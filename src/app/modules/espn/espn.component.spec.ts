@@ -1,6 +1,8 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EspnComponent } from './espn.component';
+import { EspnService } from './espn.service';
 
 describe('EspnComponent', () => {
   let component: EspnComponent;
@@ -8,9 +10,11 @@ describe('EspnComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EspnComponent ]
+      imports: [HttpClientTestingModule],
+      providers: [EspnService],
+      declarations: [EspnComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
