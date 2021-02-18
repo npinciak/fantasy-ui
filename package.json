@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test --code-coverage",
+    "test:ci": "npm run lint && npm run test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
