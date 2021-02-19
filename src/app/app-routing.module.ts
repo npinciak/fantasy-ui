@@ -1,10 +1,13 @@
-import { NgModule } from "@angular/core";
-import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { EspnComponent } from './modules/espn/espn.component';
 
-const routes: Routes = []
+const routes: Routes = [
+    { path: 'espn', component: EspnComponent, }
+];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, relativeLinkResolution: 'legacy' })],
+    imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
     providers: []
 })
