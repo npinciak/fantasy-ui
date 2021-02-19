@@ -22,7 +22,7 @@ export class EspnService {
 
   getLeague = (leagueId: number, sport: Sports) => this.api.get<any>(`${this.fantasyBase}/games/${sport}/seasons/${this.currentYear}/segments/0/leagues/${leagueId}`);
 
-  private get currentYear() {
+  private get currentYear(): string {
     return moment().format('YYYY');
   }
 
