@@ -1,12 +1,28 @@
 export class League {
-    private teams: any[];
-    private leagueId: number;
+    constructor(private _id: number, private _teams: Team[]) {
+        this.id = _id;
+        this.teams = _teams;
+    }
 
-    constructor(leagueId: number, teams: any[]) {
-        this.leagueId = leagueId;
+    get id() {
+        return this.id;
+    };
+
+    set id(id: number) {
+        this.id = id;
+    }
+
+    get teams() {
+        return this.teams;
+    };
+
+    set teams(teams: Team[]) {
         this.teams = teams;
     }
 
-    getTeams = () => this.teams;
-    getLeagueId = () => this.leagueId;
+}
+
+export interface Team {
+    abbrev: string;
+    id: number;
 }

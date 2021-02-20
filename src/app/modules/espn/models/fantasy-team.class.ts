@@ -1,34 +1,31 @@
 export class FantasyTeam {
-    private _id: number;
-    private _name: string;
-    private _roster: any;
-
-    constructor(id: number, name: string, roster: any[]) {
-        this._id = id;
-        this._name = name;
-        this._roster = roster;
+    constructor(private _id: number, private _name: string, private _roster: any[]) {
+        this.id = _id;
+        this.name = _name;
+        this.roster = _roster;
     }
 
-    get Id() {
-        return this._id
+    get id() {
+        return this.id;
     };
-    set Id(id: number) {
-        this._id = id
+
+    set id(id: number) {
+        this.id = id;
     }
 
-    get Name() {
-        return this._name
+    get name() {
+        return this.name;
     };
 
-    set Name(name: string) {
-        this._name = name
+    set name(name: string) {
+        this.name = name;
     };
 
-    get Roster() {
-        return this._roster
+    get roster() {
+        return this.roster;
     };
 
-    set Roster(roster: any[]) {
-        this._roster = roster
+    set roster(roster: any[]) {
+        this.roster = roster;
     };
 }
