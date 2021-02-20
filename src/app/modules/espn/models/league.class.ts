@@ -1,23 +1,20 @@
-export class League {
-    constructor(private _id: number, private _teams: Team[]) {
-        this.id = _id;
-        this.teams = _teams;
-    }
+export class FantasyLeague {
+    constructor(private _id: number, private _teams: Team[]) { }
 
     get id() {
-        return this.id;
+        return this._id;
     };
 
-    set id(id: number) {
-        this.id = id;
+    set id(leagueId: number) {
+        this._id = leagueId;
     }
 
     get teams() {
-        return this.teams;
+        return this._teams;
     };
 
-    set teams(teams: Team[]) {
-        this.teams = teams;
+    set teams(leagueTeams: Team[]) {
+        this._teams = leagueTeams;
     }
 
 }
@@ -25,4 +22,9 @@ export class League {
 export interface Team {
     abbrev: string;
     id: number;
+}
+
+export interface League {
+    id: number;
+    teams: Team[];
 }

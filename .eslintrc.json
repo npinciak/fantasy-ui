@@ -21,6 +21,7 @@
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+        "no-underscore-dangle": "off",
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": [
           "error"
