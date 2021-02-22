@@ -1,27 +1,24 @@
+import { FantasyPlayer, Player } from './fantasy-player.class';
+
 export class FantasyTeam {
-    constructor(private _id: number, private _name: string, private _roster: unknown[]) { }
+    constructor(private _id: number, private _name: string, private _roster: Player[]) { }
 
     get id() {
         return this._id;
     };
 
-    set id(teamId: number) {
-        this._id = teamId;
-    }
-
     get name() {
         return this._name;
     };
 
-    set name(teamName: string) {
-        this._name = teamName;
-    };
-
     get roster() {
-        return this._roster;
+        return this._roster.map(rosterEntry => new FantasyPlayer(
+            rosterEntry.playerId,
+            rosterEntry.playerPoolEntry.player.fullName,
+            rosterEntry.playerPoolEntry.player.defaultPositionId,
+            rosterEntry.playerPoolEntry.player.proTeamId,
+            rosterEntry.playerPoolEntry.player.injured
+        ));
     };
 
-    set roster(teamRoster: unknown[]) {
-        this._roster = teamRoster;
-    };
 }

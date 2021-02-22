@@ -1,30 +1,34 @@
-export class FantasyLeague {
-    constructor(private _id: number, private _teams: Team[]) { }
+import { FantasyTeam } from '.';
+import { FantasyPlayer, Player } from './fantasy-player.class';
 
-    get id() {
-        return this._id;
+export class FantasyLeague {
+    constructor(private _league: League) { }
+
+    get league() {
+        return this._league;
     };
 
-    set id(leagueId: number) {
-        this._id = leagueId;
+    get leagueId() {
+        return this._league.id;
     }
 
     get teams() {
-        return this._teams;
-    };
-
-    set teams(leagueTeams: Team[]) {
-        this._teams = leagueTeams;
+        return this._league.teams.map(res => new FantasyTeam(res.id, res.abbrev, res.roster.entries));
     }
 
 }
 
+export interface Roster {
+    entries: Array<Player>;
+}
+
 export interface Team {
-    abbrev: string;
     id: number;
+    abbrev: string;
+    roster: Roster;
 }
 
 export interface League {
     id: number;
-    teams: Team[];
+    teams: Array<Team>;
 }

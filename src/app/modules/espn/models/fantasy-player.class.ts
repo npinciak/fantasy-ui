@@ -1,35 +1,59 @@
+import { nflTeamMap } from '.';
+import { nflPositionMap } from '.';
+
 export class FantasyPlayer {
-    constructor(private _id: number, private _name: string, private _positionId: number, private _teamId: number) { }
 
-    get id() {
-        return this._id;
+    constructor(
+        private _playerId: number,
+        private _name: string,
+        private _positionId: number,
+        private _teamId: number,
+        private _injured: boolean
+    ) { }
+
+    get playerId() {
+        return this._playerId;
     };
-
-    set id(teamId: number) {
-        this._id = teamId;
-    }
 
     get name() {
         return this._name;
     };
 
-    set name(teamName: string) {
-        this._name = teamName;
-    };
-
-    get position() {
+    get positionId() {
         return this._positionId;
     };
 
-    set position(playerPosition: number) {
-        this._positionId = playerPosition;
-    };
+    get defaultPosition() {
+        return nflPositionMap[this._positionId].abbrev;
+    }
+
+    get proTeam() {
+        return nflTeamMap[this._teamId];
+    }
 
     get teamId() {
         return this._teamId;
     };
 
-    set team(playerTeam: number) {
-        this._teamId = playerTeam;
-    };
+    get isInjured() {
+        return this._injured;
+    }
+
+}
+
+export interface Player {
+    playerId: number;
+    name: string;
+    playerPoolEntry: PlayerEntry;
+}
+
+interface PlayerEntry {
+    player: PlayerInfo;
+}
+
+interface PlayerInfo {
+    fullName: string;
+    defaultPositionId: number;
+    proTeamId: number;
+    injured: boolean;
 }
