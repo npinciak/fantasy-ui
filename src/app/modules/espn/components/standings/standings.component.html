@@ -1,0 +1,22 @@
+<mat-card style="margin: 15px 0px;">
+    <mat-card-content>
+        <mat-table [dataSource]="dataSource" sticky matSort matSortStart="desc">
+            <ng-container matColumnDef="id" sticky>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>id</mat-header-cell>
+                <mat-cell *matCellDef="let team">
+                    {{ team.id}}
+                </mat-cell>
+            </ng-container>
+
+
+            <ng-container matColumnDef="name" sticky>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Team</mat-header-cell>
+                <mat-cell *matCellDef="let team">
+                    {{ team.name}}
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="standingsColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let myRowData; columns: standingsColumns"></mat-row>
+        </mat-table>
+    </mat-card-content>
+</mat-card>
