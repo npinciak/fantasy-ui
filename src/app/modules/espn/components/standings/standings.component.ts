@@ -6,7 +6,7 @@ import { FantasyTeam } from '../../models';
 @Component({
   selector: 'app-standings',
   templateUrl: './standings.component.html',
-  styleUrls: ['./standings.component.css']
+  styleUrls: ['./standings.component.scss']
 })
 export class StandingsComponent implements OnInit {
   @Input() fantasyTeams: FantasyTeam[];

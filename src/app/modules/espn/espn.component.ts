@@ -1,25 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { EspnService, Sports } from './espn.service';
-import { League } from './models';
+import { FantasyTeam } from './models';
 import { FantasyLeague } from './models/league.class';
 
 @Component({
   selector: 'app-espn',
   templateUrl: './espn.component.html',
-  styleUrls: ['./espn.component.css']
+  styleUrls: ['./espn.component.scss']
 })
 export class EspnComponent implements OnInit {
-
+  teams: FantasyTeam[];
 
   constructor(private activatedRoute: ActivatedRoute, private espnService: EspnService) { }
 
   ngOnInit(): void {
+
     const leagueId = this.activatedRoute.snapshot.params.leagueId;
-    this.getLeague(leagueId).subscribe(res => console.log(new FantasyLeague(res.id, res.teams)));
+
+    this.getNFLLeague(leagueId).subscribe(res => {
+      const league = new FantasyLeague(res);
+      this.teams = league.teams;
+    });
+
   }
 
-
-  getLeague = (leagueId: number) => this.espnService.getLeague(leagueId, Sports.nfl);
-
+  getNFLLeague = (leagueId: number) => this.espnService.getLeague(leagueId, Sports.nfl);
+  getMLBLeague = (leagueId: number) => this.espnService.getLeague(leagueId, Sports.mlb);
 }
