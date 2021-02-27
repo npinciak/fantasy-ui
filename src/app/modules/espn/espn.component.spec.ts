@@ -1,5 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MaterialModule } from 'src/app/material.module';
 
 import { EspnComponent } from './espn.component';
 import { EspnService } from './espn.service';
@@ -10,7 +12,7 @@ describe('EspnComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [RouterTestingModule, HttpClientTestingModule, MaterialModule],
       providers: [EspnService],
       declarations: [EspnComponent]
     })
