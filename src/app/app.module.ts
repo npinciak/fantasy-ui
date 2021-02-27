@@ -8,9 +8,12 @@ import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { EspnModule } from './modules/espn/espn.module';
+
 import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { CoreState } from './@core/store/core/core.state';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
     MaterialModule,
     BrowserAnimationsModule,
     NgxsSelectSnapshotModule.forRoot(),
-    NgxsModule.forRoot(),
+    NgxsModule.forRoot([CoreState]),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsDispatchPluginModule.forRoot(),
     AppRoutingModule
   ],
