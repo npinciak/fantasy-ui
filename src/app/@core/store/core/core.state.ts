@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { State, Action, Selector, StateContext } from '@ngxs/store';
 import { CoreAction } from './core.actions';
 
@@ -11,6 +12,9 @@ export interface CoreStateModel {
     items: []
   }
 })
+
+@Injectable()
+
 export class CoreState {
 
   @Selector()
