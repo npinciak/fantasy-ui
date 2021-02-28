@@ -1,5 +1,5 @@
 import { FantasyTeam } from '.';
-import { FantasyPlayer, Player } from './fantasy-player.class';
+import { Player } from './fantasy-player.class';
 
 export class FantasyLeague {
     constructor(private _league: League) { }
@@ -13,7 +13,7 @@ export class FantasyLeague {
     }
 
     get teams() {
-        return this._league.teams.map(res => new FantasyTeam(res.id, res.abbrev, res.roster.entries));
+        return this._league.teams.map(res => new FantasyTeam(res.id, `${res.location} ${res.nickname}`, res.roster.entries));
     }
 
 }
@@ -25,6 +25,8 @@ export interface Roster {
 export interface Team {
     id: number;
     abbrev: string;
+    location: string;
+    nickname: string;
     roster: Roster;
 }
 
