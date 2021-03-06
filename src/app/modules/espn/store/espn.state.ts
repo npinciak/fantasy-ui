@@ -35,6 +35,11 @@ export class EspnState {
     return state;
   }
 
+  @Selector()
+  public static teams(state: EspnStateModel) {
+    return state.teams;
+  }
+
   @Action(EspnAction)
   public add(ctx: StateContext<EspnStateModel>, { payload }: EspnAction) {
     const stateModel = ctx.getState();
@@ -42,14 +47,12 @@ export class EspnState {
     ctx.setState(stateModel);
   }
 
-  @Action(EspnAction)
+  @Action(EspnGetLeague)
   public getLeague(ctx: StateContext<EspnStateModel>, { leagueId, sport }: EspnGetLeague) {
     return this.espnService.getLeague(leagueId, sport).pipe(
       tap(res => {
-        const stateModel = ctx.getState();
         const league = new FantasyLeague(res);
-        stateModel.teams = league.teams;
-        ctx.setState(stateModel);
+        ctx.patchState({ teams: league.teams });
       }),
       catchError(err => err)
     );

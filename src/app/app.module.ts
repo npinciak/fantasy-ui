@@ -14,6 +14,7 @@ import { NgxsModule } from '@ngxs/store';
 import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { CoreState } from './@core/store/core/core.state';
+import { EspnState } from './modules/espn/store/espn.state';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { CoreState } from './@core/store/core/core.state';
     MaterialModule,
     BrowserAnimationsModule,
     NgxsSelectSnapshotModule.forRoot(),
-    NgxsModule.forRoot([CoreState]),
+    NgxsModule.forRoot([CoreState, EspnState]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsDispatchPluginModule.forRoot(),
     AppRoutingModule
