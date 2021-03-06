@@ -42,7 +42,7 @@ export class EspnService {
   }
 
   private get currentYear(): string {
-    return '2020'; //moment().format('YYYY');
+    return moment().format('YYYY');
   }
 
 }

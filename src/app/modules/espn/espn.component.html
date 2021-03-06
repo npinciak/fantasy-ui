@@ -1,2 +1,12 @@
 <p>espn works!</p>
-<app-standings *ngIf="teams" [fantasyTeams]="teams"></app-standings>
+<ng-container *ngIf="espnFacade.teams$ | async; else loading">
+    <app-standings [fantasyTeams]="espnFacade.teams$ | async"></app-standings>
+
+</ng-container>
+
+
+<ng-template #loading>
+    Loading...
+</ng-template>
+
+<!-- <app-team *ngIf="players" [fantasyPlayers]="players"></app-team> -->
