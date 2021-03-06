@@ -1,4 +1,4 @@
-import { FantasyTeam } from '.';
+import { FantasyTeam } from './fantasy-team.class';
 import { Player } from './fantasy-player.class';
 
 export class FantasyLeague {

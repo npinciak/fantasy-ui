@@ -1,5 +1,5 @@
-import { nflTeamMap } from '.';
-import { nflPositionMap } from '.';
+import { nflTeamMap } from './nfl-team.map';
+import { nflPositionMap } from './nfl-position.map';
 
 export class FantasyPlayer {
 
