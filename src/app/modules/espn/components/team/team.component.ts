@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { FantasyPlayer } from '../../models/fantasy-player.new.class';
+import { FantasyPlayer } from '../../models/fantasy-player.class';
 import { EspnFacade } from '../../store/espn.facade';
 
 @Component({

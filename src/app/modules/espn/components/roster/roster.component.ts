@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { FantasyPlayer } from '../../models/fantasy-player.new.class';
+import { FantasyPlayer } from '../../models/fantasy-player.class';
 
 @Component({
   selector: 'app-roster',
