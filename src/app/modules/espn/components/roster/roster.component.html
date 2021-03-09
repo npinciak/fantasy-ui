@@ -1,0 +1,22 @@
+<mat-card>
+    <mat-card-content>
+        <mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="lineupSlot">
+                <mat-header-cell *matHeaderCellDef>Lineup</mat-header-cell>
+                <mat-cell *matCellDef="let player">
+                    <small>{{player.lineupSlot}}</small>
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef>player</mat-header-cell>
+                <mat-cell *matCellDef="let player">
+                    {{ player.name}}
+                    <br>
+                    {{player.proTeam}}, {{player.defaultPosition}}
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="rosterColumns"></mat-header-row>
+            <mat-row *matRowDef="let rowData; columns: rosterColumns"></mat-row>
+        </mat-table>
+    </mat-card-content>
+</mat-card>
