@@ -16,14 +16,16 @@ export class StandingsComponent implements OnInit, OnChanges {
 
   readonly standingsColumns = [
     'id',
-    'name'
+    'name',
+    'totalPoints'
   ];
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
 
-  ngOnInit(): void {  }
+  ngOnInit(): void { }
 
-  viewTeam = (id: number) => this.router.navigate([`espn/${this.leagueId}/team`, id]);
+  viewTeam = (id: number) => this.router.navigate([`espn/${this.sport}/${this.leagueId}/team`, id]);
+
 
   ngOnChanges(changes: SimpleChanges) {
     for (const propName in changes) {
@@ -42,5 +44,9 @@ export class StandingsComponent implements OnInit, OnChanges {
 
   private get leagueId() {
     return this.activatedRoute.snapshot.params.leagueId;
+  }
+
+  private get sport() {
+    return this.activatedRoute.snapshot.params.sport;
   }
 }

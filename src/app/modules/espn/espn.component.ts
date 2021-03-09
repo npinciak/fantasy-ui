@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
 import { Sports } from './espn.service';
 import { FantasyTeam } from './models';
 import { FantasyPlayer } from './models/fantasy-player.class';

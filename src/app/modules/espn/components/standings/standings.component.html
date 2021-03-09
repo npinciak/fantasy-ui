@@ -13,6 +13,12 @@
                     {{ team.name}}
                 </mat-cell>
             </ng-container>
+            <ng-container matColumnDef="totalPoints">
+                <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
+                <mat-cell *matCellDef="let team">
+                    {{ team.totalPoints}}
+                </mat-cell>
+            </ng-container>
             <mat-header-row *matHeaderRowDef="standingsColumns"></mat-header-row>
             <mat-row *matRowDef="let rowData; columns: standingsColumns" (click)="viewTeam(rowData.id)"></mat-row>
         </mat-table>
