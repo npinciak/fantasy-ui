@@ -5,7 +5,7 @@ import { FantasyPlayer } from '../../models/fantasy-player.class';
 @Component({
   selector: 'app-roster',
   templateUrl: './roster.component.html',
-  styleUrls: ['./roster.component.css']
+  styleUrls: ['./roster.component.scss']
 })
 export class RosterComponent implements OnInit {
   @Input() fantasyPlayers: FantasyPlayer[];

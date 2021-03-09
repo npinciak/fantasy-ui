@@ -45,6 +45,10 @@ export class MLBFantasyPlayer extends FantasyPlayer {
     get displayOrder() {
         return mlbLineupMap[this.lineupSlotId].displayOrder;
     }
+
+    get playerImg() {
+        return `https://a.espncdn.com/combiner/i?img=/i/headshots/mlb/players/full/${this.id}.png&w=96&h=70&cb=1`;
+    }
 }
 
 export class NFLFantasyPlayer extends FantasyPlayer {

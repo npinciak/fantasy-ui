@@ -10,6 +10,8 @@
             <ng-container matColumnDef="name">
                 <mat-header-cell *matHeaderCellDef>player</mat-header-cell>
                 <mat-cell *matCellDef="let player">
+                    <img [src]="player.playerImg">
+
                     {{ player.name}}
                     <br>
                     {{player.proTeam}}, {{player.defaultPosition}}
