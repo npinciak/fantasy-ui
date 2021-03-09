@@ -1,27 +1,3 @@
-<p>team works!</p>
-<mat-card>
-    <mat-card-content>
-        <mat-table [dataSource]="dataSource">
-            <ng-container matColumnDef="id">
-                <mat-header-cell *matHeaderCellDef>id</mat-header-cell>
-                <mat-cell *matCellDef="let player">
-                    {{ player.playerId}}
-                </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="name">
-                <mat-header-cell *matHeaderCellDef>player</mat-header-cell>
-                <mat-cell *matCellDef="let player">
-                    {{ player.name}} - {{player.proTeam}}
-                </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="position">
-                <mat-header-cell *matHeaderCellDef>position</mat-header-cell>
-                <mat-cell *matCellDef="let player">
-                    <small>{{player.defaultPosition}}</small>
-                </mat-cell>
-            </ng-container>
-            <mat-header-row *matHeaderRowDef="rosterColumns"></mat-header-row>
-            <mat-row *matRowDef="let rowData; columns: rosterColumns"></mat-row>
-        </mat-table>
-    </mat-card-content>
-</mat-card>
+{{teamName}}
+<app-roster [fantasyPlayers]="starters"></app-roster>
+<app-roster [fantasyPlayers]="bench"></app-roster>
