@@ -4,7 +4,7 @@ import { catchError, tap } from 'rxjs/operators';
 
 import { EspnService } from '../espn.service';
 import { FantasyTeam, League } from '../models';
-import { FantasyLeague } from '../models/league.class';
+import { FantasyLeague, MLBFantasyLeague } from '../models/league.class';
 import { EspnAction, EspnGetLeague } from './espn.actions';
 
 
@@ -51,8 +51,17 @@ export class EspnState {
   public getLeague(ctx: StateContext<EspnStateModel>, { leagueId, sport }: EspnGetLeague) {
     return this.espnService.getLeague(leagueId, sport).pipe(
       tap(res => {
-        const league = new FantasyLeague(res);
-        ctx.patchState({ teams: league.teams });
+        switch (sport) {
+          case Sports.mlb:
+            ctx.patchState({ teams: new MLBFantasyLeague(res).teams });
+            break;
+          case Sports.nfl:
+            // ctx.patchState({ teams: new NFLFantasyLeague(res).teams });
+            break;
+          default:
+            break;
+        }
+
       }),
       catchError(err => err)
     );
