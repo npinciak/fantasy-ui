@@ -1,5 +1,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/npinciak/fantasy-ui/badge)](https://www.codefactor.io/repository/github/npinciak/fantasy-ui)
 
+* How to get started with your ESPN team -> https://github.com/npinciak/fantasy-ui/wiki
+
 # SportsUi
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.7.
