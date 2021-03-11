@@ -1,6 +1,5 @@
-import { FantasyTeam, MLBFantasyTeam } from './fantasy-team.class';
+import { MLBFantasyTeam } from './fantasy-team.class';
 import { Player } from './fantasy-player.class';
-import { Sports } from '../espn.service';
 
 export class FantasyLeague {
     constructor(_league: League) { }
@@ -11,21 +10,10 @@ export class MLBFantasyLeague extends FantasyLeague {
         super(_league);
     }
 
-
     get teams() {
-        return this._league.teams.map(res => new MLBFantasyTeam(
-            res.id,
-            `${res.location} ${res.nickname}`,
-            res.roster.entries,
-            res.points,
-            res.draftDayProjectedRank,
-            res.currentProjectedRank,
-            res.rankCalculatedFinal
-        ));
+        return this._league.teams.map(res => new MLBFantasyTeam(res));
     }
-
 }
-
 
 
 export interface Roster {
@@ -39,9 +27,13 @@ export interface Team {
     nickname: string;
     roster: Roster;
     points: number;
+    logo: string;
     draftDayProjectedRank: number;
     currentProjectedRank: number;
     rankCalculatedFinal: number;
+    pointsByStat: {
+        [key: number]: number;
+    };
 }
 
 export interface League {

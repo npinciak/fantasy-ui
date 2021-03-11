@@ -1,73 +1,49 @@
 import { mlbLineupMap } from './mlb-lineup.map';
 import { mlbPositionMap } from './mlb-position.map';
 import { mlbTeamMap } from './mlb-team.map';
-import { nflPositionMap } from './nfl-position.map';
-import { nflTeamMap } from './nfl-team.map';
 
 export class FantasyPlayer {
-    constructor(
-        public id: number,
-        public name: string,
-        public teamId: number,
-        public positionId: number,
-        public injured: boolean
-    ) { }
+    constructor(public _player: Player) { }
+
+
+
 }
 
 export class MLBFantasyPlayer extends FantasyPlayer {
-    constructor(
-        public id: number,
-        public name: string,
-        public teamId: number,
-        public positionId: number,
-        public injured: boolean,
-        public lineupSlotId: number
-    ) {
-        super(id, name, teamId, positionId, injured);
+    constructor(public _player: Player) {
+        super(_player);
+    }
+
+    get name() {
+        return this._player.playerPoolEntry.player.fullName;
     }
 
     get lineupSlot() {
-        return mlbLineupMap[this.lineupSlotId].abbrev;
+        return mlbLineupMap[this._player.lineupSlotId].abbrev;
     }
 
     get defaultPosition() {
-        return mlbPositionMap[this.positionId].abbrev;
+        return mlbPositionMap[this._player.playerPoolEntry.player.defaultPositionId].abbrev;
     }
 
     get proTeam() {
-        return mlbTeamMap[this.teamId];
+        return mlbTeamMap[this._player.playerPoolEntry.player.proTeamId];
     }
 
     get isStarter() {
-        return mlbLineupMap[this.lineupSlotId].starter;
+        return mlbLineupMap[this._player.lineupSlotId].starter;
     }
 
     get displayOrder() {
-        return mlbLineupMap[this.lineupSlotId].displayOrder;
+        return mlbLineupMap[this._player.lineupSlotId].displayOrder;
     }
 
     get playerImg() {
-        return `https://a.espncdn.com/combiner/i?img=/i/headshots/mlb/players/full/${this.id}.png&w=96&h=70&cb=1`;
-    }
-}
-
-export class NFLFantasyPlayer extends FantasyPlayer {
-    constructor(
-        public id: number,
-        public name: string,
-        public teamId: number,
-        public positionId: number,
-        public injured: boolean,
-    ) {
-        super(id, name, teamId, positionId, injured);
+        return `https://a.espncdn.com/combiner/i?img=/i/headshots/mlb/players/full/${this._player.playerId}.png&w=96&h=70&cb=1`;
     }
 
-    get defaultPosition() {
-        return nflPositionMap[this.positionId].abbrev;
-    }
-
-    get proTeam() {
-        return nflTeamMap[this.teamId];
+    get ownership() {
+        return this._player.playerPoolEntry.player.ownership;
     }
 }
 
@@ -87,4 +63,20 @@ interface PlayerInfo {
     defaultPositionId: number;
     proTeamId: number;
     injured: boolean;
+    ownership: {
+        averageDraftPosition: number;
+        percentChange: number;
+        percentOwned: number;
+        percentStarted: number;
+    };
+    stats: StatsYear[];
 }
+
+interface StatsYear {
+
+    seasonId: number;
+
+    stats: unknown;
+}
+
+
