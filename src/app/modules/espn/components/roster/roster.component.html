@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card style="width:50%">
     <mat-card-content>
         <mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="lineupSlot">
@@ -10,11 +10,19 @@
             <ng-container matColumnDef="name">
                 <mat-header-cell *matHeaderCellDef>player</mat-header-cell>
                 <mat-cell *matCellDef="let player">
-                    <img [src]="player.playerImg">
+                    <img width="48" height="35" [matTooltip]="player.name" [src]="player.playerImg" [alt]="player.name">
 
                     {{ player.name}}
                     <br>
                     {{player.proTeam}}, {{player.defaultPosition}}
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="ownership">
+                <mat-header-cell *matHeaderCellDef>ownership</mat-header-cell>
+                <mat-cell *matCellDef="let player"
+                    [ngStyle]="{ color: player.ownership.percentChange <= 0 ? 'red' : 'green' }">
+                    {{player.ownership.percentChange| number}}
+                    <mat-icon> {{ player.ownership.percentChange <= 0 ? 'trending_down' : 'trending_up' }} </mat-icon>
                 </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="rosterColumns"></mat-header-row>

@@ -14,7 +14,8 @@ export class RosterComponent implements OnInit {
 
   readonly rosterColumns = [
     'lineupSlot',
-    'name'
+    'name',
+    'ownership'
   ];
 
   constructor() { }
