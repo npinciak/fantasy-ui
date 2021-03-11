@@ -1,8 +1,10 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { FantasyTeam } from '../../models';
+import { MLBFantasyTeam } from '../../models/fantasy-team.class';
 
 @Component({
   selector: 'app-standings',
@@ -10,15 +12,23 @@ import { FantasyTeam } from '../../models';
   styleUrls: ['./standings.component.scss']
 })
 export class StandingsComponent implements OnInit, OnChanges {
-  @Input() fantasyTeams: any;
+  @Input() fantasyTeams: MLBFantasyTeam[];
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   dataSource = new MatTableDataSource<FantasyTeam>();
 
   readonly standingsColumns = [
-    'id',
+    'rankDiff',
     'name',
+    // 'hitsAB',
+    'R',
+    'HR',
+    'RBI',
+    'SB',
+    'AVG',
     'totalPoints'
   ];
+
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
 
@@ -34,6 +44,7 @@ export class StandingsComponent implements OnInit, OnChanges {
           case 'fantasyTeams':
             this.fantasyTeams = changes[propName].currentValue;
             this.dataSource.data = this.fantasyTeams;
+            this.dataSource.sort = this.sort;
             break;
           default:
             break;

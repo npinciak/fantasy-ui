@@ -1,20 +1,51 @@
-<mat-card>
+<mat-card style="width:75%">
     <mat-card-content>
-        <mat-table [dataSource]="dataSource">
-            <ng-container matColumnDef="id">
-                <mat-header-cell *matHeaderCellDef>id</mat-header-cell>
+        <mat-table [dataSource]="dataSource" matSort matSortStart="desc">
+            <ng-container matColumnDef="rankDiff">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Ranking</mat-header-cell>
                 <mat-cell *matCellDef="let team">
-                    {{ team.id}}
+                    Current: {{ team.currentProjectedRank}} (Diff: {{team.rankDiff}})
                 </mat-cell>
             </ng-container>
             <ng-container matColumnDef="name">
                 <mat-header-cell *matHeaderCellDef>Team</mat-header-cell>
                 <mat-cell *matCellDef="let team">
+                    <img width="48" height="35" [src]="team.logo" [alt]="team.name">
                     {{ team.name}}
                 </mat-cell>
             </ng-container>
+            <ng-container matColumnDef="R">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>R</mat-header-cell>
+                <mat-cell *matCellDef="let team">
+                    {{ team.stats.R}}
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="HR">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>HR</mat-header-cell>
+                <mat-cell *matCellDef="let team">
+                    {{ team.stats.HR}}
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="RBI">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>RBI</mat-header-cell>
+                <mat-cell *matCellDef="let team">
+                    {{ team.stats.RBI}}
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="SB">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>SB</mat-header-cell>
+                <mat-cell *matCellDef="let team">
+                    {{ team.stats.SB}}
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="AVG">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>AVG</mat-header-cell>
+                <mat-cell *matCellDef="let team">
+                    {{ team.stats.AVG}}
+                </mat-cell>
+            </ng-container>
             <ng-container matColumnDef="totalPoints">
-                <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
                 <mat-cell *matCellDef="let team">
                     {{ team.totalPoints}}
                 </mat-cell>
