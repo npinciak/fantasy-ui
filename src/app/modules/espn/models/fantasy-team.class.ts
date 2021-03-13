@@ -1,6 +1,6 @@
 import { MLBFantasyPlayer } from './fantasy-player.class';
 import { Team } from './league.class';
-import { mlbStatMap, StatsMap } from './mlb-stat.map';
+import { mlbStatMap } from './mlb-stat.map';
 
 export class FantasyTeam {
     constructor(public _team: Team) { }

@@ -9,7 +9,6 @@ interface Stats {
     };
 }
 
-
 export const mlbStatMap: Stats = {
     0: {
         abbrev: 'AB',
