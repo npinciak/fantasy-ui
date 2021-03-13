@@ -4,6 +4,7 @@ import * as moment from '../../../../node_modules/moment';
 
 import { ApiService } from 'src/app/@shared/services/api.service';
 import { League } from './models';
+import { PlayerNews } from './models/fantasy-player.class';
 
 export enum Sports {
   mlb = 'flb',
@@ -25,6 +26,11 @@ export class EspnService {
     this.api.get<League>(`${this.fantasyBase}/games/${sport}/seasons/${this.currentYear}/segments/0/leagues/${leagueId}`,
       { params: this.params }
     );
+
+  getPlayer = (days: number, playerId: number, sport: Sports) =>
+    this.api.get<PlayerNews>(`${this.apiBase}/fantasy/v2/games/${sport}/news/players`, {
+      params: new HttpParams().set('days', days.toString()).set('playerId', playerId.toString())
+    });
 
   private get params() {
     let params = new HttpParams();
