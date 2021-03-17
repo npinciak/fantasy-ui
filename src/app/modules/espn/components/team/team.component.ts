@@ -32,6 +32,14 @@ export class TeamComponent implements OnInit {
     return this.currentTeam.bench;
   }
 
+  get pitchers() {
+    return this.currentTeam.pitchers;
+  }
+
+  get batters() {
+    return this.currentTeam.batters;
+  }
+
   get starters() {
     return this.currentTeam.starter;
   }
