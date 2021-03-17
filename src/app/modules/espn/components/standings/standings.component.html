@@ -17,31 +17,33 @@
             <ng-container matColumnDef="R">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>R</mat-header-cell>
                 <mat-cell *matCellDef="let team">
-                    {{ team.stats.R}}
+                    {{ team.rotoStats.R}}
+                    <br>
+                    <small>({{ team.stats.R}})</small>
                 </mat-cell>
             </ng-container>
             <ng-container matColumnDef="HR">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>HR</mat-header-cell>
                 <mat-cell *matCellDef="let team">
-                    {{ team.stats.HR}}
+                    {{ team.rotoStats.HR}}
                 </mat-cell>
             </ng-container>
             <ng-container matColumnDef="RBI">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>RBI</mat-header-cell>
                 <mat-cell *matCellDef="let team">
-                    {{ team.stats.RBI}}
+                    {{ team.rotoStats.RBI}}
                 </mat-cell>
             </ng-container>
             <ng-container matColumnDef="SB">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>SB</mat-header-cell>
                 <mat-cell *matCellDef="let team">
-                    {{ team.stats.SB}}
+                    {{ team.rotoStats.SB}}
                 </mat-cell>
             </ng-container>
             <ng-container matColumnDef="AVG">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>AVG</mat-header-cell>
                 <mat-cell *matCellDef="let team">
-                    {{ team.stats.AVG}}
+                    {{ team.rotoStats.AVG}}
                 </mat-cell>
             </ng-container>
             <ng-container matColumnDef="totalPoints">

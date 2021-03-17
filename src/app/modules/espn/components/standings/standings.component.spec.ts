@@ -1,17 +1,46 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from 'src/app/material.module';
+import { Sports } from '../../espn.service';
+import { MLBFantasyTeam } from '../../models/fantasy-team.class';
+import { mockMLBTeam } from '../../models/mlb-team.mock';
+import { EspnFacade } from '../../store/espn.facade';
+import { mockESPNFacade } from '../../store/mocks/espn.facade.mock';
+import { RosterComponent } from '../roster/roster.component';
+import { TeamComponent } from '../team/team.component';
 
 import { StandingsComponent } from './standings.component';
 
 describe('StandingsComponent', () => {
   let component: StandingsComponent;
   let fixture: ComponentFixture<StandingsComponent>;
+  let compiled;
+
+  const getByTestId = (testId: string) => compiled.querySelector(`[data-test-id="${testId}"]`);
+
+  const router = {
+    navigate: jasmine.createSpy('navigate')
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, MaterialModule],
-      declarations: [StandingsComponent]
+      imports: [RouterTestingModule, MaterialModule, BrowserAnimationsModule],
+      declarations: [StandingsComponent, RosterComponent, TeamComponent],
+      providers: [
+        { provide: Router, useValue: router },
+        { provide: EspnFacade, useValue: mockESPNFacade },
+        {
+          provide: ActivatedRoute, useValue: {
+            snapshot: {
+              params: {
+                sport: Sports.mlb,
+                leagueId: 1209434861
+              }
+            }
+          }
+        }]
     })
       .compileComponents();
   });
@@ -19,10 +48,18 @@ describe('StandingsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(StandingsComponent);
     component = fixture.componentInstance;
+    compiled = fixture.debugElement.nativeElement;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should navigate to team', () => {
+    const mouseEvent = new MouseEvent('click');
+    component.viewTeam(1209434861);
+    expect(router.navigate).toHaveBeenCalledWith([`espn/${Sports.mlb}/${1209434861}/team`, 1209434861]);
+  });
+
 });

@@ -35,6 +35,10 @@ export class MLBFantasyPlayer extends FantasyPlayer {
         return mlbTeamMap[this.playerInfo.proTeamId];
     }
 
+    get isPitcher() {
+        return this.isPitcherAlgo(this.playerInfo.eligibleSlots);
+    }
+
     get isStarter() {
         return mlbLineupMap[this._player.lineupSlotId].starter;
     }
@@ -47,20 +51,8 @@ export class MLBFantasyPlayer extends FantasyPlayer {
         return `https://a.espncdn.com/combiner/i?img=/i/headshots/mlb/players/full/${this._player.playerId}.png&w=96&h=70&cb=1`;
     }
 
-    get ratingsSeason() {
-        return this.playerRatings[RatingTimeFrame.season];
-    }
-
-    get ratingsL7() {
-        return this.playerRatings[RatingTimeFrame.last7];
-    }
-
-    get ratingsL14() {
-        return this.playerRatings[RatingTimeFrame.last14];
-    }
-
-    get ratingsL30() {
-        return this.playerRatings[RatingTimeFrame.last30];
+    get positionalRankingSeason() {
+        return this.ratingsSeason.positionalRanking;
     }
 
     get ownershipChange() {
@@ -69,6 +61,22 @@ export class MLBFantasyPlayer extends FantasyPlayer {
 
     get percentOwned() {
         return this.ownership.percentOwned;
+    }
+
+    private get ratingsSeason() {
+        return this.playerRatings[RatingTimeFrame.season];
+    }
+
+    private get ratingsL7() {
+        return this.playerRatings[RatingTimeFrame.last7];
+    }
+
+    private get ratingsL14() {
+        return this.playerRatings[RatingTimeFrame.last14];
+    }
+
+    private get ratingsL30() {
+        return this.playerRatings[RatingTimeFrame.last30];
     }
 
     private get playerRatings() {
@@ -81,6 +89,11 @@ export class MLBFantasyPlayer extends FantasyPlayer {
 
     private get playerInfo() {
         return this._player.playerPoolEntry.player;
+    }
+
+    private isPitcherAlgo(eligiblePos: number[], pitcherPos = [13, 14, 15]) {
+        const eligibility = eligiblePos.filter(num => pitcherPos.indexOf(num) !== -1);
+        return [... new Set(eligibility)].length > 0;
     }
 
 }
@@ -98,11 +111,13 @@ interface PlayerEntry {
 
 interface PlayerInfo {
     fullName: string;
+    lastNewsDate: number;
     defaultPositionId: number;
     proTeamId: number;
     injured: boolean;
     injuryStatus: string;
     ownership: PlayerOwnership;
+    eligibleSlots: number[];
     stats: PlayerStatsYear[];
 }
 

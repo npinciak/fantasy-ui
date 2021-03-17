@@ -32,7 +32,7 @@ export class StandingsComponent implements OnInit, OnChanges {
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {  }
 
   viewTeam = (id: number) => this.router.navigate([`espn/${this.sport}/${this.leagueId}/team`, id]);
 
@@ -60,4 +60,5 @@ export class StandingsComponent implements OnInit, OnChanges {
   private get sport() {
     return this.activatedRoute.snapshot.params.sport;
   }
+
 }

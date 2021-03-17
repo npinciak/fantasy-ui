@@ -34,6 +34,9 @@ export interface Team {
     pointsByStat: {
         [key: number]: number;
     };
+    valuesByStat: {
+        [key: number]: number;
+    };
 }
 
 export interface League {

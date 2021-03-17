@@ -21,7 +21,7 @@ export class MLBFantasyTeam extends FantasyTeam {
         super(_team);
     }
 
-    get stats() {
+    get rotoStats() {
         const pointsByStat = this._team.pointsByStat;
 
         const final = {};
@@ -29,6 +29,21 @@ export class MLBFantasyTeam extends FantasyTeam {
             if (key) {
                 const statAbbrev = mlbStatMap[key].abbrev;
                 const statValue = pointsByStat[key];
+                final[statAbbrev] = statValue;
+            }
+        }
+
+        return final;
+    }
+
+    get stats() {
+        const valuesByStat = this._team.valuesByStat;
+
+        const final = {};
+        for (const key in valuesByStat) {
+            if (key) {
+                const statAbbrev = mlbStatMap[key].abbrev;
+                const statValue = valuesByStat[key];
                 final[statAbbrev] = statValue;
             }
         }
@@ -62,6 +77,14 @@ export class MLBFantasyTeam extends FantasyTeam {
 
     get starter() {
         return this._roster.filter(p => p.isStarter);
+    }
+
+    get batters() {
+        return this._roster.filter(p => !p.isPitcher);
+    }
+
+    get pitchers() {
+        return this._roster.filter(p => p.isPitcher); //this._roster.filter(p => p.isStarter);
     }
 
     private get _roster() {
