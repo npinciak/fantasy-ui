@@ -15,6 +15,7 @@ import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { CoreState } from './@core/store/core/core.state';
 import { EspnState } from './modules/espn/store/espn.state';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { EspnState } from './modules/espn/store/espn.state';
     NgxsModule.forRoot([CoreState, EspnState]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsDispatchPluginModule.forRoot(),
+    FlexLayoutModule,
     AppRoutingModule
   ],
   providers: [],
