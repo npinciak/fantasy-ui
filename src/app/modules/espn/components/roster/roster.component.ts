@@ -1,8 +1,8 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { EspnService, Sports } from '../../espn.service';
-import { FantasyPlayer } from '../../models/fantasy-player.class';
+import { FantasyPlayer, PlayerNews } from '../../models/fantasy-player.class';
 
 @Component({
   selector: 'app-roster',
@@ -14,10 +14,12 @@ export class RosterComponent implements OnChanges {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   dataSource = new MatTableDataSource<FantasyPlayer>();
+  playerNews: PlayerNews;
 
   readonly rosterColumns = [
     'lineupSlot',
     'name',
+    'totalRatingSeason',
     'positionalRankingSeason',
     'ownershipChange',
     'percentOwned'
@@ -42,6 +44,12 @@ export class RosterComponent implements OnChanges {
     }
   }
 
-  playerInfo = (id: number) => this.espnService.getPlayer(7, id, Sports.mlb).subscribe(res => console.log(res.feed[0]));
+  playerInfo = (id: number) => this.espnService.getPlayer(7, id, Sports.mlb).subscribe(res => {
+    if (res.resultsCount === 0) {
+      return;
+    }
+    return this.playerNews = res;
+
+  });
 
 }

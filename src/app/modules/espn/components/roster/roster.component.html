@@ -1,43 +1,58 @@
-<mat-card style="width:50%">
-    <mat-card-content>
-        <mat-table [dataSource]="dataSource" matSort>
-            <ng-container matColumnDef="lineupSlot">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Lineup</mat-header-cell>
-                <mat-cell *matCellDef="let player">
-                    <small>{{player.lineupSlot}}</small>
-                </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="name">
-                <mat-header-cell *matHeaderCellDef>player</mat-header-cell>
-                <mat-cell *matCellDef="let player">
-                    <img width="48" height="35" [matTooltip]="player.name" [src]="player.playerImg" [alt]="player.name">
+<div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+    <div fxFlex>
+        <mat-card>
+            <mat-card-content>
+                <mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="lineupSlot">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Lineup</mat-header-cell>
+                        <mat-cell *matCellDef="let player">
+                            <small>{{player.lineupSlot}}</small>
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="name">
+                        <mat-header-cell *matHeaderCellDef>player</mat-header-cell>
+                        <mat-cell *matCellDef="let player">
+                            <app-player-info-col [player]="player"></app-player-info-col>
+                            <mat-icon style="cursor: pointer; color: #d9534f;" *ngIf="player.lastNewsDate"
+                                (click)="playerInfo(player.playerId)">sms</mat-icon>
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="totalRatingSeason">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>2021</mat-header-cell>
+                        <mat-cell *matCellDef="let player">
+                            {{player.totalRatingSeason}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="positionalRankingSeason">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Position Rank</mat-header-cell>
+                        <mat-cell *matCellDef="let player">
+                            {{player.positionalRankingSeason}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="ownershipChange">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>ownershipChange</mat-header-cell>
+                        <mat-cell *matCellDef="let player"
+                            [ngStyle]="{ color: player.ownershipChange <= 0 ? 'red' : 'green' }">
+                            {{player.ownershipChange| number}}
+                            <mat-icon> {{ player.ownershipChange <= 0 ? 'trending_down' : 'trending_up' }} </mat-icon>
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="percentOwned">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>percentOwned</mat-header-cell>
+                        <mat-cell *matCellDef="let player">
+                            {{player.percentOwned| number}}
+                        </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="rosterColumns"></mat-header-row>
+                    <mat-row *matRowDef="let rowData; columns: rosterColumns">
+                    </mat-row>
+                </mat-table>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div fxFlex>
 
-                    {{ player.name}}
-                    <br>
-                    {{player.proTeam}}, {{player.defaultPosition}}
-                </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="positionalRankingSeason">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>rating</mat-header-cell>
-                <mat-cell *matCellDef="let player">
-                    {{player.positionalRankingSeason}}
-                </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="ownershipChange">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>ownershipChange</mat-header-cell>
-                <mat-cell *matCellDef="let player" [ngStyle]="{ color: player.ownershipChange <= 0 ? 'red' : 'green' }">
-                    {{player.ownershipChange| number}}
-                    <mat-icon> {{ player.ownershipChange <= 0 ? 'trending_down' : 'trending_up' }} </mat-icon>
-                </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="percentOwned">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>percentOwned</mat-header-cell>
-                <mat-cell *matCellDef="let player">
-                    {{player.percentOwned| number}}
-                </mat-cell>
-            </ng-container>
-            <mat-header-row *matHeaderRowDef="rosterColumns"></mat-header-row>
-            <mat-row *matRowDef="let rowData; columns: rosterColumns" (click)="playerInfo(rowData._player.playerId)"></mat-row>
-        </mat-table>
-    </mat-card-content>
-</mat-card>
+        <app-player *ngIf="playerNews" [playerNews]="playerNews"></app-player>
+
+    </div>
+</div>
