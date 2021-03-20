@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { FantasyTeam } from '../../models';
-import { MLBFantasyTeam } from '../../models/fantasy-team.class';
+import { MLBFantasyTeam } from '../../models/mlb/team.class';
 
 @Component({
   selector: 'app-standings',

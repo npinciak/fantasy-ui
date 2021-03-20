@@ -53,7 +53,7 @@
                 </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="standingsColumns"></mat-header-row>
-            <mat-row *matRowDef="let rowData; columns: standingsColumns" (click)="viewTeam(rowData.id)"></mat-row>
+            <mat-row *matRowDef="let rowData; columns: standingsColumns" style="cursor: pointer;" (click)="viewTeam(rowData.id)"></mat-row>
         </mat-table>
     </mat-card-content>
 </mat-card>
