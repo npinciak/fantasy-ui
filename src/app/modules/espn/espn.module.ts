@@ -8,6 +8,7 @@ import { RosterComponent } from './components/roster/roster.component';
 import { PlayerComponent } from './components/player/player.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PlayerInfoColComponent } from './components/roster/player-info-col/player-info-col.component';
+import { ChartsModule } from 'ng2-charts';
 
 
 
@@ -16,7 +17,8 @@ import { PlayerInfoColComponent } from './components/roster/player-info-col/play
   imports: [
     CommonModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ChartsModule
   ],
   exports: [StandingsComponent, RosterComponent]
 })
