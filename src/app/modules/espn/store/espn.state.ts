@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import { State, Action, Selector, StateContext } from '@ngxs/store';
+import { ActivatedRoute, Router, RouterState, RouterStateSnapshot } from '@angular/router';
+import { State, Action, Selector, StateContext, Store } from '@ngxs/store';
 import { catchError, tap } from 'rxjs/operators';
 
 import { EspnService } from '../espn.service';
-import { FantasyTeam, League } from '../models';
-import { FantasyLeague, MLBFantasyLeague } from '../models/league.class';
-import { EspnAction, EspnGetLeague } from './espn.actions';
+import { FantasyTeam } from '../models';
+import { MLBFantasyLeague } from '../models/mlb/league.class';
+import { MLBFantasyTeam } from '../models/mlb/team.class';
+import { EspnAction, EspnGetLeague, EspnGetTeamById } from './espn.actions';
 
 
 export interface EspnStateModel {
-  items: string[];
   teams: FantasyTeam[];
 }
 
@@ -21,8 +22,7 @@ export enum Sports {
 @State<EspnStateModel>({
   name: 'espn',
   defaults: {
-    items: [],
-    teams: []
+    teams: [],
   }
 })
 
@@ -40,15 +40,18 @@ export class EspnState {
     return state.teams;
   }
 
-  @Action(EspnAction)
-  public add(ctx: StateContext<EspnStateModel>, { payload }: EspnAction) {
-    const stateModel = ctx.getState();
-    stateModel.items = [...stateModel.items, payload];
-    ctx.setState(stateModel);
+  @Selector([EspnState.teams])
+  public static teamsEmpty(_state: EspnStateModel, teams: FantasyTeam[]) {
+    return teams.length === 0;
   }
 
   @Action(EspnGetLeague)
   public getLeague(ctx: StateContext<EspnStateModel>, { leagueId, sport }: EspnGetLeague) {
+    const numTeam = ctx.getState().teams.length;
+    if (numTeam > 0) {
+      console.log(`Found ${numTeam} teams, using cache`);
+      return;
+    }
     return this.espnService.getLeague(leagueId, sport).pipe(
       tap(res => {
         switch (sport) {
@@ -65,6 +68,6 @@ export class EspnState {
       }),
       catchError(err => err)
     );
-
   }
+
 }

@@ -12,3 +12,7 @@ export class EspnGetLeague {
   constructor(public leagueId: number, public sport: Sports) { }
 }
 
+export class EspnGetTeamById {
+  public static readonly type = `[${scope}] Get Team by Id`;
+  constructor(public teamId: number) { }
+}
