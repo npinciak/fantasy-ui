@@ -1,12 +1,24 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
+import { RosterComponent } from './components/roster/roster.component';
+import { StandingsComponent } from './components/standings/standings.component';
+import { TeamComponent } from './components/team/team.component';
 
 import { EspnComponent } from './espn.component';
 import { EspnService } from './espn.service';
+import { EspnFacade } from './store/espn.facade';
+import { mockESPNFacade } from './store/mocks/espn.facade.mock';
+
+enum Sports {
+  mlb = 'flb',
+  nfl = 'ffl',
+}
 
 describe('EspnComponent', () => {
   let component: EspnComponent;
@@ -14,9 +26,28 @@ describe('EspnComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NgxsModule.forRoot(), NgxsDispatchPluginModule, RouterTestingModule, HttpClientTestingModule, MaterialModule],
-      providers: [EspnService],
-      declarations: [EspnComponent]
+      imports: [
+        NgxsModule.forRoot(),
+        NgxsDispatchPluginModule,
+        RouterTestingModule,
+        BrowserAnimationsModule,
+        HttpClientTestingModule,
+        MaterialModule],
+      providers: [
+        EspnService,
+        { provide: EspnFacade, useValue: mockESPNFacade },
+        {
+          provide: ActivatedRoute, useValue: {
+            snapshot: {
+              params: {
+                sport: Sports.mlb,
+                leagueId: 1209434861
+              }
+            }
+          }
+        }
+      ],
+      declarations: [EspnComponent, RosterComponent, TeamComponent, StandingsComponent]
     })
       .compileComponents();
   });
@@ -31,3 +62,5 @@ describe('EspnComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+// espn/mlb/1209434861
