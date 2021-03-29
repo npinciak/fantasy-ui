@@ -1,6 +1,8 @@
 import { FantasyPlayer, Player } from '../fantasy-player.class';
+import { injuryStatusTypes } from '../injury.map';
 import { mlbLineupMap } from '../mlb-lineup.map';
 import { mlbPositionMap } from '../mlb-position.map';
+import { mlbStatMap, StatAbbrev } from '../mlb-stat.map';
 import { mlbTeamMap } from '../mlb-team.map';
 
 enum RatingTimeFrame {
@@ -9,6 +11,26 @@ enum RatingTimeFrame {
     last14,
     last30
 }
+
+/* eslint-disable */
+enum HealthStatus {
+    ACTIVE = 'ACTIVE',
+    PROBABLE = 'PROBABLE',
+    QUESTIONABLE = 'QUES',
+    DOUBTFUL = 'D',
+    OUT = 'O',
+    INJURY_RESERVE = 'IR',
+    DAY_TO_DAY = 'DTD',
+    FIFTEEN_DAY_DL = 'DL10',
+    SIXTY_DAY_DL = 'DL60',
+    SEVEN_DAY_DL = 'DL7',
+    TEN_DAY_DL = 'DL10',
+    BEREAVEMENT = 'BRV',
+    PATERNITY = 'PAT',
+    SUSPENSION = 'SUS'
+}
+/* eslint-enable */
+
 
 export class MLBFantasyPlayer extends FantasyPlayer {
 
@@ -22,6 +44,14 @@ export class MLBFantasyPlayer extends FantasyPlayer {
 
     get playerId() {
         return this._player.playerId;
+    }
+
+    get injuryStatus() {
+        const abbrev = injuryStatusTypes[this.playerInfo.injuryStatus].abbrev;
+        if (abbrev === HealthStatus.ACTIVE) {
+            return;
+        }
+        return abbrev;
     }
 
     get lineupSlot() {
