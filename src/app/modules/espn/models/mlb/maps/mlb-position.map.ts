@@ -1,12 +1,5 @@
-interface PositionMap {
-    [key: number]: {
-        abbrev: string;
-        name: string;
-    };
-}
 
-
-export const mlbPositionMap: PositionMap = {
+export const mlbPositionMap = {
     0: {
         abbrev: 'POS0',
         name: 'POS0'

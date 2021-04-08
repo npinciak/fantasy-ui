@@ -2,9 +2,9 @@ interface Stats {
     [key: number]: {
         abbrev: string;
         description: string;
-        displayOrder: number;
-        statCategoryId: number;
-        statTypeId: number;
+        displayOrder?: number;
+        statCategoryId?: number;
+        statTypeId?: number;
         statDerivation?: unknown;
     };
 }
@@ -809,3 +809,50 @@ export const mlbStatMap: Stats = {
         statTypeId: 2,
     },
 };
+
+
+export interface StatAbbrev {
+    ab?: number;
+    h?: number;
+    avg?: number;
+    '2b'?: number;
+    '3b'?: number;
+    hr?: number;
+    xbh?: number;
+    '1b'?: number;
+    tb?: number;
+    slg?: number;
+    bb?: number;
+    ibb?: number;
+    hbp?: number;
+    sf?: number;
+    sh?: number;
+    sac?: number;
+    pa?: number;
+    obp?: number;
+    ops?: number;
+    rc?: number;
+    r?: number;
+    rbi?: number;
+    gwrbi?: number;
+    sb?: number;
+    cs?: number;
+    sbn?: number;
+    gidp?: number;
+    ko?: number;
+    tp?: number;
+    ppa?: number;
+    gshr?: number;
+    fc?: number;
+    po?: number;
+    ast?: number;
+    ofast?: number;
+    fpct?: number;
+    e?: number;
+    dpt?: number;
+    btw?: number;
+    btl?: number;
+    ptw?: number;
+    ptl?: number;
+    gp?: number;
+}

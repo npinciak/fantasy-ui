@@ -1,6 +1,5 @@
-import { Player } from './fantasy-player.class';
 
-export const mockMLBPlayer: Player = {
+export const mockMLBPlayer = {
     lineupSlotId: 0,
     playerId: 33557,
     playerPoolEntry: {

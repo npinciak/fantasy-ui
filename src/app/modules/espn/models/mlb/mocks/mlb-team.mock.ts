@@ -1,7 +1,6 @@
-import { Team } from './league.class';
 import { mockMLBPlayer } from './mlb-player.mock';
 
-export const mockMLBTeam: Team = {
+export const mockMLBTeam = {
     abbrev: 'ROCK',
     currentProjectedRank: 0,
     // divisionId: 0,

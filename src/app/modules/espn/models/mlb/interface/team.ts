@@ -1,10 +1,27 @@
+import { Roster } from './roster';
 
-export class FantasyPlayer {
-    constructor(public _player: Player) { }
+
+export interface Team {
+    id: number;
+    abbrev: string;
+    location: string;
+    nickname: string;
+    roster: Roster;
+    points: number;
+    logo: string;
+    playoffSeed: number;
+    draftDayProjectedRank: number;
+    currentProjectedRank: number;
+    rankCalculatedFinal: number;
+    pointsByStat: {
+        [key: number]: number;
+    };
+    valuesByStat: {
+        [key: number]: number;
+    };
 }
 
-
-export interface Player {
+interface Player {
     playerId: number;
     lineupSlotId: number;
     playerPoolEntry: PlayerEntry;
@@ -42,7 +59,7 @@ interface PlayerRatings {
     };
 }
 
-interface PlayerStatsYear {
+export interface PlayerStatsYear {
     seasonId: number;
     statSplitTypeId: number;
     scoringPeriodId: number;
@@ -67,5 +84,3 @@ interface FeedEntity {
     headline: string;
     story: string;
 }
-
-
