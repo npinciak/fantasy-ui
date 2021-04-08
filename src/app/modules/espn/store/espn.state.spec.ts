@@ -15,7 +15,10 @@ describe('Espn store', () => {
 
   it('should create an action and add an item', () => {
     const expected: EspnStateModel = {
+      leagueId: null,
+      leagueName: null,
       teams: [],
+      isLoading: true
     };
     store.dispatch(new EspnAction('item-1'));
     const actual = store.selectSnapshot(EspnState.getState);

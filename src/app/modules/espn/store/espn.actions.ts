@@ -1,4 +1,3 @@
-import { Sports } from './espn.state';
 
 const scope = 'Espn';
 
@@ -7,9 +6,9 @@ export class EspnAction {
   constructor(public payload: string) { }
 }
 
-export class EspnGetLeague {
-  public static readonly type = `[${scope}] Get League`;
-  constructor(public leagueId: number, public sport: Sports) { }
+export class EspnGetBaseballLeague {
+  public static readonly type = `[${scope}] Get Baseball League`;
+  constructor(public leagueId: number) { }
 }
 
 export class EspnGetTeamById {
