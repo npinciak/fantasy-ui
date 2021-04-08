@@ -4,8 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from 'src/app/material.module';
 import { Sports } from '../../espn.service';
-import { MLBFantasyTeam } from '../../models/fantasy-team.class';
-import { mockMLBTeam } from '../../models/mlb-team.mock';
 import { EspnFacade } from '../../store/espn.facade';
 import { mockESPNFacade } from '../../store/mocks/espn.facade.mock';
 import { RosterComponent } from '../roster/roster.component';
@@ -35,7 +33,7 @@ describe('StandingsComponent', () => {
           provide: ActivatedRoute, useValue: {
             snapshot: {
               params: {
-                sport: Sports.mlb,
+                sport: 'mlb',
                 leagueId: 1209434861
               }
             }
@@ -54,12 +52,6 @@ describe('StandingsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should navigate to team', () => {
-    const mouseEvent = new MouseEvent('click');
-    component.viewTeam(1209434861);
-    expect(router.navigate).toHaveBeenCalledWith([`espn/${Sports.mlb}/${1209434861}/team`, 1209434861]);
   });
 
 });

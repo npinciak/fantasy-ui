@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Sports } from './espn.service';
-import { FantasyTeam } from './models';
-import { FantasyPlayer } from './models/fantasy-player.class';
 import { EspnFacade } from './store/espn.facade';
 
 @Component({
@@ -12,8 +9,6 @@ import { EspnFacade } from './store/espn.facade';
   styleUrls: ['./espn.component.scss']
 })
 export class EspnComponent implements OnInit {
-  teams: FantasyTeam[];
-  players: FantasyPlayer[];
 
   constructor(readonly espnFacade: EspnFacade, private activatedRoute: ActivatedRoute) { }
 
@@ -34,6 +29,6 @@ export class EspnComponent implements OnInit {
 
   }
 
-  getNFLLeague = (leagueId: number) => this.espnFacade.getLeague(leagueId, Sports.nfl);
-  getMLBLeague = (leagueId: number) => this.espnFacade.getLeague(leagueId, Sports.mlb);
+  getNFLLeague = (leagueId: number) => this.espnFacade.getLeague(leagueId);
+  getMLBLeague = (leagueId: number) => this.espnFacade.getLeague(leagueId);
 }

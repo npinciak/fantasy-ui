@@ -1,0 +1,5 @@
+{{ team.currentRank}}
+<br>
+<span [ngStyle]="{'color':team.rankDiff < 0  ? 'red' : 'green' }">
+    <small>{{team.rankDiff < 0  ? '' : '+'}}{{team.rankDiff}}</small>
+</span>

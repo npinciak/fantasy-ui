@@ -1,6 +1,8 @@
 <ng-container *ngIf="espnFacade.teams$ | async; else loading">
-    <app-standings [fantasyTeams]="espnFacade.teams$ | async"></app-standings>
+    <app-standings [teams]="espnFacade.teams$ | async"></app-standings>
 </ng-container>
+
+
 
 <ng-template #loading>
     Loading...
