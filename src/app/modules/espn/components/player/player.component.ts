@@ -1,6 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PlayerNews } from '../../models/fantasy-player.class';
-import { MLBFantasyPlayer } from '../../models/mlb/player.class';
 
 @Component({
   selector: 'app-player',
@@ -8,7 +6,7 @@ import { MLBFantasyPlayer } from '../../models/mlb/player.class';
   styleUrls: ['./player.component.scss']
 })
 export class PlayerComponent implements OnInit {
-  @Input() playerNews: PlayerNews;
+  @Input() playerNews: any;
 
   constructor() { }
 

@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { MLBFantasyPlayer } from '../../models/mlb/player.class';
+import { BaseballPlayer } from '../../models/mlb/class/player.class';
+import { BaseballTeam } from '../../models/mlb/class/team.class';
 import { EspnFacade } from '../../store/espn.facade';
-import { Sports } from '../../store/espn.state';
 
 @Component({
   selector: 'app-team',
@@ -11,36 +11,34 @@ import { Sports } from '../../store/espn.state';
   styleUrls: ['./team.component.scss']
 })
 export class TeamComponent implements OnInit {
-  @Input() fantasyPlayers: MLBFantasyPlayer[];
-
-  dataSource = new MatTableDataSource<MLBFantasyPlayer>();
-
-  readonly rosterColumns = [
-    'id',
-    'lineupSlot',
-    'name',
-    'team',
-    'position'
-  ];
+  dataSource = new MatTableDataSource<BaseballTeam>();
 
   constructor(readonly espnFacade: EspnFacade, private activatedRoute: ActivatedRoute) { }
 
-  ngOnInit(): void {
-    if (!this.currentTeam) {
-      this.espnFacade.getLeague(this.leagueId, Sports.mlb);
-    }
-  }
+  ngOnInit(): void { }
 
   get batters() {
-    return this.currentTeam.batters;
+    return this._roster.filter(player => !player.isPitcher);
+  }
+
+  get pitchers() {
+    return this._roster.filter(player => player.isPitcher);
+  }
+
+  private get _roster() {
+    const arr: BaseballPlayer[] = [];
+    this._team.roster.forEach(player => {
+      arr.push(new BaseballPlayer(player));
+    });
+    return arr;
   }
 
   get teamName() {
-    return this.currentTeam.name;
+    return this._team.teamName;
   }
 
-  get currentTeam() {
-    return this.espnFacade.teamsSnapshot.find(team => team.id === this.teamId);
+  private get _team() {
+    return this.espnFacade.teamsSnapshot.find(team => team.teamId === this.teamId);
   }
 
   private get leagueId() {

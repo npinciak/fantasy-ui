@@ -5,22 +5,27 @@ import { BaseballPlayer } from './player.class';
 
 export class BaseballTeam {
     private _team: Team;
-    private _roster;
+    private _roster: Player[];
+    private _liveScore: number;
 
-    constructor(_team: Team) {
-        this._team = _team;
+    constructor(team: Team) {
+        this._team = team;
     }
 
     get teamId() {
-        return this.teamBase.id;
+        return this._teamBase.id;
     }
 
     get teamName() {
-        return `${this.teamBase.location} ${this.teamBase.nickname}`;
+        return `${this._teamBase.location} ${this._teamBase.nickname}`;
+    }
+
+    get teamAbbrev() {
+        return this._teamBase.abbrev;
     }
 
     get teamLogo() {
-        return this.teamBase.logo;
+        return this._teamBase.logo;
     }
 
     get roster() {
@@ -28,42 +33,73 @@ export class BaseballTeam {
     }
 
     set roster(roster: Player[]) {
-        const arr = [];
-        roster.forEach(player => {
-            arr.push(new BaseballPlayer(player));
-        });
-        this._roster = arr;
+        this._roster = roster;
     }
 
     get totalPoints() {
-        return this.teamBase.points;
+        return this._teamBase.points;
     }
 
     get currentRank() {
-        return this.teamBase.playoffSeed;
+        return this._teamBase.playoffSeed;
     }
 
     get rankDiff() {
-        return this.teamBase.draftDayProjectedRank - this.teamBase.playoffSeed;
+        return this._teamBase.draftDayProjectedRank - this._teamBase.playoffSeed;
     }
 
     get stats() {
-        return statsKeyMap(this.valuesByStat);
+        return statsKeyMap(this._valuesByStat);
     }
 
     get rotoStats() {
-        return statsKeyMap(this.rotoPointsByStats);
+        return statsKeyMap(this._rotoPointsByStats);
     }
 
-    private get rotoPointsByStats() {
-        return this.teamBase.pointsByStat;
+    get totalBattingRoto() {
+        return this._calcBattingTotal;
     }
 
-    private get valuesByStat() {
-        return this.teamBase.valuesByStat;
+    get totalPitchingRoto() {
+        return this._calcPitchingTotal;
     }
 
-    private get teamBase() {
+    get pitchingLimit() {
+        return this._calcPitchingLimit;
+    }
+
+    get liveScore() {
+        return this._liveScore;
+    }
+
+    set liveScore(points: number) {
+        this._liveScore = points;
+    }
+
+    private get _calcPitchingTotal() {
+        const stat = statsKeyMap(this._rotoPointsByStats);
+        return (stat.w + stat.ko + stat.sv + stat.era + stat.whip);
+    }
+
+    private get _calcPitchingLimit() {
+        const stat = statsKeyMap(this._valuesByStat);
+        return (stat.gs / 200);
+    }
+
+    private get _calcBattingTotal() {
+        const stat = statsKeyMap(this._rotoPointsByStats);
+        return (stat.r + stat.hr + stat.rbi + stat.sb + stat.avg);
+    }
+
+    private get _rotoPointsByStats() {
+        return this._teamBase.pointsByStat;
+    }
+
+    private get _valuesByStat() {
+        return this._teamBase.valuesByStat;
+    }
+
+    private get _teamBase() {
         return this._team;
     }
 }

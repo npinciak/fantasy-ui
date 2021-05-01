@@ -1,17 +1,9 @@
-<!-- <ng-container *ngIf="currentTeam; else noTeams"> -->
-    <!-- <h2 data-test-id="teamName">{{teamName}}</h2>
+<ng-container *ngIf="(espnFacade.teamsEmpty$ | async) === (false); else noPlayers">
+    <h2 data-test-id="teamName">{{teamName}}</h2>
+    <app-roster [fantasyPlayers]="batters"></app-roster>
+    <app-roster [fantasyPlayers]="pitchers"></app-roster>
+</ng-container>
 
-<app-roster [fantasyPlayers]="starters"></app-roster>
-<br>
-Bench
-
-<app-roster [fantasyPlayers]="bench"></app-roster>-->
-
-
-
-    <!-- <app-roster [fantasyPlayers]="pitchers"></app-roster>  -->
-<!-- </ng-container>
-
-<ng-template #noTeams>
-    Loading
-</ng-template> -->
+<ng-template #noPlayers>
+    No Players
+</ng-template>

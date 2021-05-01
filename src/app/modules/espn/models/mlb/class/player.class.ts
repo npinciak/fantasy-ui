@@ -1,15 +1,24 @@
 import { statsKeyMap } from '../helpers';
-import { Player, Team } from '../interface';
+import { Player } from '../interface';
 import { SeasonConst } from '../interface/adv.stats';
 import { mlbLineupMap } from '../maps/mlb-lineup.map';
 import { mlbPositionMap } from '../maps/mlb-position.map';
-import { mlbStatMap, StatAbbrev } from '../maps/mlb-stat.map';
 import { mlbTeamMap } from '../maps/mlb-team.map';
+import { weights2021 } from '../mlb.const';
 import { StatTypeId } from '../mlb.enums';
 import { AdvStats } from './advStats.class';
 
+
+/**
+ * This is a description of the BaseballPlayer constructor function.
+ *
+ * @class
+ * @classdesc This is a description of the BaseballPlayer class.
+ */
 export class BaseballPlayer {
+    readonly weights21 = weights2021;
     private _player: Player;
+    private _seasonConst: SeasonConst;
 
     constructor(_player: Player) {
         this._player = _player;
@@ -47,11 +56,34 @@ export class BaseballPlayer {
         return this.ownership.percentOwned;
     }
 
+    get isPitcher() {
+        return this.isPitcherAlgo(this._player.playerPoolEntry.player.eligibleSlots);
+    }
+
     get statsL7() {
-        const stats = this.statsBase.find(entry => entry.statSplitTypeId === 1);
+        const stats = this.statsBase.find(entry => entry.statSplitTypeId === StatTypeId.last7Days);
         if (!stats) {
             return;
         }
+
+        return statsKeyMap(stats.stats);
+    }
+
+    get statsL15() {
+        const stats = this.statsBase.find(entry => entry.statSplitTypeId === StatTypeId.last15Days);
+        if (!stats) {
+            return;
+        }
+
+        return statsKeyMap(stats.stats);
+    }
+
+    get statsL30() {
+        const stats = this.statsBase.find(entry => entry.statSplitTypeId === StatTypeId.last30Days);
+        if (!stats) {
+            return;
+        }
+
         return statsKeyMap(stats.stats);
     }
 
@@ -63,8 +95,28 @@ export class BaseballPlayer {
         return statsKeyMap(stats.stats);
     }
 
-    get wOBAL7() {
-        return ;//new AdvStats(this.statsL7, this.weights2021).wOBA;
+    get wOBA7() {
+        return this.advStats.wOBA7; // this.advStats.wOBA7;
+    }
+
+    get ratingsL7() {
+        return this.ratingsBase[StatTypeId.last7Days];
+    }
+
+    get ratingsL15() {
+        return this.ratingsBase[StatTypeId.last15Days];
+    }
+
+    get fip() {
+        return this.advStats.fip;
+    }
+
+    private get advStats() {
+        const advStats = new AdvStats();
+        advStats.seasonConst = this.weights21;
+        advStats.stats = this.statsL7;
+
+        return advStats;
     }
 
     private get statsBase() {
@@ -79,25 +131,12 @@ export class BaseballPlayer {
         return this._player.playerPoolEntry.player;
     }
 
-    private get weights2020(): SeasonConst {
-        return {
-            wBB: 0.699,
-            wHBP: 0.728,
-            w1B: 0.883,
-            w2B: 1.238,
-            w3B: 1.558,
-            wHR: 1.979,
-        };
+    private get ratingsBase() {
+        return this._player.playerPoolEntry.ratings;
     }
 
-    private get weights2021(): SeasonConst {
-        return {
-            wBB: 0.711,
-            wHBP: 0.742,
-            w1B: 0.901,
-            w2B: 1.269,
-            w3B: 1.600,
-            wHR: 2.035,
-        };
+    private isPitcherAlgo(eligiblePos: number[], pitcherPos = [13, 14, 15]) {
+        const eligibility = eligiblePos.filter(num => pitcherPos.indexOf(num) !== -1);
+        return [... new Set(eligibility)].length > 0;
     }
 }

@@ -2,31 +2,49 @@ import { SeasonConst } from '../interface/adv.stats';
 import { StatAbbrev } from '../maps/mlb-stat.map';
 
 export class AdvStats {
-    private stats: StatAbbrev;
-    private seasonConst: SeasonConst;
+    private _stats: StatAbbrev;
+    private _seasonConst: SeasonConst;
 
-    constructor(stats: StatAbbrev, seasonConst: any) {
-        this.stats = stats;
-        this.seasonConst = seasonConst;
+    constructor() { }
+
+
+
+    get stats() {
+        return this._stats;
     }
 
+    set stats(stats: StatAbbrev) {
+        this._stats = stats;
+    }
 
-    get wOBA() {
+    get seasonConst() {
+        return this._seasonConst;
+    }
+
+    set seasonConst(seasonConst: SeasonConst) {
+        this._seasonConst = seasonConst;
+    }
+
+    get wOBA7() {
         return this.hits / this.nonHits;
     }
 
-    private get unintentionalBB() {
-        return this.stats.bb - this.stats.ibb;
+    get fip() {
+        return (
+            (13 * this._stats.hra) +
+            (3 * (this._stats.bbi + this._stats.hb)) -
+            (2 * this._stats.k))
+            / this._stats.ip + this.seasonConst.cFIP;
     }
 
     private get hits() {
         return (
             (this.seasonConst.wBB * this.unintentionalBB) +
-            (this.seasonConst.wHBP * this.stats.hbp) +
-            (this.seasonConst.w1B * this.stats['1b']) +
-            (this.seasonConst.w2B * this.stats['2b']) +
-            (this.seasonConst.w3B * this.stats['3b']) +
-            (this.seasonConst.wHR * this.stats.hr)
+            (this.seasonConst.wHBP * this._stats.hbp) +
+            (this.seasonConst.w1B * this._stats['1b']) +
+            (this.seasonConst.w2B * this._stats['2b']) +
+            (this.seasonConst.w3B * this._stats['3b']) +
+            (this.seasonConst.wHR * this._stats.hr)
         );
     }
 
@@ -37,5 +55,8 @@ export class AdvStats {
         );
     }
 
+    private get unintentionalBB() {
+        return this.stats.bb - this.stats.ibb;
+    }
 
 }
