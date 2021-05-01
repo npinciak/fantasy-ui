@@ -1,5 +1,10 @@
 $content-padding: 25px;
 
+$background-main: #F5F6F6;
+
 .content {
     padding: $content-padding;
+    background-color: $background-main;
+    height: 100%
 }
+

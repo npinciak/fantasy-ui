@@ -31,7 +31,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     NgxsModule.forRoot([CoreState, EspnState]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsDispatchPluginModule.forRoot(),
-    FlexLayoutModule,
     AppRoutingModule
   ],
   providers: [],
