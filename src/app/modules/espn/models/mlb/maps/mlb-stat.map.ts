@@ -855,4 +855,14 @@ export interface StatAbbrev {
     ptw?: number;
     ptl?: number;
     gp?: number;
+    gs?: number;
+    w?: number;
+    hra?: number;
+    sv?: number;
+    era?: number;
+    whip?: number;
+    ip?: number;
+    bbi?: number;
+    k?: number;
+    hb?: number;
 }

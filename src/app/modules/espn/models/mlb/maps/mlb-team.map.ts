@@ -1,4 +1,4 @@
-export const mlbTeamMap = {
+const mlbTeamMap = {
     0: 'FA',
     1: 'Bal',
     2: 'Bos',
@@ -31,3 +31,5 @@ export const mlbTeamMap = {
     29: 'Ari',
     30: 'TB'
 };
+
+export { mlbTeamMap };
