@@ -11,7 +11,7 @@ export class ApiService {
   /**
    * GET request
    *
-   * @param endpoint Request endpoint. Ex: /insights/user
+   * @param endpoint Request endpoint
    * @param options Request headers, query params, etc.
    * @param mock Substitute mock data for real http
    */
@@ -22,7 +22,7 @@ export class ApiService {
   /**
    * POST request
    *
-   * @param endpoint Request endpoint. Ex: /insights/user
+   * @param endpoint Request endpoint
    * @param data Request payload
    * @param options Request headers, query params, etc.
    */
@@ -33,7 +33,7 @@ export class ApiService {
   /**
    * PUT request
    *
-   * @param endpoint Request endpoint. Ex: /insights/user
+   * @param endpoint Request endpoint
    * @param data Request payload
    * @param options Request headers, query params, etc.
    */

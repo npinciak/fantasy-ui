@@ -12,6 +12,10 @@ import { PlayerComponent } from './components/player/player.component';
 import { PlayerInfoColComponent } from './components/roster/player-info-col/player-info-col.component';
 import { TeamInfoColComponent } from './components/standings/team-info-col/team-info-col.component';
 import { RankingColComponent } from './components/standings/ranking-col/ranking-col.component';
+import { ScoreboardComponent } from './components/scoreboard/scoreboard.component';
+import { PlayerRatingColComponent } from './components/roster/player-rating-col/player-rating-col.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ScoreboardExpComponent } from './components/scoreboard-exp/scoreboard-exp.component';
 
 const components = [
   EspnComponent,
@@ -19,9 +23,12 @@ const components = [
   TeamComponent,
   RosterComponent,
   PlayerComponent,
+  ScoreboardComponent,
+  ScoreboardExpComponent,
   PlayerInfoColComponent,
+  PlayerRatingColComponent,
   TeamInfoColComponent,
-  RankingColComponent
+  RankingColComponent,
 ];
 
 @NgModule({
@@ -30,6 +37,7 @@ const components = [
     CommonModule,
     MaterialModule,
     FlexLayoutModule,
+    BrowserAnimationsModule,
     ChartsModule
   ],
   exports: [StandingsComponent, RosterComponent]

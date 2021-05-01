@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { EspnFacade } from './store/espn.facade';
 
 @Component({
@@ -9,26 +8,28 @@ import { EspnFacade } from './store/espn.facade';
   styleUrls: ['./espn.component.scss']
 })
 export class EspnComponent implements OnInit {
+  readonly sport = this.activatedRoute.snapshot.params.sport;
+  readonly leagueId = this.activatedRoute.snapshot.params.leagueId;
 
   constructor(readonly espnFacade: EspnFacade, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    const sport = this.activatedRoute.snapshot.params.sport;
-    const leagueId = this.activatedRoute.snapshot.params.leagueId;
 
-    switch (sport) {
+    switch (this.sport) {
       case 'nfl':
-        this.getNFLLeague(leagueId);
+        this.getNFLLeague(this.leagueId);
         break;
       case 'mlb':
-        this.getMLBLeague(leagueId);
+        this.getMLBLeague(this.leagueId);
+        // this.getFreeAgents(this.leagueId);
         break;
       default:
         break;
     }
-
   }
 
-  getNFLLeague = (leagueId: number) => this.espnFacade.getLeague(leagueId);
-  getMLBLeague = (leagueId: number) => this.espnFacade.getLeague(leagueId);
+  private getNFLLeague = (leagueId: number) => this.espnFacade.getLeague(leagueId);
+  private getMLBLeague = (leagueId: number) => this.espnFacade.getLeague(leagueId);
+  private getFreeAgents = (leagueId: number) => this.espnFacade.getFreeAgents(leagueId);
+
 }

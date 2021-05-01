@@ -1,9 +1,8 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as moment from '../../../../node_modules/moment';
 
 import { ApiService } from 'src/app/@shared/services/api.service';
-import { League } from './models/mlb/interface';
+import { League, Player } from './models/mlb/interface';
 
 export enum Sports {
   baseball = 'flb',
@@ -31,9 +30,29 @@ export class EspnService {
       params: new HttpParams().set('days', days.toString()).set('playerId', playerId.toString())
     });
 
+  getBaseballFA = (leagueId: number) =>
+    this.api.get<any>(`${this.fantasyBase}/games/${Sports.baseball}/seasons/${this.currentYear}/segments/0/leagues/${leagueId}`,
+      {
+        params: this.faParams,
+        // header: new HttpHeaders({
+        //   // eslint-disable-next-line @typescript-eslint/naming-convention
+        //   'Content-Type': 'application/json',
+        //   // eslint-disable-next-line @typescript-eslint/naming-convention
+        //   'X-Fantasy-Filter': null,
+        // })
+      }
+    );
+
+  private get faParams() {
+    let params = new HttpParams();
+    params = params.append('view', 'kona_player_info');
+    return params;
+  }
+
+
   private get params() {
     let params = new HttpParams();
-    // params = paramss.append('scoringPeriodId', '4');
+    // params = params.append('scoringPeriodId', '26');
     params = params.append('view', 'mLiveScoring');
     params = params.append('view', 'mMatchupScore');
     params = params.append('view', 'mRoster');
