@@ -1,5 +1,5 @@
 {{ team.currentRank}}
 <br>
-<span [ngStyle]="{'color':team.rankDiff < 0  ? 'red' : 'green' }">
+<span style="font-weight: bold;" [ngStyle]="{'color':team.rankDiff < 0  ? '#cd2026' : '#2e8540' }">
     <small>{{team.rankDiff < 0  ? '' : '+'}}{{team.rankDiff}}</small>
 </span>

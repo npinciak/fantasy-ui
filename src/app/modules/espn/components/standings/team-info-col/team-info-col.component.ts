@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core';
 })
 export class TeamInfoColComponent {
   @Input() team: any;
+  @Input() isLeader: boolean;
   constructor() { }
 
 
