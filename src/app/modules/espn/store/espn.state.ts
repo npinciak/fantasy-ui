@@ -1,19 +1,21 @@
+import { LiteralMapEntry } from '@angular/compiler/src/output/output_ast';
 import { Injectable } from '@angular/core';
 import { State, Action, Selector, StateContext } from '@ngxs/store';
 import { catchError, tap } from 'rxjs/operators';
 
 import { EspnService } from '../espn.service';
+import { LeagueScoreboard } from '../models/mlb/class/leagueScoreboard.class';
 import { BaseballPlayer } from '../models/mlb/class/player.class';
 import { BaseballTeam } from '../models/mlb/class/team.class';
 import { Player, Team } from '../models/mlb/interface';
-import { ScheduleEntry } from '../models/mlb/interface/league';
-import { EspnGetBaseballLeague } from './espn.actions';
+import { ScheduleEntry, ScheduleTeams } from '../models/mlb/interface/league';
+import { EspnGetBaseballLeague, EspnGetBaseballFA } from './espn.actions';
 
 export interface EspnStateModel {
   leagueId: number;
   leagueName: string;
-  teams: any[];
-  leagueSchedule: ScheduleEntry[];
+  teams: BaseballTeam[];
+  freeAgents: BaseballPlayer[];
   isLoading: boolean;
 }
 @State<EspnStateModel>({
@@ -21,8 +23,8 @@ export interface EspnStateModel {
   defaults: {
     leagueId: null,
     leagueName: null,
-    leagueSchedule: [],
     teams: [],
+    freeAgents: [],
     isLoading: true
   }
 })
@@ -46,9 +48,9 @@ export class EspnState {
     return state.teams;
   }
 
-  @Selector()
-  public static schedule(state: EspnStateModel) {
-    return state.leagueSchedule;
+  @Selector([EspnState.teams])
+  public static scoreboard(_state: EspnStateModel, teams: BaseballTeam[]) {
+    return teams.sort((a, b) => b.liveScore - a.liveScore);
   }
 
   @Selector([EspnState.teams])
@@ -65,14 +67,10 @@ export class EspnState {
     }
     return this.espnService.getBaseballLeague(leagueId).pipe(
       tap(res => {
-
-        const newTeams = this.newTeams(res.teams);
-
         ctx.patchState({
           leagueId: res.id,
           leagueName: res.settings.name,
-          leagueSchedule: res.schedule,
-          teams: newTeams,
+          teams: this.newTeams(res.teams, res.schedule),
           isLoading: false
         });
       }),
@@ -81,17 +79,49 @@ export class EspnState {
   }
 
 
-  private newTeams(teams: Team[]) {
-    const t1 = performance.now();
+  @Action(EspnGetBaseballFA)
+  public getBaseballFA(ctx: StateContext<EspnStateModel>, { leagueId }: EspnGetBaseballFA) {
+    return this.espnService.getBaseballFA(leagueId).pipe(
+      tap(res => {
+        ctx.patchState({
+          freeAgents: this.freeAgents(res.players),
+          isLoading: false
+        });
+      }),
+      catchError(err => err)
+    );
+  }
+
+
+
+  private newTeams(teams: Team[], entries: ScheduleEntry[]) {
+
+    const leagueScoreboard = new LeagueScoreboard();
+    leagueScoreboard.teams = entries[0].teams;
+
+    const liveScores = leagueScoreboard.scoreBoard;
+
     const arr = [];
-    teams.forEach(team => { //O(n)
+
+    teams.map(team => {
       const newTeam = new BaseballTeam(team);
       newTeam.roster = team.roster.entries;
+      if (liveScores.has(newTeam.teamId)) {
+        newTeam.liveScore = liveScores.get(newTeam.teamId);
+      }
       arr.push(newTeam);
     });
-    const t2 = performance.now();
 
-    console.log(t2 - t1);
+    return arr;
+  }
+
+
+  private freeAgents(players: Player[]) {
+    const arr = [];
+    players.map(player => {
+      const freeAgent = new BaseballPlayer(player);
+      arr.push(freeAgent);
+    });
     return arr;
   }
 

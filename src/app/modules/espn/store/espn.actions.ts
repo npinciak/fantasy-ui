@@ -11,6 +11,11 @@ export class EspnGetBaseballLeague {
   constructor(public leagueId: number) { }
 }
 
+export class EspnGetBaseballFA {
+  public static readonly type = `[${scope}] Get Baseball Free Agents`;
+  constructor(public leagueId: number) { }
+}
+
 export class EspnGetTeamById {
   public static readonly type = `[${scope}] Get Team by Id`;
   constructor(public teamId: number) { }

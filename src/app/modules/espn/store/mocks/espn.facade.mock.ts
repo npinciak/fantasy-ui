@@ -1,24 +1,28 @@
 import { of } from 'rxjs';
 import { Sports } from '../../espn.service';
-import { League } from '../../models/league.class';
-import { mockMLBTeam } from '../../models/mlb-team.mock';
-import { MLBFantasyLeague } from '../../models/mlb/league.class';
-import { EspnGetLeague } from '../espn.actions';
-
+import { BaseballTeam } from '../../models/mlb/class/team.class';
+import { League } from '../../models/mlb/interface';
+import { mockBaseballTeam, mockMLBTeam } from '../../models/mlb/mocks/mlb-team.mock';
+import { EspnGetBaseballLeague } from '../espn.actions';
 
 const mockLeague: League = {
     id: 1234,
-    teams: [mockMLBTeam]
+    teams: [],
+    schedule: [],
+    settings: null,
 };
 
 export const mockESPNFacade = {
-    teams$: of(
-        new MLBFantasyLeague(mockLeague).teams
-    ),
-    teamsSnapshot: new MLBFantasyLeague(mockLeague).teams,
-    getLeague: (leagueId: number, sport: Sports) => new EspnGetLeague(leagueId, sport)
+    teams$: of([mockBaseballTeam]),
+    teamsSnapshot: [mockBaseballTeam],
+    getLeague: (leagueId: number) => new EspnGetBaseballLeague(leagueId)
 };
 
 
 
+// const mockBaseballTeam =   {
+//     const team = new BaseballTeam(mockMLBTeam)
+//     team.roster = [mockMLBPlayer];
+//     return team
+// };
 

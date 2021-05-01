@@ -6,14 +6,14 @@ import { Observable } from 'rxjs';
 import { BaseballTeam } from '../models/mlb/class/team.class';
 import { ScheduleEntry } from '../models/mlb/interface/league';
 
-import { EspnGetBaseballLeague, EspnGetTeamById } from './espn.actions';
+import { EspnGetBaseballFA, EspnGetBaseballLeague, EspnGetTeamById } from './espn.actions';
 import { EspnState } from './espn.state';
 
 @Injectable({ providedIn: 'root' })
 export class EspnFacade {
 
     @Select(EspnState.teams) public teams$: Observable<BaseballTeam[]>;
-    @Select(EspnState.schedule) public schedule$: Observable<ScheduleEntry[]>;
+    @Select(EspnState.scoreboard) public scoreboard$: Observable<BaseballTeam[]>;
 
     @Select(EspnState.teamsEmpty) public teamsEmpty$: Observable<boolean>;
     @Select(EspnState.isLoading) public isLoading$: Observable<boolean>;
@@ -21,6 +21,7 @@ export class EspnFacade {
     @SelectSnapshot(EspnState.teams) public teamsSnapshot: BaseballTeam[];
 
     @Dispatch() getLeague = (leagueId: number) => new EspnGetBaseballLeague(leagueId);
+    @Dispatch() getFreeAgents = (leagueId: number) => new EspnGetBaseballFA(leagueId);
     @Dispatch() getTeamById = (teamId: number) => new EspnGetTeamById(teamId);
 
 }
