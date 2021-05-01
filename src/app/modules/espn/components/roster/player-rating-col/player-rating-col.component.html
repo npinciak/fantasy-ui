@@ -1,0 +1,5 @@
+<span [ngStyle]="{ color: player[key] <= 0 ? 'red' : 'green' }">
+    {{player[key] | number}}
+
+    <mat-icon> {{ player[key] <= 0 ? 'trending_down' : 'trending_up' }} </mat-icon>
+</span>

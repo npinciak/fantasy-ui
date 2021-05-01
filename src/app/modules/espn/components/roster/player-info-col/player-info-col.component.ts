@@ -4,6 +4,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-player-info-col',
   templateUrl: './player-info-col.component.html'
 })
+
 export class PlayerInfoColComponent {
   @Input() player: any;
   constructor() { }
