@@ -16,6 +16,7 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { CoreState } from './@core/store/core/core.state';
 import { EspnState } from './modules/espn/store/espn.state';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MaterialModule,
     BrowserAnimationsModule,
     NgxsSelectSnapshotModule.forRoot(),
-    NgxsModule.forRoot([CoreState, EspnState]),
+    NgxsModule.forRoot([CoreState, EspnState], { developmentMode: !environment.production }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsDispatchPluginModule.forRoot(),
     AppRoutingModule
