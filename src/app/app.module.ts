@@ -14,9 +14,9 @@ import { NgxsModule } from '@ngxs/store';
 import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { CoreState } from './@core/store/core/core.state';
-import { EspnState } from './modules/espn/store/espn.state';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { environment } from 'src/environments/environment';
+import { MlbState } from './modules/espn/store/mlb/mlb.state';
 
 @NgModule({
   declarations: [
@@ -29,9 +29,10 @@ import { environment } from 'src/environments/environment';
     MaterialModule,
     BrowserAnimationsModule,
     NgxsSelectSnapshotModule.forRoot(),
-    NgxsModule.forRoot([CoreState, EspnState], { developmentMode: !environment.production }),
+    NgxsModule.forRoot([CoreState, MlbState], { developmentMode: !environment.production }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsDispatchPluginModule.forRoot(),
+    FlexLayoutModule,
     AppRoutingModule
   ],
   providers: [],

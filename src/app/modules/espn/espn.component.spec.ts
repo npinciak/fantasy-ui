@@ -6,14 +6,16 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
+import { environment } from 'src/environments/environment';
 import { RosterComponent } from './components/roster/roster.component';
+import { ScoreboardComponent } from './components/scoreboard/scoreboard.component';
 import { StandingsComponent } from './components/standings/standings.component';
 import { TeamComponent } from './components/team/team.component';
 
 import { EspnComponent } from './espn.component';
 import { EspnService } from './espn.service';
-import { EspnFacade } from './store/espn.facade';
-import { mockESPNFacade } from './store/mocks/espn.facade.mock';
+import { MlbFacade } from './store/mlb/mlb.facade';
+// import { mockmlbFacade } from './store/mocks/espn.facade.mock';
 
 enum Sports {
   mlb = 'flb',
@@ -35,19 +37,19 @@ describe('EspnComponent', () => {
         MaterialModule],
       providers: [
         EspnService,
-        { provide: EspnFacade, useValue: mockESPNFacade },
+        // { provide: mlbFacade, useValue: mockmlbFacade },
         {
           provide: ActivatedRoute, useValue: {
             snapshot: {
               params: {
                 sport: Sports.mlb,
-                leagueId: 1209434861
+                leagueId: `${environment.leagueId}`
               }
             }
           }
         }
       ],
-      declarations: [EspnComponent, RosterComponent, TeamComponent, StandingsComponent]
+      declarations: [EspnComponent, RosterComponent, TeamComponent, StandingsComponent, ScoreboardComponent]
     })
       .compileComponents();
   });
@@ -61,6 +63,5 @@ describe('EspnComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
 
-// espn/mlb/1209434861
+});
