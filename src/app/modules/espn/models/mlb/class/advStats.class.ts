@@ -7,8 +7,6 @@ export class AdvStats {
 
     constructor() { }
 
-
-
     get stats() {
         return this._stats;
     }

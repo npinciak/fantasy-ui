@@ -20,6 +20,5 @@ export class MlbFacade {
     @SelectSnapshot(MlbState.scoringPeriod) public scoringPeriod: number;
     @SelectSnapshot(MlbState.teams) public teamsSnapshot: Map<number, BaseballTeam>;
 
-
     @Dispatch() getLeague = (leagueId: number) => new FetchBaseballLeague(leagueId);
 }

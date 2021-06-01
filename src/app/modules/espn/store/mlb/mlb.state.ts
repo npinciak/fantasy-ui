@@ -66,14 +66,12 @@ export class MlbState {
     return insertionSortDesc([...teams.values()], 'liveScore');
   }
 
-
   @Action(MlbAction)
   public add(ctx: StateContext<MlbStateModel>, { payload }: MlbAction) {
     const stateModel = ctx.getState();
     stateModel.items = [...stateModel.items, payload];
     ctx.setState(stateModel);
   }
-
 
   @Action(FetchBaseballLeague)
   public baseballLeague(ctx: StateContext<MlbStateModel>, { leagueId }: FetchBaseballLeague) {
@@ -86,20 +84,16 @@ export class MlbState {
           return map;
         }, {});
 
-
-        ctx.patchState({ teams, schedule: [...league.schedule], isLoading: false, scoringPeriodId: league.scoringPeriodId });
-        // schedule: league.schedule
-        // leagueId: league.id,
-        // scoringPeriodId: league.scoringPeriodId,
-        // leagueName: league.settings.name,
-        // games: [...mapToArr(mappedGames)],
-        // isLoading: false
-        // });
+        ctx.patchState({
+          teams,
+          schedule: [...league.schedule],
+          isLoading: false,
+          scoringPeriodId:
+            league.scoringPeriodId
+        });
       }),
       catchError(err => err)
     );
   }
 
 }
-
-
