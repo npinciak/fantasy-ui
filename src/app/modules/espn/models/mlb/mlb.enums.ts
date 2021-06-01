@@ -1,5 +1,5 @@
 enum StatTypeId {
-    seasonProj,
+    // season,
     last7Days = 1,
     last15Days = 2,
     last30Days = 3,
@@ -12,6 +12,12 @@ enum TeamColumn {
     name = 'teamName',
     totalPoints = 'totalPoints',
     liveScore = 'liveScore'
+}
+
+enum PlayingStatus {
+    probable = 'PROBABLE',
+    notStarting = 'NOTSTARTING',
+    active = 'ACTIVE'
 }
 
 enum RotoColumn {
@@ -44,4 +50,4 @@ enum StatsColumn {
     whip = 'stats.whip'
 }
 
-export { StatsColumn, RotoColumn, TeamColumn, StatTypeId };
+export { StatsColumn, RotoColumn, TeamColumn, StatTypeId, PlayingStatus };
