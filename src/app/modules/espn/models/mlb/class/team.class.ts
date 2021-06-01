@@ -6,7 +6,7 @@ import { BaseballPlayer } from './player.class';
 export class BaseballTeam {
     private _team: Team;
     private _roster: Player[];
-    private _liveScore: number;
+    private _liveScore = 0;
 
     constructor(team: Team) {
         this._team = team;
@@ -64,10 +64,6 @@ export class BaseballTeam {
         return this._calcPitchingTotal;
     }
 
-    get pitchingLimit() {
-        return this._calcPitchingLimit;
-    }
-
     get liveScore() {
         return this._liveScore;
     }
@@ -78,13 +74,9 @@ export class BaseballTeam {
 
     private get _calcPitchingTotal() {
         const stat = statsKeyMap(this._rotoPointsByStats);
-        return (stat.w + stat.ko + stat.sv + stat.era + stat.whip);
+        return (stat.w + stat.k + stat.sv + stat.era + stat.whip);
     }
 
-    private get _calcPitchingLimit() {
-        const stat = statsKeyMap(this._valuesByStat);
-        return (stat.gs / 200);
-    }
 
     private get _calcBattingTotal() {
         const stat = statsKeyMap(this._rotoPointsByStats);

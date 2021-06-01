@@ -814,6 +814,8 @@ export const mlbStatMap: Stats = {
 export interface StatAbbrev {
     ab?: number;
     h?: number;
+    ha?: number;
+    er?: number;
     avg?: number;
     '2b'?: number;
     '3b'?: number;
