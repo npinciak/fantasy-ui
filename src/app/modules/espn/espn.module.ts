@@ -13,7 +13,6 @@ import { RankingColComponent } from './components/standings/ranking-col/ranking-
 import { ScoreboardComponent } from './components/scoreboard/scoreboard.component';
 import { PlayerRatingColComponent } from './components/roster/player-rating-col/player-rating-col.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ScoreboardExpComponent } from './components/scoreboard-exp/scoreboard-exp.component';
 import { FreeAgentsComponent } from './components/free-agents/free-agents.component';
 
 const components = [
@@ -23,7 +22,6 @@ const components = [
   RosterComponent,
   PlayerComponent,
   ScoreboardComponent,
-  ScoreboardExpComponent,
   PlayerInfoColComponent,
   PlayerRatingColComponent,
   TeamInfoColComponent,
