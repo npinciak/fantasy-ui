@@ -1,12 +1,12 @@
 import { statsKeyMap } from '../helpers';
-import { Player } from '../interface';
-import { SeasonConst } from '../interface/adv.stats';
+import { PlayerStatsYear, PlayerRatings, PlayerOwnership, GameStatus, Player } from '../interface/player';
 import { mlbLineupMap } from '../maps/mlb-lineup.map';
 import { mlbPositionMap } from '../maps/mlb-position.map';
 import { mlbTeamMap } from '../maps/mlb-team.map';
 import { weights2021 } from '../mlb.const';
 import { StatTypeId } from '../mlb.enums';
 import { AdvStats } from './advStats.class';
+import { Game } from './game.class';
 
 
 /**
@@ -17,11 +17,16 @@ import { AdvStats } from './advStats.class';
  */
 export class BaseballPlayer {
     readonly weights21 = weights2021;
-    private _player: Player;
-    private _seasonConst: SeasonConst;
 
-    constructor(_player: Player) {
-        this._player = _player;
+    private _player: Player;
+    private _eligibleSlots: number[] = [];
+    private _ownership;
+    private _ratings = new Map<number, any>();
+    private _startingStatus = new Map<string, string>();
+    private _isStarting = false;
+
+    constructor(player: Player) {
+        this._player = player;
     }
 
     get id() {
@@ -29,7 +34,15 @@ export class BaseballPlayer {
     }
 
     get name() {
-        return this.playerInfo.fullName;
+        return this._player.playerPoolEntry.player.fullName;
+    }
+
+    get isInjured() {
+        return this._player.playerPoolEntry.player.injured;
+    }
+
+    get injuryStatus() {
+        return this._player.playerPoolEntry.player.injuryStatus;
     }
 
     get playerImg() {
@@ -37,102 +50,99 @@ export class BaseballPlayer {
     }
 
     get lineupSlot() {
-        return mlbLineupMap[this._player.lineupSlotId].abbrev;
+        return mlbLineupMap[this._player.lineupSlotId];
     }
 
     get defaultPosition() {
-        return mlbPositionMap[this.playerInfo.defaultPositionId].abbrev;
+        return mlbPositionMap[this._player.playerPoolEntry.player.defaultPositionId].abbrev;
     }
 
     get proTeam() {
-        return mlbTeamMap[this.playerInfo.proTeamId];
+        return mlbTeamMap[this._player.playerPoolEntry.player.proTeamId];
+    }
+
+    get playerStats() {
+        return this._stats;
+    }
+
+    private get _stats() {
+        const map = new Map<number, any>();
+        const stats = this._player.playerPoolEntry.player.stats;
+        for (const stat of stats) {
+            map.set(stat.statSplitTypeId, statsKeyMap(stat.stats));
+
+        }
+        return map;
+    }
+
+    set eligibleSlots(slots: number[]) {
+        for (const slot of slots) {
+            this._eligibleSlots.push(slot);
+        }
+    }
+
+    set ownership(val: PlayerOwnership) {
+        this._ownership = val;
+    }
+
+    set ratings(val: PlayerRatings) {
+        for (const key in val) {
+            if (Object.prototype.hasOwnProperty.call(val, key)) {
+                const element = val[key];
+                this._ratings.set(Number(key), element);
+            }
+        }
+    }
+
+    set gameStatus(val: GameStatus) {
+        for (const game in val) {
+            if (Object.prototype.hasOwnProperty.call(val, game)) {
+                const element = val[game];
+                this._startingStatus.set(game, element);
+            }
+        }
+    }
+
+    get isStarting() {
+        return this._isStarting;
+    }
+
+    set isStarting(val: boolean) {
+        this._isStarting = val;
+    }
+
+    get startingStatus() {
+        return this._startingStatus;
+    }
+
+    get playerRatings() {
+        return this._ratings;
     }
 
     get ownershipChange() {
-        return this.ownership.percentChange;
+        return this._ownership.percentChange;
     }
 
     get percentOwned() {
-        return this.ownership.percentOwned;
+        return this._ownership.percentOwned;
     }
 
     get isPitcher() {
-        return this.isPitcherAlgo(this._player.playerPoolEntry.player.eligibleSlots);
-    }
-
-    get statsL7() {
-        const stats = this.statsBase.find(entry => entry.statSplitTypeId === StatTypeId.last7Days);
-        if (!stats) {
-            return;
-        }
-
-        return statsKeyMap(stats.stats);
-    }
-
-    get statsL15() {
-        const stats = this.statsBase.find(entry => entry.statSplitTypeId === StatTypeId.last15Days);
-        if (!stats) {
-            return;
-        }
-
-        return statsKeyMap(stats.stats);
-    }
-
-    get statsL30() {
-        const stats = this.statsBase.find(entry => entry.statSplitTypeId === StatTypeId.last30Days);
-        if (!stats) {
-            return;
-        }
-
-        return statsKeyMap(stats.stats);
-    }
-
-    get statsLive() {
-        const stats = this.statsBase.find(entry => entry.statSplitTypeId === 5);
-        if (!stats) {
-            return;
-        }
-        return statsKeyMap(stats.stats);
+        return this.isPitcherAlgo(this._eligibleSlots);
     }
 
     get wOBA7() {
-        return this.advStats.wOBA7; // this.advStats.wOBA7;
-    }
-
-    get ratingsL7() {
-        return this.ratingsBase[StatTypeId.last7Days];
-    }
-
-    get ratingsL15() {
-        return this.ratingsBase[StatTypeId.last15Days];
+        return this._advStats.wOBA7;
     }
 
     get fip() {
-        return this.advStats.fip;
+        return this._advStats.fip;
     }
 
-    private get advStats() {
+    private get _advStats() {
         const advStats = new AdvStats();
         advStats.seasonConst = this.weights21;
-        advStats.stats = this.statsL7;
-
         return advStats;
-    }
-
-    private get statsBase() {
-        return this.playerInfo.stats;
-    }
-
-    private get ownership() {
-        return this.playerInfo.ownership;
-    }
-
-    private get playerInfo() {
-        return this._player.playerPoolEntry.player;
-    }
-
-    private get ratingsBase() {
-        return this._player.playerPoolEntry.ratings;
     }
 
     private isPitcherAlgo(eligiblePos: number[], pitcherPos = [13, 14, 15]) {
