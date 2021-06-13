@@ -1,14 +1,17 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
-import { mockMLBTeam } from '../../models/mlb/mocks/mlb-team.mock';
-import { EspnFacade } from '../../store/espn.facade';
-import { mockESPNFacade } from '../../store/mocks/espn.facade.mock';
+// import { mockMLBTeam } from '../../models/mlb/mocks/mlb-team.mock';
+// import { MlbFacade } from '../../store/mlb/mlb.facade';
+// import { mockmlbFacade } from '../../store/mocks/espn.facade.mock';
 import { PlayerInfoColComponent } from '../roster/player-info-col/player-info-col.component';
 import { RosterComponent } from '../roster/roster.component';
 
@@ -27,13 +30,15 @@ describe('TeamComponent', () => {
         HttpClientTestingModule,
         BrowserAnimationsModule,
         RouterTestingModule,
-        MaterialModule,
+        MatCardModule,
+        MatToolbarModule,
+        MatProgressSpinnerModule,
         NgxsSelectSnapshotModule,
         NgxsModule.forRoot()
       ],
       declarations: [TeamComponent, RosterComponent, PlayerInfoColComponent],
       providers: [
-        { provide: EspnFacade, useValue: mockESPNFacade },
+        // { provide: mlbFacade, useValue: mockmlbFacade },
         {
           provide: ActivatedRoute, useValue: {
             snapshot: {

@@ -1,9 +1,11 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { BaseballPlayer } from '../../models/mlb/class/player.class';
+import { Store } from '@ngxs/store';
+import { gridTemplate } from 'src/app/@shared/helpers/grid';
+import { rosterMap } from 'src/app/@shared/helpers/mapping';
 import { BaseballTeam } from '../../models/mlb/class/team.class';
-import { EspnFacade } from '../../store/espn.facade';
+import { MlbFacade } from '../../store/mlb/mlb.facade';
 
 @Component({
   selector: 'app-team',
@@ -11,46 +13,70 @@ import { EspnFacade } from '../../store/espn.facade';
   styleUrls: ['./team.component.scss']
 })
 export class TeamComponent implements OnInit {
-  dataSource = new MatTableDataSource<BaseballTeam>();
+  readonly gridTemplate = gridTemplate;
 
-  constructor(readonly espnFacade: EspnFacade, private activatedRoute: ActivatedRoute) { }
+  public dataSource = new MatTableDataSource<BaseballTeam>();
 
-  ngOnInit(): void { }
 
-  get batters() {
-    return this._roster.filter(player => !player.isPitcher);
-  }
+  constructor(readonly store: Store, readonly mlbFacade: MlbFacade, private activatedRoute: ActivatedRoute) { }
 
-  get pitchers() {
-    return this._roster.filter(player => player.isPitcher);
-  }
+  ngOnInit(): void {
 
-  private get _roster() {
-    const arr: BaseballPlayer[] = [];
-    this._team.roster.forEach(player => {
-      arr.push(new BaseballPlayer(player));
-    });
-    return arr;
+    if (this.mlbFacade.teamsEmpty) {
+      this.mlbFacade.getLeague(this.leagueId);
+    }
+
   }
 
   get teamName() {
     return this._team.teamName;
   }
 
+  get batterLineup() {
+    return this._batters.sort((a, b) => a.lineupSlot.displayOrder - b.lineupSlot.displayOrder)
+      .filter(player => !player.lineupSlot.bench);
+  }
+
+  get batterBench() {
+    return this._batters.sort((a, b) => a.lineupSlot.displayOrder - b.lineupSlot.displayOrder)
+      .filter(player => player.lineupSlot.bench);
+  }
+
+  get pitcherLineup() {
+    return this._pitchers.sort((a, b) => a.lineupSlot.displayOrder - b.lineupSlot.displayOrder)
+      .filter(player => !player.lineupSlot.bench);
+  }
+
+  private get _batters() {
+    return this._rosterArr.filter(player => !player.isPitcher && !player.isInjured);
+  }
+
+  private get _pitchers() {
+    return this._rosterArr.filter(player => player.isPitcher && !player.isInjured);
+  }
+
+  private get _rosterArr() {
+    return [...this._roster.values()];
+  }
+
+  private get _roster() {
+    return rosterMap(this._team.roster);
+  }
+
+  // private get _games() {
+  //   return this.mlbFacade.competitionSnapshot;
+  // }
+
   private get _team() {
-    return this.espnFacade.teamsSnapshot.find(team => team.teamId === this.teamId);
+    return this.mlbFacade.teamsSnapshot.get(this.teamId);
   }
 
   private get leagueId() {
     return this.activatedRoute.snapshot.params.leagueId;
   }
 
-  private get sport() {
-    return this.activatedRoute.snapshot.params.sport;
-  }
-
   private get teamId(): number {
-    return Number(this.activatedRoute.snapshot.params.teamId);
+    return +this.activatedRoute.snapshot.params.teamId;
   }
 
 }
