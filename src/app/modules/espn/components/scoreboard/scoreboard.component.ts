@@ -22,8 +22,4 @@ export class ScoreboardComponent {
     return this.activatedRoute.snapshot.params.sport;
   }
 
-  get sorted() {
-    return this.teams.sort((a, b) => b.liveScore - a.liveScore);
-  }
-
 }
