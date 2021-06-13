@@ -1,3 +1,21 @@
+export interface MlbLineup {
+    [key: number]: {
+        abbrev: string;
+        active: boolean;
+        bench: boolean;
+        canApplyLimitIndividually: boolean;
+        display: boolean;
+        displayOrder: number;
+        eligiblePositions: number[];
+        id: number;
+        injuryRequired: boolean;
+        lineupSlotEligible: boolean;
+        name: string;
+        parentId: number;
+        starter: boolean;
+    };
+}
+
 export const mlbLineupMap = {
     0: {
         abbrev: 'C',
@@ -342,5 +360,6 @@ export const mlbLineupMap = {
         name: 'Miscellaneous',
         parentId: 23,
         starter: false,
+        eligiblePositions: []
     }
 };
