@@ -1,16 +1,13 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
-import { BaseChartDirective, Color } from 'ng2-charts';
-import { BaseGraph } from '../../models/graph.class';
 import { BaseballTeam } from '../../models/mlb/class/team.class';
-import { EspnFacade } from '../../store/espn.facade';
+import { MlbFacade } from '../../store/mlb/mlb.facade';
 import * as _ from 'lodash';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { RotoColumn, StatsColumn, TeamColumn } from '../../models/mlb/mlb.enums';
-import { standingsColumns, battingStatsColumns, pitchingStatsColumns } from '../../models/mlb/mlb.const';
+import { standingsColumns } from '../../models/mlb/mlb.const';
+import { TEST_ID } from '@app/@shared/helpers/testConfigs';
 
 @Component({
   selector: 'app-standings',
@@ -18,60 +15,27 @@ import { standingsColumns, battingStatsColumns, pitchingStatsColumns } from '../
   styleUrls: ['./standings.component.scss'],
 })
 export class StandingsComponent implements OnInit, OnChanges {
-  @Input() teams: BaseballTeam[];
+  @Input() teams: Map<number, BaseballTeam>;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
   readonly teamColumn = TeamColumn;
   readonly rotoColumn = RotoColumn;
   readonly statsColumn = StatsColumn;
-
-  public chartOptions: ChartOptions = {
-    responsive: true,
-    legend: {
-      display: true,
-      position: 'top'
-    },
-    tooltips: {
-      mode: 'index',
-    },
-    scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
-      xAxes: [{}],
-      yAxes: [
-        {
-          type: 'linear',
-          position: 'bottom',
-          ticks: {
-            beginAtZero: true,
-            fontFamily: 'Muli, Arial, sans-serif',
-            fontColor: '#707070',
-            padding: 8,
-            fontSize: 14,
-            //     callback: GraphingOptions.ValuePrettify
-          },
-          gridLines: {
-            color: '#f5f5f5'
-          }
-        }
-      ]
-    }
-  };
-  public chartData: ChartDataSets[];
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  readonly TEST_ID = TEST_ID.STAT_TOGGLE;
 
   dataSource = new MatTableDataSource<BaseballTeam>();
   tableColumns: string[];
   viewOptions: any;
 
-  constructor(readonly espnFacade: EspnFacade, private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(readonly mlbFacade: MlbFacade) { }
 
   ngOnInit(): void {
-    this.dataSource.data = this.teams;
+    this.dataSource.data = this.teamsToArray;
     this.dataSource.sort = this.sort;
     this.dataSource.sortingDataAccessor = _.get;
-    this.tableColumns = standingsColumns;
+    this.tableColumns = standingsColumns.batting.rotoValue;
   }
-
 
   ngOnChanges(changes: SimpleChanges) {
     for (const propName in changes) {
@@ -79,17 +43,8 @@ export class StandingsComponent implements OnInit, OnChanges {
         switch (propName) {
           case 'teams':
             this.teams = changes[propName].currentValue;
-            this.dataSource.data = this.teams;
+            this.dataSource.data = this.teamsToArray;
             this.dataSource.sort = this.sort;
-
-            // this.chartData = [
-            //   { data: this.teams.map(team => team.stats.hr), label: 'hr', fill: false },
-            //   { data: this.teams.map(team => team.stats.rbi), label: 'rbi', fill: false },
-            //   { data: this.teams.map(team => team.stats.r), label: 'r', fill: false },
-            //   { data: this.teams.map(team => team.stats.sb), label: 'sb', fill: false },
-            //   { data: this.teams.map(team => team.stats.h), label: 'h', fill: false },
-            // ];
-
             break;
           default:
             break;
@@ -98,37 +53,41 @@ export class StandingsComponent implements OnInit, OnChanges {
     }
   }
 
-  get scoreBoard() {
-    return this.teams.sort((a, b) => b.liveScore - a.liveScore);
-  }
-
-  get leagueChart() {
-    return new BaseGraph(this.chartData, this.teams.map(team => team.teamName), 'line', true);
-  }
-
   get statsView() {
     return [
-      { value: 'battingStats', label: 'Batter' },
-      { value: 'pitchingStats', label: 'Pitcher' },
-      { value: 'roto', label: 'Roto' }
+      { value: 'battingStatsRoto', label: 'B Roto' },
+      { value: 'pitchingStatsRoto', label: 'P Roto' },
+      { value: 'battingStats', label: 'B Stats' },
+      { value: 'pitchingStats', label: 'P Stats' }
     ];
   }
 
   updateView(event: MatButtonToggleChange) {
     switch (event.value) {
       case 'battingStats':
-        this.tableColumns = battingStatsColumns;
+        this.tableColumns = standingsColumns.batting.statValue;
         break;
       case 'pitchingStats':
-        this.tableColumns = pitchingStatsColumns;
+        this.tableColumns = standingsColumns.pitching.statValue;
         break;
-      case 'roto':
-        this.tableColumns = standingsColumns;
+      case 'battingStatsRoto':
+        this.tableColumns = standingsColumns.batting.rotoValue;
+        break;
+      case 'pitchingStatsRoto':
+        this.tableColumns = standingsColumns.pitching.rotoValue;
         break;
       default:
-        this.tableColumns = standingsColumns;
+        this.tableColumns = standingsColumns.batting.rotoValue;
         break;
     }
+  }
+
+  get scoringPeriod() {
+    return this.mlbFacade.scoringPeriod;
+  }
+
+  private get teamsToArray() {
+    return [...this.teams.values()];
   }
 
 }
