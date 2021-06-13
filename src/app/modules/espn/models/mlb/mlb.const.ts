@@ -20,95 +20,114 @@ const weights2021: SeasonConst = {
     cFIP: 3.073
 };
 
-const standingsColumns = [
-    TeamColumn.rank,
-    TeamColumn.name,
-    RotoColumn.run,
-    RotoColumn.homeRun,
-    RotoColumn.rbi,
-    RotoColumn.sb,
-    RotoColumn.avg,
-    RotoColumn.battingTotal,
-    RotoColumn.pitchingLimit,
-    RotoColumn.pitchingTotal,
-
-    // RotoColumn.strikeOut,
-    // RotoColumn.win,
-    // RotoColumn.save,
-    // RotoColumn.era,
-    // RotoColumn.whip,
-    // TeamColumn.totalPoints,
-    // TeamColumn.liveScore
-];
-
-
-
-const battingStatsColumns = [
-    TeamColumn.rank,
-    TeamColumn.name,
-    StatsColumn.hits,
-    StatsColumn.run,
-    StatsColumn.homeRun,
-    StatsColumn.rbi,
-    StatsColumn.sb,
-    StatsColumn.avg
-];
-
-const pitchingStatsColumns = [
-    TeamColumn.rank,
-    TeamColumn.name,
-    StatsColumn.win,
-    StatsColumn.strikeOut,
-    StatsColumn.whip
-];
-
-enum StatsColumnroste5r {
-    hits = 'stats.h',
-    run = 'stats.r',
-    homeRun = 'stats.hr',
-    rbi = 'stats.rbi',
-    sb = 'stats.sb',
-    avg = 'stats.avg',
-    strikeOut = 'stats.k',
-    win = 'stats.w',
-    save = 'stats.sv',
-    era = 'stats.era',
-    whip = 'stats.whip'
-}
-
-const rosterColumns = {
-    batters: {
-        season: [
-
+const standingsColumns = {
+    batting: {
+        rotoValue: [
+            TeamColumn.rank,
+            TeamColumn.name,
+            RotoColumn.run,
+            RotoColumn.homeRun,
+            RotoColumn.rbi,
+            RotoColumn.sb,
+            RotoColumn.avg,
+            RotoColumn.battingTotal
         ],
-        l7: [
-            StatsColumn.hits,
+        statValue: [
+            TeamColumn.rank,
+            TeamColumn.name,
             StatsColumn.run,
             StatsColumn.homeRun,
             StatsColumn.rbi,
             StatsColumn.sb,
-            StatsColumn.avg
-        ],
-        l15: [
-            StatsColumn.hits,
-            StatsColumn.run,
-            StatsColumn.homeRun,
-            StatsColumn.rbi,
-            StatsColumn.sb,
-            StatsColumn.avg
-        ],
-        l30: [
-            StatsColumn.hits,
-            StatsColumn.run,
-            StatsColumn.homeRun,
-            StatsColumn.rbi,
-            StatsColumn.sb,
-            StatsColumn.avg
+            StatsColumn.avg,
         ]
     },
+    pitching: {
+        rotoValue: [
+            TeamColumn.rank,
+            TeamColumn.name,
+            RotoColumn.strikeOut,
+            RotoColumn.win,
+            RotoColumn.save,
+            RotoColumn.era,
+            RotoColumn.whip,
+            RotoColumn.pitchingTotal
+        ],
+        statValue: [
+            TeamColumn.rank,
+            TeamColumn.name,
+            StatsColumn.win,
+            StatsColumn.save,
+            StatsColumn.strikeOut,
+            StatsColumn.whip
+        ]
+    }
+};
+
+enum PlayerInfoColumn {
+    slot = 'lineupSlot',
+    name = 'name',
+    injuryStatus = 'injuryStatus',
+    totalRatingSeason = 'ratingsSeason.totalRating',
+    positionalRankingSeason = 'ratingsSeason.positionalRanking',
+    ownershipChange = 'ownershipChange',
+    percentOwned = 'percentOwned'
+}
+
+enum BattingStatColumn {
+    hits = `h`,
+    run = 'r',
+    homeRun = 'hr',
+    rbi = 'rbi',
+    stolenBase = 'sb',
+    avg = 'avg',
+    obp = 'obp',
+    ops = 'ops',
+    slg = 'slg',
+    runsCreated = 'rc'
+}
+
+enum PitchingStatColumn {
+    strikeOut = 'k',
+    win = 'w',
+    save = 'sv',
+    era = 'era',
+    whip = 'whip'
+}
+
+const battingStats = {
+    hits: 'h',
+    run: 'r',
+    homeRun: 'hr',
+    rbi: 'rbi',
+    sb: 'sb',
+    avg: 'avg'
+};
+
+const advBattingStats = {
+    obp: ''
+};
+
+const pitchingStats = {
+    strikeOut: 'k',
+    win: 'w',
+    save: 'sv',
+    era: 'era',
+    whip: 'whip'
+};
+
+const rosterColumns = {
+    batters: [
+        PlayerInfoColumn.slot,
+        PlayerInfoColumn.name,
+        BattingStatColumn.run,
+        BattingStatColumn.homeRun,
+        BattingStatColumn.rbi,
+        BattingStatColumn.stolenBase,
+    ],
     pitchers: [
 
     ]
 };
 
-export { rosterColumns, battingStatsColumns, pitchingStatsColumns, standingsColumns, weights2020, weights2021 };
+export { PlayerInfoColumn, rosterColumns, standingsColumns, weights2020, weights2021 };
