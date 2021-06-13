@@ -1,7 +1,7 @@
 import { mlbStatMap, StatAbbrev } from './maps/mlb-stat.map';
 
-const statsKeyMap = (obj) => {
-    const final: StatAbbrev = {};
+const statsKeyMap = (obj): StatAbbrev => {
+    const final: { [key: string]: number } = {};
     for (const key in obj) {
         if (key) {
             const statAbbrev = mlbStatMap[key].abbrev.toLowerCase();

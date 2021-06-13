@@ -4,7 +4,6 @@ import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { BaseballTeam } from '../../models/mlb/class/team.class';
-import { Team } from '../../models/mlb/interface';
 import { FetchBaseballLeague } from './mlb.actions';
 import { MlbState } from './mlb.state';
 
