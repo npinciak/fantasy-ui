@@ -1,55 +1,33 @@
-<div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="20px">
-    <div fxFlex="20">
-        <ng-container *ngIf="espnFacade.scoreboard$ | async; else loading">
-            <app-scoreboard [teams]="espnFacade.scoreboard$ | async"></app-scoreboard>
-        </ng-container>
-    </div>
-    <div fxFlex="80">
-        <div fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="20px"
-            *ngIf="espnFacade.teams$ | async">
-            <div fxFlex="20">
-                <app-scoreboard-exp [teams]="espnFacade.teams$ | async" stat="r"></app-scoreboard-exp>
-            </div>
-            <div fxFlex="20">
-                <app-scoreboard-exp [teams]="espnFacade.teams$ | async" stat="avg"></app-scoreboard-exp>
-            </div>
-            <div fxFlex="20">
-                <app-scoreboard-exp [teams]="espnFacade.teams$ | async" stat="rbi"></app-scoreboard-exp>
-            </div>
-            <div fxFlex="20">
-                <app-scoreboard-exp [teams]="espnFacade.teams$ | async" stat="hr"></app-scoreboard-exp>
-            </div>
-            <div fxFlex="20">
-                <app-scoreboard-exp [teams]="espnFacade.teams$ | async" stat="sb"></app-scoreboard-exp>
-            </div>
-        </div>
-        <div style="padding: 20px 0;"></div>
-        <div fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="20px"
-            *ngIf="espnFacade.teams$ | async">
-            <div fxFlex="20">
-                <app-scoreboard-exp [teams]="espnFacade.teams$ | async" stat="k"></app-scoreboard-exp>
-            </div>
-            <div fxFlex="20">
-                <app-scoreboard-exp [teams]="espnFacade.teams$ | async" stat="w"></app-scoreboard-exp>
-            </div>
-            <div fxFlex="20">
-                <app-scoreboard-exp [teams]="espnFacade.teams$ | async" stat="sv"></app-scoreboard-exp>
-            </div>
-            <div fxFlex="20">
-                <app-scoreboard-exp [teams]="espnFacade.teams$ | async" stat="era"></app-scoreboard-exp>
-            </div>
-            <div fxFlex="20">
-                <app-scoreboard-exp [teams]="espnFacade.teams$ | async" stat="whip"></app-scoreboard-exp>
-            </div>
-        </div>
-        <div style="padding: 20px 0;"></div>
+<div gdAreas="header header header header| 
+side content content content | 
+footer footer footer footer" gdGap="16px" gdRows="auto auto auto auto" gdAreas.lt-md="header | side | content | footer"
+    gdRows.lt-md="auto auto auto auto">
 
-        <ng-container *ngIf="espnFacade.teams$ | async; else loading">
-            <app-standings [teams]="espnFacade.teams$ | async"></app-standings>
+    <div class="header" gdArea="header">
+        <mat-toolbar style="background-color:#205493;color:#ffffff">
+            <span>ESPN Companion</span>
+        </mat-toolbar>
+    </div>
+
+    <div class="side" gdArea="side">
+        <ng-container *ngIf="(mlbFacade.isLoading$ | async) === (false); else loading">
+            <app-scoreboard [teams]="mlbFacade.scoreboard$ | async"></app-scoreboard>
         </ng-container>
     </div>
+
+    <div class="content" gdArea="content">
+        <div style="padding: 20px 0;"></div>
+        <ng-container *ngIf="mlbFacade.teams$ | async; else loading">
+            <app-standings [teams]="mlbFacade.teams$ | async"></app-standings>
+        </ng-container>
+        <div style="padding: 20px 0;"></div>
+    </div>
+
+    <div class="footer" gdArea="footer">
+        Footer
+    </div>
+
 </div>
-
 
 <ng-template #loading>
     Loading...
