@@ -4,13 +4,14 @@ export interface Player {
     playerPoolEntry: PlayerEntry;
 }
 
-interface PlayerEntry {
+export interface PlayerEntry {
     player: PlayerInfo;
     ratings: PlayerRatings;
 }
 
-interface PlayerInfo {
+export interface PlayerInfo {
     fullName: string;
+    playerId?: number;
     lastNewsDate: number;
     defaultPositionId: number;
     proTeamId: number;
@@ -19,16 +20,21 @@ interface PlayerInfo {
     ownership: PlayerOwnership;
     eligibleSlots: number[];
     stats: PlayerStatsYear[];
+    starterStatusByProGame: GameStatus;
 }
 
-interface PlayerOwnership {
+export interface GameStatus {
+    [key: number]: string;
+}
+
+export interface PlayerOwnership {
     averageDraftPosition: number;
     percentChange: number;
     percentOwned: number;
     percentStarted: number;
 }
 
-interface PlayerRatings {
+export interface PlayerRatings {
     [key: number]: {
         positionalRanking: number;
         totalRanking: number;
@@ -43,7 +49,7 @@ export interface PlayerStatsYear {
     stats: PlayerStatsEntity;
 }
 
-interface PlayerStatsEntity {
+export interface PlayerStatsEntity {
     [key: number]: number;
 }
 
@@ -56,7 +62,7 @@ export interface PlayerNews {
     feed?: (FeedEntity)[] | null;
 }
 
-interface FeedEntity {
+export interface FeedEntity {
     lastModified: string;
     headline: string;
     story: string;
