@@ -6,7 +6,7 @@
     </tr>
     <tr>
         <td>
-            {{ player.name}}
+            {{ player.name}} <mat-icon [matTooltip]="player.injuryStatus" *ngIf="player.isInjured" style="color: #d9534f">medical_services</mat-icon>
         </td>
     </tr>
     <tr>

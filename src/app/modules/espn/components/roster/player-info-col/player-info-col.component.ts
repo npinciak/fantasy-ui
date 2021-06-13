@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { BaseballPlayer } from '../../../models/mlb/class/player.class';
 
 @Component({
   selector: 'app-player-info-col',
@@ -6,7 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 
 export class PlayerInfoColComponent {
-  @Input() player: any;
+  @Input() player: BaseballPlayer;
   constructor() { }
 
 
