@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { ChartsModule } from 'ng2-charts';
-
+import { FlexLayoutModule, GridModule } from '@angular/flex-layout';
 import { EspnComponent } from './espn.component';
 import { StandingsComponent } from './components/standings/standings.component';
 import { TeamComponent } from './components/team/team.component';
@@ -16,6 +14,7 @@ import { ScoreboardComponent } from './components/scoreboard/scoreboard.componen
 import { PlayerRatingColComponent } from './components/roster/player-rating-col/player-rating-col.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScoreboardExpComponent } from './components/scoreboard-exp/scoreboard-exp.component';
+import { FreeAgentsComponent } from './components/free-agents/free-agents.component';
 
 const components = [
   EspnComponent,
@@ -29,6 +28,7 @@ const components = [
   PlayerRatingColComponent,
   TeamInfoColComponent,
   RankingColComponent,
+  FreeAgentsComponent,
 ];
 
 @NgModule({
@@ -37,11 +37,10 @@ const components = [
     CommonModule,
     MaterialModule,
     FlexLayoutModule,
+    GridModule,
     BrowserAnimationsModule,
-    ChartsModule
   ],
   exports: [StandingsComponent, RosterComponent]
 })
+
 export class EspnModule { }
-
-
