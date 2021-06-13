@@ -14,11 +14,13 @@ import { MlbState } from './mlb.state';
 
 export class MlbFacade {
     @Select(MlbState.teams) public teams$: Observable<BaseballTeam[]>;
+    @Select(MlbState.teamsEmpty) public teamsEmpty$: Observable<boolean>;
     @Select(MlbState.scoreboard) public scoreboard$: Observable<BaseballTeam[]>;
     @Select(MlbState.isLoading) public isLoading$: Observable<boolean>;
 
     @SelectSnapshot(MlbState.scoringPeriod) public scoringPeriod: number;
     @SelectSnapshot(MlbState.teams) public teamsSnapshot: Map<number, BaseballTeam>;
+    @SelectSnapshot(MlbState.teamsEmpty) public teamsEmpty: boolean;
 
     @Dispatch() getLeague = (leagueId: number) => new FetchBaseballLeague(leagueId);
 }

@@ -8,7 +8,7 @@ import { Game } from '../../models/mlb/class/game.class';
 import { BaseballTeam } from '../../models/mlb/class/team.class';
 import { Team } from '../../models/mlb/interface';
 import { ScheduleEntry } from '../../models/mlb/interface/league';
-import { MlbAction, FetchBaseballLeague } from './mlb.actions';
+import { MlbAction, FetchBaseballLeague, SelectTeam } from './mlb.actions';
 
 export interface MlbStateModel {
   items: string[];
@@ -64,6 +64,16 @@ export class MlbState {
   @Selector([MlbState.teams])
   public static scoreboard(_: MlbStateModel, teams: Map<number, BaseballTeam>) {
     return insertionSortDesc([...teams.values()], 'liveScore');
+  }
+
+  @Selector([MlbState.teams])
+  public static teamsEmpty(_: MlbStateModel, teams: Map<number, BaseballTeam>) {
+    return teams.size === 0;
+  }
+
+  @Selector([MlbState.teams])
+  public selectTeam(_: MlbStateModel, teams: Map<number, BaseballTeam>) {
+    return (teamId: number) => teams.get(teamId);
   }
 
   @Action(MlbAction)
