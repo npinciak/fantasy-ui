@@ -17,6 +17,7 @@ import { CoreState } from './@core/store/core/core.state';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { environment } from 'src/environments/environment';
 import { MlbState } from './modules/espn/store/mlb/mlb.state';
+import { MlbTeamState } from './modules/espn/store/mlb/mlb-team.state';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { MlbState } from './modules/espn/store/mlb/mlb.state';
     MaterialModule,
     BrowserAnimationsModule,
     NgxsSelectSnapshotModule.forRoot(),
-    NgxsModule.forRoot([CoreState, MlbState], { developmentMode: !environment.production }),
+    NgxsModule.forRoot([CoreState, MlbState, MlbTeamState], { developmentMode: !environment.production }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsDispatchPluginModule.forRoot(),
     FlexLayoutModule,
