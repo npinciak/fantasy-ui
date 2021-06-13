@@ -21,6 +21,10 @@ export class EspnService {
   constructor(private api: ApiService) { }
 
   getBaseballLeague = (leagueId: number) =>
+  updateTeam = (payload: unknown, leagueId: number) =>
+    this.api.post<any>(`${this.fantasyBase}/games/flb/seasons/2021/segments/0/leagues/${leagueId}/transactions`, payload, {
+      withCredentials: true, headers: this.postHeaders
+    });
     this.api.get<League>(`${this.fantasyBase}/games/${Sports.baseball}/seasons/${this.currentYear}/segments/0/leagues/${leagueId}`,
       { params: this.params }
     );
