@@ -13,7 +13,7 @@ export class WeatherService {
 
   currentWeather = (coordinates: string) => this.api.get<any>(this.baseUri, {
     headers: this.headers,
-    params: this.queryParams.append('coordinates', coordinates)
+    params: this.queryParams.append('location', coordinates)
   });
 
   private get headers() {
