@@ -18,6 +18,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { environment } from 'src/environments/environment';
 import { MlbState } from './modules/espn/store/mlb/mlb.state';
 import { MlbTeamState } from './modules/espn/store/mlb/mlb-team.state';
+import { httpInterceptorProviders } from './@core/interceptors';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { MlbTeamState } from './modules/espn/store/mlb/mlb-team.state';
     FlexLayoutModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
