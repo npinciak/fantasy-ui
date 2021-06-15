@@ -1,7 +1,7 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ApiService } from './api.service';
+import { ApiService } from '../../@shared/services/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +32,7 @@ export class WeatherService {
   }
 
   private get forecastFields() {
+    // eslint-disable-next-line max-len
     return 'precipitationIntensity,precipitationType,precipitationProbability,temperatureApparent,temperature,humidity,windSpeed,windGust,windDirection,weatherCode';
   }
 
