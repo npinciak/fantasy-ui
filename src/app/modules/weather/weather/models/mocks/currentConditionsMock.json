@@ -1,0 +1,28 @@
+{
+    "data": {
+      "timelines": [
+        {
+          "timestep": "current",
+          "startTime": "2021-06-15T16:51:00Z",
+          "endTime": "2021-06-15T16:51:00Z",
+          "intervals": [
+            {
+              "startTime": "2021-06-15T16:51:00Z",
+              "values": {
+                "precipitationIntensity": 0,
+                "precipitationType": 1,
+                "precipitationProbability": 0,
+                "temperatureApparent": 71.33,
+                "temperature": 71.33,
+                "humidity": 81.22,
+                "windSpeed": 4.92,
+                "windGust": 5.95,
+                "windDirection": 245,
+                "weatherCode": 1102
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
