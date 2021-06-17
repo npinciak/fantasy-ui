@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgxsModule } from '@ngxs/store';
 
 import { FreeAgentsComponent } from './free-agents.component';
 
@@ -8,9 +9,10 @@ describe('FreeAgentsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FreeAgentsComponent ]
+      imports: [NgxsModule.forRoot()],
+      declarations: [FreeAgentsComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -22,6 +22,7 @@ import { BaseballTeam } from '../../models/mlb/class/team.class';
 import * as mockleague from '@espn/models/mlb/mocks/league.mock.json';
 import { teamMap } from '@app/@shared/helpers/mapping';
 import { MOCK_DATA } from '@app/@shared/helpers/testConfigs';
+import { NgxsModule } from '@ngxs/store';
 
 
 describe('StandingsComponent', () => {
@@ -37,7 +38,7 @@ describe('StandingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, MatCardModule, MatButtonToggleModule, MatTableModule, BrowserAnimationsModule],
+      imports: [NgxsModule.forRoot(), RouterTestingModule, MatCardModule, MatButtonToggleModule, MatTableModule, BrowserAnimationsModule],
       declarations: [StandingsComponent, RosterComponent, TeamComponent, TeamInfoColComponent, RankingColComponent],
       providers: [
         { provide: Router, useValue: router },

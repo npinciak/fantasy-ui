@@ -2,6 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
 // import { BaseballPlayer } from '../../models/mlb/class/player.class';
 // import { mockMLBPlayer } from '../../models/mlb/mocks/mlb-player.mock';
@@ -19,7 +20,7 @@ describe('RosterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule, MaterialModule, BrowserAnimationsModule],
+      imports: [NgxsModule.forRoot(),HttpClientTestingModule, RouterTestingModule, MaterialModule, BrowserAnimationsModule],
       declarations: [RosterComponent, PlayerInfoColComponent]
     })
       .compileComponents();
