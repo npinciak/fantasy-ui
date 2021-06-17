@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 enum StatTypeId {
     // season,
     last7Days = 1,
-    last15Days = 2,
-    last30Days = 3,
+    last15Days,
+    last30Days,
     //currentYear = 4,?
     live = 5
 }
@@ -50,4 +51,38 @@ enum StatsColumn {
     whip = 'stats.whip'
 }
 
-export { StatsColumn, RotoColumn, TeamColumn, StatTypeId, PlayingStatus };
+enum MLBTeam {
+    FA,
+    Bal,
+    Bos,
+    LAA,
+    ChW,
+    Cle,
+    Det,
+    KC,
+    Mil,
+    Min,
+    NYY,
+    Oak,
+    Sea,
+    Tex,
+    Tor,
+    Atl,
+    ChC,
+    Cin,
+    Hou,
+    LAD,
+    Wsh,
+    NYM,
+    Phi,
+    Pit,
+    StL,
+    SD,
+    SF,
+    Col,
+    Mia,
+    Ari,
+    TB
+}
+
+export { MLBTeam, StatsColumn, RotoColumn, TeamColumn, StatTypeId, PlayingStatus };
