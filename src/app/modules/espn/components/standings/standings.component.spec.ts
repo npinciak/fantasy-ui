@@ -61,7 +61,7 @@ describe('StandingsComponent', () => {
 
     fixture = TestBed.createComponent(StandingsComponent);
     component = fixture.componentInstance;
-    component.teams = MOCK_DATA.BASEBALL_TEAM_MAP;
+    component.teams = Object.values(MOCK_DATA.BASEBALL_TEAM_MAP);
     fixture.detectChanges();
   });
 

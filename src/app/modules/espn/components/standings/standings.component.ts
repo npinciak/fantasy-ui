@@ -8,6 +8,8 @@ import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { RotoColumn, StatsColumn, TeamColumn } from '../../models/mlb/mlb.enums';
 import { standingsColumns } from '../../models/mlb/mlb.const';
 import { TEST_ID } from '@app/@shared/helpers/testConfigs';
+import { mlbTeamMap } from '../../models/mlb/maps';
+import { mlbStadiumMap } from '../../models/mlb/maps/mlb-team.map';
 
 @Component({
   selector: 'app-standings',
@@ -15,7 +17,7 @@ import { TEST_ID } from '@app/@shared/helpers/testConfigs';
   styleUrls: ['./standings.component.scss'],
 })
 export class StandingsComponent implements OnInit, OnChanges {
-  @Input() teams: Map<number, BaseballTeam>;
+  @Input() teams: BaseballTeam[];
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   readonly teamColumn = TeamColumn;
@@ -31,7 +33,7 @@ export class StandingsComponent implements OnInit, OnChanges {
   constructor(readonly mlbFacade: MlbFacade) { }
 
   ngOnInit(): void {
-    this.dataSource.data = this.teamsToArray;
+    this.dataSource.data = this.teams;
     this.dataSource.sort = this.sort;
     this.dataSource.sortingDataAccessor = _.get;
     this.tableColumns = standingsColumns.batting.rotoValue;
@@ -43,7 +45,7 @@ export class StandingsComponent implements OnInit, OnChanges {
         switch (propName) {
           case 'teams':
             this.teams = changes[propName].currentValue;
-            this.dataSource.data = this.teamsToArray;
+            this.dataSource.data = this.teams;
             this.dataSource.sort = this.sort;
             break;
           default:
@@ -84,10 +86,6 @@ export class StandingsComponent implements OnInit, OnChanges {
 
   get scoringPeriod() {
     return this.mlbFacade.scoringPeriod;
-  }
-
-  private get teamsToArray() {
-    return [...this.teams.values()];
   }
 
 }
