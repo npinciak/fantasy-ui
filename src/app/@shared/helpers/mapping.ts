@@ -1,11 +1,41 @@
+import { TeamState } from '@app/modules/espn/store/mlb';
 import { Game } from 'src/app/modules/espn/models/mlb/class/game.class';
 import { LeagueScoreboard } from 'src/app/modules/espn/models/mlb/class/leagueScoreboard.class';
 import { BaseballPlayer } from 'src/app/modules/espn/models/mlb/class/player.class';
 import { BaseballTeam } from 'src/app/modules/espn/models/mlb/class/team.class';
-import { Player, Team, Event } from 'src/app/modules/espn/models/mlb/interface';
+import { Player, Team, EspnEvent } from 'src/app/modules/espn/models/mlb/interface';
 import { ScheduleEntry } from 'src/app/modules/espn/models/mlb/interface/league';
 
 
+const newTeamMap = (entities: TeamState, entries?: ScheduleEntry[]): { [id: number]: BaseballTeam } => {
+    const finalMap = {};
+
+    const entityLength = Object.values(entities).length;
+
+    if (entityLength === 0 || entries.length === 0) {
+        return finalMap;
+    } else {
+
+        const leagueScoreboard = new LeagueScoreboard(entries[0].teams);
+        const liveScores = leagueScoreboard.scoreBoard;
+
+        for (const team of Object.values(entities)) {
+
+            const newTeam = new BaseballTeam(team);
+            newTeam.roster = team.roster.entries;
+
+            if (liveScores.hasOwnProperty(team.id)) {
+                newTeam.liveScore = liveScores[team.id];
+            } else {
+                newTeam.liveScore = 0;
+            }
+            finalMap[newTeam.teamId] = newTeam;
+        }
+        return finalMap;
+
+    }
+
+};
 
 const teamMap = (teams: Team[], entries: ScheduleEntry[]): Map<number, BaseballTeam> => {
     if (teams.length === 0 || entries.length === 0) {
@@ -14,15 +44,15 @@ const teamMap = (teams: Team[], entries: ScheduleEntry[]): Map<number, BaseballT
 
     const leagueScoreboard = new LeagueScoreboard(entries[0].teams);
 
-    const liveScores = leagueScoreboard.scoreBoard;
+    // const liveScores = leagueScoreboard.scoreBoard;
     const newMap = new Map<number, BaseballTeam>();
 
     teams.map(team => {
         const newTeam = new BaseballTeam(team);
         newTeam.roster = team.roster.entries;
-        if (liveScores.has(team.id)) {
-            newTeam.liveScore = liveScores.get(team.id);
-        }
+        // if (liveScores.has(team.id)) {
+        //     newTeam.liveScore = liveScores.get(team.id);
+        // }
         newMap.set(newTeam.teamId, newTeam);
     });
 
@@ -30,16 +60,20 @@ const teamMap = (teams: Team[], entries: ScheduleEntry[]): Map<number, BaseballT
 
 };
 
-const gameMap = (competitions: Event[]) => {
-    const compMap = new Map<number, Game>();
-    for (const comp of competitions) {
+const gameMap = (competitions: { [id: number]: EspnEvent }) => {
+    if (Object.values(competitions).length === 0) {
+        return {};
+    }
+    const compMap: { [id: number]: Game } = {};
+    for (const comp of Object.values(competitions)) {
         const competition = new Game();
 
         competition.id = comp.id;
         competition.competitors = comp.competitors;
         competition.summary = comp.summary;
+        competition.gameDate = comp.date;
 
-        compMap.set(competition.gameId, competition);
+        compMap[competition.gameId] = competition;
     }
     return compMap;
 };
@@ -66,4 +100,4 @@ const rosterMap = (roster: Player[]): Map<number, BaseballPlayer> => {
     return playerMap;
 };
 
-export { teamMap, gameMap, rosterMap };
+export { newTeamMap, teamMap, gameMap, rosterMap };

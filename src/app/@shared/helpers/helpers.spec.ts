@@ -1,4 +1,4 @@
-import { rosterMap, teamMap } from './mapping';
+import { gameMap, newTeamMap, rosterMap, teamMap } from './mapping';
 import * as mockleague from '@espn/models/mlb/mocks/league.mock.json';
 
 describe('TeamMap', () => {
@@ -55,5 +55,45 @@ describe('RosterMap', () => {
         const expected = 2;
 
         expect(actual.size).toEqual(expected);
+    });
+});
+
+
+
+describe('newTeamMap', () => {
+
+    it('should return empty map if team size is 0', () => {
+        const actual = newTeamMap({}, mockleague.schedule);
+        const expected = 0;
+        expect(Object.values(actual).length).toEqual(expected);
+    });
+
+    it('should return empty map if schedule size is 0', () => {
+        const actual = newTeamMap(mockleague.teams, []);
+        const expected = 0;
+
+        expect(Object.values(actual).length).toEqual(expected);
+    });
+
+    it('should return map of teams', () => {
+        const actual = newTeamMap(mockleague.teams, mockleague.schedule);
+        const expected = 1;
+
+        expect(Object.values(actual).length).toEqual(expected);
+    });
+
+    it('should return team with liveScore of 0 if no matching schedule', () => {
+        const noMatchingTeam = [{
+            teams: [{
+                teamId: 55,
+                totalPoints: 78,
+                totalPointsLive: 45
+            }]
+        }];
+
+        const actual = newTeamMap(mockleague.teams, noMatchingTeam)[6].liveScore;
+        const expected = 0;
+
+        expect(actual).toEqual(expected);
     });
 });
