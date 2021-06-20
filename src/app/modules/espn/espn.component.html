@@ -11,14 +11,14 @@ footer footer footer footer" gdGap="16px" gdRows="auto auto auto auto" gdAreas.l
 
     <div class="side" gdArea="side">
         <ng-container *ngIf="(mlbFacade.isLoading$ | async) === (false); else loading">
-            <app-scoreboard [teams]="mlbFacade.scoreboard$ | async"></app-scoreboard>
+            <app-scoreboard [teams]="mlbFacade.liveScore$ | async"></app-scoreboard>
         </ng-container>
     </div>
 
     <div class="content" gdArea="content">
         <div style="padding: 20px 0;"></div>
-        <ng-container *ngIf="mlbFacade.teams$ | async; else loading">
-            <app-standings [teams]="mlbFacade.teams$ | async"></app-standings>
+        <ng-container *ngIf="mlbFacade.standings$ | async; else loading">
+            <app-standings [teams]="mlbFacade.standings$ | async"></app-standings>
         </ng-container>
         <div style="padding: 20px 0;"></div>
     </div>
