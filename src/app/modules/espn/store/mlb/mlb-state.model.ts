@@ -5,7 +5,6 @@ interface MlbStateModel {
     schedule: ScheduleState;
     teams: TeamState;
     games: EventState;
-    stadiums: Record<string, unknown>;
     isLoading: boolean;
     scoringPeriodId: number;
 }
