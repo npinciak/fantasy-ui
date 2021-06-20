@@ -1,24 +1,15 @@
 import { Injectable } from '@angular/core';
-import { insertionSortDesc } from '@app/@shared/helpers/algos';
+import { newTeamMap } from '@app/@shared/helpers/mapping';
+import { entityMap } from '@app/@shared/operators/entities.operators';
 import { State, Action, Selector, StateContext } from '@ngxs/store';
-import { catchError, tap } from 'rxjs/operators';
-import { teamMap } from 'src/app/@shared/helpers/mapping';
-import { EspnService } from '../../espn.service';
-import { Game } from '../../models/mlb/class/game.class';
-import { BaseballTeam } from '../../models/mlb/class/team.class';
-import { Team } from '../../models/mlb/interface';
-import { ScheduleEntry } from '../../models/mlb/interface/league';
-import { MlbAction, FetchBaseballLeague, SelectTeam } from './mlb.actions';
+import { tap } from 'rxjs/operators';
 
-export interface MlbStateModel {
-  items: string[];
-  schedule: ScheduleEntry[];
-  teams: { [id: number]: Team };
-  games: { [id: number]: Game };
-  isLoading: boolean;
-  scoringPeriodId: number;
-}
+import { EspnService } from '../../espn.service';
+import { BaseballTeam } from '../../models/mlb/class/team.class';
+import { EspnEvent, Team } from '../../models/mlb/interface';
 import { MlbStateModel, ScheduleState, TeamState } from './mlb-state.model';
+import { FetchBaseballLeague } from './mlb.actions';
+
 
 @State<MlbStateModel>({
   name: 'mlb',
@@ -37,73 +28,82 @@ export class MlbState {
   constructor(private espnService: EspnService) { }
 
   @Selector()
-  public static getState(state: MlbStateModel) {
+  static getState(state: MlbStateModel) {
     return state;
   }
 
   @Selector([MlbState.getState])
-  public static isLoading(_: MlbStateModel, getState: MlbStateModel) {
+  static isLoading(_: MlbStateModel, getState: MlbStateModel) {
     return getState.isLoading;
   }
 
-  @Selector([MlbState.getState])
-  public static scoringPeriod(_: MlbStateModel, getState: MlbStateModel) {
-    return getState.scoringPeriodId;
+  @Selector()
+  static scoringPeriod(state: MlbStateModel) {
+    return state.scoringPeriodId;
   }
 
   @Selector()
-  public static schedule(state: MlbStateModel) {
+  static schedule(state: MlbStateModel) {
     return state.schedule;
   }
 
-  @Selector([MlbState.schedule])
-  public static teams(state: MlbStateModel, schedule: ScheduleEntry[]): Map<number, BaseballTeam> {
-    return teamMap(Object.values(state.teams), schedule);
+  @Selector()
+  static teams(state: MlbStateModel): TeamState {
+    return state.teams;
   }
 
   @Selector([MlbState.teams])
-  public static scoreboard(_: MlbStateModel, teams: Map<number, BaseballTeam>) {
-    return insertionSortDesc([...teams.values()], 'liveScore');
-  }
-
-  @Selector([MlbState.teams])
-  public static teamsEmpty(_: MlbStateModel, teams: Map<number, BaseballTeam>) {
+  static teamsEmpty(_: MlbStateModel, teams: Map<number, BaseballTeam>) {
     return teams.size === 0;
   }
 
-  @Selector([MlbState.teams])
-  public selectTeam(_: MlbStateModel, teams: Map<number, BaseballTeam>) {
-    return (teamId: number) => teams.get(teamId);
+  @Selector()
+  static selectTeamById(state: MlbStateModel): (id: number) => Team {
+    return (id: number) => state.teams[id];
   }
 
-  @Action(MlbAction)
-  public add(ctx: StateContext<MlbStateModel>, { payload }: MlbAction) {
-    const stateModel = ctx.getState();
-    stateModel.items = [...stateModel.items, payload];
-    ctx.setState(stateModel);
+  @Selector()
+  static games(state: MlbStateModel): { [id: number]: EspnEvent } {
+    return state.games;
+  }
+
+  @Selector()
+  static selectGameById(state: MlbStateModel): (id: number) => EspnEvent {
+    return (id: number) => state.games[id];
+  }
+
+  @Selector([MlbState.teams, MlbState.schedule])
+  static baseballTeamMap(_: MlbStateModel, teams: TeamState, schedule: ScheduleState) {
+    return newTeamMap(teams, Object.values(schedule));
+  }
+
+  @Selector([MlbState.baseballTeamMap])
+  static standings(_: MlbStateModel, teams: { [id: number]: BaseballTeam }) {
+    return Object.values(teams);
+  }
+
+  @Selector([MlbState.baseballTeamMap])
+  static liveScore(_: MlbStateModel, teams: { [id: number]: BaseballTeam }) {
+    return Object.values(teams).sort((a, b) => b.liveScore - a.liveScore);
   }
 
   @Action(FetchBaseballLeague)
-  public baseballLeague(ctx: StateContext<MlbStateModel>, { leagueId }: FetchBaseballLeague) {
-    const state = ctx.getState();
+  baseballLeague(ctx: StateContext<MlbStateModel>, { leagueId }: FetchBaseballLeague) {
     return this.espnService.fetchEspnBaseball(leagueId).pipe(
       tap(([league, mlbGames]) => {
 
-        const teams = league.teams.reduce((map, obj) => {
-          map[obj.id] = obj;
-          return map;
-        }, {});
+        const teams = entityMap(league.teams);
+        const games = entityMap(mlbGames.events);
+        const schedule = entityMap(league.schedule);
 
         ctx.patchState({
           teams,
-          schedule: [...league.schedule],
+          games,
+          schedule,
           isLoading: false,
-          scoringPeriodId:
-            league.scoringPeriodId
+          scoringPeriodId: league.scoringPeriodId
         });
-      }),
-      catchError(err => err)
+      })
     );
   }
-
 }
