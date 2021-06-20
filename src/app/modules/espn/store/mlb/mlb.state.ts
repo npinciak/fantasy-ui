@@ -18,15 +18,15 @@ export interface MlbStateModel {
   isLoading: boolean;
   scoringPeriodId: number;
 }
+import { MlbStateModel, ScheduleState, TeamState } from './mlb-state.model';
 
 @State<MlbStateModel>({
   name: 'mlb',
   defaults: {
     scoringPeriodId: null,
-    schedule: [],
+    schedule: {},
     teams: {},
     games: {},
-    items: [],
     isLoading: true
   }
 })
