@@ -19,12 +19,14 @@ import { environment } from 'src/environments/environment';
 import { MlbState } from './modules/espn/store/mlb/mlb.state';
 import { MlbTeamState } from './modules/espn/store/mlb/mlb-team.state';
 import { httpInterceptorProviders } from './@core/interceptors';
+import { WeatherModule } from './modules/weather/weather.module';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    WeatherModule,
     EspnModule,
     BrowserModule,
     HttpClientModule,
