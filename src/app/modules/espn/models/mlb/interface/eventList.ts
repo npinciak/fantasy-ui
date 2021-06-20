@@ -1,19 +1,20 @@
 interface EventList {
-    events: Event[];
+    events: EspnEvent[];
 }
 
-interface Event {
+interface EspnEvent {
     id: string;
+    date: string;
     summary: string;
     competitors: Competitor[];
 }
 
 interface Competitor {
     id: string;
-    homeAway: 'home' | 'away';
-    score: string;
+    homeAway: string | 'home' | 'away';
+    score: number;
     record: string;
     abbreviation: string;
 }
 
-export { EventList, Event, Competitor };
+export { EventList, EspnEvent, Competitor };
