@@ -24,9 +24,28 @@ class CurrentConditions {
     }
 
     get chanceOf() {
+        return this._dataFields.precipitationProbability;
+    }
+
+    get chanceOfText() {
         return `Chance of ${precipitationMap[this._dataFields.precipitationType]}, ${this._dataFields.precipitationProbability}%`;
     }
 
+    get weatherImg(){
+        return `https://github.com/Tomorrow-IO-API/tomorrow-weather-codes/blob/master/color/${weatherMap[this._dataFields.weatherCode].split(' ').join('_').toLowerCase()}.svg`
+    }
+
+    get wind() {
+        return {
+            direction: this._dataFields.windDirection,
+            gust: this._dataFields.windGust,
+            speed: this._dataFields.windSpeed
+        };
+    }
+
+    get dewPoint() {
+        return this._dataFields.dewPoint;
+    }
 }
 
 export { CurrentConditions };
