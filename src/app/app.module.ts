@@ -19,21 +19,19 @@ import { environment } from 'src/environments/environment';
 import { MlbState } from './modules/espn/store/mlb/mlb.state';
 import { MlbTeamState } from './modules/espn/store/mlb/mlb-team.state';
 import { httpInterceptorProviders } from './@core/interceptors';
-import { WeatherModule } from './modules/weather/weather.module';
-
+import { WeatherState } from './modules/weather/store/weather.state';
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    WeatherModule,
     EspnModule,
     BrowserModule,
     HttpClientModule,
     MaterialModule,
     BrowserAnimationsModule,
     NgxsSelectSnapshotModule.forRoot(),
-    NgxsModule.forRoot([CoreState, MlbState, MlbTeamState], { developmentMode: !environment.production }),
+    NgxsModule.forRoot([CoreState, MlbState, MlbTeamState, WeatherState], { developmentMode: !environment.production }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsDispatchPluginModule.forRoot(),
     FlexLayoutModule,
