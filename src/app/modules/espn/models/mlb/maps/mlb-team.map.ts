@@ -255,6 +255,8 @@ const mlbStadiumMap = {
     },
     [MLBTeam.Tex]: {
         team: 'Texas Rangers',
+        name: 'ballpark_in_arlington',
+        img: 'https://www.baseball-almanac.com/stadium/directions/ballpark_in_arlington.gif',
         address: '1000 Ballpark Way, Arlington, TX 76011',
         lat: 32.750156,
         lng: -97.081117
