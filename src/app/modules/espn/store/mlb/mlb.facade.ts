@@ -3,6 +3,7 @@ import { Dispatch } from '@ngxs-labs/dispatch-decorator';
 import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { Game } from '../../models/mlb/class/game.class';
 import { BaseballTeam } from '../../models/mlb/class/team.class';
 
 import { EventState, ScheduleState, TeamState } from './mlb-state.model';
@@ -20,6 +21,7 @@ export class MlbFacade {
     @Select(MlbState.standings) public standings$: Observable<BaseballTeam[]>;
     @Select(MlbState.schedule) public schedule$: Observable<ScheduleState>;
     @Select(MlbState.liveScore) public liveScore$: Observable<BaseballTeam[]>;
+    @Select(MlbState.gameMap) public gamesMap$: Observable<{ [id: number]: Game }>;
 
     @Select(MlbState.teamsEmpty) public teamsEmpty$: Observable<boolean>;
     @Select(MlbState.isLoading) public isLoading$: Observable<boolean>;

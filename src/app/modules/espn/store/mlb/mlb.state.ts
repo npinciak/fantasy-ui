@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { newTeamMap } from '@app/@shared/helpers/mapping';
+import { gameMap, newTeamMap } from '@app/@shared/helpers/mapping';
 import { entityMap } from '@app/@shared/operators/entities.operators';
 import { State, Action, Selector, StateContext } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 
 import { EspnService } from '../../espn.service';
+import { Game } from '../../models/mlb/class/game.class';
 import { BaseballTeam } from '../../models/mlb/class/team.class';
 import { EspnEvent, Team } from '../../models/mlb/interface';
 import { MlbStateModel, ScheduleState, TeamState } from './mlb-state.model';
@@ -65,6 +66,11 @@ export class MlbState {
   @Selector()
   static games(state: MlbStateModel): { [id: number]: EspnEvent } {
     return state.games;
+  }
+
+  @Selector()
+  static gameMap(state: MlbStateModel): { [id: number]: Game } {
+    return gameMap(state.games);
   }
 
   @Selector()
