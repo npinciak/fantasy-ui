@@ -1,4 +1,8 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { gameMap } from '@app/@shared/helpers/mapping';
+import { MOCK_DATA } from '@app/@shared/helpers/testConfigs';
+import { MockGame } from '../espn/models/mlb/mocks';
 
 import { WeatherComponent } from './weather.component';
 
@@ -8,9 +12,10 @@ describe('WeatherComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WeatherComponent ]
+      imports: [HttpClientTestingModule],
+      declarations: [WeatherComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
