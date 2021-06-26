@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve --configuration=develop --port=4400",
     "build": "ng build --outputHashing='all' && npm run createEnv:Prod",
-    "test": "ng test --code-coverage --watch=true",
+    "test": "ng test --configuration=develop --code-coverage --watch=true",
     "test:ci": "npm run lint && npm run test",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
