@@ -27,13 +27,13 @@ export class WeatherService {
     params = params.append('fields', this.forecastFields);
     params = params.append('timesteps', 'current');
     params = params.append('units', 'imperial');
-    params = params.append('timezone', 'UTC');
+    params = params.append('timezone', 'est');
     return params;
   }
 
   private get forecastFields() {
     // eslint-disable-next-line max-len
-    return 'precipitationIntensity,precipitationType,precipitationProbability,temperatureApparent,temperature,humidity,windSpeed,windGust,windDirection,weatherCode';
+    return 'precipitationIntensity,precipitationType,precipitationProbability,temperatureApparent,temperature,humidity,dewPoint,windSpeed,windGust,windDirection,weatherCode';
   }
 
 }
