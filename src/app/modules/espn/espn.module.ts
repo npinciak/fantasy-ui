@@ -14,6 +14,7 @@ import { ScoreboardComponent } from './components/scoreboard/scoreboard.componen
 import { PlayerRatingColComponent } from './components/roster/player-rating-col/player-rating-col.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FreeAgentsComponent } from './components/free-agents/free-agents.component';
+import { WeatherComponent } from '../weather/weather.component';
 
 const components = [
   EspnComponent,
@@ -27,6 +28,7 @@ const components = [
   TeamInfoColComponent,
   RankingColComponent,
   FreeAgentsComponent,
+  WeatherComponent
 ];
 
 @NgModule({
