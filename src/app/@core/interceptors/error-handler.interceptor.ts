@@ -20,16 +20,14 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   }
 
   private errorHandler(response: HttpErrorResponse): Observable<HttpEvent<any>> {
-    if (response.error instanceof ErrorEvent) {
-    } else {
 
-      const msg = response.message || 'NO_MSG';
-      const code = response.status || 0;
-      const statusText = response.statusText || 'NO_STATUS';
+    console.error(response);
 
-      this.snackBar.open(`${code}: ${statusText}`, 'x', { panelClass: ['mat-toolbar', 'mat-warn'] });
+    const code = response.status || 0;
+    const statusText = response.statusText;
 
-      return of(response as any);
-    }
+    this.snackBar.open(`${code}: ${statusText}`, 'x', { panelClass: ['mat-toolbar', 'mat-warn'] });
+
+    throw response;
   }
 }
