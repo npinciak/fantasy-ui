@@ -1,0 +1,29 @@
+{
+    "bidAmount": 0,
+    "executionType": "EXECUTE",
+    "id": "XXX-XXX-XXX-XXX",
+    "isActingAsTeamOwner": false,
+    "isLeagueManager": false,
+    "isPending": false,
+    "items": [
+        {
+            "fromLineupSlotId": 5,
+            "fromTeamId": 0,
+            "isKeeper": false,
+            "overallPickNumber": 0,
+            "playerId": 35568,
+            "toLineupSlotId": 16,
+            "toTeamId": 0,
+            "type": "LINEUP"
+        }
+    ],
+    "memberId": "{XXX-XXX-XXX-XXX-XXXX}",
+    "proposedDate": 1624751945319,
+    "rating": 0,
+    "scoringPeriodId": 87,
+    "skipTransactionCounters": false,
+    "status": "EXECUTED",
+    "subOrder": 0,
+    "teamId": 6,
+    "type": "ROSTER"
+}
