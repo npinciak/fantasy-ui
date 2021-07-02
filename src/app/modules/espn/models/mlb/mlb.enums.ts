@@ -51,6 +51,49 @@ enum StatsColumn {
     whip = 'stats.whip'
 }
 
+enum MLBPosition {
+    POS0,
+    SP,
+    C,
+    '1B',
+    '2B',
+    '3B',
+    SS,
+    LF,
+    CF,
+    RF,
+    DH,
+    RP,
+    PH,
+    PR
+}
+
+enum MLBLineup {
+    C,
+    '1B',
+    '2B',
+    '3B',
+    SS,
+    OF,
+    '2B/SS',
+    '1B/3B',
+    LF,
+    CF,
+    RF,
+    DH,
+    UTIL,
+    P,
+    SP,
+    RP,
+    BE,
+    IL,
+    INV,
+    IF,
+    B,
+    P2,
+    MISC
+}
+
 enum MLBTeam {
     FA,
     Bal,
@@ -85,4 +128,4 @@ enum MLBTeam {
     TB
 }
 
-export { MLBTeam, StatsColumn, RotoColumn, TeamColumn, StatTypeId, PlayingStatus };
+export { MLBTeam, MLBPosition, MLBLineup, StatsColumn, RotoColumn, TeamColumn, StatTypeId, PlayingStatus };
