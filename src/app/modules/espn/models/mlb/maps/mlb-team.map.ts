@@ -37,17 +37,15 @@ const mlbTeamMap = {
 const mlbStadiumMap = {
     [MLBTeam.LAA]: {
         team: 'Anaheim Angels',
-
-        name: 'edison_international_field',
+        name: 'Edison International Field',
         img: 'https://www.baseball-almanac.com/stadium/directions/edison_international_field.gif',
-
         address: '2000 Gene Autry Way, Anaheim, CA. 92806',
         lat: 33.799572,
         lng: -117.889031
     },
     [MLBTeam.Ari]: {
         team: 'Arizona Diamondbacks',
-        name: 'bank_one_ballpark',
+        name: 'Bankone Ballpark',
         img: 'https://www.baseball-almanac.com/stadium/directions/bank_one_ballpark.gif',
         address: 'P.O. Box 2095, Phoenix, AZ. 85001',
         lat: 33.452922,
@@ -55,7 +53,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.Atl]: {
         team: 'Atlanta Braves',
-        name: 'turner_field',
+        name: 'Turner Field',
         img: 'https://www.baseball-almanac.com/stadium/directions/turner_field.gif',
         address: 'P.O. Box 4064, Atlanta, GA. 30302',
         lat: 33.74691,
@@ -79,7 +77,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.ChC]: {
         team: 'Chicago Cubs',
-        name: 'wrigley_field',
+        name: 'Wrigley Field',
         img: 'https://www.baseball-almanac.com/stadium/directions/wrigley_field.gif',
         address: '1060 Addison Street, Chicago, IL 60616',
         lat: 41.947201,
@@ -95,7 +93,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.Cin]: {
         team: 'Cincinnati Reds',
-        name: 'great_american_ballpark',
+        name: 'Great American Ballpark',
         img: 'https://www.baseball-almanac.com/stadium/directions/great_american_ballpark.gif',
         address: '100 Cinergy Field, Cincinnati, OH 45202',
         lat: 39.107183,
@@ -111,7 +109,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.Col]: {
         team: 'Colorado Rockies',
-        name: 'coors_field',
+        name: 'Coor Field',
         img: 'https://www.baseball-almanac.com/stadium/directions/coors_field.gif',
         address: 'Coors Field, 2001 Blake Street, Denver, CO 80205-2000',
         lat: 39.75698,
@@ -127,7 +125,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.Hou]: {
         team: 'Houston Astros',
-        name: 'minute_maid_park',
+        name: 'Minute Maid Park',
         img: 'https://www.baseball-almanac.com/stadium/directions/minute_maid_park.gif',
         address: 'P.O. Box 288, Houston, TX 77001-0288',
         lat: 29.76045,
@@ -135,7 +133,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.KC]: {
         team: 'Kansas City Royals',
-        name: 'kauffman_stadium',
+        name: 'Kauffman Stadium',
         img: 'https://www.baseball-almanac.com/stadium/directions/kauffman_stadium.gif',
         address: 'P.O. Boz 419969, Kansas City, MO 64141',
         lat: 39.10222,
@@ -143,7 +141,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.LAD]: {
         team: 'Los Angeles Dodgers',
-        name: 'dodger_stadium',
+        name: 'Dodger Stadium',
         img: 'https://www.baseball-almanac.com/stadium/directions/dodger_stadium.gif',
         address: '1000 Elysian Park Ave., Los Angeles, CA 90012',
         lat: 34.072437,
@@ -151,7 +149,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.Mil]: {
         team: 'Milwaukee Brewers',
-        name: 'miller_park',
+        name: 'Miller Park',
         img: 'https://www.baseball-almanac.com/stadium/directions/miller_park.gif',
         address: 'P.O. Box 3099, Milwaukee, WI 53201-3099',
         lat: 43.04205,
@@ -159,7 +157,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.Min]: {
         team: 'Minnesota Twins',
-        name: 'metrodome',
+        name: 'Metrodome',
         img: 'https://www.baseball-almanac.com/stadium/directions/metrodome.gif',
         address: '501 Chicago Ave. S., Minneapolis, MN 55415',
         lat: 44.974346,
@@ -167,7 +165,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.Wsh]: {
         team: 'Washington Nationals',
-        name: 'nationals_park',
+        name: 'Nationals Park',
         img: 'https://www.baseball-almanac.com/stadium/directions/nationals_park.gif',
         address: '1500 South Capitol Street SE, Washington, DC',
         lat: 38.87,
@@ -175,7 +173,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.NYM]: {
         team: 'New York Mets',
-        name: 'New York Mets',
+        name: 'Citi Field',
         img: 'https://www.baseball-almanac.com/stadium/directions/citi-field.gif',
         address: 'Roosevelt Ave & 126th Street, New York, NY 11368',
         lat: 40.75535,
@@ -199,7 +197,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.Phi]: {
         team: 'Philadelphia Phillies',
-        name: 'citizens_bank_ballpark',
+        name: 'Citizens Bank Ballpark',
         img: 'https://www.baseball-almanac.com/stadium/directions/citizens_bank_ballpark.gif',
         address: 'P.O. Box 7575, Philadelphia, PA 19101',
         lat: 39.952313,
@@ -207,7 +205,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.Pit]: {
         team: 'Pittsburgh Pirates',
-        name: 'PNC_park',
+        name: 'PNC Park',
         img: 'https://www.baseball-almanac.com/stadium/directions/PNC_park.gif',
         address: '600 Stadium Circle, Pittsburgh, PA 15212',
         lat: 40.461503,
@@ -215,7 +213,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.StL]: {
         team: 'St. Louis Cardinals',
-        name: 'busch_stadium',
+        name: 'Busch Stadium',
         img: 'https://www.baseball-almanac.com/stadium/directions/busch_stadium.gif',
         address: '250 Stadium Plaza, St. Louis, MO 63102',
         lat: 38.629683,
@@ -223,7 +221,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.SD]: {
         team: 'San Diego Padres',
-        name: 'petco_park',
+        name: 'Petco Park',
         img: 'https://www.baseball-almanac.com/stadium/directions/petco_park.gif',
         address: 'P.O. Box 2000, San Diego, CA 92112-2000',
         lat: 32.752148,
@@ -239,7 +237,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.Sea]: {
         team: 'Seattle Mariners',
-        name: 'safeco_field',
+        name: 'Safeco Field',
         img: 'https://www.baseball-almanac.com/stadium/directions/safeco_field.gif',
         address: 'P.O. Box 41000, 411 First Ave. S., Seattle, WA 98104',
         lat: 47.60174,
@@ -247,7 +245,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.TB]: {
         team: 'Tampa Bay Devil Rays',
-        name: 'tropicana_field',
+        name: 'Tropicana Field',
         img: 'https://www.baseball-almanac.com/stadium/directions/tropicana_field.gif',
         address: '1 Tropicana Drive, St. Petersburg, FL 33705',
         lat: 27.768487,
@@ -255,7 +253,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.Tex]: {
         team: 'Texas Rangers',
-        name: 'ballpark_in_arlington',
+        name: 'Ballpark in Arlington',
         img: 'https://www.baseball-almanac.com/stadium/directions/ballpark_in_arlington.gif',
         address: '1000 Ballpark Way, Arlington, TX 76011',
         lat: 32.750156,
@@ -263,7 +261,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.Tor]: {
         team: 'Toronto Blue Jays',
-        name: 'skydome',
+        name: 'Skydome',
         img: 'https://www.baseball-almanac.com/stadium/directions/skydome.gif',
         address: '1 Blue Jay Way, Suite 3200, Toronto, ONT M5V 1J1',
         lat: 43.641653,
@@ -271,7 +269,7 @@ const mlbStadiumMap = {
     },
     [MLBTeam.Mia]: {
         team: 'Miami Marlins',
-        name: 'pro_player_park',
+        name: 'Pro Player Park',
         img: 'https://www.baseball-almanac.com/stadium/directions/pro_player_park.gif'
     }
 };
