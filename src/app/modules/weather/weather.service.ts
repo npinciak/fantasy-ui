@@ -2,6 +2,7 @@ import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ApiService } from '../../@shared/services/api.service';
+import { CurrentWeather } from './weather/models/interface/currentWeather.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class WeatherService {
 
   constructor(private api: ApiService) { }
 
-  currentWeather = (coordinates: string) => this.api.get<any>(this.baseUri, {
+  currentWeather = (coordinates: string) => this.api.get<CurrentWeather>(this.baseUri, {
     headers: this.headers,
     params: this.queryParams.append('location', coordinates)
   });
