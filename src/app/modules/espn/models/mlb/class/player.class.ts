@@ -1,10 +1,10 @@
-import { statsKeyMap } from '../helpers';
+import { isPitcher, statsKeyMap } from '../helpers';
 import { PlayerStatsYear, PlayerRatings, PlayerOwnership, GameStatus, Player } from '../interface/player';
 import { mlbLineupMap } from '../maps/mlb-lineup.map';
 import { mlbPositionMap } from '../maps/mlb-position.map';
 import { mlbTeamMap } from '../maps/mlb-team.map';
 import { weights2021 } from '../mlb.const';
-import { StatTypeId } from '../mlb.enums';
+import { MLBLineup, StatTypeId } from '../mlb.enums';
 import { AdvStats } from './advStats.class';
 import { Game } from './game.class';
 
@@ -19,7 +19,7 @@ export class BaseballPlayer {
     readonly weights21 = weights2021;
 
     private _player: Player;
-    private _eligibleSlots: number[] = [];
+    private _eligibleSlots = {};
     private _ownership;
     private _ratings = new Map<number, any>();
     private _startingStatus = new Map<string, string>();
@@ -75,9 +75,13 @@ export class BaseballPlayer {
         return map;
     }
 
+    get eligibleLineupSlots() {
+        return this._eligibleSlots;
+    }
+
     set eligibleSlots(slots: number[]) {
         for (const slot of slots) {
-            this._eligibleSlots.push(slot);
+            this._eligibleSlots[slot] = slot;
         }
     }
 
@@ -116,37 +120,18 @@ export class BaseballPlayer {
     }
 
     get playerRatings() {
-        return this._ratings;
+        return this._player.playerPoolEntry.ratings;
     }
 
-    get ownershipChange() {
-        return this._ownership.percentChange;
-    }
-
-    get percentOwned() {
-        return this._ownership.percentOwned;
+    get playerOwnership() {
+        return {
+            change: this._player.playerPoolEntry.player.ownership.percentChange,
+            percentOwned: this._player.playerPoolEntry.player.ownership.percentOwned
+        };
     }
 
     get isPitcher() {
-        return this.isPitcherAlgo(this._eligibleSlots);
+        return isPitcher(this._eligibleSlots);
     }
 
-    get wOBA7() {
-        return this._advStats.wOBA7;
-    }
-
-    get fip() {
-        return this._advStats.fip;
-    }
-
-    private get _advStats() {
-        const advStats = new AdvStats();
-        advStats.seasonConst = this.weights21;
-        return advStats;
-    }
-
-    private isPitcherAlgo(eligiblePos: number[], pitcherPos = [13, 14, 15]) {
-        const eligibility = eligiblePos.filter(num => pitcherPos.indexOf(num) !== -1);
-        return [... new Set(eligibility)].length > 0;
-    }
 }
