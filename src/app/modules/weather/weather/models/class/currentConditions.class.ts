@@ -28,11 +28,16 @@ class CurrentConditions {
     }
 
     get chanceOfText() {
+
+        if (precipitationMap[this._dataFields.precipitationType] === 'N/A') {
+            return 'No precipitation';
+        }
+
         return `Chance of ${precipitationMap[this._dataFields.precipitationType]}, ${this._dataFields.precipitationProbability}%`;
     }
 
-    get weatherImg(){
-        return `https://github.com/Tomorrow-IO-API/tomorrow-weather-codes/blob/master/color/${weatherMap[this._dataFields.weatherCode].split(' ').join('_').toLowerCase()}.svg`
+    get weatherImg() {
+        return `https://github.com/Tomorrow-IO-API/tomorrow-weather-codes/blob/master/color/${this.lowercaseWeatherCode}.svg`;
     }
 
     get wind() {
@@ -46,6 +51,11 @@ class CurrentConditions {
     get dewPoint() {
         return this._dataFields.dewPoint;
     }
+
+    private get lowercaseWeatherCode() {
+        return weatherMap[this._dataFields.weatherCode].split(' ').join('_').toLowerCase();
+    }
+
 }
 
 export { CurrentConditions };
