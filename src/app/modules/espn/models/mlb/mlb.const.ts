@@ -1,5 +1,7 @@
 import { SeasonConst } from './interface/adv.stats';
-import { RotoColumn, StatsColumn, TeamColumn } from './mlb.enums';
+import { MLBTeam, RotoColumn, StatsColumn, TeamColumn } from './mlb.enums';
+
+const domeStadiums = [MLBTeam.Tor, MLBTeam.Ari, MLBTeam.TB, MLBTeam.Min, MLBTeam.Hou, MLBTeam.Mia, MLBTeam.Tex];
 
 const weights2020: SeasonConst = {
     wBB: 0.699,
@@ -130,4 +132,4 @@ const rosterColumns = {
     ]
 };
 
-export { PlayerInfoColumn, rosterColumns, standingsColumns, weights2020, weights2021 };
+export { PlayerInfoColumn, rosterColumns, standingsColumns, weights2020, weights2021, domeStadiums };
