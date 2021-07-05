@@ -1,0 +1,4 @@
+class WeatherRequest {
+}
+
+export { WeatherRequest };
