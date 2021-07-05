@@ -5,7 +5,7 @@ import { WeatherCode } from '../weather.enum';
  *
  * @description https://docs.tomorrow.io/reference/data-layers-overview
  */
-const weatherMap = {
+const WEATHER_MAP = {
     [WeatherCode.Unknown]: 'Unknown',
     [WeatherCode.Clear]: 'Clear',
     [WeatherCode.Cloudy]: 'Cloudy',
@@ -35,4 +35,4 @@ const weatherMap = {
     [WeatherCode.Thunderstorm]: 'Thunderstorm'
 };
 
-export { weatherMap };
+export { WEATHER_MAP };

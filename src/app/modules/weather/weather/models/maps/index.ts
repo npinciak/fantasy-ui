@@ -1,4 +1,4 @@
-import { precipitationMap } from './precipCode.map';
-import { weatherMap } from './weatherCode.map';
+import { PRECIPITATION_MAP } from './precipCode.map';
+import { WEATHER_MAP } from './weatherCode.map';
 
-export { weatherMap, precipitationMap };
+export { WEATHER_MAP, PRECIPITATION_MAP };

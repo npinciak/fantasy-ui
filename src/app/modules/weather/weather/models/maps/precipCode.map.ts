@@ -5,7 +5,7 @@ import { PrecipitationCode } from '../weather.enum';
  *
  * @description https://docs.tomorrow.io/reference/data-layers-overview
  */
-const precipitationMap = {
+const PRECIPITATION_MAP = {
     [PrecipitationCode.NA]: 'N/A',
     [PrecipitationCode.Rain]: 'Rain',
     [PrecipitationCode.Snow]: 'Snow',
@@ -13,4 +13,4 @@ const precipitationMap = {
     [PrecipitationCode.IcePellets]: 'Ice Pellets',
 };
 
-export { precipitationMap };
+export { PRECIPITATION_MAP };
