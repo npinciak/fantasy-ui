@@ -34,7 +34,7 @@ const mlbTeamMap = {
     30: 'TB'
 };
 
-const mlbStadiumMap = {
+const MLB_STADIUM_MAP = {
     [MLBTeam.LAA]: {
         team: 'Anaheim Angels',
         name: 'Edison International Field',
@@ -269,9 +269,9 @@ const mlbStadiumMap = {
     },
     [MLBTeam.Mia]: {
         team: 'Miami Marlins',
-        name: 'Pro Player Park',
+        name: 'LoanDepot Park',
         img: 'https://www.baseball-almanac.com/stadium/directions/pro_player_park.gif'
     }
 };
 
-export { mlbTeamMap, mlbStadiumMap };
+export { mlbTeamMap, MLB_STADIUM_MAP };

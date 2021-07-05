@@ -1,4 +1,5 @@
 import { Competitor } from '../interface';
+import { MLB_STADIUM_MAP, mlbTeamMap } from '../maps/mlb-team.map';
 
 export class Game {
     private _id: string;
@@ -25,10 +26,19 @@ export class Game {
 
     get summary() {
         return this._summary;
+    get location() {
+        return `${MLB_STADIUM_MAP[this._homeTeam].lat}, ${MLB_STADIUM_MAP[this._homeTeam].lng}`;
+    }
     }
 
     set summary(val: string) {
         this._summary = val;
+    get stadium() {
+        return {
+            img: `${MLB_STADIUM_MAP[this._homeTeam].img}`,
+            name: MLB_STADIUM_MAP[this._homeTeam].name,
+            isDome: domeStadiums.includes(this._homeTeam)
+        };
     }
 
 }

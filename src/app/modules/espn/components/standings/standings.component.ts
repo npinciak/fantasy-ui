@@ -9,7 +9,7 @@ import { RotoColumn, StatsColumn, TeamColumn } from '../../models/mlb/mlb.enums'
 import { standingsColumns } from '../../models/mlb/mlb.const';
 import { TEST_ID } from '@app/@shared/helpers/testConfigs';
 import { mlbTeamMap } from '../../models/mlb/maps';
-import { mlbStadiumMap } from '../../models/mlb/maps/mlb-team.map';
+import { MLB_STADIUM_MAP } from '../../models/mlb/maps/mlb-team.map';
 
 @Component({
   selector: 'app-standings',
