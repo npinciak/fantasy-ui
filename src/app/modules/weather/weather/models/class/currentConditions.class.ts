@@ -1,10 +1,11 @@
+import { WeatherValues } from '../interface/currentWeather.interface';
 import { PRECIPITATION_MAP, WEATHER_MAP } from '../maps';
 import { WeatherCode } from '../weather.enum';
 
 class CurrentConditions {
-    private _dataFields: any;
+    private _dataFields: WeatherValues;
 
-    constructor(dataFields: any) {
+    constructor(dataFields: WeatherValues) {
         this._dataFields = dataFields;
     }
 
@@ -61,9 +62,7 @@ class CurrentConditions {
 
         switch (this._dataFields.weatherCode) {
             case WeatherCode.MostlyClear:
-                return `${WEATHER_MAP[this._dataFields.weatherCode].split(' ').join('_').toLowerCase()}_day`;
             case WeatherCode.Clear:
-                return `${WEATHER_MAP[this._dataFields.weatherCode].split(' ').join('_').toLowerCase()}_day`;
             case WeatherCode.PartlyCloudy:
                 return `${WEATHER_MAP[this._dataFields.weatherCode].split(' ').join('_').toLowerCase()}_day`;
             default:
