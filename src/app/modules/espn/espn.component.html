@@ -11,7 +11,7 @@ footer footer footer footer" gdGap="16px" gdRows="auto auto auto auto" gdAreas.l
 
     <div class="side" gdArea="side">
         <ng-container *ngIf="(mlbFacade.isLoading$ | async) === (false); else loading">
-            <app-scoreboard [teams]="mlbFacade.liveScore$ | async"></app-scoreboard>
+            <app-league-scoreboard [teams]="mlbFacade.liveScore$ | async"></app-league-scoreboard>
         </ng-container>
     </div>
 

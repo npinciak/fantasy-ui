@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { RouterTestingModule } from '@angular/router/testing';
-import { getByTestId } from 'src/app/@shared/helpers/testConfigs';
 import { ScoreboardComponent } from './scoreboard.component';
 
 describe('ScoreboardComponent', () => {
