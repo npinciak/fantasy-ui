@@ -53,37 +53,4 @@ describe('WeatherComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  describe('gamesToArray', () => {
-    it('should return empty array', () => {
-      expect(component.gamesToArray).toEqual([]);
-    });
-
-    it('should return array of games', () => {
-      component.games = MOCK_DATA.GAME;
-      expect(component.gamesToArray).toEqual([MOCK_DATA.GAME[401228076]]);
-    });
-  });
-
-  describe('getWeather', () => {
-    it('should dispatch action', () => {
-      const spy = spyOn(state, 'fetchWeather');
-
-      const game = MOCK_DATA.GAME;
-
-      component.getWeather(game[401228076]);
-
-      expect(spy).toHaveBeenCalled();
-    });
-
-    it('should make http call', () => {
-      const spy = spyOn(service, 'currentWeather').and.callThrough();
-
-      const game = MOCK_DATA.GAME;
-
-      component.getWeather(game[401228076]);
-
-      expect(spy).toHaveBeenCalled();
-    });
-  });
 });
