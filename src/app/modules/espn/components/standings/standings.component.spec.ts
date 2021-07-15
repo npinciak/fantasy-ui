@@ -24,41 +24,51 @@ import { teamMap } from '@app/@shared/helpers/mapping';
 import { MOCK_DATA } from '@app/@shared/helpers/testConfigs';
 import { NgxsModule } from '@ngxs/store';
 
-
 describe('StandingsComponent', () => {
   let loader: HarnessLoader;
   let component: StandingsComponent;
   let fixture: ComponentFixture<StandingsComponent>;
 
   const router = {
-    navigate: jasmine.createSpy('navigate')
+    navigate: jasmine.createSpy('navigate'),
   };
-
-
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NgxsModule.forRoot(), RouterTestingModule, MatCardModule, MatButtonToggleModule, MatTableModule, BrowserAnimationsModule],
-      declarations: [StandingsComponent, RosterComponent, TeamComponent, TeamInfoColComponent, RankingColComponent],
+      imports: [
+        NgxsModule.forRoot(),
+        RouterTestingModule,
+        MatCardModule,
+        MatButtonToggleModule,
+        MatTableModule,
+        BrowserAnimationsModule,
+      ],
+      declarations: [
+        StandingsComponent,
+        RosterComponent,
+        TeamComponent,
+        TeamInfoColComponent,
+        RankingColComponent,
+      ],
       providers: [
         { provide: Router, useValue: router },
         // { provide: mlbFacade, useValue: mockmlbFacade },
         {
-          provide: ActivatedRoute, useValue: {
+          provide: ActivatedRoute,
+          useValue: {
             snapshot: {
               params: {
                 sport: 'mlb',
-                leagueId: 1209434861
-              }
-            }
-          }
-        }]
-    })
-      .compileComponents();
+                leagueId: 1209434861,
+              },
+            },
+          },
+        },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
-
     fixture = TestBed.createComponent(StandingsComponent);
     component = fixture.componentInstance;
     component.teams = Object.values(MOCK_DATA.BASEBALL_TEAM_MAP);
@@ -68,5 +78,4 @@ describe('StandingsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 });

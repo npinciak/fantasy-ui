@@ -13,17 +13,10 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "lib": ["es2018", "dom"],
     "paths": {
-      "@app/*": [
-        "src/app/*"
-      ],
-      "@espn/*": [
-        "src/app/modules/espn/*"
-      ],
+      "@app/*": ["src/app/*"],
+      "@espn/*": ["src/app/modules/espn/*"]
     }
   }
 }

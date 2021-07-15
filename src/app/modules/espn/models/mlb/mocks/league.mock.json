@@ -1,1879 +1,1844 @@
 {
-    "draftDetail": {
-      "completeDate": 1615051894167,
-      "drafted": true,
-      "inProgress": false
-    },
-    "gameId": 2,
-    "id": 1209434861,
-    "schedule": [
-      {
-        "id": 1,
-        "matchupPeriodId": 1,
-        "teams": [
-          {
-            "adjustment": 0,
-            "cumulativeScore": {
-              "losses": 0,
-              "statBySlot": {
-                "22": {
-                  "exceededOnScoringPeriod": 0,
-                  "limitExceeded": false,
-                  "statId": 33,
-                  "value": 65
+  "draftDetail": {
+    "completeDate": 1615051894167,
+    "drafted": true,
+    "inProgress": false
+  },
+  "gameId": 2,
+  "id": 1209434861,
+  "schedule": [
+    {
+      "id": 1,
+      "matchupPeriodId": 1,
+      "teams": [
+        {
+          "adjustment": 0,
+          "cumulativeScore": {
+            "losses": 0,
+            "statBySlot": {
+              "22": {
+                "exceededOnScoringPeriod": 0,
+                "limitExceeded": false,
+                "statId": 33,
+                "value": 65
+              }
+            },
+            "ties": 0,
+            "wins": 0
+          },
+          "rosterForCurrentScoringPeriod": {
+            "entries": [
+              {
+                "lineupSlotId": 17,
+                "playerId": 30836,
+                "playerPoolEntry": {
+                  "id": 30836,
+                  "player": {
+                    "defaultPositionId": 8,
+                    "fullName": "Mike Trout",
+                    "id": 30836,
+                    "proTeamId": 3,
+                    "stats": [],
+                    "universeId": 1
+                  }
                 }
               },
-              "ties": 0,
-              "wins": 0
-            },
-            "rosterForCurrentScoringPeriod": {
-              "entries": [
-                {
-                  "lineupSlotId": 17,
-                  "playerId": 30836,
-                  "playerPoolEntry": {
-                    "id": 30836,
-                    "player": {
-                      "defaultPositionId": 8,
-                      "fullName": "Mike Trout",
-                      "id": 30836,
-                      "proTeamId": 3,
-                      "stats": [],
-                      "universeId": 1
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 13,
-                  "playerId": 32055,
-                  "playerPoolEntry": {
+              {
+                "lineupSlotId": 13,
+                "playerId": 32055,
+                "playerPoolEntry": {
+                  "id": 32055,
+                  "player": {
+                    "defaultPositionId": 1,
+                    "fullName": "Yu Darvish",
                     "id": 32055,
-                    "player": {
-                      "defaultPositionId": 1,
-                      "fullName": "Yu Darvish",
-                      "id": 32055,
-                      "proTeamId": 25,
-                      "stats": [],
-                      "universeId": 2
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 13,
-                  "playerId": 32697,
-                  "playerPoolEntry": {
-                    "id": 32697,
-                    "player": {
-                      "defaultPositionId": 1,
-                      "fullName": "Lucas Giolito",
-                      "id": 32697,
-                      "proTeamId": 4,
-                      "stats": [],
-                      "universeId": 1
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 17,
-                  "playerId": 32177,
-                  "playerPoolEntry": {
-                    "id": 32177,
-                    "player": {
-                      "defaultPositionId": 2,
-                      "fullName": "J.T. Realmuto",
-                      "id": 32177,
-                      "proTeamId": 22,
-                      "stats": [],
-                      "universeId": 2
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 5,
-                  "playerId": 31187,
-                  "playerPoolEntry": {
-                    "id": 31187,
-                    "player": {
-                      "defaultPositionId": 9,
-                      "fullName": "Nick Castellanos",
-                      "id": 31187,
-                      "proTeamId": 17,
-                      "stats": [],
-                      "universeId": 2
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 13,
-                  "playerId": 32582,
-                  "playerPoolEntry": {
-                    "id": 32582,
-                    "player": {
-                      "defaultPositionId": 1,
-                      "fullName": "Hyun Jin Ryu",
-                      "id": 32582,
-                      "proTeamId": 14,
-                      "stats": [],
-                      "universeId": 1
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 13,
-                  "playerId": 32082,
-                  "playerPoolEntry": {
-                    "id": 32082,
-                    "player": {
-                      "defaultPositionId": 1,
-                      "fullName": "Sonny Gray",
-                      "id": 32082,
-                      "proTeamId": 17,
-                      "stats": [],
-                      "universeId": 2
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 17,
-                  "playerId": 29999,
-                  "playerPoolEntry": {
-                    "id": 29999,
-                    "player": {
-                      "defaultPositionId": 4,
-                      "fullName": "Mike Moustakas",
-                      "id": 29999,
-                      "proTeamId": 17,
-                      "stats": [],
-                      "universeId": 2
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 3,
-                  "playerId": 39907,
-                  "playerPoolEntry": {
-                    "id": 39907,
-                    "player": {
-                      "defaultPositionId": 5,
-                      "fullName": "Tommy Edman",
-                      "id": 39907,
-                      "proTeamId": 24,
-                      "stats": [],
-                      "universeId": 2
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 2,
-                  "playerId": 32900,
-                  "playerPoolEntry": {
-                    "id": 32900,
-                    "player": {
-                      "defaultPositionId": 7,
-                      "fullName": "Chris Taylor",
-                      "id": 32900,
-                      "proTeamId": 19,
-                      "stats": [],
-                      "universeId": 2
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 5,
-                  "playerId": 32833,
-                  "playerPoolEntry": {
-                    "id": 32833,
-                    "player": {
-                      "defaultPositionId": 7,
-                      "fullName": "Jesse Winker",
-                      "id": 32833,
-                      "proTeamId": 17,
-                      "stats": [],
-                      "universeId": 2
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 12,
-                  "playerId": 33546,
-                  "playerPoolEntry": {
-                    "id": 33546,
-                    "player": {
-                      "defaultPositionId": 4,
-                      "fullName": "Adam Frazier",
-                      "id": 33546,
-                      "proTeamId": 23,
-                      "stats": [],
-                      "universeId": 2
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 13,
-                  "playerId": 31174,
-                  "playerPoolEntry": {
-                    "id": 31174,
-                    "player": {
-                      "defaultPositionId": 1,
-                      "fullName": "Nathan Eovaldi",
-                      "id": 31174,
-                      "proTeamId": 2,
-                      "stats": [],
-                      "universeId": 1
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 1,
-                  "playerId": 30280,
-                  "playerPoolEntry": {
-                    "id": 30280,
-                    "player": {
-                      "defaultPositionId": 3,
-                      "fullName": "Carlos Santana",
-                      "id": 30280,
-                      "proTeamId": 7,
-                      "stats": [],
-                      "universeId": 1
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 5,
-                  "playerId": 35537,
-                  "playerPoolEntry": {
-                    "id": 35537,
-                    "player": {
-                      "defaultPositionId": 7,
-                      "fullName": "Adolis Garcia",
-                      "id": 35537,
-                      "proTeamId": 13,
-                      "stats": [],
-                      "universeId": 1
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 16,
-                  "playerId": 32132,
-                  "playerPoolEntry": {
-                    "id": 32132,
-                    "player": {
-                      "defaultPositionId": 3,
-                      "fullName": "Jesus Aguilar",
-                      "id": 32132,
-                      "proTeamId": 28,
-                      "stats": [],
-                      "universeId": 2
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 0,
-                  "playerId": 30112,
-                  "playerPoolEntry": {
-                    "id": 30112,
-                    "player": {
-                      "defaultPositionId": 2,
-                      "fullName": "Buster Posey",
-                      "id": 30112,
-                      "proTeamId": 26,
-                      "stats": [],
-                      "universeId": 2
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 13,
-                  "playerId": 33636,
-                  "playerPoolEntry": {
-                    "id": 33636,
-                    "player": {
-                      "defaultPositionId": 11,
-                      "fullName": "Kendall Graveman",
-                      "id": 33636,
-                      "proTeamId": 12,
-                      "stats": [],
-                      "universeId": 1
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 16,
-                  "playerId": 32620,
-                  "playerPoolEntry": {
-                    "id": 32620,
-                    "player": {
-                      "defaultPositionId": 11,
-                      "fullName": "Alex Wood",
-                      "id": 32620,
-                      "proTeamId": 26,
-                      "stats": [],
-                      "universeId": 2
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 13,
-                  "playerId": 34943,
-                  "playerPoolEntry": {
-                    "id": 34943,
-                    "player": {
-                      "defaultPositionId": 1,
-                      "fullName": "Dylan Cease",
-                      "id": 34943,
-                      "proTeamId": 4,
-                      "stats": [],
-                      "universeId": 1
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 4,
-                  "playerId": 30791,
-                  "playerPoolEntry": {
-                    "id": 30791,
-                    "player": {
-                      "defaultPositionId": 6,
-                      "fullName": "Miguel Rojas",
-                      "id": 30791,
-                      "proTeamId": 28,
-                      "stats": [],
-                      "universeId": 2
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 13,
-                  "playerId": 35844,
-                  "playerPoolEntry": {
-                    "id": 35844,
-                    "player": {
-                      "defaultPositionId": 11,
-                      "fullName": "Lou Trivino",
-                      "id": 35844,
-                      "proTeamId": 11,
-                      "stats": [],
-                      "universeId": 1
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 5,
-                  "playerId": 32788,
-                  "playerPoolEntry": {
-                    "id": 32788,
-                    "player": {
-                      "defaultPositionId": 9,
-                      "fullName": "Tyler Naquin",
-                      "id": 32788,
-                      "proTeamId": 17,
-                      "stats": [],
-                      "universeId": 2
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 5,
-                  "playerId": 31385,
-                  "playerPoolEntry": {
-                    "id": 31385,
-                    "player": {
-                      "defaultPositionId": 7,
-                      "fullName": "Robbie Grossman",
-                      "id": 31385,
-                      "proTeamId": 6,
-                      "stats": [],
-                      "universeId": 1
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 16,
-                  "playerId": 34701,
-                  "playerPoolEntry": {
-                    "id": 34701,
-                    "player": {
-                      "defaultPositionId": 3,
-                      "fullName": "Josh Fuentes",
-                      "id": 34701,
-                      "proTeamId": 27,
-                      "stats": [],
-                      "universeId": 2
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 6,
-                  "playerId": 30469,
-                  "playerPoolEntry": {
-                    "id": 30469,
-                    "player": {
-                      "defaultPositionId": 6,
-                      "fullName": "Brandon Crawford",
-                      "id": 30469,
-                      "proTeamId": 26,
-                      "stats": [],
-                      "universeId": 2
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 7,
-                  "playerId": 30819,
-                  "playerPoolEntry": {
-                    "id": 30819,
-                    "player": {
-                      "defaultPositionId": 5,
-                      "fullName": "Kyle Seager",
-                      "id": 30819,
-                      "proTeamId": 12,
-                      "stats": [],
-                      "universeId": 1
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 13,
-                  "playerId": 36175,
-                  "playerPoolEntry": {
-                    "id": 36175,
-                    "player": {
-                      "defaultPositionId": 11,
-                      "fullName": "Josh Staumont",
-                      "id": 36175,
-                      "proTeamId": 7,
-                      "stats": [],
-                      "universeId": 1
-                    }
-                  }
-                },
-                {
-                  "lineupSlotId": 16,
-                  "playerId": 31117,
-                  "playerPoolEntry": {
-                    "id": 31117,
-                    "player": {
-                      "defaultPositionId": 7,
-                      "fullName": "Jurickson Profar",
-                      "id": 31117,
-                      "proTeamId": 25,
-                      "stats": [],
-                      "universeId": 2
-                    }
+                    "proTeamId": 25,
+                    "stats": [],
+                    "universeId": 2
                   }
                 }
-              ]
-            },
-            "teamId": 6,
-            "tiebreak": 0,
-            "totalPoints": 57,
-            "totalPointsLive": 57
-          }
-        ]
-      }
-    ],
-    "scoringPeriodId": 56,
-    "seasonId": 2021,
-    "segmentId": 0,
-    "settings": {
-      "acquisitionSettings": {
-        "acquisitionBudget": 100,
-        "acquisitionLimit": -1,
-        "acquisitionType": "WAIVERS_TRADITIONAL",
-        "isUsingAcquisitionBudget": false,
-        "matchupAcquisitionLimit": 0,
-        "matchupLimitPerScoringPeriod": false,
-        "minimumBid": 1,
-        "waiverHours": 24,
-        "waiverOrderReset": false,
-        "waiverProcessDays": [
-          "SUNDAY"
-        ],
-        "waiverProcessHour": 8
+              },
+              {
+                "lineupSlotId": 13,
+                "playerId": 32697,
+                "playerPoolEntry": {
+                  "id": 32697,
+                  "player": {
+                    "defaultPositionId": 1,
+                    "fullName": "Lucas Giolito",
+                    "id": 32697,
+                    "proTeamId": 4,
+                    "stats": [],
+                    "universeId": 1
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 17,
+                "playerId": 32177,
+                "playerPoolEntry": {
+                  "id": 32177,
+                  "player": {
+                    "defaultPositionId": 2,
+                    "fullName": "J.T. Realmuto",
+                    "id": 32177,
+                    "proTeamId": 22,
+                    "stats": [],
+                    "universeId": 2
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 5,
+                "playerId": 31187,
+                "playerPoolEntry": {
+                  "id": 31187,
+                  "player": {
+                    "defaultPositionId": 9,
+                    "fullName": "Nick Castellanos",
+                    "id": 31187,
+                    "proTeamId": 17,
+                    "stats": [],
+                    "universeId": 2
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 13,
+                "playerId": 32582,
+                "playerPoolEntry": {
+                  "id": 32582,
+                  "player": {
+                    "defaultPositionId": 1,
+                    "fullName": "Hyun Jin Ryu",
+                    "id": 32582,
+                    "proTeamId": 14,
+                    "stats": [],
+                    "universeId": 1
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 13,
+                "playerId": 32082,
+                "playerPoolEntry": {
+                  "id": 32082,
+                  "player": {
+                    "defaultPositionId": 1,
+                    "fullName": "Sonny Gray",
+                    "id": 32082,
+                    "proTeamId": 17,
+                    "stats": [],
+                    "universeId": 2
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 17,
+                "playerId": 29999,
+                "playerPoolEntry": {
+                  "id": 29999,
+                  "player": {
+                    "defaultPositionId": 4,
+                    "fullName": "Mike Moustakas",
+                    "id": 29999,
+                    "proTeamId": 17,
+                    "stats": [],
+                    "universeId": 2
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 3,
+                "playerId": 39907,
+                "playerPoolEntry": {
+                  "id": 39907,
+                  "player": {
+                    "defaultPositionId": 5,
+                    "fullName": "Tommy Edman",
+                    "id": 39907,
+                    "proTeamId": 24,
+                    "stats": [],
+                    "universeId": 2
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 2,
+                "playerId": 32900,
+                "playerPoolEntry": {
+                  "id": 32900,
+                  "player": {
+                    "defaultPositionId": 7,
+                    "fullName": "Chris Taylor",
+                    "id": 32900,
+                    "proTeamId": 19,
+                    "stats": [],
+                    "universeId": 2
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 5,
+                "playerId": 32833,
+                "playerPoolEntry": {
+                  "id": 32833,
+                  "player": {
+                    "defaultPositionId": 7,
+                    "fullName": "Jesse Winker",
+                    "id": 32833,
+                    "proTeamId": 17,
+                    "stats": [],
+                    "universeId": 2
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 12,
+                "playerId": 33546,
+                "playerPoolEntry": {
+                  "id": 33546,
+                  "player": {
+                    "defaultPositionId": 4,
+                    "fullName": "Adam Frazier",
+                    "id": 33546,
+                    "proTeamId": 23,
+                    "stats": [],
+                    "universeId": 2
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 13,
+                "playerId": 31174,
+                "playerPoolEntry": {
+                  "id": 31174,
+                  "player": {
+                    "defaultPositionId": 1,
+                    "fullName": "Nathan Eovaldi",
+                    "id": 31174,
+                    "proTeamId": 2,
+                    "stats": [],
+                    "universeId": 1
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 1,
+                "playerId": 30280,
+                "playerPoolEntry": {
+                  "id": 30280,
+                  "player": {
+                    "defaultPositionId": 3,
+                    "fullName": "Carlos Santana",
+                    "id": 30280,
+                    "proTeamId": 7,
+                    "stats": [],
+                    "universeId": 1
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 5,
+                "playerId": 35537,
+                "playerPoolEntry": {
+                  "id": 35537,
+                  "player": {
+                    "defaultPositionId": 7,
+                    "fullName": "Adolis Garcia",
+                    "id": 35537,
+                    "proTeamId": 13,
+                    "stats": [],
+                    "universeId": 1
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 16,
+                "playerId": 32132,
+                "playerPoolEntry": {
+                  "id": 32132,
+                  "player": {
+                    "defaultPositionId": 3,
+                    "fullName": "Jesus Aguilar",
+                    "id": 32132,
+                    "proTeamId": 28,
+                    "stats": [],
+                    "universeId": 2
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 0,
+                "playerId": 30112,
+                "playerPoolEntry": {
+                  "id": 30112,
+                  "player": {
+                    "defaultPositionId": 2,
+                    "fullName": "Buster Posey",
+                    "id": 30112,
+                    "proTeamId": 26,
+                    "stats": [],
+                    "universeId": 2
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 13,
+                "playerId": 33636,
+                "playerPoolEntry": {
+                  "id": 33636,
+                  "player": {
+                    "defaultPositionId": 11,
+                    "fullName": "Kendall Graveman",
+                    "id": 33636,
+                    "proTeamId": 12,
+                    "stats": [],
+                    "universeId": 1
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 16,
+                "playerId": 32620,
+                "playerPoolEntry": {
+                  "id": 32620,
+                  "player": {
+                    "defaultPositionId": 11,
+                    "fullName": "Alex Wood",
+                    "id": 32620,
+                    "proTeamId": 26,
+                    "stats": [],
+                    "universeId": 2
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 13,
+                "playerId": 34943,
+                "playerPoolEntry": {
+                  "id": 34943,
+                  "player": {
+                    "defaultPositionId": 1,
+                    "fullName": "Dylan Cease",
+                    "id": 34943,
+                    "proTeamId": 4,
+                    "stats": [],
+                    "universeId": 1
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 4,
+                "playerId": 30791,
+                "playerPoolEntry": {
+                  "id": 30791,
+                  "player": {
+                    "defaultPositionId": 6,
+                    "fullName": "Miguel Rojas",
+                    "id": 30791,
+                    "proTeamId": 28,
+                    "stats": [],
+                    "universeId": 2
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 13,
+                "playerId": 35844,
+                "playerPoolEntry": {
+                  "id": 35844,
+                  "player": {
+                    "defaultPositionId": 11,
+                    "fullName": "Lou Trivino",
+                    "id": 35844,
+                    "proTeamId": 11,
+                    "stats": [],
+                    "universeId": 1
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 5,
+                "playerId": 32788,
+                "playerPoolEntry": {
+                  "id": 32788,
+                  "player": {
+                    "defaultPositionId": 9,
+                    "fullName": "Tyler Naquin",
+                    "id": 32788,
+                    "proTeamId": 17,
+                    "stats": [],
+                    "universeId": 2
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 5,
+                "playerId": 31385,
+                "playerPoolEntry": {
+                  "id": 31385,
+                  "player": {
+                    "defaultPositionId": 7,
+                    "fullName": "Robbie Grossman",
+                    "id": 31385,
+                    "proTeamId": 6,
+                    "stats": [],
+                    "universeId": 1
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 16,
+                "playerId": 34701,
+                "playerPoolEntry": {
+                  "id": 34701,
+                  "player": {
+                    "defaultPositionId": 3,
+                    "fullName": "Josh Fuentes",
+                    "id": 34701,
+                    "proTeamId": 27,
+                    "stats": [],
+                    "universeId": 2
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 6,
+                "playerId": 30469,
+                "playerPoolEntry": {
+                  "id": 30469,
+                  "player": {
+                    "defaultPositionId": 6,
+                    "fullName": "Brandon Crawford",
+                    "id": 30469,
+                    "proTeamId": 26,
+                    "stats": [],
+                    "universeId": 2
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 7,
+                "playerId": 30819,
+                "playerPoolEntry": {
+                  "id": 30819,
+                  "player": {
+                    "defaultPositionId": 5,
+                    "fullName": "Kyle Seager",
+                    "id": 30819,
+                    "proTeamId": 12,
+                    "stats": [],
+                    "universeId": 1
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 13,
+                "playerId": 36175,
+                "playerPoolEntry": {
+                  "id": 36175,
+                  "player": {
+                    "defaultPositionId": 11,
+                    "fullName": "Josh Staumont",
+                    "id": 36175,
+                    "proTeamId": 7,
+                    "stats": [],
+                    "universeId": 1
+                  }
+                }
+              },
+              {
+                "lineupSlotId": 16,
+                "playerId": 31117,
+                "playerPoolEntry": {
+                  "id": 31117,
+                  "player": {
+                    "defaultPositionId": 7,
+                    "fullName": "Jurickson Profar",
+                    "id": 31117,
+                    "proTeamId": 25,
+                    "stats": [],
+                    "universeId": 2
+                  }
+                }
+              }
+            ]
+          },
+          "teamId": 6,
+          "tiebreak": 0,
+          "totalPoints": 57,
+          "totalPointsLive": 57
+        }
+      ]
+    }
+  ],
+  "scoringPeriodId": 56,
+  "seasonId": 2021,
+  "segmentId": 0,
+  "settings": {
+    "acquisitionSettings": {
+      "acquisitionBudget": 100,
+      "acquisitionLimit": -1,
+      "acquisitionType": "WAIVERS_TRADITIONAL",
+      "isUsingAcquisitionBudget": false,
+      "matchupAcquisitionLimit": 0,
+      "matchupLimitPerScoringPeriod": false,
+      "minimumBid": 1,
+      "waiverHours": 24,
+      "waiverOrderReset": false,
+      "waiverProcessDays": ["SUNDAY"],
+      "waiverProcessHour": 8
+    },
+    "draftSettings": {
+      "auctionBudget": 260,
+      "availableDate": 1615046400000,
+      "date": 1615046580000,
+      "isTradingEnabled": false,
+      "keeperCount": 0,
+      "keeperCountFuture": 0,
+      "keeperOrderType": "TRADITIONAL",
+      "leagueSubType": "DRAFT_LOBBY",
+      "orderType": "MANUAL",
+      "pickOrder": [1, 5, 6, 4, 8, 3, 7, 2, 10, 9],
+      "timePerSelection": 90,
+      "type": "SNAKE"
+    },
+    "financeSettings": {
+      "entryFee": 0,
+      "miscFee": 0,
+      "perLoss": 0,
+      "perTrade": 0,
+      "playerAcquisition": 0,
+      "playerDrop": 0,
+      "playerMoveToActive": 0,
+      "playerMoveToIR": 0
+    },
+    "isCustomizable": false,
+    "isPublic": true,
+    "name": "Texas 10-Team Roto",
+    "restrictionType": "NONE",
+    "rosterSettings": {
+      "isBenchUnlimited": true,
+      "isUsingUndroppableList": true,
+      "lineupLocktimeType": "INDIVIDUAL_GAME",
+      "lineupSlotCounts": {
+        "0": 1,
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 5,
+        "6": 1,
+        "7": 1,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 1,
+        "13": 9,
+        "14": 0,
+        "15": 0,
+        "16": 4,
+        "17": 3,
+        "19": 0
       },
-      "draftSettings": {
-        "auctionBudget": 260,
-        "availableDate": 1615046400000,
-        "date": 1615046580000,
-        "isTradingEnabled": false,
-        "keeperCount": 0,
-        "keeperCountFuture": 0,
-        "keeperOrderType": "TRADITIONAL",
-        "leagueSubType": "DRAFT_LOBBY",
-        "orderType": "MANUAL",
-        "pickOrder": [
-          1,
-          5,
-          6,
-          4,
-          8,
-          3,
-          7,
-          2,
-          10,
-          9
-        ],
-        "timePerSelection": 90,
-        "type": "SNAKE"
-      },
-      "financeSettings": {
-        "entryFee": 0,
-        "miscFee": 0,
-        "perLoss": 0,
-        "perTrade": 0,
-        "playerAcquisition": 0,
-        "playerDrop": 0,
-        "playerMoveToActive": 0,
-        "playerMoveToIR": 0
-      },
-      "isCustomizable": false,
-      "isPublic": true,
-      "name": "Texas 10-Team Roto",
-      "restrictionType": "NONE",
-      "rosterSettings": {
-        "isBenchUnlimited": true,
-        "isUsingUndroppableList": true,
-        "lineupLocktimeType": "INDIVIDUAL_GAME",
-        "lineupSlotCounts": {
-          "0": 1,
-          "1": 1,
-          "2": 1,
-          "3": 1,
-          "4": 1,
-          "5": 5,
-          "6": 1,
-          "7": 1,
-          "8": 0,
-          "9": 0,
-          "10": 0,
-          "11": 0,
-          "12": 1,
-          "13": 9,
-          "14": 0,
-          "15": 0,
-          "16": 4,
-          "17": 3,
-          "19": 0
-        },
-        "lineupSlotStatLimits": {
-          "22": {
-            "appliesTo": [],
-            "limitValue": 200,
-            "statId": 33
-          }
-        },
-        "moveLimit": -1,
-        "positionLimits": {
-          "0": 0,
-          "1": -1,
-          "2": -1,
-          "3": -1,
-          "4": -1,
-          "5": -1,
-          "6": -1,
-          "7": -1,
-          "8": -1,
-          "9": -1,
-          "10": -1,
-          "11": -1,
-          "12": 0,
-          "13": 0
-        },
-        "rosterLocktimeType": "FIRSTGAME_SCORINGPERIOD",
-        "universeIds": [
-          0
-        ]
-      },
-      "scheduleSettings": {
-        "divisions": [
-          {
-            "id": 0,
-            "name": "East",
-            "size": 10
-          }
-        ],
-        "matchupPeriodCount": 1,
-        "matchupPeriodLength": 1,
-        "matchupPeriods": {
-          "1": [
-            1
-          ]
-        },
-        "periodTypeId": 0,
-        "playoffMatchupPeriodLength": 0,
-        "playoffSeedingRule": "H2H_RECORD",
-        "playoffSeedingRuleBy": 0,
-        "playoffTeamCount": 0
-      },
-      "scoringSettings": {
-        "allowOutOfPositionScoring": false,
-        "homeTeamBonus": 0,
-        "matchupTieRule": "NONE",
-        "matchupTieRuleBy": 0,
-        "playerRankType": "STANDARD",
-        "playoffHomeTeamBonus": 0,
-        "playoffMatchupTieRule": "NONE",
-        "playoffMatchupTieRuleBy": 0,
-        "scoringItems": [
-          {
-            "isReverseItem": false,
-            "leagueRanking": 0,
-            "leagueTotal": 0,
-            "points": 1,
-            "pointsOverrides": {},
-            "statId": 20
-          },
-          {
-            "isReverseItem": false,
-            "leagueRanking": 0,
-            "leagueTotal": 0,
-            "points": 1,
-            "pointsOverrides": {},
-            "statId": 5
-          },
-          {
-            "isReverseItem": false,
-            "leagueRanking": 0,
-            "leagueTotal": 0,
-            "points": 1,
-            "pointsOverrides": {},
-            "statId": 21
-          },
-          {
-            "isReverseItem": false,
-            "leagueRanking": 0,
-            "leagueTotal": 0,
-            "points": 1,
-            "pointsOverrides": {},
-            "statId": 53
-          },
-          {
-            "isReverseItem": true,
-            "leagueRanking": 0,
-            "leagueTotal": 0,
-            "points": 1,
-            "pointsOverrides": {},
-            "statId": 47
-          },
-          {
-            "isReverseItem": false,
-            "leagueRanking": 0,
-            "leagueTotal": 0,
-            "points": 1,
-            "pointsOverrides": {},
-            "statId": 23
-          },
-          {
-            "isReverseItem": false,
-            "leagueRanking": 0,
-            "leagueTotal": 0,
-            "points": 1,
-            "pointsOverrides": {},
-            "statId": 57
-          },
-          {
-            "isReverseItem": true,
-            "leagueRanking": 0,
-            "leagueTotal": 0,
-            "points": 1,
-            "pointsOverrides": {},
-            "statId": 41
-          },
-          {
-            "isReverseItem": false,
-            "leagueRanking": 0,
-            "leagueTotal": 0,
-            "points": 1,
-            "pointsOverrides": {},
-            "statId": 48
-          },
-          {
-            "isReverseItem": false,
-            "leagueRanking": 0,
-            "leagueTotal": 0,
-            "points": 1,
-            "pointsOverrides": {},
-            "statId": 2
-          }
-        ],
-        "scoringType": "ROTO",
-        "statQualificationMinimum": {
-          "appliesTo": [
-            41,
-            47
-          ],
-          "limitValue": 3000,
-          "statId": 34
+      "lineupSlotStatLimits": {
+        "22": {
+          "appliesTo": [],
+          "limitValue": 200,
+          "statId": 33
         }
       },
-      "size": 10,
-      "tradeSettings": {
-        "allowOutOfUniverse": false,
-        "deadlineDate": 1629475200000,
-        "max": -1,
-        "revisionHours": 24,
-        "vetoVotesRequired": 4
+      "moveLimit": -1,
+      "positionLimits": {
+        "0": 0,
+        "1": -1,
+        "2": -1,
+        "3": -1,
+        "4": -1,
+        "5": -1,
+        "6": -1,
+        "7": -1,
+        "8": -1,
+        "9": -1,
+        "10": -1,
+        "11": -1,
+        "12": 0,
+        "13": 0
+      },
+      "rosterLocktimeType": "FIRSTGAME_SCORINGPERIOD",
+      "universeIds": [0]
+    },
+    "scheduleSettings": {
+      "divisions": [
+        {
+          "id": 0,
+          "name": "East",
+          "size": 10
+        }
+      ],
+      "matchupPeriodCount": 1,
+      "matchupPeriodLength": 1,
+      "matchupPeriods": {
+        "1": [1]
+      },
+      "periodTypeId": 0,
+      "playoffMatchupPeriodLength": 0,
+      "playoffSeedingRule": "H2H_RECORD",
+      "playoffSeedingRuleBy": 0,
+      "playoffTeamCount": 0
+    },
+    "scoringSettings": {
+      "allowOutOfPositionScoring": false,
+      "homeTeamBonus": 0,
+      "matchupTieRule": "NONE",
+      "matchupTieRuleBy": 0,
+      "playerRankType": "STANDARD",
+      "playoffHomeTeamBonus": 0,
+      "playoffMatchupTieRule": "NONE",
+      "playoffMatchupTieRuleBy": 0,
+      "scoringItems": [
+        {
+          "isReverseItem": false,
+          "leagueRanking": 0,
+          "leagueTotal": 0,
+          "points": 1,
+          "pointsOverrides": {},
+          "statId": 20
+        },
+        {
+          "isReverseItem": false,
+          "leagueRanking": 0,
+          "leagueTotal": 0,
+          "points": 1,
+          "pointsOverrides": {},
+          "statId": 5
+        },
+        {
+          "isReverseItem": false,
+          "leagueRanking": 0,
+          "leagueTotal": 0,
+          "points": 1,
+          "pointsOverrides": {},
+          "statId": 21
+        },
+        {
+          "isReverseItem": false,
+          "leagueRanking": 0,
+          "leagueTotal": 0,
+          "points": 1,
+          "pointsOverrides": {},
+          "statId": 53
+        },
+        {
+          "isReverseItem": true,
+          "leagueRanking": 0,
+          "leagueTotal": 0,
+          "points": 1,
+          "pointsOverrides": {},
+          "statId": 47
+        },
+        {
+          "isReverseItem": false,
+          "leagueRanking": 0,
+          "leagueTotal": 0,
+          "points": 1,
+          "pointsOverrides": {},
+          "statId": 23
+        },
+        {
+          "isReverseItem": false,
+          "leagueRanking": 0,
+          "leagueTotal": 0,
+          "points": 1,
+          "pointsOverrides": {},
+          "statId": 57
+        },
+        {
+          "isReverseItem": true,
+          "leagueRanking": 0,
+          "leagueTotal": 0,
+          "points": 1,
+          "pointsOverrides": {},
+          "statId": 41
+        },
+        {
+          "isReverseItem": false,
+          "leagueRanking": 0,
+          "leagueTotal": 0,
+          "points": 1,
+          "pointsOverrides": {},
+          "statId": 48
+        },
+        {
+          "isReverseItem": false,
+          "leagueRanking": 0,
+          "leagueTotal": 0,
+          "points": 1,
+          "pointsOverrides": {},
+          "statId": 2
+        }
+      ],
+      "scoringType": "ROTO",
+      "statQualificationMinimum": {
+        "appliesTo": [41, 47],
+        "limitValue": 3000,
+        "statId": 34
       }
     },
-    "status": {
-      "activatedDate": 1614040300036,
-      "createdAsLeagueType": 1,
-      "currentLeagueType": 1,
-      "currentMatchupPeriod": 1,
-      "finalScoringPeriod": 186,
-      "firstScoringPeriod": 1,
-      "isActive": true,
-      "isExpired": false,
-      "isFull": true,
-      "isPlayoffMatchupEdited": false,
-      "isToBeDeleted": false,
-      "isViewable": false,
-      "isWaiverOrderEdited": false,
-      "latestScoringPeriod": 56,
-      "previousSeasons": [],
-      "standingsUpdateDate": 1622018654120,
-      "teamsJoined": 10,
-      "transactionScoringPeriod": 56,
-      "waiverLastExecutionDate": 1622018653904,
-      "waiverProcessStatus": {
-        "2021-03-08T08:34:45.372+0000": 5,
-        "2021-03-09T08:28:59.381+0000": 1,
-        "2021-03-10T08:21:47.036+0000": 1,
-        "2021-03-22T07:40:59.726+0000": 1,
-        "2021-04-08T08:55:58.521+0000": 1,
-        "2021-04-12T09:18:01.482+0000": 1,
-        "2021-04-18T09:15:24.306+0000": 1,
-        "2021-04-23T08:45:07.610+0000": 1,
-        "2021-04-24T08:52:43.825+0000": 1,
-        "2021-05-08T08:39:49.101+0000": 2,
-        "2021-05-19T08:44:19.242+0000": 1
-      }
-    },
-    "teams": [
-      {
-        "abbrev": "BEET",
-        "currentProjectedRank": 0,
-        "divisionId": 0,
-        "draftDayProjectedRank": 6,
-        "draftStrategy": {},
-        "id": 6,
-        "isActive": false,
-        "location": "Schrute Farms",
-        "logo": "https://g.espncdn.com/lm-static/logo-packs/flb/At-the-Ballpark-Robb-Harskamp/Ballpark-02.svg",
-        "logoType": "VECTOR",
-        "nickname": "Beetdowns",
-        "owners": [
-          "{1DD31CC8-624A-406C-931C-C8624A506CA8}"
-        ],
-        "playoffSeed": 3,
-        "points": 57,
-        "pointsAdjusted": 0,
-        "pointsByStat": {
-          "0": 0,
-          "1": 0,
-          "2": 10,
-          "5": 7,
-          "20": 10,
-          "21": 9,
-          "23": 5.5,
-          "33": 0,
-          "34": 0,
-          "37": 0,
-          "39": 0,
-          "41": 1,
-          "45": 0,
-          "47": 3,
-          "48": 4,
-          "53": 5.5,
-          "57": 2
+    "size": 10,
+    "tradeSettings": {
+      "allowOutOfUniverse": false,
+      "deadlineDate": 1629475200000,
+      "max": -1,
+      "revisionHours": 24,
+      "vetoVotesRequired": 4
+    }
+  },
+  "status": {
+    "activatedDate": 1614040300036,
+    "createdAsLeagueType": 1,
+    "currentLeagueType": 1,
+    "currentMatchupPeriod": 1,
+    "finalScoringPeriod": 186,
+    "firstScoringPeriod": 1,
+    "isActive": true,
+    "isExpired": false,
+    "isFull": true,
+    "isPlayoffMatchupEdited": false,
+    "isToBeDeleted": false,
+    "isViewable": false,
+    "isWaiverOrderEdited": false,
+    "latestScoringPeriod": 56,
+    "previousSeasons": [],
+    "standingsUpdateDate": 1622018654120,
+    "teamsJoined": 10,
+    "transactionScoringPeriod": 56,
+    "waiverLastExecutionDate": 1622018653904,
+    "waiverProcessStatus": {
+      "2021-03-08T08:34:45.372+0000": 5,
+      "2021-03-09T08:28:59.381+0000": 1,
+      "2021-03-10T08:21:47.036+0000": 1,
+      "2021-03-22T07:40:59.726+0000": 1,
+      "2021-04-08T08:55:58.521+0000": 1,
+      "2021-04-12T09:18:01.482+0000": 1,
+      "2021-04-18T09:15:24.306+0000": 1,
+      "2021-04-23T08:45:07.610+0000": 1,
+      "2021-04-24T08:52:43.825+0000": 1,
+      "2021-05-08T08:39:49.101+0000": 2,
+      "2021-05-19T08:44:19.242+0000": 1
+    }
+  },
+  "teams": [
+    {
+      "abbrev": "BEET",
+      "currentProjectedRank": 0,
+      "divisionId": 0,
+      "draftDayProjectedRank": 6,
+      "draftStrategy": {},
+      "id": 6,
+      "isActive": false,
+      "location": "Schrute Farms",
+      "logo": "https://g.espncdn.com/lm-static/logo-packs/flb/At-the-Ballpark-Robb-Harskamp/Ballpark-02.svg",
+      "logoType": "VECTOR",
+      "nickname": "Beetdowns",
+      "owners": ["{1DD31CC8-624A-406C-931C-C8624A506CA8}"],
+      "playoffSeed": 3,
+      "points": 57,
+      "pointsAdjusted": 0,
+      "pointsByStat": {
+        "0": 0,
+        "1": 0,
+        "2": 10,
+        "5": 7,
+        "20": 10,
+        "21": 9,
+        "23": 5.5,
+        "33": 0,
+        "34": 0,
+        "37": 0,
+        "39": 0,
+        "41": 1,
+        "45": 0,
+        "47": 3,
+        "48": 4,
+        "53": 5.5,
+        "57": 2
+      },
+      "pointsDelta": -1,
+      "primaryOwner": "{1DD31CC8-624A-406C-931C-C8624A506CA8}",
+      "rankCalculatedFinal": 3,
+      "rankFinal": 0,
+      "record": {
+        "away": {
+          "gamesBack": 0,
+          "losses": 0,
+          "percentage": 0,
+          "pointsAgainst": 0,
+          "pointsFor": 0,
+          "streakLength": 0,
+          "streakType": "NONE",
+          "ties": 0,
+          "wins": 0
         },
-        "pointsDelta": -1,
-        "primaryOwner": "{1DD31CC8-624A-406C-931C-C8624A506CA8}",
-        "rankCalculatedFinal": 3,
-        "rankFinal": 0,
-        "record": {
-          "away": {
-            "gamesBack": 0,
-            "losses": 0,
-            "percentage": 0,
-            "pointsAgainst": 0,
-            "pointsFor": 0,
-            "streakLength": 0,
-            "streakType": "NONE",
-            "ties": 0,
-            "wins": 0
-          },
-          "division": {
-            "gamesBack": 0,
-            "losses": 0,
-            "percentage": 0,
-            "pointsAgainst": 0,
-            "pointsFor": 0,
-            "streakLength": 0,
-            "streakType": "NONE",
-            "ties": 0,
-            "wins": 0
-          },
-          "home": {
-            "gamesBack": 0,
-            "losses": 0,
-            "percentage": 0,
-            "pointsAgainst": 0,
-            "pointsFor": 0,
-            "streakLength": 0,
-            "streakType": "NONE",
-            "ties": 0,
-            "wins": 0
-          },
-          "overall": {
-            "gamesBack": 0,
-            "losses": 0,
-            "percentage": 0,
-            "pointsAgainst": 0,
-            "pointsFor": 0,
-            "streakLength": 0,
-            "streakType": "NONE",
-            "ties": 0,
-            "wins": 0
-          }
+        "division": {
+          "gamesBack": 0,
+          "losses": 0,
+          "percentage": 0,
+          "pointsAgainst": 0,
+          "pointsFor": 0,
+          "streakLength": 0,
+          "streakType": "NONE",
+          "ties": 0,
+          "wins": 0
         },
-        "roster": {
-          "entries": [
-            {
-              "acquisitionDate": 1615051894165,
-              "acquisitionType": "DRAFT",
-              "injuryStatus": "NORMAL",
-              "lineupSlotId": 17,
-              "pendingTransactionIds": null,
-              "playerId": 30836,
-              "playerPoolEntry": {
+        "home": {
+          "gamesBack": 0,
+          "losses": 0,
+          "percentage": 0,
+          "pointsAgainst": 0,
+          "pointsFor": 0,
+          "streakLength": 0,
+          "streakType": "NONE",
+          "ties": 0,
+          "wins": 0
+        },
+        "overall": {
+          "gamesBack": 0,
+          "losses": 0,
+          "percentage": 0,
+          "pointsAgainst": 0,
+          "pointsFor": 0,
+          "streakLength": 0,
+          "streakType": "NONE",
+          "ties": 0,
+          "wins": 0
+        }
+      },
+      "roster": {
+        "entries": [
+          {
+            "acquisitionDate": 1615051894165,
+            "acquisitionType": "DRAFT",
+            "injuryStatus": "NORMAL",
+            "lineupSlotId": 17,
+            "pendingTransactionIds": null,
+            "playerId": 30836,
+            "playerPoolEntry": {
+              "id": 30836,
+              "keeperValue": 0,
+              "keeperValueFuture": 1,
+              "lineupLocked": false,
+              "onTeamId": 6,
+              "player": {
+                "active": true,
+                "defaultPositionId": 8,
+                "draftRanksByRankType": {
+                  "STANDARD": {
+                    "auctionValue": 43,
+                    "published": false,
+                    "rank": 5,
+                    "rankSourceId": 0,
+                    "rankType": "STANDARD",
+                    "slotId": 0
+                  }
+                },
+                "droppable": true,
+                "eligibleSlots": [9, 5, 12, 16, 17],
+                "firstName": "Mike",
+                "fullName": "Mike Trout",
+                "gamesPlayedByPosition": {
+                  "8": 36
+                },
                 "id": 30836,
-                "keeperValue": 0,
-                "keeperValueFuture": 1,
-                "lineupLocked": false,
-                "onTeamId": 6,
-                "player": {
-                  "active": true,
-                  "defaultPositionId": 8,
-                  "draftRanksByRankType": {
-                    "STANDARD": {
-                      "auctionValue": 43,
-                      "published": false,
-                      "rank": 5,
-                      "rankSourceId": 0,
-                      "rankType": "STANDARD",
-                      "slotId": 0
-                    }
-                  },
-                  "droppable": true,
-                  "eligibleSlots": [
-                    9,
-                    5,
-                    12,
-                    16,
-                    17
-                  ],
-                  "firstName": "Mike",
-                  "fullName": "Mike Trout",
-                  "gamesPlayedByPosition": {
-                    "8": 36
-                  },
-                  "id": 30836,
-                  "injured": true,
-                  "injuryStatus": "TEN_DAY_DL",
-                  "lastName": "Trout",
-                  "lastNewsDate": 1621378544000,
-                  "ownership": {
-                    "auctionValueAverage": 36.35,
-                    "averageDraftPosition": 8.426519337016575,
-                    "percentChange": -0.1351022185887416,
-                    "percentOwned": 99.82266359283561,
-                    "percentStarted": 28.787610096352783
-                  },
-                  "proTeamId": 3,
-                  "seasonOutlook": "Widely regarded the best player in baseball, Trout is no longer a slam dunk for the same honor in fantasy baseball. He placed outside the top 25 on the Player Rater while posting the worst full-season batting average (.281) and second-worst contact rate (71.9%) of his career in 2020, and he has missed 105 Angels games (most due to injuries) since the beginning of 2017. Still, that Trout's No. 27 Player Rater finish represented his lowest in any of his nine full big-league seasons speaks volumes about his Hall of Fame caliber skill set. Just since the beginning of 2018, his 101 home runs lead the majors, 252 runs scored rank sixth, .298 batting average and 229 RBI each rank 14th and 36 stolen bases rank 21st. It's the latter category that sparks genuine worry, as Trout attempted only two steals in 53 games in 2020, and as a 29-year-old, that's a skill unlikely to significantly rebound. His power metrics look as strong as ever, and with good luck in the health department that he should remain one of the most valuable commodities in fantasy. But with that No. 1 overall pick, it's probably wiser to go with someone younger or who steals more bases.",
-                  "starterStatusByProGame": {
-                    "401227055": "STARTING",
-                    "401227068": "STARTING",
-                    "401227076": "STARTING",
-                    "401227091": "STARTING",
-                    "401227104": "STARTING",
-                    "401227119": "STARTING",
-                    "401227143": "STARTING",
-                    "401227152": "STARTING",
-                    "401227161": "STARTING",
-                    "401227176": "NOTSTARTING",
-                    "401227190": "STARTING",
-                    "401227204": "STARTING",
-                    "401227219": "STARTING",
-                    "401227252": "STARTING",
-                    "401227267": "NOTSTARTING",
-                    "401227282": "NOTSTARTING",
-                    "401227296": "STARTING",
-                    "401227310": "STARTING",
-                    "401227324": "STARTING",
-                    "401227326": "STARTING",
-                    "401227334": "NOTSTARTING",
-                    "401227349": "NOTSTARTING",
-                    "401227364": "NOTSTARTING",
-                    "401227379": "STARTING",
-                    "401227390": "STARTING",
-                    "401227405": "STARTING",
-                    "401227429": "STARTING",
-                    "401227444": "STARTING",
-                    "401227459": "STARTING",
-                    "401227481": "STARTING",
-                    "401227496": "STARTING",
-                    "401227511": "STARTING",
-                    "401227521": "STARTING",
-                    "401227529": "STARTING",
-                    "401227544": "STARTING",
-                    "401227559": "STARTING",
-                    "401227569": "STARTING",
-                    "401227575": "STARTING",
-                    "401227590": "NOTSTARTING",
-                    "401227616": "STARTING",
-                    "401227631": "STARTING",
-                    "401227646": "STARTING",
-                    "401227663": "STARTING",
-                    "401227673": "NOTSTARTING",
-                    "401227688": "NOTSTARTING",
-                    "401227720": "NOTSTARTING",
-                    "401227735": "NOTSTARTING",
-                    "401227750": "NOTSTARTING",
-                    "401227775": "NOTSTARTING",
-                    "401322957": "NOTSTARTING",
-                    "401322958": "NOTSTARTING"
-                  },
-                  "stats": [
-                    {
-                      "externalId": "2021",
-                      "id": "012021",
-                      "proTeamId": 0,
-                      "scoringPeriodId": 0,
-                      "seasonId": 2021,
-                      "statSourceId": 0,
-                      "statSplitTypeId": 1,
-                      "stats": {}
-                    },
-                    {
-                      "externalId": "2021",
-                      "id": "022021",
-                      "proTeamId": 0,
-                      "scoringPeriodId": 0,
-                      "seasonId": 2021,
-                      "statSourceId": 0,
-                      "statSplitTypeId": 2,
-                      "stats": {
-                        "0": 13,
-                        "1": 1,
-                        "2": 0.07692308,
-                        "3": 0,
-                        "4": 0,
-                        "5": 0,
-                        "6": 0,
-                        "7": 1,
-                        "8": 1,
-                        "9": 0.07692308,
-                        "10": 5,
-                        "11": 0,
-                        "12": 0,
-                        "13": 0,
-                        "14": 0,
-                        "16": 18,
-                        "17": 0.33333333,
-                        "18": 0.41025641,
-                        "19": 0.33333333,
-                        "20": 1,
-                        "21": 0,
-                        "22": 0,
-                        "23": 0,
-                        "24": 0,
-                        "25": 0,
-                        "26": 0,
-                        "27": 5,
-                        "28": 83,
-                        "29": 4.61111111,
-                        "31": 0,
-                        "67": 6,
-                        "68": 6,
-                        "69": 0,
-                        "70": 0,
-                        "71": 1,
-                        "72": 0,
-                        "73": 0,
-                        "74": 2,
-                        "75": 3,
-                        "76": 0,
-                        "77": 0,
-                        "81": 5
-                      }
-                    },
-                    {
-                      "externalId": "2020",
-                      "id": "002020",
-                      "proTeamId": 0,
-                      "scoringPeriodId": 0,
-                      "seasonId": 2020,
-                      "statSourceId": 0,
-                      "statSplitTypeId": 0,
-                      "stats": {
-                        "0": 199,
-                        "1": 56,
-                        "2": 0.28140704,
-                        "3": 9,
-                        "4": 2,
-                        "5": 17,
-                        "6": 28,
-                        "7": 28,
-                        "8": 120,
-                        "9": 0.60301508,
-                        "10": 35,
-                        "11": 4,
-                        "12": 3,
-                        "13": 4,
-                        "14": 0,
-                        "15": 4,
-                        "16": 241,
-                        "17": 0.39004149,
-                        "18": 0.99305657,
-                        "19": 46.66666667,
-                        "20": 41,
-                        "21": 46,
-                        "22": 5,
-                        "23": 1,
-                        "24": 1,
-                        "25": 0,
-                        "26": 1,
-                        "27": 56,
-                        "28": 1017,
-                        "29": 4.21991701,
-                        "31": 0,
-                        "67": 120,
-                        "68": 120,
-                        "69": 0,
-                        "70": 0,
-                        "71": 1,
-                        "72": 0,
-                        "73": 0,
-                        "74": 24,
-                        "75": 29,
-                        "76": 0,
-                        "77": 0,
-                        "81": 53
-                      },
-                      "variance": {}
-                    },
-                    {
-                      "externalId": "2021",
-                      "id": "002021",
-                      "proTeamId": 0,
-                      "scoringPeriodId": 0,
-                      "seasonId": 2021,
-                      "statSourceId": 0,
-                      "statSplitTypeId": 0,
-                      "stats": {
-                        "0": 117,
-                        "1": 39,
-                        "2": 0.33333333,
-                        "3": 8,
-                        "4": 1,
-                        "5": 8,
-                        "6": 17,
-                        "7": 22,
-                        "8": 73,
-                        "9": 0.62393162,
-                        "10": 27,
-                        "11": 5,
-                        "12": 2,
-                        "13": 0,
-                        "14": 0,
-                        "16": 146,
-                        "17": 0.46575342,
-                        "18": 1.08968505,
-                        "19": 33.45833333,
-                        "20": 23,
-                        "21": 18,
-                        "22": 2,
-                        "23": 2,
-                        "24": 0,
-                        "25": 2,
-                        "26": 0,
-                        "27": 41,
-                        "28": 628,
-                        "29": 4.30136986,
-                        "31": 0,
-                        "67": 53,
-                        "68": 53,
-                        "69": 0,
-                        "70": 0,
-                        "71": 1,
-                        "72": 0,
-                        "73": 0,
-                        "74": 17,
-                        "75": 19,
-                        "76": 0,
-                        "77": 0,
-                        "81": 36
-                      }
-                    },
-                    {
-                      "externalId": "2021",
-                      "id": "102021",
-                      "proTeamId": 0,
-                      "scoringPeriodId": 0,
-                      "seasonId": 2021,
-                      "statSourceId": 1,
-                      "statSplitTypeId": 0,
-                      "stats": {
-                        "0": 518,
-                        "1": 153,
-                        "2": 0.295366795,
-                        "3": 28,
-                        "4": 4,
-                        "5": 44,
-                        "6": 76,
-                        "7": 77,
-                        "8": 321,
-                        "9": 0.619691119,
-                        "10": 116,
-                        "11": 17,
-                        "12": 13,
-                        "13": 6,
-                        "15": 6,
-                        "16": 653,
-                        "17": 0.431852986,
-                        "18": 1.051544105,
-                        "20": 115,
-                        "21": 107,
-                        "23": 13,
-                        "24": 2,
-                        "25": 11,
-                        "26": 5,
-                        "27": 135,
-                        "81": 146
-                      },
-                      "variance": {}
-                    },
-                    {
-                      "externalId": "2020",
-                      "id": "102020",
-                      "proTeamId": 0,
-                      "scoringPeriodId": 0,
-                      "seasonId": 2020,
-                      "statSourceId": 1,
-                      "statSplitTypeId": 0,
-                      "stats": {
-                        "0": 161,
-                        "1": 48,
-                        "2": 0.298136646,
-                        "3": 9,
-                        "4": 1,
-                        "5": 13,
-                        "6": 23,
-                        "7": 25,
-                        "8": 98,
-                        "9": 0.60869565,
-                        "10": 37,
-                        "11": 6,
-                        "12": 5,
-                        "13": 1,
-                        "15": 1,
-                        "16": 204,
-                        "17": 0.441176471,
-                        "18": 1.049872121,
-                        "20": 36,
-                        "21": 31,
-                        "23": 5,
-                        "24": 1,
-                        "25": 4,
-                        "26": 2,
-                        "27": 42,
-                        "81": 47
-                      },
-                      "variance": {}
-                    },
-                    {
-                      "externalId": "2021",
-                      "id": "162021",
-                      "proTeamId": 0,
-                      "scoringPeriodId": 0,
-                      "seasonId": 2021,
-                      "statSourceId": 1,
-                      "statSplitTypeId": 6,
-                      "stats": {
-                        "0": 258,
-                        "1": 78,
-                        "2": 0.302325581,
-                        "3": 20,
-                        "4": 2,
-                        "5": 21,
-                        "6": 43,
-                        "7": 35,
-                        "8": 165,
-                        "9": 0.639534884,
-                        "10": 59,
-                        "11": 0.148148148,
-                        "12": 6,
-                        "13": 2,
-                        "15": 2,
-                        "16": 325,
-                        "17": 0.44,
-                        "18": 1.079534884,
-                        "20": 55,
-                        "21": 48,
-                        "23": 6,
-                        "24": 1,
-                        "25": 5,
-                        "26": 2,
-                        "27": 77,
-                        "81": 75
-                      },
-                      "variance": {}
-                    },
-                    {
-                      "externalId": "2021",
-                      "id": "032021",
-                      "proTeamId": 0,
-                      "scoringPeriodId": 0,
-                      "seasonId": 2021,
-                      "statSourceId": 0,
-                      "statSplitTypeId": 3,
-                      "stats": {
-                        "0": 61,
-                        "1": 17,
-                        "2": 0.27868852,
-                        "3": 3,
-                        "4": 1,
-                        "5": 2,
-                        "6": 6,
-                        "7": 11,
-                        "8": 28,
-                        "9": 0.45901639,
-                        "10": 13,
-                        "11": 2,
-                        "12": 1,
-                        "13": 0,
-                        "14": 0,
-                        "16": 75,
-                        "17": 0.41333333,
-                        "18": 0.87234973,
-                        "19": 11.35135135,
-                        "20": 8,
-                        "21": 6,
-                        "22": 1,
-                        "23": 2,
-                        "24": 0,
-                        "25": 2,
-                        "26": 0,
-                        "27": 21,
-                        "28": 321,
-                        "29": 4.28,
-                        "31": 0,
-                        "67": 29,
-                        "68": 29,
-                        "69": 0,
-                        "70": 0,
-                        "71": 1,
-                        "72": 0,
-                        "73": 0,
-                        "74": 8,
-                        "75": 11,
-                        "76": 0,
-                        "77": 0,
-                        "81": 19
-                      }
-                    }
-                  ],
-                  "universeId": 1
+                "injured": true,
+                "injuryStatus": "TEN_DAY_DL",
+                "lastName": "Trout",
+                "lastNewsDate": 1621378544000,
+                "ownership": {
+                  "auctionValueAverage": 36.35,
+                  "averageDraftPosition": 8.426519337016575,
+                  "percentChange": -0.1351022185887416,
+                  "percentOwned": 99.82266359283561,
+                  "percentStarted": 28.787610096352783
                 },
-                "ratings": {
-                  "0": {
-                    "positionalRanking": 7,
-                    "totalRanking": 82,
-                    "totalRating": 6.041801
+                "proTeamId": 3,
+                "seasonOutlook": "Widely regarded the best player in baseball, Trout is no longer a slam dunk for the same honor in fantasy baseball. He placed outside the top 25 on the Player Rater while posting the worst full-season batting average (.281) and second-worst contact rate (71.9%) of his career in 2020, and he has missed 105 Angels games (most due to injuries) since the beginning of 2017. Still, that Trout's No. 27 Player Rater finish represented his lowest in any of his nine full big-league seasons speaks volumes about his Hall of Fame caliber skill set. Just since the beginning of 2018, his 101 home runs lead the majors, 252 runs scored rank sixth, .298 batting average and 229 RBI each rank 14th and 36 stolen bases rank 21st. It's the latter category that sparks genuine worry, as Trout attempted only two steals in 53 games in 2020, and as a 29-year-old, that's a skill unlikely to significantly rebound. His power metrics look as strong as ever, and with good luck in the health department that he should remain one of the most valuable commodities in fantasy. But with that No. 1 overall pick, it's probably wiser to go with someone younger or who steals more bases.",
+                "starterStatusByProGame": {
+                  "401227055": "STARTING",
+                  "401227068": "STARTING",
+                  "401227076": "STARTING",
+                  "401227091": "STARTING",
+                  "401227104": "STARTING",
+                  "401227119": "STARTING",
+                  "401227143": "STARTING",
+                  "401227152": "STARTING",
+                  "401227161": "STARTING",
+                  "401227176": "NOTSTARTING",
+                  "401227190": "STARTING",
+                  "401227204": "STARTING",
+                  "401227219": "STARTING",
+                  "401227252": "STARTING",
+                  "401227267": "NOTSTARTING",
+                  "401227282": "NOTSTARTING",
+                  "401227296": "STARTING",
+                  "401227310": "STARTING",
+                  "401227324": "STARTING",
+                  "401227326": "STARTING",
+                  "401227334": "NOTSTARTING",
+                  "401227349": "NOTSTARTING",
+                  "401227364": "NOTSTARTING",
+                  "401227379": "STARTING",
+                  "401227390": "STARTING",
+                  "401227405": "STARTING",
+                  "401227429": "STARTING",
+                  "401227444": "STARTING",
+                  "401227459": "STARTING",
+                  "401227481": "STARTING",
+                  "401227496": "STARTING",
+                  "401227511": "STARTING",
+                  "401227521": "STARTING",
+                  "401227529": "STARTING",
+                  "401227544": "STARTING",
+                  "401227559": "STARTING",
+                  "401227569": "STARTING",
+                  "401227575": "STARTING",
+                  "401227590": "NOTSTARTING",
+                  "401227616": "STARTING",
+                  "401227631": "STARTING",
+                  "401227646": "STARTING",
+                  "401227663": "STARTING",
+                  "401227673": "NOTSTARTING",
+                  "401227688": "NOTSTARTING",
+                  "401227720": "NOTSTARTING",
+                  "401227735": "NOTSTARTING",
+                  "401227750": "NOTSTARTING",
+                  "401227775": "NOTSTARTING",
+                  "401322957": "NOTSTARTING",
+                  "401322958": "NOTSTARTING"
+                },
+                "stats": [
+                  {
+                    "externalId": "2021",
+                    "id": "012021",
+                    "proTeamId": 0,
+                    "scoringPeriodId": 0,
+                    "seasonId": 2021,
+                    "statSourceId": 0,
+                    "statSplitTypeId": 1,
+                    "stats": {}
                   },
-                  "1": {
-                    "positionalRanking": 0,
-                    "totalRanking": 0,
-                    "totalRating": 0
+                  {
+                    "externalId": "2021",
+                    "id": "022021",
+                    "proTeamId": 0,
+                    "scoringPeriodId": 0,
+                    "seasonId": 2021,
+                    "statSourceId": 0,
+                    "statSplitTypeId": 2,
+                    "stats": {
+                      "0": 13,
+                      "1": 1,
+                      "2": 0.07692308,
+                      "3": 0,
+                      "4": 0,
+                      "5": 0,
+                      "6": 0,
+                      "7": 1,
+                      "8": 1,
+                      "9": 0.07692308,
+                      "10": 5,
+                      "11": 0,
+                      "12": 0,
+                      "13": 0,
+                      "14": 0,
+                      "16": 18,
+                      "17": 0.33333333,
+                      "18": 0.41025641,
+                      "19": 0.33333333,
+                      "20": 1,
+                      "21": 0,
+                      "22": 0,
+                      "23": 0,
+                      "24": 0,
+                      "25": 0,
+                      "26": 0,
+                      "27": 5,
+                      "28": 83,
+                      "29": 4.61111111,
+                      "31": 0,
+                      "67": 6,
+                      "68": 6,
+                      "69": 0,
+                      "70": 0,
+                      "71": 1,
+                      "72": 0,
+                      "73": 0,
+                      "74": 2,
+                      "75": 3,
+                      "76": 0,
+                      "77": 0,
+                      "81": 5
+                    }
                   },
-                  "2": {
-                    "positionalRanking": 49,
-                    "totalRanking": 897,
-                    "totalRating": -4.2175245
+                  {
+                    "externalId": "2020",
+                    "id": "002020",
+                    "proTeamId": 0,
+                    "scoringPeriodId": 0,
+                    "seasonId": 2020,
+                    "statSourceId": 0,
+                    "statSplitTypeId": 0,
+                    "stats": {
+                      "0": 199,
+                      "1": 56,
+                      "2": 0.28140704,
+                      "3": 9,
+                      "4": 2,
+                      "5": 17,
+                      "6": 28,
+                      "7": 28,
+                      "8": 120,
+                      "9": 0.60301508,
+                      "10": 35,
+                      "11": 4,
+                      "12": 3,
+                      "13": 4,
+                      "14": 0,
+                      "15": 4,
+                      "16": 241,
+                      "17": 0.39004149,
+                      "18": 0.99305657,
+                      "19": 46.66666667,
+                      "20": 41,
+                      "21": 46,
+                      "22": 5,
+                      "23": 1,
+                      "24": 1,
+                      "25": 0,
+                      "26": 1,
+                      "27": 56,
+                      "28": 1017,
+                      "29": 4.21991701,
+                      "31": 0,
+                      "67": 120,
+                      "68": 120,
+                      "69": 0,
+                      "70": 0,
+                      "71": 1,
+                      "72": 0,
+                      "73": 0,
+                      "74": 24,
+                      "75": 29,
+                      "76": 0,
+                      "77": 0,
+                      "81": 53
+                    },
+                    "variance": {}
                   },
-                  "3": {
-                    "positionalRanking": 15,
-                    "totalRanking": 258,
-                    "totalRating": 1.746557
+                  {
+                    "externalId": "2021",
+                    "id": "002021",
+                    "proTeamId": 0,
+                    "scoringPeriodId": 0,
+                    "seasonId": 2021,
+                    "statSourceId": 0,
+                    "statSplitTypeId": 0,
+                    "stats": {
+                      "0": 117,
+                      "1": 39,
+                      "2": 0.33333333,
+                      "3": 8,
+                      "4": 1,
+                      "5": 8,
+                      "6": 17,
+                      "7": 22,
+                      "8": 73,
+                      "9": 0.62393162,
+                      "10": 27,
+                      "11": 5,
+                      "12": 2,
+                      "13": 0,
+                      "14": 0,
+                      "16": 146,
+                      "17": 0.46575342,
+                      "18": 1.08968505,
+                      "19": 33.45833333,
+                      "20": 23,
+                      "21": 18,
+                      "22": 2,
+                      "23": 2,
+                      "24": 0,
+                      "25": 2,
+                      "26": 0,
+                      "27": 41,
+                      "28": 628,
+                      "29": 4.30136986,
+                      "31": 0,
+                      "67": 53,
+                      "68": 53,
+                      "69": 0,
+                      "70": 0,
+                      "71": 1,
+                      "72": 0,
+                      "73": 0,
+                      "74": 17,
+                      "75": 19,
+                      "76": 0,
+                      "77": 0,
+                      "81": 36
+                    }
+                  },
+                  {
+                    "externalId": "2021",
+                    "id": "102021",
+                    "proTeamId": 0,
+                    "scoringPeriodId": 0,
+                    "seasonId": 2021,
+                    "statSourceId": 1,
+                    "statSplitTypeId": 0,
+                    "stats": {
+                      "0": 518,
+                      "1": 153,
+                      "2": 0.295366795,
+                      "3": 28,
+                      "4": 4,
+                      "5": 44,
+                      "6": 76,
+                      "7": 77,
+                      "8": 321,
+                      "9": 0.619691119,
+                      "10": 116,
+                      "11": 17,
+                      "12": 13,
+                      "13": 6,
+                      "15": 6,
+                      "16": 653,
+                      "17": 0.431852986,
+                      "18": 1.051544105,
+                      "20": 115,
+                      "21": 107,
+                      "23": 13,
+                      "24": 2,
+                      "25": 11,
+                      "26": 5,
+                      "27": 135,
+                      "81": 146
+                    },
+                    "variance": {}
+                  },
+                  {
+                    "externalId": "2020",
+                    "id": "102020",
+                    "proTeamId": 0,
+                    "scoringPeriodId": 0,
+                    "seasonId": 2020,
+                    "statSourceId": 1,
+                    "statSplitTypeId": 0,
+                    "stats": {
+                      "0": 161,
+                      "1": 48,
+                      "2": 0.298136646,
+                      "3": 9,
+                      "4": 1,
+                      "5": 13,
+                      "6": 23,
+                      "7": 25,
+                      "8": 98,
+                      "9": 0.60869565,
+                      "10": 37,
+                      "11": 6,
+                      "12": 5,
+                      "13": 1,
+                      "15": 1,
+                      "16": 204,
+                      "17": 0.441176471,
+                      "18": 1.049872121,
+                      "20": 36,
+                      "21": 31,
+                      "23": 5,
+                      "24": 1,
+                      "25": 4,
+                      "26": 2,
+                      "27": 42,
+                      "81": 47
+                    },
+                    "variance": {}
+                  },
+                  {
+                    "externalId": "2021",
+                    "id": "162021",
+                    "proTeamId": 0,
+                    "scoringPeriodId": 0,
+                    "seasonId": 2021,
+                    "statSourceId": 1,
+                    "statSplitTypeId": 6,
+                    "stats": {
+                      "0": 258,
+                      "1": 78,
+                      "2": 0.302325581,
+                      "3": 20,
+                      "4": 2,
+                      "5": 21,
+                      "6": 43,
+                      "7": 35,
+                      "8": 165,
+                      "9": 0.639534884,
+                      "10": 59,
+                      "11": 0.148148148,
+                      "12": 6,
+                      "13": 2,
+                      "15": 2,
+                      "16": 325,
+                      "17": 0.44,
+                      "18": 1.079534884,
+                      "20": 55,
+                      "21": 48,
+                      "23": 6,
+                      "24": 1,
+                      "25": 5,
+                      "26": 2,
+                      "27": 77,
+                      "81": 75
+                    },
+                    "variance": {}
+                  },
+                  {
+                    "externalId": "2021",
+                    "id": "032021",
+                    "proTeamId": 0,
+                    "scoringPeriodId": 0,
+                    "seasonId": 2021,
+                    "statSourceId": 0,
+                    "statSplitTypeId": 3,
+                    "stats": {
+                      "0": 61,
+                      "1": 17,
+                      "2": 0.27868852,
+                      "3": 3,
+                      "4": 1,
+                      "5": 2,
+                      "6": 6,
+                      "7": 11,
+                      "8": 28,
+                      "9": 0.45901639,
+                      "10": 13,
+                      "11": 2,
+                      "12": 1,
+                      "13": 0,
+                      "14": 0,
+                      "16": 75,
+                      "17": 0.41333333,
+                      "18": 0.87234973,
+                      "19": 11.35135135,
+                      "20": 8,
+                      "21": 6,
+                      "22": 1,
+                      "23": 2,
+                      "24": 0,
+                      "25": 2,
+                      "26": 0,
+                      "27": 21,
+                      "28": 321,
+                      "29": 4.28,
+                      "31": 0,
+                      "67": 29,
+                      "68": 29,
+                      "69": 0,
+                      "70": 0,
+                      "71": 1,
+                      "72": 0,
+                      "73": 0,
+                      "74": 8,
+                      "75": 11,
+                      "76": 0,
+                      "77": 0,
+                      "81": 19
+                    }
                   }
-                },
-                "rosterLocked": false,
-                "status": "ONTEAM",
-                "tradeLocked": false
+                ],
+                "universeId": 1
               },
-              "status": "NORMAL"
+              "ratings": {
+                "0": {
+                  "positionalRanking": 7,
+                  "totalRanking": 82,
+                  "totalRating": 6.041801
+                },
+                "1": {
+                  "positionalRanking": 0,
+                  "totalRanking": 0,
+                  "totalRating": 0
+                },
+                "2": {
+                  "positionalRanking": 49,
+                  "totalRanking": 897,
+                  "totalRating": -4.2175245
+                },
+                "3": {
+                  "positionalRanking": 15,
+                  "totalRanking": 258,
+                  "totalRating": 1.746557
+                }
+              },
+              "rosterLocked": false,
+              "status": "ONTEAM",
+              "tradeLocked": false
             },
-            {
-              "acquisitionDate": 1615051894166,
-              "acquisitionType": "DRAFT",
-              "injuryStatus": "NORMAL",
-              "lineupSlotId": 13,
-              "pendingTransactionIds": null,
-              "playerId": 32582,
-              "playerPoolEntry": {
-                "id": 32582,
-                "keeperValue": 0,
-                "keeperValueFuture": 10,
-                "lineupLocked": false,
-                "onTeamId": 6,
-                "player": {
-                  "active": true,
-                  "defaultPositionId": 1,
-                  "draftRanksByRankType": {
-                    "STANDARD": {
-                      "auctionValue": 14,
-                      "published": false,
-                      "rank": 64,
-                      "rankSourceId": 0,
-                      "rankType": "STANDARD",
-                      "slotId": 0
-                    }
-                  },
-                  "droppable": true,
-                  "eligibleSlots": [
-                    13,
-                    14,
-                    16,
-                    17
-                  ],
-                  "firstName": "Hyun Jin",
-                  "fullName": "Hyun Jin Ryu",
-                  "gamesPlayedByPosition": {
-                    "1": 9
-                  },
-                  "id": 32582,
-                  "injured": false,
-                  "injuryStatus": "ACTIVE",
-                  "lastName": "Ryu",
-                  "lastNewsDate": 1621864185000,
-                  "ownership": {
-                    "auctionValueAverage": 10.974358974358974,
-                    "averageDraftPosition": 71.31270718232044,
-                    "percentChange": 0.44198096392463526,
-                    "percentOwned": 99.38116246705948,
-                    "percentStarted": 78.13638113285761
-                  },
-                  "proTeamId": 14,
-                  "seasonOutlook": "Nobody expected Ryu to replicate his second-place Cy Young finish from 2019 in his age-33 season last year, but he came pretty darn close, finishing third in the voting on the back of a 2.69 ERA. His walk rate in his first year with the Blue Jays may have nearly doubled from 3.3% to 6.2%, but that came with a jump in strikeout rate from 22.5% to 26.2%. He also produced a career-best 51.1% groundball rate. The lefty did lose a tick on his fastball, which came in at 89.6 mph on average, but he adjusted by using it just 34.7% of the time, increasing his cutter usage to compensate. Ryu will be 34 by Opening Day, and he's near the lower limit of velocity for an elite pitcher, but he's been strong all-around and healthy for several seasons now.",
-                  "starterStatusByProGame": {
-                    "401227066": "PROBABLE",
-                    "401227087": "NOTSTARTING",
-                    "401227100": "NOTSTARTING",
-                    "401227114": "NOTSTARTING",
-                    "401227128": "NOTSTARTING",
-                    "401227142": "PROBABLE",
-                    "401227143": "NOTSTARTING",
-                    "401227152": "NOTSTARTING",
-                    "401227161": "NOTSTARTING",
-                    "401227176": "NOTSTARTING",
-                    "401227197": "NOTSTARTING",
-                    "401227212": "PROBABLE",
-                    "401227227": "NOTSTARTING",
-                    "401227243": "NOTSTARTING",
-                    "401227258": "NOTSTARTING",
-                    "401227273": "NOTSTARTING",
-                    "401227288": "NOTSTARTING",
-                    "401227311": "PROBABLE",
-                    "401227325": "NOTSTARTING",
-                    "401227347": "NOTSTARTING",
-                    "401227362": "NOTSTARTING",
-                    "401227377": "PROBABLE",
-                    "401227404": "NOTSTARTING",
-                    "401227419": "NOTSTARTING",
-                    "401227430": "NOTSTARTING",
-                    "401227445": "NOTSTARTING",
-                    "401227460": "NOTSTARTING",
-                    "401227483": "NOTSTARTING",
-                    "401227498": "NOTSTARTING",
-                    "401227513": "NOTSTARTING",
-                    "401227523": "PROBABLE",
-                    "401227537": "NOTSTARTING",
-                    "401227552": "NOTSTARTING",
-                    "401227567": "NOTSTARTING",
-                    "401227589": "NOTSTARTING",
-                    "401227603": "PROBABLE",
-                    "401227615": "NOTSTARTING",
-                    "401227626": "NOTSTARTING",
-                    "401227641": "NOTSTARTING",
-                    "401227656": "NOTSTARTING",
-                    "401227671": "PROBABLE",
-                    "401227686": "NOTSTARTING",
-                    "401227701": "NOTSTARTING",
-                    "401227723": "NOTSTARTING",
-                    "401227738": "NOTSTARTING",
-                    "401227753": "PROBABLE",
-                    "401227761": "NOTSTARTING",
-                    "401227776": "NOTSTARTING",
-                    "401227818": "PROBABLE",
-                    "401227907": "PROBABLE",
-                    "401321165": "NOTSTARTING"
-                  },
-                  "stats": [
-                    {
-                      "externalId": "2021",
-                      "id": "012021",
-                      "proTeamId": 0,
-                      "scoringPeriodId": 0,
-                      "seasonId": 2021,
-                      "statSourceId": 0,
-                      "statSplitTypeId": 1,
-                      "stats": {
-                        "7": 0,
-                        "19": 0,
-                        "25": 0,
-                        "32": 1,
-                        "33": 1,
-                        "34": 20,
-                        "35": 27,
-                        "36": 107,
-                        "37": 8,
-                        "38": 0.32,
-                        "39": 1,
-                        "40": 0,
-                        "41": 1.35,
-                        "42": 0,
-                        "43": 0.33333333,
-                        "44": 2,
-                        "45": 2,
-                        "46": 1,
-                        "47": 2.7,
-                        "48": 7,
-                        "49": 9.45,
-                        "50": 0,
-                        "51": 0,
-                        "52": 1,
-                        "53": 0,
-                        "54": 0,
-                        "55": 0,
-                        "56": 0,
-                        "57": 0,
-                        "58": 0,
-                        "59": 0,
-                        "60": 0,
-                        "61": 0,
-                        "62": 0,
-                        "63": 1,
-                        "64": 0,
-                        "66": 0,
-                        "74": 0,
-                        "75": 0,
-                        "76": 0,
-                        "77": 1,
-                        "78": 0,
-                        "79": 1,
-                        "80": 0,
-                        "82": 7
-                      }
-                    },
-                    {
-                      "externalId": "2021",
-                      "id": "022021",
-                      "proTeamId": 0,
-                      "scoringPeriodId": 0,
-                      "seasonId": 2021,
-                      "statSourceId": 0,
-                      "statSplitTypeId": 2,
-                      "stats": {
-                        "7": 0,
-                        "19": 0,
-                        "25": 0,
-                        "32": 3,
-                        "33": 3,
-                        "34": 62,
-                        "35": 79,
-                        "36": 301,
-                        "37": 17,
-                        "38": 0.22368421,
-                        "39": 2,
-                        "40": 0,
-                        "41": 0.91935484,
-                        "42": 0,
-                        "43": 0.24050633,
-                        "44": 3,
-                        "45": 3,
-                        "46": 2,
-                        "47": 1.30645161,
-                        "48": 20,
-                        "49": 8.70967742,
-                        "50": 0,
-                        "51": 0,
-                        "52": 1,
-                        "53": 2,
-                        "54": 0,
-                        "55": 1,
-                        "56": 0,
-                        "57": 0,
-                        "58": 0,
-                        "59": 0,
-                        "60": 0,
-                        "61": 0,
-                        "62": 0,
-                        "63": 3,
-                        "64": 0,
-                        "66": 0,
-                        "74": 0,
-                        "75": 0,
-                        "76": 2,
-                        "77": 1,
-                        "78": 0,
-                        "79": 1,
-                        "80": 0,
-                        "82": 10
-                      }
-                    },
-                    {
-                      "externalId": "2020",
-                      "id": "002020",
-                      "proTeamId": 0,
-                      "scoringPeriodId": 0,
-                      "seasonId": 2020,
-                      "statSourceId": 0,
-                      "statSplitTypeId": 0,
-                      "stats": {
-                        "25": 0,
-                        "32": 12,
-                        "33": 12,
-                        "34": 201,
-                        "35": 275,
-                        "36": 1132,
-                        "37": 61,
-                        "38": 0.23828125,
-                        "39": 17,
-                        "40": 0,
-                        "41": 1.1641791,
-                        "42": 1,
-                        "43": 0.28727273,
-                        "44": 22,
-                        "45": 21,
-                        "46": 6,
-                        "47": 2.82089552,
-                        "48": 72,
-                        "49": 9.67164179,
-                        "50": 1,
-                        "51": 0,
-                        "52": 1,
-                        "53": 5,
-                        "54": 2,
-                        "55": 0.71428571,
-                        "56": 0,
-                        "57": 0,
-                        "58": 0,
-                        "59": 0,
-                        "60": 0,
-                        "61": 0,
-                        "62": 0,
-                        "63": 7,
-                        "64": 0,
-                        "66": 0,
-                        "74": 0,
-                        "75": 0,
-                        "76": 9,
-                        "77": 3,
-                        "78": 0,
-                        "79": 1,
-                        "80": 0,
-                        "82": 4.23529412
-                      },
-                      "variance": {}
-                    },
-                    {
-                      "externalId": "2021",
-                      "id": "002021",
-                      "proTeamId": 0,
-                      "scoringPeriodId": 0,
-                      "seasonId": 2021,
-                      "statSourceId": 0,
-                      "statSplitTypeId": 0,
-                      "stats": {
-                        "7": 0,
-                        "19": 0,
-                        "25": 0,
-                        "32": 9,
-                        "33": 9,
-                        "34": 160,
-                        "35": 211,
-                        "36": 814,
-                        "37": 49,
-                        "38": 0.24019608,
-                        "39": 6,
-                        "40": 0,
-                        "41": 1.03125,
-                        "42": 0,
-                        "43": 0.26066351,
-                        "44": 16,
-                        "45": 15,
-                        "46": 6,
-                        "47": 2.53125,
-                        "48": 52,
-                        "49": 8.775,
-                        "50": 0,
-                        "51": 0,
-                        "52": 1,
-                        "53": 4,
-                        "54": 2,
-                        "55": 0.66666667,
-                        "56": 0,
-                        "57": 0,
-                        "58": 0,
-                        "59": 0,
-                        "60": 0,
-                        "61": 0,
-                        "62": 0,
-                        "63": 5,
-                        "64": 0,
-                        "66": 0,
-                        "74": 0,
-                        "75": 0,
-                        "76": 6,
-                        "77": 3,
-                        "78": 0,
-                        "79": 1,
-                        "80": 0,
-                        "82": 8.66666667
-                      }
-                    },
-                    {
-                      "externalId": "2021",
-                      "id": "102021",
-                      "proTeamId": 0,
-                      "scoringPeriodId": 0,
-                      "seasonId": 2021,
-                      "statSourceId": 1,
-                      "statSplitTypeId": 0,
-                      "stats": {
-                        "32": 31,
-                        "33": 31,
-                        "34": 537,
-                        "35": 722,
-                        "37": 160,
-                        "38": 0.236686391,
-                        "39": 41,
-                        "40": 2,
-                        "41": 1.12,
-                        "42": 4,
-                        "43": 0.278393352,
-                        "44": 74,
-                        "45": 66,
-                        "46": 19,
-                        "47": 3.32,
-                        "48": 174,
-                        "50": 1,
-                        "52": 2,
-                        "53": 12,
-                        "54": 8,
-                        "55": 0.6,
-                        "63": 20,
-                        "82": 4.24
-                      },
-                      "variance": {}
-                    },
-                    {
-                      "externalId": "2020",
-                      "id": "102020",
-                      "proTeamId": 0,
-                      "scoringPeriodId": 0,
-                      "seasonId": 2020,
-                      "statSourceId": 1,
-                      "statSplitTypeId": 0,
-                      "stats": {
-                        "32": 11,
-                        "33": 11,
-                        "34": 192,
-                        "35": 256,
-                        "37": 61,
-                        "38": 0.253112033,
-                        "39": 14,
-                        "40": 1,
-                        "41": 1.17,
-                        "42": 1,
-                        "43": 0.30078125,
-                        "44": 30,
-                        "45": 28,
-                        "46": 9,
-                        "47": 3.94,
-                        "48": 60,
-                        "53": 4,
-                        "54": 3,
-                        "55": 0.571428571,
-                        "63": 6,
-                        "82": 4.29
-                      },
-                      "variance": {}
-                    },
-                    {
-                      "externalId": "2021",
-                      "id": "162021",
-                      "proTeamId": 0,
-                      "scoringPeriodId": 0,
-                      "seasonId": 2021,
-                      "statSourceId": 1,
-                      "statSplitTypeId": 6,
-                      "stats": {
-                        "32": 21,
-                        "33": 21,
-                        "34": 382.0000002,
-                        "35": 510,
-                        "37": 113,
-                        "38": 0.233471074,
-                        "39": 24,
-                        "40": 1,
-                        "41": 1.08,
-                        "42": 2,
-                        "43": 0.268627451,
-                        "44": 49,
-                        "45": 44,
-                        "46": 14,
-                        "47": 3.11,
-                        "48": 124,
-                        "53": 9,
-                        "54": 5,
-                        "55": 0.642857143,
-                        "63": 14,
-                        "82": 5.17
-                      },
-                      "variance": {}
-                    },
-                    {
-                      "externalId": "2021",
-                      "id": "032021",
-                      "proTeamId": 0,
-                      "scoringPeriodId": 0,
-                      "seasonId": 2021,
-                      "statSourceId": 0,
-                      "statSplitTypeId": 3,
-                      "stats": {
-                        "7": 0,
-                        "19": 0,
-                        "25": 0,
-                        "32": 4,
-                        "33": 4,
-                        "34": 77,
-                        "35": 100,
-                        "36": 392,
-                        "37": 23,
-                        "38": 0.23958333,
-                        "39": 3,
-                        "40": 0,
-                        "41": 1.01298701,
-                        "42": 0,
-                        "43": 0.26,
-                        "44": 7,
-                        "45": 7,
-                        "46": 3,
-                        "47": 2.45454545,
-                        "48": 26,
-                        "49": 9.11688312,
-                        "50": 0,
-                        "51": 0,
-                        "52": 1,
-                        "53": 3,
-                        "54": 0,
-                        "55": 1,
-                        "56": 0,
-                        "57": 0,
-                        "58": 0,
-                        "59": 0,
-                        "60": 0,
-                        "61": 0,
-                        "62": 0,
-                        "63": 3,
-                        "64": 0,
-                        "66": 0,
-                        "74": 0,
-                        "75": 0,
-                        "76": 3,
-                        "77": 1,
-                        "78": 0,
-                        "79": 1,
-                        "80": 0,
-                        "82": 8.66666667
-                      }
-                    }
-                  ],
-                  "universeId": 1
-                },
-                "ratings": {
-                  "0": {
-                    "positionalRanking": 22,
-                    "totalRanking": 98,
-                    "totalRating": 5.6220517
-                  },
-                  "1": {
-                    "positionalRanking": 77,
-                    "totalRanking": 282,
-                    "totalRating": 0.37177104
-                  },
-                  "2": {
-                    "positionalRanking": 10,
-                    "totalRanking": 41,
-                    "totalRating": 6.7550125
-                  },
-                  "3": {
-                    "positionalRanking": 31,
-                    "totalRanking": 102,
-                    "totalRating": 4.8689175
+            "status": "NORMAL"
+          },
+          {
+            "acquisitionDate": 1615051894166,
+            "acquisitionType": "DRAFT",
+            "injuryStatus": "NORMAL",
+            "lineupSlotId": 13,
+            "pendingTransactionIds": null,
+            "playerId": 32582,
+            "playerPoolEntry": {
+              "id": 32582,
+              "keeperValue": 0,
+              "keeperValueFuture": 10,
+              "lineupLocked": false,
+              "onTeamId": 6,
+              "player": {
+                "active": true,
+                "defaultPositionId": 1,
+                "draftRanksByRankType": {
+                  "STANDARD": {
+                    "auctionValue": 14,
+                    "published": false,
+                    "rank": 64,
+                    "rankSourceId": 0,
+                    "rankType": "STANDARD",
+                    "slotId": 0
                   }
                 },
-                "rosterLocked": false,
-                "status": "ONTEAM",
-                "tradeLocked": false
+                "droppable": true,
+                "eligibleSlots": [13, 14, 16, 17],
+                "firstName": "Hyun Jin",
+                "fullName": "Hyun Jin Ryu",
+                "gamesPlayedByPosition": {
+                  "1": 9
+                },
+                "id": 32582,
+                "injured": false,
+                "injuryStatus": "ACTIVE",
+                "lastName": "Ryu",
+                "lastNewsDate": 1621864185000,
+                "ownership": {
+                  "auctionValueAverage": 10.974358974358974,
+                  "averageDraftPosition": 71.31270718232044,
+                  "percentChange": 0.44198096392463526,
+                  "percentOwned": 99.38116246705948,
+                  "percentStarted": 78.13638113285761
+                },
+                "proTeamId": 14,
+                "seasonOutlook": "Nobody expected Ryu to replicate his second-place Cy Young finish from 2019 in his age-33 season last year, but he came pretty darn close, finishing third in the voting on the back of a 2.69 ERA. His walk rate in his first year with the Blue Jays may have nearly doubled from 3.3% to 6.2%, but that came with a jump in strikeout rate from 22.5% to 26.2%. He also produced a career-best 51.1% groundball rate. The lefty did lose a tick on his fastball, which came in at 89.6 mph on average, but he adjusted by using it just 34.7% of the time, increasing his cutter usage to compensate. Ryu will be 34 by Opening Day, and he's near the lower limit of velocity for an elite pitcher, but he's been strong all-around and healthy for several seasons now.",
+                "starterStatusByProGame": {
+                  "401227066": "PROBABLE",
+                  "401227087": "NOTSTARTING",
+                  "401227100": "NOTSTARTING",
+                  "401227114": "NOTSTARTING",
+                  "401227128": "NOTSTARTING",
+                  "401227142": "PROBABLE",
+                  "401227143": "NOTSTARTING",
+                  "401227152": "NOTSTARTING",
+                  "401227161": "NOTSTARTING",
+                  "401227176": "NOTSTARTING",
+                  "401227197": "NOTSTARTING",
+                  "401227212": "PROBABLE",
+                  "401227227": "NOTSTARTING",
+                  "401227243": "NOTSTARTING",
+                  "401227258": "NOTSTARTING",
+                  "401227273": "NOTSTARTING",
+                  "401227288": "NOTSTARTING",
+                  "401227311": "PROBABLE",
+                  "401227325": "NOTSTARTING",
+                  "401227347": "NOTSTARTING",
+                  "401227362": "NOTSTARTING",
+                  "401227377": "PROBABLE",
+                  "401227404": "NOTSTARTING",
+                  "401227419": "NOTSTARTING",
+                  "401227430": "NOTSTARTING",
+                  "401227445": "NOTSTARTING",
+                  "401227460": "NOTSTARTING",
+                  "401227483": "NOTSTARTING",
+                  "401227498": "NOTSTARTING",
+                  "401227513": "NOTSTARTING",
+                  "401227523": "PROBABLE",
+                  "401227537": "NOTSTARTING",
+                  "401227552": "NOTSTARTING",
+                  "401227567": "NOTSTARTING",
+                  "401227589": "NOTSTARTING",
+                  "401227603": "PROBABLE",
+                  "401227615": "NOTSTARTING",
+                  "401227626": "NOTSTARTING",
+                  "401227641": "NOTSTARTING",
+                  "401227656": "NOTSTARTING",
+                  "401227671": "PROBABLE",
+                  "401227686": "NOTSTARTING",
+                  "401227701": "NOTSTARTING",
+                  "401227723": "NOTSTARTING",
+                  "401227738": "NOTSTARTING",
+                  "401227753": "PROBABLE",
+                  "401227761": "NOTSTARTING",
+                  "401227776": "NOTSTARTING",
+                  "401227818": "PROBABLE",
+                  "401227907": "PROBABLE",
+                  "401321165": "NOTSTARTING"
+                },
+                "stats": [
+                  {
+                    "externalId": "2021",
+                    "id": "012021",
+                    "proTeamId": 0,
+                    "scoringPeriodId": 0,
+                    "seasonId": 2021,
+                    "statSourceId": 0,
+                    "statSplitTypeId": 1,
+                    "stats": {
+                      "7": 0,
+                      "19": 0,
+                      "25": 0,
+                      "32": 1,
+                      "33": 1,
+                      "34": 20,
+                      "35": 27,
+                      "36": 107,
+                      "37": 8,
+                      "38": 0.32,
+                      "39": 1,
+                      "40": 0,
+                      "41": 1.35,
+                      "42": 0,
+                      "43": 0.33333333,
+                      "44": 2,
+                      "45": 2,
+                      "46": 1,
+                      "47": 2.7,
+                      "48": 7,
+                      "49": 9.45,
+                      "50": 0,
+                      "51": 0,
+                      "52": 1,
+                      "53": 0,
+                      "54": 0,
+                      "55": 0,
+                      "56": 0,
+                      "57": 0,
+                      "58": 0,
+                      "59": 0,
+                      "60": 0,
+                      "61": 0,
+                      "62": 0,
+                      "63": 1,
+                      "64": 0,
+                      "66": 0,
+                      "74": 0,
+                      "75": 0,
+                      "76": 0,
+                      "77": 1,
+                      "78": 0,
+                      "79": 1,
+                      "80": 0,
+                      "82": 7
+                    }
+                  },
+                  {
+                    "externalId": "2021",
+                    "id": "022021",
+                    "proTeamId": 0,
+                    "scoringPeriodId": 0,
+                    "seasonId": 2021,
+                    "statSourceId": 0,
+                    "statSplitTypeId": 2,
+                    "stats": {
+                      "7": 0,
+                      "19": 0,
+                      "25": 0,
+                      "32": 3,
+                      "33": 3,
+                      "34": 62,
+                      "35": 79,
+                      "36": 301,
+                      "37": 17,
+                      "38": 0.22368421,
+                      "39": 2,
+                      "40": 0,
+                      "41": 0.91935484,
+                      "42": 0,
+                      "43": 0.24050633,
+                      "44": 3,
+                      "45": 3,
+                      "46": 2,
+                      "47": 1.30645161,
+                      "48": 20,
+                      "49": 8.70967742,
+                      "50": 0,
+                      "51": 0,
+                      "52": 1,
+                      "53": 2,
+                      "54": 0,
+                      "55": 1,
+                      "56": 0,
+                      "57": 0,
+                      "58": 0,
+                      "59": 0,
+                      "60": 0,
+                      "61": 0,
+                      "62": 0,
+                      "63": 3,
+                      "64": 0,
+                      "66": 0,
+                      "74": 0,
+                      "75": 0,
+                      "76": 2,
+                      "77": 1,
+                      "78": 0,
+                      "79": 1,
+                      "80": 0,
+                      "82": 10
+                    }
+                  },
+                  {
+                    "externalId": "2020",
+                    "id": "002020",
+                    "proTeamId": 0,
+                    "scoringPeriodId": 0,
+                    "seasonId": 2020,
+                    "statSourceId": 0,
+                    "statSplitTypeId": 0,
+                    "stats": {
+                      "25": 0,
+                      "32": 12,
+                      "33": 12,
+                      "34": 201,
+                      "35": 275,
+                      "36": 1132,
+                      "37": 61,
+                      "38": 0.23828125,
+                      "39": 17,
+                      "40": 0,
+                      "41": 1.1641791,
+                      "42": 1,
+                      "43": 0.28727273,
+                      "44": 22,
+                      "45": 21,
+                      "46": 6,
+                      "47": 2.82089552,
+                      "48": 72,
+                      "49": 9.67164179,
+                      "50": 1,
+                      "51": 0,
+                      "52": 1,
+                      "53": 5,
+                      "54": 2,
+                      "55": 0.71428571,
+                      "56": 0,
+                      "57": 0,
+                      "58": 0,
+                      "59": 0,
+                      "60": 0,
+                      "61": 0,
+                      "62": 0,
+                      "63": 7,
+                      "64": 0,
+                      "66": 0,
+                      "74": 0,
+                      "75": 0,
+                      "76": 9,
+                      "77": 3,
+                      "78": 0,
+                      "79": 1,
+                      "80": 0,
+                      "82": 4.23529412
+                    },
+                    "variance": {}
+                  },
+                  {
+                    "externalId": "2021",
+                    "id": "002021",
+                    "proTeamId": 0,
+                    "scoringPeriodId": 0,
+                    "seasonId": 2021,
+                    "statSourceId": 0,
+                    "statSplitTypeId": 0,
+                    "stats": {
+                      "7": 0,
+                      "19": 0,
+                      "25": 0,
+                      "32": 9,
+                      "33": 9,
+                      "34": 160,
+                      "35": 211,
+                      "36": 814,
+                      "37": 49,
+                      "38": 0.24019608,
+                      "39": 6,
+                      "40": 0,
+                      "41": 1.03125,
+                      "42": 0,
+                      "43": 0.26066351,
+                      "44": 16,
+                      "45": 15,
+                      "46": 6,
+                      "47": 2.53125,
+                      "48": 52,
+                      "49": 8.775,
+                      "50": 0,
+                      "51": 0,
+                      "52": 1,
+                      "53": 4,
+                      "54": 2,
+                      "55": 0.66666667,
+                      "56": 0,
+                      "57": 0,
+                      "58": 0,
+                      "59": 0,
+                      "60": 0,
+                      "61": 0,
+                      "62": 0,
+                      "63": 5,
+                      "64": 0,
+                      "66": 0,
+                      "74": 0,
+                      "75": 0,
+                      "76": 6,
+                      "77": 3,
+                      "78": 0,
+                      "79": 1,
+                      "80": 0,
+                      "82": 8.66666667
+                    }
+                  },
+                  {
+                    "externalId": "2021",
+                    "id": "102021",
+                    "proTeamId": 0,
+                    "scoringPeriodId": 0,
+                    "seasonId": 2021,
+                    "statSourceId": 1,
+                    "statSplitTypeId": 0,
+                    "stats": {
+                      "32": 31,
+                      "33": 31,
+                      "34": 537,
+                      "35": 722,
+                      "37": 160,
+                      "38": 0.236686391,
+                      "39": 41,
+                      "40": 2,
+                      "41": 1.12,
+                      "42": 4,
+                      "43": 0.278393352,
+                      "44": 74,
+                      "45": 66,
+                      "46": 19,
+                      "47": 3.32,
+                      "48": 174,
+                      "50": 1,
+                      "52": 2,
+                      "53": 12,
+                      "54": 8,
+                      "55": 0.6,
+                      "63": 20,
+                      "82": 4.24
+                    },
+                    "variance": {}
+                  },
+                  {
+                    "externalId": "2020",
+                    "id": "102020",
+                    "proTeamId": 0,
+                    "scoringPeriodId": 0,
+                    "seasonId": 2020,
+                    "statSourceId": 1,
+                    "statSplitTypeId": 0,
+                    "stats": {
+                      "32": 11,
+                      "33": 11,
+                      "34": 192,
+                      "35": 256,
+                      "37": 61,
+                      "38": 0.253112033,
+                      "39": 14,
+                      "40": 1,
+                      "41": 1.17,
+                      "42": 1,
+                      "43": 0.30078125,
+                      "44": 30,
+                      "45": 28,
+                      "46": 9,
+                      "47": 3.94,
+                      "48": 60,
+                      "53": 4,
+                      "54": 3,
+                      "55": 0.571428571,
+                      "63": 6,
+                      "82": 4.29
+                    },
+                    "variance": {}
+                  },
+                  {
+                    "externalId": "2021",
+                    "id": "162021",
+                    "proTeamId": 0,
+                    "scoringPeriodId": 0,
+                    "seasonId": 2021,
+                    "statSourceId": 1,
+                    "statSplitTypeId": 6,
+                    "stats": {
+                      "32": 21,
+                      "33": 21,
+                      "34": 382.0000002,
+                      "35": 510,
+                      "37": 113,
+                      "38": 0.233471074,
+                      "39": 24,
+                      "40": 1,
+                      "41": 1.08,
+                      "42": 2,
+                      "43": 0.268627451,
+                      "44": 49,
+                      "45": 44,
+                      "46": 14,
+                      "47": 3.11,
+                      "48": 124,
+                      "53": 9,
+                      "54": 5,
+                      "55": 0.642857143,
+                      "63": 14,
+                      "82": 5.17
+                    },
+                    "variance": {}
+                  },
+                  {
+                    "externalId": "2021",
+                    "id": "032021",
+                    "proTeamId": 0,
+                    "scoringPeriodId": 0,
+                    "seasonId": 2021,
+                    "statSourceId": 0,
+                    "statSplitTypeId": 3,
+                    "stats": {
+                      "7": 0,
+                      "19": 0,
+                      "25": 0,
+                      "32": 4,
+                      "33": 4,
+                      "34": 77,
+                      "35": 100,
+                      "36": 392,
+                      "37": 23,
+                      "38": 0.23958333,
+                      "39": 3,
+                      "40": 0,
+                      "41": 1.01298701,
+                      "42": 0,
+                      "43": 0.26,
+                      "44": 7,
+                      "45": 7,
+                      "46": 3,
+                      "47": 2.45454545,
+                      "48": 26,
+                      "49": 9.11688312,
+                      "50": 0,
+                      "51": 0,
+                      "52": 1,
+                      "53": 3,
+                      "54": 0,
+                      "55": 1,
+                      "56": 0,
+                      "57": 0,
+                      "58": 0,
+                      "59": 0,
+                      "60": 0,
+                      "61": 0,
+                      "62": 0,
+                      "63": 3,
+                      "64": 0,
+                      "66": 0,
+                      "74": 0,
+                      "75": 0,
+                      "76": 3,
+                      "77": 1,
+                      "78": 0,
+                      "79": 1,
+                      "80": 0,
+                      "82": 8.66666667
+                    }
+                  }
+                ],
+                "universeId": 1
               },
-              "status": "NORMAL"
-            }
-          ],
-          "tradeReservedEntries": 0
+              "ratings": {
+                "0": {
+                  "positionalRanking": 22,
+                  "totalRanking": 98,
+                  "totalRating": 5.6220517
+                },
+                "1": {
+                  "positionalRanking": 77,
+                  "totalRanking": 282,
+                  "totalRating": 0.37177104
+                },
+                "2": {
+                  "positionalRanking": 10,
+                  "totalRanking": 41,
+                  "totalRating": 6.7550125
+                },
+                "3": {
+                  "positionalRanking": 31,
+                  "totalRanking": 102,
+                  "totalRating": 4.8689175
+                }
+              },
+              "rosterLocked": false,
+              "status": "ONTEAM",
+              "tradeLocked": false
+            },
+            "status": "NORMAL"
+          }
+        ],
+        "tradeReservedEntries": 0
+      },
+      "tradeBlock": {},
+      "transactionCounter": {
+        "acquisitionBudgetSpent": 0,
+        "acquisitions": 41,
+        "drops": 38,
+        "matchupAcquisitionTotals": {
+          "1": 40
         },
-        "tradeBlock": {},
-        "transactionCounter": {
-          "acquisitionBudgetSpent": 0,
-          "acquisitions": 41,
-          "drops": 38,
-          "matchupAcquisitionTotals": {
-            "1": 40
-          },
-          "misc": 0,
-          "moveToActive": 182,
-          "moveToIR": 6,
-          "paid": 0,
-          "teamCharges": 0,
-          "trades": 0
-        },
-        "valuesByStat": {
-          "0": 2261,
-          "1": 633,
-          "2": 0.27996462,
-          "5": 91,
-          "20": 360,
-          "21": 291,
-          "23": 35,
-          "33": 65,
-          "34": 1156,
-          "37": 363,
-          "39": 117,
-          "41": 1.24567474,
-          "45": 170,
-          "47": 3.97058824,
-          "48": 393,
-          "53": 23,
-          "57": 5
-        },
-        "waiverRank": 9,
-        "watchList": [
-          34945
-        ]
-      }
-    ]
-  }
+        "misc": 0,
+        "moveToActive": 182,
+        "moveToIR": 6,
+        "paid": 0,
+        "teamCharges": 0,
+        "trades": 0
+      },
+      "valuesByStat": {
+        "0": 2261,
+        "1": 633,
+        "2": 0.27996462,
+        "5": 91,
+        "20": 360,
+        "21": 291,
+        "23": 35,
+        "33": 65,
+        "34": 1156,
+        "37": 363,
+        "39": 117,
+        "41": 1.24567474,
+        "45": 170,
+        "47": 3.97058824,
+        "48": 393,
+        "53": 23,
+        "57": 5
+      },
+      "waiverRank": 9,
+      "watchList": [34945]
+    }
+  ]
+}

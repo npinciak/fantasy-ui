@@ -6,9 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class RankingColComponent implements OnInit {
   @Input() team: any;
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

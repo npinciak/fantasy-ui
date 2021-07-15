@@ -1,5 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { ApiService } from './api.service';
 
 describe('ApiService', () => {
@@ -8,7 +11,7 @@ describe('ApiService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule]
+      imports: [HttpClientTestingModule],
     });
     service = TestBed.inject(ApiService);
     httpTestingController = TestBed.inject(HttpTestingController);
@@ -22,7 +25,6 @@ describe('ApiService', () => {
     expect(service).toBeTruthy();
   });
 
-
   it('should send GET', () => {
     const spy = spyOn(service, 'get').and.callThrough();
 
@@ -30,12 +32,13 @@ describe('ApiService', () => {
 
     expect(spy).toHaveBeenCalled();
 
-    const req = httpTestingController.expectOne('https://jsonplaceholder.typicode.com/posts');
+    const req = httpTestingController.expectOne(
+      'https://jsonplaceholder.typicode.com/posts'
+    );
 
     expect(req.request.method).toBe('GET');
 
     req.flush({ id: 1, title: 'foo', body: 'bar', userId: 1 });
-
   });
 
   it('should send POST', () => {
@@ -43,34 +46,39 @@ describe('ApiService', () => {
 
     const mockBody = JSON.stringify({ title: 'foo', body: 'bar', userId: 1 });
 
-    service.post('https://jsonplaceholder.typicode.com/posts', mockBody).subscribe();
+    service
+      .post('https://jsonplaceholder.typicode.com/posts', mockBody)
+      .subscribe();
 
     expect(spy).toHaveBeenCalled();
 
-    const req = httpTestingController.expectOne('https://jsonplaceholder.typicode.com/posts');
+    const req = httpTestingController.expectOne(
+      'https://jsonplaceholder.typicode.com/posts'
+    );
 
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(mockBody);
 
     req.flush({ id: 1, title: 'foo', body: 'bar', userId: 1 });
-
   });
 
   it('should send PUT', () => {
     const spy = spyOn(service, 'put').and.callThrough();
     const mockBody = JSON.stringify({ title: 'foo', body: 'bar', userId: 1 });
 
-    service.put('https://jsonplaceholder.typicode.com/posts/1', mockBody).subscribe();
+    service
+      .put('https://jsonplaceholder.typicode.com/posts/1', mockBody)
+      .subscribe();
 
     expect(spy).toHaveBeenCalled();
 
-    const req = httpTestingController.expectOne('https://jsonplaceholder.typicode.com/posts/1');
+    const req = httpTestingController.expectOne(
+      'https://jsonplaceholder.typicode.com/posts/1'
+    );
 
     expect(req.request.method).toBe('PUT');
     expect(req.request.body).toEqual(mockBody);
 
     req.flush({ id: 1, title: 'foo', body: 'bar', userId: 1 });
-
   });
-
 });

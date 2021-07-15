@@ -9,14 +9,11 @@ export interface CoreStateModel {
 @State<CoreStateModel>({
   name: 'core',
   defaults: {
-    items: []
-  }
+    items: [],
+  },
 })
-
 @Injectable()
-
 export class CoreState {
-
   @Selector()
   public static getState(state: CoreStateModel) {
     return state;

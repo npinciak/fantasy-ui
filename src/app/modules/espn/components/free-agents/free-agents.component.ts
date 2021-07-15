@@ -5,14 +5,12 @@ import { MlbFacade } from '../../store/mlb/mlb.facade';
 @Component({
   selector: 'app-free-agents',
   templateUrl: './free-agents.component.html',
-  styleUrls: ['./free-agents.component.css']
+  styleUrls: ['./free-agents.component.css'],
 })
 export class FreeAgentsComponent implements OnInit {
   @Input() fantasyPlayers: Map<number, BaseballPlayer>;
 
-  constructor(readonly mlbFacade: MlbFacade) { }
+  constructor(readonly mlbFacade: MlbFacade) {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

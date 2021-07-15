@@ -1,11 +1,22 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { BaseballTeam } from '../../models/mlb/class/team.class';
 import { MlbFacade } from '../../store/mlb/mlb.facade';
 import * as _ from 'lodash';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
-import { RotoColumn, StatsColumn, TeamColumn } from '../../models/mlb/mlb.enums';
+import {
+  RotoColumn,
+  StatsColumn,
+  TeamColumn,
+} from '../../models/mlb/mlb.enums';
 import { standingsColumns } from '../../models/mlb/mlb.const';
 import { TEST_ID } from '@app/@shared/helpers/testConfigs';
 import { mlbTeamMap } from '../../models/mlb/maps';
@@ -30,7 +41,7 @@ export class StandingsComponent implements OnInit, OnChanges {
   tableColumns: string[];
   viewOptions: any;
 
-  constructor(readonly mlbFacade: MlbFacade) { }
+  constructor(readonly mlbFacade: MlbFacade) {}
 
   ngOnInit(): void {
     this.dataSource.data = this.teams;
@@ -62,7 +73,7 @@ export class StandingsComponent implements OnInit, OnChanges {
       { value: 'battingStatsRoto', label: 'B Roto' },
       { value: 'pitchingStatsRoto', label: 'P Roto' },
       { value: 'battingStats', label: 'B Stats' },
-      { value: 'pitchingStats', label: 'P Stats' }
+      { value: 'pitchingStats', label: 'P Stats' },
     ];
   }
 
@@ -85,5 +96,4 @@ export class StandingsComponent implements OnInit, OnChanges {
         break;
     }
   }
-
 }

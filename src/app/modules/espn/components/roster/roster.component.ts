@@ -1,4 +1,12 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import * as _ from 'lodash';
@@ -12,7 +20,7 @@ import { of } from 'rxjs';
 @Component({
   selector: 'app-roster',
   templateUrl: './roster.component.html',
-  styleUrls: ['./roster.component.scss']
+  styleUrls: ['./roster.component.scss'],
 })
 export class RosterComponent implements OnInit, AfterViewInit {
   @Input() fantasyPlayers: BaseballPlayer[];
@@ -30,25 +38,24 @@ export class RosterComponent implements OnInit, AfterViewInit {
 
   view: StatTypeId = 0;
 
-  constructor(readonly mlbFacade: MlbFacade) { }
+  constructor(readonly mlbFacade: MlbFacade) {}
 
   ngOnInit() {
     // console.log(this.fantasyPlayers[0])
 
     this.dataSource.data = this.fantasyPlayers;
 
-    this.dataSource.sortingDataAccessor = (player, stat) => this.sortAccessor(player, stat);
+    this.dataSource.sortingDataAccessor = (player, stat) =>
+      this.sortAccessor(player, stat);
   }
-
 
   ngAfterViewInit() {
     // this.dataSource.sort = this.sort;
-  };
+  }
 
   updateView = (event: MatButtonToggleChange) => of(); //this.mlbFacade.updateStatType(event.value);
 
   private sortAccessor(player, stat) {
     return player.playerStats.get(this.view)[stat];
   }
-
 }

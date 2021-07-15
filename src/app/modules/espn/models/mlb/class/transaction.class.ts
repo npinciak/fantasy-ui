@@ -1,9 +1,6 @@
 class MLBTransaction {
-    constructor() {
-
-    }
+  constructor() {}
 }
-
 
 //    {
 //         "isLeagueManager": false,

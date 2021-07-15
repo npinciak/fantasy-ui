@@ -1,6 +1,9 @@
 /* eslint-disable max-len */
 import { HttpHeaders } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { MOCK_DATA } from '@app/@shared/helpers/testConfigs';
 import { NgxsModule, Store } from '@ngxs/store';
@@ -14,12 +17,11 @@ describe('EspnService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, NgxsModule.forRoot()],
-      providers: [EspnService, Store]
+      providers: [EspnService, Store],
     });
 
     service = TestBed.inject(EspnService);
     httpTestingController = TestBed.inject(HttpTestingController);
-
   });
 
   afterEach(() => {
@@ -31,28 +33,28 @@ describe('EspnService', () => {
   });
 
   it('should call fetchEspnBaseball', () => {
-
     const spy = spyOn(service, 'fetchEspnBaseball').and.callThrough();
 
     service.fetchEspnBaseball(MOCK_DATA.LEAGUE_ID).subscribe();
 
     expect(spy).toHaveBeenCalled();
 
-    const requestOne = httpTestingController.expectOne(MOCK_DATA.LEAGUE_REQUEST);
+    const requestOne = httpTestingController.expectOne(
+      MOCK_DATA.LEAGUE_REQUEST
+    );
 
-    const requestTwo = httpTestingController.expectOne(MOCK_DATA.ESPN_GAME_REQUEST);
+    const requestTwo = httpTestingController.expectOne(
+      MOCK_DATA.ESPN_GAME_REQUEST
+    );
 
     expect(requestOne.request.method).toBe('GET');
     expect(requestTwo.request.method).toBe('GET');
 
     requestOne.flush(MOCK_DATA.ESPN_LEAGUE);
     requestTwo.flush(MOCK_DATA.ESPN_GAME_REQUEST);
-
   });
 
-
   it('should update team', () => {
-
     const spy = spyOn(service, 'updateTeam').and.callThrough();
 
     const expected = {
@@ -71,8 +73,8 @@ describe('EspnService', () => {
           playerId: 35568,
           toLineupSlotId: 16,
           toTeamId: 0,
-          type: 'LINEUP'
-        }
+          type: 'LINEUP',
+        },
       ],
       memberId: '{XXX-XXX-XXX-XXX-XXXX}',
       proposedDate: 1624751945319,
@@ -82,11 +84,10 @@ describe('EspnService', () => {
       status: 'EXECUTED',
       subOrder: 0,
       teamId: 6,
-      type: 'ROSTER'
+      type: 'ROSTER',
     };
 
-
-    service.updateTeam({}, MOCK_DATA.LEAGUE_ID).subscribe(res => {
+    service.updateTeam({}, MOCK_DATA.LEAGUE_ID).subscribe((res) => {
       expect(res).toEqual(expected);
     });
 
@@ -97,11 +98,9 @@ describe('EspnService', () => {
     expect(request.request.method).toBe('POST');
 
     request.flush(expected);
-
   });
 
   it('should retrieve player news', () => {
-
     const spy = spyOn(service, 'playerNews').and.callThrough();
 
     const expected = {};
@@ -110,16 +109,16 @@ describe('EspnService', () => {
 
     expect(spy).toHaveBeenCalled();
 
-    const request = httpTestingController.expectOne('https://site.api.espn.com/apis/fantasy/v2/games/flb/news/players?days=1&playerId=12345');
+    const request = httpTestingController.expectOne(
+      'https://site.api.espn.com/apis/fantasy/v2/games/flb/news/players?days=1&playerId=12345'
+    );
 
     expect(request.request.method).toBe('GET');
 
     request.flush(expected);
-
   });
 
   it('should retrieve free agents', () => {
-
     const spy = spyOn(service, 'freeAgents').and.callThrough();
 
     const expected = {};
@@ -128,12 +127,12 @@ describe('EspnService', () => {
 
     expect(spy).toHaveBeenCalled();
 
-    const request = httpTestingController.expectOne('https://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/1?scoringPeriodId=26&view=kona_player_info');
+    const request = httpTestingController.expectOne(
+      'https://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/1?scoringPeriodId=26&view=kona_player_info'
+    );
 
     expect(request.request.method).toBe('GET');
 
     request.flush(expected);
-
   });
-
 });

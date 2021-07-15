@@ -11,9 +11,8 @@ describe('ScoreboardComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, MatListModule, MatCardModule],
-      declarations: [ScoreboardComponent]
-    })
-      .compileComponents();
+      declarations: [ScoreboardComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -68,12 +67,6 @@ describe('ScoreboardComponent', () => {
 
   //   expect(final).toBeTruthy();
   // });
-
-
-
-
 });
-
-
 
 // scoreboardTeamChange

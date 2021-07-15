@@ -10,9 +10,8 @@ describe('FreeAgentsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [NgxsModule.forRoot()],
-      declarations: [FreeAgentsComponent]
-    })
-      .compileComponents();
+      declarations: [FreeAgentsComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

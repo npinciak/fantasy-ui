@@ -13,9 +13,8 @@ describe('WeatherComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      declarations: [WeatherComponent]
-    })
-      .compileComponents();
+      declarations: [WeatherComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

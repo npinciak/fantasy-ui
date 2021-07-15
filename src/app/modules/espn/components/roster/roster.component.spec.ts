@@ -16,14 +16,20 @@ describe('RosterComponent', () => {
   let fixture: ComponentFixture<RosterComponent>;
   let compiled;
 
-  const getByTestId = (testId: string) => compiled.querySelector(`[data-test="${testId}"]`);
+  const getByTestId = (testId: string) =>
+    compiled.querySelector(`[data-test="${testId}"]`);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NgxsModule.forRoot(),HttpClientTestingModule, RouterTestingModule, MaterialModule, BrowserAnimationsModule],
-      declarations: [RosterComponent, PlayerInfoColComponent]
-    })
-      .compileComponents();
+      imports: [
+        NgxsModule.forRoot(),
+        HttpClientTestingModule,
+        RouterTestingModule,
+        MaterialModule,
+        BrowserAnimationsModule,
+      ],
+      declarations: [RosterComponent, PlayerInfoColComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -37,5 +43,4 @@ describe('RosterComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 });

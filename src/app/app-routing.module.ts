@@ -7,22 +7,20 @@ import { EspnComponent } from './modules/espn/espn.component';
 const leagueId = environment.production ? '' : environment.leagueId;
 
 const routes: Routes = [
-    { path: 'espn', component: EspnComponent },
-    {
-        path: 'espn/:sport/:leagueId',
-        children: [
-            { path: '', component: EspnComponent },
-            { path: 'team/:teamId', component: TeamComponent }
-        ]
-    },
-    { path: '**', redirectTo: `espn/mlb/${leagueId}`, pathMatch: 'full' }
+  { path: 'espn', component: EspnComponent },
+  {
+    path: 'espn/:sport/:leagueId',
+    children: [
+      { path: '', component: EspnComponent },
+      { path: 'team/:teamId', component: TeamComponent },
+    ],
+  },
+  { path: '**', redirectTo: `espn/mlb/${leagueId}`, pathMatch: 'full' },
 ];
 
-
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule],
-    providers: []
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+  providers: [],
 })
-
-export class AppRoutingModule { }
+export class AppRoutingModule {}

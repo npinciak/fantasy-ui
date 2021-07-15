@@ -1,3 +1,3 @@
-import *  as MockCurrentConditions from './currentConditions.mock.json';
+import * as MockCurrentConditions from './currentConditions.mock.json';
 
 export { MockCurrentConditions };

@@ -11,7 +11,6 @@ import { EspnEvent, Team } from '../../models/mlb/interface';
 import { MlbStateModel, ScheduleState, TeamState } from './mlb-state.model';
 import { FetchBaseballLeague } from './mlb.actions';
 
-
 @State<MlbStateModel>({
   name: 'mlb',
   defaults: {
@@ -19,14 +18,12 @@ import { FetchBaseballLeague } from './mlb.actions';
     schedule: {},
     teams: {},
     games: {},
-    isLoading: true
-  }
+    isLoading: true,
+  },
 })
-
 @Injectable()
 export class MlbState {
-
-  constructor(private espnService: EspnService) { }
+  constructor(private espnService: EspnService) {}
 
   @Selector()
   static getState(state: MlbStateModel) {
@@ -74,7 +71,10 @@ export class MlbState {
   }
 
   @Selector([MlbState.games])
-  static noGames(_: MlbStateModel, games: { [id: number]: EspnEvent }): boolean {
+  static noGames(
+    _: MlbStateModel,
+    games: { [id: number]: EspnEvent }
+  ): boolean {
     return Object.keys(games).length === 0;
   }
 
@@ -84,7 +84,11 @@ export class MlbState {
   }
 
   @Selector([MlbState.teams, MlbState.schedule])
-  static baseballTeamMap(_: MlbStateModel, teams: TeamState, schedule: ScheduleState) {
+  static baseballTeamMap(
+    _: MlbStateModel,
+    teams: TeamState,
+    schedule: ScheduleState
+  ) {
     return newTeamMap(teams, Object.values(schedule));
   }
 
@@ -99,7 +103,10 @@ export class MlbState {
   }
 
   @Action(FetchBaseballLeague)
-  baseballLeague(ctx: StateContext<MlbStateModel>, { leagueId }: FetchBaseballLeague) {
+  baseballLeague(
+    ctx: StateContext<MlbStateModel>,
+    { leagueId }: FetchBaseballLeague
+  ) {
     if (ctx.getState().scoringPeriodId) {
       console.log('Data already in state, retrieving cache');
       return;
@@ -107,7 +114,6 @@ export class MlbState {
 
     return this.espnService.fetchEspnBaseball(leagueId).pipe(
       tap(([league, mlbGames]) => {
-
         const teams = entityMap(league.teams);
         const games = entityMap(mlbGames.events);
         const schedule = entityMap(league.schedule);
@@ -117,7 +123,7 @@ export class MlbState {
           games,
           schedule,
           isLoading: false,
-          scoringPeriodId: league.scoringPeriodId
+          scoringPeriodId: league.scoringPeriodId,
         });
       })
     );

@@ -1,45 +1,45 @@
 mat-table {
-    width: 100%;
+  width: 100%;
 
-    mat-row.example-detail-row {
-        height: 0;
-    }
-    
-   mat-row.example-team-row:not(.example-expanded-row):hover {
-        background: whitesmoke;
-    }
-    
-    mat-row.example-team-row:not(.example-expanded-row):active {
-        background: #efefef;
-    }
+  mat-row.example-detail-row {
+    height: 0;
+  }
+
+  mat-row.example-team-row:not(.example-expanded-row):hover {
+    background: whitesmoke;
+  }
+
+  mat-row.example-team-row:not(.example-expanded-row):active {
+    background: #efefef;
+  }
 }
 
 .example-team-row mat-col {
-    border-bottom-width: 0;
+  border-bottom-width: 0;
 }
 
 .example-team-detail {
-    overflow: hidden;
-    display: flex;
+  overflow: hidden;
+  display: flex;
 }
 
 .example-team-diagram {
-    min-width: 80px;
-    border: 2px solid black;
-    padding: 8px;
-    font-weight: lighter;
-    margin: 8px 0;
-    height: 104px;
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
 }
 
 .example-team-symbol {
-    font-weight: bold;
-    font-size: 40px;
-    line-height: normal;
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
 }
 
 .example-team-description {
-    padding: 16px;
+  padding: 16px;
 }
 
 // .example-team-description-attribution {

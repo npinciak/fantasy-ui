@@ -8,9 +8,8 @@ describe('LeagueScoreboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LeagueScoreboardComponent ]
-    })
-    .compileComponents();
+      declarations: [LeagueScoreboardComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

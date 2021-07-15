@@ -13,14 +13,13 @@ export enum Sports {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EspnService {
-
   private readonly fantasyBase = 'https://fantasy.espn.com/apis/v3';
   private readonly apiBase = 'https://site.api.espn.com/apis';
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService) {}
 
   fetchEspnBaseball = (leagueId: number) => {
     const $fantasyLeague = this._baseballLeague(leagueId);
@@ -29,13 +28,20 @@ export class EspnService {
   };
 
   updateTeam = (payload: unknown, leagueId: number) =>
-    this.api.post<any>(`${this.fantasyBase}/games/flb/seasons/2021/segments/0/leagues/${leagueId}/transactions`, payload, {
-      withCredentials: true, headers: this.postHeaders
-    });
+    this.api.post<any>(
+      `${this.fantasyBase}/games/flb/seasons/2021/segments/0/leagues/${leagueId}/transactions`,
+      payload,
+      {
+        withCredentials: true,
+        headers: this.postHeaders,
+      }
+    );
 
-  playerNews = (days: number, playerId: number) => this._baseballPlayerNews(days, playerId);
+  playerNews = (days: number, playerId: number) =>
+    this._baseballPlayerNews(days, playerId);
 
-  freeAgents = (leagueId: number, headers: HttpHeaders) => this._baseballFreeAgents(leagueId, headers);
+  freeAgents = (leagueId: number, headers: HttpHeaders) =>
+    this._baseballFreeAgents(leagueId, headers);
 
   /**
    * Retrieve league information
@@ -44,7 +50,8 @@ export class EspnService {
    * @returns League object
    */
   private readonly _baseballLeague = (leagueId: number) =>
-    this.api.get<League>(`${this.fantasyBase}/games/${Sports.baseball}/seasons/${this.currentYear}/segments/0/leagues/${leagueId}`,
+    this.api.get<League>(
+      `${this.fantasyBase}/games/${Sports.baseball}/seasons/${this.currentYear}/segments/0/leagues/${leagueId}`,
       { params: this.params }
     );
 
@@ -56,9 +63,14 @@ export class EspnService {
    * @returns Player news
    */
   private readonly _baseballPlayerNews = (days: number, playerId: number) =>
-    this.api.get<any>(`${this.apiBase}/fantasy/v2/games/${Sports.baseball}/news/players`, {
-      params: new HttpParams().set('days', days.toString()).set('playerId', playerId.toString())
-    });
+    this.api.get<any>(
+      `${this.apiBase}/fantasy/v2/games/${Sports.baseball}/news/players`,
+      {
+        params: new HttpParams()
+          .set('days', days.toString())
+          .set('playerId', playerId.toString()),
+      }
+    );
 
   /**
    * Retrieve league free agents
@@ -69,8 +81,12 @@ export class EspnService {
    * @param headers 'X-Fantasy-Filter' header required
    * @returns List of free agents
    */
-  private readonly _baseballFreeAgents = (leagueId: number, headers: HttpHeaders) =>
-    this.api.get<any>(`${this.fantasyBase}/games/${Sports.baseball}/seasons/${this.currentYear}/segments/0/leagues/${leagueId}`,
+  private readonly _baseballFreeAgents = (
+    leagueId: number,
+    headers: HttpHeaders
+  ) =>
+    this.api.get<any>(
+      `${this.fantasyBase}/games/${Sports.baseball}/seasons/${this.currentYear}/segments/0/leagues/${leagueId}`,
       { params: this.faParams, headers }
     );
 
@@ -81,9 +97,12 @@ export class EspnService {
    * @returns list of events
    */
   private readonly _baseballEvents = () =>
-    this.api.get<EventList>(`${this.apiBase}/fantasy/v2/games/${Sports.baseball}/games`, {
-      params: this.baseballEventParams
-    });
+    this.api.get<EventList>(
+      `${this.apiBase}/fantasy/v2/games/${Sports.baseball}/games`,
+      {
+        params: this.baseballEventParams,
+      }
+    );
 
   /**
    * @todo
@@ -139,5 +158,4 @@ export class EspnService {
   private get currentYear() {
     return new Date().getFullYear();
   }
-
 }

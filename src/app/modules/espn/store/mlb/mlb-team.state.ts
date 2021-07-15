@@ -9,14 +9,12 @@ export interface MlbTeamStateModel {
 @State<MlbTeamStateModel>({
   name: 'mlbTeam',
   defaults: {
-    isLoading: true
-  }
+    isLoading: true,
+  },
 })
-
 @Injectable()
 export class MlbTeamState {
-
-  constructor(private espnService: EspnService) { }
+  constructor(private espnService: EspnService) {}
 
   @Selector()
   public static getState(state: MlbTeamStateModel) {
@@ -27,5 +25,4 @@ export class MlbTeamState {
   public static isLoading(_: MlbTeamStateModel, getState: MlbTeamStateModel) {
     return getState.isLoading;
   }
-
 }

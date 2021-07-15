@@ -35,24 +35,31 @@ describe('EspnComponent', () => {
         RouterTestingModule,
         BrowserAnimationsModule,
         HttpClientTestingModule,
-        MaterialModule],
+        MaterialModule,
+      ],
       providers: [
         EspnService,
         // { provide: mlbFacade, useValue: mockmlbFacade },
         {
-          provide: ActivatedRoute, useValue: {
+          provide: ActivatedRoute,
+          useValue: {
             snapshot: {
               params: {
                 sport: Sports.mlb,
-                leagueId: `${environment.leagueId}`
-              }
-            }
-          }
-        }
+                leagueId: `${environment.leagueId}`,
+              },
+            },
+          },
+        },
       ],
-      declarations: [EspnComponent, RosterComponent, TeamComponent, StandingsComponent, ScoreboardComponent]
-    })
-      .compileComponents();
+      declarations: [
+        EspnComponent,
+        RosterComponent,
+        TeamComponent,
+        StandingsComponent,
+        ScoreboardComponent,
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -72,8 +79,5 @@ describe('EspnComponent', () => {
     fixture.detectChanges();
 
     expect(spy).toHaveBeenCalled();
-
   });
-
-
 });

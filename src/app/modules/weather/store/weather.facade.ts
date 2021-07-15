@@ -9,19 +9,20 @@ import { FetchWeather } from './weather.actions';
 import { WeatherState } from './weather.state';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class WeatherFacade {
+  @Select(WeatherState.currentWeather) public currentWeather$: Observable<
+    any[]
+  >;
 
-    @Select(WeatherState.currentWeather) public currentWeather$: Observable<any[]>;
+  constructor(private store: Store) {}
 
-    constructor(private store: Store) { }
+  selectWeatherByGameId = (id: number) =>
+    this.store.selectSnapshot(WeatherState.selectWeatherByGameId)(id);
+  weatherToGame = (id: number) =>
+    this.store.selectSnapshot(WeatherState.weatherToGame)(id);
 
-    selectWeatherByGameId = (id: number) => this.store.selectSnapshot(WeatherState.selectWeatherByGameId)(id);
-    weatherToGame = (id: number) => this.store.selectSnapshot(WeatherState.weatherToGame)(id);
-
-    // eslint-disable-next-line @typescript-eslint/member-ordering
-    @Dispatch() fetchWeather = (game: Game) => new FetchWeather(game);
-
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  @Dispatch() fetchWeather = (game: Game) => new FetchWeather(game);
 }

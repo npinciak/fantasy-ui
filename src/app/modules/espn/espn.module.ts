@@ -31,7 +31,7 @@ const components = [
   RankingColComponent,
   FreeAgentsComponent,
   WeatherComponent,
-  LeagueScoreboardComponent
+  LeagueScoreboardComponent,
 ];
 
 @NgModule({
@@ -44,7 +44,6 @@ const components = [
     SharedModule,
     BrowserAnimationsModule,
   ],
-  exports: [StandingsComponent, RosterComponent]
+  exports: [StandingsComponent, RosterComponent],
 })
-
-export class EspnModule { }
+export class EspnModule {}

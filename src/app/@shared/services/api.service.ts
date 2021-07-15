@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * GET request
@@ -26,7 +26,11 @@ export class ApiService {
    * @param data Request payload
    * @param options Request headers, query params, etc.
    */
-  public post<T>(endpoint: string, postData: unknown, options?: unknown): Observable<T> {
+  public post<T>(
+    endpoint: string,
+    postData: unknown,
+    options?: unknown
+  ): Observable<T> {
     return this.http.post<T>(endpoint, postData, options);
   }
 
@@ -37,7 +41,11 @@ export class ApiService {
    * @param data Request payload
    * @param options Request headers, query params, etc.
    */
-  public put<T>(endpoint: string, putData: unknown, options?: unknown): Observable<T> {
+  public put<T>(
+    endpoint: string,
+    putData: unknown,
+    options?: unknown
+  ): Observable<T> {
     return this.http.put<T>(endpoint, putData, options);
   }
 }

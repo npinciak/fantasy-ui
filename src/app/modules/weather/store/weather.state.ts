@@ -18,17 +18,16 @@ export class WeatherStateModel {
 
 const defaults = {
   items: [],
-  currentWeather: {}
+  currentWeather: {},
 };
 
 @State<WeatherStateModel>({
   name: 'weather',
-  defaults
+  defaults,
 })
-
 @Injectable()
 export class WeatherState {
-  constructor(private service: WeatherService) { }
+  constructor(private service: WeatherService) {}
 
   @Selector()
   static getState(state: WeatherStateModel) {
@@ -41,10 +40,11 @@ export class WeatherState {
   }
 
   @Selector([WeatherState.currentWeather, MlbState.gamesMap])
-  static weatherToGame(_: WeatherStateModel,
+  static weatherToGame(
+    _: WeatherStateModel,
     weather: { [id: number]: CurrentConditions },
-    game: { [id: number]: Game }) {
-
+    game: { [id: number]: Game }
+  ) {
     return (id: number) => {
       game[id].currentConditions = weather[id];
       return game[id];
@@ -52,12 +52,17 @@ export class WeatherState {
   }
 
   @Selector()
-  static selectWeatherByGameId(state: WeatherStateModel): (id: number) => WeatherValues {
+  static selectWeatherByGameId(
+    state: WeatherStateModel
+  ): (id: number) => WeatherValues {
     return (id: number) => state.currentWeather[id];
   }
 
   @Action(FetchWeather)
-  fetchWeather(ctx: StateContext<WeatherStateModel>, { payload }: FetchWeather) {
+  fetchWeather(
+    ctx: StateContext<WeatherStateModel>,
+    { payload }: FetchWeather
+  ) {
     if (ctx.getState().currentWeather.hasOwnProperty(payload.gameId)) {
       console.log('Data already in state, retrieving cache');
       return;
@@ -65,13 +70,13 @@ export class WeatherState {
 
     return this.service.currentWeather(payload.location).pipe(
       tap((res) => {
-
         const currentWeather = {};
-        currentWeather[payload.gameId] = res.data.timelines[0].intervals[0].values;
+        currentWeather[payload.gameId] =
+          res.data.timelines[0].intervals[0].values;
 
         ctx.patchState({
           items: [],
-          currentWeather
+          currentWeather,
         });
       })
     );

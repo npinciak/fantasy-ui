@@ -5,4 +5,13 @@ import { Team } from './team';
 import { FreeAgent } from './freeAgent';
 import { EventList, EspnEvent, Competitor } from './eventList';
 
-export { FreeAgent, League, Player, Roster, Team, EventList, EspnEvent, Competitor };
+export {
+  FreeAgent,
+  League,
+  Player,
+  Roster,
+  Team,
+  EventList,
+  EspnEvent,
+  Competitor,
+};

@@ -22,7 +22,8 @@ describe('TeamComponent', () => {
   let fixture: ComponentFixture<TeamComponent>;
   let compiled;
 
-  const getByTestId = (testId: string) => compiled.querySelector(`[data-test-id="${testId}"]`);
+  const getByTestId = (testId: string) =>
+    compiled.querySelector(`[data-test-id="${testId}"]`);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -34,22 +35,23 @@ describe('TeamComponent', () => {
         MatToolbarModule,
         MatProgressSpinnerModule,
         NgxsSelectSnapshotModule,
-        NgxsModule.forRoot()
+        NgxsModule.forRoot(),
       ],
       declarations: [TeamComponent, RosterComponent, PlayerInfoColComponent],
       providers: [
         // { provide: mlbFacade, useValue: mockmlbFacade },
         {
-          provide: ActivatedRoute, useValue: {
+          provide: ActivatedRoute,
+          useValue: {
             snapshot: {
               params: {
-                teamId: 10
-              }
-            }
-          }
-        }]
-    })
-      .compileComponents();
+                teamId: 10,
+              },
+            },
+          },
+        },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -70,5 +72,4 @@ describe('TeamComponent', () => {
   // it('should render teamName', () => {
   //   expect(getByTestId('teamName').textContent).toContain(`${mockTeam.location} ${mockTeam.nickname}`);
   // });
-
 });

@@ -5,15 +5,15 @@ import { BaseballTeam } from '../../models/mlb/class/team.class';
 @Component({
   selector: 'app-league-scoreboard',
   templateUrl: './league-scoreboard.component.html',
-  styleUrls: ['./league-scoreboard.component.css']
+  styleUrls: ['./league-scoreboard.component.css'],
 })
 export class LeagueScoreboardComponent {
-
   @Input() teams: BaseballTeam[];
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
-  viewTeam = (id: number) => this.router.navigate([`espn/${this.sport}/${this.leagueId}/team`, id]);
+  viewTeam = (id: number) =>
+    this.router.navigate([`espn/${this.sport}/${this.leagueId}/team`, id]);
 
   private get leagueId() {
     return this.activatedRoute.snapshot.params.leagueId;

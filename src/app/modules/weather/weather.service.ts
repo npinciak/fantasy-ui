@@ -5,17 +5,18 @@ import { ApiService } from '../../@shared/services/api.service';
 import { CurrentWeather } from './weather/models/interface/currentWeather.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WeatherService {
   private readonly baseUri = 'https://api.tomorrow.io/v4/timelines';
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService) {}
 
-  currentWeather = (coordinates: string) => this.api.get<CurrentWeather>(this.baseUri, {
-    headers: this.headers,
-    params: this.queryParams.append('location', coordinates)
-  });
+  currentWeather = (coordinates: string) =>
+    this.api.get<CurrentWeather>(this.baseUri, {
+      headers: this.headers,
+      params: this.queryParams.append('location', coordinates),
+    });
 
   private get headers() {
     let headers = new HttpHeaders();
@@ -36,5 +37,4 @@ export class WeatherService {
     // eslint-disable-next-line max-len
     return 'precipitationIntensity,precipitationType,precipitationProbability,temperatureApparent,temperature,humidity,dewPoint,windSpeed,windGust,windDirection,weatherCode';
   }
-
 }

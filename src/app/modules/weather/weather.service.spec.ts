@@ -1,4 +1,7 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { MOCK_DATA } from '@app/@shared/helpers/testConfigs';
 
@@ -11,7 +14,7 @@ describe('WeatherService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [WeatherService]
+      providers: [WeatherService],
     });
     service = TestBed.inject(WeatherService);
     httpTestingController = TestBed.inject(HttpTestingController);
@@ -27,10 +30,9 @@ describe('WeatherService', () => {
 
   describe('currentWeather', () => {
     it('should fetch current conditions', () => {
-
       const spy = spyOn(service, 'currentWeather').and.callThrough();
 
-      service.currentWeather('40.7128,74.0060').subscribe(res => {
+      service.currentWeather('40.7128,74.0060').subscribe((res) => {
         expect(res).toEqual(MOCK_DATA.WEATHER_CURRENT_CONDITIONS);
       });
 
@@ -42,7 +44,5 @@ describe('WeatherService', () => {
 
       req.flush(MOCK_DATA.WEATHER_CURRENT_CONDITIONS);
     });
-
   });
-
 });

@@ -5,14 +5,13 @@
 
 // stylelint-disable-next-line selector-max-universal
 * {
-    box-sizing: border-box;
-  }
-  
-  html,
-  body {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    height: 100%;
-  }
-  
+  box-sizing: border-box;
+}
+
+html,
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  height: 100%;
+}
