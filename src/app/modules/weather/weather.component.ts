@@ -8,7 +8,7 @@ import { WeatherFacade } from './store/weather.facade';
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.component.html',
-  styleUrls: ['./weather.component.css'],
+  styleUrls: ['./weather.component.scss'],
 })
 export class WeatherComponent implements OnInit {
   constructor() {}
