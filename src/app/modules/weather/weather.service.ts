@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ApiService } from '../../@shared/services/api.service';
 import { CurrentWeather } from './weather/models/interface/currentWeather.interface';
+import { WEATHER_DATA_FIELDS } from './weather/models/weather.const';
 
 @Injectable({
   providedIn: 'root',
@@ -26,15 +27,10 @@ export class WeatherService {
 
   private get queryParams() {
     let params = new HttpParams();
-    params = params.append('fields', this.forecastFields);
+    params = params.append('fields', WEATHER_DATA_FIELDS);
     params = params.append('timesteps', 'current');
     params = params.append('units', 'imperial');
     params = params.append('timezone', 'est');
     return params;
-  }
-
-  private get forecastFields() {
-    // eslint-disable-next-line max-len
-    return 'precipitationIntensity,precipitationType,precipitationProbability,temperatureApparent,temperature,humidity,dewPoint,windSpeed,windGust,windDirection,weatherCode';
   }
 }

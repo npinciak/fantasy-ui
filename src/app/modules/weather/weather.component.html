@@ -1,1 +1,29 @@
 <p>weather works!</p>
+<ng-container *ngIf="weather">
+    <mat-card>
+        <mat-card-content>
+            <img width="48" height="35" [alt]="weather?.currentConditions.weather"
+                [matTooltip]="weather?.currentConditions.weather" [src]="weather?.currentConditions.weatherImg">
+            <div
+                [ngClass]="weather?.currentConditions.temperature >=70 ? 'weather-chip-ideal' : 'weather-chip-default'">
+                Temp: {{weather?.currentConditions.temperature}}
+            </div>
+            <br>
+            {{weather?.currentConditions.chanceOfText}}
+            <br>
+            <div [ngClass]="weather?.currentConditions.humidity >= 65 ? 'weather-chip-ideal' : 'weather-chip-default'">
+                Humidity: {{weather?.currentConditions.humidity}}%
+            </div>
+            <div style="height:100px; width: 100px; " [ngStyle]="{'background-image':'url('+weather?.stadium.img+')'}">
+                <div
+                    style="height:100px; width: 100px; display: block; margin: auto; clear: both; text-align: center; z-index: 1000;">
+                    <mat-icon [ngStyle]="{'transform':'rotate('+weather?.currentConditions.wind.direction+'deg)'}">
+                        arrow_downward
+                    </mat-icon>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+
+</ng-container>

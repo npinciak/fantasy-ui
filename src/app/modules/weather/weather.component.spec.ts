@@ -1,20 +1,47 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatListModule } from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { gameMap } from '@app/@shared/helpers/mapping';
 import { MOCK_DATA } from '@app/@shared/helpers/testConfigs';
+import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
+import { NgxsModule, Store } from '@ngxs/store';
+import { Game } from '../espn/models/mlb/class/game.class';
 import { MockGame } from '../espn/models/mlb/mocks';
+import { FetchWeather } from './store/weather.actions';
+import { WeatherState } from './store/weather.state';
 
 import { WeatherComponent } from './weather.component';
+import { WeatherService } from './weather.service';
 
 describe('WeatherComponent', () => {
   let component: WeatherComponent;
   let fixture: ComponentFixture<WeatherComponent>;
 
+  let httpTestingController: HttpTestingController;
+  let service: WeatherService;
+  let state: WeatherState;
+  let store: Store;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [
+        MatTooltipModule,
+        MatListModule,
+        NgxsDispatchPluginModule,
+        HttpClientTestingModule,
+        NgxsModule.forRoot([WeatherState]),
+      ],
       declarations: [WeatherComponent],
     }).compileComponents();
+
+    httpTestingController = TestBed.inject(HttpTestingController);
+    service = TestBed.inject(WeatherService);
+    store = TestBed.inject(Store);
+    state = TestBed.inject(WeatherState);
   });
 
   beforeEach(() => {
@@ -25,5 +52,38 @@ describe('WeatherComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('gamesToArray', () => {
+    it('should return empty array', () => {
+      expect(component.gamesToArray).toEqual([]);
+    });
+
+    it('should return array of games', () => {
+      component.games = MOCK_DATA.GAME;
+      expect(component.gamesToArray).toEqual([MOCK_DATA.GAME[401228076]]);
+    });
+  });
+
+  describe('getWeather', () => {
+    it('should dispatch action', () => {
+      const spy = spyOn(state, 'fetchWeather');
+
+      const game = MOCK_DATA.GAME;
+
+      component.getWeather(game[401228076]);
+
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it('should make http call', () => {
+      const spy = spyOn(service, 'currentWeather').and.callThrough();
+
+      const game = MOCK_DATA.GAME;
+
+      component.getWeather(game[401228076]);
+
+      expect(spy).toHaveBeenCalled();
+    });
   });
 });

@@ -34,6 +34,8 @@ const mlbTeamMap = {
   30: 'TB',
 };
 
+// https://a.espncdn.com/redesign/assets/img/mlb/fields/5.png
+
 const MLB_STADIUM_MAP = {
   [MLBTeam.LAA]: {
     team: 'Anaheim Angels',
