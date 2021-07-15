@@ -1,4 +1,6 @@
 import { TeamState } from '@app/modules/espn/store/mlb';
+import { CurrentConditions } from '@app/modules/weather/weather/models/class';
+import { WeatherValues } from '@app/modules/weather/weather/models/interface/currentWeather.interface';
 import { Game } from 'src/app/modules/espn/models/mlb/class/game.class';
 import { LeagueScoreboard } from 'src/app/modules/espn/models/mlb/class/leagueScoreboard.class';
 import { BaseballPlayer } from 'src/app/modules/espn/models/mlb/class/player.class';
@@ -66,12 +68,9 @@ const gameMap = (competitions: { [id: number]: EspnEvent }) => {
     }
     const compMap: { [id: number]: Game } = {};
     for (const comp of Object.values(competitions)) {
-        const competition = new Game();
+        const competition = new Game(comp);
 
-        competition.id = comp.id;
         competition.competitors = comp.competitors;
-        competition.summary = comp.summary;
-        competition.gameDate = comp.date;
 
         compMap[competition.gameId] = competition;
     }
@@ -100,4 +99,18 @@ const rosterMap = (roster: Player[]): Map<number, BaseballPlayer> => {
     return playerMap;
 };
 
-export { newTeamMap, teamMap, gameMap, rosterMap };
+const stadiumConditionsMap = (conditions: { [id: number]: WeatherValues }) => {
+    if (Object.values(conditions).length === 0) {
+        return {};
+    }
+
+    const conditionsMap: { [id: number]: CurrentConditions } = {};
+
+    for (const [key, val] of Object.entries(conditions)) {
+        conditionsMap[key] = new CurrentConditions(val);
+    }
+
+    return conditionsMap;
+};
+
+export { newTeamMap, teamMap, gameMap, rosterMap, stadiumConditionsMap };
