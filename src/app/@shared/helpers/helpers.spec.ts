@@ -1,6 +1,7 @@
-import { gameMap, newTeamMap, rosterMap, teamMap } from './mapping';
+import { gameMap, newTeamMap, rosterMap, stadiumConditionsMap, teamMap } from './mapping';
 import * as mockleague from '@espn/models/mlb/mocks/league.mock.json';
 import { MOCK_DATA } from './testConfigs';
+import { isPitcher } from '@app/modules/espn/models/mlb/helpers';
 
 describe('[Helpers]', () => {
 
@@ -113,4 +114,38 @@ describe('[Helpers]', () => {
             expect(Object.values(actual).length).toEqual(expected);
         });
     });
+
+
+    describe('isPitcher', () => {
+
+        it('should return true', () => {
+            const actual = isPitcher({ 13: 13 });
+            expect(actual).toEqual(true);
+        });
+
+        it('should return false', () => {
+            const actual = isPitcher({ 3: 3, 4: 4, 7: 7 });
+            expect(actual).toEqual(false);
+        });
+
+    });
+
+    describe('stadiumConditionsMap', () => {
+        it('should return empty map if conditions size is 0', () => {
+            const actual = stadiumConditionsMap({});
+            const expected = 0;
+            expect(Object.values(actual).length).toEqual(expected);
+        });
+
+        it('should return map of conditions', () => {
+            const intervalValue = MOCK_DATA.WEATHER_CURRENT_CONDITIONS.data.timelines[0].intervals[0].values;
+            const actual = stadiumConditionsMap({ 1: intervalValue });
+            const expected = 1;
+
+            expect(Object.values(actual).length).toEqual(expected);
+        });
+    });
+
+
+
 });

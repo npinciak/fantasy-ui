@@ -20,11 +20,11 @@ export class StandingsComponent implements OnInit, OnChanges {
   @Input() teams: BaseballTeam[];
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
+  public scoringPeriod = this.mlbFacade.scoringPeriod;
+
   readonly teamColumn = TeamColumn;
   readonly rotoColumn = RotoColumn;
   readonly statsColumn = StatsColumn;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  readonly TEST_ID = TEST_ID.STAT_TOGGLE;
 
   dataSource = new MatTableDataSource<BaseballTeam>();
   tableColumns: string[];
@@ -47,6 +47,8 @@ export class StandingsComponent implements OnInit, OnChanges {
             this.teams = changes[propName].currentValue;
             this.dataSource.data = this.teams;
             this.dataSource.sort = this.sort;
+            this.dataSource.sortingDataAccessor = _.get;
+
             break;
           default:
             break;
@@ -82,10 +84,6 @@ export class StandingsComponent implements OnInit, OnChanges {
         this.tableColumns = standingsColumns.batting.rotoValue;
         break;
     }
-  }
-
-  get scoringPeriod() {
-    return this.mlbFacade.scoringPeriod;
   }
 
 }

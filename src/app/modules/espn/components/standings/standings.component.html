@@ -1,9 +1,9 @@
 <div style="padding: 10px 0"></div>
 
 <mat-button-toggle-group #group="matButtonToggleGroup" [value]="viewOptions" (change)="updateView($event)">
-    <mat-button-toggle value="battingStatsRoto" ariaLabelledby="Card View" [attr.data-test-id]="TEST_ID.BATTING_ROTO">
+    <mat-button-toggle value="battingStatsRoto" ariaLabelledby="Card View">
         Batting Roto </mat-button-toggle>
-    <mat-button-toggle value="pitchingStatsRoto" ariaLabelledby="Card View" [attr.data-test-id]="TEST_ID.PITCHING_ROTO">
+    <mat-button-toggle value="pitchingStatsRoto" ariaLabelledby="Card View">
         Pitching Roto </mat-button-toggle>
     <mat-button-toggle value="battingStats" ariaLabelledby="Card View"> Batter Stats</mat-button-toggle>
     <mat-button-toggle value="pitchingStats" ariaLabelledby="Card View"> Pitching Stats</mat-button-toggle>

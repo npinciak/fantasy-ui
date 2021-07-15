@@ -7,7 +7,7 @@ import { Sports } from '../../espn.service';
 import { MlbFacade } from '../../store/mlb/mlb.facade';
 // import { mockmlbFacade } from '../../store/mocks/espn.facade.mock';
 import { RosterComponent } from '../roster/roster.component';
-import { TeamComponent } from '../team/team.component';
+import { TeamComponent } from '../../pages/team/team.component';
 import { StandingsComponent } from './standings.component';
 
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
