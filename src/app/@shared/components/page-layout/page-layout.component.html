@@ -1,0 +1,9 @@
+<div
+  [gdAreas]="GRID_TEMPLATE.area.main"
+  gdGap="16px"
+  gdRows="auto auto auto"
+  [gdAreas.lt-md]="GRID_TEMPLATE.lessThanMedium"
+  [gdRows.lt-md]="GRID_TEMPLATE.rowsLessThanMedium"
+>
+  <ng-content></ng-content>
+</div>
