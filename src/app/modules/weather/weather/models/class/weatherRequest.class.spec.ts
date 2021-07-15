@@ -1,4 +1,15 @@
-class WeatherRequest {
-}
+describe('[Class] Weather', () => {
 
-export { WeatherRequest };
+    // it('should <<do something here>>', () => {
+
+    // });
+
+    // it('should <<do something here>>', () => {
+
+    // });
+
+    // it('should <<do something here>>', () => {
+
+    // });
+
+});
