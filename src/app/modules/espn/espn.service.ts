@@ -33,6 +33,10 @@ export class EspnService {
       withCredentials: true, headers: this.postHeaders
     });
 
+  playerNews = (days: number, playerId: number) => this._baseballPlayerNews(days, playerId);
+
+  freeAgents = (leagueId: number, headers: HttpHeaders) => this._baseballFreeAgents(leagueId, headers);
+
   /**
    * Retrieve league information
    *
@@ -51,7 +55,7 @@ export class EspnService {
    * @param playerId Player Id
    * @returns Player news
    */
-  private readonly _getBaseballPlayerNews = (days: number, playerId: number) =>
+  private readonly _baseballPlayerNews = (days: number, playerId: number) =>
     this.api.get<any>(`${this.apiBase}/fantasy/v2/games/${Sports.baseball}/news/players`, {
       params: new HttpParams().set('days', days.toString()).set('playerId', playerId.toString())
     });

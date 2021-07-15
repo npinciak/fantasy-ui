@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MOCK_DATA } from '@app/@shared/helpers/testConfigs';
 import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
@@ -10,7 +11,7 @@ import { environment } from 'src/environments/environment';
 import { RosterComponent } from './components/roster/roster.component';
 import { ScoreboardComponent } from './components/scoreboard/scoreboard.component';
 import { StandingsComponent } from './components/standings/standings.component';
-import { TeamComponent } from './components/team/team.component';
+import { TeamComponent } from './pages/team/team.component';
 
 import { EspnComponent } from './espn.component';
 import { EspnService } from './espn.service';
@@ -57,11 +58,22 @@ describe('EspnComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EspnComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
+    fixture.detectChanges();
+
     expect(component).toBeTruthy();
   });
+
+  it('should call action to fetch league', () => {
+    const spy = spyOn<any>(component, 'getMLBLeague').and.callThrough();
+
+    fixture.detectChanges();
+
+    expect(spy).toHaveBeenCalled();
+
+  });
+
 
 });

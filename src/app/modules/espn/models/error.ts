@@ -1,6 +1,6 @@
 interface EspnError {
-    messages?: (string)[] | null;
-    details?: (ErrorDetails)[] | null;
+    messages: (string)[] | null;
+    details: (ErrorDetails)[] | null;
 }
 
 interface ErrorDetails {

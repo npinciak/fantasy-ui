@@ -1,40 +1,42 @@
-<div gdAreas="header header header header| 
-side content content content | 
-footer footer footer footer" gdGap="16px" gdRows="auto auto auto auto" gdAreas.lt-md="header | side | content | footer"
-    gdRows.lt-md="auto auto auto auto">
+<app-page-layout>
+  <div class="header" gdArea="header">
+    <mat-toolbar style="background-color: #205493; color: #ffffff">
+      <span>ESPN Companion</span>
+    </mat-toolbar>
+  </div>
 
-    <div class="header" gdArea="header">
-        <mat-toolbar style="background-color:#205493;color:#ffffff">
-            <span>ESPN Companion</span>
-        </mat-toolbar>
-    </div>
-
-    <div class="side" gdArea="side">
-        <ng-container *ngIf="(mlbFacade.isLoading$ | async) === (false); else loading">
-            <app-league-scoreboard [teams]="mlbFacade.liveScore$ | async"></app-league-scoreboard>
+  <div class="side" gdArea="side">
     <ng-container
       *ngIf="(mlbFacade.isLoading$ | async) === false; else loading"
     >
       <app-league-scoreboard
         [teams]="mlbFacade.liveScore$ | async"
       ></app-league-scoreboard>
-        </ng-container>
-    </div>
+    </ng-container>
+  </div>
 
-    <div class="content" gdArea="content">
-        <div style="padding: 20px 0;"></div>
-        <ng-container *ngIf="mlbFacade.standings$ | async; else loading">
-            <app-standings [teams]="mlbFacade.standings$ | async"></app-standings>
-        </ng-container>
-        <div style="padding: 20px 0;"></div>
-    </div>
+  <app-no-data></app-no-data>
 
-    <div class="footer" gdArea="footer">
-        Footer
-    </div>
+  <div
+    class="content"
+    gdArea="content"
+    *ngIf="(mlbFacade.isLoading$ | async) === false; else loading"
+  >
+    <ng-container *ngIf="(mlbFacade.noGames$ | async) === false; else noGames">
+      <app-scoreboard [games]="mlbFacade.gamesMap$ | async"></app-scoreboard>
+    </ng-container>
+    <div style="padding: 20px 0"></div>
+    <ng-container>
+      <app-standings [teams]="mlbFacade.standings$ | async"></app-standings>
+    </ng-container>
+    <div style="padding: 20px 0"></div>
+  </div>
 
-</div>
+  <div class="footer" gdArea="footer">Footer</div>
+</app-page-layout>
 
-<ng-template #loading>
-    Loading...
+<ng-template #noGames>
+  <app-no-data [title]="NO_GAMES_TEXT"></app-no-data>
 </ng-template>
+
+<ng-template #loading> Loading... </ng-template>
