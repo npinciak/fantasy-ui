@@ -1,22 +1,26 @@
+/* eslint-disable @typescript-eslint/prefer-for-of */
 import { ScheduleTeams } from '../interface/league';
 
 export class LeagueScoreboard {
     private _teams: ScheduleTeams[] = [];
+    private _scoreboard = {};
 
     constructor(scheduleTeams: ScheduleTeams[]) {
-        for (const team of scheduleTeams) {
-            this._teams.push(team);
-        }
+        this._teams = scheduleTeams;
+        this.createScoreboard();
     }
 
     get scoreBoard() {
         return this._scoreboard;
     }
 
-    private get _scoreboard() {
-        const final = new Map<number, number>();
-        this._teams.map(team => final.set(team.teamId, team.totalPointsLive));
-        return final;
-    }
+    private createScoreboard() {
+        const final = {};
+        for (let i = 0; i < this._teams.length; i++) {
+            const team = this._teams[i];
+            final[team.teamId] = team.totalPointsLive;
+        }
 
+        this._scoreboard = final;
+    }
 }

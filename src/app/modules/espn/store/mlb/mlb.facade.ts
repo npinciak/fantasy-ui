@@ -21,7 +21,8 @@ export class MlbFacade {
     @Select(MlbState.standings) public standings$: Observable<BaseballTeam[]>;
     @Select(MlbState.schedule) public schedule$: Observable<ScheduleState>;
     @Select(MlbState.liveScore) public liveScore$: Observable<BaseballTeam[]>;
-    @Select(MlbState.gameMap) public gamesMap$: Observable<{ [id: number]: Game }>;
+    @Select(MlbState.gamesMap) public gamesMap$: Observable<{ [id: number]: Game }>;
+    @Select(MlbState.noGames) public noGames$: Observable<boolean>;
 
     @Select(MlbState.teamsEmpty) public teamsEmpty$: Observable<boolean>;
     @Select(MlbState.isLoading) public isLoading$: Observable<boolean>;
@@ -36,6 +37,7 @@ export class MlbFacade {
     selectGameById = (id: number) => this.store.selectSnapshot(MlbState.selectGameById)(id);
     selectTeamById = (id: number) => this.store.selectSnapshot(MlbState.selectTeamById)(id);
 
+    // eslint-disable-next-line @typescript-eslint/member-ordering
     @Dispatch() getLeague = (leagueId: number) => new FetchBaseballLeague(leagueId);
 
 }

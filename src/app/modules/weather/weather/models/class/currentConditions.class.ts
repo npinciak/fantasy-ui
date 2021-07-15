@@ -65,10 +65,13 @@ class CurrentConditions {
             case WeatherCode.Clear:
             case WeatherCode.PartlyCloudy:
                 return `${WEATHER_MAP[this._dataFields.weatherCode].split(' ').join('_').toLowerCase()}_day`;
+            case WeatherCode.LightRain:
+                return `rain_light`;
+            case WeatherCode.HeavyRain:
+                return `rain_heavy`;
             default:
                 break;
         }
-
 
         return WEATHER_MAP[this._dataFields.weatherCode].split(' ').join('_').toLowerCase();
     }

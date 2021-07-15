@@ -1,17 +1,30 @@
-import { Competitor } from '../interface';
+import { CurrentConditions } from '@app/modules/weather/weather/models/class';
+import { Competitor, EspnEvent } from '../interface';
 import { MLB_STADIUM_MAP, mlbTeamMap } from '../maps/mlb-team.map';
+import { domeStadiums } from '../mlb.const';
+import { MLBTeam } from '../mlb.enums';
 
 export class Game {
-    private _id: string;
-    private _summary: string;
-    private _competitors: Map<number, string> = new Map<number, string>();
+    private _event: EspnEvent;
+    private _competitors: Map<number, Competitor> = new Map<number, Competitor>();
+    private _homeTeam: number;
+    private _awayTeam: number;
+    private _currentConditions: CurrentConditions;
 
-    get gameId() {
-        return Number(this._id);
+    constructor(event: EspnEvent) {
+        this._event = event;
     }
 
-    set id(val: string) {
-        this._id = val;
+    get gameId() {
+        return this._event.id;
+    }
+
+    get currentConditions() {
+        return this._currentConditions;
+    }
+
+    set currentConditions(val: CurrentConditions) {
+        this._currentConditions = val;
     }
 
     get teams() {
@@ -20,19 +33,59 @@ export class Game {
 
     set competitors(val: Competitor[]) {
         for (const comp of val) {
-            this._competitors.set(Number(comp.id), comp.abbreviation);
+            this._competitors.set(+comp.id, comp);
+            if (comp.homeAway === 'home') {
+                this._homeTeam = +comp.id;
+            } else {
+                this._awayTeam = +comp.id;
+            }
         }
     }
 
+    get homeTeam() {
+        return {
+            score: +this._competitors.get(this._homeTeam).score,
+            abbrev: mlbTeamMap[this._homeTeam],
+            logo: `https://a.espncdn.com/combiner/i?img=/i/teamlogos/mlb/500/${mlbTeamMap[this._homeTeam].toLowerCase()}.png&h=100&w=100`,
+            isWinner: this._competitors.get(this._homeTeam).winner
+        };
+    }
+
+    get awayTeam() {
+        return {
+            score: +this._competitors.get(this._awayTeam).score,
+            abbrev: mlbTeamMap[this._awayTeam],
+            logo: `https://a.espncdn.com/combiner/i?img=/i/teamlogos/mlb/500/${mlbTeamMap[this._awayTeam].toLowerCase()}.png&h=100&w=100`,
+            isWinner: this._competitors.get(this._awayTeam).winner
+        };
+    }
+
     get summary() {
-        return this._summary;
+        return {
+            event: this._event.summary,
+            game: `${mlbTeamMap[this._awayTeam]} at ${mlbTeamMap[this._homeTeam]}`,
+        };
+    }
+
+    get gameDate() {
+        return {
+            iso: this._event.date,
+            milli: new Date(this._event.date).getTime()
+        };
+    }
+
     get location() {
         return `${MLB_STADIUM_MAP[this._homeTeam].lat}, ${MLB_STADIUM_MAP[this._homeTeam].lng}`;
     }
+
+    get gameCompletePerc() {
+        return this._event.percentComplete;
     }
 
-    set summary(val: string) {
-        this._summary = val;
+    get isFinal() {
+        return this._event.fullStatus.type.completed || this._event.fullStatus.type.name === 'STATUS_POSTPONED';
+    }
+
     get stadium() {
         return {
             img: `${MLB_STADIUM_MAP[this._homeTeam].img}`,

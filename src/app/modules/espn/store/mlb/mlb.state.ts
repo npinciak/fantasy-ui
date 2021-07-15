@@ -69,8 +69,13 @@ export class MlbState {
   }
 
   @Selector()
-  static gameMap(state: MlbStateModel): { [id: number]: Game } {
+  static gamesMap(state: MlbStateModel): { [id: number]: Game } {
     return gameMap(state.games);
+  }
+
+  @Selector([MlbState.games])
+  static noGames(_: MlbStateModel, games: { [id: number]: EspnEvent }): boolean {
+    return Object.keys(games).length === 0;
   }
 
   @Selector()
@@ -95,6 +100,11 @@ export class MlbState {
 
   @Action(FetchBaseballLeague)
   baseballLeague(ctx: StateContext<MlbStateModel>, { leagueId }: FetchBaseballLeague) {
+    if (ctx.getState().scoringPeriodId) {
+      console.log('Data already in state, retrieving cache');
+      return;
+    }
+
     return this.espnService.fetchEspnBaseball(leagueId).pipe(
       tap(([league, mlbGames]) => {
 
