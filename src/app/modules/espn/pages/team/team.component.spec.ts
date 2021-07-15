@@ -12,8 +12,8 @@ import { MaterialModule } from 'src/app/material.module';
 // import { mockMLBTeam } from '../../models/mlb/mocks/mlb-team.mock';
 // import { MlbFacade } from '../../store/mlb/mlb.facade';
 // import { mockmlbFacade } from '../../store/mocks/espn.facade.mock';
-import { PlayerInfoColComponent } from '../roster/player-info-col/player-info-col.component';
-import { RosterComponent } from '../roster/roster.component';
+import { PlayerInfoColComponent } from '../../components/roster/player-info-col/player-info-col.component';
+import { RosterComponent } from '../../components/roster/roster.component';
 
 import { TeamComponent } from './team.component';
 
