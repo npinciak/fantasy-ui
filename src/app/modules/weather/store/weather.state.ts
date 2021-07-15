@@ -45,7 +45,10 @@ export class WeatherState {
     weather: { [id: number]: CurrentConditions },
     game: { [id: number]: Game }) {
 
-    return (id: number) => game[id].currentConditions = weather[id];
+    return (id: number) => {
+      game[id].currentConditions = weather[id];
+      return game[id];
+    };
   }
 
   @Selector()
