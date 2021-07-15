@@ -20,24 +20,24 @@ import { MlbState } from './modules/espn/store/mlb/mlb.state';
 import { MlbTeamState } from './modules/espn/store/mlb/mlb-team.state';
 import { httpInterceptorProviders } from './@core/interceptors';
 import { WeatherState } from './modules/weather/store/weather.state';
+import { SharedModule } from './@shared/shared.module';
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     EspnModule,
     BrowserModule,
     HttpClientModule,
-    MaterialModule,
+    SharedModule,
     BrowserAnimationsModule,
     NgxsSelectSnapshotModule.forRoot(),
-    NgxsModule.forRoot([CoreState, MlbState, MlbTeamState, WeatherState], { developmentMode: !environment.production }),
+    NgxsModule.forRoot([CoreState, MlbState, MlbTeamState, WeatherState], {
+      developmentMode: !environment.production,
+    }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsDispatchPluginModule.forRoot(),
-    FlexLayoutModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [httpInterceptorProviders],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
