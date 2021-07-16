@@ -98,6 +98,16 @@ export class Game {
         MLB_STADIUM_MAP[this._homeTeam].lng
       }`,
       currentConditions: this._currentConditions,
+      disableWeather: this.disableWeather,
     };
+  }
+
+  private get disableWeather() {
+    return (
+      this._event.fullStatus.type.completed ||
+      this._event.fullStatus.type.name === 'STATUS_POSTPONED' ||
+      this._event.percentComplete === 100 ||
+      domeStadiums.includes(this._homeTeam)
+    );
   }
 }

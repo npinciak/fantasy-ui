@@ -52,7 +52,7 @@
     <button
       style="width: 100%"
       mat-flat-button
-      [disabled]="event.status.completePerc === 100 || event.location.isDome"
+      [disabled]="event.location.disableWeather"
       (click)="getWeather(event)"
     >
       {{ event.location.isDome ? 'In Dome' : 'Weather' }}

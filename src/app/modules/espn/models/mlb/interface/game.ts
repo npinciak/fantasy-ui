@@ -28,6 +28,7 @@ interface ScoreboardGameLocation {
   isDome: boolean;
   latLng: string;
   currentConditions: CurrentConditions;
+  disableWeather: boolean;
 }
 
 export {
