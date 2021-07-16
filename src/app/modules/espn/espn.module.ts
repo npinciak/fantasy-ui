@@ -13,7 +13,6 @@ import { RankingColComponent } from './components/standings/ranking-col/ranking-
 import { ScoreboardComponent } from './components/scoreboard/scoreboard.component';
 import { PlayerRatingColComponent } from './components/roster/player-rating-col/player-rating-col.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FreeAgentsComponent } from './components/free-agents/free-agents.component';
 import { WeatherComponent } from '../weather/weather.component';
 import { LeagueScoreboardComponent } from './components/league-scoreboard/league-scoreboard.component';
 import { SharedModule } from '@app/@shared/shared.module';
@@ -31,7 +30,6 @@ const components = [
   PlayerRatingColComponent,
   TeamInfoColComponent,
   RankingColComponent,
-  FreeAgentsComponent,
   WeatherComponent,
   LeagueScoreboardComponent,
 ];
