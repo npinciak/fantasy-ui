@@ -20,7 +20,7 @@ const pitcherKeys = new Set([
   MLBLineup.P2,
 ]);
 
-const isPitcher = (eligiblePos) => {
+const isPitcher = eligiblePos => {
   let count = 0;
   for (const key in eligiblePos) {
     if (Object.prototype.hasOwnProperty.call(eligiblePos, key)) {
@@ -32,4 +32,7 @@ const isPitcher = (eligiblePos) => {
   return count > 0;
 };
 
-export { statsKeyMap, isPitcher };
+const logoBuilder = (league: 'mlb' | 'nfl', abbrev: string) =>
+  `https://a.espncdn.com/combiner/i?img=/i/teamlogos/${league}}/500/${abbrev.toLowerCase()}.png&h=100&w=100`;
+
+export { statsKeyMap, isPitcher, logoBuilder };

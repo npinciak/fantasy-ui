@@ -24,6 +24,14 @@ mat-card.game-card {
   // width: 70px;
 }
 
+.game-score-winner {
+  color: #1f252e;
+}
+
+.game-team-logo {
+  padding: 0 10px;
+}
+
 .game-score-item {
   // background: #bfc0c0;
   // padding: 0px 5px;
@@ -34,8 +42,13 @@ mat-card.game-card {
   font-size: 35px;
 }
 
-.summary {
-  // background: #bfc0c0;
+.game-summary-container {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+}
+
+.game-summary {
   width: 100%;
   height: 20px;
   line-height: 20px;
