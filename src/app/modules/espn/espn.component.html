@@ -23,7 +23,9 @@
     *ngIf="(mlbFacade.isLoading$ | async) === false; else loading"
   >
     <ng-container *ngIf="(mlbFacade.noGames$ | async) === false; else noGames">
-      <app-scoreboard [games]="mlbFacade.gamesMap$ | async"></app-scoreboard>
+      <app-scoreboard
+        [events]="mlbFacade.sortedGamesByStartTime$ | async"
+      ></app-scoreboard>
     </ng-container>
     <div style="padding: 20px 0"></div>
     <ng-container>

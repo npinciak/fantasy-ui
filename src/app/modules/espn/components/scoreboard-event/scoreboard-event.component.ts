@@ -12,4 +12,6 @@ export class ScoreboardEventComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  getWeather(...param) {}
 }

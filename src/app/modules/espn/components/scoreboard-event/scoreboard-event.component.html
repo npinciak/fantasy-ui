@@ -1,1 +1,78 @@
-<p>scoreboard-event works!</p>
+<mat-card class="game-card">
+  <mat-card-header>
+    <mat-card-title>
+      {{ event.summary.game }}
+    </mat-card-title>
+    <mat-card-subtitle>
+      {{ event.stadium.name }}
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <table style="margin: auto">
+      <tr>
+        <td style="padding: 0 10px">
+          <img height="55px" [src]="event.awayTeam.logo" />
+          <br />
+          <span style="font-weight: bold">{{ event.awayTeam.abbrev }}</span>
+        </td>
+        <td>
+          <div class="game-score-container">
+            <div class="game-score-item">
+              <span
+                [ngStyle]="{
+                  color: event.awayTeam.isWinner ? '#1F252E' : ''
+                }"
+              >
+                {{ event.awayTeam.score }}</span
+              >
+            </div>
+            <div class="game-score-item">
+              <span style="font-size: 28px">:</span>
+            </div>
+            <div class="game-score-item">
+              <span
+                [ngStyle]="{
+                  color: event.homeTeam.isWinner ? '#1F252E' : ''
+                }"
+              >
+                {{ event.homeTeam.score }}</span
+              >
+            </div>
+          </div>
+          <div
+            style="display: flex; flex-flow: row; justify-content: space-around"
+          >
+            <div class="summary">
+              {{ event.summary.event }}
+            </div>
+          </div>
+        </td>
+        <td style="padding: 0 10px">
+          <img height="55px" [src]="event.homeTeam.logo" />
+          <br />
+          <span style="font-weight: bold">{{ event.homeTeam.abbrev }}</span>
+        </td>
+      </tr>
+    </table>
+    <!-- <ng-container *ngIf="!event.isFinal">
+                  <mat-progress-bar [matTooltip]="event.summary.event" mode="determinate"
+                      [value]="event.gameCompletePerc">
+                  </mat-progress-bar>
+              </ng-container> -->
+  </mat-card-content>
+  <mat-card-actions style="text-align: center">
+    <button
+      style="width: 100%"
+      mat-flat-button
+      [disabled]="event.gameCompletePerc === 100 || event.stadium.isDome"
+      (click)="getWeather(event)"
+    >
+      {{ event.stadium.isDome ? "In Dome" : "Weather" }}
+    </button>
+  </mat-card-actions>
+  <!-- <mat-card-actions>
+
+              <button mat-flat-button [disabled]="event.gameCompletePerc === 100 || event.stadium.isDome"
+                  (click)="getWeather(game)">{{event.stadium.isDome ? 'In Dome' : 'Weather'}}</button>
+          </mat-card-actions> -->
+</mat-card>
