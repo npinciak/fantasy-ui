@@ -22,6 +22,10 @@ export class MlbFacade {
   @Select(MlbState.gamesMap) public gamesMap$: Observable<{
     [id: number]: Game;
   }>;
+
+  @Select(MlbState.sortedGamesByStartTime)
+  public sortedGamesByStartTime$: Observable<Game[]>;
+
   @Select(MlbState.noGames) public noGames$: Observable<boolean>;
 
   @Select(MlbState.teamsEmpty) public teamsEmpty$: Observable<boolean>;

@@ -70,6 +70,16 @@ export class MlbState {
     return gameMap(state.games);
   }
 
+  @Selector([MlbState.gamesMap])
+  static sortedGamesByStartTime(
+    _: MlbStateModel,
+    games: { [id: number]: Game }
+  ): Game[] {
+    return Object.values(games).sort(
+      (a, b) => a.gameDate.milli - b.gameDate.milli
+    );
+  }
+
   @Selector([MlbState.games])
   static noGames(
     _: MlbStateModel,
