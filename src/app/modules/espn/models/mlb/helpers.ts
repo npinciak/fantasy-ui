@@ -33,6 +33,6 @@ const isPitcher = eligiblePos => {
 };
 
 const logoBuilder = (league: 'mlb' | 'nfl', abbrev: string) =>
-  `https://a.espncdn.com/combiner/i?img=/i/teamlogos/${league}}/500/${abbrev.toLowerCase()}.png&h=100&w=100`;
+  `https://a.espncdn.com/combiner/i?img=/i/teamlogos/${league}/500/${abbrev.toLowerCase()}.png&h=100&w=100`;
 
 export { statsKeyMap, isPitcher, logoBuilder };
