@@ -17,6 +17,7 @@ import { FreeAgentsComponent } from './components/free-agents/free-agents.compon
 import { WeatherComponent } from '../weather/weather.component';
 import { LeagueScoreboardComponent } from './components/league-scoreboard/league-scoreboard.component';
 import { SharedModule } from '@app/@shared/shared.module';
+import { ScoreboardEventComponent } from './components/scoreboard-event/scoreboard-event.component';
 
 const components = [
   EspnComponent,
@@ -25,6 +26,7 @@ const components = [
   RosterComponent,
   PlayerComponent,
   ScoreboardComponent,
+  ScoreboardEventComponent,
   PlayerInfoColComponent,
   PlayerRatingColComponent,
   TeamInfoColComponent,
