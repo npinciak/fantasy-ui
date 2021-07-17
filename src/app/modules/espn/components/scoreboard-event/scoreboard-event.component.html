@@ -42,15 +42,10 @@
         </td>
       </tr>
     </table>
-    <!-- <ng-container *ngIf="!event.isFinal">
-                  <mat-progress-bar [matTooltip]="event.summary.event" mode="determinate"
-                      [value]="event.gameCompletePerc">
-                  </mat-progress-bar>
-              </ng-container> -->
   </mat-card-content>
   <mat-card-actions style="text-align: center">
     <button
-      style="width: 100%"
+      class="ui-w-100"
       mat-flat-button
       [disabled]="event.location.disableWeather"
       (click)="getWeather(event)"
@@ -58,9 +53,4 @@
       {{ event.location.isDome ? 'In Dome' : 'Weather' }}
     </button>
   </mat-card-actions>
-  <!-- <mat-card-actions>
-
-              <button mat-flat-button [disabled]="event.gameCompletePerc === 100 || event.stadium.isDome"
-                  (click)="getWeather(game)">{{event.stadium.isDome ? 'In Dome' : 'Weather'}}</button>
-          </mat-card-actions> -->
 </mat-card>

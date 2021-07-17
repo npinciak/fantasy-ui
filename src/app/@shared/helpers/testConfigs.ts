@@ -27,6 +27,7 @@ const MOCK_DATA = {
   BASEBALL_TEAM_MAP: newTeamMap(MockLeague.teams, MockLeague.schedule),
   // eslint-disable-next-line max-len
   CLIMACELL_REQUEST:
+    // eslint-disable-next-line max-len
     'https://api.tomorrow.io/v4/timelines?fields=pressureSeaLevel,precipitationIntensity,precipitationType,precipitationProbability,temperatureApparent,temperature,humidity,dewPoint,windSpeed,windGust,windDirection,weatherCode&timesteps=current&units=imperial&timezone=est&location=40.7128,74.0060',
   LEAGUE_ID: 8675309,
   // eslint-disable-next-line max-len
