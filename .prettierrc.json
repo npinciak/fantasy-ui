@@ -4,9 +4,16 @@
   "endOfLine": "auto",
   "overrides": [
     {
+      "files": "*.ts",
+      "options": {
+        "printWidth": 140
+      }
+    },
+    {
       "files": "*.html",
       "options": {
-        "parser": "angular"
+        "parser": "angular",
+        "printWidth": 140
       }
     }
   ]
