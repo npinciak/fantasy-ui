@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { BaseballTeam } from '../../class/team.class';
@@ -16,7 +16,7 @@ import { MLB_STADIUM_MAP } from '../../maps/mlb-team.map';
   templateUrl: './standings.component.html',
   styleUrls: ['./standings.component.scss'],
 })
-export class StandingsComponent implements OnInit, OnChanges {
+export class StandingsComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() teams: BaseballTeam[];
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
@@ -33,10 +33,13 @@ export class StandingsComponent implements OnInit, OnChanges {
   constructor(readonly mlbFacade: MlbFacade) {}
 
   ngOnInit(): void {
+    this.tableColumns = standingsColumns.batting.rotoValue;
+  }
+
+  ngAfterViewInit() {
     this.dataSource.data = this.teams;
     this.dataSource.sort = this.sort;
     this.dataSource.sortingDataAccessor = _.get;
-    this.tableColumns = standingsColumns.batting.rotoValue;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -45,6 +48,7 @@ export class StandingsComponent implements OnInit, OnChanges {
         switch (propName) {
           case 'teams':
             this.teams = changes[propName].currentValue;
+
             this.dataSource.data = this.teams;
             this.dataSource.sort = this.sort;
             this.dataSource.sortingDataAccessor = _.get;

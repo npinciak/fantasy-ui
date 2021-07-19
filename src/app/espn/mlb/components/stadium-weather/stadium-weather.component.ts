@@ -14,11 +14,7 @@ import { Game } from '@mlb/class/game.class';
 export class StadiumWeatherComponent implements OnChanges {
   @Input() event: Game;
 
-  // = MOCK_DATA.GAME[401228076];
-
-  constructor(readonly weatherFacade: WeatherFacade, private actions$: Actions) {
-    // this.event.currentConditions = MOCK_DATA.CURRENT_CONDITIONS_CLASS;
-  }
+  constructor(readonly weatherFacade: WeatherFacade, private actions$: Actions) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.event);
@@ -26,9 +22,6 @@ export class StadiumWeatherComponent implements OnChanges {
       if (changes.hasOwnProperty(propName)) {
         switch (propName) {
           case 'event':
-            {
-              console.log(this.event);
-            }
             break;
           default:
             break;
