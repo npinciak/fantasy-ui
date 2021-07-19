@@ -1,15 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Game } from '@app/modules/espn/models/mlb/class/game.class';
-import { BaseballPlayer } from '@app/modules/espn/models/mlb/class/player.class';
-import {
-  MockGame,
-  MockLeague,
-  MockTeam,
-  MockTransaction,
-} from '@app/modules/espn/models/mlb/mocks';
-import { CurrentConditions } from '@app/modules/weather/weather/models/class';
-import { MockCurrentConditions } from '@app/modules/weather/weather/models/mocks';
-import { BaseballTeam } from '@espn/models/mlb/class/team.class';
+import { Game } from '@mlb/class/game.class';
+import { BaseballPlayer } from '@mlb/class/player.class';
+import { MockGame, MockLeague, MockTeam, MockTransaction } from '@mlb/mocks';
+import { CurrentConditions } from '@espn/weather/weather/models/class';
+import { MockCurrentConditions } from '@espn/weather/weather/models/mocks';
+import { BaseballTeam } from '@mlb/class/team.class';
 import { currentDate } from './date';
 import { gameMap, newTeamMap } from './mapping';
 
@@ -27,6 +22,7 @@ const MOCK_DATA = {
   BASEBALL_TEAM_MAP: newTeamMap(MockLeague.teams, MockLeague.schedule),
   // eslint-disable-next-line max-len
   CLIMACELL_REQUEST:
+    // eslint-disable-next-line max-len
     'https://api.tomorrow.io/v4/timelines?fields=pressureSeaLevel,precipitationIntensity,precipitationType,precipitationProbability,temperatureApparent,temperature,humidity,dewPoint,windSpeed,windGust,windDirection,weatherCode&timesteps=current&units=imperial&timezone=est&location=40.7128,74.0060',
   LEAGUE_ID: 8675309,
   // eslint-disable-next-line max-len
@@ -37,12 +33,9 @@ const MOCK_DATA = {
   ESPN_EVENT: MockGame.events[0],
   ESPN_SCHEDULE: MockLeague.schedule,
   ESPN_TRANSACTION: MockTransaction,
-  ESPN_UPDATE_TEAM:
-    'https://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/8675309/transactions',
+  ESPN_UPDATE_TEAM: 'https://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/8675309/transactions',
   WEATHER_CURRENT_CONDITIONS: MockCurrentConditions,
-  CURRENT_CONDITIONS_CLASS: new CurrentConditions(
-    MockCurrentConditions.data.timelines[0].intervals[0].values
-  ),
+  CURRENT_CONDITIONS_CLASS: new CurrentConditions(MockCurrentConditions.data.timelines[0].intervals[0].values),
 };
 
 export { MOCK_DATA, TEST_ID };

@@ -1,0 +1,20 @@
+{
+  "singleQuote": true,
+  "arrowParens": "avoid",
+  "endOfLine": "auto",
+  "overrides": [
+    {
+      "files": "*.ts",
+      "options": {
+        "printWidth": 140
+      }
+    },
+    {
+      "files": "*.html",
+      "options": {
+        "parser": "angular",
+        "printWidth": 140
+      }
+    }
+  ]
+}

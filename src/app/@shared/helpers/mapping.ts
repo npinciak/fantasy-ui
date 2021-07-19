@@ -1,21 +1,14 @@
-import { TeamState } from '@app/modules/espn/store/mlb';
-import { CurrentConditions } from '@app/modules/weather/weather/models/class';
-import { WeatherValues } from '@app/modules/weather/weather/models/interface/currentWeather.interface';
-import { Game } from 'src/app/modules/espn/models/mlb/class/game.class';
-import { LeagueScoreboard } from 'src/app/modules/espn/models/mlb/class/leagueScoreboard.class';
-import { BaseballPlayer } from 'src/app/modules/espn/models/mlb/class/player.class';
-import { BaseballTeam } from 'src/app/modules/espn/models/mlb/class/team.class';
-import {
-  Player,
-  Team,
-  EspnEvent,
-} from 'src/app/modules/espn/models/mlb/interface';
-import { ScheduleEntry } from 'src/app/modules/espn/models/mlb/interface/league';
+import { TeamMap } from '@app/espn/mlb/state/mlb-state.model';
+import { CurrentConditions } from '@espn/weather/weather/models/class';
+import { WeatherValues } from '@espn/weather/weather/models/interface/currentWeather.interface';
+import { Game } from '@mlb/class/game.class';
+import { LeagueScoreboard } from '@mlb/class/leagueScoreboard.class';
+import { BaseballPlayer } from '@mlb/class/player.class';
+import { BaseballTeam } from '@mlb/class/team.class';
+import { Player, Team, EspnEvent } from '@mlb/interface';
+import { ScheduleEntry } from '@mlb/interface/league';
 
-const newTeamMap = (
-  entities: TeamState,
-  entries?: ScheduleEntry[]
-): { [id: number]: BaseballTeam } => {
+const newTeamMap = (entities: TeamMap, entries?: ScheduleEntry[]): { [id: number]: BaseballTeam } => {
   const finalMap = {};
 
   const entityLength = Object.values(entities).length;
@@ -41,31 +34,6 @@ const newTeamMap = (
   }
 };
 
-const teamMap = (
-  teams: Team[],
-  entries: ScheduleEntry[]
-): Map<number, BaseballTeam> => {
-  if (teams.length === 0 || entries.length === 0) {
-    return new Map();
-  }
-
-  const leagueScoreboard = new LeagueScoreboard(entries[0].teams);
-
-  // const liveScores = leagueScoreboard.scoreBoard;
-  const newMap = new Map<number, BaseballTeam>();
-
-  teams.map((team) => {
-    const newTeam = new BaseballTeam(team);
-    newTeam.roster = team.roster.entries;
-    // if (liveScores.has(team.id)) {
-    //     newTeam.liveScore = liveScores.get(team.id);
-    // }
-    newMap.set(newTeam.teamId, newTeam);
-  });
-
-  return newMap;
-};
-
 const gameMap = (competitions: { [id: number]: EspnEvent }) => {
   if (Object.values(competitions).length === 0) {
     return {};
@@ -87,14 +55,13 @@ const rosterMap = (roster: Player[]): Map<number, BaseballPlayer> => {
   }
 
   const playerMap = new Map<number, BaseballPlayer>();
-  roster.forEach((player) => {
+  roster.forEach(player => {
     const baseballPlayer = new BaseballPlayer(player);
 
     baseballPlayer.ownership = player.playerPoolEntry.player.ownership;
     baseballPlayer.ratings = player.playerPoolEntry.ratings;
     baseballPlayer.eligibleSlots = player.playerPoolEntry.player.eligibleSlots;
-    baseballPlayer.gameStatus =
-      player.playerPoolEntry.player.starterStatusByProGame;
+    baseballPlayer.gameStatus = player.playerPoolEntry.player.starterStatusByProGame;
 
     playerMap.set(player.playerId, baseballPlayer);
   });
@@ -116,4 +83,4 @@ const stadiumConditionsMap = (conditions: { [id: number]: WeatherValues }) => {
   return conditionsMap;
 };
 
-export { newTeamMap, teamMap, gameMap, rosterMap, stadiumConditionsMap };
+export { newTeamMap, gameMap, rosterMap, stadiumConditionsMap };

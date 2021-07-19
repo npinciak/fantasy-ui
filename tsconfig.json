@@ -16,7 +16,8 @@
     "lib": ["es2018", "dom"],
     "paths": {
       "@app/*": ["src/app/*"],
-      "@espn/*": ["src/app/modules/espn/*"]
+      "@espn/*": ["src/app/espn/*"],
+      "@mlb/*": ["src/app/espn/mlb/*"]
     }
   }
 }

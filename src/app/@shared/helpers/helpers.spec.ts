@@ -1,13 +1,7 @@
-import {
-  gameMap,
-  newTeamMap,
-  rosterMap,
-  stadiumConditionsMap,
-  teamMap,
-} from './mapping';
-import * as mockleague from '@espn/models/mlb/mocks/league.mock.json';
+import { gameMap, newTeamMap, rosterMap, stadiumConditionsMap, teamMap } from './mapping';
+import * as mockleague from '@mlb/mocks/league.mock.json';
 import { MOCK_DATA } from './testConfigs';
-import { isPitcher } from '@app/modules/espn/models/mlb/helpers';
+import { isPitcher } from '@mlb/helpers';
 
 describe('[Helpers]', () => {
   describe('TeamMap', () => {
@@ -61,9 +55,7 @@ describe('[Helpers]', () => {
     });
 
     it('should return map of teams', () => {
-      const roster = teamMap(mockleague.teams, mockleague.schedule).get(
-        6
-      ).roster;
+      const roster = teamMap(mockleague.teams, mockleague.schedule).get(6).roster;
       const actual = rosterMap(roster);
       const expected = 2;
 
@@ -149,9 +141,7 @@ describe('[Helpers]', () => {
     });
 
     it('should return map of conditions', () => {
-      const intervalValue =
-        MOCK_DATA.WEATHER_CURRENT_CONDITIONS.data.timelines[0].intervals[0]
-          .values;
+      const intervalValue = MOCK_DATA.WEATHER_CURRENT_CONDITIONS.data.timelines[0].intervals[0].values;
       const actual = stadiumConditionsMap({ 1: intervalValue });
       const expected = 1;
 
