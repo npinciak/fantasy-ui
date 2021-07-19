@@ -1,17 +1,7 @@
 <table [id]="'team' + team.teamId">
   <tr>
-    <td
-      rowspan="2"
-      [attr.aria-label]="team.teamName"
-      [attr.aria-labelledby]="'team' + team.teamId"
-    >
-      <img
-        width="48"
-        height="35"
-        [alt]="team.teamName"
-        [src]="team.teamLogo"
-        [alt]="team.teamName"
-      />
+    <td rowspan="2" [attr.aria-label]="team.teamName" [attr.aria-labelledby]="'team' + team.teamId">
+      <img width="48" height="35" [alt]="team.teamName" [src]="team.teamLogo" [alt]="team.teamName" />
     </td>
   </tr>
   <tr>
