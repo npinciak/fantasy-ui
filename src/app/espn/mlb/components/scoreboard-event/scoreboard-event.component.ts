@@ -13,14 +13,9 @@ export class ScoreboardEventComponent implements OnInit {
 
   constructor(readonly weatherFacade: WeatherFacade) {}
 
-  ngOnInit(): void {
-    this.event.currentConditions = MOCK_DATA.CURRENT_CONDITIONS_CLASS;
-    console.log(this.event);
-  }
+  ngOnInit(): void {}
 
   fetchGameWeatherConditions(event: Game) {
     this.weatherFacade.fetchWeather(event);
-
-    // this.weatherFacade.ga(Number(event.gameId));
   }
 }
