@@ -1,0 +1,91 @@
+<mat-card class="weather-card">
+  <mat-card-content style="margin: 5px auto; text-align: center">
+    <div>
+      <table class="ui-w-100">
+        <tr>
+          <td>
+            <img
+              width="48"
+              height="35"
+              [alt]="event?.location.currentConditions.weather"
+              [matTooltip]="event?.location.currentConditions.weather"
+              [src]="event?.location.currentConditions.weatherImg"
+            />
+          </td>
+          <td>
+            <span style="font-size: 35px"> {{ event?.location.currentConditions.temperature }}&deg;</span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <div
+              style="height: 100px; background-repeat: no-repeat; background-position: center"
+              [style.background-image]="event?.location.imgCss"
+            >
+              <div
+                style="
+                  height: 100px;
+                  width: 100px;
+                  display: block;
+                  margin: 0 auto;
+                  clear: both;
+                  text-align: center;
+                  z-index: 1000;
+                  padding: 35px 0;
+                "
+              >
+                <mat-icon [style.transform]="event?.location.currentConditions.wind.directionRotate"> north </mat-icon>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="3">Winds: {{ event?.location.currentConditions.wind.speed }}mph</td>
+        </tr>
+        <tr>
+          <td colspan="3">Humidity: {{ event?.location.currentConditions.humidity }}</td>
+        </tr>
+      </table>
+    </div>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <a href="https://www.tomorrow.io/" target="_blank">
+      <img
+        alt="Powered By Tomorrrow.io"
+        width="100"
+        height="56"
+        src="https://raw.githubusercontent.com/Tomorrow-IO-API/tomorrow-weather-codes/master/powered-by-tomorrow/Powered_by_Tomorrow-Black.svg"
+      />
+    </a>
+  </mat-card-actions>
+</mat-card>
+<!-- {{ weatherFacade.weatherToGame(+event.gameId) | async | json }} -->
+<!-- <ng-container *ngIf="weather">
+    <mat-card>
+        <mat-card-content>
+            <img width="48" height="35" [alt]="weather?.currentConditions.weather"
+                [matTooltip]="weather?.currentConditions.weather" [src]="weather?.currentConditions.weatherImg">
+            <div
+                [ngClass]="weather?.currentConditions.temperature >=70 ? 'weather-chip-ideal' : 'weather-chip-default'">
+                Temp: {{weather?.currentConditions.temperature}}
+            </div>
+            <br>
+            {{weather?.currentConditions.chanceOfText}}
+            <br>
+            <div [ngClass]="weather?.currentConditions.humidity >= 65 ? 'weather-chip-ideal' : 'weather-chip-default'">
+                Humidity: {{weather?.currentConditions.humidity}}%
+            </div>
+            <div style="height:100px; width: 100px; " [ngStyle]="{'background-image':'url('+weather?.stadium.img+')'}">
+                <div
+                    style="height:100px; width: 100px; display: block; margin: auto; clear: both; text-align: center; z-index: 1000;">
+                    <mat-icon [ngStyle]="{'transform':'rotate('+weather?.currentConditions.wind.direction+'deg)'}">
+                        arrow_downward
+                    </mat-icon>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+
+</ng-container> -->

@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { TeamComponent } from './modules/espn/pages/team/team.component';
-import { EspnComponent } from './modules/espn/espn.component';
-import { HomeComponent } from './modules/espn/pages/home/home.component';
+import { TeamComponent } from '@mlb/pages/team/team.component';
+import { HomeComponent } from '@mlb/pages/home/home.component';
 
 const leagueId = environment.production ? '' : environment.leagueId;
 

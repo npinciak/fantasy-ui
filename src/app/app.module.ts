@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { EspnModule } from './modules/espn/espn.module';
+import { EspnModule } from './espn/espn.module';
 
 import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 import { NgxsModule } from '@ngxs/store';
@@ -16,10 +16,10 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { CoreState } from './@core/store/core/core.state';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { environment } from 'src/environments/environment';
-import { MlbState } from './modules/espn/store/mlb/mlb.state';
-import { MlbTeamState } from './modules/espn/store/mlb/mlb-team.state';
+import { MlbState } from './espn/mlb/state/mlb.state';
+import { MlbTeamState } from './espn/mlb/state/mlb-team.state';
 import { httpInterceptorProviders } from './@core/interceptors';
-import { WeatherState } from './modules/weather/store/weather.state';
+import { WeatherState } from './espn/weather/state/weather.state';
 import { SharedModule } from './@shared/shared.module';
 @NgModule({
   declarations: [AppComponent],
