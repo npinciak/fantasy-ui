@@ -34,28 +34,6 @@ const newTeamMap = (entities: TeamMap, entries?: ScheduleEntry[]): { [id: number
   }
 };
 
-const teamMap = (teams: Team[], entries: ScheduleEntry[]): Map<number, BaseballTeam> => {
-  if (teams.length === 0 || entries.length === 0) {
-    return new Map();
-  }
-
-  const leagueScoreboard = new LeagueScoreboard(entries[0].teams);
-
-  // const liveScores = leagueScoreboard.scoreBoard;
-  const newMap = new Map<number, BaseballTeam>();
-
-  teams.map(team => {
-    const newTeam = new BaseballTeam(team);
-    newTeam.roster = team.roster.entries;
-    // if (liveScores.has(team.id)) {
-    //     newTeam.liveScore = liveScores.get(team.id);
-    // }
-    newMap.set(newTeam.teamId, newTeam);
-  });
-
-  return newMap;
-};
-
 const gameMap = (competitions: { [id: number]: EspnEvent }) => {
   if (Object.values(competitions).length === 0) {
     return {};
@@ -105,4 +83,4 @@ const stadiumConditionsMap = (conditions: { [id: number]: WeatherValues }) => {
   return conditionsMap;
 };
 
-export { newTeamMap, teamMap, gameMap, rosterMap, stadiumConditionsMap };
+export { newTeamMap, gameMap, rosterMap, stadiumConditionsMap };

@@ -137,13 +137,4 @@ enum MLBTeam {
   TB,
 }
 
-export {
-  MLBTeam,
-  MLBPosition,
-  MLBLineup,
-  StatsColumn,
-  RotoColumn,
-  TeamColumn,
-  StatTypeId,
-  PlayingStatus,
-};
+export { MLBTeam, MLBPosition, MLBLineup, StatsColumn, RotoColumn, TeamColumn, StatTypeId, PlayingStatus };
