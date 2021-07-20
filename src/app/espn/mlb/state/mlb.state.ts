@@ -7,7 +7,7 @@ import { tap } from 'rxjs/operators';
 import { EspnService } from '@espn/espn.service';
 import { Game } from '../class/game.class';
 import { BaseballTeam } from '../class/team.class';
-import { EventMap, GameMap, MlbStateModel, ScheduleMap, TeamMap } from './mlb-state.model';
+import { BaseballTeamMap, EventMap, GameMap, MlbStateModel, ScheduleMap, TeamMap } from './mlb-state.model';
 import { FetchBaseballLeague } from '../actions/mlb.actions';
 import { EspnEvent, Team } from '../interface';
 
@@ -50,16 +50,6 @@ export class MlbState {
     return state.teams;
   }
 
-  @Selector([MlbState.teams])
-  static teamsEmpty(_: MlbStateModel, teams: Map<number, BaseballTeam>) {
-    return teams.size === 0;
-  }
-
-  @Selector()
-  static selectTeamById(state: MlbStateModel): (id: number) => Team {
-    return (id: number) => state.teams[id];
-  }
-
   @Selector()
   static events(state: MlbStateModel): EventMap {
     return state.events;
@@ -88,21 +78,6 @@ export class MlbState {
   @Selector()
   static selectEventById(state: MlbStateModel): (id: number) => EspnEvent {
     return (id: number) => state.events[id];
-  }
-
-  @Selector([MlbState.teams, MlbState.schedule])
-  static baseballTeamMap(_: MlbStateModel, teams: TeamMap, schedule: ScheduleMap) {
-    return newTeamMap(teams, Object.values(schedule));
-  }
-
-  @Selector([MlbState.baseballTeamMap])
-  static standings(_: MlbStateModel, teams: { [id: number]: BaseballTeam }) {
-    return Object.values(teams);
-  }
-
-  @Selector([MlbState.baseballTeamMap])
-  static liveScore(_: MlbStateModel, teams: { [id: number]: BaseballTeam }) {
-    return Object.values(teams).sort((a, b) => b.liveScore - a.liveScore);
   }
 
   @Action(FetchBaseballLeague)
