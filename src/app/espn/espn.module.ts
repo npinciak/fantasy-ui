@@ -17,6 +17,7 @@ import { SharedModule } from '@app/@shared/shared.module';
 import { ScoreboardEventComponent } from './mlb/components/scoreboard-event/scoreboard-event.component';
 import { HomeComponent } from './mlb/pages/home/home.component';
 import { StadiumWeatherComponent } from './mlb/components/stadium-weather/stadium-weather.component';
+import { LineupCardComponent } from './mlb/components/lineup-card/lineup-card.component';
 
 const components = [
   HomeComponent,
@@ -32,6 +33,7 @@ const components = [
   RankingColComponent,
   StadiumWeatherComponent,
   LeagueScoreboardComponent,
+  LineupCardComponent,
 ];
 
 @NgModule({

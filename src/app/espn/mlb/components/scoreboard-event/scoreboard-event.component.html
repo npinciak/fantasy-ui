@@ -40,15 +40,17 @@
     </table>
   </mat-card-content>
   <mat-card-actions style="text-align: center">
-    <button class="ui-w-100" mat-flat-button [disabled]="event.location.disableWeather" (click)="fetchGameWeatherConditions(event)">
+    <button
+      class="ui-w-100"
+      mat-flat-button
+      [disabled]="event.location.disableWeather || weatherFacade.weatherByGameIdExists(+event.gameId)"
+      (click)="weatherFacade.fetchWeather(event)"
+    >
       {{ event.location.isDome ? 'In Dome' : 'Weather' }}
     </button>
   </mat-card-actions>
 </mat-card>
 
-<!-- <ng-container *ngIf="weatherFacade.selectWeatherByGameId(+event.gameId)">
-  {{ weatherFacade.weatherToGame(+event.gameId) | json }}
-</ng-container> -->
-<ng-container *ngIf="weatherFacade.selectWeatherByGameId(+event.gameId)">
+<ng-container *ngIf="weatherFacade.weatherByGameIdExists(+event.gameId)">
   <app-stadium-weather [event]="weatherFacade.weatherToGame(+event.gameId)"></app-stadium-weather>
 </ng-container>

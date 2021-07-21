@@ -2,7 +2,7 @@ import { CurrentConditions } from './class';
 import { WeatherValues } from './interface/currentWeather.interface';
 
 class WeatherStateModel {
-  currentWeather: CurrentWeatherMap;
+  map!: CurrentWeatherMap;
 }
 
 interface CurrentWeatherMap {
@@ -13,8 +13,8 @@ interface CurrentConditionsMap {
   [id: number]: CurrentConditions;
 }
 
-const INITIAL_WEATHER_STATE = {
-  currentWeather: {},
+const INITIAL_WEATHER_STATE: WeatherStateModel = {
+  map: {},
 };
 
 export { WeatherStateModel, CurrentWeatherMap, CurrentConditionsMap, INITIAL_WEATHER_STATE };

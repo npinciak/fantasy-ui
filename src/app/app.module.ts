@@ -14,10 +14,8 @@ import { NgxsModule } from '@ngxs/store';
 import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { CoreState } from './@core/store/core/core.state';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { environment } from 'src/environments/environment';
 import { MlbState } from './espn/mlb/state/mlb.state';
-import { MlbTeamState } from './espn/mlb/state/mlb-team.state';
 import { httpInterceptorProviders } from './@core/interceptors';
 import { WeatherState } from './espn/weather/state/weather.state';
 import { SharedModule } from './@shared/shared.module';
@@ -30,7 +28,7 @@ import { SharedModule } from './@shared/shared.module';
     SharedModule,
     BrowserAnimationsModule,
     NgxsSelectSnapshotModule.forRoot(),
-    NgxsModule.forRoot([CoreState, MlbState, MlbTeamState, WeatherState], {
+    NgxsModule.forRoot([CoreState, MlbState, WeatherState], {
       developmentMode: !environment.production,
     }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
