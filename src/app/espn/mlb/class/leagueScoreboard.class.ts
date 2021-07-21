@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/prefer-for-of */
-import { ScheduleTeams } from '../interface/league';
+import { EspnClientScheduleTeams } from '../interface/league';
 
 export class LeagueScoreboard {
-  private _teams: ScheduleTeams[] = [];
+  private _teams: EspnClientScheduleTeams[] = [];
   private _scoreboard = {};
 
-  constructor(scheduleTeams: ScheduleTeams[]) {
+  constructor(scheduleTeams: EspnClientScheduleTeams[]) {
     this._teams = scheduleTeams;
     this.createScoreboard();
   }

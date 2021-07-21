@@ -1,14 +1,20 @@
+import { newTeamMap } from '@app/@shared/helpers/mapping';
 import { Selector } from '@ngxs/store';
 import { BaseballPlayer } from '../class/player.class';
 import { BaseballTeam } from '../class/team.class';
-import { BaseballPlayerMap, BaseballTeamMap, MlbStateModel } from '../state/mlb-state.model';
+import { BaseballPlayerMap, BaseballTeamMap, MlbStateModel, ScheduleMap, TeamMap } from '../state/mlb-state.model';
 import { MlbState } from '../state/mlb.state';
 import { MlbSelectors } from './mlb.selectors';
 
 export class MlbTeamSelectors {
-  @Selector([MlbSelectors.baseballTeamMap])
-  static selectBaseballTeamById(baseballTeams: BaseballTeamMap): (id: number) => BaseballTeam {
-    return (id: number) => baseballTeams[id];
+  @Selector([MlbState.teams, MlbState.schedule])
+  static baseballTeamMap(teams: TeamMap, schedule: ScheduleMap): BaseballTeamMap {
+    return newTeamMap(teams, Object.values(schedule));
+  }
+
+  @Selector([MlbState.teams, MlbState.schedule])
+  static selectBaseballTeamById(teams: TeamMap, schedule: ScheduleMap): (id: number) => BaseballTeam {
+    return (id: number) => null;
   }
 
   @Selector([MlbState.teams])
@@ -22,7 +28,7 @@ export class MlbTeamSelectors {
   }
 
   @Selector([MlbTeamSelectors.getTeamRoster])
-  static getTeamBatters(getTeamRoster: (id: number) => BaseballPlayer): (id: number) => BaseballPlayer[] {
+  static getTeamBatters(getTeamRoster: (id: number) => BaseballPlayerMap): (id: number) => BaseballPlayer[] {
     return (id: number) => {
       const roster = getTeamRoster(id);
       return Object.values(roster)

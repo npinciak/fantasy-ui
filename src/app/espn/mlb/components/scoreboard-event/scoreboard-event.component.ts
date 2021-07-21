@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MOCK_DATA } from '@app/@shared/helpers/testConfigs';
 import { WeatherFacade } from '@espn/weather/facade/weather.facade';
 import { Game } from '@mlb/class/game.class';
 

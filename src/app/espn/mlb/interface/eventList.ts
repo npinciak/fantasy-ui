@@ -1,26 +1,26 @@
-interface EventList {
-  events: EspnEvent[];
+interface EspnClientEventList {
+  events: EspnClientEvent[];
 }
 
-interface EspnEvent {
+interface EspnClientEvent {
   id: string;
   date: string;
   summary: string;
   percentComplete: number;
-  competitors: Competitor[];
-  fullStatus: FullEventStatus;
+  competitors: EspnClientCompetitor[];
+  fullStatus: EspnClientFullEventStatus;
 }
 
-interface FullEventStatus {
+interface EspnClientFullEventStatus {
   clock: number;
   displayClock: string;
   period: number;
-  type: EventStatusType;
+  type: EspnClientEventStatusType;
   halfInning: number;
   periodPrefix: string;
 }
 
-interface EventStatusType {
+interface EspnClientEventStatusType {
   id: string;
   name: string;
   state: string;
@@ -30,7 +30,7 @@ interface EventStatusType {
   shortDetail: string;
 }
 
-interface Competitor {
+interface EspnClientCompetitor {
   id: string;
   homeAway: string | 'home' | 'away';
   score: number | string;
@@ -39,4 +39,4 @@ interface Competitor {
   winner: boolean;
 }
 
-export { EventList, EspnEvent, FullEventStatus, EventStatusType, Competitor };
+export { EspnClientEventList, EspnClientEvent, EspnClientFullEventStatus, EspnClientEventStatusType, EspnClientCompetitor };

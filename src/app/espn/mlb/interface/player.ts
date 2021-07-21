@@ -1,15 +1,15 @@
-export interface Player {
+export interface EspnClientPlayer {
   playerId: number;
   lineupSlotId: number;
-  playerPoolEntry: PlayerEntry;
+  playerPoolEntry: EspnClientPlayerEntry;
 }
 
-export interface PlayerEntry {
-  player: PlayerInfo;
-  ratings: PlayerRatings;
+export interface EspnClientPlayerEntry {
+  player: EspnClientPlayerInfo;
+  ratings: EspnClientPlayerRatings;
 }
 
-export interface PlayerInfo {
+export interface EspnClientPlayerInfo {
   fullName: string;
   playerId?: number;
   lastNewsDate: number;
@@ -17,24 +17,24 @@ export interface PlayerInfo {
   proTeamId: number;
   injured: boolean;
   injuryStatus: string;
-  ownership: PlayerOwnership;
+  ownership: EspnClientPlayerOwnership;
   eligibleSlots: number[];
-  stats: PlayerStatsYear[];
-  starterStatusByProGame: GameStatus;
+  stats: EspnClientPlayerStatsYear[];
+  starterStatusByProGame: EspnClientGameStatus;
 }
 
-export interface GameStatus {
+export interface EspnClientGameStatus {
   [key: number]: string;
 }
 
-export interface PlayerOwnership {
+export interface EspnClientPlayerOwnership {
   averageDraftPosition: number;
   percentChange: number;
   percentOwned: number;
   percentStarted: number;
 }
 
-export interface PlayerRatings {
+export interface EspnClientPlayerRatings {
   [key: number]: {
     positionalRanking: number;
     totalRanking: number;
@@ -42,14 +42,14 @@ export interface PlayerRatings {
   };
 }
 
-export interface PlayerStatsYear {
+export interface EspnClientPlayerStatsYear {
   seasonId: number;
   statSplitTypeId: number;
   scoringPeriodId: number;
-  stats: PlayerStatsEntity;
+  stats: EspnClientPlayerStatsEntity;
 }
 
-export interface PlayerStatsEntity {
+export interface EspnClientPlayerStatsEntity {
   [key: number]: number;
 }
 

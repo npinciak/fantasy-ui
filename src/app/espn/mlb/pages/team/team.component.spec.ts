@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -22,8 +23,7 @@ describe('TeamComponent', () => {
   let fixture: ComponentFixture<TeamComponent>;
   let compiled;
 
-  const getByTestId = (testId: string) =>
-    compiled.querySelector(`[data-test-id="${testId}"]`);
+  const getByTestId = (testId: string) => compiled.querySelector(`[data-test-id="${testId}"]`);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -34,6 +34,7 @@ describe('TeamComponent', () => {
         MatCardModule,
         MatToolbarModule,
         MatProgressSpinnerModule,
+        MatButtonToggleModule,
         NgxsSelectSnapshotModule,
         NgxsModule.forRoot(),
       ],

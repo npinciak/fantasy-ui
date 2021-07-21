@@ -5,10 +5,10 @@ import { Game } from '@mlb/class/game.class';
 import { LeagueScoreboard } from '@mlb/class/leagueScoreboard.class';
 import { BaseballPlayer } from '@mlb/class/player.class';
 import { BaseballTeam } from '@mlb/class/team.class';
-import { Player, Team, EspnEvent } from '@mlb/interface';
-import { ScheduleEntry } from '@mlb/interface/league';
+import { EspnClientPlayer, EspnClientTeam, EspnClientEvent } from '@mlb/interface';
+import { EspnClientScheduleEntry } from '@mlb/interface/league';
 
-const newTeamMap = (entities: TeamMap, entries?: ScheduleEntry[]): BaseballTeamMap => {
+const newTeamMap = (entities: TeamMap, entries?: EspnClientScheduleEntry[]): BaseballTeamMap => {
   const finalMap = {};
 
   const entityLength = Object.values(entities).length;
@@ -49,7 +49,7 @@ const gameMap = (competitions: EventMap): GameMap => {
   return compMap;
 };
 
-const rosterMap = (roster: Player[]): BaseballPlayerMap => {
+const rosterMap = (roster: EspnClientPlayer[]): BaseballPlayerMap => {
   if (roster.length === 0) {
     return {};
   }

@@ -1,15 +1,15 @@
 import { statsKeyMap } from '../helpers';
-import { Player, Team } from '../interface';
+import { EspnClientTeam } from '../interface';
 import { mlbStatMap, StatAbbrev } from '../maps/mlb-stat.map';
 import { BaseballPlayerMap } from '../state/mlb-state.model';
 import { BaseballPlayer } from './player.class';
 
 export class BaseballTeam {
-  private _team: Team;
+  private _team: EspnClientTeam;
   private _roster: BaseballPlayerMap = {};
   private _liveScore = 0;
 
-  constructor(team: Team) {
+  constructor(team: EspnClientTeam) {
     this._team = team;
   }
 

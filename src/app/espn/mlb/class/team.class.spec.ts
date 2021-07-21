@@ -1,9 +1,9 @@
-import { MOCK_DATA } from '@app/@shared/helpers/testConfigs';
+import { MOCK_DATA_CLASS } from '@app/@shared/helpers/testConfigs';
 import * as mockleague from '@mlb/mocks/league.mock.json';
 import { BaseballTeam } from './team.class';
 
 describe('[Class] Team', () => {
-  const team = MOCK_DATA.BASEBALL_TEAM;
+  const team = MOCK_DATA_CLASS.BASEBALL_TEAM;
 
   it('should return teamName', () => {
     expect(team.teamName).toBe('Schrute Farms Beetdowns');

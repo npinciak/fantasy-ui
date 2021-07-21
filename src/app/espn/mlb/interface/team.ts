@@ -1,11 +1,11 @@
-import { Roster } from './roster';
+import { EspnClientRoster } from './roster';
 
-export interface Team {
+export interface EspnClientTeam {
   id: number;
   abbrev: string;
   location: string;
   nickname: string;
-  roster: Roster;
+  roster: EspnClientRoster;
   points: number;
   logo: string;
   playoffSeed: number;

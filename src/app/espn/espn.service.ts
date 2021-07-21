@@ -5,7 +5,7 @@ import { currentDate } from 'src/app/@shared/helpers/date';
 
 import { ApiService } from 'src/app/@shared/services/api.service';
 import { Filter } from '@mlb/class';
-import { EventList, League } from '@mlb/interface';
+import { EspnClientEventList, EspnClientLeague } from '@mlb/interface';
 
 export enum Sports {
   baseball = 'flb',
@@ -44,9 +44,12 @@ export class EspnService {
    * @returns League object
    */
   private readonly _baseballLeague = (leagueId: number) =>
-    this.api.get<League>(`${this.fantasyBase}/games/${Sports.baseball}/seasons/${this.currentYear}/segments/0/leagues/${leagueId}`, {
-      params: this.params,
-    });
+    this.api.get<EspnClientLeague>(
+      `${this.fantasyBase}/games/${Sports.baseball}/seasons/${this.currentYear}/segments/0/leagues/${leagueId}`,
+      {
+        params: this.params,
+      }
+    );
 
   /**
    * Fetch player news
@@ -82,7 +85,7 @@ export class EspnService {
    * @returns list of events
    */
   private readonly _baseballEvents = () =>
-    this.api.get<EventList>(`${this.apiBase}/fantasy/v2/games/${Sports.baseball}/games`, {
+    this.api.get<EspnClientEventList>(`${this.apiBase}/fantasy/v2/games/${Sports.baseball}/games`, {
       params: this.baseballEventParams,
     });
 
