@@ -1,9 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { MOCK_DATA } from '@app/@shared/helpers/testConfigs';
-import { FetchWeather } from '@espn/weather/actions/weather.actions';
 import { WeatherFacade } from '@espn/weather/facade/weather.facade';
-import { Actions, ofActionSuccessful } from '@ngxs/store';
-import { take } from 'rxjs/operators';
 import { Game } from '@mlb/class/game.class';
 
 @Component({

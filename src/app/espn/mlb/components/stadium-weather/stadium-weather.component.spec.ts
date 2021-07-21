@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgxsModule } from '@ngxs/store';
 
 import { StadiumWeatherComponent } from './stadium-weather.component';
 
@@ -8,9 +9,9 @@ describe('StadiumWeatherComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StadiumWeatherComponent ]
-    })
-    .compileComponents();
+      imports: [NgxsModule.forRoot()],
+      declarations: [StadiumWeatherComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

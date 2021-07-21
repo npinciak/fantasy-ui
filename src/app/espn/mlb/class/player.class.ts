@@ -1,10 +1,10 @@
 import { isPitcher, statsKeyMap } from '../helpers';
 import {
-  PlayerStatsYear,
-  PlayerRatings,
-  PlayerOwnership,
-  GameStatus,
-  Player,
+  EspnClientPlayerStatsYear,
+  EspnClientPlayerRatings,
+  EspnClientPlayerOwnership,
+  EspnClientGameStatus,
+  EspnClientPlayer,
 } from '../interface/player';
 import { mlbLineupMap } from '../maps/mlb-lineup.map';
 import { mlbPositionMap } from '../maps/mlb-position.map';
@@ -23,14 +23,14 @@ import { Game } from './game.class';
 export class BaseballPlayer {
   readonly weights21 = weights2021;
 
-  private _player: Player;
+  private _player: EspnClientPlayer;
   private _eligibleSlots = {};
   private _ownership;
   private _ratings = new Map<number, any>();
   private _startingStatus = new Map<string, string>();
   private _isStarting = false;
 
-  constructor(player: Player) {
+  constructor(player: EspnClientPlayer) {
     this._player = player;
   }
 
@@ -59,8 +59,7 @@ export class BaseballPlayer {
   }
 
   get defaultPosition() {
-    return mlbPositionMap[this._player.playerPoolEntry.player.defaultPositionId]
-      .abbrev;
+    return mlbPositionMap[this._player.playerPoolEntry.player.defaultPositionId].abbrev;
   }
 
   get proTeam() {
@@ -90,11 +89,11 @@ export class BaseballPlayer {
     }
   }
 
-  set ownership(val: PlayerOwnership) {
+  set ownership(val: EspnClientPlayerOwnership) {
     this._ownership = val;
   }
 
-  set ratings(val: PlayerRatings) {
+  set ratings(val: EspnClientPlayerRatings) {
     for (const key in val) {
       if (Object.prototype.hasOwnProperty.call(val, key)) {
         const element = val[key];
@@ -103,7 +102,7 @@ export class BaseballPlayer {
     }
   }
 
-  set gameStatus(val: GameStatus) {
+  set gameStatus(val: EspnClientGameStatus) {
     for (const game in val) {
       if (Object.prototype.hasOwnProperty.call(val, game)) {
         const element = val[game];

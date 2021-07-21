@@ -1,17 +1,7 @@
-import { League } from './league';
-import { Player } from './player';
-import { Roster } from './roster';
-import { Team } from './team';
-import { FreeAgent } from './freeAgent';
-import { EventList, EspnEvent, Competitor } from './eventList';
+import { EspnClientLeague } from './league';
+import { EspnClientPlayer } from './player';
+import { EspnClientRoster } from './roster';
+import { EspnClientTeam } from './team';
+import { EspnClientEventList, EspnClientEvent, EspnClientCompetitor } from './eventList';
 
-export {
-  FreeAgent,
-  League,
-  Player,
-  Roster,
-  Team,
-  EventList,
-  EspnEvent,
-  Competitor,
-};
+export { EspnClientEventList, EspnClientEvent, EspnClientCompetitor, EspnClientTeam, EspnClientRoster, EspnClientPlayer, EspnClientLeague };

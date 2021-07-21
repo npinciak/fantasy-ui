@@ -7,9 +7,6 @@ import * as _ from 'lodash';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { RotoColumn, StatsColumn, TeamColumn } from '../../mlb.enums';
 import { standingsColumns } from '../../mlb.const';
-import { TEST_ID } from '@app/@shared/helpers/testConfigs';
-import { mlbTeamMap } from '../../maps/mlb-team.map';
-import { MLB_STADIUM_MAP } from '../../maps/mlb-team.map';
 
 @Component({
   selector: 'app-standings',

@@ -1,11 +1,11 @@
-import { MOCK_DATA } from '@app/@shared/helpers/testConfigs';
+import { MOCK_DATA_CLASS, MOCK_DATA_CLIMA } from '@app/@shared/helpers/testConfigs';
 import { WEATHER_MAP } from '../maps';
 import { PrecipitationCode, WeatherCode } from '../weather.enum';
 import { CurrentConditions } from './currentConditions.class';
 
 describe('[Class] CurrentConditions', () => {
-  const actual = MOCK_DATA.CURRENT_CONDITIONS_CLASS;
-  const expected = MOCK_DATA.WEATHER_CURRENT_CONDITIONS.data.timelines[0].intervals[0].values;
+  const actual = MOCK_DATA_CLASS.CURRENT_CONDITIONS;
+  const expected = MOCK_DATA_CLIMA.WEATHER_CURRENT_CONDITIONS.data.timelines[0].intervals[0].values;
 
   describe('weather', () => {
     it('should return mapped weather value', () => {
