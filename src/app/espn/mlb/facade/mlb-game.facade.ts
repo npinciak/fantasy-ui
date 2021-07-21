@@ -12,20 +12,19 @@ import { MlbState } from '../state/mlb.state';
 import { EspnEvent } from '../interface';
 import { MlbSelectors } from '../selectors/mlb.selectors';
 import { MlbTeamSelectors } from '../selectors/mlb-team.selectors';
+import { BaseballPlayer } from '../class/player.class';
+import { MlbGameSelectors } from '../selectors/mlb-game.selectors';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MlbFacade {
-  @Select(MlbSelectors.standings) public standings$: Observable<BaseballTeam[]>;
-  @Select(MlbState.schedule) public schedule$: Observable<ScheduleMap>;
-  @Select(MlbSelectors.liveScore) public liveScore$: Observable<BaseballTeam[]>;
+export class MlbGameFacade {
+  @Select(MlbGameSelectors.getSortedGamesByStartTime) public sortedGamesByStartTime$: Observable<Game[]>;
+  @Select(MlbGameSelectors.noGames) public noGames$: Observable<boolean>;
 
-  @Select(MlbState.isLoading) public isLoading$: Observable<boolean>;
+  @SelectSnapshot(MlbGameSelectors.getNumberOfGames) public numberOfGames$: Observable<number>;
 
-  @SelectSnapshot(MlbState.scoringPeriod) public scoringPeriod: number;
-  @SelectSnapshot(MlbState.events) public eventSnapshot: EventMap;
+  constructor(private store: Store) {}
 
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  @Dispatch() getLeague = (leagueId: number) => new FetchBaseballLeague(leagueId);
+  selectGameById = (id: number): Game => this.store.selectSnapshot(MlbGameSelectors.selectGameById)(id);
 }

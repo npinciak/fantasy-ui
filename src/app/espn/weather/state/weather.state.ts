@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { stadiumConditionsMap } from '@app/@shared/helpers/mapping';
-import { entityMap } from '@app/@shared/operators';
+import { entityMap, patchMap } from '@app/@shared/operators';
 import { Game } from '@mlb/class/game.class';
 import { MlbStateModel } from '@mlb/state/mlb-state.model';
 import { GameMap } from '@app/espn/mlb/state/mlb-state.model';
@@ -26,37 +26,39 @@ export class WeatherState {
     return state;
   }
 
-  @Selector([WeatherState.getState])
-  static currentWeather(state: WeatherStateModel): CurrentConditionsMap {
-    return stadiumConditionsMap(state.currentWeather);
-  }
-
-  @Selector([WeatherState.currentWeather, MlbState.eventToGame])
-  static weatherToGame(_: WeatherStateModel, weather: CurrentConditionsMap, game: GameMap) {
-    return (id: number) => {
-      game[id].currentConditions = weather[id];
-      return game[id];
-    };
-  }
-
   @Selector()
-  static selectWeatherByGameId(state: WeatherStateModel): (id: number) => WeatherValues {
-    return (id: number) => state.currentWeather[id];
+  static gameWeather(state: WeatherStateModel) {
+    return state.map;
   }
 
   @Action(FetchWeather)
   async fetchWeather(ctx: StateContext<WeatherStateModel>, { payload }: FetchWeather): Promise<void> {
-    const gameExists = ctx.getState().currentWeather.hasOwnProperty(payload.gameId);
+    const gameExists = ctx.getState().map.hasOwnProperty(payload.gameId);
 
     if (gameExists) {
       console.log(`!---- Weather for ${payload.gameId} already in state, retrieving cache ----!`);
       return;
+    } else {
+      const conditions = await this.service.currentWeather(payload.location.latLng).toPromise();
+
+      const weatherValues = conditions.data.timelines[0].intervals[0].values;
+
+      const map = { ...ctx.getState().map };
+      map[payload.gameId] = weatherValues;
+
+      ctx.patchState({ map });
     }
 
-    const conditions = await this.service.currentWeather(payload.location.latLng).toPromise();
+    // const map = {};
+    // map[payload.gameId] = weatherValues;
 
-    const currentWeather = {};
-    currentWeather[payload.gameId] = conditions.data.timelines[0].intervals[0].values;
-    ctx.patchState({ currentWeather });
+    // // const gameToConditionsMap: { [id: number]: WeatherValues } = {};
+
+    // // gameToConditionsMap[payload.gameId] = entityMap(weatherValues);
+
+    // patchMap([weatherValues]);
+    // // patchMap(weatherValues, payload => payload.gameId);
+
+    // map[payload.gameId] = weatherValues;
   }
 }

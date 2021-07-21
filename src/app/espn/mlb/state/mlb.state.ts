@@ -55,31 +55,6 @@ export class MlbState {
     return state.events;
   }
 
-  @Selector([MlbState.events])
-  static eventToGame(_: MlbStateModel, event: EventMap): GameMap {
-    return gameMap(event);
-  }
-
-  @Selector([MlbState.eventToGame])
-  static sortedGamesByStartTime(_: MlbStateModel, games: GameMap): Game[] {
-    return Object.values(games).sort((a, b) => a.gameDate.milli - b.gameDate.milli);
-  }
-
-  @Selector([MlbState.numberOfEvents])
-  static noEvents(_: MlbStateModel, numberOfEvents: number): boolean {
-    return numberOfEvents === 0;
-  }
-
-  @Selector([MlbState.events])
-  static numberOfEvents(_: MlbStateModel, events: EventMap): number {
-    return Object.keys(events).length;
-  }
-
-  @Selector()
-  static selectEventById(state: MlbStateModel): (id: number) => EspnEvent {
-    return (id: number) => state.events[id];
-  }
-
   @Action(FetchBaseballLeague)
   baseballLeague(ctx: StateContext<MlbStateModel>, { leagueId }: FetchBaseballLeague) {
     if (ctx.getState().scoringPeriodId) {
