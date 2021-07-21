@@ -1,12 +1,20 @@
-import { MOCK_DATA } from '@app/@shared/helpers/testConfigs';
+import { MOCK_DATA_ESPN } from '@app/@shared/helpers/testConfigs';
 import { MlbStateModel } from './mlb-state.model';
 
-const mockState: MlbStateModel = {
-  schedule: { [MOCK_DATA.ESPN_SCHEDULE[0].id]: MOCK_DATA.ESPN_SCHEDULE[0] },
-  teams: { [MOCK_DATA.ESPN_TEAM.id]: MOCK_DATA.ESPN_TEAM },
-  events: { [Number(MOCK_DATA.ESPN_EVENT.id)]: MOCK_DATA.ESPN_EVENT },
-  scoringPeriodId: MOCK_DATA.ESPN_LEAGUE.scoringPeriodId,
+const MOCK_STATE: MlbStateModel = {
+  schedule: { [MOCK_DATA_ESPN.ESPN_SCHEDULE[0].id]: MOCK_DATA_ESPN.ESPN_SCHEDULE[0] },
+  teams: { [MOCK_DATA_ESPN.ESPN_TEAM.id]: MOCK_DATA_ESPN.ESPN_TEAM },
+  events: { [Number(MOCK_DATA_ESPN.ESPN_EVENT.id)]: MOCK_DATA_ESPN.ESPN_EVENT },
+  scoringPeriodId: MOCK_DATA_ESPN.ESPN_LEAGUE.scoringPeriodId,
   isLoading: false,
 };
 
-export { mockState };
+const MOCK_STATE_EMPTY: MlbStateModel = {
+  schedule: {},
+  teams: {},
+  events: {},
+  scoringPeriodId: null,
+  isLoading: true,
+};
+
+export { MOCK_STATE, MOCK_STATE_EMPTY };

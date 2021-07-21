@@ -1,4 +1,4 @@
-import { MOCK_DATA } from '@app/@shared/helpers/testConfigs';
+import { MOCK_DATA_ESPN } from '@app/@shared/helpers/testConfigs';
 import { Observable, of } from 'rxjs';
 import { Game } from '../class/game.class';
 import { BaseballTeam } from '../class/team.class';
@@ -23,7 +23,7 @@ export class MockMlbFacade implements Mock<MlbFacade> {
   teamsEmpty: boolean;
   eventSnapshot: EventMap;
 
-  selectEventById = (id: number) => MOCK_DATA.ESPN_EVENT;
-  selectTeamById = (id: number) => MOCK_DATA.ESPN_TEAM;
+  selectEventById = (id: number) => MOCK_DATA_ESPN.ESPN_EVENT;
+  selectTeamById = (id: number) => MOCK_DATA_ESPN.ESPN_TEAM;
   getLeague = (leagueId: number) => null;
 }

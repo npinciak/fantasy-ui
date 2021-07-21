@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
-import { gameMap, newTeamMap } from '@app/@shared/helpers/mapping';
 import { entityMap } from '@app/@shared/operators/entities.operators';
 import { State, Action, Selector, StateContext } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 
 import { EspnService } from '@espn/espn.service';
-import { Game } from '../class/game.class';
-import { BaseballTeam } from '../class/team.class';
-import { BaseballTeamMap, EventMap, GameMap, MlbStateModel, ScheduleMap, TeamMap } from './mlb-state.model';
+import { EventMap, MlbStateModel, TeamMap } from './mlb-state.model';
 import { FetchBaseballLeague } from '../actions/mlb.actions';
-import { EspnEvent, Team } from '../interface';
 
 @State<MlbStateModel>({
   name: 'mlb',

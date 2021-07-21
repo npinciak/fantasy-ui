@@ -1,11 +1,11 @@
-import { MOCK_DATA } from '@app/@shared/helpers/testConfigs';
+import { MOCK_DATA_CLASS, MOCK_DATA_ESPN } from '@app/@shared/helpers/testConfigs';
 import * as mockleague from '@mlb/mocks/league.mock.json';
 import { mlbLineupMap } from '../maps';
 import { BaseballTeam } from './team.class';
 
 describe('[Class] Player', () => {
-  const actual = MOCK_DATA.BASEBALL_PLAYER;
-  const expected = MOCK_DATA.ESPN_TEAM.roster.entries[0];
+  const actual = MOCK_DATA_CLASS.BASEBALL_PLAYER;
+  const expected = MOCK_DATA_ESPN.ESPN_TEAM.roster.entries[0];
 
   it('should return player name', () => {
     expect(actual.name).toBe(expected.playerPoolEntry.player.fullName);

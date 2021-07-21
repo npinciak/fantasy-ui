@@ -1,18 +1,18 @@
-import { Team } from './team';
+import { EspnClientTeam } from './team';
 
-export interface League {
+export interface EspnClientLeague {
   id: number;
-  schedule: ScheduleEntry[];
+  schedule: EspnClientScheduleEntry[];
   scoringPeriodId: number;
   settings: { name: string };
-  teams: Team[];
+  teams: EspnClientTeam[];
 }
 
-export interface ScheduleEntry {
-  teams: ScheduleTeams[];
+export interface EspnClientScheduleEntry {
+  teams: EspnClientScheduleTeams[];
 }
 
-export interface ScheduleTeams {
+export interface EspnClientScheduleTeams {
   teamId: number;
   totalPoints: number;
   totalPointsLive: number;

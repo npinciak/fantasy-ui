@@ -1,6 +1,6 @@
 import { CurrentConditions } from '@espn/weather/weather/models/class';
 import { logoImgBuilder } from '../helpers';
-import { Competitor, EspnEvent } from '../interface';
+import { EspnClientCompetitor, EspnClientEvent } from '../interface';
 import {
   ScoreboardGameLocation,
   ScoreboardGameStart,
@@ -12,13 +12,13 @@ import { MLB_STADIUM_MAP, mlbTeamMap } from '../maps/mlb-team.map';
 import { domeStadiums } from '../mlb.const';
 
 export class Game {
-  private _event: EspnEvent;
-  private _competitors: Map<number, Competitor> = new Map<number, Competitor>();
+  private _event: EspnClientEvent;
+  private _competitors: Map<number, EspnClientCompetitor> = new Map<number, EspnClientCompetitor>();
   private _homeTeam: number;
   private _awayTeam: number;
   private _currentConditions: CurrentConditions;
 
-  constructor(event: EspnEvent) {
+  constructor(event: EspnClientEvent) {
     this._event = event;
   }
 
@@ -30,7 +30,7 @@ export class Game {
     this._currentConditions = val;
   }
 
-  set competitors(val: Competitor[]) {
+  set competitors(val: EspnClientCompetitor[]) {
     for (const comp of val) {
       this._competitors.set(Number(comp.id), comp);
       if (comp.homeAway === 'home') {

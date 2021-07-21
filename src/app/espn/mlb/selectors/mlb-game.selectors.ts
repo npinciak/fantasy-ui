@@ -1,7 +1,7 @@
 import { gameMap } from '@app/@shared/helpers/mapping';
 import { Selector } from '@ngxs/store';
 import { Game } from '../class/game.class';
-import { EspnEvent } from '../interface';
+import { EspnClientEvent } from '../interface';
 import { EventMap, GameMap, MlbStateModel } from '../state/mlb-state.model';
 import { MlbState } from '../state/mlb.state';
 

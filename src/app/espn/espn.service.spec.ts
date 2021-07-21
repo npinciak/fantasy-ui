@@ -1,11 +1,8 @@
 /* eslint-disable max-len */
 import { HttpHeaders } from '@angular/common/http';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { MOCK_DATA } from '@app/@shared/helpers/testConfigs';
+import { MOCK_DATA_ESPN } from '@app/@shared/helpers/testConfigs';
 import { NgxsModule, Store } from '@ngxs/store';
 
 import { EspnService } from './espn.service';
@@ -35,23 +32,19 @@ describe('EspnService', () => {
   it('should call fetchEspnBaseball', () => {
     const spy = spyOn(service, 'fetchEspnBaseball').and.callThrough();
 
-    service.fetchEspnBaseball(MOCK_DATA.LEAGUE_ID).subscribe();
+    service.fetchEspnBaseball(MOCK_DATA_ESPN.ESPN_LEAGUE_ID).subscribe();
 
     expect(spy).toHaveBeenCalled();
 
-    const requestOne = httpTestingController.expectOne(
-      MOCK_DATA.LEAGUE_REQUEST
-    );
+    const requestOne = httpTestingController.expectOne(MOCK_DATA_ESPN.ESPN_LEAGUE_REQUEST);
 
-    const requestTwo = httpTestingController.expectOne(
-      MOCK_DATA.ESPN_GAME_REQUEST
-    );
+    const requestTwo = httpTestingController.expectOne(MOCK_DATA_ESPN.ESPN_GAME_REQUEST);
 
     expect(requestOne.request.method).toBe('GET');
     expect(requestTwo.request.method).toBe('GET');
 
-    requestOne.flush(MOCK_DATA.ESPN_LEAGUE);
-    requestTwo.flush(MOCK_DATA.ESPN_GAME_REQUEST);
+    requestOne.flush(MOCK_DATA_ESPN.ESPN_LEAGUE);
+    requestTwo.flush(MOCK_DATA_ESPN.ESPN_GAME_REQUEST);
   });
 
   it('should update team', () => {
@@ -87,13 +80,13 @@ describe('EspnService', () => {
       type: 'ROSTER',
     };
 
-    service.updateTeam({}, MOCK_DATA.LEAGUE_ID).subscribe((res) => {
+    service.updateTeam({}, MOCK_DATA_ESPN.ESPN_LEAGUE_ID).subscribe(res => {
       expect(res).toEqual(expected);
     });
 
     expect(spy).toHaveBeenCalled();
 
-    const request = httpTestingController.expectOne(MOCK_DATA.ESPN_UPDATE_TEAM);
+    const request = httpTestingController.expectOne(MOCK_DATA_ESPN.ESPN_UPDATE_TEAM_REQUEST);
 
     expect(request.request.method).toBe('POST');
 

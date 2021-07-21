@@ -1,9 +1,9 @@
-interface EspnError {
+interface EspnClientError {
   messages: string[] | null;
-  details: ErrorDetails[] | null;
+  details: EspnClientErrorDetails[] | null;
 }
 
-interface ErrorDetails {
+interface EspnClientErrorDetails {
   message: string;
   shortMessage: string;
   resolution?: null;
@@ -11,4 +11,4 @@ interface ErrorDetails {
   metaData?: null;
 }
 
-export { EspnError, ErrorDetails };
+export { EspnClientError, EspnClientErrorDetails };

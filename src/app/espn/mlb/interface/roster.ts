@@ -1,5 +1,5 @@
-import { Player } from './player';
+import { EspnClientPlayer } from './player';
 
-export interface Roster {
-  entries: Array<Player>;
+export interface EspnClientRoster {
+  entries: Array<EspnClientPlayer>;
 }
