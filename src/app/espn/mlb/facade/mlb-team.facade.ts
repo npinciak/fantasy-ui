@@ -12,20 +12,18 @@ import { MlbState } from '../state/mlb.state';
 import { EspnEvent } from '../interface';
 import { MlbSelectors } from '../selectors/mlb.selectors';
 import { MlbTeamSelectors } from '../selectors/mlb-team.selectors';
+import { BaseballPlayer } from '../class/player.class';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MlbFacade {
-  @Select(MlbSelectors.standings) public standings$: Observable<BaseballTeam[]>;
-  @Select(MlbState.schedule) public schedule$: Observable<ScheduleMap>;
-  @Select(MlbSelectors.liveScore) public liveScore$: Observable<BaseballTeam[]>;
+export class MlbTeamFacade {
+  @SelectSnapshot(MlbTeamSelectors.teamsEmpty) public teamsEmpty: boolean;
 
-  @Select(MlbState.isLoading) public isLoading$: Observable<boolean>;
+  constructor(private store: Store) {}
 
-  @SelectSnapshot(MlbState.scoringPeriod) public scoringPeriod: number;
-  @SelectSnapshot(MlbState.events) public eventSnapshot: EventMap;
-
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  @Dispatch() getLeague = (leagueId: number) => new FetchBaseballLeague(leagueId);
+  selectBaseballTeamById = (id: number): BaseballTeam => this.store.selectSnapshot(MlbTeamSelectors.selectBaseballTeamById)(id);
+  selectTeamStartingBatters = (id: number): BaseballPlayer[] => this.store.selectSnapshot(MlbTeamSelectors.getTeamStartingBatters)(id);
+  selectTeamBenchBatters = (id: number): BaseballPlayer[] => this.store.selectSnapshot(MlbTeamSelectors.getTeamBenchBatters)(id);
+  selectTeamStartingPitchers = (id: number): BaseballPlayer[] => this.store.selectSnapshot(MlbTeamSelectors.getTeamStartingPitchers)(id);
 }

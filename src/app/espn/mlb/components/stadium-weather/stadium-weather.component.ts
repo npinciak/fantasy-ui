@@ -14,7 +14,7 @@ import { Game } from '@mlb/class/game.class';
 export class StadiumWeatherComponent implements OnChanges {
   @Input() event: Game;
 
-  constructor(readonly weatherFacade: WeatherFacade, private actions$: Actions) {}
+  constructor(readonly weatherFacade: WeatherFacade) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.event);

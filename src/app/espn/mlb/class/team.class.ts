@@ -1,11 +1,12 @@
 import { statsKeyMap } from '../helpers';
 import { Player, Team } from '../interface';
 import { mlbStatMap, StatAbbrev } from '../maps/mlb-stat.map';
+import { BaseballPlayerMap } from '../state/mlb-state.model';
 import { BaseballPlayer } from './player.class';
 
 export class BaseballTeam {
   private _team: Team;
-  private _roster: Player[];
+  private _roster: BaseballPlayerMap = {};
   private _liveScore = 0;
 
   constructor(team: Team) {
@@ -32,7 +33,7 @@ export class BaseballTeam {
     return this._roster;
   }
 
-  set roster(roster: Player[]) {
+  set roster(roster: BaseballPlayerMap) {
     this._roster = roster;
   }
 

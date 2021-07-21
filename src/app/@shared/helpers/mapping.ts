@@ -1,4 +1,4 @@
-import { TeamMap } from '@app/espn/mlb/state/mlb-state.model';
+import { BaseballPlayerMap, BaseballTeamMap, EventMap, GameMap, TeamMap } from '@app/espn/mlb/state/mlb-state.model';
 import { CurrentConditions } from '@espn/weather/weather/models/class';
 import { WeatherValues } from '@espn/weather/weather/models/interface/currentWeather.interface';
 import { Game } from '@mlb/class/game.class';
@@ -8,7 +8,7 @@ import { BaseballTeam } from '@mlb/class/team.class';
 import { Player, Team, EspnEvent } from '@mlb/interface';
 import { ScheduleEntry } from '@mlb/interface/league';
 
-const newTeamMap = (entities: TeamMap, entries?: ScheduleEntry[]): { [id: number]: BaseballTeam } => {
+const newTeamMap = (entities: TeamMap, entries?: ScheduleEntry[]): BaseballTeamMap => {
   const finalMap = {};
 
   const entityLength = Object.values(entities).length;
@@ -21,7 +21,7 @@ const newTeamMap = (entities: TeamMap, entries?: ScheduleEntry[]): { [id: number
 
     for (const team of Object.values(entities)) {
       const newTeam = new BaseballTeam(team);
-      newTeam.roster = team.roster.entries;
+      newTeam.roster = rosterMap(team.roster.entries);
 
       if (liveScores.hasOwnProperty(team.id)) {
         newTeam.liveScore = liveScores[team.id];
@@ -34,11 +34,11 @@ const newTeamMap = (entities: TeamMap, entries?: ScheduleEntry[]): { [id: number
   }
 };
 
-const gameMap = (competitions: { [id: number]: EspnEvent }) => {
+const gameMap = (competitions: EventMap): GameMap => {
   if (Object.values(competitions).length === 0) {
     return {};
   }
-  const compMap: { [id: number]: Game } = {};
+  const compMap: GameMap = {};
   for (const comp of Object.values(competitions)) {
     const competition = new Game(comp);
 
@@ -49,13 +49,14 @@ const gameMap = (competitions: { [id: number]: EspnEvent }) => {
   return compMap;
 };
 
-const rosterMap = (roster: Player[]): Map<number, BaseballPlayer> => {
+const rosterMap = (roster: Player[]): BaseballPlayerMap => {
   if (roster.length === 0) {
-    return new Map();
+    return {};
   }
 
-  const playerMap = new Map<number, BaseballPlayer>();
-  roster.forEach(player => {
+  const playerMap: BaseballPlayerMap = {};
+
+  roster.map(player => {
     const baseballPlayer = new BaseballPlayer(player);
 
     baseballPlayer.ownership = player.playerPoolEntry.player.ownership;
@@ -63,7 +64,7 @@ const rosterMap = (roster: Player[]): Map<number, BaseballPlayer> => {
     baseballPlayer.eligibleSlots = player.playerPoolEntry.player.eligibleSlots;
     baseballPlayer.gameStatus = player.playerPoolEntry.player.starterStatusByProGame;
 
-    playerMap.set(player.playerId, baseballPlayer);
+    playerMap[player.playerId] = baseballPlayer;
   });
 
   return playerMap;
