@@ -8,15 +8,15 @@ import { BaseballTeam } from '../class/team.class';
 import { EventMap, ScheduleMap } from '../state/mlb-state.model';
 import { FetchBaseballLeague } from '../actions/mlb.actions';
 import { MlbState } from '../state/mlb.state';
-import { MlbSelectors } from '../selectors/mlb.selectors';
+import { MlbLeagueSelectors } from '../selectors/mlb-league.selectors';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MlbFacade {
-  @Select(MlbSelectors.standings) public standings$: Observable<BaseballTeam[]>;
+  @Select(MlbLeagueSelectors.standings) public standings$: Observable<BaseballTeam[]>;
   @Select(MlbState.schedule) public schedule$: Observable<ScheduleMap>;
-  @Select(MlbSelectors.liveScore) public liveScore$: Observable<BaseballTeam[]>;
+  @Select(MlbLeagueSelectors.liveScore) public liveScore$: Observable<BaseballTeam[]>;
 
   @Select(MlbState.isLoading) public isLoading$: Observable<boolean>;
 

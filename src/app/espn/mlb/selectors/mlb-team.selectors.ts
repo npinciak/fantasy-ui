@@ -4,7 +4,6 @@ import { BaseballTeam } from '../class/team.class';
 import { baseballTeamLiveScoreMap, espnPlayerToBaseballPlayerMap, espnTeamsToBaseballTeamsMap } from '../helpers';
 import { BaseballPlayerMap, BaseballTeamMap, MlbStateModel, ScheduleMap, TeamMap } from '../state/mlb-state.model';
 import { MlbState } from '../state/mlb.state';
-import { MlbSelectors } from './mlb.selectors';
 
 export class MlbTeamSelectors {
   @Selector([MlbState.teams])

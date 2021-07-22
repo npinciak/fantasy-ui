@@ -5,7 +5,7 @@ import { BaseballTeamMap, ScheduleMap, TeamMap } from '../state/mlb-state.model'
 import { MlbState } from '../state/mlb.state';
 import { MlbTeamSelectors } from './mlb-team.selectors';
 
-export class MlbSelectors {
+export class MlbLeagueSelectors {
   @Selector([MlbTeamSelectors.baseballTeamMap])
   static standings(teams: BaseballTeamMap) {
     return Object.values(teams);

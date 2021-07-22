@@ -3,7 +3,6 @@ import { MOCK_DATA_CLASS, MOCK_DATA_MAPS } from '@app/@shared/helpers/testConfig
 import { NgxsModule, Store } from '@ngxs/store';
 import { MOCK_STATE, MOCK_STATE_EMPTY } from '../state/mlb.state.mocks';
 import { MlbTeamSelectors } from './mlb-team.selectors';
-import { MlbSelectors } from './mlb.selectors';
 
 describe('@Selector Mlb Team', () => {
   let store: Store;
