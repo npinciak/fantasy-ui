@@ -1,20 +1,20 @@
-import { newTeamMap } from '@app/@shared/helpers/mapping';
 import { Selector } from '@ngxs/store';
 import { BaseballPlayer } from '../class/player.class';
 import { BaseballTeam } from '../class/team.class';
+import { espnPlayerToBaseballPlayerMap, espnTeamsToBaseballTeamsMap } from '../helpers';
 import { BaseballPlayerMap, BaseballTeamMap, MlbStateModel, ScheduleMap, TeamMap } from '../state/mlb-state.model';
 import { MlbState } from '../state/mlb.state';
 import { MlbSelectors } from './mlb.selectors';
 
 export class MlbTeamSelectors {
-  @Selector([MlbState.teams, MlbState.schedule])
-  static baseballTeamMap(teams: TeamMap, schedule: ScheduleMap): BaseballTeamMap {
-    return newTeamMap(teams, Object.values(schedule));
+  @Selector([MlbState.teams])
+  static baseballTeamMap(teams: TeamMap): BaseballTeamMap {
+    return espnTeamsToBaseballTeamsMap(teams);
   }
 
-  @Selector([MlbState.teams, MlbState.schedule])
-  static selectBaseballTeamById(teams: TeamMap, schedule: ScheduleMap): (id: number) => BaseballTeam {
-    return (id: number) => null;
+  @Selector([MlbTeamSelectors.baseballTeamMap])
+  static selectBaseballTeamById(teams: BaseballTeamMap): (id: number) => BaseballTeam {
+    return (id: number) => teams[id];
   }
 
   @Selector([MlbState.teams])
@@ -24,7 +24,10 @@ export class MlbTeamSelectors {
 
   @Selector([MlbTeamSelectors.selectBaseballTeamById])
   static getTeamRoster(selectBaseballTeamById: (id: number) => BaseballTeam): (id: number) => BaseballPlayerMap {
-    return (id: number) => selectBaseballTeamById(id).roster;
+    return (id: number) => {
+      const roster = selectBaseballTeamById(id).roster;
+      return espnPlayerToBaseballPlayerMap(roster);
+    };
   }
 
   @Selector([MlbTeamSelectors.getTeamRoster])
@@ -32,7 +35,7 @@ export class MlbTeamSelectors {
     return (id: number) => {
       const roster = getTeamRoster(id);
       return Object.values(roster)
-        .filter(player => !player.isPitcher)
+        .filter((player: BaseballPlayer) => !player.isPitcher)
         .sort((a, b) => a.lineupSlot.displayOrder - b.lineupSlot.displayOrder);
     };
   }
@@ -48,7 +51,7 @@ export class MlbTeamSelectors {
   }
 
   @Selector([MlbTeamSelectors.getTeamRoster])
-  static getTeamPitchers(getTeamRoster: (id: number) => BaseballPlayer): (id: number) => BaseballPlayer[] {
+  static getTeamPitchers(getTeamRoster: (id: number) => BaseballPlayerMap): (id: number) => BaseballPlayer[] {
     return (id: number) => {
       const roster = getTeamRoster(id);
       return Object.values(roster)

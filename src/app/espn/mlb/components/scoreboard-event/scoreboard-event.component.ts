@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { WeatherFacade } from '@espn/weather/facade/weather.facade';
-import { Game } from '@mlb/class/game.class';
+import { BaseballGame } from '@mlb/class/game.class';
 
 @Component({
   selector: 'app-scoreboard-event',
@@ -8,7 +8,7 @@ import { Game } from '@mlb/class/game.class';
   styleUrls: ['./scoreboard-event.component.scss'],
 })
 export class ScoreboardEventComponent implements OnInit {
-  @Input() event: Game;
+  @Input() event: BaseballGame;
 
   constructor(readonly weatherFacade: WeatherFacade) {}
 

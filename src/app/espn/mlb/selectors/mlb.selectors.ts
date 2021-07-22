@@ -1,4 +1,3 @@
-import { newTeamMap } from '@app/@shared/helpers/mapping';
 import { Selector } from '@ngxs/store';
 import { BaseballTeam } from '../class/team.class';
 import { BaseballTeamMap, ScheduleMap, TeamMap } from '../state/mlb-state.model';

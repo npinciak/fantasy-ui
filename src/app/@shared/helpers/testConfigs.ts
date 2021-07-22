@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Game } from '@mlb/class/game.class';
+import { BaseballGame } from '@mlb/class/game.class';
 import { BaseballPlayer } from '@mlb/class/player.class';
 import { MockGame, MockLeague, MockPlayer, MockTeam, MockTransaction } from '@mlb/mocks';
 import { CurrentConditions } from '@espn/weather/weather/models/class';
@@ -17,9 +17,12 @@ interface MockDataMaps {
 }
 
 interface MockDataClass {
-  BASEBALL_PLAYER: BaseballPlayer;
+  BASEBALL_PLAYER_INJURED: BaseballPlayer;
+  BASEBALL_PLAYER_PITCHER: BaseballPlayer;
+  BASEBALL_PLAYER_HEALTHY: BaseballPlayer;
+  BASEBALL_PLAYER_BENCH: BaseballPlayer;
   BASEBALL_TEAM: BaseballTeam;
-  BASEBALL_GAME: Game;
+  BASEBALL_GAME: BaseballGame;
   CURRENT_CONDITIONS: CurrentConditions;
 }
 
@@ -55,14 +58,22 @@ const MOCK_DATA_CLIMA = {
 };
 
 const MOCK_DATA_CLASS: MockDataClass = {
-  BASEBALL_PLAYER: new BaseballPlayer(MOCK_DATA_ESPN.ESPN_TEAM.roster.entries[0]),
+  BASEBALL_PLAYER_INJURED: new BaseballPlayer(MOCK_DATA_ESPN.ESPN_TEAM.roster.entries[0]), // Batter
+  BASEBALL_PLAYER_PITCHER: new BaseballPlayer(MOCK_DATA_ESPN.ESPN_TEAM.roster.entries[1]), // Pitcher
+  BASEBALL_PLAYER_HEALTHY: new BaseballPlayer(MOCK_DATA_ESPN.ESPN_TEAM.roster.entries[2]),
+  BASEBALL_PLAYER_BENCH: new BaseballPlayer(MOCK_DATA_ESPN.ESPN_TEAM.roster.entries[3]),
   BASEBALL_TEAM: new BaseballTeam(MOCK_DATA_ESPN.ESPN_TEAM),
-  BASEBALL_GAME: new Game(MOCK_DATA_ESPN.ESPN_EVENT),
+  BASEBALL_GAME: new BaseballGame(MOCK_DATA_ESPN.ESPN_EVENT),
   CURRENT_CONDITIONS: new CurrentConditions(MOCK_DATA_CLIMA.WEATHER_CURRENT_CONDITIONS.data.timelines[0].intervals[0].values),
 };
 
 const MOCK_DATA_MAPS: MockDataMaps = {
-  BASEBALL_PLAYER_MAP: { [MOCK_DATA_CLASS.BASEBALL_PLAYER.id]: MOCK_DATA_CLASS.BASEBALL_PLAYER },
+  BASEBALL_PLAYER_MAP: {
+    [MOCK_DATA_CLASS.BASEBALL_PLAYER_INJURED.id]: MOCK_DATA_CLASS.BASEBALL_PLAYER_INJURED,
+    [MOCK_DATA_CLASS.BASEBALL_PLAYER_PITCHER.id]: MOCK_DATA_CLASS.BASEBALL_PLAYER_PITCHER,
+    [MOCK_DATA_CLASS.BASEBALL_PLAYER_HEALTHY.id]: MOCK_DATA_CLASS.BASEBALL_PLAYER_HEALTHY,
+    [MOCK_DATA_CLASS.BASEBALL_PLAYER_BENCH.id]: MOCK_DATA_CLASS.BASEBALL_PLAYER_BENCH,
+  },
   BASEBALL_TEAM_MAP: { [MOCK_DATA_CLASS.BASEBALL_TEAM.teamId]: MOCK_DATA_CLASS.BASEBALL_TEAM },
   BASEBALL_GAME_MAP: { [MOCK_DATA_CLASS.BASEBALL_GAME.gameId]: MOCK_DATA_CLASS.BASEBALL_GAME },
 };

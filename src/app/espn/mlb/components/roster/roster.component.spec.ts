@@ -2,6 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MOCK_DATA_CLASS } from '@app/@shared/helpers/testConfigs';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
 // import { BaseballPlayer } from '../../models/mlb/class/player.class';
@@ -16,18 +17,9 @@ describe('RosterComponent', () => {
   let fixture: ComponentFixture<RosterComponent>;
   let compiled;
 
-  const getByTestId = (testId: string) =>
-    compiled.querySelector(`[data-test="${testId}"]`);
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        NgxsModule.forRoot(),
-        HttpClientTestingModule,
-        RouterTestingModule,
-        MaterialModule,
-        BrowserAnimationsModule,
-      ],
+      imports: [NgxsModule.forRoot(), HttpClientTestingModule, RouterTestingModule, MaterialModule, BrowserAnimationsModule],
       declarations: [RosterComponent, PlayerInfoColComponent],
     }).compileComponents();
   });
@@ -35,8 +27,7 @@ describe('RosterComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RosterComponent);
     component = fixture.componentInstance;
-    compiled = fixture.debugElement.nativeElement;
-    component.fantasyPlayers = [];
+    component.fantasyPlayers = [MOCK_DATA_CLASS.BASEBALL_PLAYER_HEALTHY];
     fixture.detectChanges();
   });
 

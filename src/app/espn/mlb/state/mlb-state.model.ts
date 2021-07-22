@@ -1,4 +1,4 @@
-import { Game } from '../class/game.class';
+import { BaseballGame } from '../class/game.class';
 import { BaseballPlayer } from '../class/player.class';
 import { BaseballTeam } from '../class/team.class';
 import { EspnClientEvent, EspnClientTeam } from '../interface';
@@ -25,7 +25,7 @@ interface EventMap {
 }
 
 interface GameMap {
-  [id: number]: Game;
+  [id: number]: EspnClientEvent;
 }
 
 interface BaseballTeamMap {
@@ -37,7 +37,7 @@ interface BaseballPlayerMap {
 }
 
 interface BaseballGameMap {
-  [id: number]: Game;
+  [id: number]: BaseballGame;
 }
 
 export { MlbStateModel, ScheduleMap, TeamMap, EventMap, GameMap, BaseballTeamMap, BaseballPlayerMap, BaseballGameMap };

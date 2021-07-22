@@ -1,23 +1,13 @@
 <table>
   <tr>
     <td rowspan="3">
-      <img
-        width="48"
-        height="35"
-        [src]="player.playerImg"
-        [alt]="player.name"
-      />
+      <img width="48" height="35" [src]="player.playerImg" [alt]="player.name" />
     </td>
   </tr>
   <tr>
     <td>
       {{ player.name }}
-      <mat-icon
-        [matTooltip]="player.injuryStatus"
-        *ngIf="player.isInjured"
-        style="color: #d9534f"
-        >medical_services</mat-icon
-      >
+      <mat-icon [matTooltip]="player.injuryStatus" *ngIf="player.isInjured" style="color: #d9534f">medical_services</mat-icon>
     </td>
   </tr>
   <tr>

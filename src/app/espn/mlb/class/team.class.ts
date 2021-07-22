@@ -1,13 +1,9 @@
 import { statsKeyMap } from '../helpers';
-import { EspnClientTeam } from '../interface';
-import { mlbStatMap, StatAbbrev } from '../maps/mlb-stat.map';
-import { BaseballPlayerMap } from '../state/mlb-state.model';
-import { BaseballPlayer } from './player.class';
+import { EspnClientPlayer, EspnClientTeam } from '../interface';
 
 export class BaseballTeam {
   private _team: EspnClientTeam;
-  private _roster: BaseballPlayerMap = {};
-  private _liveScore = 0;
+  private _liveScore;
 
   constructor(team: EspnClientTeam) {
     this._team = team;
@@ -30,11 +26,7 @@ export class BaseballTeam {
   }
 
   get roster() {
-    return this._roster;
-  }
-
-  set roster(roster: BaseballPlayerMap) {
-    this._roster = roster;
+    return this._teamBase.roster.entries;
   }
 
   get totalPoints() {
