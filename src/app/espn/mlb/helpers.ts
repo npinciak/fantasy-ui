@@ -4,7 +4,7 @@ import { BaseballTeam } from './class/team.class';
 import { EspnClientPlayer } from './interface';
 import { mlbStatMap, StatAbbrev } from './maps/mlb-stat.map';
 import { MLBLineup } from './mlb.enums';
-import { BaseballGameMap, BaseballPlayerMap, BaseballTeamMap, EventMap, TeamMap } from './state/mlb-state.model';
+import { BaseballGameMap, BaseballPlayerMap, BaseballTeamMap, EventMap, ScheduleMap, TeamMap } from './state/mlb-state.model';
 
 export const espnTeamsToBaseballTeamsMap = (teams: TeamMap): BaseballTeamMap | null => {
   const map: BaseballTeamMap = {};
@@ -33,6 +33,15 @@ export const espnEventToBaseballGamesMap = (competitions: EventMap): BaseballGam
     competition.competitors = comp.competitors;
 
     map[comp.id] = competition;
+  }
+  return map;
+};
+
+export const baseballTeamLiveScoreMap = (teams: BaseballTeamMap, schedule: ScheduleMap): BaseballTeamMap => {
+  const map: BaseballTeamMap = {};
+  for (const team of Object.values(teams)) {
+    team.liveScore = schedule[team.teamId].totalPointsLive;
+    map[team.teamId] = team;
   }
   return map;
 };

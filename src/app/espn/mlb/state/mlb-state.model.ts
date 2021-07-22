@@ -2,7 +2,7 @@ import { BaseballGame } from '../class/game.class';
 import { BaseballPlayer } from '../class/player.class';
 import { BaseballTeam } from '../class/team.class';
 import { EspnClientEvent, EspnClientTeam } from '../interface';
-import { EspnClientScheduleEntry } from '../interface/league';
+import { EspnClientScheduleEntry, EspnClientScheduleTeams } from '../interface/league';
 
 interface MlbStateModel {
   schedule: ScheduleMap;
@@ -13,7 +13,7 @@ interface MlbStateModel {
 }
 
 interface ScheduleMap {
-  [id: number]: EspnClientScheduleEntry;
+  [id: number]: EspnClientScheduleTeams;
 }
 
 interface TeamMap {
