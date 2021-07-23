@@ -18,6 +18,7 @@ import { ScoreboardEventComponent } from './mlb/components/scoreboard-event/scor
 import { HomeComponent } from './mlb/pages/home/home.component';
 import { StadiumWeatherComponent } from './mlb/components/stadium-weather/stadium-weather.component';
 import { LineupCardComponent } from './mlb/components/lineup-card/lineup-card.component';
+import { LineupCardPlayerComponent } from './mlb/components/lineup-card-player/lineup-card-player.component';
 
 const components = [
   HomeComponent,
@@ -34,6 +35,7 @@ const components = [
   StadiumWeatherComponent,
   LeagueScoreboardComponent,
   LineupCardComponent,
+  LineupCardPlayerComponent,
 ];
 
 @NgModule({

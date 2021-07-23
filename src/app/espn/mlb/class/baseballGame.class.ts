@@ -11,9 +11,9 @@ import {
 import { MLB_STADIUM_MAP, mlbTeamMap } from '../maps/mlb-team.map';
 import { domeStadiums } from '../mlb.const';
 
-export class Game {
+export class BaseballGame {
   private _event: EspnClientEvent;
-  private _competitors: Map<number, EspnClientCompetitor> = new Map<number, EspnClientCompetitor>();
+  private _competitors: { [id: number]: EspnClientCompetitor } = {};
   private _homeTeam: number;
   private _awayTeam: number;
   private _currentConditions: CurrentConditions;
@@ -31,35 +31,36 @@ export class Game {
   }
 
   set competitors(val: EspnClientCompetitor[]) {
+    const map: { [id: number]: EspnClientCompetitor } = {};
     for (const comp of val) {
-      this._competitors.set(Number(comp.id), comp);
+      map[Number(comp.id)] = comp;
+
       if (comp.homeAway === 'home') {
         this._homeTeam = Number(comp.id);
       } else {
         this._awayTeam = Number(comp.id);
       }
     }
+    this._competitors = map;
   }
 
   get homeTeam(): ScoreboardGameTeam {
     return {
-      score: Number(this._competitors.get(this._homeTeam).score),
+      score: Number(this._competitors[this._homeTeam].score),
       abbrev: mlbTeamMap[this._homeTeam],
       logo: logoImgBuilder('mlb', mlbTeamMap[this._homeTeam]),
       isWinner:
-        this._competitors.get(this._homeTeam).winner ||
-        this._competitors.get(this._homeTeam).score > this._competitors.get(this._awayTeam).score,
+        this._competitors[this._homeTeam].winner || this._competitors[this._homeTeam].score > this._competitors[this._awayTeam].score,
     };
   }
 
   get awayTeam(): ScoreboardGameTeam {
     return {
-      score: Number(this._competitors.get(this._awayTeam).score),
+      score: Number(this._competitors[this._awayTeam].score),
       abbrev: mlbTeamMap[this._awayTeam],
       logo: logoImgBuilder('mlb', mlbTeamMap[this._awayTeam]),
       isWinner:
-        this._competitors.get(this._awayTeam).winner ||
-        this._competitors.get(this._awayTeam).score > this._competitors.get(this._homeTeam).score,
+        this._competitors[this._awayTeam].winner || this._competitors[this._awayTeam].score > this._competitors[this._homeTeam].score,
     };
   }
 

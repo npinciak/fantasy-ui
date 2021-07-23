@@ -1,18 +1,9 @@
 import { isPitcher, statsKeyMap } from '../helpers';
-import {
-  EspnClientPlayerStatsYear,
-  EspnClientPlayerRatings,
-  EspnClientPlayerOwnership,
-  EspnClientGameStatus,
-  EspnClientPlayer,
-} from '../interface/player';
+import { EspnClientPlayerRatings, EspnClientGameStatus, EspnClientPlayer } from '../interface/player';
 import { mlbLineupMap } from '../maps/mlb-lineup.map';
 import { mlbPositionMap } from '../maps/mlb-position.map';
 import { mlbTeamMap } from '../maps/mlb-team.map';
 import { weights2021 } from '../mlb.const';
-import { MLBLineup, StatTypeId } from '../mlb.enums';
-import { AdvStats } from './advStats.class';
-import { Game } from './game.class';
 
 /**
  * This is a description of the BaseballPlayer constructor function.
@@ -24,11 +15,8 @@ export class BaseballPlayer {
   readonly weights21 = weights2021;
 
   private _player: EspnClientPlayer;
-  private _eligibleSlots = {};
-  private _ownership;
-  private _ratings = new Map<number, any>();
-  private _startingStatus = new Map<string, string>();
-  private _isStarting = false;
+  private _startingStatus: EspnClientGameStatus;
+  private _isStarting = true;
 
   constructor(player: EspnClientPlayer) {
     this._player = player;
@@ -70,6 +58,10 @@ export class BaseballPlayer {
     return this._stats;
   }
 
+  get ratings() {
+    return this._ratings;
+  }
+
   private get _stats() {
     const map = new Map<number, any>();
     const stats = this._player.playerPoolEntry.player.stats;
@@ -79,34 +71,11 @@ export class BaseballPlayer {
     return map;
   }
 
-  get eligibleLineupSlots() {
-    return this._eligibleSlots;
-  }
-
-  set eligibleSlots(slots: number[]) {
-    for (const slot of slots) {
-      this._eligibleSlots[slot] = slot;
-    }
-  }
-
-  set ownership(val: EspnClientPlayerOwnership) {
-    this._ownership = val;
-  }
-
-  set ratings(val: EspnClientPlayerRatings) {
-    for (const key in val) {
-      if (Object.prototype.hasOwnProperty.call(val, key)) {
-        const element = val[key];
-        this._ratings.set(Number(key), element);
-      }
-    }
-  }
-
   set gameStatus(val: EspnClientGameStatus) {
     for (const game in val) {
       if (Object.prototype.hasOwnProperty.call(val, game)) {
         const element = val[game];
-        this._startingStatus.set(game, element);
+        this._startingStatus[game] = element;
       }
     }
   }
@@ -135,6 +104,27 @@ export class BaseballPlayer {
   }
 
   get isPitcher() {
-    return isPitcher(this._eligibleSlots);
+    return isPitcher(this._eligibleLineupSlots);
+  }
+
+  private get _eligibleLineupSlots() {
+    const map = {};
+    const slots = this._player.playerPoolEntry.player.eligibleSlots;
+    for (const slot of slots) {
+      map[slot] = slot;
+    }
+    return map;
+  }
+
+  private get _ratings(): EspnClientPlayerRatings {
+    const ratings = this._player.playerPoolEntry.ratings;
+    const map: EspnClientPlayerRatings = {};
+    for (const key in ratings) {
+      if (Object.prototype.hasOwnProperty.call(ratings, key)) {
+        const element = ratings[key];
+        map[Number(key)] = element;
+      }
+    }
+    return map;
   }
 }

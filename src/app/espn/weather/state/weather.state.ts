@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { stadiumConditionsMap } from '@app/@shared/helpers/mapping';
 import { entityMap, patchMap } from '@app/@shared/operators';
-import { Game } from '@mlb/class/game.class';
 import { MlbStateModel } from '@mlb/state/mlb-state.model';
 import { GameMap } from '@app/espn/mlb/state/mlb-state.model';
 import { MlbState } from '@app/espn/mlb/state/mlb.state';

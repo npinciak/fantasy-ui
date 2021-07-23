@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { WeatherFacade } from '@espn/weather/facade/weather.facade';
-import { Game } from '@mlb/class/game.class';
+import { BaseballGame } from '@app/espn/mlb/class/baseballGame.class';
 
 @Component({
   selector: 'app-stadium-weather',
@@ -8,7 +8,7 @@ import { Game } from '@mlb/class/game.class';
   styleUrls: ['./stadium-weather.component.scss'],
 })
 export class StadiumWeatherComponent implements OnChanges {
-  @Input() event: Game;
+  @Input() event: BaseballGame;
 
   constructor(readonly weatherFacade: WeatherFacade) {}
 

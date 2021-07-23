@@ -3,7 +3,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import * as _ from 'lodash';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
-import { BaseballPlayer } from '@mlb/class/player.class';
+import { BaseballPlayer } from '@app/espn/mlb/class/baseballPlayer.class';
 import { rosterColumns, PlayerInfoColumn } from '@mlb/mlb.const';
 import { StatTypeId } from '@mlb/mlb.enums';
 import { MlbFacade } from '@mlb/facade/mlb.facade';

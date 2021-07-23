@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BaseballPlayer } from '../../class/player.class';
+import { BaseballPlayer } from '../../class/baseballPlayer.class';
 
 @Component({
   selector: 'app-lineup-card',

@@ -41,7 +41,7 @@ describe('ErrorHandlerInterceptor', () => {
       () => fail('should error'),
       () => {
         // eslint-disable-next-line @typescript-eslint/dot-notation
-        expect(ErrorHandlerInterceptor.prototype['erroHandler']).toHaveBeenCalled();
+        expect(ErrorHandlerInterceptor.prototype['errorHandler']).toHaveBeenCalled();
       }
     );
 
