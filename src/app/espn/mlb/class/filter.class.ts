@@ -1,4 +1,4 @@
-import { mlbLineupMap } from '../maps';
+import { MLB_LINEUP } from '../consts';
 
 class Filter {
   private _playerStatus: string[] = [];
@@ -31,7 +31,7 @@ class Filter {
     const slotMap = new Map();
 
     for (const id of lineupSlots) {
-      slotMap.set(id, mlbLineupMap[id].abbrev);
+      slotMap.set(id, MLB_LINEUP[id].abbrev);
     }
 
     return slotMap;

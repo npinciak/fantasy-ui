@@ -9,7 +9,7 @@ interface Stats {
   };
 }
 
-export const mlbStatMap: Stats = {
+export const MLB_STATS: Stats = {
   0: {
     abbrev: 'AB',
     description: 'At Bats',

@@ -1,5 +1,5 @@
 import { SeasonConst } from '../interface/adv.stats';
-import { StatAbbrev } from '../maps/mlb-stat.map';
+import { StatAbbrev } from '../consts/stats.const';
 
 export class AdvStats {
   private _stats: StatAbbrev;

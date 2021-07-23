@@ -1,8 +1,8 @@
 import { isPitcher, statsKeyMap } from '../helpers';
 import { EspnClientPlayerRatings, EspnClientGameStatus, EspnClientPlayer } from '../interface/player';
-import { mlbLineupMap } from '../maps/mlb-lineup.map';
-import { mlbPositionMap } from '../maps/mlb-position.map';
-import { mlbTeamMap } from '../maps/mlb-team.map';
+import { MLB_LINEUP } from '../consts/lineup.const';
+import { MLB_POSITION } from '../consts/position.const';
+import { MLB_TEAM } from '../consts/team.const';
 import { weights2021 } from '../mlb.const';
 
 /**
@@ -43,15 +43,15 @@ export class BaseballPlayer {
   }
 
   get lineupSlot() {
-    return mlbLineupMap[this._player.lineupSlotId];
+    return MLB_LINEUP[this._player.lineupSlotId];
   }
 
   get defaultPosition() {
-    return mlbPositionMap[this._player.playerPoolEntry.player.defaultPositionId].abbrev;
+    return MLB_POSITION[this._player.playerPoolEntry.player.defaultPositionId].abbrev;
   }
 
   get proTeam() {
-    return mlbTeamMap[this._player.playerPoolEntry.player.proTeamId];
+    return MLB_TEAM[this._player.playerPoolEntry.player.proTeamId];
   }
 
   get playerStats() {
