@@ -1,6 +1,6 @@
 import { BaseballGame, BaseballPlayer, BaseballTeam } from './class';
 import { EspnClientPlayer } from './interface';
-import { mlbStatMap, StatAbbrev } from './maps/mlb-stat.map';
+import { MLB_STATS, StatAbbrev } from './consts/stats.const';
 import { MLBLineup } from './mlb.enums';
 import { BaseballGameMap, BaseballPlayerMap, BaseballTeamMap, EventMap, ScheduleMap, TeamMap } from './state/mlb-state.model';
 
@@ -45,7 +45,7 @@ export const statsKeyMap = (obj): StatAbbrev => {
   const map: StatAbbrev = {};
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      const statAbbrev = mlbStatMap[key].abbrev.toLowerCase();
+      const statAbbrev = MLB_STATS[key].abbrev.toLowerCase();
       const statValue = obj[key];
       map[statAbbrev] = statValue;
     }

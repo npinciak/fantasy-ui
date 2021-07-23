@@ -1,7 +1,7 @@
 import { Ballpark } from '../interface/ballpark';
 import { MLBTeam } from '../mlb.enums';
 
-const mlbTeamMap = {
+const MLB_TEAM = {
   0: 'FA',
   1: 'Bal',
   2: 'Bos',
@@ -250,4 +250,4 @@ const MLB_STADIUM_MAP: Ballpark = {
   },
 };
 
-export { mlbTeamMap, MLB_STADIUM_MAP };
+export { MLB_TEAM, MLB_STADIUM_MAP };
