@@ -1,4 +1,4 @@
-export const nflPositionMap = {
+export const NFL_POSITIONS = {
   0: {
     abbrev: 'POS0',
     name: 'POS0',
