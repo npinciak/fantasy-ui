@@ -1,4 +1,4 @@
-import { BaseballGame } from '@mlb/class/game.class';
+import { BaseballGame } from '@app/espn/mlb/class/baseballGame.class';
 
 export class WeatherAction {
   static readonly type = '[Weather] Add item';

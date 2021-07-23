@@ -1,10 +1,10 @@
 import { BaseballPlayerMap, BaseballTeamMap, EventMap, GameMap, TeamMap } from '@app/espn/mlb/state/mlb-state.model';
 import { CurrentConditions } from '@espn/weather/weather/models/class';
 import { WeatherValues } from '@espn/weather/weather/models/interface/currentWeather.interface';
-import { BaseballGame } from '@mlb/class/game.class';
+import { BaseballGame } from '@app/espn/mlb/class/baseballGame.class';
 import { LeagueScoreboard } from '@mlb/class/leagueScoreboard.class';
-import { BaseballPlayer } from '@mlb/class/player.class';
-import { BaseballTeam } from '@mlb/class/team.class';
+import { BaseballPlayer } from '@app/espn/mlb/class/baseballPlayer.class';
+import { BaseballTeam } from '@app/espn/mlb/class/baseballTeam.class';
 import { EspnClientPlayer, EspnClientTeam, EspnClientEvent } from '@mlb/interface';
 import { EspnClientScheduleEntry } from '@mlb/interface/league';
 

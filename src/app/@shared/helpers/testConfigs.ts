@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/naming-convention */
-import { BaseballGame } from '@mlb/class/game.class';
-import { BaseballPlayer } from '@mlb/class/player.class';
+import { BaseballGame } from '@app/espn/mlb/class/baseballGame.class';
+import { BaseballPlayer } from '@app/espn/mlb/class/baseballPlayer.class';
 import { MockGame, MockLeague, MockPlayer, MockTeam, MockTransaction } from '@mlb/mocks';
 import { CurrentConditions } from '@espn/weather/weather/models/class';
 import { MockCurrentConditions } from '@espn/weather/weather/models/mocks';
-import { BaseballTeam } from '@mlb/class/team.class';
+import { BaseballTeam } from '@app/espn/mlb/class/baseballTeam.class';
 import { currentDate } from './date';
 import { BaseballGameMap, BaseballPlayerMap, BaseballTeamMap } from '@app/espn/mlb/state/mlb-state.model';
 import { EspnClientEvent, EspnClientLeague, EspnClientTeam } from '@app/espn/mlb/interface';

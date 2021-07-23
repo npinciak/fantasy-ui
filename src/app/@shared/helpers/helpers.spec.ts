@@ -2,7 +2,7 @@ import { stadiumConditionsMap } from './mapping';
 import * as mockleague from '@mlb/mocks/league.mock.json';
 import { MOCK_DATA_CLIMA, MOCK_DATA_ESPN } from './testConfigs';
 import { isPitcher } from '@mlb/helpers';
-import { BaseballPlayer } from '@app/espn/mlb/class/player.class';
+import { BaseballPlayer } from '@app/espn/mlb/class/baseballPlayer.class';
 import { BaseballPlayerMap } from '@app/espn/mlb/state/mlb-state.model';
 
 describe('[Helpers]', () => {

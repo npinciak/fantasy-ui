@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseballGame } from '@mlb/class/game.class';
+import { BaseballGame } from '@app/espn/mlb/class/baseballGame.class';
 import { Dispatch } from '@ngxs-labs/dispatch-decorator';
 import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
 import { ActionCompletion, Actions, ofActionCompleted, ofActionSuccessful, Select, Store } from '@ngxs/store';

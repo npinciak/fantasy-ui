@@ -1,7 +1,7 @@
 import { MOCK_DATA_ESPN } from '@app/@shared/helpers/testConfigs';
 import { Observable, of } from 'rxjs';
-import { BaseballGame } from '../class/game.class';
-import { BaseballTeam } from '../class/team.class';
+import { BaseballGame } from '../class/baseballGame.class';
+import { BaseballTeam } from '../class/baseballTeam.class';
 import { EventMap, ScheduleMap, TeamMap } from '../state/mlb-state.model';
 import { MlbFacade } from './mlb.facade';
 

@@ -41,7 +41,6 @@ export class BaseballGame {
         this._awayTeam = Number(comp.id);
       }
     }
-
     this._competitors = map;
   }
 
@@ -51,7 +50,7 @@ export class BaseballGame {
       abbrev: mlbTeamMap[this._homeTeam],
       logo: logoImgBuilder('mlb', mlbTeamMap[this._homeTeam]),
       isWinner:
-        this._competitors[this._homeTeam].winner || this._competitors[this._homeTeam].score > this._competitors[this._homeTeam].score,
+        this._competitors[this._homeTeam].winner || this._competitors[this._homeTeam].score > this._competitors[this._awayTeam].score,
     };
   }
 
@@ -61,7 +60,7 @@ export class BaseballGame {
       abbrev: mlbTeamMap[this._awayTeam],
       logo: logoImgBuilder('mlb', mlbTeamMap[this._awayTeam]),
       isWinner:
-        this._competitors[this._awayTeam].winner || this._competitors[this._awayTeam].score > this._competitors[this._awayTeam].score,
+        this._competitors[this._awayTeam].winner || this._competitors[this._awayTeam].score > this._competitors[this._homeTeam].score,
     };
   }
 

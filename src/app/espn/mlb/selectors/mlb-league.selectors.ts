@@ -1,5 +1,5 @@
 import { Selector } from '@ngxs/store';
-import { BaseballTeam } from '../class/team.class';
+import { BaseballTeam } from '../class/baseballTeam.class';
 import { baseballTeamLiveScoreMap } from '../helpers';
 import { BaseballTeamMap, ScheduleMap, TeamMap } from '../state/mlb-state.model';
 import { MlbState } from '../state/mlb.state';

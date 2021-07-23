@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
 import { Store } from '@ngxs/store';
 
-import { BaseballTeam } from '../class/team.class';
+import { BaseballTeam } from '../class/baseballTeam.class';
 
 import { MlbTeamSelectors } from '../selectors/mlb-team.selectors';
-import { BaseballPlayer } from '../class/player.class';
+import { BaseballPlayer } from '../class/baseballPlayer.class';
 import { MlbTeamFacade } from './mlb-team.facade';
 import { MOCK_DATA_CLASS } from '@app/@shared/helpers/testConfigs';
 

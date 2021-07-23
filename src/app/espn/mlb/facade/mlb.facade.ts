@@ -3,7 +3,7 @@ import { Dispatch } from '@ngxs-labs/dispatch-decorator';
 import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { BaseballTeam } from '../class/team.class';
+import { BaseballTeam } from '../class/baseballTeam.class';
 
 import { EventMap, ScheduleMap } from '../state/mlb-state.model';
 import { FetchBaseballLeague } from '../actions/mlb.actions';

@@ -1,6 +1,6 @@
-import { BaseballGame } from '../class/game.class';
-import { BaseballPlayer } from '../class/player.class';
-import { BaseballTeam } from '../class/team.class';
+import { BaseballGame } from '../class/baseballGame.class';
+import { BaseballPlayer } from '../class/baseballPlayer.class';
+import { BaseballTeam } from '../class/baseballTeam.class';
 import { EspnClientEvent, EspnClientTeam } from '../interface';
 import { EspnClientScheduleEntry, EspnClientScheduleTeams } from '../interface/league';
 

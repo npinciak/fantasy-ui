@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { WeatherFacade } from '@espn/weather/facade/weather.facade';
-import { BaseballGame } from '@mlb/class/game.class';
+import { BaseballGame } from '@app/espn/mlb/class/baseballGame.class';
 
 @Component({
   selector: 'app-scoreboard',

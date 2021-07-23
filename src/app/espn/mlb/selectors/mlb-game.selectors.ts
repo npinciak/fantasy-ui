@@ -1,5 +1,5 @@
 import { Selector } from '@ngxs/store';
-import { BaseballGame } from '../class/game.class';
+import { BaseballGame } from '../class';
 import { espnEventToBaseballGamesMap } from '../helpers';
 import { EspnClientEvent } from '../interface';
 import { BaseballGameMap, EventMap, GameMap, MlbStateModel } from '../state/mlb-state.model';

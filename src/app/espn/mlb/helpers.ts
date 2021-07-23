@@ -1,6 +1,4 @@
-import { BaseballGame } from './class/game.class';
-import { BaseballPlayer } from './class/player.class';
-import { BaseballTeam } from './class/team.class';
+import { BaseballGame, BaseballPlayer, BaseballTeam } from './class';
 import { EspnClientPlayer } from './interface';
 import { mlbStatMap, StatAbbrev } from './maps/mlb-stat.map';
 import { MLBLineup } from './mlb.enums';
@@ -26,12 +24,9 @@ export const espnPlayerToBaseballPlayerMap = (roster: EspnClientPlayer[]): Baseb
 
 export const espnEventToBaseballGamesMap = (competitions: EventMap): BaseballGameMap | null => {
   const map: BaseballGameMap = {};
-
   for (const comp of Object.values(competitions)) {
     const competition = new BaseballGame(comp);
-
     competition.competitors = comp.competitors;
-
     map[comp.id] = competition;
   }
   return map;

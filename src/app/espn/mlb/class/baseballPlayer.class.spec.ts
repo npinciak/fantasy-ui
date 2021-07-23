@@ -1,7 +1,7 @@
 import { MOCK_DATA_CLASS, MOCK_DATA_ESPN } from '@app/@shared/helpers/testConfigs';
 import * as mockleague from '@mlb/mocks/league.mock.json';
 import { mlbLineupMap } from '../maps';
-import { BaseballTeam } from './team.class';
+import { BaseballTeam } from './baseballTeam.class';
 
 describe('[Class] Player', () => {
   const actual = MOCK_DATA_CLASS.BASEBALL_PLAYER_HEALTHY;

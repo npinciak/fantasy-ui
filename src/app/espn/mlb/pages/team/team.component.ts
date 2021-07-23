@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngxs/store';
-import { GRID_TEMPLATE } from 'src/app/@shared/helpers/grid';
-import { BaseballTeam } from '../../class/team.class';
+import { BaseballTeam } from '../../class';
 import { MlbTeamFacade } from '../../facade/mlb-team.facade';
-import { MlbFacade } from '../../facade/mlb.facade';
 
 @Component({
   selector: 'app-team',
@@ -13,8 +10,6 @@ import { MlbFacade } from '../../facade/mlb.facade';
   styleUrls: ['./team.component.scss'],
 })
 export class TeamComponent implements OnInit {
-  readonly gridTemplate = GRID_TEMPLATE;
-
   public dataSource = new MatTableDataSource<BaseballTeam>();
 
   constructor(readonly mlbTeamFacade: MlbTeamFacade, private activatedRoute: ActivatedRoute) {}

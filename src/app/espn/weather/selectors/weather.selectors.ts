@@ -1,5 +1,5 @@
 import { stadiumConditionsMap } from '@app/@shared/helpers/mapping';
-import { BaseballGame } from '@app/espn/mlb/class/game.class';
+import { BaseballGame } from '@app/espn/mlb/class/baseballGame.class';
 import { MlbGameSelectors } from '@app/espn/mlb/selectors/mlb-game.selectors';
 import { GameMap } from '@app/espn/mlb/state/mlb-state.model';
 import { Selector } from '@ngxs/store';
