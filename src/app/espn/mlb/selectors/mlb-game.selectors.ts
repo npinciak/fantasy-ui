@@ -1,18 +1,18 @@
-import { gameMap } from '@app/@shared/helpers/mapping';
 import { Selector } from '@ngxs/store';
-import { Game } from '../class/game.class';
+import { BaseballGame } from '../class';
+import { espnEventToBaseballGamesMap } from '../helpers';
 import { EspnClientEvent } from '../interface';
-import { EventMap, GameMap, MlbStateModel } from '../state/mlb-state.model';
+import { BaseballGameMap, EventMap, GameMap, MlbStateModel } from '../state/mlb-state.model';
 import { MlbState } from '../state/mlb.state';
 
 export class MlbGameSelectors {
   @Selector([MlbState.events])
-  static eventToGameMap(event: EventMap): GameMap {
-    return gameMap(event);
+  static eventToGameMap(event: EventMap): BaseballGameMap {
+    return espnEventToBaseballGamesMap(event);
   }
 
   @Selector([MlbGameSelectors.eventToGameMap])
-  static getSortedGamesByStartTime(games: GameMap): Game[] {
+  static getSortedGamesByStartTime(games: BaseballGameMap): BaseballGame[] {
     return Object.values(games).sort((a, b) => a.gameDate.milli - b.gameDate.milli);
   }
 
@@ -27,7 +27,7 @@ export class MlbGameSelectors {
   }
 
   @Selector([MlbGameSelectors.eventToGameMap])
-  static selectGameById(eventToGameMap: GameMap): (id: number) => Game {
+  static selectGameById(eventToGameMap: BaseballGameMap): (id: number) => BaseballGame {
     return (id: number) => eventToGameMap[id];
   }
 }

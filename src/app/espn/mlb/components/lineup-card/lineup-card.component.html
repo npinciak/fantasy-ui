@@ -1,38 +1,11 @@
-<mat-card data-test-id="">
-  <mat-card-header> Lineup </mat-card-header>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Lineup</mat-card-title>
+  </mat-card-header>
   <mat-card-content>
     <ul>
       <li *ngFor="let player of lineup">
-        <table style="width: 100%">
-          <tr>
-            <td rowspan="4" style="width: 60px">
-              {{ player?.lineupSlot.abbrev }}
-            </td>
-          </tr>
-          <tr>
-            <td rowspan="4" style="width: 60px">
-              <img width="48" height="35" [src]="player?.playerImg" [alt]="player.name" />
-            </td>
-          </tr>
-          <tr>
-            <td syle="width:228px">
-              {{ player?.name }}
-              <mat-icon [matTooltip]="player?.injuryStatus" *ngIf="player?.isInjured" style="color: #cd2026">medical_services </mat-icon>
-            </td>
-            <!-- <td
-                rowspan="4"
-                style="width: 60px"
-                [ngStyle]="{
-                  color: player.playerRatings.get(1)?.totalRating <= 0 ? '#cd2026' : '#2e8540'
-                }"
-              >
-                {{ player.playerRatings.get(1)?.totalRating | number }}
-              </td> -->
-          </tr>
-          <tr>
-            <td>{{ player?.proTeam }}, {{ player?.defaultPosition }}</td>
-          </tr>
-        </table>
+        <app-lineup-card-player [player]="player"></app-lineup-card-player>
       </li>
     </ul>
   </mat-card-content>

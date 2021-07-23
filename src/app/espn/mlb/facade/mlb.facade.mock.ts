@@ -1,7 +1,7 @@
 import { MOCK_DATA_ESPN } from '@app/@shared/helpers/testConfigs';
 import { Observable, of } from 'rxjs';
-import { Game } from '../class/game.class';
-import { BaseballTeam } from '../class/team.class';
+import { BaseballGame } from '../class/baseballGame.class';
+import { BaseballTeam } from '../class/baseballTeam.class';
 import { EventMap, ScheduleMap, TeamMap } from '../state/mlb-state.model';
 import { MlbFacade } from './mlb.facade';
 
@@ -13,8 +13,8 @@ export class MockMlbFacade implements Mock<MlbFacade> {
   standings$: Observable<BaseballTeam[]>;
   schedule$: Observable<ScheduleMap>;
   liveScore$: Observable<BaseballTeam[]>;
-  gamesMap$: Observable<{ [id: number]: Game }>;
-  sortedGamesByStartTime$: Observable<Game[]>;
+  gamesMap$: Observable<{ [id: number]: BaseballGame }>;
+  sortedGamesByStartTime$: Observable<BaseballGame[]>;
   noEvents$: Observable<boolean>;
   teamsEmpty$: Observable<boolean>;
   isLoading$: Observable<boolean>;

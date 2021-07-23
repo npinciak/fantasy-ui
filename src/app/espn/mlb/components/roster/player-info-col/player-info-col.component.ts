@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { BaseballPlayer } from '@mlb/class/player.class';
+import { BaseballPlayer } from '@app/espn/mlb/class/baseballPlayer.class';
 
 @Component({
   selector: 'app-player-info-col',

@@ -4,7 +4,6 @@ import { WeatherState } from './weather.state';
 import { FetchWeather, WeatherAction } from '../actions/weather.actions';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { WeatherService } from '../weather.service';
-import { Game } from '@mlb/class/game.class';
 import { MOCK_DATA_CLIMA } from '@app/@shared/helpers/testConfigs';
 import { MockWeatherState } from './weather.state.mock';
 

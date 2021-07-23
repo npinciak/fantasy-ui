@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Game } from '@mlb/class/game.class';
+import { BaseballGame } from '@app/espn/mlb/class/baseballGame.class';
 import { Dispatch } from '@ngxs-labs/dispatch-decorator';
 import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
 import { ActionCompletion, Actions, ofActionCompleted, ofActionSuccessful, Select, Store } from '@ngxs/store';
@@ -28,5 +28,5 @@ export class WeatherFacade {
   weatherToGame = (id: number) => this.store.selectSnapshot(WeatherSelector.weatherToGame)(id);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  @Dispatch() fetchWeather = (game: Game) => new FetchWeather(game);
+  @Dispatch() fetchWeather = (game: BaseballGame) => new FetchWeather(game);
 }

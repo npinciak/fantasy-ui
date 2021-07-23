@@ -1,8 +1,8 @@
-import { Game } from '../class/game.class';
-import { BaseballPlayer } from '../class/player.class';
-import { BaseballTeam } from '../class/team.class';
+import { BaseballGame } from '../class/baseballGame.class';
+import { BaseballPlayer } from '../class/baseballPlayer.class';
+import { BaseballTeam } from '../class/baseballTeam.class';
 import { EspnClientEvent, EspnClientTeam } from '../interface';
-import { EspnClientScheduleEntry } from '../interface/league';
+import { EspnClientScheduleEntry, EspnClientScheduleTeams } from '../interface/league';
 
 interface MlbStateModel {
   schedule: ScheduleMap;
@@ -13,7 +13,7 @@ interface MlbStateModel {
 }
 
 interface ScheduleMap {
-  [id: number]: EspnClientScheduleEntry;
+  [id: number]: EspnClientScheduleTeams;
 }
 
 interface TeamMap {
@@ -25,7 +25,7 @@ interface EventMap {
 }
 
 interface GameMap {
-  [id: number]: Game;
+  [id: number]: EspnClientEvent;
 }
 
 interface BaseballTeamMap {
@@ -37,7 +37,7 @@ interface BaseballPlayerMap {
 }
 
 interface BaseballGameMap {
-  [id: number]: Game;
+  [id: number]: BaseballGame;
 }
 
 export { MlbStateModel, ScheduleMap, TeamMap, EventMap, GameMap, BaseballTeamMap, BaseballPlayerMap, BaseballGameMap };

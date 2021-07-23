@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { BaseballTeam } from '../../class/team.class';
+import { BaseballTeam } from '../../class/baseballTeam.class';
 import { MlbFacade } from '../../facade/mlb.facade';
 import * as _ from 'lodash';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
@@ -27,7 +27,7 @@ export class StandingsComponent implements OnInit, OnChanges, AfterViewInit {
   tableColumns: string[];
   viewOptions: any;
 
-  constructor(readonly mlbFacade: MlbFacade) {}
+  constructor(readonly mlbFacade: MlbFacade, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.tableColumns = standingsColumns.batting.rotoValue;
@@ -37,6 +37,7 @@ export class StandingsComponent implements OnInit, OnChanges, AfterViewInit {
     this.dataSource.data = this.teams;
     this.dataSource.sort = this.sort;
     this.dataSource.sortingDataAccessor = _.get;
+    this.cdr.detectChanges();
   }
 
   ngOnChanges(changes: SimpleChanges) {

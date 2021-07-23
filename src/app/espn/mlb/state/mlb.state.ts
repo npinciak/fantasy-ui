@@ -62,7 +62,7 @@ export class MlbState {
       tap(([league, mlbGames]) => {
         const teams = entityMap(league.teams);
         const events = entityMap(mlbGames.events);
-        const schedule = entityMap(league.schedule);
+        const schedule = entityMap(league.schedule[0].teams, team => team.teamId);
 
         ctx.patchState({
           teams,

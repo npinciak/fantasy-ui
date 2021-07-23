@@ -1066,6 +1066,162 @@
           "tradeLocked": false
         },
         "status": "NORMAL"
+      },
+      {
+        "acquisitionDate": 1615051894165,
+        "acquisitionType": "DRAFT",
+        "injuryStatus": "NORMAL",
+        "lineupSlotId": 10,
+        "pendingTransactionIds": null,
+        "playerId": 12345,
+        "playerPoolEntry": {
+          "id": 12345,
+          "keeperValue": 0,
+          "keeperValueFuture": 1,
+          "lineupLocked": false,
+          "onTeamId": 6,
+          "player": {
+            "active": true,
+            "defaultPositionId": 8,
+            "draftRanksByRankType": {
+              "STANDARD": {
+                "auctionValue": 43,
+                "published": false,
+                "rank": 5,
+                "rankSourceId": 0,
+                "rankType": "STANDARD",
+                "slotId": 0
+              }
+            },
+            "droppable": true,
+            "eligibleSlots": [9, 5, 12, 16, 17],
+            "firstName": "Dwight",
+            "fullName": "Dwight Schrute",
+            "gamesPlayedByPosition": {
+              "8": 36
+            },
+            "id": 12345,
+            "injured": false,
+            "injuryStatus": "",
+            "lastName": "Schrute",
+            "lastNewsDate": 1621378544000,
+            "ownership": {
+              "auctionValueAverage": 36.35,
+              "averageDraftPosition": 8.426519337016575,
+              "percentChange": -0.1351022185887416,
+              "percentOwned": 99.82266359283561,
+              "percentStarted": 28.787610096352783
+            },
+            "proTeamId": 3,
+            "seasonOutlook": "Widely regarded the best player in baseball, Dwight is no longer a slam dunk for the same honor in fantasy baseball. He placed outside the top 25 on the Player Rater while posting the worst full-season batting average (.281) and second-worst contact rate (71.9%) of his career in 2020, and he has missed 105 Angels games (most due to injuries) since the beginning of 2017. Still, that Trout's No. 27 Player Rater finish represented his lowest in any of his nine full big-league seasons speaks volumes about his Hall of Fame caliber skill set. Just since the beginning of 2018, his 101 home runs lead the majors, 252 runs scored rank sixth, .298 batting average and 229 RBI each rank 14th and 36 stolen bases rank 21st. It's the latter category that sparks genuine worry, as Trout attempted only two steals in 53 games in 2020, and as a 29-year-old, that's a skill unlikely to significantly rebound. His power metrics look as strong as ever, and with good luck in the health department that he should remain one of the most valuable commodities in fantasy. But with that No. 1 overall pick, it's probably wiser to go with someone younger or who steals more bases.",
+            "starterStatusByProGame": {
+              "401227055": "STARTING",
+              "401227068": "STARTING"
+            },
+            "stats": [
+              {
+                "externalId": "2021",
+                "id": "012021",
+                "proTeamId": 0,
+                "scoringPeriodId": 0,
+                "seasonId": 2021,
+                "statSourceId": 0,
+                "statSplitTypeId": 1,
+                "stats": {}
+              }
+            ],
+            "universeId": 1
+          },
+          "ratings": {
+            "0": {
+              "positionalRanking": 7,
+              "totalRanking": 82,
+              "totalRating": 6.041801
+            }
+          },
+          "rosterLocked": false,
+          "status": "ONTEAM",
+          "tradeLocked": false
+        },
+        "status": "NORMAL"
+      },
+      {
+        "acquisitionDate": 1615051894165,
+        "acquisitionType": "DRAFT",
+        "injuryStatus": "NORMAL",
+        "lineupSlotId": 16,
+        "pendingTransactionIds": null,
+        "playerId": 65432,
+        "playerPoolEntry": {
+          "id": 65432,
+          "keeperValue": 0,
+          "keeperValueFuture": 1,
+          "lineupLocked": false,
+          "onTeamId": 6,
+          "player": {
+            "active": true,
+            "defaultPositionId": 8,
+            "draftRanksByRankType": {
+              "STANDARD": {
+                "auctionValue": 43,
+                "published": false,
+                "rank": 5,
+                "rankSourceId": 0,
+                "rankType": "STANDARD",
+                "slotId": 0
+              }
+            },
+            "droppable": true,
+            "eligibleSlots": [9, 5, 12, 16, 17],
+            "firstName": "Jim",
+            "fullName": "Jim Halpert",
+            "gamesPlayedByPosition": {
+              "8": 36
+            },
+            "id": 65432,
+            "injured": false,
+            "injuryStatus": "",
+            "lastName": "Halpert",
+            "lastNewsDate": 1621378544000,
+            "ownership": {
+              "auctionValueAverage": 36.35,
+              "averageDraftPosition": 8.426519337016575,
+              "percentChange": -0.1351022185887416,
+              "percentOwned": 99.82266359283561,
+              "percentStarted": 28.787610096352783
+            },
+            "proTeamId": 3,
+            "seasonOutlook": "Widely regarded the best player in baseball, Jim is no longer a slam dunk for the same honor in fantasy baseball. He placed outside the top 25 on the Player Rater while posting the worst full-season batting average (.281) and second-worst contact rate (71.9%) of his career in 2020, and he has missed 105 Angels games (most due to injuries) since the beginning of 2017. Still, that Trout's No. 27 Player Rater finish represented his lowest in any of his nine full big-league seasons speaks volumes about his Hall of Fame caliber skill set. Just since the beginning of 2018, his 101 home runs lead the majors, 252 runs scored rank sixth, .298 batting average and 229 RBI each rank 14th and 36 stolen bases rank 21st. It's the latter category that sparks genuine worry, as Trout attempted only two steals in 53 games in 2020, and as a 29-year-old, that's a skill unlikely to significantly rebound. His power metrics look as strong as ever, and with good luck in the health department that he should remain one of the most valuable commodities in fantasy. But with that No. 1 overall pick, it's probably wiser to go with someone younger or who steals more bases.",
+            "starterStatusByProGame": {
+              "401227055": "STARTING",
+              "401227068": "STARTING"
+            },
+            "stats": [
+              {
+                "externalId": "2021",
+                "id": "012021",
+                "proTeamId": 0,
+                "scoringPeriodId": 0,
+                "seasonId": 2021,
+                "statSourceId": 0,
+                "statSplitTypeId": 1,
+                "stats": {}
+              }
+            ],
+            "universeId": 1
+          },
+          "ratings": {
+            "0": {
+              "positionalRanking": 7,
+              "totalRanking": 82,
+              "totalRating": 6.041801
+            }
+          },
+          "rosterLocked": false,
+          "status": "ONTEAM",
+          "tradeLocked": false
+        },
+        "status": "NORMAL"
       }
     ],
     "tradeReservedEntries": 0
