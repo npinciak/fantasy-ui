@@ -1,6 +1,5 @@
 import { EspnClientCompetitor, EspnClientEvent } from '@app/espn/mlb/interface';
 import { ScoreboardGameStart, ScoreboardGameStatus } from '@app/espn/mlb/interface/game';
-import { GameMap } from '@app/espn/mlb/state/mlb-state.model';
 import { entityMap } from '../operators';
 
 /**
