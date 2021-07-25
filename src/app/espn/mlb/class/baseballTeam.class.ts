@@ -1,45 +1,8 @@
+import { Team } from '@app/@shared/class';
 import { statsKeyMap } from '../helpers';
-import { EspnClientPlayer, EspnClientTeam } from '../interface';
 
-export class BaseballTeam {
-  private _team: EspnClientTeam;
+export class BaseballTeam extends Team {
   private _liveScore;
-
-  constructor(team: EspnClientTeam) {
-    this._team = team;
-  }
-
-  get teamId() {
-    return this._teamBase.id;
-  }
-
-  get teamName() {
-    return `${this._teamBase.location} ${this._teamBase.nickname}`;
-  }
-
-  get teamAbbrev() {
-    return this._teamBase.abbrev;
-  }
-
-  get teamLogo() {
-    return this._teamBase.logo;
-  }
-
-  get roster() {
-    return this._teamBase.roster.entries;
-  }
-
-  get totalPoints() {
-    return this._teamBase.points;
-  }
-
-  get currentRank() {
-    return this._teamBase.playoffSeed;
-  }
-
-  get rankDiff() {
-    return this._teamBase.draftDayProjectedRank - this._teamBase.playoffSeed;
-  }
 
   get stats() {
     return statsKeyMap(this._valuesByStat);
@@ -76,14 +39,10 @@ export class BaseballTeam {
   }
 
   private get _rotoPointsByStats() {
-    return this._teamBase.pointsByStat;
+    return this._team.pointsByStat;
   }
 
   private get _valuesByStat() {
-    return this._teamBase.valuesByStat;
-  }
-
-  private get _teamBase() {
-    return this._team;
+    return this._team.valuesByStat;
   }
 }
