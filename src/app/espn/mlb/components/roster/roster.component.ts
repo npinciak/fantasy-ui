@@ -8,6 +8,7 @@ import { rosterColumns, PlayerInfoColumn } from '@mlb/mlb.const';
 import { StatTypeId } from '@mlb/mlb.enums';
 import { MlbFacade } from '@mlb/facade/mlb.facade';
 import { of } from 'rxjs';
+import { MlbTeamFacade } from '../../facade/mlb-team.facade';
 
 @Component({
   selector: 'app-roster',
@@ -30,21 +31,16 @@ export class RosterComponent implements OnInit, AfterViewInit {
 
   view: StatTypeId = 0;
 
-  constructor(readonly mlbFacade: MlbFacade) {}
+  constructor(readonly mlbTeamFacade: MlbTeamFacade, private cdr: ChangeDetectorRef) {}
 
-  ngOnInit() {
-    // console.log(this.fantasyPlayers[0])
-
-    this.dataSource.data = this.fantasyPlayers;
-
-    this.dataSource.sortingDataAccessor = (player, stat) => this.sortAccessor(player, stat);
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
-    // this.dataSource.sort = this.sort;
+    this.dataSource.data = this.fantasyPlayers;
+    this.dataSource.sort = this.sort;
+    this.dataSource.sortingDataAccessor = (player, stat) => this.sortAccessor(player, stat);
+    this.cdr.detectChanges();
   }
-
-  updateView = (event: MatButtonToggleChange) => of(); //this.mlbFacade.updateStatType(event.value);
 
   private sortAccessor(player, stat) {
     return player.playerStats.get(this.view)[stat];

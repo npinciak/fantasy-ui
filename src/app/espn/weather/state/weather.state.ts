@@ -47,17 +47,5 @@ export class WeatherState {
 
       ctx.patchState({ map });
     }
-
-    // const map = {};
-    // map[payload.gameId] = weatherValues;
-
-    // // const gameToConditionsMap: { [id: number]: WeatherValues } = {};
-
-    // // gameToConditionsMap[payload.gameId] = entityMap(weatherValues);
-
-    // patchMap([weatherValues]);
-    // // patchMap(weatherValues, payload => payload.gameId);
-
-    // map[payload.gameId] = weatherValues;
   }
 }

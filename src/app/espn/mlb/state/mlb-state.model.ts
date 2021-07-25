@@ -5,6 +5,7 @@ import { EspnClientEvent, EspnClientTeam } from '../interface';
 import { EspnClientScheduleEntry, EspnClientScheduleTeams } from '../interface/league';
 
 interface MlbStateModel {
+  statTypeId: number;
   schedule: ScheduleMap;
   teams: TeamMap;
   events: EventMap;

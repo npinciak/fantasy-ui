@@ -16,7 +16,7 @@ export interface MlbLineup {
   };
 }
 
-export const mlbLineupMap = {
+export const MLB_LINEUP = {
   0: {
     abbrev: 'C',
     active: true,

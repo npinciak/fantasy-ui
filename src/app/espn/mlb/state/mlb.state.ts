@@ -5,11 +5,12 @@ import { tap } from 'rxjs/operators';
 
 import { EspnService } from '@espn/espn.service';
 import { EventMap, MlbStateModel, TeamMap } from './mlb-state.model';
-import { FetchBaseballLeague } from '../actions/mlb.actions';
+import { FetchBaseballLeague, UpdateStatType } from '../actions/mlb.actions';
 
 @State<MlbStateModel>({
   name: 'mlb',
   defaults: {
+    statTypeId: 1,
     scoringPeriodId: null,
     schedule: {},
     teams: {},
@@ -29,6 +30,11 @@ export class MlbState {
   @Selector([MlbState.getState])
   static isLoading(_: MlbStateModel, getState: MlbStateModel) {
     return getState.isLoading;
+  }
+
+  @Selector()
+  static statTypeId(state: MlbStateModel) {
+    return state.statTypeId;
   }
 
   @Selector()
@@ -73,5 +79,10 @@ export class MlbState {
         });
       })
     );
+  }
+
+  @Action(UpdateStatType)
+  update(ctx: StateContext<MlbStateModel>, { statTypeId }: UpdateStatType) {
+    return ctx.patchState({ statTypeId });
   }
 }

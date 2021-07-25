@@ -1,9 +1,10 @@
 import { isPitcher, statsKeyMap } from '../helpers';
 import { EspnClientPlayerRatings, EspnClientGameStatus, EspnClientPlayer } from '../interface/player';
-import { mlbLineupMap } from '../maps/mlb-lineup.map';
-import { mlbPositionMap } from '../maps/mlb-position.map';
-import { mlbTeamMap } from '../maps/mlb-team.map';
+import { MLB_LINEUP } from '../consts/lineup.const';
+import { MLB_POSITION } from '../consts/position.const';
+import { MLB_TEAM } from '../consts/team.const';
 import { weights2021 } from '../mlb.const';
+import { Player } from '@app/@shared/class';
 
 /**
  * This is a description of the BaseballPlayer constructor function.
@@ -11,47 +12,26 @@ import { weights2021 } from '../mlb.const';
  * @class
  * @classdesc This is a description of the BaseballPlayer class.
  */
-export class BaseballPlayer {
+export class BaseballPlayer extends Player {
   readonly weights21 = weights2021;
 
-  private _player: EspnClientPlayer;
   private _startingStatus: EspnClientGameStatus;
   private _isStarting = true;
-
-  constructor(player: EspnClientPlayer) {
-    this._player = player;
-  }
-
-  get id() {
-    return this._player.playerId;
-  }
-
-  get name() {
-    return this._player.playerPoolEntry.player.fullName;
-  }
-
-  get isInjured() {
-    return this._player.playerPoolEntry.player.injured;
-  }
-
-  get injuryStatus() {
-    return this._player.playerPoolEntry.player.injuryStatus;
-  }
 
   get playerImg() {
     return `https://a.espncdn.com/combiner/i?img=/i/headshots/mlb/players/full/${this._player.playerId}.png&w=96&h=70&cb=1`;
   }
 
   get lineupSlot() {
-    return mlbLineupMap[this._player.lineupSlotId];
+    return MLB_LINEUP[this._player.lineupSlotId];
   }
 
   get defaultPosition() {
-    return mlbPositionMap[this._player.playerPoolEntry.player.defaultPositionId].abbrev;
+    return MLB_POSITION[this._player.playerPoolEntry.player.defaultPositionId].abbrev;
   }
 
   get proTeam() {
-    return mlbTeamMap[this._player.playerPoolEntry.player.proTeamId];
+    return MLB_TEAM[this._player.playerPoolEntry.player.proTeamId];
   }
 
   get playerStats() {
@@ -90,17 +70,6 @@ export class BaseballPlayer {
 
   get startingStatus() {
     return this._startingStatus;
-  }
-
-  get playerRatings() {
-    return this._player.playerPoolEntry.ratings;
-  }
-
-  get playerOwnership() {
-    return {
-      change: this._player.playerPoolEntry.player.ownership.percentChange,
-      percentOwned: this._player.playerPoolEntry.player.ownership.percentOwned,
-    };
   }
 
   get isPitcher() {

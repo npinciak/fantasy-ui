@@ -1,6 +1,6 @@
 import { MOCK_DATA_CLASS, MOCK_DATA_ESPN } from '@app/@shared/helpers/testConfigs';
 import * as mockleague from '@mlb/mocks/league.mock.json';
-import { mlbLineupMap } from '../maps';
+import { MLB_LINEUP } from '../consts';
 import { BaseballTeam } from './baseballTeam.class';
 
 describe('[Class] Player', () => {
@@ -29,7 +29,7 @@ describe('[Class] Player', () => {
   });
 
   it('should return players lineup slot', () => {
-    expect(actual.lineupSlot).toBe(mlbLineupMap[expected.lineupSlotId]);
+    expect(actual.lineupSlot).toBe(MLB_LINEUP[expected.lineupSlotId]);
   });
 
   it('should return players position', () => {
