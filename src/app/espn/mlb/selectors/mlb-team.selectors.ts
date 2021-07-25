@@ -5,6 +5,11 @@ import { BaseballPlayerMap, BaseballTeamMap, MlbStateModel, ScheduleMap, TeamMap
 import { MlbState } from '../state/mlb.state';
 
 export class MlbTeamSelectors {
+  @Selector([MlbState.statTypeId])
+  static selectStatTypeId(id: number): number {
+    return id;
+  }
+
   @Selector([MlbState.teams])
   static baseballTeamMap(teams: TeamMap): BaseballTeamMap {
     return espnTeamsToBaseballTeamsMap(teams);

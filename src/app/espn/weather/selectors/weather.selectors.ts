@@ -1,7 +1,7 @@
 import { stadiumConditionsMap } from '@app/@shared/helpers/mapping';
 import { BaseballGame } from '@app/espn/mlb/class/baseballGame.class';
 import { MlbGameSelectors } from '@app/espn/mlb/selectors/mlb-game.selectors';
-import { GameMap } from '@app/espn/mlb/state/mlb-state.model';
+import { BaseballGameMap, GameMap } from '@app/espn/mlb/state/mlb-state.model';
 import { Selector } from '@ngxs/store';
 import { WeatherState } from '../state/weather.state';
 import { CurrentConditions } from '../weather/models/class';
@@ -25,14 +25,12 @@ export class WeatherSelector {
   }
 
   @Selector([WeatherSelector.selectWeatherByGameId, MlbGameSelectors.eventToGameMap])
-  static weatherToGame(selectWeatherByGameId: (id: number) => CurrentConditions, game: GameMap): (id: number) => BaseballGame {
-    return null;
-
-    // (id: number) => {
-    //   const weather = selectWeatherByGameId(id);
-    //   game[id].currentConditions = weather;
-    //   return game[id];
-    // };
+  static weatherToGame(selectWeatherByGameId: (id: number) => CurrentConditions, game: BaseballGameMap): (id: number) => BaseballGame {
+    return (id: number) => {
+      const weather = selectWeatherByGameId(id);
+      game[id].currentConditions = weather;
+      return game[id];
+    };
   }
 
   @Selector([WeatherState.gameWeather])

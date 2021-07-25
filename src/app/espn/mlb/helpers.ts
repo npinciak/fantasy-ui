@@ -26,7 +26,6 @@ export const espnEventToBaseballGamesMap = (competitions: EventMap): BaseballGam
   const map: BaseballGameMap = {};
   for (const comp of Object.values(competitions)) {
     const competition = new BaseballGame(comp);
-    competition.competitors = comp.competitors;
     map[comp.id] = competition;
   }
   return map;
