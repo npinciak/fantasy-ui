@@ -19,6 +19,7 @@ import { MlbState } from './espn/mlb/state/mlb.state';
 import { httpInterceptorProviders } from './@core/interceptors';
 import { WeatherState } from './espn/weather/state/weather.state';
 import { SharedModule } from './@shared/shared.module';
+import { NflState } from './espn/nfl/state/nfl.state';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -28,7 +29,7 @@ import { SharedModule } from './@shared/shared.module';
     SharedModule,
     BrowserAnimationsModule,
     NgxsSelectSnapshotModule.forRoot(),
-    NgxsModule.forRoot([CoreState, MlbState, WeatherState], {
+    NgxsModule.forRoot([CoreState, MlbState, NflState, WeatherState], {
       developmentMode: !environment.production,
     }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
