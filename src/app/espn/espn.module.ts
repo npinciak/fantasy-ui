@@ -21,7 +21,6 @@ import { LineupCardComponent } from './mlb/components/lineup-card/lineup-card.co
 import { LineupCardPlayerComponent } from './mlb/components/lineup-card-player/lineup-card-player.component';
 
 import { HomeComponent as NFLHomeComponent } from './nfl/pages/home/home.component';
-import { NgChartsModule } from 'ng2-charts';
 
 const components = [
   HomeComponent,
