@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ESPN_TEXT } from '@app/espn/espn.const';
-import { MockLeague } from '@app/espn/nfl/mocks';
-import { FootballPlayer, FootballTeam } from '../../class';
 import { NFLFacade } from '../../facade/nfl.facade';
 
 @Component({
