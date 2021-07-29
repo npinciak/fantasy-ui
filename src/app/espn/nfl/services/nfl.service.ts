@@ -22,14 +22,13 @@ export class NflService {
   };
 
   /**
-   * @todo
-   * @param leagueId
-   * @returns
+   * Retrieve league information
+   *
+   * @param leagueId League Id
+   * @returns EspnClientLeague
    */
   private readonly _footballLeague = (leagueId: number) =>
-    this.api.get<EspnClientLeague>(this.fantasyBase + leagueId, {
-      params: this.params,
-    });
+    this.api.get<EspnClientLeague>(this.fantasyBase + leagueId, { params: this.params });
 
   /**
    * Retrieve games for current date
