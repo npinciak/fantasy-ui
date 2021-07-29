@@ -1,0 +1,1539 @@
+{
+  "draftDetail": {
+    "drafted": true,
+    "inProgress": false
+  },
+  "gameId": 1,
+  "id": 2119159403,
+  "schedule": [
+    {
+      "away": {
+        "adjustment": 0,
+        "cumulativeScore": {
+          "losses": 0,
+          "scoreByStat": {
+            "3": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "4": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "19": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "20": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "24": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "25": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "26": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "42": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "43": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "44": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "53": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "63": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "72": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "77": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "80": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "85": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "86": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "89": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "90": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "91": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "92": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "93": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "95": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "96": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "97": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "98": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "99": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "101": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "102": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "103": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "104": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "123": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "124": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "125": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "128": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "129": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "130": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "132": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "133": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "134": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "135": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "136": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "198": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "201": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "206": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "209": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            }
+          },
+          "statBySlot": null,
+          "ties": 0,
+          "wins": 0
+        },
+        "gamesPlayed": 0,
+        "rosterForCurrentScoringPeriod": {
+          "appliedStatTotal": 0,
+          "entries": [
+            {
+              "injuryStatus": "NORMAL",
+              "lineupSlotId": 4,
+              "playerId": 16800,
+              "playerPoolEntry": {
+                "appliedStatTotal": 0,
+                "id": 16800,
+                "onTeamId": 6,
+                "player": {
+                  "active": true,
+                  "defaultPositionId": 3,
+                  "eligibleSlots": [3, 4, 5, 23, 7, 20, 21],
+                  "firstName": "Davante",
+                  "fullName": "Davante Adams",
+                  "id": 16800,
+                  "injured": false,
+                  "injuryStatus": "ACTIVE",
+                  "jersey": "17",
+                  "lastName": "Adams",
+                  "proTeamId": 9,
+                  "stats": [
+                    {
+                      "appliedStats": {
+                        "42": 7.890180334,
+                        "43": 4.179160146,
+                        "44": 0.05741823,
+                        "53": 6.646717854,
+                        "63": 0.001716,
+                        "72": -0.072680168
+                      },
+                      "appliedTotal": 18.702512396,
+                      "appliedTotalCeiling": 34.559513769,
+                      "externalId": "20211",
+                      "id": "1120211",
+                      "lastUpdateInfo": {
+                        "clientAddress": null,
+                        "platform": "admin-tool",
+                        "source": "{A46028ED-3871-4207-8605-4031C5B47321}"
+                      },
+                      "proTeamId": 0,
+                      "scoringPeriodId": 1,
+                      "seasonId": 2021,
+                      "statSourceId": 1,
+                      "statSplitTypeId": 1,
+                      "stats": {
+                        "42": 78.90180334,
+                        "43": 0.696526691,
+                        "44": 0.028709115,
+                        "45": 0.013324479,
+                        "46": 0.008707547,
+                        "47": 15,
+                        "48": 7,
+                        "49": 3,
+                        "50": 3,
+                        "51": 1,
+                        "53": 6.646717854,
+                        "54": 1,
+                        "56": 0.292302327,
+                        "57": 0.00904,
+                        "58": 9.391562995,
+                        "60": 11.87079173,
+                        "61": 78.90180334,
+                        "62": 0.028709115,
+                        "63": 0.000286,
+                        "67": 0.064893007,
+                        "68": 0.064893007,
+                        "71": 0.036340084,
+                        "72": 0.036340084,
+                        "73": 0.036340084,
+                        "210": 1
+                      },
+                      "variance": {
+                        "23": 0.309561125,
+                        "24": 2.961189065,
+                        "25": 0.016224972,
+                        "26": 0.176044943,
+                        "35": 0.07,
+                        "36": 0.06,
+                        "42": 44.20622855,
+                        "43": 0.785313069,
+                        "44": 0.265755419,
+                        "45": 0.230129315,
+                        "46": 0.165101687,
+                        "53": 6.574094096,
+                        "58": 3.518870683,
+                        "63": 0.001,
+                        "68": 0.246520913,
+                        "72": 0.193552415
+                      }
+                    }
+                  ],
+                  "universeId": 2
+                },
+                "status": "ONTEAM"
+              },
+              "status": "NORMAL"
+            }
+          ]
+        },
+        "rosterForMatchupPeriod": {
+          "entries": []
+        },
+        "rosterForMatchupPeriodDelayed": {
+          "entries": []
+        },
+        "teamId": 6,
+        "tiebreak": 0,
+        "totalPoints": 0,
+        "totalPointsLive": 0,
+        "totalProjectedPointsLive": 105.0314161274
+      },
+      "home": {
+        "adjustment": 0,
+        "cumulativeScore": {
+          "losses": 0,
+          "scoreByStat": {
+            "3": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "4": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "19": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "20": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "24": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "25": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "26": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "42": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "43": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "44": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "53": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "63": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "72": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "77": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "80": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "85": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "86": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "89": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "90": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "91": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "92": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "93": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "95": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "96": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "97": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "98": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "99": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "101": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "102": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "103": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "104": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "123": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "124": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "125": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "128": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "129": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "130": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "132": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "133": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "134": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "135": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "136": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "198": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "201": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "206": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            },
+            "209": {
+              "ineligible": false,
+              "rank": 0,
+              "result": null,
+              "score": 0
+            }
+          },
+          "statBySlot": null,
+          "ties": 0,
+          "wins": 0
+        },
+        "gamesPlayed": 0,
+        "rosterForCurrentScoringPeriod": {
+          "appliedStatTotal": 0,
+          "entries": [
+            {
+              "injuryStatus": "NORMAL",
+              "lineupSlotId": 2,
+              "playerId": 3043078,
+              "playerPoolEntry": {
+                "appliedStatTotal": 0,
+                "id": 3043078,
+                "onTeamId": 5,
+                "player": {
+                  "active": true,
+                  "defaultPositionId": 2,
+                  "eligibleSlots": [2, 3, 23, 7, 20, 21],
+                  "firstName": "Derrick",
+                  "fullName": "Derrick Henry",
+                  "id": 3043078,
+                  "injured": false,
+                  "injuryStatus": "ACTIVE",
+                  "jersey": "22",
+                  "lastName": "Henry",
+                  "proTeamId": 10,
+                  "stats": [
+                    {
+                      "appliedStats": {
+                        "24": 9.001151977000001,
+                        "25": 4.646826558000001,
+                        "26": 0.046634124,
+                        "42": 1.2144239140000002,
+                        "43": 0.347804976,
+                        "44": 0.006553108,
+                        "53": 1.635942997,
+                        "63": 0.004314,
+                        "72": -0.15298842
+                      },
+                      "appliedTotal": 16.750663234,
+                      "appliedTotalCeiling": 32.629307328,
+                      "externalId": "20211",
+                      "id": "1120211",
+                      "lastUpdateInfo": {
+                        "clientAddress": null,
+                        "platform": "admin-tool",
+                        "source": "{A46028ED-3871-4207-8605-4031C5B47321}"
+                      },
+                      "proTeamId": 0,
+                      "scoringPeriodId": 1,
+                      "seasonId": 2021,
+                      "statSourceId": 1,
+                      "statSplitTypeId": 1,
+                      "stats": {
+                        "23": 19.12441207,
+                        "24": 90.01151977,
+                        "25": 0.774471093,
+                        "26": 0.023317062,
+                        "27": 18,
+                        "28": 9,
+                        "29": 4,
+                        "30": 3,
+                        "31": 1,
+                        "33": 3,
+                        "34": 1,
+                        "35": 0.041276126,
+                        "36": 0.028893288,
+                        "37": 0.355,
+                        "38": 0.0121,
+                        "39": 4.706629383,
+                        "40": 90.01151977,
+                        "42": 12.14423914,
+                        "43": 0.057967496,
+                        "44": 0.003276554,
+                        "45": 0.002588414,
+                        "46": 0.001691529,
+                        "47": 2,
+                        "48": 1,
+                        "53": 1.635942997,
+                        "56": 0.004526983,
+                        "57": 0.00014,
+                        "58": 2.145938324,
+                        "60": 7.42338771,
+                        "61": 12.14423914,
+                        "62": 0.026593616,
+                        "63": 0.000719,
+                        "66": 0.150607735,
+                        "67": 0.012883307,
+                        "68": 0.163491042,
+                        "70": 0.069279558,
+                        "71": 0.007214652,
+                        "72": 0.07649421,
+                        "73": 0.07649421,
+                        "210": 1
+                      },
+                      "variance": {
+                        "23": 7.868540147,
+                        "24": 59.53373552,
+                        "25": 0.885537811,
+                        "26": 0.176044943,
+                        "35": 0.349635636,
+                        "36": 0.349635636,
+                        "42": 14.73049021,
+                        "43": 0.191182198,
+                        "44": 0.265755419,
+                        "45": 0.181020335,
+                        "46": 0.181020335,
+                        "53": 1.632407013,
+                        "58": 1.188286715,
+                        "63": 0.001,
+                        "68": 0.381328457,
+                        "72": 0.265053135
+                      }
+                    }
+                  ],
+                  "universeId": 1
+                },
+                "status": "ONTEAM"
+              },
+              "status": "NORMAL"
+            }
+          ]
+        },
+        "rosterForMatchupPeriod": {
+          "entries": []
+        },
+        "rosterForMatchupPeriodDelayed": {
+          "entries": []
+        },
+        "teamId": 5,
+        "tiebreak": 0,
+        "totalPoints": 0,
+        "totalPointsLive": 0,
+        "totalProjectedPointsLive": 97.770850451
+      },
+      "id": 1,
+      "matchupPeriodId": 1,
+      "playoffTierType": "NONE",
+      "winner": "UNDECIDED"
+    }
+  ],
+  "scoringPeriodId": 1,
+  "seasonId": 2021,
+  "segmentId": 0,
+  "settings": {
+    "isCustomizable": false,
+    "isPublic": true,
+    "name": "Buffalo 10-Team PPR",
+    "scheduleSettings": {
+      "divisions": [
+        {
+          "id": 0,
+          "name": "East"
+        },
+        {
+          "id": 1,
+          "name": "West"
+        }
+      ],
+      "matchupPeriods": {
+        "1": [1],
+        "2": [2],
+        "3": [3],
+        "4": [4],
+        "5": [5],
+        "6": [6],
+        "7": [7],
+        "8": [8],
+        "9": [9],
+        "10": [10],
+        "11": [11],
+        "12": [12],
+        "13": [13],
+        "14": [14],
+        "15": [16, 15],
+        "16": [17, 18]
+      },
+      "periodTypeId": 1
+    },
+    "scoringSettings": {
+      "scoringItems": [
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 89
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 90
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 123
+        },
+        {
+          "isReverseItem": false,
+          "points": 2,
+          "statId": 206
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 133
+        },
+        {
+          "isReverseItem": false,
+          "points": 6,
+          "statId": 25
+        },
+        {
+          "isReverseItem": false,
+          "points": 1,
+          "statId": 209
+        },
+        {
+          "isReverseItem": false,
+          "points": 1,
+          "statId": 53
+        },
+        {
+          "isReverseItem": false,
+          "points": -2,
+          "statId": 72
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 134
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 95
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 135
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 136
+        },
+        {
+          "isReverseItem": false,
+          "points": 6,
+          "statId": 93
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 98
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 91
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 96
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 97
+        },
+        {
+          "isReverseItem": false,
+          "points": 2,
+          "statId": 19
+        },
+        {
+          "isReverseItem": false,
+          "points": 6,
+          "statId": 43
+        },
+        {
+          "isReverseItem": false,
+          "points": -2,
+          "statId": 20
+        },
+        {
+          "isReverseItem": false,
+          "points": 4,
+          "statId": 4
+        },
+        {
+          "isReverseItem": false,
+          "points": 6,
+          "statId": 102
+        },
+        {
+          "isReverseItem": false,
+          "points": 0.1,
+          "statId": 24
+        },
+        {
+          "isReverseItem": false,
+          "points": 6,
+          "statId": 103
+        },
+        {
+          "isReverseItem": false,
+          "points": 6,
+          "statId": 63
+        },
+        {
+          "isReverseItem": false,
+          "points": 6,
+          "statId": 101
+        },
+        {
+          "isReverseItem": false,
+          "points": 3,
+          "statId": 80
+        },
+        {
+          "isReverseItem": false,
+          "points": 2,
+          "statId": 26
+        },
+        {
+          "isReverseItem": false,
+          "points": 6,
+          "statId": 104
+        },
+        {
+          "isReverseItem": false,
+          "points": 4,
+          "statId": 77
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 92
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 128
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 99
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 125
+        },
+        {
+          "isReverseItem": false,
+          "points": -1,
+          "statId": 85
+        },
+        {
+          "isReverseItem": false,
+          "points": 0.04,
+          "statId": 3
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 124
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 132
+        },
+        {
+          "isReverseItem": false,
+          "points": 1,
+          "statId": 86
+        },
+        {
+          "isReverseItem": false,
+          "points": 0.1,
+          "statId": 42
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 129
+        },
+        {
+          "isReverseItem": false,
+          "points": 2,
+          "statId": 44
+        },
+        {
+          "isReverseItem": false,
+          "points": 0,
+          "statId": 130
+        },
+        {
+          "isReverseItem": false,
+          "points": 6,
+          "statId": 201
+        },
+        {
+          "isReverseItem": false,
+          "points": 5,
+          "statId": 198
+        }
+      ]
+    }
+  },
+  "status": {
+    "activatedDate": 1621004635616,
+    "createdAsLeagueType": 3,
+    "creationInfo": {
+      "clientAddress": null,
+      "platform": "cinco_13237",
+      "source": "{AC080728-51AE-4213-8667-8ECBB686D675}"
+    },
+    "currentLeagueType": 3,
+    "currentMatchupPeriod": 1,
+    "finalScoringPeriod": 18,
+    "firstScoringPeriod": 1,
+    "isActive": true,
+    "isExpired": false,
+    "isFull": true,
+    "isPlayoffMatchupEdited": false,
+    "isToBeDeleted": false,
+    "isViewable": false,
+    "isWaiverOrderEdited": false,
+    "lastUpdateInfo": {
+      "clientAddress": null,
+      "platform": "lm-processor",
+      "source": "NightlyLeagueUpdateTaskProcessor"
+    },
+    "latestScoringPeriod": 1,
+    "previousSeasons": [],
+    "standingsUpdateDate": 1621007644810,
+    "teamsJoined": 10,
+    "transactionScoringPeriod": 1,
+    "waiverLastExecutionDate": 1627198256289,
+    "waiverProcessStatus": {
+      "2021-05-16T07:24:33.470+0000": 1
+    }
+  },
+  "teams": [
+    {
+      "abbrev": "SIAU",
+      "currentProjectedRank": 1,
+      "currentSimulationResults": {
+        "divisionWinPct": 0.263,
+        "modeRecord": {
+          "gamesBack": 0,
+          "losses": 7,
+          "percentage": 0,
+          "pointsAgainst": 0,
+          "pointsFor": 0,
+          "streakLength": 0,
+          "streakType": "NONE",
+          "ties": 0,
+          "wins": 7
+        },
+        "playoffPct": 0.538,
+        "rank": 3
+      },
+      "divisionId": 0,
+      "draftDayProjectedRank": 3,
+      "draftStrategy": {},
+      "id": 1,
+      "isActive": false,
+      "location": "Team",
+      "logo": "https://g.espncdn.com/lm-static/ffl/images/default_logos/1.svg",
+      "logoType": "VECTOR",
+      "nickname": "Siau",
+      "owners": ["{C82E4ECC-A448-4FF1-AE4E-CCA4482FF1F9}"],
+      "playoffSeed": 10,
+      "points": 0,
+      "pointsAdjusted": 0,
+      "pointsDelta": 0,
+      "primaryOwner": "{C82E4ECC-A448-4FF1-AE4E-CCA4482FF1F9}",
+      "rankCalculatedFinal": 0,
+      "rankFinal": 0,
+      "record": {
+        "away": {
+          "gamesBack": 0,
+          "losses": 0,
+          "percentage": 0,
+          "pointsAgainst": 0,
+          "pointsFor": 0,
+          "streakLength": 0,
+          "streakType": "NONE",
+          "ties": 0,
+          "wins": 0
+        },
+        "division": {
+          "gamesBack": 0,
+          "losses": 0,
+          "percentage": 0,
+          "pointsAgainst": 0,
+          "pointsFor": 0,
+          "streakLength": 0,
+          "streakType": "NONE",
+          "ties": 0,
+          "wins": 0
+        },
+        "home": {
+          "gamesBack": 0,
+          "losses": 0,
+          "percentage": 0,
+          "pointsAgainst": 0,
+          "pointsFor": 0,
+          "streakLength": 0,
+          "streakType": "NONE",
+          "ties": 0,
+          "wins": 0
+        },
+        "overall": {
+          "gamesBack": 0,
+          "losses": 0,
+          "percentage": 0,
+          "pointsAgainst": 0,
+          "pointsFor": 0,
+          "streakLength": 0,
+          "streakType": "NONE",
+          "ties": 0,
+          "wins": 0
+        }
+      },
+      "roster": {
+        "appliedStatTotal": 0,
+        "entries": [
+          {
+            "acquisitionDate": 1621007644729,
+            "acquisitionType": "DRAFT",
+            "injuryStatus": "NORMAL",
+            "lineupSlotId": 2,
+            "pendingTransactionIds": null,
+            "playerId": 3051392,
+            "playerPoolEntry": {
+              "appliedStatTotal": 0,
+              "id": 3051392,
+              "keeperValue": 0,
+              "keeperValueFuture": 1,
+              "lineupLocked": false,
+              "onTeamId": 1,
+              "player": {
+                "active": true,
+                "defaultPositionId": 2,
+                "draftRanksByRankType": {
+                  "STANDARD": {
+                    "auctionValue": 50,
+                    "published": false,
+                    "rank": 8,
+                    "rankSourceId": 0,
+                    "rankType": "STANDARD",
+                    "slotId": 0
+                  },
+                  "PPR": {
+                    "auctionValue": 51,
+                    "published": false,
+                    "rank": 7,
+                    "rankSourceId": 0,
+                    "rankType": "PPR",
+                    "slotId": 0
+                  }
+                },
+                "droppable": true,
+                "eligibleSlots": [2, 3, 23, 7, 20, 21],
+                "firstName": "Ezekiel",
+                "fullName": "Ezekiel Elliott",
+                "id": 3051392,
+                "injured": false,
+                "injuryStatus": "ACTIVE",
+                "jersey": "21",
+                "lastName": "Elliott",
+                "lastNewsDate": 1625322656000,
+                "ownership": {
+                  "auctionValueAverage": 47.33273703041145,
+                  "averageDraftPosition": 9.260712752254186,
+                  "percentChange": 0.008348552893835404,
+                  "percentOwned": 99.627628230043,
+                  "percentStarted": 97.0310560563698
+                },
+                "proTeamId": 6,
+                "rankings": {
+                  "0": [
+                    {
+                      "auctionValue": 0,
+                      "published": true,
+                      "rank": 7,
+                      "rankSourceId": 7,
+                      "rankType": "STANDARD",
+                      "slotId": 2
+                    },
+                    {
+                      "auctionValue": 0,
+                      "published": true,
+                      "rank": 6,
+                      "rankSourceId": 7,
+                      "rankType": "PPR",
+                      "slotId": 2
+                    },
+                    {
+                      "auctionValue": 0,
+                      "published": true,
+                      "rank": 6,
+                      "rankSourceId": 5,
+                      "rankType": "STANDARD",
+                      "slotId": 2
+                    },
+                    {
+                      "auctionValue": 0,
+                      "published": true,
+                      "rank": 5,
+                      "rankSourceId": 6,
+                      "rankType": "PPR",
+                      "slotId": 2
+                    },
+                    {
+                      "auctionValue": 0,
+                      "published": true,
+                      "rank": 5,
+                      "rankSourceId": 10,
+                      "rankType": "PPR",
+                      "slotId": 2
+                    },
+                    {
+                      "auctionValue": 0,
+                      "published": true,
+                      "rank": 6,
+                      "rankSourceId": 5,
+                      "rankType": "PPR",
+                      "slotId": 2
+                    },
+                    {
+                      "auctionValue": 0,
+                      "published": true,
+                      "rank": 7,
+                      "rankSourceId": 3,
+                      "rankType": "STANDARD",
+                      "slotId": 2
+                    },
+                    {
+                      "auctionValue": 0,
+                      "published": true,
+                      "rank": 7,
+                      "rankSourceId": 3,
+                      "rankType": "PPR",
+                      "slotId": 2
+                    },
+                    {
+                      "auctionValue": 0,
+                      "published": true,
+                      "rank": 5,
+                      "rankSourceId": 2,
+                      "rankType": "PPR",
+                      "slotId": 2
+                    },
+                    {
+                      "auctionValue": 0,
+                      "averageRank": 7,
+                      "published": true,
+                      "rank": 0,
+                      "rankSourceId": 0,
+                      "rankType": "STANDARD",
+                      "slotId": 2
+                    },
+                    {
+                      "auctionValue": 0,
+                      "averageRank": 5.666666666666667,
+                      "published": true,
+                      "rank": 0,
+                      "rankSourceId": 0,
+                      "rankType": "PPR",
+                      "slotId": 2
+                    },
+                    {
+                      "auctionValue": 0,
+                      "published": true,
+                      "rank": 8,
+                      "rankSourceId": 9,
+                      "rankType": "STANDARD",
+                      "slotId": 2
+                    }
+                  ]
+                },
+                "seasonOutlook": "Elliott's 2020 season was considered a letdown by those who drafted him, which is really something when you consider that he finished top-five at RB in carries and targets while posting his fifth-consecutive top-12 fantasy campaign. The issue, of course, was a split season that saw Elliott post the third-most fantasy points during Dak Prescott's five starts (top-13 every week) before plummeting to 24th (one weekly finish better than 12th) the rest of the way. Prescott and Dallas' elite offensive line are back and healthy for 2021, which positions Elliott, who paced the NFL with 22 carries inside the 5-yard line last season, for a big rebound. The 26-year-old could prove to be a steal late in the first round of drafts.",
+                "stats": [
+                  {
+                    "appliedAverage": 14.913333333333334,
+                    "appliedStats": {
+                      "24": 97.9,
+                      "25": 36,
+                      "42": 33.800000000000004,
+                      "43": 12,
+                      "44": 2,
+                      "53": 52,
+                      "72": -10
+                    },
+                    "appliedTotal": 223.70000000000002,
+                    "externalId": "2020",
+                    "id": "002020",
+                    "proTeamId": 0,
+                    "scoringPeriodId": 0,
+                    "seasonId": 2020,
+                    "statSourceId": 0,
+                    "statSplitTypeId": 0,
+                    "stats": {
+                      "23": 244,
+                      "24": 979,
+                      "25": 6,
+                      "27": 189,
+                      "28": 91,
+                      "29": 42,
+                      "30": 32,
+                      "31": 11,
+                      "32": 2,
+                      "33": 41,
+                      "34": 18,
+                      "37": 2,
+                      "39": 4.01229508,
+                      "40": 65.26666667,
+                      "41": 52,
+                      "42": 338,
+                      "43": 2,
+                      "44": 1,
+                      "47": 61,
+                      "48": 28,
+                      "49": 8,
+                      "50": 6,
+                      "51": 1,
+                      "53": 52,
+                      "54": 4,
+                      "58": 71,
+                      "59": 364,
+                      "60": 6.5,
+                      "61": 22.53333333,
+                      "62": 1,
+                      "66": 5,
+                      "67": 1,
+                      "68": 6,
+                      "70": 4,
+                      "71": 1,
+                      "72": 5,
+                      "73": 5,
+                      "108": 1,
+                      "109": 1,
+                      "155": 5,
+                      "156": 10,
+                      "158": 50,
+                      "179": 5,
+                      "180": 1,
+                      "183": 1,
+                      "184": 1,
+                      "210": 15
+                    },
+                    "variance": {}
+                  }
+                ],
+                "universeId": 2
+              },
+              "ratings": {
+                "0": {
+                  "positionalRanking": 9,
+                  "totalRanking": 51,
+                  "totalRating": 223.70001
+                }
+              },
+              "rosterLocked": false,
+              "status": "ONTEAM",
+              "tradeLocked": false
+            },
+            "status": "NORMAL"
+          }
+        ],
+        "tradeReservedEntries": 0
+      },
+      "tradeBlock": {},
+      "transactionCounter": {
+        "acquisitionBudgetSpent": 0,
+        "acquisitions": 0,
+        "drops": 0,
+        "matchupAcquisitionTotals": {},
+        "misc": 0,
+        "moveToActive": 0,
+        "moveToIR": 0,
+        "paid": 0,
+        "teamCharges": 0,
+        "trades": 0
+      },
+      "valuesByStat": {
+        "3": 0,
+        "4": 0,
+        "19": 0,
+        "20": 0,
+        "24": 0,
+        "25": 0,
+        "26": 0,
+        "42": 0,
+        "43": 0,
+        "44": 0,
+        "53": 0,
+        "63": 0,
+        "72": 0,
+        "77": 0,
+        "80": 0,
+        "85": 0,
+        "86": 0,
+        "89": 0,
+        "90": 0,
+        "91": 0,
+        "92": 0,
+        "93": 0,
+        "95": 0,
+        "96": 0,
+        "97": 0,
+        "98": 0,
+        "99": 0,
+        "101": 0,
+        "102": 0,
+        "103": 0,
+        "104": 0,
+        "123": 0,
+        "124": 0,
+        "125": 0,
+        "128": 0,
+        "129": 0,
+        "130": 0,
+        "132": 0,
+        "133": 0,
+        "134": 0,
+        "135": 0,
+        "136": 0,
+        "198": 0,
+        "201": 0,
+        "206": 0,
+        "209": 0
+      },
+      "waiverRank": 5
+    }
+  ]
+}
