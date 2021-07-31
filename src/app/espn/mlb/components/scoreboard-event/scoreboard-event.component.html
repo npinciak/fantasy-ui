@@ -44,7 +44,7 @@
       class="ui-w-100"
       mat-flat-button
       [disabled]="event.location.disableWeather || weatherFacade.weatherByGameIdExists(+event.gameId)"
-      (click)="weatherFacade.fetchWeather(event)"
+      (click)="fetchWeatherForGame(event)"
     >
       {{ event.location.isDome ? 'In Dome' : 'Weather' }}
     </button>

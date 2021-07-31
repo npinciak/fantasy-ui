@@ -1,5 +1,6 @@
 import { EspnClientCompetitor, EspnClientEvent } from '@app/espn/mlb/interface';
 import { ScoreboardGameStart, ScoreboardGameStatus } from '@app/espn/mlb/interface/game';
+import { addHoursToDate } from '../helpers/date';
 import { entityMap } from '../operators';
 
 /**
@@ -25,8 +26,9 @@ export class Game {
 
   get gameDate(): ScoreboardGameStart {
     return {
-      iso: this._event.date,
+      isoStartTime: this._event.date,
       milli: new Date(this._event.date).getTime(),
+      isoEstEndTime: addHoursToDate(new Date(this._event.date), 3).toISOString(),
     };
   }
 
