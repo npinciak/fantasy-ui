@@ -30,6 +30,11 @@ export class WeatherState {
     return state.map;
   }
 
+  @Selector()
+  static gameWeatherIntervals(state: WeatherStateModel) {
+    return state.intervalsByGame;
+  }
+
   @Action(FetchWeather)
   async fetchWeather(ctx: StateContext<WeatherStateModel>, { payload }: FetchWeather): Promise<void> {
     const gameExists = ctx.getState().map.hasOwnProperty(payload.gameId);
@@ -38,14 +43,17 @@ export class WeatherState {
       console.log(`!---- Weather for ${payload.gameId} already in state, retrieving cache ----!`);
       return;
     } else {
-      const conditions = await this.service.currentWeather(payload.location.latLng).toPromise();
+      const conditions = await this.service.currentWeather(payload.request).toPromise();
 
-      const weatherValues = conditions.data.timelines[0].intervals[0].values;
+      const timeline = conditions.data.timelines[0];
 
       const map = { ...ctx.getState().map };
-      map[payload.gameId] = weatherValues;
+      const intervalsByGame = { ...ctx.getState().intervalsByGame };
 
-      ctx.patchState({ map });
+      map[payload.gameId] = timeline.intervals[0].values;
+      intervalsByGame[payload.gameId] = timeline.intervals;
+
+      ctx.patchState({ map, intervalsByGame });
     }
   }
 }
