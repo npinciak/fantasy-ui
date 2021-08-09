@@ -6,6 +6,7 @@ import { tap } from 'rxjs/operators';
 import { EspnService } from '@espn/espn.service';
 import { EventMap, MlbStateModel, TeamMap } from './mlb-state.model';
 import { FetchBaseballLeague, UpdateStatType } from '../actions/mlb.actions';
+import { MlbService } from '../services/mlb.service';
 
 @State<MlbStateModel>({
   name: 'mlb',
@@ -20,7 +21,7 @@ import { FetchBaseballLeague, UpdateStatType } from '../actions/mlb.actions';
 })
 @Injectable()
 export class MlbState {
-  constructor(private espnService: EspnService) {}
+  constructor(private espnService: EspnService, private mlbService: MlbService) {}
 
   @Selector()
   static getState(state: MlbStateModel) {

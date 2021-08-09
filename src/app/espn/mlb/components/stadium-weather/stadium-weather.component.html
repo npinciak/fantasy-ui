@@ -34,7 +34,7 @@
                   padding: 35px 0;
                 "
               >
-                <mat-icon [style.transform]="event?.location.currentConditions.wind.directionRotate"> north </mat-icon>
+                {{ WIND_MAP[event?.location.currentConditions.wind.degreeToCompass] }}
               </div>
             </div>
           </td>
