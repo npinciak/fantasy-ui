@@ -1,5 +1,5 @@
 import { MOCK_DATA_CLASS, MOCK_DATA_CLIMA } from '@app/@shared/helpers/testConfigs';
-import { WEATHER_MAP } from '../maps';
+import { WEATHER_MAP } from '../maps/weatherCode.map';
 import { PrecipitationCode, WeatherCode } from '../weather.enum';
 import { CurrentConditions } from './currentConditions.class';
 
