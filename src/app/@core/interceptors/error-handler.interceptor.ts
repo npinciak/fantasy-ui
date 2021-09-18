@@ -15,11 +15,34 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   private errorHandler(response: HttpErrorResponse): Observable<HttpEvent<any>> {
     const code = response.status || 0;
     const statusText = response.statusText;
+    let message = '';
 
-    this.snackBar.open(`${code}: ${response.error.message}`, 'x', {
-      panelClass: ['mat-toolbar', 'mat-warn'],
+    switch (code) {
+      case 0:
+        message = 'Could not contact server';
+        break;
+
+      default:
+        message = response.error.message;
+        break;
+    }
+
+    this.snackBar.open(`${code}: ${message}`, 'Close', {
+      panelClass: ['mat-toolbar', 'mat-warn', 'text-white'],
     });
 
     throw response;
   }
+}
+
+export enum ErrorStatusCode {
+  Unknown = 0,
+  BadRequest = 400,
+  Unauthorized = 401,
+  Forbidden = 403,
+  NotAcceptable = 406,
+  InternalServerError = 500,
+  BadGateway = 502,
+  ServiceUnavailable = 503,
+  GatewayTimeout = 504,
 }
