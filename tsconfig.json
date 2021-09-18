@@ -17,7 +17,9 @@
     "paths": {
       "@app/*": ["src/app/*"],
       "@espn/*": ["src/app/espn/*"],
-      "@mlb/*": ["src/app/espn/mlb/*"]
+      "@mlb/*": ["src/app/espn/mlb/*"],
+      "@dfsNfl/*": ["src/app/dfs/nfl/*"]
     }
-  }
+  },
+  "exclude": ["schematics"]
 }
