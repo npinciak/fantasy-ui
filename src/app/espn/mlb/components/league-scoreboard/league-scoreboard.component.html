@@ -7,7 +7,7 @@
       <a mat-list-item (click)="viewTeam(team.teamId)" *ngFor="let team of teams">
         {{ team.liveScore }}
         <img matListAvatar [src]="team.teamLogo" [alt]="team.teamName" />
-        <h3 matLine data-test-id="scoreboardTeamName">{{ team.teamName }}</h3>
+        <h3 matLine>{{ team.teamName }}</h3>
       </a>
     </mat-nav-list>
   </mat-card-content>

@@ -11,7 +11,7 @@ import { WIND_MAP } from '@app/espn/weather/weather/models/maps/windDir.map';
 export class StadiumWeatherComponent implements OnChanges {
   @Input() event: BaseballGame;
 
-  // eslint-disable-next-line @typescript-eslint/naming-convention
+  //
   readonly WIND_MAP = WIND_MAP;
 
   constructor(readonly weatherFacade: WeatherFacade) {}
