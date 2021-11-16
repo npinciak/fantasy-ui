@@ -18,6 +18,7 @@
         "no-underscore-dangle": "off",
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": ["error"],
+        "@typescript-eslint/eqeqeq": ["smart"],
         "@typescript-eslint/naming-convention": [
           "error",
           {

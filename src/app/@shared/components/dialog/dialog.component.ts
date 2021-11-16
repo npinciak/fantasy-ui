@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PositiveEntityOrNegativeEntity } from '@app/dfs/models/slatePlayer.interface';
+import { PositiveEntityOrNegativeEntity } from '@app/dfs/mlb/models/slatePlayer.interface';
 
 @Component({
   selector: 'app-dialog',

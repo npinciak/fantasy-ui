@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-sticky-table-cell',
   templateUrl: './sticky-table-cell.component.html',
-  styles: ['.sticky-cell { min-width: 200px; }'],
+  styles: ['.sticky-cell { min-width: 150px; }'],
 })
 export class StickyTableCellComponent implements OnInit {
   constructor() {}
