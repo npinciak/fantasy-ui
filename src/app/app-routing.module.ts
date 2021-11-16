@@ -7,21 +7,23 @@ import { UrlFragments, UrlParams } from './@shared/urlBuilder';
 
 import { HomeComponent as MLBHomeComponent } from '@mlb/pages/home/home.component';
 import { HomeComponent as NFLHomeComponent } from '@espn/nfl/pages/home/home.component';
+import { NFLDfsResolver } from './dfs/nfl/resolvers/dfs.resolver';
+import { MLBDfsResolver } from './dfs/mlb/resolvers/dfs.resolver';
 
 const leagueId = environment.production ? '' : environment.leagueId;
 
 const routes: Routes = [
   {
     path: `${UrlFragments.Dfs}/mlb`,
-    component: MLBDFSHomeComponent,
+    component: MLBHomeComponent,
     resolve: { dfs: MLBDfsResolver },
-    children: [{ path: UrlFragments.Empty, component: MLBDFSHomeComponent }],
+    children: [{ path: UrlFragments.Empty, component: MLBHomeComponent }],
   },
   {
     path: `${UrlFragments.Dfs}/nfl`,
-    component: NFLDFSHomeComponent,
+    component: NFLHomeComponent,
     resolve: { dfs: NFLDfsResolver },
-    children: [{ path: UrlFragments.Empty, component: NFLDFSHomeComponent }],
+    children: [{ path: UrlFragments.Empty, component: NFLHomeComponent }],
   },
 
   { path: UrlFragments.Espn, component: MLBHomeComponent },
