@@ -13,7 +13,8 @@
     "lint:fix": "ng lint --fix",
     "e2e": "ng e2e",
     "createEnv:Dev": "node ./scripts/configEnv.ts",
-    "createEnv:Prod": "node ./scripts/configEnv.ts --environment=prod"
+    "createEnv:Prod": "node ./scripts/configEnv.ts --environment=prod",
+    "playground": "angular-playground"
   },
   "private": true,
   "dependencies": {
@@ -59,6 +60,7 @@
     "@types/node": "^12.20.15",
     "@typescript-eslint/eslint-plugin": "4.3.0",
     "@typescript-eslint/parser": "4.3.0",
+    "angular-playground": "^7.1.1",
     "codelyzer": "^6.0.0",
     "dotenv": "^10.0.0",
     "eslint": "^7.6.0",

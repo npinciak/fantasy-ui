@@ -19,7 +19,6 @@ export class RosterComponent implements OnInit, AfterViewInit {
   @Input() fantasyPlayers: BaseballPlayer[];
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   readonly StatType = StatTypeId;
   readonly rosterColumns = rosterColumns;
   readonly playerInfoColumn = PlayerInfoColumn;

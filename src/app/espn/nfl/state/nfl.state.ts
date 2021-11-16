@@ -4,8 +4,6 @@ import { State, Action, Selector, StateContext } from '@ngxs/store';
 import { EspnService } from '@espn/espn.service';
 import { NflStateModel } from './nfl.state.model';
 import { FetchFootballLeague } from '../actions/nfl.actions';
-import { entityMap } from '@app/@shared/operators';
-import { tap } from 'rxjs/operators';
 import { NflService } from '../services/nfl.service';
 @State<NflStateModel>({
   name: 'nfl',

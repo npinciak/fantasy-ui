@@ -25,7 +25,7 @@ const weights2021: SeasonConst = {
 const standingsColumns = {
   batting: {
     rotoValue: [
-      TeamColumn.rank,
+      // TeamColumn.rank,
       TeamColumn.name,
       RotoColumn.run,
       RotoColumn.homeRun,
@@ -34,11 +34,19 @@ const standingsColumns = {
       RotoColumn.avg,
       RotoColumn.battingTotal,
     ],
-    statValue: [TeamColumn.rank, TeamColumn.name, StatsColumn.run, StatsColumn.homeRun, StatsColumn.rbi, StatsColumn.sb, StatsColumn.avg],
+    statValue: [
+      // TeamColumn.rank,
+      TeamColumn.name,
+      StatsColumn.run,
+      StatsColumn.homeRun,
+      StatsColumn.rbi,
+      StatsColumn.sb,
+      StatsColumn.avg,
+    ],
   },
   pitching: {
     rotoValue: [
-      TeamColumn.rank,
+      // TeamColumn.rank,
       TeamColumn.name,
       RotoColumn.strikeOut,
       RotoColumn.win,
@@ -47,7 +55,14 @@ const standingsColumns = {
       RotoColumn.whip,
       RotoColumn.pitchingTotal,
     ],
-    statValue: [TeamColumn.rank, TeamColumn.name, StatsColumn.win, StatsColumn.save, StatsColumn.strikeOut, StatsColumn.whip],
+    statValue: [
+      // TeamColumn.rank,
+      TeamColumn.name,
+      StatsColumn.win,
+      StatsColumn.save,
+      StatsColumn.strikeOut,
+      StatsColumn.whip,
+    ],
   },
 };
 

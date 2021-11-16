@@ -15,7 +15,6 @@ import { MlbFacade } from '../../facade/mlb.facade';
 export class HomeComponent implements OnInit {
   readonly leagueId = this.activatedRoute.snapshot.params.leagueId;
 
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   readonly NO_GAMES_TEXT = ESPN_TEXT.NO_GAMES_TEXT;
 
   constructor(
