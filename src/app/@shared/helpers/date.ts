@@ -2,7 +2,7 @@
  *
  * @returns Date in format yyyymmdd
  */
-const currentDate = (delim?: string) => {
+const currentDate = <T>(delim?: T) => {
   const today = new Date();
 
   const day = today.getDate();
