@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port=4400 -o",
+    "start": "ng serve --port=4400",
     "build": "ng build --outputHashing=\"all\" && npm run createEnv:Prod",
     "generate:feature": " schematics ./schematics/feature/src/collection.json:feature --debug=false",
     "generate:state": "cd schematics/state && tsc -p tsconfig.json && cd ../.. && npx schematics ./schematics/state/src/collection.json:state --debug=false",

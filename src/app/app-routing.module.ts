@@ -7,11 +7,6 @@ import { UrlFragments, UrlParams } from './@shared/urlBuilder';
 
 import { HomeComponent as MLBHomeComponent } from '@mlb/pages/home/home.component';
 import { HomeComponent as NFLHomeComponent } from '@espn/nfl/pages/home/home.component';
-import { HomeComponent as MLBDFSHomeComponent } from './dfs/mlb/pages/home/home.component';
-import { HomeComponent as NFLDFSHomeComponent } from './dfs/nfl/pages/home/home.component';
-
-import { MLBDfsResolver } from './dfs/mlb/resolvers/dfs.resolver';
-import { NFLDfsResolver } from './dfs/nfl/resolvers/dfs.resolver';
 
 const leagueId = environment.production ? '' : environment.leagueId;
 
