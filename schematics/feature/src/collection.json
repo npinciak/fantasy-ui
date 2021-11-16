@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "feature": {
+      "description": "An empty feature module.",
+      "factory": "./feature/index#feature"
+    }
+  }
+}

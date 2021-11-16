@@ -1,13 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatLabel } from '@angular/material/form-field';
 import { ActivatedRoute } from '@angular/router';
-import { Game } from '@app/@shared/class';
-import { EspnService } from '@app/espn/espn.service';
+import { ChartDatasetProperties } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 import { ESPN_TEXT } from '../../../espn.const';
-import { BaseballGame } from '../../class';
 import { MlbGameFacade } from '../../facade/mlb-game.facade';
 import { MlbFacade } from '../../facade/mlb.facade';
-import { MockGame } from '../../mocks';
 
 @Component({
   selector: 'app-home',
@@ -20,9 +18,14 @@ export class HomeComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   readonly NO_GAMES_TEXT = ESPN_TEXT.NO_GAMES_TEXT;
 
-  constructor(readonly mlbFacade: MlbFacade, readonly mlbGameFacade: MlbGameFacade, private activatedRoute: ActivatedRoute) {}
+  constructor(
+    readonly mlbFacade: MlbFacade,
 
-  ngOnInit(): void {
+    readonly mlbGameFacade: MlbGameFacade,
+    private activatedRoute: ActivatedRoute
+  ) {}
+
+  ngOnInit() {
     this.mlbFacade.getLeague(this.leagueId);
   }
 }

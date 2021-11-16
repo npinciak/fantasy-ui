@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { WeatherFacade } from '@espn/weather/facade/weather.facade';
 import { BaseballGame } from '@app/espn/mlb/class/baseballGame.class';
+import { WeatherRequest } from '@app/espn/weather/weather/models/class';
 
 @Component({
   selector: 'app-scoreboard-event',
@@ -13,4 +14,10 @@ export class ScoreboardEventComponent implements OnInit {
   constructor(readonly weatherFacade: WeatherFacade) {}
 
   ngOnInit(): void {}
+
+  fetchWeatherForGame(event: BaseballGame) {
+    const weatherRequest = new WeatherRequest(event.location.latLng, event.gameDate.isoStartTime, event.gameDate.isoEstEndTime);
+
+    this.weatherFacade.fetchWeather(Number(event.gameId), weatherRequest);
+  }
 }

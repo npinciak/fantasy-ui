@@ -1,0 +1,85 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Live Scoreboard</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-paginator class="ml-1 my-1" [length]="dfsMatchup.length" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons> </mat-paginator>
+
+    <mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="team">
+        <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+        <mat-cell *matCellDef="let matchup">
+          {{ matchup?.team }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="vegas.o/u">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>o/u</mat-header-cell>
+        <mat-cell *matCellDef="let matchup">
+          {{ matchup?.vegas['o/u'] | number }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="teamTotal">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>teamTotal</mat-header-cell>
+        <mat-cell *matCellDef="let matchup" class="status-indicator" [ngClass]="threshold(matchup?.teamTotal, sport)">
+          {{ matchup?.teamTotal | number }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="vegas.movement">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>movement</mat-header-cell>
+        <mat-cell *matCellDef="let matchup">
+          <span [matTooltip]="movementTooltip(matchup?.vegas.movement, matchup?.teamTotal)">
+            {{ positiveChange(matchup?.vegas.movement) ? '+' : '' }}{{ matchup?.vegas.movement | number }}
+          </span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="vegas.line">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>line</mat-header-cell>
+        <mat-cell *matCellDef="let matchup"> {{ positiveChange(matchup?.vegas.line) ? '+' : '' }}{{ matchup?.vegas.line | number }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="opponentPitcher.name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>VS Pitcher</mat-header-cell>
+        <mat-cell *matCellDef="let matchup">
+          {{ matchup?.opponentPitcher.name }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="smashVal">
+        <mat-header-cell matTooltip="Percentage of top finishes for a team stack" *matHeaderCellDef mat-sort-header>smashVal</mat-header-cell>
+        <mat-cell *matCellDef="let matchup">
+          {{ matchup?.smashVal }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="stackDiff">
+        <mat-header-cell matTooltip="The percentage gap between estimated stack ownership and estimated team smash percentage." *matHeaderCellDef mat-sort-header
+          >stackDiff</mat-header-cell
+        >
+        <mat-cell *matCellDef="let matchup">
+          {{ matchup?.stackDiff }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="topValue">
+        <mat-header-cell matTooltip="Percentage of top points per salary finishes for a stack" *matHeaderCellDef mat-sort-header>Top Value</mat-header-cell>
+        <mat-cell *matCellDef="let matchup">
+          {{ matchup?.topValue }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="stackLeverage">
+        <mat-header-cell
+          matTooltip="A visualization of the potential advantage to be gained on your opponents if your team stack succeeds."
+          *matHeaderCellDef
+          mat-sort-header
+          >stackLeverage</mat-header-cell
+        >
+        <mat-cell *matCellDef="let matchup">
+          {{ matchup?.stackLeverage }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="stackValue">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>stackValue</mat-header-cell>
+        <mat-cell *matCellDef="let matchup">
+          {{ matchup?.stackValue }}
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
+      <mat-row *matRowDef="let rowData; columns: tableColumns"> </mat-row>
+    </mat-table> </mat-card-content
+></mat-card>

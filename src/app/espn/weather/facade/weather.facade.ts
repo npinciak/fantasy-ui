@@ -9,6 +9,7 @@ import { FetchWeather } from '../actions/weather.actions';
 import { WeatherState } from '../state/weather.state';
 import { CurrentConditionsMap } from '../weather/models/weather.state.model';
 import { WeatherSelector } from '../selectors/weather.selectors';
+import { WeatherRequest } from '../weather/models/class';
 
 @Injectable({
   providedIn: 'root',
@@ -28,5 +29,5 @@ export class WeatherFacade {
   weatherToGame = (id: number) => this.store.selectSnapshot(WeatherSelector.weatherToGame)(id);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  @Dispatch() fetchWeather = (game: BaseballGame) => new FetchWeather(game);
+  @Dispatch() fetchWeather = (gameId: number, request: WeatherRequest) => new FetchWeather({ gameId, request });
 }

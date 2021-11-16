@@ -1,0 +1,16 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Slates</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-action-list>
+      <ng-container *ngFor="let slate of slateList | keyvalue">
+        <h3 matLine>{{ slate.key }}</h3>
+
+        <button mat-list-item *ngFor="let item of slate.value" (click)="selectSlate.emit(item)">
+          {{ item.name }}
+        </button>
+      </ng-container>
+    </mat-action-list>
+  </mat-card-content>
+</mat-card>

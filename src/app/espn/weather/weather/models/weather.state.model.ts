@@ -1,8 +1,9 @@
 import { CurrentConditions } from './class';
-import { WeatherValues } from './interface/currentWeather.interface';
+import { IntervalsEntity, WeatherValues } from './interface/currentWeather.interface';
 
 class WeatherStateModel {
   map!: CurrentWeatherMap;
+  intervalsByGame!: { [id: number]: IntervalsEntity[] };
 }
 
 interface CurrentWeatherMap {
@@ -15,6 +16,7 @@ interface CurrentConditionsMap {
 
 const INITIAL_WEATHER_STATE: WeatherStateModel = {
   map: {},
+  intervalsByGame: {},
 };
 
 export { WeatherStateModel, CurrentWeatherMap, CurrentConditionsMap, INITIAL_WEATHER_STATE };

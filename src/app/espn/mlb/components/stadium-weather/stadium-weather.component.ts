@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { WeatherFacade } from '@espn/weather/facade/weather.facade';
 import { BaseballGame } from '@app/espn/mlb/class/baseballGame.class';
+import { WIND_MAP } from '@app/espn/weather/weather/models/maps/windDir.map';
 
 @Component({
   selector: 'app-stadium-weather',
@@ -9,6 +10,9 @@ import { BaseballGame } from '@app/espn/mlb/class/baseballGame.class';
 })
 export class StadiumWeatherComponent implements OnChanges {
   @Input() event: BaseballGame;
+
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  readonly WIND_MAP = WIND_MAP;
 
   constructor(readonly weatherFacade: WeatherFacade) {}
 

@@ -5,7 +5,11 @@
   "projects": {
     "sports-ui": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -144,10 +148,5 @@
       }
     }
   },
-  "defaultProject": "sports-ui",
-  "schematics": {
-    "@schematics/angular:component": {
-      "styleext": "scss"
-    }
-  }
+  "defaultProject": "sports-ui"
 }

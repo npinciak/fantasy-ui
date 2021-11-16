@@ -1,5 +1,6 @@
 import { WeatherValues } from '../interface/currentWeather.interface';
-import { PRECIPITATION_MAP, WEATHER_MAP } from '../maps';
+import { PRECIPITATION_MAP } from '../maps/precipCode.map';
+import { WEATHER_MAP } from '../maps/weatherCode.map';
 import { WeatherCode } from '../weather.enum';
 
 class CurrentConditions {
@@ -51,6 +52,7 @@ class CurrentConditions {
       gust: this._dataFields.windGust,
       speed: this._dataFields.windSpeed,
       directionRotate: `rotate(${this._dataFields.windDirection}deg)`,
+      degreeToCompass: Math.floor((this._dataFields.windDirection + 11.25) / 22.5),
     };
   }
 
