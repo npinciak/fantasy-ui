@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { currentDate } from '@app/@shared/helpers/date';
 import { ApiService } from '@app/@shared/services/api.service';
-import { UrlQueryParams } from '@app/@shared/urlBuilder';
+import { UrlQueryParams } from '@app/@shared/url-builder';
 import { DfsSite, DfsSport, DFS_MLB_TEAM_MAP } from '@app/dfs/dfs.const';
 import { DfsFacade } from '@app/dfs/mlb/facade/dfs.facade';
 import { SlateFacade } from '@app/dfs/mlb/facade/slate.facade';

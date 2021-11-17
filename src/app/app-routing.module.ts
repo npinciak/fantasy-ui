@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 import { TeamComponent } from '@mlb/pages/team/team.component';
-import { UrlFragments, UrlParams } from './@shared/urlBuilder';
+import { UrlFragments, UrlParams } from './@shared/url-builder';
 
 import { HomeComponent as MLBHomeComponent } from '@mlb/pages/home/home.component';
 import { HomeComponent as NFLHomeComponent } from '@espn/nfl/pages/home/home.component';
@@ -17,29 +17,41 @@ const leagueId = environment.production ? '' : environment.leagueId;
 
 const routes: Routes = [
   {
-    path: `${UrlFragments.Dfs}/mlb`,
-    component: MLBDfsHomeComponent,
-    resolve: { dfs: MLBDfsResolver },
-    children: [{ path: UrlFragments.Empty, component: MLBDfsHomeComponent }],
-  },
-  {
-    path: `${UrlFragments.Dfs}/nfl`,
-    component: NFLDfsHomeComponent,
-    resolve: { dfs: NFLDfsResolver },
-    children: [{ path: UrlFragments.Empty, component: NFLDfsHomeComponent }],
-  },
-
-  { path: UrlFragments.Espn, component: MLBHomeComponent },
-  {
-    path: `${UrlFragments.Espn}/${UrlFragments.MLB}/${UrlParams.LeagueId}`,
+    path: UrlFragments.Empty,
     children: [
-      { path: UrlFragments.Empty, component: MLBHomeComponent },
-      { path: `${UrlFragments.Team}/${UrlParams.TeamId}`, component: TeamComponent },
+      {
+        path: UrlFragments.Dfs,
+        children: [
+          { path: UrlFragments.MLB, resolve: { dfs: MLBDfsResolver }, component: MLBDfsHomeComponent },
+          { path: UrlFragments.NFL, resolve: { dfs: NFLDfsResolver }, component: NFLDfsHomeComponent },
+        ],
+      },
+      {
+        path: UrlFragments.Espn,
+        children: [
+          {
+            path: UrlFragments.MLB,
+            children: [
+              {
+                path: UrlParams.LeagueId,
+                component: MLBHomeComponent,
+                children: [{ path: UrlFragments.Team, children: [{ path: UrlParams.TeamId, component: TeamComponent }] }],
+              },
+            ],
+          },
+          {
+            path: UrlFragments.NFL,
+            children: [
+              {
+                path: UrlParams.LeagueId,
+                component: NFLHomeComponent,
+                children: [{ path: UrlFragments.Team, children: [{ path: UrlParams.TeamId, component: TeamComponent }] }],
+              },
+            ],
+          },
+        ],
+      },
     ],
-  },
-  {
-    path: `${UrlFragments.Espn}/${UrlFragments.NFL}/${UrlParams.LeagueId}`,
-    children: [{ path: UrlFragments.Empty, component: NFLHomeComponent }],
   },
   { path: '**', redirectTo: `${UrlFragments.Espn}/${UrlFragments.MLB}/${leagueId}`, pathMatch: 'full' },
 ];

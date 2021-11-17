@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GRID_TEMPLATE } from '@app/@shared/helpers/grid';
-import { UrlFragments, UrlQueryParams } from '@app/@shared/urlBuilder';
+import { UrlService } from '@app/@shared/services/url.service';
+import { UrlFragments, UrlQueryParams } from '@app/@shared/url-builder';
 
 @Component({
   selector: 'app-page-layout',
@@ -15,15 +16,15 @@ export class PageLayoutComponent implements OnInit {
   readonly URL_FRAGMENT = UrlFragments;
   readonly URL_QUERY_PARAMS = UrlQueryParams;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private urlService: UrlService) {}
 
   ngOnInit(): void {}
 
-  get dfsConfig() {
-    return this.router.navigate([`/${UrlFragments.Dfs}/${UrlFragments.NFL}`], { queryParams: { site: 'draftkings' } });
+  get dfsNflConfig() {
+    return this.router.navigate([this.urlService.getDfsNfl()], { queryParams: { site: 'draftkings' } });
   }
 
-  get dfsConfigMLB() {
-    return this.router.navigate([`/${UrlFragments.Dfs}/${UrlFragments.MLB}`], { queryParams: { site: 'draftkings' } });
+  get dfsMlbConfig() {
+    return this.router.navigate([this.urlService.getDfsMlb], { queryParams: { site: 'draftkings' } });
   }
 }

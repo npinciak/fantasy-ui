@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { UrlParams, UrlQueryParams } from '@app/@shared/urlBuilder';
+import { UrlParams, UrlQueryParams } from '@app/@shared/url-builder';
 import { Store } from '@ngxs/store';
 import { SlateFacade } from '../facade/slate.facade';
 import { FetchSlates } from '../state/dfs-slate.actions';

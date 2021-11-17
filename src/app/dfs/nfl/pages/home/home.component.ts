@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UrlQueryParams } from '@app/@shared/urlBuilder';
+import { UrlQueryParams } from '@app/@shared/url-builder';
 import { DfsSite } from '@app/dfs/dfs.const';
 import { DfsFacade } from '@app/dfs/mlb/facade/dfs.facade';
 import { SlateFacade } from '@app/dfs/mlb/facade/slate.facade';

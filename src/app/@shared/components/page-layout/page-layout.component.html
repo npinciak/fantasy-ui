@@ -4,16 +4,16 @@
   </button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item [routerLink]="['/espn']">
-      <span>Espn</span>
-    </button>
-    <button mat-menu-item (click)="(dfsConfigMLB)">
-      <span>DraftKings</span>
-    </button>
-    <button mat-menu-item (click)="(dfsConfig)">
-      <span>DraftKings NFL</span>
+      <span>Espn MLB</span>
     </button>
     <button mat-menu-item>
-      <span>NFL</span>
+      <span>Espn NFL</span>
+    </button>
+    <button mat-menu-item (click)="(dfsMlbConfig)">
+      <span>DraftKings MLB</span>
+    </button>
+    <button mat-menu-item (click)="(dfsNflConfig)">
+      <span>DraftKings NFL</span>
     </button>
   </mat-menu>
   <span>{{ pageTitle }}</span>
