@@ -31,6 +31,7 @@ import { NflDfsPlayerSlateState } from './dfs/nfl/state/nfl-dfs-player-slate.sta
 import { NflDfsTeamState } from './dfs/nfl/state/nfl-dfs-team.state';
 import { NflDfsLineupState } from './dfs/nfl/state/nfl-dfs-lineup.state';
 import { MlbEventState } from './espn/mlb/state/mlb-event.state';
+import { BaseballTeamState } from './espn/mlb/state/baseball-team.state';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -44,6 +45,7 @@ import { MlbEventState } from './espn/mlb/state/mlb-event.state';
     NgxsModule.forRoot(
       [
         CoreState,
+        BaseballTeamState,
         MlbState,
         MlbEventState,
         NflState,
