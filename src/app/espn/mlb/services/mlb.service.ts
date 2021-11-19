@@ -5,10 +5,13 @@ import { ApiService } from '@app/@shared/services/api.service';
 import { Sports } from '@app/espn/espn.service';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { EspnClientLeague, EspnClientEventList } from '../interface';
+import { EspnClientLeague, EspnClientEventList, EspnClientEvent } from '../interface';
 import { BaseballLeague } from '../models/baseball-league.model';
+import { MlbEvent } from '../models/mlb-event.model';
 
 const transformEspnClientLeagueToBaseballLeague = (espnLeague: EspnClientLeague): BaseballLeague => ({ ...espnLeague });
+// TODO create new FE MlbEvent Model
+const transformEspnClientEventListToMlbEventList = (espnEvents: EspnClientEvent[]): MlbEvent[] => espnEvents.map(event => event);
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +24,7 @@ export class MlbService {
 
   fetchEspnBaseball = (leagueId: number) => {
     const $fantasyLeague = this.baseballLeague(leagueId);
-    const $games = this._baseballEvents();
+    const $games = this.baseballEvents();
     return forkJoin([$fantasyLeague, $games]);
   };
 
@@ -44,10 +47,12 @@ export class MlbService {
    * @description Fetches espn fantasy api for current games for today
    * @returns list of events
    */
-  private readonly _baseballEvents = () =>
-    this.api.get<EspnClientEventList>(`${this.apiBase}/fantasy/v2/games/${Sports.baseball}/games`, {
-      params: this.baseballEventParams,
-    });
+  baseballEvents = (): Observable<MlbEvent[]> =>
+    this.api
+      .get<EspnClientEventList>(`${this.apiBase}/fantasy/v2/games/${Sports.baseball}/games`, {
+        params: this.baseballEventParams,
+      })
+      .pipe(map(res => transformEspnClientEventListToMlbEventList(res.events)));
 
   /**
    * @todo
@@ -55,7 +60,7 @@ export class MlbService {
   private get baseballEventParams() {
     let params = new HttpParams();
     params = params.append('useMap', 'true');
-    params = params.append('dates', currentDate());
+    params = params.append('dates', '20210809'); //currentDate());
     // params = params.append('pbpOnly', 'true');
     return params;
   }
@@ -70,11 +75,6 @@ export class MlbService {
     params = params.append('view', 'mRoster');
     params = params.append('view', 'mScoreboard');
     params = params.append('view', 'mTeam');
-
-    // params = params.append('view', 'mPendingTransactions');
-    // params = params.append('scoringPeriodId','');
-    // params = params.append('view', 'mStatus');
-    // params = params.append('view', 'mTransactions2');
     return params;
   }
 

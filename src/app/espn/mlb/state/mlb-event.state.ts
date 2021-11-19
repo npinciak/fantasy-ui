@@ -1,10 +1,17 @@
 import { Injectable } from '@angular/core';
-import { State, Selector } from '@ngxs/store';
+import { entityMap } from '@app/@shared/operators';
+import { State, Selector, Action, StateContext } from '@ngxs/store';
 
 import { EspnClientEvent } from '../interface';
+import { MlbEvent } from '../models/mlb-event.model';
+
+export class PatchEvents {
+  static readonly type = `[mlbEvents] PatchEvents`;
+  constructor(public payload: { events: MlbEvent[] }) {}
+}
 
 interface MlbEventStateModel {
-  map: { [id: string]: EspnClientEvent };
+  map: { [id: string]: MlbEvent };
 }
 
 @State<MlbEventStateModel>({
@@ -20,5 +27,10 @@ export class MlbEventState {
   @Selector()
   static getEventMap(state: MlbEventStateModel) {
     return state.map;
+  }
+
+  @Action(PatchEvents)
+  patchEvents(ctx: StateContext<MlbEventState>, { payload: { events } }: PatchEvents) {
+    ctx.patchState(entityMap(events, event => event.id));
   }
 }
