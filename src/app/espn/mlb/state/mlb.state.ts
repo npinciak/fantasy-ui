@@ -8,6 +8,7 @@ import { EventMap, MlbStateModel, TeamMap } from './mlb-state.model';
 import { FetchBaseballLeague, UpdateStatType } from '../actions/mlb.actions';
 import { MlbService } from '../services/mlb.service';
 import { PatchEvents } from './mlb-event.state';
+import { PatchTeams } from './baseball-team.state';
 
 @State<MlbStateModel>({
   name: 'mlb',
@@ -66,9 +67,10 @@ export class MlbState {
       return;
     }
 
-    await this.mlbService.baseballLeague(leagueId);
+    const league = await this.mlbService.baseballLeague(leagueId).toPromise();
     const events = await this.mlbService.baseballEvents().toPromise();
 
+    this.store.dispatch(new PatchTeams({ teams: league.teams }));
     this.store.dispatch(new PatchEvents({ events }));
   }
 

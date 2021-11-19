@@ -1,10 +1,16 @@
 import { Injectable } from '@angular/core';
-import { State, Selector } from '@ngxs/store';
+import { entityMap } from '@app/@shared/operators';
+import { State, Selector, Action, StateContext } from '@ngxs/store';
 
-import { BaseballTeam } from '../models/baseball-team.model';
+import { Team } from '../models/team.model';
+
+export class PatchTeams {
+  static readonly type = `[baseballTeam] PatchTeams`;
+  constructor(public payload: { teams: Team[] }) {}
+}
 
 interface BaseballTeamStateModel {
-  map: { [id: string]: BaseballTeam };
+  map: { [id: string]: Team };
 }
 
 @State<BaseballTeamStateModel>({
@@ -20,5 +26,10 @@ export class BaseballTeamState {
   @Selector()
   static getBaseballTeamMap(state: BaseballTeamStateModel) {
     return state.map;
+  }
+
+  @Action(PatchTeams)
+  patchTeams(ctx: StateContext<BaseballTeamState>, { payload: { teams } }: PatchTeams) {
+    ctx.patchState(entityMap(teams, team => team.id));
   }
 }

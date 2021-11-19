@@ -3,13 +3,31 @@ import { Injectable } from '@angular/core';
 import { currentDate } from '@app/@shared/helpers/date';
 import { ApiService } from '@app/@shared/services/api.service';
 import { Sports } from '@app/espn/espn.service';
+import { templateSettings } from 'lodash';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { EspnClientLeague, EspnClientEventList, EspnClientEvent } from '../interface';
+import { EspnClientLeague, EspnClientEventList, EspnClientEvent, EspnClientTeam } from '../interface';
 import { BaseballLeague } from '../models/baseball-league.model';
+import { BaseballTeam } from '../models/baseball-team.model';
 import { MlbEvent } from '../models/mlb-event.model';
+import { Team } from '../models/team.model';
 
-const transformEspnClientLeagueToBaseballLeague = (espnLeague: EspnClientLeague): BaseballLeague => ({ ...espnLeague });
+const transformEspnClientLeagueToBaseballLeague = (espnLeague: EspnClientLeague): BaseballLeague => ({
+  teams: transformEspnClientTeamListToTeamList(espnLeague.teams),
+});
+
+const transformEspnClientTeamListToTeamList = (teams: EspnClientTeam[]): Team[] =>
+  teams.map(team => ({
+    id: team.id.toString(),
+    name: team.nickname,
+    abbrev: team.abbrev,
+    logo: team.logo,
+    roster: team.roster.entries,
+    totalPoints: 0,
+    currentRank: 0,
+    rankDiff: 0,
+  }));
+
 // TODO create new FE MlbEvent Model
 const transformEspnClientEventListToMlbEventList = (espnEvents: EspnClientEvent[]): MlbEvent[] => espnEvents.map(event => event);
 
@@ -61,7 +79,6 @@ export class MlbService {
     let params = new HttpParams();
     params = params.append('useMap', 'true');
     params = params.append('dates', '20210809'); //currentDate());
-    // params = params.append('pbpOnly', 'true');
     return params;
   }
 

@@ -3,8 +3,8 @@ export interface Team {
   name: string;
   abbrev: string;
   logo: string;
-  roster: string;
-  totalPoints: string;
-  currentRank: string;
-  rankDiff: string;
+  roster: any;
+  totalPoints: number;
+  currentRank: number;
+  rankDiff: number;
 }
