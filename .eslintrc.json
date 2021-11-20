@@ -17,6 +17,7 @@
       "rules": {
         "no-underscore-dangle": "off",
         "no-shadow": "off",
+        "@typescript-eslint/prefer-for-of": "off",
         "@typescript-eslint/no-shadow": ["error"],
         "@typescript-eslint/naming-convention": [
           "error",

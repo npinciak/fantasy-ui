@@ -54,16 +54,13 @@ export const statsKeyMap = (obj): StatAbbrev => {
 
 export const pitcherKeys = new Set([MLBLineup.P, MLBLineup.SP, MLBLineup.RP, MLBLineup.P2]);
 
-export const isPitcher = eligiblePos => {
-  let count = 0;
-  for (const key in eligiblePos) {
-    if (Object.prototype.hasOwnProperty.call(eligiblePos, key)) {
-      if (pitcherKeys.has(+key)) {
-        count += 1;
-      }
+export const isPitcher = (eligiblePos: number[]): boolean => {
+  for (let i = 0; i < eligiblePos.length; i++) {
+    if (pitcherKeys.has(eligiblePos[i])) {
+      return true;
     }
+    return false;
   }
-  return count > 0;
 };
 
 export const logoImgBuilder = (league: 'mlb' | 'nfl', abbrev: string) =>

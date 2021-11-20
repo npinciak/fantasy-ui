@@ -6,8 +6,10 @@ import { Sports } from '@app/espn/espn.service';
 import { templateSettings } from 'lodash';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { isPitcher } from '../helpers';
 import { EspnClientLeague, EspnClientEventList, EspnClientEvent, EspnClientTeam, EspnClientPlayer } from '../interface';
 import { BaseballLeague } from '../models/baseball-league.model';
+import { BaseballPlayer } from '../models/baseball-player.model';
 import { BaseballTeam } from '../models/baseball-team.model';
 import { MlbEvent } from '../models/mlb-event.model';
 import { Player } from '../models/player.model';
@@ -23,13 +25,13 @@ const transformEspnClientTeamListToTeamList = (teams: EspnClientTeam[]): Team[] 
     name: team.nickname,
     abbrev: team.abbrev,
     logo: team.logo,
-    roster: transformEspnClientTeamPlayerListToPlayerList(team.roster.entries),
+    roster: transformEspnClientTeamPlayerListToBaseballPlayerList(team.roster.entries),
     totalPoints: 0,
     currentRank: 0,
     rankDiff: 0,
   }));
 
-const transformEspnClientTeamPlayerListToPlayerList = (players: EspnClientPlayer[]): Player[] =>
+const transformEspnClientTeamPlayerListToBaseballPlayerList = (players: EspnClientPlayer[]): BaseballPlayer[] =>
   players.map(player => ({
     id: player.playerId.toString(),
     name: player.playerPoolEntry.player.fullName,
@@ -40,6 +42,7 @@ const transformEspnClientTeamPlayerListToPlayerList = (players: EspnClientPlayer
       change: player.playerPoolEntry.player.ownership.percentChange,
       percentOwned: player.playerPoolEntry.player.ownership.percentOwned,
     },
+    isPitcher: isPitcher(player.playerPoolEntry.player.eligibleSlots),
   }));
 
 // TODO create new FE MlbEvent Model

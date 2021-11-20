@@ -11,4 +11,4 @@ export interface BaseballPlayerProperties {
   isPitcher: boolean;
 }
 
-export type BaseballPlayer = BaseballPlayerProperties & Player;
+export type BaseballPlayer = Partial<BaseballPlayerProperties> & Player;
