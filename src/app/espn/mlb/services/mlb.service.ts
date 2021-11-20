@@ -6,10 +6,11 @@ import { Sports } from '@app/espn/espn.service';
 import { templateSettings } from 'lodash';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { EspnClientLeague, EspnClientEventList, EspnClientEvent, EspnClientTeam } from '../interface';
+import { EspnClientLeague, EspnClientEventList, EspnClientEvent, EspnClientTeam, EspnClientPlayer } from '../interface';
 import { BaseballLeague } from '../models/baseball-league.model';
 import { BaseballTeam } from '../models/baseball-team.model';
 import { MlbEvent } from '../models/mlb-event.model';
+import { Player } from '../models/player.model';
 import { Team } from '../models/team.model';
 
 const transformEspnClientLeagueToBaseballLeague = (espnLeague: EspnClientLeague): BaseballLeague => ({
@@ -22,10 +23,23 @@ const transformEspnClientTeamListToTeamList = (teams: EspnClientTeam[]): Team[] 
     name: team.nickname,
     abbrev: team.abbrev,
     logo: team.logo,
-    roster: team.roster.entries,
+    roster: transformEspnClientTeamPlayerListToPlayerList(team.roster.entries),
     totalPoints: 0,
     currentRank: 0,
     rankDiff: 0,
+  }));
+
+const transformEspnClientTeamPlayerListToPlayerList = (players: EspnClientPlayer[]): Player[] =>
+  players.map(player => ({
+    id: player.playerId.toString(),
+    name: player.playerPoolEntry.player.fullName,
+    isInjured: player.playerPoolEntry.player.injured,
+    injuryStatus: player.playerPoolEntry.player.injuryStatus,
+    playerRatings: player.playerPoolEntry.ratings,
+    playerOwnership: {
+      change: player.playerPoolEntry.player.ownership.percentChange,
+      percentOwned: player.playerPoolEntry.player.ownership.percentOwned,
+    },
   }));
 
 // TODO create new FE MlbEvent Model
