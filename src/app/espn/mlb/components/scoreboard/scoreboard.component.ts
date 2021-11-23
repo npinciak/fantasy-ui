@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { WeatherFacade } from '@espn/weather/facade/weather.facade';
-import { BaseballGame } from '@app/espn/mlb/class/baseballGame.class';
 import { MlbEvent } from '../../models/mlb-event.model';
 
 @Component({

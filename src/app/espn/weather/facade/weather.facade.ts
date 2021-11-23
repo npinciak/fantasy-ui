@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BaseballGame } from '@app/espn/mlb/class/baseballGame.class';
 import { Dispatch } from '@ngxs-labs/dispatch-decorator';
-import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
-import { ActionCompletion, Actions, ofActionCompleted, ofActionSuccessful, Select, Store } from '@ngxs/store';
+import { ActionCompletion, Actions, ofActionSuccessful, Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { WeatherValues } from '../weather/models/interface/currentWeather.interface';
 import { FetchWeather } from '../actions/weather.actions';
 import { WeatherState } from '../state/weather.state';
 import { CurrentConditionsMap } from '../weather/models/weather.state.model';

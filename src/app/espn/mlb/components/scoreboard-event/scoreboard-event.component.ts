@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { WeatherFacade } from '@espn/weather/facade/weather.facade';
-import { BaseballGame } from '@app/espn/mlb/class/baseballGame.class';
-import { WeatherRequest } from '@app/espn/weather/weather/models/class';
 import { MlbEvent } from '../../models/mlb-event.model';
 
 @Component({
