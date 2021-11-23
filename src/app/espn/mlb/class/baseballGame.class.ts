@@ -12,6 +12,9 @@ import { MLB_STADIUM_MAP, MLB_TEAM } from '../consts/team.const';
 import { domeStadiums } from '../mlb.const';
 import { Game } from '@app/@shared/class';
 
+/**
+ * @deprecated
+ */
 export class BaseballGame extends Game {
   private _currentConditions: CurrentConditions;
 

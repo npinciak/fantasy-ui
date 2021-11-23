@@ -1,6 +1,9 @@
 import { Team } from '@app/@shared/class';
 import { statsKeyMap } from '../helpers';
 
+/**
+ * @deprecated
+ */
 export class BaseballTeam extends Team {
   private _liveScore;
 

@@ -5,6 +5,8 @@ import { EspnClientTeam } from '@app/espn/mlb/interface';
  *
  * @description FootballTeam, BaseballTeam classes should _extend_ this class. Ingests EspnClientTeam
  * @constructor EspnClientTeam
+ *
+ * @deprecated
  */
 export class Team {
   protected _team: EspnClientTeam;
