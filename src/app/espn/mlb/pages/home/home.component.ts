@@ -1,10 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatLabel } from '@angular/material/form-field';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ChartDatasetProperties } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
 import { ESPN_TEXT } from '../../../espn.const';
-import { MlbGameFacade } from '../../facade/mlb-game.facade';
+import { MlbEventFacade } from '../../facade/mlb-event.facade';
 import { MlbFacade } from '../../facade/mlb.facade';
 
 @Component({
@@ -17,12 +14,7 @@ export class HomeComponent implements OnInit {
 
   readonly NO_GAMES_TEXT = ESPN_TEXT.NO_GAMES_TEXT;
 
-  constructor(
-    readonly mlbFacade: MlbFacade,
-
-    readonly mlbGameFacade: MlbGameFacade,
-    private activatedRoute: ActivatedRoute
-  ) {}
+  constructor(readonly mlbFacade: MlbFacade, readonly mlbEventFacade: MlbEventFacade, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.mlbFacade.getLeague(this.leagueId);

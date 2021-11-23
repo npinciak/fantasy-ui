@@ -1,3 +1,11 @@
-import { EspnClientEvent } from '../interface';
+import { EspnClientCompetitor, EspnClientEvent } from '../interface';
 
-export type MlbEvent = EspnClientEvent;
+export interface MlbEventProperties {
+  id: string | null;
+  date: string | null;
+  summary: string | null;
+  teams: { [homeAway: string]: MlbEventTeams };
+}
+
+export type MlbEvent = MlbEventProperties;
+export type MlbEventTeams = EspnClientCompetitor[];

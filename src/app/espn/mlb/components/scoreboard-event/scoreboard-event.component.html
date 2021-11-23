@@ -1,56 +1,34 @@
 <mat-card class="game-card">
-  <mat-card-header>
-    <mat-card-title>
-      {{ event.summary.game }}
-    </mat-card-title>
-    <mat-card-subtitle>
-      {{ event.location.name }}
-    </mat-card-subtitle>
-  </mat-card-header>
   <mat-card-content>
     <table class="ui-margin-auto">
       <tr>
         <td class="game-team-logo">
-          <img height="55px" [src]="event.awayTeam.logo" />
+          <img height="55px" [src]="event.teams?.away.logo" />
           <br />
-          <span class="ui-font-weight-bold">{{ event.awayTeam.abbrev }}</span>
+          <span class="ui-font-weight-bold">{{ event.teams?.away.abbrev }}</span>
         </td>
         <td>
           <div class="game-score-container">
             <div class="game-score-item">
-              <span [class.game-score-winner]="event.awayTeam.isWinner"> {{ event.awayTeam.score }}</span>
+              <span [class.game-score-winner]="event.teams?.away.isWinner"> {{ event.teams?.away.score }}</span>
             </div>
             <div class="game-score-item">:</div>
             <div class="game-score-item">
-              <span [class.game-score-winner]="event.homeTeam.isWinner"> {{ event.homeTeam.score }}</span>
+              <span [class.game-score-winner]="event.teams?.home.isWinner"> {{ event.teams?.home.score }}</span>
             </div>
           </div>
           <div class="game-summary-container">
             <div class="game-summary">
-              {{ event.summary.event }}
+              {{ event?.summary }}
             </div>
           </div>
         </td>
         <td class="game-team-logo">
-          <img height="55px" [src]="event.homeTeam.logo" />
+          <img height="55px" [src]="event.teams?.home.logo" />
           <br />
-          <span class="ui-font-weight-bold">{{ event.homeTeam.abbrev }}</span>
+          <span class="ui-font-weight-bold">{{ event.teams?.home.abbrev }}</span>
         </td>
       </tr>
     </table>
   </mat-card-content>
-  <mat-card-actions style="text-align: center">
-    <button
-      class="ui-w-100"
-      mat-flat-button
-      [disabled]="event.location.disableWeather || weatherFacade.weatherByGameIdExists(+event.gameId)"
-      (click)="fetchWeatherForGame(event)"
-    >
-      {{ event.location.isDome ? 'In Dome' : 'Weather' }}
-    </button>
-  </mat-card-actions>
 </mat-card>
-
-<ng-container *ngIf="weatherFacade.weatherByGameIdExists(+event.gameId)">
-  <app-stadium-weather [event]="weatherFacade.weatherToGame(+event.gameId)"></app-stadium-weather>
-</ng-container>

@@ -45,8 +45,24 @@ const transformEspnClientTeamPlayerListToBaseballPlayerList = (players: EspnClie
     isPitcher: isPitcher(player.playerPoolEntry.player.eligibleSlots),
   }));
 
-// TODO create new FE MlbEvent Model
-const transformEspnClientEventListToMlbEventList = (espnEvents: EspnClientEvent[]): MlbEvent[] => espnEvents.map(event => event);
+const transformEspnClientEventListToMlbEventList = (events: EspnClientEvent[]): MlbEvent[] =>
+  events.map(event => ({
+    id: event.id,
+    date: event.date,
+    summary: event.summary,
+    teams: transformCompetitorToTeam(event.competitors),
+  }));
+
+const transformCompetitorToTeam = (competitors: EspnClientCompetitor[]): { [homeAway: string]: MlbEventTeams } =>
+  competitors.reduce((acc, val, i) => {
+    acc[val.homeAway] = {
+      score: val.score,
+      abbrev: val.abbreviation,
+      logo: logoImgBuilder('mlb', val.abbreviation),
+      isWinner: val.winner,
+    };
+    return acc;
+  }, {});
 
 @Injectable({
   providedIn: 'root',
