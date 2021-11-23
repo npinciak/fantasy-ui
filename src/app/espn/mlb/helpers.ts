@@ -1,26 +1,5 @@
-import { EspnClientPlayer } from './interface';
 import { MLB_STATS, StatAbbrev } from './consts/stats.const';
 import { MLBLineup } from './mlb.enums';
-import { BaseballPlayerMap, BaseballTeamMap, ScheduleMap } from './state/mlb-state.model';
-import { BaseballPlayer } from './class/baseballPlayer.class';
-
-export const espnPlayerToBaseballPlayerMap = (roster: EspnClientPlayer[]): BaseballPlayerMap | null => {
-  const map: BaseballPlayerMap = {};
-  roster.map(player => {
-    const baseballPlayer = new BaseballPlayer(player);
-    map[player.playerId] = baseballPlayer;
-  });
-  return map;
-};
-
-export const baseballTeamLiveScoreMap = (teams: BaseballTeamMap, schedule: ScheduleMap): BaseballTeamMap => {
-  const map: BaseballTeamMap = {};
-  for (const team of Object.values(teams)) {
-    team.liveScore = schedule[team.teamId].totalPointsLive;
-    map[team.teamId] = team;
-  }
-  return map;
-};
 
 export const statsKeyMap = (obj): StatAbbrev => {
   const map: StatAbbrev = {};
