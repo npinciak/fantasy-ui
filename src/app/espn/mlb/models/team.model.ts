@@ -1,5 +1,4 @@
 import { BaseballPlayer } from './baseball-player.model';
-import { Player } from './player.model';
 
 export interface Team {
   id: string;
@@ -9,5 +8,4 @@ export interface Team {
   roster: BaseballPlayer[];
   totalPoints: number;
   currentRank: number;
-  rankDiff: number;
 }
