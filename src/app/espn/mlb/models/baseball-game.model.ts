@@ -1,12 +1,8 @@
-import { ScoreboardGameLocation, ScoreboardGameSummary, ScoreboardGameTeam } from '../interface/game';
-import { Game } from './game.model';
-
+import { EspnClientCompetitor, EspnClientEvent } from '../interface';
 export interface BaseballGameProperties {
-  homeTeam: ScoreboardGameTeam;
-  awayTeam: ScoreboardGameTeam;
-  summary: ScoreboardGameSummary;
-  location: ScoreboardGameLocation;
-  disableWeather: boolean;
+  id: string | null;
+  date: string | null;
+  teams: EspnClientCompetitor[];
 }
 
-export type BaseballGame = BaseballGameProperties & Game;
+export type BaseballGame = BaseballGameProperties & Partial<EspnClientEvent>;
