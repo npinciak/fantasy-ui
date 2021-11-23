@@ -26,7 +26,6 @@ export class WeatherFacade {
 
   weatherByGameIdExists = (id: number) => this.store.selectSnapshot(WeatherSelector.weatherByGameIdExists)(id);
   selectWeatherByGameId = (id: number) => this.store.selectSnapshot(WeatherSelector.selectWeatherByGameId)(id);
-  weatherToGame = (id: number) => this.store.selectSnapshot(WeatherSelector.weatherToGame)(id);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   @Dispatch() fetchWeather = (gameId: number, request: WeatherRequest) => new FetchWeather({ gameId, request });
