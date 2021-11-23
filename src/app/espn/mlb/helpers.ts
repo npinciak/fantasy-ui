@@ -1,17 +1,9 @@
-import { BaseballGame, BaseballPlayer, BaseballTeam } from './class';
 import { EspnClientPlayer } from './interface';
 import { MLB_STATS, StatAbbrev } from './consts/stats.const';
 import { MLBLineup } from './mlb.enums';
 import { BaseballGameMap, BaseballPlayerMap, BaseballTeamMap, EventMap, ScheduleMap, TeamMap } from './state/mlb-state.model';
-
-export const espnTeamsToBaseballTeamsMap = (teams: TeamMap): BaseballTeamMap | null => {
-  const map: BaseballTeamMap = {};
-  for (const team of Object.values(teams)) {
-    const baseballTeam = new BaseballTeam(team);
-    map[team.id] = baseballTeam;
-  }
-  return map;
-};
+import { BaseballGame } from './class/baseballGame.class';
+import { BaseballPlayer } from './class/baseballPlayer.class';
 
 export const espnPlayerToBaseballPlayerMap = (roster: EspnClientPlayer[]): BaseballPlayerMap | null => {
   const map: BaseballPlayerMap = {};

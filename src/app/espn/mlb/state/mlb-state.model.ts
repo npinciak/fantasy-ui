@@ -1,8 +1,8 @@
 import { BaseballGame } from '../class/baseballGame.class';
 import { BaseballPlayer } from '../class/baseballPlayer.class';
-import { BaseballTeam } from '../class/baseballTeam.class';
+import { BaseballTeam } from '../models/baseball-team.model';
 import { EspnClientEvent, EspnClientTeam } from '../interface';
-import { EspnClientScheduleEntry, EspnClientScheduleTeams } from '../interface/league';
+import { EspnClientScheduleTeams } from '../interface/league';
 
 interface MlbStateModel {
   statTypeId: number;

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { BaseballTeam } from '../../class';
-import { MlbTeamFacade } from '../../facade/mlb-team.facade';
 
 @Component({
   selector: 'app-team',
@@ -10,9 +8,9 @@ import { MlbTeamFacade } from '../../facade/mlb-team.facade';
   styleUrls: ['./team.component.scss'],
 })
 export class TeamComponent implements OnInit {
-  public dataSource = new MatTableDataSource<BaseballTeam>();
+  public dataSource = new MatTableDataSource<any>();
 
-  constructor(readonly mlbTeamFacade: MlbTeamFacade, private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {}
 
