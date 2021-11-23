@@ -1,4 +1,3 @@
-import { BaseballPlayerMap, BaseballTeamMap, EventMap, GameMap, TeamMap } from '@app/espn/mlb/state/mlb-state.model';
 import { CurrentConditions } from '@espn/weather/weather/models/class';
 import { WeatherValues } from '@espn/weather/weather/models/interface/currentWeather.interface';
 
