@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { entityMap } from '@app/@shared/operators';
+import { entityMap, setMap } from '@app/@shared/operators';
 import { State, Selector, Action, StateContext } from '@ngxs/store';
 
 import { Team } from '../models/team.model';
@@ -29,7 +29,7 @@ export class BaseballTeamState {
   }
 
   @Action(PatchTeams)
-  patchTeams(ctx: StateContext<BaseballTeamState>, { payload: { teams } }: PatchTeams) {
-    ctx.patchState(entityMap(teams, team => team.id));
+  patchTeams(ctx: StateContext<BaseballTeamStateModel>, { payload: { teams } }: PatchTeams) {
+    ctx.setState(setMap(teams, team => team.id));
   }
 }

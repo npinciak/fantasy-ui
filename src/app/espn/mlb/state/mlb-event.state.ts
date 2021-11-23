@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { entityMap } from '@app/@shared/operators';
+import { entityMap, setMap } from '@app/@shared/operators';
 import { State, Selector, Action, StateContext } from '@ngxs/store';
 
 import { EspnClientEvent } from '../interface';
@@ -30,7 +30,7 @@ export class MlbEventState {
   }
 
   @Action(PatchEvents)
-  patchEvents(ctx: StateContext<MlbEventState>, { payload: { events } }: PatchEvents) {
-    ctx.patchState(entityMap(events, event => event.id));
+  patchEvents(ctx: StateContext<MlbEventStateModel>, { payload: { events } }: PatchEvents) {
+    ctx.setState(setMap(events, event => event.id));
   }
 }
