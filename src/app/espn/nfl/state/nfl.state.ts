@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { State, Action, Selector, StateContext } from '@ngxs/store';
+import { State, Action, Selector, StateContext, Store } from '@ngxs/store';
 
 import { EspnService } from '@espn/espn.service';
 import { NflStateModel } from './nfl.state.model';
 import { FetchFootballLeague } from '../actions/nfl.actions';
 import { NflService } from '../services/nfl.service';
+import { PatchEvents } from './nfl-event.state';
 @State<NflStateModel>({
   name: 'nfl',
   defaults: {
@@ -17,7 +18,7 @@ import { NflService } from '../services/nfl.service';
 })
 @Injectable()
 export class NflState {
-  constructor(private nflService: NflService) {}
+  constructor(private nflService: NflService, private store: Store) {}
 
   @Selector()
   static scoringPeriod(state: NflStateModel) {
@@ -25,12 +26,15 @@ export class NflState {
   }
 
   @Action(FetchFootballLeague)
-  footballLeague(ctx: StateContext<NflStateModel>, { leagueId }: FetchFootballLeague) {
-    if (NflState.scoringPeriod !== null) {
-      console.log(`League ${leagueId} already in state, retrieving cache`);
-      return;
-    }
+  async footballLeague(ctx: StateContext<NflStateModel>, { leagueId }: FetchFootballLeague) {
+    // if (NflState.scoringPeriod !== null) {
+    //   console.log(`League ${leagueId} already in state, retrieving cache`);
+    //   return;
+    // }
 
-    return this.nflService.fetchFootballLeague(leagueId);
+    const league = await this.nflService.footballLeague(leagueId).toPromise();
+    const events = await this.nflService.footballEvents().toPromise();
+
+    this.store.dispatch(new PatchEvents({ events }));
   }
 }

@@ -3,7 +3,7 @@
     <mat-button-toggle-group class="small" #group="matButtonToggleGroup" [value]="viewOptions">
       <!-- <mat-button-toggle [value]="StatType.season" ariaLabelledby="Stat View" (change)="updateView($event)">
                 season</mat-button-toggle> -->
-      <mat-button-toggle [value]="StatType.last7Days" ariaLabelledby="Stat View" (change)="mlbTeamFacade.updateStatType($event.value)">
+      <!-- <mat-button-toggle [value]="StatType.last7Days" ariaLabelledby="Stat View" (change)="mlbTeamFacade.updateStatType($event.value)">
         l7
       </mat-button-toggle>
       <mat-button-toggle [value]="StatType.last15Days" ariaLabelledby="Stat View" (change)="mlbTeamFacade.updateStatType($event.value)">
@@ -11,7 +11,7 @@
       </mat-button-toggle>
       <mat-button-toggle [value]="StatType.last30Days" ariaLabelledby="Stat View" (change)="mlbTeamFacade.updateStatType($event.value)">
         l30
-      </mat-button-toggle>
+      </mat-button-toggle> -->
     </mat-button-toggle-group>
     <div style="padding: 20px 0"></div>
 
@@ -37,9 +37,7 @@
           <ng-container matColumnDef="h">
             <mat-header-cell *matHeaderCellDef mat-sort-header>h/ab</mat-header-cell>
             <mat-cell *matCellDef="let player">
-              {{ player.playerStats[this.mlbTeamFacade.statTypeId$ | async]?.h }}/{{
-                player.playerStats[this.mlbTeamFacade.statTypeId$ | async]?.ab
-              }}
+              {{ player.playerStats[this.mlbTeamFacade.statTypeId$ | async]?.h }}/{{ player.playerStats[this.mlbTeamFacade.statTypeId$ | async]?.ab }}
             </mat-cell>
           </ng-container>
           <ng-container matColumnDef="rc">

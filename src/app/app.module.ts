@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { EspnModule } from './espn/espn.module';
@@ -22,7 +21,6 @@ import { SharedModule } from './@shared/shared.module';
 import { NflState } from './espn/nfl/state/nfl.state';
 import { MlbDfsState } from './dfs/mlb/state/mlb-dfs.state';
 import { DfsModule } from './dfs/dfs.module';
-import { NgChartsModule } from 'ng2-charts';
 import { DfsSlateState } from './dfs/mlb/state/dfs-slate.state';
 import { NflDfsState } from './dfs/nfl/state/nfl-dfs.state';
 import { NflDfsProfilerState } from './dfs/nfl/state/nfl-dfs-profiler.state';
@@ -32,6 +30,7 @@ import { NflDfsTeamState } from './dfs/nfl/state/nfl-dfs-team.state';
 import { NflDfsLineupState } from './dfs/nfl/state/nfl-dfs-lineup.state';
 import { MlbEventState } from './espn/mlb/state/mlb-event.state';
 import { BaseballTeamState } from './espn/mlb/state/baseball-team.state';
+import { NflEventState } from './espn/nfl/state/nfl-event.state';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -49,6 +48,7 @@ import { BaseballTeamState } from './espn/mlb/state/baseball-team.state';
         MlbState,
         MlbEventState,
         NflState,
+        NflEventState,
         WeatherState,
         MlbDfsState,
         NflDfsState,

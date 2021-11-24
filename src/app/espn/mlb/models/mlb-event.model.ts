@@ -1,4 +1,4 @@
-import { EspnClientCompetitor, EspnClientEvent } from '../interface';
+import { EspnClientCompetitor } from '../interface';
 
 export interface MlbEventProperties {
   id: string | null;

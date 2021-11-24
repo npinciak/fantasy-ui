@@ -4,7 +4,43 @@
       <!-- <app-league-scoreboard [teams]="nflFacade.liveScore$ | async"></app-league-scoreboard> -->
     </div>
     <div fxLayout="column" fxFlex="70%">
-      <!-- <app-scoreboard [events]="nflFacade.selectEventList$ | async"></app-scoreboard> -->
+      <ng-container *ngFor="let event of nflEventFacade.selectEventList$ | async">
+        <mat-card class="game-card">
+          <mat-card-content>
+            <table class="ui-margin-auto">
+              <tr>
+                <td class="game-team-logo">
+                  <img height="55px" [src]="event.teams?.away.logo" />
+                  <br />
+                  <span class="ui-font-weight-bold">{{ event.teams?.away.abbrev }}</span>
+                </td>
+                <td>
+                  <div class="game-score-container">
+                    <div class="game-score-item">
+                      <span [class.game-score-winner]="event.teams?.away.isWinner"> {{ event.teams?.away.score }}</span>
+                    </div>
+                    <div class="game-score-item">:</div>
+                    <div class="game-score-item">
+                      <span [class.game-score-winner]="event.teams?.home.isWinner"> {{ event.teams?.home.score }}</span>
+                    </div>
+                  </div>
+                  <div class="game-summary-container">
+                    <div class="game-summary">
+                      {{ event?.summary }}
+                    </div>
+                  </div>
+                </td>
+                <td class="game-team-logo">
+                  <img height="55px" [src]="event.teams?.home.logo" />
+                  <br />
+                  <span class="ui-font-weight-bold">{{ event.teams?.home.abbrev }}</span>
+                </td>
+              </tr>
+            </table>
+          </mat-card-content>
+        </mat-card>
+      </ng-container>
+
       <div style="padding: 20px 0"></div>
       <!-- <app-standings [teams]="mlbFacade.standings$ | async"></app-standings> -->
     </div>
