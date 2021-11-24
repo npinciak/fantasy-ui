@@ -1,19 +1,29 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { currentDate } from '@app/@shared/helpers/date';
-import { ApiService } from '@app/@shared/services/api.service';
-import { Sports } from '@app/espn/espn.service';
-import { templateSettings } from 'lodash';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { isPitcher } from '../helpers';
-import { EspnClientLeague, EspnClientEventList, EspnClientEvent, EspnClientTeam, EspnClientPlayer } from '../interface';
+
+import { ApiService } from '@app/@shared/services/api.service';
+import { EspnService, Sports } from '@app/espn/espn.service';
+import { isPitcher, logoImgBuilder } from '../helpers';
 import { BaseballLeague } from '../models/baseball-league.model';
 import { BaseballPlayer } from '../models/baseball-player.model';
-import { BaseballTeam } from '../models/baseball-team.model';
-import { MlbEvent } from '../models/mlb-event.model';
-import { Player } from '../models/player.model';
+import { MlbEvent, MlbEventTeams } from '../models/mlb-event.model';
 import { Team } from '../models/team.model';
+import { EspnClientCompetitor, EspnClientEvent, EspnClientLeague, EspnClientPlayer, EspnClientTeam } from '@app/espn/espn-client.model';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class MlbService {
+  constructor(private espnClient: EspnService) {}
+
+  baseballLeague = (leagueId: number): Observable<BaseballLeague> =>
+    this.espnClient.espnFantasyLeagueBySport(leagueId, Sports.baseball).pipe(map(res => transformEspnClientLeagueToBaseballLeague(res)));
+
+  baseballEvents = (): Observable<MlbEvent[]> =>
+    this.espnClient.espnFantasyEventsBySport(Sports.baseball).pipe(map(res => transformEspnClientEventListToMlbEventList(res.events)));
+}
 
 const transformEspnClientLeagueToBaseballLeague = (espnLeague: EspnClientLeague): BaseballLeague => ({
   teams: transformEspnClientTeamListToTeamList(espnLeague.teams),
@@ -22,13 +32,12 @@ const transformEspnClientLeagueToBaseballLeague = (espnLeague: EspnClientLeague)
 const transformEspnClientTeamListToTeamList = (teams: EspnClientTeam[]): Team[] =>
   teams.map(team => ({
     id: team.id.toString(),
-    name: team.nickname,
+    name: `${team.location} ${team.nickname}`,
     abbrev: team.abbrev,
     logo: team.logo,
     roster: transformEspnClientTeamPlayerListToBaseballPlayerList(team.roster.entries),
-    totalPoints: 0,
-    currentRank: 0,
-    rankDiff: 0,
+    totalPoints: team.points,
+    currentRank: team.playoffSeed,
   }));
 
 const transformEspnClientTeamPlayerListToBaseballPlayerList = (players: EspnClientPlayer[]): BaseballPlayer[] =>
@@ -63,75 +72,3 @@ const transformCompetitorToTeam = (competitors: EspnClientCompetitor[]): { [home
     };
     return acc;
   }, {});
-
-@Injectable({
-  providedIn: 'root',
-})
-export class MlbService {
-  private readonly fantasyBase = 'https://fantasy.espn.com/apis/v3';
-  private readonly apiBase = 'https://site.api.espn.com/apis';
-
-  constructor(private api: ApiService) {}
-
-  fetchEspnBaseball = (leagueId: number) => {
-    const $fantasyLeague = this.baseballLeague(leagueId);
-    const $games = this.baseballEvents();
-    return forkJoin([$fantasyLeague, $games]);
-  };
-
-  /**
-   * Retrieve league information
-   *
-   * @param leagueId League Id
-   * @returns League object
-   */
-  baseballLeague = (leagueId: number): Observable<BaseballLeague> =>
-    this.api
-      .get<EspnClientLeague>(`${this.fantasyBase}/games/${Sports.baseball}/seasons/${this.currentYear}/segments/0/leagues/${leagueId}`, {
-        params: this.params,
-      })
-      .pipe(map(res => transformEspnClientLeagueToBaseballLeague(res)));
-
-  /**
-   * Retrieve games for current date
-   *
-   * @description Fetches espn fantasy api for current games for today
-   * @returns list of events
-   */
-  baseballEvents = (): Observable<MlbEvent[]> =>
-    this.api
-      .get<EspnClientEventList>(`${this.apiBase}/fantasy/v2/games/${Sports.baseball}/games`, {
-        params: this.baseballEventParams,
-      })
-      .pipe(map(res => transformEspnClientEventListToMlbEventList(res.events)));
-
-  /**
-   * @todo
-   */
-  private get baseballEventParams() {
-    let params = new HttpParams();
-    params = params.append('useMap', 'true');
-    params = params.append('dates', '20210809'); //currentDate());
-    return params;
-  }
-
-  /**
-   * @todo
-   */
-  private get params() {
-    let params = new HttpParams();
-    params = params.append('view', 'mLiveScoring');
-    params = params.append('view', 'mMatchupScore');
-    params = params.append('view', 'mRoster');
-    params = params.append('view', 'mScoreboard');
-    params = params.append('view', 'mTeam');
-    return params;
-  }
-
-  /**
-   * @todo
-   */
-  private get currentYear() {
-    return new Date().getFullYear();
-  }
-}

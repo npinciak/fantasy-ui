@@ -1,64 +1,42 @@
-import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { currentDate } from '@app/@shared/helpers/date';
-import { ApiService } from '@app/@shared/services/api.service';
-import { API_BASE, FANTASY_BASE } from '@app/espn/espn.const';
-import { EspnClientEventList, EspnClientLeague } from '@app/espn/mlb/interface';
-import { forkJoin, of } from 'rxjs';
+import { EspnClientEvent, EspnClientLeague } from '@app/espn/espn-client.model';
+import { EspnService, Sports } from '@app/espn/espn.service';
+import { logoImgBuilder } from '@app/espn/mlb/helpers';
+import { EspnClientCompetitor } from '@app/espn/mlb/interface';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { NflEvent, NflEventTeams } from '../models/nfl-event.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NflService {
-  private readonly currentYear = new Date().getFullYear();
-  private readonly fantasyBase = `${FANTASY_BASE}/games/flb/seasons/${this.currentYear}/segments/0/leagues/`;
+  constructor(private espnClient: EspnService) {}
 
-  constructor(private api: ApiService) {}
+  footballLeague = (leagueId: number): Observable<any> =>
+    this.espnClient.espnFantasyLeagueBySport(leagueId, Sports.football).pipe(map(res => transformEspnClientLeagueToFootballLeague(res)));
 
-  fetchFootballLeague = (leagueId: number) => {
-    const fantasyLeague$ = this._footballLeague(leagueId);
-    const games$ = this._footballEvents();
-    return forkJoin([fantasyLeague$, games$]);
-  };
-
-  /**
-   * Retrieve league information
-   *
-   * @param leagueId League Id
-   * @returns EspnClientLeague
-   */
-  private readonly _footballLeague = (leagueId: number) =>
-    this.api.get<EspnClientLeague>(this.fantasyBase + leagueId, { params: this.params });
-
-  /**
-   * Retrieve games for current date
-   *
-   * @description Fetches espn fantasy api for current games for today
-   * @returns list of events
-   */
-  private readonly _footballEvents = () =>
-    this.api.get<EspnClientEventList>(`${API_BASE}/games/flb/games`, { params: this.footballEventParams });
-
-  /**
-   * @todo
-   */
-  private get params() {
-    let params = new HttpParams();
-    params = params.append('view', 'mLiveScoring');
-    params = params.append('view', 'mMatchupScore');
-    params = params.append('view', 'mRoster');
-    params = params.append('view', 'mScoreboard');
-    params = params.append('view', 'mTeam');
-    return params;
-  }
-
-  /**
-   * @todo
-   */
-  private get footballEventParams() {
-    let params = new HttpParams();
-    params = params.append('useMap', 'true');
-    params = params.append('dates', currentDate());
-    return params;
-  }
+  footballEvents = (): Observable<NflEvent[]> =>
+    this.espnClient.espnFantasyEventsBySport(Sports.football).pipe(map(res => transformEspnClientEventListToNflEventList(res.events)));
 }
+
+const transformEspnClientLeagueToFootballLeague = (espnLeague: EspnClientLeague) => espnLeague;
+
+const transformEspnClientEventListToNflEventList = (events: EspnClientEvent[]): NflEvent[] =>
+  events.map(event => ({
+    id: event.id,
+    date: event.date,
+    summary: event.summary,
+    teams: transformCompetitorToTeam(event.competitors),
+  }));
+
+const transformCompetitorToTeam = (competitors: EspnClientCompetitor[]): { [homeAway: string]: NflEventTeams } =>
+  competitors.reduce((acc, val, i) => {
+    acc[val.homeAway] = {
+      score: val.score,
+      abbrev: val.abbreviation,
+      logo: logoImgBuilder('nfl', val.abbreviation),
+      isWinner: val.winner,
+    };
+    return acc;
+  }, {});
