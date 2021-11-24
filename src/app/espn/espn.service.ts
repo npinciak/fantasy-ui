@@ -4,7 +4,6 @@ import { forkJoin, of } from 'rxjs';
 import { currentDate } from 'src/app/@shared/helpers/date';
 
 import { ApiService } from 'src/app/@shared/services/api.service';
-import { Filter } from '@mlb/class';
 import { EspnClientEventList, EspnClientLeague } from '@mlb/interface';
 
 export enum Sports {

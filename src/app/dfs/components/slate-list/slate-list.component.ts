@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DfsSite } from '@app/dfs/dfs.const';
 import { DfsFacade } from '@app/dfs/mlb/facade/dfs.facade';
 import { DfsSlate } from '@app/dfs/mlb/models/slateMaster.interface';
 import { SlateType } from '@app/dfs/mlb/selectors/slate.selector';

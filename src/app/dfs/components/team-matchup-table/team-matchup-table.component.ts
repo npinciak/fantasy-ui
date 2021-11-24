@@ -4,7 +4,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { sortAccessor } from '@app/@shared/helpers/sort';
 import { DfsMatchup } from '@app/dfs/mlb/class/matchup.class';
-import { DfsPlayer } from '@app/dfs/mlb/class/player.class';
 
 @Component({
   selector: 'app-team-matchup-table',

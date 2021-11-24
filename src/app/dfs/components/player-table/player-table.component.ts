@@ -8,10 +8,7 @@ import { sortAccessor } from '@app/@shared/helpers/sort';
 import { DfsPlayer } from '@app/dfs/mlb/class/player.class';
 import { DFS_TOOLTIPS, positionFilter, ThresholdClass, tierFilter } from '@app/dfs/dfs.const';
 import { DfsFacade } from '@app/dfs/mlb/facade/dfs.facade';
-import { SlatePlayerAttr } from '@app/dfs/mlb/models/slatePlayer.interface';
-import { MlbPlayerSlateAttrSelectors } from '@app/dfs/mlb/selectors/playerSlateAttr.selector';
 import { TableColumn } from '@app/dfs/mlb/selectors/table.selector';
-import { BaseballPlayer } from '@app/espn/mlb/class';
 
 export enum FilterType {
   team,

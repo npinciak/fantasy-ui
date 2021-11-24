@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { entityMap } from '@app/@shared/operators/entities.operators';
 import { State, Action, Selector, StateContext, Store } from '@ngxs/store';
-import { tap } from 'rxjs/operators';
 
 import { EspnService } from '@espn/espn.service';
 import { EventMap, MlbStateModel, TeamMap } from './mlb-state.model';

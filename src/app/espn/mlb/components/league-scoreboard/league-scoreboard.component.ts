@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BaseballTeam } from '@app/espn/mlb/class/baseballTeam.class';
 import { Team } from '../../models/team.model';
 
 @Component({
@@ -10,8 +9,7 @@ import { Team } from '../../models/team.model';
 export class LeagueScoreboardComponent {
   @Input() teams: Team[];
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
-  }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   viewTeam = (id: number) => this.router.navigate([`espn/${this.sport}/${this.leagueId}/team`, id]);
 

@@ -9,6 +9,7 @@ const MOCK_STATE: MlbStateModel = {
   },
   scoringPeriodId: MOCK_DATA_ESPN.ESPN_LEAGUE.scoringPeriodId,
   isLoading: false,
+  statTypeId: 0,
 };
 
 const MOCK_STATE_EMPTY: MlbStateModel = {
@@ -17,6 +18,7 @@ const MOCK_STATE_EMPTY: MlbStateModel = {
   events: {},
   scoringPeriodId: null,
   isLoading: true,
+  statTypeId: 0,
 };
 
 export { MOCK_STATE, MOCK_STATE_EMPTY };
