@@ -16,7 +16,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     const code = response.status || 0;
     const message = statusCodeToMessage[code];
 
-    this.snackBar.open(`${code}: ${response.error.message}`, 'x', {
+    this.snackBar.open(`${code}: ${message}`, 'x', {
       panelClass: ['mat-toolbar', 'mat-warn'],
     });
 
