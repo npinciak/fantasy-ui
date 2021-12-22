@@ -31,6 +31,7 @@ import { BaseballTeamState } from './espn/mlb/state/baseball-team.state';
 import { NflEventState } from './espn/nfl/state/nfl-event.state';
 import { EspnFastcastState } from './espn/state/espn-fastcast.state';
 import { ShellModule } from './@core/shell/shell.module';
+import { ShellState } from './@core/shell/state/shell.state';
 
 @NgModule({
   declarations: [AppComponent],
@@ -59,6 +60,7 @@ import { ShellModule } from './@core/shell/shell.module';
         NflEventState,
         NflState,
         WeatherState,
+        ShellState,
       ],
       {
         developmentMode: !environment.production,
