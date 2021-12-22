@@ -6,8 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { EspnModule } from './espn/espn.module';
-
 import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
@@ -31,33 +29,36 @@ import { NflDfsLineupState } from './dfs/nfl/state/nfl-dfs-lineup.state';
 import { MlbEventState } from './espn/mlb/state/mlb-event.state';
 import { BaseballTeamState } from './espn/mlb/state/baseball-team.state';
 import { NflEventState } from './espn/nfl/state/nfl-event.state';
+import { EspnFastcastState } from './espn/state/espn-fastcast.state';
+import { ShellModule } from './@core/shell/shell.module';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    EspnModule,
-    DfsModule,
-    BrowserModule,
     HttpClientModule,
     SharedModule,
+    ShellModule,
+    BrowserModule,
     BrowserAnimationsModule,
     NgxsSelectSnapshotModule.forRoot(),
     NgxsModule.forRoot(
       [
-        CoreState,
         BaseballTeamState,
-        MlbState,
-        MlbEventState,
-        NflState,
-        NflEventState,
-        WeatherState,
+        CoreState,
+        DfsSlateState,
+        EspnFastcastState,
         MlbDfsState,
+        MlbEventState,
+        MlbState,
         NflDfsState,
         NflDfsTeamState,
         NflDfsProfilerState,
         NflDfsPlayerMasterState,
         NflDfsPlayerSlateState,
         NflDfsLineupState,
-        DfsSlateState,
+        NflEventState,
+        NflState,
+        WeatherState,
       ],
       {
         developmentMode: !environment.production,
