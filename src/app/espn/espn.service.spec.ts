@@ -1,15 +1,19 @@
-/* eslint-disable max-len */
 import { HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { MOCK_DATA_ESPN } from '@app/@shared/helpers/testConfigs';
 import { NgxsModule, Store } from '@ngxs/store';
 
-import { EspnService } from './espn.service';
+import { EspnEndpointBuilder, EspnService, EspnViewParamFragment, Sports } from './espn.service';
 
 describe('EspnService', () => {
   let service: EspnService;
   let httpTestingController: HttpTestingController;
+
+  const sport = Sports.baseball;
+  const scoringPeriodId = 1;
+  const leagueId = 1;
+  const playerId = 12345;
+  const lookbackDays = 1;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -29,26 +33,22 @@ describe('EspnService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should call fetchEspnBaseball', () => {
-    const spy = spyOn(service, 'fetchEspnBaseball').and.callThrough();
-
-    service.fetchEspnBaseball(MOCK_DATA_ESPN.ESPN_LEAGUE_ID).subscribe();
-
+  it('should call espnFantasyLeagueBySport', () => {
+    const spy = spyOn(service, 'espnFantasyLeagueBySport').and.callThrough();
+    service.espnFantasyLeagueBySport(sport, leagueId).subscribe();
     expect(spy).toHaveBeenCalled();
 
-    const requestOne = httpTestingController.expectOne(MOCK_DATA_ESPN.ESPN_LEAGUE_REQUEST);
+    const endpoint = new EspnEndpointBuilder(sport, leagueId);
+    const params = '?view=kona_player_info&view=mLiveScoring&view=mMatchupScore&view=mRoster&view=mScoreboard&view=mTeam';
 
-    const requestTwo = httpTestingController.expectOne(MOCK_DATA_ESPN.ESPN_GAME_REQUEST);
+    const request = httpTestingController.expectOne(`${endpoint.fantasyLeague}${params}`);
+    expect(request.request.method).toBe('GET');
 
-    expect(requestOne.request.method).toBe('GET');
-    expect(requestTwo.request.method).toBe('GET');
-
-    requestOne.flush(MOCK_DATA_ESPN.ESPN_LEAGUE);
-    requestTwo.flush(MOCK_DATA_ESPN.ESPN_GAME_REQUEST);
+    request.flush({});
   });
 
   it('should update team', () => {
-    const spy = spyOn(service, 'updateTeam').and.callThrough();
+    const spy = spyOn(service, 'espnUpdateFantasyTeam').and.callThrough();
 
     const expected = {
       bidAmount: 0,
@@ -80,49 +80,51 @@ describe('EspnService', () => {
       type: 'ROSTER',
     };
 
-    service.updateTeam({}, MOCK_DATA_ESPN.ESPN_LEAGUE_ID).subscribe(res => {
+    service.espnUpdateFantasyTeam({}, sport, leagueId).subscribe(res => {
       expect(res).toEqual(expected);
     });
 
     expect(spy).toHaveBeenCalled();
 
-    const request = httpTestingController.expectOne(MOCK_DATA_ESPN.ESPN_UPDATE_TEAM_REQUEST);
+    const endpoint = new EspnEndpointBuilder(sport, leagueId);
 
+    const request = httpTestingController.expectOne(endpoint.fantasyPlayerTransaction);
     expect(request.request.method).toBe('POST');
 
     request.flush(expected);
   });
 
   it('should retrieve player news', () => {
-    const spy = spyOn(service, 'playerNews').and.callThrough();
+    const spy = spyOn(service, 'espnFantasyPlayerNewsBySport').and.callThrough();
 
     const expected = {};
 
-    service.playerNews(1, 12345).subscribe();
+    service.espnFantasyPlayerNewsBySport(sport, lookbackDays, playerId).subscribe();
 
     expect(spy).toHaveBeenCalled();
 
-    const request = httpTestingController.expectOne(
-      'https://site.api.espn.com/apis/fantasy/v2/games/flb/news/players?days=1&playerId=12345'
-    );
+    const endpoint = new EspnEndpointBuilder(sport);
+    const params = `?days=${lookbackDays}&playerId=${playerId}`;
 
+    const request = httpTestingController.expectOne(`${endpoint.fantasyPlayerNews}${params}`);
     expect(request.request.method).toBe('GET');
 
     request.flush(expected);
   });
 
   it('should retrieve free agents', () => {
-    const spy = spyOn(service, 'freeAgents').and.callThrough();
+    const spy = spyOn(service, 'espnFantasyFreeAgentsBySport').and.callThrough();
 
     const expected = {};
 
-    service.freeAgents(1, new HttpHeaders()).subscribe();
+    service.espnFantasyFreeAgentsBySport(sport, leagueId, scoringPeriodId, new HttpHeaders()).subscribe();
 
     expect(spy).toHaveBeenCalled();
 
-    const request = httpTestingController.expectOne(
-      'https://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/1?scoringPeriodId=26&view=kona_player_info'
-    );
+    const endpoint = new EspnEndpointBuilder(sport, leagueId);
+    const params = `?scoringPeriodId=${scoringPeriodId}&view=${EspnViewParamFragment.PlayerInfo}`;
+
+    const request = httpTestingController.expectOne(`${endpoint.fantasyLeague}${params}`);
 
     expect(request.request.method).toBe('GET');
 

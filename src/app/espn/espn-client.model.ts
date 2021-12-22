@@ -144,9 +144,23 @@ export interface EspnClientEventStatusType {
 
 export interface EspnClientCompetitor {
   id: string;
-  homeAway: string | 'home' | 'away';
+  homeAway: string;
   score: number | string;
   record: string;
   abbreviation: string;
   winner: boolean;
+  name: string;
+}
+
+export interface EspnClientError {
+  messages: string[] | null;
+  details: EspnClientErrorDetails[] | null;
+}
+
+export interface EspnClientErrorDetails {
+  message: string;
+  shortMessage: string;
+  resolution?: null;
+  type: string;
+  metaData?: null;
 }
