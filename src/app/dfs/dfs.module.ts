@@ -9,7 +9,6 @@ import { PlayerTableComponent } from './components/player-table/player-table.com
 import { TeamMatchupTableComponent } from './components/team-matchup-table/team-matchup-table.component';
 import { FormsModule } from '@angular/forms';
 import { NgChartsModule } from 'ng2-charts';
-import { GraphComponent } from './components/graph/graph.component';
 import { SlateListComponent } from './components/slate-list/slate-list.component';
 
 import { HomeComponent as MLBHomeComponent } from './mlb/pages/home/home.component';
@@ -24,7 +23,6 @@ import { PlayerTableRankingColumnComponent } from './nfl/components/player-table
     MLBHomeComponent,
     PlayerTableComponent,
     TeamMatchupTableComponent,
-    GraphComponent,
     SlateListComponent,
     NFLHomeComponent,
     NFLPlayerTableHomeComponent,
