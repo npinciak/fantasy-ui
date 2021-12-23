@@ -1,0 +1,30 @@
+<table style="width: 100%">
+  <tr [ngStyle]="{ color: team?.color }" style="text-align: left">
+    <td class="game-team-logo">
+      <img height="40px" [src]="team?.logo" />
+    </td>
+    <td>
+      <table style="width: 100%">
+        <tr>
+          <td style="width: 165px">
+            <span class="ui-font-weight-bold">
+              <small *ngIf="team?.rank">{{ team?.rank }}&nbsp;</small>{{ team?.name }}&nbsp;
+              <span style="font-size: 10px; vertical-align: middle" *ngIf="team?.hasPossession">🏈</span>
+              <mat-icon *ngIf="team?.isWinner">arrow_left</mat-icon>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <small>{{ team?.record }}</small>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td style="text-align: left">
+      <div class="game-score-item">
+        <span [class.game-score-winner]="team?.isWinner"> {{ team?.score }}</span>
+      </div>
+    </td>
+  </tr>
+</table>
