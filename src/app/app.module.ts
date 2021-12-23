@@ -28,7 +28,6 @@ import { NflDfsTeamState } from './dfs/nfl/state/nfl-dfs-team.state';
 import { NflDfsLineupState } from './dfs/nfl/state/nfl-dfs-lineup.state';
 import { MlbEventState } from './espn/mlb/state/mlb-event.state';
 import { BaseballTeamState } from './espn/mlb/state/baseball-team.state';
-import { NflEventState } from './espn/nfl/state/nfl-event.state';
 import { EspnFastcastState } from './espn/state/espn-fastcast.state';
 import { ShellModule } from './@core/shell/shell.module';
 import { ShellState } from './@core/shell/state/shell.state';
@@ -57,7 +56,6 @@ import { ShellState } from './@core/shell/state/shell.state';
         NflDfsPlayerMasterState,
         NflDfsPlayerSlateState,
         NflDfsLineupState,
-        NflEventState,
         NflState,
         WeatherState,
         ShellState,
