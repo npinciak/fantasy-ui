@@ -4,11 +4,20 @@ import { MaterialModule } from '@app/material.module';
 import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '@app/@shared/shared.module';
+
 import { ShellComponent } from './shell.component';
 import { PageLayoutComponent } from '@app/@shared/components/page-layout/page-layout.component';
+import { EspnScoreboardCardComponent } from '@app/@shared/components/espn-scoreboard-card/espn-scoreboard-card.component';
+import { EspnScoreboardCardTeamComponent } from '@app/@shared/components/espn-scoreboard-card-team/espn-scoreboard-card-team.component';
 
 @NgModule({
   imports: [SharedModule, CommonModule, MaterialModule, RouterModule],
   declarations: [ShellComponent, PageLayoutComponent],
+  declarations: [
+    ShellComponent,
+    PageLayoutComponent,
+    EspnScoreboardCardComponent,
+    EspnScoreboardCardTeamComponent,
+  ],
 })
 export class ShellModule {}
