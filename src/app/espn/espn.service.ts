@@ -5,7 +5,16 @@ import { currentDate } from 'src/app/@shared/helpers/date';
 
 import { ApiService } from 'src/app/@shared/services/api.service';
 import { EspnClientEventList, EspnClientLeague } from './espn-client.model';
+import {
+  CompetitorsEntity as CompetitorsImport,
+  EspnClientFastcast as FastCastImport,
+  EventsEntity as EventsImport,
+  LeaguesEntity as LeaguesImport,
+  Situation,
+} from './models/espn-fastcast.model';
 import { FANTASY_BASE_V2, FANTASY_BASE_V3, NO_LOGO } from './espn.const';
+import { FastcastEvent } from './models/fastcast-event.model';
+import { FastcastEventTeam } from './models/fastcast-team.model';
 import { enumAsList } from '@app/@shared/helpers/enum-as-list';
 
 export enum Sports {
@@ -62,6 +71,84 @@ export enum FastCastGameStatus {
 })
 export class EspnService {
   constructor(private api: ApiService) {}
+
+  static transformFastCastToEvent(data: FastCastImport): { slug: string; league: { [league: string]: FastcastEvent[] } }[] {
+    return data.sports.map(sport => ({
+      slug: sport.slug,
+      league: EspnService.transformFastcastLeagueToLeague(sport.leagues),
+    }));
+  }
+
+  static transformFastcastLeagueToLeague(leagues: LeaguesImport[]): { [slug: string]: FastcastEvent[] } {
+    return leagues.reduce((acc, val) => {
+      acc[val.abbreviation] = {
+        event: EspnService.transformFastcastEventToEvent(val.events),
+      };
+      return acc;
+    }, {});
+  }
+
+  static transformFastcastEventToEvent(data: EventsImport[]): FastcastEvent[] {
+    return data.map(event => ({
+      id: event.id,
+      state: event.fullStatus.type.state,
+      status: event.status,
+      name: event.name,
+      shortname: event.shortName,
+      location: event.location,
+      clock: event.clock,
+      summary: event.summary,
+      period: event.period,
+      teams: EspnService.transformFastcastCompetitorsToTeams(event.competitors, event.situation),
+      isRedzone: event.situation?.isRedZone ?? null,
+      isHalftime: event.fullStatus.type?.id ? Number(event.fullStatus?.type?.id) === GameStatusId.Halftime : false,
+      downDistancePositionText: EspnService.transformDownDistancePostitionText(
+        event.situation?.shortDownDistanceText,
+        event.situation?.possessionText
+      ),
+      lastPlay: event.situation?.lastPlay ?? null,
+    }));
+  }
+
+  static transformFastcastCompetitorsToTeams(
+    data: CompetitorsImport[],
+    situation: Situation | null
+  ): { [homeAway: string]: FastcastEventTeam } {
+    const winPctMap: { home: number | null; away: number | null } = { home: null, away: null };
+
+    if (!situation) {
+      winPctMap.home = null;
+      winPctMap.away = null;
+    } else {
+      winPctMap.home = situation.lastPlay?.probability?.homeWinPercentage;
+      winPctMap.away = situation.lastPlay?.probability?.awayWinPercentage;
+    }
+
+    return data.reduce((acc, val) => {
+      acc[val.homeAway] = {
+        id: val.id,
+        score: val.score,
+        abbrev: val.abbreviation,
+        logo: val.logo === '' ? NO_LOGO : val.logo,
+        isWinner: val.winner,
+        name: val.name ?? val.abbreviation,
+        color: val.color === 'ffffff' || val.color === 'ffff00' ? '#1a1a1a' : `#${val.color}`,
+        altColor: `#${val.alternateColor}`,
+        record: val.record,
+        rank: val.rank ?? null,
+        winPct: winPctMap[val.homeAway],
+        hasPossession: situation?.possession === val.id,
+      };
+      return acc;
+    }, {});
+  }
+
+  static transformDownDistancePostitionText(downDistanceText: string | null, possessionText: string | null): string | null {
+    if (downDistanceText && possessionText) {
+      return `${downDistanceText}, ${possessionText}`;
+    }
+    return null;
+  }
 
   /**
    * Update Espn Fantasy Team
@@ -138,6 +225,15 @@ export class EspnService {
     return this.api.get<EspnClientEventList>(endpoint.espnEvents, { params: this.espnEventParams });
   }
 
+  /**
+   * Fastcast
+   *
+   * @param url
+   * @returns
+   */
+  espnFastcast(url: string) {
+    return this.api.get<FastCastImport>(url).pipe(map(res => EspnService.transformFastCastToEvent(res)));
+  }
 
   /**
    * @todo

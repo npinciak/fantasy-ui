@@ -1,13 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NgxsModule, Store } from '@ngxs/store';
 
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, NgxsModule.forRoot()],
       declarations: [AppComponent],
+      providers: [{ provide: Store, useClass: Store }],
     }).compileComponents();
   });
 
