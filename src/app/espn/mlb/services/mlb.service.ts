@@ -18,57 +18,73 @@ import { EspnClientCompetitor, EspnClientEvent, EspnClientLeague, EspnClientPlay
 export class MlbService {
   constructor(private espnClient: EspnService) {}
 
-  baseballLeague = (leagueId: number): Observable<BaseballLeague> =>
-    this.espnClient.espnFantasyLeagueBySport(leagueId, Sports.baseball).pipe(map(res => transformEspnClientLeagueToBaseballLeague(res)));
-
-  baseballEvents = (): Observable<MlbEvent[]> =>
-    this.espnClient.espnFantasyEventsBySport(Sports.baseball).pipe(map(res => transformEspnClientEventListToMlbEventList(res.events)));
-}
-
-const transformEspnClientLeagueToBaseballLeague = (espnLeague: EspnClientLeague): BaseballLeague => ({
-  teams: transformEspnClientTeamListToTeamList(espnLeague.teams),
-});
-
-const transformEspnClientTeamListToTeamList = (teams: EspnClientTeam[]): Team[] =>
-  teams.map(team => ({
-    id: team.id.toString(),
-    name: `${team.location} ${team.nickname}`,
-    abbrev: team.abbrev,
-    logo: team.logo,
-    roster: transformEspnClientTeamPlayerListToBaseballPlayerList(team.roster.entries),
-    totalPoints: team.points,
-    currentRank: team.playoffSeed,
-  }));
-
-const transformEspnClientTeamPlayerListToBaseballPlayerList = (players: EspnClientPlayer[]): BaseballPlayer[] =>
-  players.map(player => ({
-    id: player.playerId.toString(),
-    name: player.playerPoolEntry.player.fullName,
-    isInjured: player.playerPoolEntry.player.injured,
-    injuryStatus: player.playerPoolEntry.player.injuryStatus,
-    playerRatings: player.playerPoolEntry.ratings,
-    playerOwnership: {
-      change: player.playerPoolEntry.player.ownership.percentChange,
-      percentOwned: player.playerPoolEntry.player.ownership.percentOwned,
-    },
-    isPitcher: isPitcher(player.playerPoolEntry.player.eligibleSlots),
-  }));
-
-const transformEspnClientEventListToMlbEventList = (events: EspnClientEvent[]): MlbEvent[] =>
-  events.map(event => ({
-    id: event.id,
-    date: event.date,
-    summary: event.summary,
-    teams: transformCompetitorToTeam(event.competitors),
-  }));
-
-const transformCompetitorToTeam = (competitors: EspnClientCompetitor[]): { [homeAway: string]: MlbEventTeams } =>
-  competitors.reduce((acc, val, i) => {
-    acc[val.homeAway] = {
-      score: val.score,
-      abbrev: val.abbreviation,
-      logo: logoImgBuilder('mlb', val.abbreviation),
-      isWinner: val.winner,
+  static transformEspnClientLeagueToBaseballLeague(espnLeague: EspnClientLeague): BaseballLeague {
+    return {
+      teams: MlbService.transformEspnClientTeamListToTeamList(espnLeague.teams),
     };
-    return acc;
-  }, {});
+  }
+
+  static transformEspnClientTeamListToTeamList(teams: EspnClientTeam[]): Team[] {
+    return teams.map(team => ({
+      id: team.id.toString(),
+      name: `${team.location} ${team.nickname}`,
+      abbrev: team.abbrev,
+      logo: team.logo,
+      roster: MlbService.transformEspnClientTeamPlayerListToBaseballPlayerList(team.roster.entries),
+      totalPoints: team.points,
+      currentRank: team.playoffSeed,
+    }));
+  }
+
+  static transformEspnClientTeamPlayerListToBaseballPlayerList(players: EspnClientPlayer[]): BaseballPlayer[] {
+    return players.map(player => ({
+      id: player.playerId.toString(),
+      name: player.playerPoolEntry.player.fullName,
+      isInjured: player.playerPoolEntry.player.injured,
+      injuryStatus: player.playerPoolEntry.player.injuryStatus,
+      playerRatings: player.playerPoolEntry.ratings,
+      playerOwnership: {
+        change: player.playerPoolEntry.player.ownership.percentChange,
+        percentOwned: player.playerPoolEntry.player.ownership.percentOwned,
+      },
+      isPitcher: isPitcher(player.playerPoolEntry.player.eligibleSlots),
+    }));
+  }
+
+  static transformEspnClientEventListToMlbEventList(events: EspnClientEvent[]): MlbEvent[] {
+    return events.map(event => ({
+      id: event.id,
+      date: event.date,
+      summary: event.summary,
+      teams: MlbService.transformCompetitorToTeam(event.competitors),
+    }));
+  }
+
+  static transformCompetitorToTeam(competitors: EspnClientCompetitor[]): { [homeAway: string]: MlbEventTeams } {
+    return competitors.reduce((acc, val, i) => {
+      acc[val.homeAway] = {
+        score: val.score,
+        abbrev: val.abbreviation,
+        logo: logoImgBuilder('mlb', val.abbreviation),
+        isWinner: val.winner,
+      };
+      return acc;
+    }, {});
+  }
+
+  baseballLeague(leagueId: number): Observable<BaseballLeague> {
+    return this.espnClient
+      .espnFantasyLeagueBySport(Sports.baseball, leagueId)
+      .pipe(map(res => MlbService.transformEspnClientLeagueToBaseballLeague(res)));
+  }
+
+  /**
+   *
+   * @deprecated replace with fastcast
+   */
+  baseballEvents(): Observable<MlbEvent[]> {
+    return this.espnClient
+      .espnFantasyEventsBySport(Sports.baseball)
+      .pipe(map(res => MlbService.transformEspnClientEventListToMlbEventList(res.events)));
+  }
+}

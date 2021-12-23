@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { entityMap, setMap } from '@app/@shared/operators';
+import { setMap } from '@app/@shared/operators';
 import { State, Selector, Action, StateContext } from '@ngxs/store';
 
 import { Team } from '../models/team.model';

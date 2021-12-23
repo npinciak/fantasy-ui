@@ -1,12 +1,10 @@
-<app-page-layout pageTitle="Espn">
-  <div fxLayout="row" fxLayoutGap="20px">
-    <div fxLayout="column" fxFlex="30%">
-      <app-league-scoreboard [teams]="mlbFacade.liveScore$ | async"></app-league-scoreboard>
-    </div>
-    <div fxLayout="column" fxFlex="70%">
-      <app-scoreboard [events]="mlbEventFacade.selectEventList$ | async"></app-scoreboard>
-      <div style="padding: 20px 0"></div>
-      <!-- <app-standings [teams]="mlbFacade.standings$ | async"></app-standings> -->
-    </div>
+<div fxLayout="row" fxLayoutGap="20px">
+  <div fxLayout="column" fxFlex="30%">
+    <app-league-scoreboard [teams]="mlbFacade.liveScore$ | async"></app-league-scoreboard>
   </div>
-</app-page-layout>
+  <div fxLayout="column" fxFlex="70%">
+    <app-scoreboard [events]="mlbEventFacade.selectEventList$ | async"></app-scoreboard>
+    <div style="padding: 20px 0"></div>
+    <!-- <app-standings [teams]="mlbFacade.standings$ | async"></app-standings> -->
+  </div>
+</div>

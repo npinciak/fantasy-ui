@@ -1,5 +1,3 @@
-import { BaseballGame } from './baseball-game.model';
-import { MlbEvent } from './mlb-event.model';
 import { Team } from './team.model';
 
 export interface BaseballLeagueProperties {

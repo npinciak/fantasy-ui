@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { entityMap, setMap } from '@app/@shared/operators';
+import { setMap } from '@app/@shared/operators';
 import { State, Selector, Action, StateContext } from '@ngxs/store';
 
-import { EspnClientEvent } from '../interface';
 import { MlbEvent } from '../models/mlb-event.model';
 
 export class PatchEvents {

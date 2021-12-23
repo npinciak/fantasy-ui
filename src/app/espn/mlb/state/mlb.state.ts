@@ -21,7 +21,7 @@ import { PatchTeams } from './baseball-team.state';
 })
 @Injectable()
 export class MlbState {
-  constructor(private store: Store, private espnService: EspnService, private mlbService: MlbService) {}
+  constructor(private store: Store, private mlbService: MlbService) {}
 
   @Selector()
   static getState(state: MlbStateModel) {
