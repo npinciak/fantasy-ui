@@ -1,0 +1,31 @@
+<!-- <ng-container *ngIf="homeAway === HomeAwayTeam.Away; else homeTeam"> -->
+<div fxLayout="row" fxLayoutGap="10px" class="ui-w-100" fxLayoutAlign="center center">
+  <div [ngStyle]="{ color: team?.color }" style="text-align: center">
+    <img height="40px" [src]="team?.logo" />
+    <div>
+      <span class="ui-font-weight-bold">
+        <small *ngIf="team?.rank">{{ team?.rank }}&nbsp;</small>{{ team?.name }}&nbsp;
+
+        <!-- <small style="font-size: 14px" *ngIf="team?.hasPossession">🏈</small> -->
+      </span>
+    </div>
+    <div>
+      <small>{{ team?.record }}</small>
+    </div>
+    <div>
+      <!-- <mat-progress-bar [matTooltip]="team?.winPct | percent: '1.1-1'" mode="determinate" [value]="team?.winPct"></mat-progress-bar> -->
+      {{ team?.winPct }}
+    </div>
+  </div>
+</div>
+
+<ng-template #homeTeam>
+  <div fxLayout="row" fxLayoutGap="10px" class="ui-w-100" fxLayoutAlign="center center">
+    <div>
+      <img height="40px" [src]="team?.logo" />
+      <span class="ui-font-weight-bold">
+        <small *ngIf="team?.rank">{{ team?.rank }}&nbsp;</small>{{ team?.name }}&nbsp;
+      </span>
+    </div>
+  </div>
+</ng-template>

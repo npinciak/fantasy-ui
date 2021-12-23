@@ -22,6 +22,7 @@ import { LineupCardPlayerComponent } from './mlb/components/lineup-card-player/l
 import { HomeComponent as NFLHomeComponent } from './nfl/pages/home/home.component';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 import { EspnRoutingModule } from './espn-routing.module';
+import { EspnListTeamComponent } from './components/espn-list-team/espn-list-team.component';
 
 const components = [
   EspnHomeComponent,
@@ -41,6 +42,7 @@ const components = [
   LineupCardComponent,
   LineupCardPlayerComponent,
   NFLHomeComponent,
+  EspnListTeamComponent,
 ];
 
 @NgModule({
