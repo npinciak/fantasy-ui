@@ -1,33 +1,25 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { environment } from 'src/environments/environment';
-import { TeamComponent } from '@mlb/pages/team/team.component';
-import { HomeComponent } from '@mlb/pages/home/home.component';
-import { HomeComponent as NFLHomeComponent } from '@espn/nfl/pages/home/home.component';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { ShellService } from './@core/shell/shell.service';
 
-const leagueId = environment.production ? '' : environment.leagueId;
+import { UrlFragments } from './@shared/url-builder';
 
 const routes: Routes = [
-  { path: 'espn', component: HomeComponent },
-  {
-    path: 'espn/mlb/:leagueId',
-    children: [
-      { path: '', component: HomeComponent },
-      { path: 'team/:teamId', component: TeamComponent },
-    ],
-  },
-  {
-    path: 'espn/nfl/:leagueId',
-    children: [
-      { path: '', component: NFLHomeComponent },
-      // { path: 'team/:teamId', component: TeamComponent },
-    ],
-  },
-  { path: '**', redirectTo: `espn/mlb/${leagueId}`, pathMatch: 'full' },
+  ShellService.childRoutes([
+    {
+      path: UrlFragments.Espn,
+      loadChildren: () => import('./espn/espn.module').then(m => m.EspnModule),
+    },
+    {
+      path: UrlFragments.Dfs,
+      loadChildren: () => import('./dfs/dfs.module').then(m => m.DfsModule),
+    },
+    { path: '**', redirectTo: '/espn', pathMatch: 'full' },
+  ]),
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule],
   providers: [],
 })

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+
 import { ESPN_TEXT } from '@app/espn/espn.const';
 import { NFLFacade } from '../../facade/nfl.facade';
 
@@ -9,13 +9,9 @@ import { NFLFacade } from '../../facade/nfl.facade';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  readonly leagueId = this.activatedRoute.snapshot.params.leagueId;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   readonly NO_GAMES_TEXT = ESPN_TEXT.NO_GAMES_TEXT;
 
-  constructor(readonly nflFacade: NFLFacade, private activatedRoute: ActivatedRoute) {}
+  constructor(readonly nflFacade: NFLFacade) {}
 
-  ngOnInit(): void {
-    this.nflFacade.getLeague(this.leagueId).toPromise();
-  }
+  ngOnInit(): void {}
 }

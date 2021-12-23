@@ -1,6 +1,6 @@
 {
   "root": true,
-  "ignorePatterns": ["projects/**/*"],
+  "ignorePatterns": ["projects/**/*", "schematics"],
   "overrides": [
     {
       "files": ["*.ts"],
@@ -17,7 +17,19 @@
       "rules": {
         "no-underscore-dangle": "off",
         "no-shadow": "off",
+        "@typescript-eslint/prefer-for-of": "off",
         "@typescript-eslint/no-shadow": ["error"],
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "enumMember",
+            "format": ["PascalCase", "camelCase"]
+          },
+          {
+            "selector": "variable",
+            "format": ["camelCase", "UPPER_CASE"]
+          }
+        ],
         "@angular-eslint/component-selector": [
           "error",
           {

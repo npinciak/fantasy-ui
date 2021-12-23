@@ -1,0 +1,36 @@
+.status-indicator {
+  font-weight: bold;
+  &.excellent {
+    background-color: #00876c;
+    color: whitesmoke;
+  }
+
+  &.great {
+    background-color: #71a879;
+    color: whitesmoke;
+  }
+
+  &.above-avg {
+    background-color: #b6c794;
+    color: whitesmoke;
+  }
+  &.avg {
+    background-color: #f4e8bc;
+    color: whitesmoke;
+  }
+
+  &.below-avg {
+    background-color: #eab780;
+    color: whitesmoke;
+  }
+
+  &.poor {
+    background-color: #e2805b;
+    color: whitesmoke;
+  }
+
+  &.awful {
+    background-color: #d43d51;
+    color: whitesmoke;
+  }
+}

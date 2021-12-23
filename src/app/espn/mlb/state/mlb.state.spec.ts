@@ -1,14 +1,10 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { NgxsModule, Store } from '@ngxs/store';
 import { MlbState } from './mlb.state';
-import { FetchBaseballLeague } from '../actions/mlb.actions';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { MlbStateModel } from './mlb-state.model';
-import { entityMap } from '@app/@shared/operators';
 import { MOCK_DATA_ESPN } from '@app/@shared/helpers/testConfigs';
 import { MOCK_STATE } from './mlb.state.mocks';
 
-import { MockGame, MockLeague } from '../mocks';
 import { EspnService } from '@espn/espn.service';
 
 describe('[MLB] Store', () => {

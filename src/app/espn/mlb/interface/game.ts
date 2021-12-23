@@ -13,8 +13,9 @@ interface ScoreboardGameSummary {
 }
 
 interface ScoreboardGameStart {
-  iso: string;
+  isoStartTime: string;
   milli: number;
+  isoEstEndTime: string;
 }
 
 interface ScoreboardGameStatus {

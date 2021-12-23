@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BaseballPlayer } from '../../class/baseballPlayer.class';
 
 @Component({
   selector: 'app-lineup-card',
@@ -7,7 +6,7 @@ import { BaseballPlayer } from '../../class/baseballPlayer.class';
   styleUrls: ['./lineup-card.component.scss'],
 })
 export class LineupCardComponent implements OnInit {
-  @Input() lineup: BaseballPlayer[];
+  @Input() lineup: any[];
   constructor() {}
 
   ngOnInit(): void {}

@@ -1,14 +1,10 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import * as _ from 'lodash';
-import { MatButtonToggleChange } from '@angular/material/button-toggle';
-import { BaseballPlayer } from '@app/espn/mlb/class/baseballPlayer.class';
 import { rosterColumns, PlayerInfoColumn } from '@mlb/mlb.const';
 import { StatTypeId } from '@mlb/mlb.enums';
-import { MlbFacade } from '@mlb/facade/mlb.facade';
-import { of } from 'rxjs';
-import { MlbTeamFacade } from '../../facade/mlb-team.facade';
+import { BaseballPlayer } from '../../models/baseball-player.model';
 
 @Component({
   selector: 'app-roster',
@@ -19,7 +15,6 @@ export class RosterComponent implements OnInit, AfterViewInit {
   @Input() fantasyPlayers: BaseballPlayer[];
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   readonly StatType = StatTypeId;
   readonly rosterColumns = rosterColumns;
   readonly playerInfoColumn = PlayerInfoColumn;
@@ -31,7 +26,7 @@ export class RosterComponent implements OnInit, AfterViewInit {
 
   view: StatTypeId = 0;
 
-  constructor(readonly mlbTeamFacade: MlbTeamFacade, private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {}
 

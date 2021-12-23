@@ -1,25 +1,25 @@
 import { Injectable } from '@angular/core';
-import { State, Action, Selector, StateContext } from '@ngxs/store';
+import { EspnService } from '@app/espn/espn.service';
+import { State, Action, Selector, StateContext, Store } from '@ngxs/store';
 
-import { EspnService } from '@espn/espn.service';
-import { NflStateModel } from './nfl.state.model';
 import { FetchFootballLeague } from '../actions/nfl.actions';
-import { entityMap } from '@app/@shared/operators';
-import { tap } from 'rxjs/operators';
 import { NflService } from '../services/nfl.service';
+
+interface NflStateModel {
+  scoringPeriodId: number | null;
+  isLoading: boolean;
+}
+
 @State<NflStateModel>({
   name: 'nfl',
   defaults: {
     scoringPeriodId: null,
-    schedule: {},
-    teams: {},
-    events: {},
     isLoading: true,
   },
 })
 @Injectable()
 export class NflState {
-  constructor(private nflService: NflService) {}
+  constructor(private espnService: EspnService, private nflService: NflService, private store: Store) {}
 
   @Selector()
   static scoringPeriod(state: NflStateModel) {
@@ -27,12 +27,14 @@ export class NflState {
   }
 
   @Action(FetchFootballLeague)
-  footballLeague(ctx: StateContext<NflStateModel>, { leagueId }: FetchFootballLeague) {
-    if (NflState.scoringPeriod !== null) {
-      console.log(`League ${leagueId} already in state, retrieving cache`);
-      return;
-    }
+  async footballLeague(ctx: StateContext<NflStateModel>, { leagueId }: FetchFootballLeague) {
+    // if (NflState.scoringPeriod !== null) {
+    //   console.log(`League ${leagueId} already in state, retrieving cache`);
+    //   return;
+    // }
+    // const test = await this.espnService.espnFastcastEvents().toPromise();
+    await this.nflService.footballLeague(Number(leagueId)).toPromise();
 
-    return this.nflService.fetchFootballLeague(leagueId);
+    // console.log(test);
   }
 }

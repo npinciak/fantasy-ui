@@ -1,0 +1,20 @@
+$content-padding: 25px;
+
+$background-main: #f5f6f6;
+$background-main-dark: #1b262c;
+
+.content {
+  margin: 10px;
+
+  // background-color: $background-main-dark;
+  height: 100%;
+}
+
+.side {
+  margin: 10px;
+}
+
+.chart {
+  display: block;
+  width: 100%;
+}

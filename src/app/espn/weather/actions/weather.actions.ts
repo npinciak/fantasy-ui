@@ -1,4 +1,4 @@
-import { BaseballGame } from '@app/espn/mlb/class/baseballGame.class';
+import { WeatherRequest } from '../weather/models/class';
 
 export class WeatherAction {
   static readonly type = '[Weather] Add item';
@@ -7,5 +7,5 @@ export class WeatherAction {
 
 export class FetchWeather {
   static readonly type = '[Weather] Fetch Weather';
-  constructor(public payload: BaseballGame) {}
+  constructor(public payload: { gameId: number; request: WeatherRequest }) {}
 }

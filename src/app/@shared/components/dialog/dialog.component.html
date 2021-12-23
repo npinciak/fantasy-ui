@@ -1,0 +1,6 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  <ul>
+    <li *ngFor="let info of data.body">{{ info.name }} - {{ info.description }}</li>
+  </ul>
+</div>

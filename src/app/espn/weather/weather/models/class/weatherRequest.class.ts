@@ -1,9 +1,9 @@
 class WeatherRequest {
   private _location: string;
-  private _startTime: Date;
-  private _endTime: Date;
+  private _startTime: string;
+  private _endTime: string;
 
-  constructor(location: string, startTime: Date, endTime: Date) {
+  constructor(location: string, startTime: string, endTime: string) {
     this._location = location;
     this._startTime = startTime;
     this._endTime = endTime;

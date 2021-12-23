@@ -11,7 +11,6 @@ import { TeamInfoColComponent } from './mlb/components/standings/team-info-col/t
 import { RankingColComponent } from './mlb/components/standings/ranking-col/ranking-col.component';
 import { ScoreboardComponent } from './mlb/components/scoreboard/scoreboard.component';
 import { PlayerRatingColComponent } from './mlb/components/roster/player-rating-col/player-rating-col.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
 import { SharedModule } from '@app/@shared/shared.module';
 import { ScoreboardEventComponent } from './mlb/components/scoreboard-event/scoreboard-event.component';
@@ -21,8 +20,12 @@ import { LineupCardComponent } from './mlb/components/lineup-card/lineup-card.co
 import { LineupCardPlayerComponent } from './mlb/components/lineup-card-player/lineup-card-player.component';
 
 import { HomeComponent as NFLHomeComponent } from './nfl/pages/home/home.component';
+import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
+import { EspnRoutingModule } from './espn-routing.module';
+import { EspnListTeamComponent } from './components/espn-list-team/espn-list-team.component';
 
 const components = [
+  EspnHomeComponent,
   HomeComponent,
   StandingsComponent,
   TeamComponent,
@@ -39,11 +42,12 @@ const components = [
   LineupCardComponent,
   LineupCardPlayerComponent,
   NFLHomeComponent,
+  EspnListTeamComponent,
 ];
 
 @NgModule({
   declarations: components,
-  imports: [CommonModule, MaterialModule, FlexLayoutModule, GridModule, SharedModule, BrowserAnimationsModule],
+  imports: [CommonModule, EspnRoutingModule, MaterialModule, FlexLayoutModule, GridModule, SharedModule],
   exports: [StandingsComponent, RosterComponent],
 })
 export class EspnModule {}

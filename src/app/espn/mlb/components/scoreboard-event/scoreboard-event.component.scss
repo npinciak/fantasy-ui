@@ -6,7 +6,7 @@ table td {
   text-align: center;
 }
 
-td[colspan="3"] {
+td[colspan='3'] {
   text-align: center;
 }
 
@@ -14,7 +14,7 @@ mat-card.game-card {
   margin: 10px;
   width: 300px;
   min-width: 300px;
-  height: 220px;
+  height: 150px;
 }
 
 .game-score-container {

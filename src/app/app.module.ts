@@ -4,10 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { EspnModule } from './espn/espn.module';
 
 import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 import { NgxsModule } from '@ngxs/store';
@@ -20,18 +17,53 @@ import { httpInterceptorProviders } from './@core/interceptors';
 import { WeatherState } from './espn/weather/state/weather.state';
 import { SharedModule } from './@shared/shared.module';
 import { NflState } from './espn/nfl/state/nfl.state';
+import { MlbDfsState } from './dfs/mlb/state/mlb-dfs.state';
+import { DfsModule } from './dfs/dfs.module';
+import { DfsSlateState } from './dfs/mlb/state/dfs-slate.state';
+import { NflDfsState } from './dfs/nfl/state/nfl-dfs.state';
+import { NflDfsProfilerState } from './dfs/nfl/state/nfl-dfs-profiler.state';
+import { NflDfsPlayerMasterState } from './dfs/nfl/state/nfl-dfs-player-master.state';
+import { NflDfsPlayerSlateState } from './dfs/nfl/state/nfl-dfs-player-slate.state';
+import { NflDfsTeamState } from './dfs/nfl/state/nfl-dfs-team.state';
+import { NflDfsLineupState } from './dfs/nfl/state/nfl-dfs-lineup.state';
+import { MlbEventState } from './espn/mlb/state/mlb-event.state';
+import { BaseballTeamState } from './espn/mlb/state/baseball-team.state';
+import { EspnFastcastState } from './espn/state/espn-fastcast.state';
+import { ShellModule } from './@core/shell/shell.module';
+import { ShellState } from './@core/shell/state/shell.state';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    EspnModule,
-    BrowserModule,
     HttpClientModule,
     SharedModule,
+    ShellModule,
+    BrowserModule,
     BrowserAnimationsModule,
     NgxsSelectSnapshotModule.forRoot(),
-    NgxsModule.forRoot([CoreState, MlbState, NflState, WeatherState], {
-      developmentMode: !environment.production,
-    }),
+    NgxsModule.forRoot(
+      [
+        BaseballTeamState,
+        CoreState,
+        DfsSlateState,
+        EspnFastcastState,
+        MlbDfsState,
+        MlbEventState,
+        MlbState,
+        NflDfsState,
+        NflDfsTeamState,
+        NflDfsProfilerState,
+        NflDfsPlayerMasterState,
+        NflDfsPlayerSlateState,
+        NflDfsLineupState,
+        NflState,
+        WeatherState,
+        ShellState,
+      ],
+      {
+        developmentMode: !environment.production,
+      }
+    ),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsDispatchPluginModule.forRoot(),
     AppRoutingModule,

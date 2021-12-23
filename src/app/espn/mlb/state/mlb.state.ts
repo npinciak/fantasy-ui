@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { entityMap } from '@app/@shared/operators/entities.operators';
-import { State, Action, Selector, StateContext } from '@ngxs/store';
-import { tap } from 'rxjs/operators';
+import { State, Action, Selector, StateContext, Store } from '@ngxs/store';
 
 import { EspnService } from '@espn/espn.service';
 import { EventMap, MlbStateModel, TeamMap } from './mlb-state.model';
 import { FetchBaseballLeague, UpdateStatType } from '../actions/mlb.actions';
+import { MlbService } from '../services/mlb.service';
+import { PatchEvents } from './mlb-event.state';
+import { PatchTeams } from './baseball-team.state';
 
 @State<MlbStateModel>({
   name: 'mlb',
@@ -20,7 +21,7 @@ import { FetchBaseballLeague, UpdateStatType } from '../actions/mlb.actions';
 })
 @Injectable()
 export class MlbState {
-  constructor(private espnService: EspnService) {}
+  constructor(private store: Store, private mlbService: MlbService) {}
 
   @Selector()
   static getState(state: MlbStateModel) {
@@ -58,27 +59,17 @@ export class MlbState {
   }
 
   @Action(FetchBaseballLeague)
-  baseballLeague(ctx: StateContext<MlbStateModel>, { leagueId }: FetchBaseballLeague) {
+  async baseballLeague(ctx: StateContext<MlbStateModel>, { leagueId }: FetchBaseballLeague) {
     if (ctx.getState().scoringPeriodId) {
       console.log(`League ${leagueId} already in state, retrieving cache`);
       return;
     }
 
-    return this.espnService.fetchEspnBaseball(leagueId).pipe(
-      tap(([league, mlbGames]) => {
-        const teams = entityMap(league.teams);
-        const events = entityMap(mlbGames.events);
-        const schedule = entityMap(league.schedule[0].teams, team => team.teamId);
+    const league = await this.mlbService.baseballLeague(leagueId).toPromise();
+    const events = await this.mlbService.baseballEvents().toPromise();
 
-        ctx.patchState({
-          teams,
-          events,
-          schedule,
-          isLoading: false,
-          scoringPeriodId: league.scoringPeriodId,
-        });
-      })
-    );
+    this.store.dispatch(new PatchTeams({ teams: league.teams }));
+    this.store.dispatch(new PatchEvents({ events }));
   }
 
   @Action(UpdateStatType)

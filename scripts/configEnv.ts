@@ -4,7 +4,6 @@ const { writeFile, existsSync } = require('fs');
 const { argv } = require('yargs');
 
 const CONFIG = {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     DIRECTORY: {
         src: './src'
     }

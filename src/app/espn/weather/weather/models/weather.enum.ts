@@ -37,4 +37,24 @@ enum WeatherCode {
   Thunderstorm = 8000,
 }
 
-export { PrecipitationCode, WeatherCode };
+enum CardinalDir {
+  N,
+  NNE,
+  NE,
+  ENE,
+  E,
+  ESE,
+  SE,
+  SSE,
+  S,
+  SSW,
+  SW,
+  WSW,
+  W,
+  WNW,
+  NW,
+  NNW,
+  NALT,
+}
+
+export { PrecipitationCode, WeatherCode, CardinalDir };

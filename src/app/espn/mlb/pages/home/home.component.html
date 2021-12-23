@@ -1,29 +1,10 @@
-<app-page-layout>
-  <div class="side" gdArea="side">
-    <ng-container *ngIf="(mlbFacade.isLoading$ | async) === false; else loading">
-      <app-league-scoreboard [teams]="mlbFacade.liveScore$ | async"></app-league-scoreboard>
-    </ng-container>
+<div fxLayout="row" fxLayoutGap="20px">
+  <div fxLayout="column" fxFlex="30%">
+    <app-league-scoreboard [teams]="mlbFacade.liveScore$ | async"></app-league-scoreboard>
   </div>
-
-  <div class="content" gdArea="content">
-    <ng-container *ngIf="(mlbFacade.isLoading$ | async) === false; else loading">
-      <ng-container *ngIf="(mlbGameFacade.noGames$ | async) === false; else noGames">
-        <app-scoreboard [events]="mlbGameFacade.sortedGamesByStartTime$ | async"></app-scoreboard>
-      </ng-container>
-      <div style="padding: 20px 0"></div>
-
-      <div style="padding: 20px 0"></div>
-      <ng-container>
-        <app-standings [teams]="mlbFacade.standings$ | async"></app-standings>
-      </ng-container>
-      <div style="padding: 20px 0"></div>
-    </ng-container>
+  <div fxLayout="column" fxFlex="70%">
+    <app-scoreboard [events]="mlbEventFacade.selectEventList$ | async"></app-scoreboard>
+    <div style="padding: 20px 0"></div>
+    <!-- <app-standings [teams]="mlbFacade.standings$ | async"></app-standings> -->
   </div>
-  <div class="footer" gdArea="footer">Footer</div>
-</app-page-layout>
-
-<ng-template #loading>
-  <div style="padding: 10px 0; height: 100%">
-    <mat-progress-spinner style="margin: 0 auto" mode="indeterminate" diameter="20"></mat-progress-spinner>
-  </div>
-</ng-template>
+</div>

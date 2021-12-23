@@ -1,0 +1,13 @@
+<div
+  class="scrollable-table"
+  [ngClass]="{
+    horizontalScroll: horizontalScroll,
+    verticalScroll: verticalScroll,
+    maxHeightSmall: maxHeightSmall,
+    maxHeightMedium: maxHeightMedium,
+    maxHeightLarge: maxHeightLarge,
+    fixedHeight: fixedHeight
+  }"
+>
+  <ng-content></ng-content>
+</div>

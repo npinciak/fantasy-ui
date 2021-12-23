@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Dispatch } from '@ngxs-labs/dispatch-decorator';
 import { Store } from '@ngxs/store';
 import { FetchFootballLeague } from '../actions/nfl.actions';
 
@@ -8,8 +7,8 @@ import { FetchFootballLeague } from '../actions/nfl.actions';
 })
 export class NFLFacade {
   constructor(private store: Store) {}
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  public getLeague(leagueId: number) {
+
+  public getLeague(leagueId: string) {
     return this.store.dispatch(new FetchFootballLeague(leagueId));
   }
 }
