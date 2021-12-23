@@ -1,60 +1,58 @@
-<app-page-layout pageTitle="DFS Helper">
-  <div fxLayout="row">
-    <div fxLayout="column" fxFlex="30%">
-      <ng-container *ngIf="(slateFacade.slatesEmpty$ | async) === false">
-        <app-slate-list [slateList]="slateFacade.selectSlateByType()" (selectSlate)="dfsFacade.getResources(SPORT, SITE, $event)"></app-slate-list>
+<div fxLayout="row">
+  <div fxLayout="column" fxFlex="30%">
+    <ng-container *ngIf="(slateFacade.slatesEmpty$ | async) === false">
+      <app-slate-list [slateList]="slateFacade.selectSlateByType()" (selectSlate)="dfsFacade.getResources(SPORT, SITE, $event)"></app-slate-list>
+    </ng-container>
+  </div>
+  <div fxLayout="column" fxFlex="70%">
+    <h4>Team Matchups</h4>
+    <div>
+      <ng-container *ngIf="(dfsFacade.matchupsEmpty$ | async) === false">
+        <app-team-matchup-table [tableColumns]="tableFacade.mlbMatchupColumns$ | async" [dfsMatchup]="dfsFacade.getMatchups$ | async"></app-team-matchup-table>
+
+        {{ dfsFacade.selectMLBMatchups$ | async }}
       </ng-container>
     </div>
-    <div fxLayout="column" fxFlex="70%">
-      <h4>Team Matchups</h4>
-      <div>
-        <ng-container *ngIf="(dfsFacade.matchupsEmpty$ | async) === false">
-          <app-team-matchup-table [tableColumns]="tableFacade.mlbMatchupColumns$ | async" [dfsMatchup]="dfsFacade.getMatchups$ | async"></app-team-matchup-table>
 
-          {{ dfsFacade.selectMLBMatchups$ | async }}
-        </ng-container>
-      </div>
+    <div style="padding: 20px 0"></div>
 
-      <div style="padding: 20px 0"></div>
-
-      <!-- <app-graph [chartData]="dfsFacade.totalPointsGraph$ | async"></app-graph> -->
-      <mat-button-toggle-group class="small" #group="matButtonToggleGroup">
-        <!-- <mat-button-toggle [value]="StatType.season" ariaLabelledby="Stat View" (change)="updateView($event)">
+    <!-- <app-graph [chartData]="dfsFacade.totalPointsGraph$ | async"></app-graph> -->
+    <mat-button-toggle-group class="small" #group="matButtonToggleGroup">
+      <!-- <mat-button-toggle [value]="StatType.season" ariaLabelledby="Stat View" (change)="updateView($event)">
                 season</mat-button-toggle> -->
-        <mat-button-toggle value="oneWeek" ariaLabelledby="Stat View" (change)="dfsFacade.updateStatLine($event.value)"> 1 week </mat-button-toggle>
-        <mat-button-toggle value="twoWeeks" ariaLabelledby="Stat View" (change)="dfsFacade.updateStatLine($event.value)"> 2 weeks </mat-button-toggle>
-        <mat-button-toggle value="fourWeeks" ariaLabelledby="Stat View" (change)="dfsFacade.updateStatLine($event.value)"> 4 weeks </mat-button-toggle>
-      </mat-button-toggle-group>
-      <div style="padding: 20px 0"></div>
+      <mat-button-toggle value="oneWeek" ariaLabelledby="Stat View" (change)="dfsFacade.updateStatLine($event.value)"> 1 week </mat-button-toggle>
+      <mat-button-toggle value="twoWeeks" ariaLabelledby="Stat View" (change)="dfsFacade.updateStatLine($event.value)"> 2 weeks </mat-button-toggle>
+      <mat-button-toggle value="fourWeeks" ariaLabelledby="Stat View" (change)="dfsFacade.updateStatLine($event.value)"> 4 weeks </mat-button-toggle>
+    </mat-button-toggle-group>
+    <div style="padding: 20px 0"></div>
 
-      <mat-tab-group>
-        <mat-tab label="Batters">
-          <h4>Batters</h4>
+    <mat-tab-group>
+      <mat-tab label="Batters">
+        <h4>Batters</h4>
 
-          <div>
-            <ng-container *ngIf="(dfsFacade.battersEmpty$ | async) === false">
-              <app-player-table
-                [dfsPlayers]="dfsFacade.batters$ | async"
-                [tableColumns]="tableFacade.batterColumns$ | async"
-                [displayColumns]="tableFacade.batterColumnDisplay$ | async"
-              >
-              </app-player-table>
-            </ng-container>
-          </div>
-        </mat-tab>
-        <mat-tab label="Pitchers">
-          <h4>Pitchers</h4>
-          <div>
-            <ng-container *ngIf="(dfsFacade.pitchersEmpty$ | async) === false">
-              <app-player-table
-                [dfsPlayers]="dfsFacade.pitchers$ | async"
-                [tableColumns]="tableFacade.pitcherColumns$ | async"
-                [displayColumns]="tableFacade.pitcherColumnDisplay$ | async"
-              ></app-player-table>
-            </ng-container>
-          </div>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
+        <div>
+          <ng-container *ngIf="(dfsFacade.battersEmpty$ | async) === false">
+            <app-player-table
+              [dfsPlayers]="dfsFacade.batters$ | async"
+              [tableColumns]="tableFacade.batterColumns$ | async"
+              [displayColumns]="tableFacade.batterColumnDisplay$ | async"
+            >
+            </app-player-table>
+          </ng-container>
+        </div>
+      </mat-tab>
+      <mat-tab label="Pitchers">
+        <h4>Pitchers</h4>
+        <div>
+          <ng-container *ngIf="(dfsFacade.pitchersEmpty$ | async) === false">
+            <app-player-table
+              [dfsPlayers]="dfsFacade.pitchers$ | async"
+              [tableColumns]="tableFacade.pitcherColumns$ | async"
+              [displayColumns]="tableFacade.pitcherColumnDisplay$ | async"
+            ></app-player-table>
+          </ng-container>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </div>
-</app-page-layout>
+</div>
