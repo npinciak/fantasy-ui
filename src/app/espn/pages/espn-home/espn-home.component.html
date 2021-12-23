@@ -1,0 +1,45 @@
+<ng-container *ngFor="let option of fastcastFacade.selectSportMapOptions$ | async">
+  <ng-container *ngFor="let entity of fastcastFacade.selectLeagueListBySlug(option.slug)">
+    <h3 matSubheader>
+      {{ entity?.league }}
+    </h3>
+    <ng-container *ngFor="let event of entity?.events">
+      <!-- <app-espn-list-team [team]="event.teams?.away" [homeAway]="HomeAwayTeam.Away"></app-espn-list-team> -->
+      <div fxLayout="row" fxLayoutGap="10px">
+        <div class="ui-w-100">
+          <mat-card style="margin: 10px 0">
+            <div fxLayout="row" fxLayoutGap="10px">
+              <div style="width: 30%">
+                <app-espn-list-team [team]="event.teams?.away" [homeAway]="HomeAwayTeam.Away"></app-espn-list-team>
+              </div>
+              <div style="width: 40%; text-align: center; display: inline">
+                <div *ngIf="event.state !== FastCastGameStatus.Pre">
+                  <span class="game-score-item">
+                    <!-- <mat-icon *ngIf="event.teams?.away.isWinner">arrow_right</mat-icon> -->
+                    <span style="font-size: 10px; vertical-align: middle" *ngIf="event.teams?.away.hasPossession">🏈</span>
+                    {{ event.teams?.away.score }} - {{ event.teams?.home.score }}
+                    <span style="font-size: 10px; vertical-align: middle" *ngIf="event.teams?.home.hasPossession">🏈</span>
+                    <!-- <mat-icon *ngIf="event.teams?.home.isWinner">arrow_left</mat-icon> -->
+                  </span>
+                </div>
+                <div style="font-size: 14px">
+                  {{ event?.summary }}
+                </div>
+                <div style="font-size: 14px" *ngIf="event?.state === FastCastGameStatus.InProgress">{{ event?.downDistancePositionText }}</div>
+                <div *ngIf="event?.isRedzone">
+                  <span style="font-size: 14px; color: red; font-weight: bold"> RedZone </span>
+                </div>
+              </div>
+              <div style="width: 30%">
+                <app-espn-list-team [team]="event.teams?.home" [homeAway]="HomeAwayTeam.Home"></app-espn-list-team>
+              </div>
+            </div>
+            <div style="text-align: center">
+              <p style="font-size: 14px">{{ event.lastPlay?.text }}</p>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>
