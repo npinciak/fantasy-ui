@@ -3,7 +3,7 @@
   Last Disconnect: {{ fastcastFacade.selectLastDisconnect$ | async | date: 'medium' }}
 </pre>
 
-<div fxLayout="row" style="margin: 10px 0px">
+<div fxLayout="row" style="margin: 10px 0">
   <div class="scoreboard-container">
     <ng-container *ngFor="let event of fastcastFacade.selectEventsMapList$ | async">
       <app-espn-scoreboard-card [event]="event"></app-espn-scoreboard-card>
