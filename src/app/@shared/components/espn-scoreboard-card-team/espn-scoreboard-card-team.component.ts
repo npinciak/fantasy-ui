@@ -8,7 +8,13 @@ import { FastcastEventTeam } from '@app/espn/models/fastcast-team.model';
 })
 export class EspnScoreboardCardTeamComponent implements OnInit {
   @Input() team: FastcastEventTeam;
+  @Input() redzone: boolean;
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  get isRedzone() {
+    return this.team.hasPossession && this.redzone;
+  }
 }
