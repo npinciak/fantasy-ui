@@ -1,11 +1,30 @@
 export interface EspnClientLeague {
   id: number;
-  schedule: EspnClientScheduleEntry[];
+  schedule: EspnClientScheduleEntity[];
   scoringPeriodId: number;
+  seasonId: number;
   settings: { name: string };
   teams: EspnClientTeam[];
 }
 
+export interface EspnClientScheduleProperties {
+  id: number;
+  matchupPeriodId: number;
+  home: EspnClientScheduleTeam;
+  away: EspnClientScheduleTeam;
+  winner: string;
+}
+
+export interface EspnClientScheduleTeam {
+  teamId: number;
+  totalPoints: number;
+}
+
+export type EspnClientScheduleEntity = EspnClientScheduleProperties;
+
+/**
+ * @deprecated
+ */
 export interface EspnClientScheduleEntry {
   teams: EspnClientScheduleTeams[];
 }

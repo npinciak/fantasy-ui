@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
-import { EspnClientScheduleEntry } from '@app/espn/espn-client.model';
+import { EspnClientScheduleEntity } from '@app/espn/espn-client.model';
 import { State, Action, Selector, StateContext, Store } from '@ngxs/store';
 
 export class PatchFantasyFootballSchedule {
   public static readonly type = `[fantasyFootballSchedule] PatchFantasyFootballSchedule`;
-  constructor(public payload: { schedule: EspnClientScheduleEntry[] }) {}
+  constructor(public payload: { schedule: EspnClientScheduleEntity[] }) {}
 }
 
 interface FantasyFootballScheduleStateModel {
-  map: { [id: string]: any };
+  map: { [id: string]: EspnClientScheduleEntity };
   isLoading: boolean;
 }
 
@@ -31,7 +31,7 @@ export class FantasyFootballScheduleState {
 
   @Action(PatchFantasyFootballSchedule)
   patchFantasyFootballSchedule(
-    { getState, patchState, dispatch }: StateContext<FantasyFootballScheduleStateModel>,
+    { getState, patchState }: StateContext<FantasyFootballScheduleStateModel>,
     { payload: { schedule } }: PatchFantasyFootballSchedule
   ) {
     const state = getState();

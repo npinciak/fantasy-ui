@@ -32,6 +32,7 @@ import { EspnFastcastState } from './espn/state/espn-fastcast.state';
 import { ShellModule } from './@core/shell/shell.module';
 import { ShellState } from './@core/shell/state/shell.state';
 import { FantasyFootballScheduleState } from './espn/nfl/state/fantasy-football-schedule';
+import { FantasyFootballTeamsState } from './espn/nfl/state/fantasy-football-teams';
 
 @NgModule({
   declarations: [AppComponent],
@@ -49,6 +50,7 @@ import { FantasyFootballScheduleState } from './espn/nfl/state/fantasy-football-
         DfsSlateState,
         EspnFastcastState,
         FantasyFootballScheduleState,
+        FantasyFootballTeamsState,
         MlbDfsState,
         MlbEventState,
         MlbState,
