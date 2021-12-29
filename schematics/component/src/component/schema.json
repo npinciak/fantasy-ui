@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "ComponentSchematic",
+  "title": "Component Schema",
+  "type": "object",
+  "description": "Creates an empty component with angular-playground",
+  "properties": {
+    "componentName": {
+      "type": "string",
+      "description": "Name of the component",
+      "x-prompt": "What is the name of the component you want to create ? (e.g. entering 'MyCoolFeature' here will make 'MyCoolFeatureComponent')"
+    },
+    "folderName": {
+      "type": "string",
+      "description": "Name of the top-level folder this form state will be saved under",
+      "x-prompt": "What top-level folder should this form state be saved under?"
+    }
+  },
+  "required": ["componentName", "folderName"]
+}
