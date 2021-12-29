@@ -15,4 +15,8 @@ export class EspnScoreboardCardComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  get preGame() {
+    return this.event?.state === FastCastGameStatus.Pre;
+  }
 }

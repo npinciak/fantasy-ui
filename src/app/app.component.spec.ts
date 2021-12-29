@@ -9,7 +9,7 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, NgxsModule.forRoot()],
       declarations: [AppComponent],
-      providers: [{ provide: Store, useClass: Store }],
+      providers: [],
     }).compileComponents();
   });
 
