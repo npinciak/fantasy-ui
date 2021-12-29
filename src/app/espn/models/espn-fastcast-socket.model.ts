@@ -1,3 +1,31 @@
+import { StatusCode } from '@app/@core/interceptors/error-handler.interceptor';
+
+interface WebSocketResponseProperties {
+  hbi: number;
+  op: OperationCode; // operationcode
+  rc: StatusCode; //response code
+  sid: string; //sessionID
+  pl: string; // payload?
+  tc: string;
+  ts: number;
+  useCDN: boolean;
+  edgeUrl: string;
+  '~c': number;
+  mid?: string; //message ID ?
+  oat: unknown;
+  tp: unknown;
+}
+
+interface websocketFE {
+  sessionId: string; // sid
+  messageId: string; // mid
+  payload: string; // pl
+  responseCode: StatusCode; // rc
+  timestamp: number; // ts
+  operationCode: OperationCode; // op
+  useCDN: boolean;
+}
+
 export interface EspnWebSocket {
   ip: string;
   token: string;
@@ -5,44 +33,37 @@ export interface EspnWebSocket {
   securePort: number;
 }
 
-export interface SocketRes {
-  hbi: number;
-  op: OPCode;
-  rc: number;
-  sid: string;
-  pl: string;
-  mid?: string;
-}
+export type SocketRes = Partial<WebSocketResponseProperties>;
+export type SocketResSuccess = Pick<WebSocketResponseProperties, 'mid' | 'op' | 'pl' | 'tc' | 'useCDN'>;
+export type SocketMsg = Pick<WebSocketResponseProperties, 'sid' | 'tc'> & { op: OperationCode.S };
+export type OpCodePRes = Pick<WebSocketResponseProperties, 'ts' | '~c' | 'pl'>;
 
-export interface SocketResSuccess {
-  mid: number;
-  op: OPCode;
-  pl: string;
-  tc: string;
-  useCDN: boolean;
-}
-
-export interface SocketMsg {
-  op: OPCode.S;
-  sid: string;
-  tc: string;
-}
-
-export enum OPCode {
+export enum OperationCode {
   B = 'B',
   C = 'C',
   H = 'H',
-  S = 'S',
-  R = 'R',
+  S = 'S', // send?
+  R = 'R', // replace?
   P = 'P',
   I = 'I',
+  Replace = 'Replace',
   Error = 'ERROR',
 }
 
-export interface OpCodePRes {
-  ts: number;
-  '~c': number;
-  pl: string;
+const opCodeKeyMap: { [key in OperationCode]: string } = {
+  [OperationCode.B]: '',
+  [OperationCode.C]: '',
+  [OperationCode.H]: '',
+  [OperationCode.S]: '',
+  [OperationCode.R]: '',
+  [OperationCode.P]: '',
+  [OperationCode.I]: '',
+  [OperationCode.Error]: '',
+  [OperationCode.Replace]: '',
+};
+
+export enum FastcastEventType {
+  Top = 'event-topevents',
 }
 
 export class WebSocketBuilder {

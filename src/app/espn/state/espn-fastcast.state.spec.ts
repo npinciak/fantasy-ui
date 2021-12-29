@@ -15,16 +15,7 @@ describe('Fastcast State', () => {
 
   const MOCK_STATE: EspnFastcastStateModel = {
     map: {
-      '321': {
-        basketball: {
-          nba: { event: [MOCK_FASTCAST_EVENT_1] },
-        },
-      },
-      '312': {
-        football: {
-          nfl: { event: [MOCK_FASTCAST_EVENT_1] },
-        },
-      },
+      [MOCK_FASTCAST_EVENT_1.id]: MOCK_FASTCAST_EVENT_1,
     },
     disconnect: null,
     connect: null,
@@ -51,7 +42,7 @@ describe('Fastcast State', () => {
 
   describe('selectSportMap', () => {
     it('returns a hash map of fastcast sports', () => {
-      const result = EspnFastcastState.selectSportMap(MOCK_STATE);
+      const result = EspnFastcastState.selectMap(MOCK_STATE);
       expect(result).toEqual(MOCK_STATE.map);
     });
   });

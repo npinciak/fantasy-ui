@@ -10,12 +10,15 @@ import {
   EspnClientFastcast as FastCastImport,
   EventsEntity as EventsImport,
   LeaguesEntity as LeaguesImport,
-  Situation,
+  Situation as SituationImport,
+  SportsEntity as SportsImport,
 } from './models/espn-fastcast.model';
 import { FANTASY_BASE_V2, FANTASY_BASE_V3, NO_LOGO } from './espn.const';
 import { FastcastEvent } from './models/fastcast-event.model';
 import { FastcastEventTeam } from './models/fastcast-team.model';
 import { enumAsList } from '@app/@shared/helpers/enum-as-list';
+import { Observable } from 'rxjs';
+import { flatten } from 'lodash';
 
 export enum Sports {
   baseball = 'flb',
@@ -24,7 +27,7 @@ export enum Sports {
   hockey = 'fhl',
 }
 
-enum GameStatusId {
+export enum GameStatusId {
   Scheduled = 1,
   '2nd' = 2,
   Cancelled = 5,
@@ -72,48 +75,30 @@ export enum FastCastGameStatus {
 export class EspnService {
   constructor(private api: ApiService) {}
 
-  static transformFastCastToEvent(data: FastCastImport): { slug: string; league: { [league: string]: FastcastEvent[] } }[] {
-    return data.sports.map(sport => ({
-      slug: sport.slug,
-      league: EspnService.transformFastcastLeagueToLeague(sport.leagues),
-    }));
-  }
+  static transformSportsImportToEventsImport = (sportsImport: SportsImport[]): FastcastEvent[] => {
+    const tmp: LeaguesImport[][] = [];
 
-  static transformFastcastLeagueToLeague(leagues: LeaguesImport[]): { [slug: string]: FastcastEvent[] } {
-    return leagues.reduce((acc, val) => {
-      acc[val.abbreviation] = {
-        event: EspnService.transformFastcastEventToEvent(val.events),
-      };
-      return acc;
-    }, {});
-  }
+    for (let i = 0; i < sportsImport.length; i++) {
+      tmp.push(sportsImport[i].leagues);
+    }
 
-  static transformFastcastEventToEvent(data: EventsImport[]): FastcastEvent[] {
-    return data.map(event => ({
-      id: event.id,
-      state: event.fullStatus.type.state,
-      status: event.status,
-      name: event.name,
-      shortname: event.shortName,
-      location: event.location,
-      clock: event.clock,
-      summary: event.summary,
-      period: event.period,
-      teams: EspnService.transformFastcastCompetitorsToTeams(event.competitors, event.situation),
-      isRedzone: event.situation?.isRedZone ?? null,
-      isHalftime: event.fullStatus.type?.id ? Number(event.fullStatus?.type?.id) === GameStatusId.Halftime : false,
-      downDistancePositionText: EspnService.transformDownDistancePostitionText(
-        event.situation?.shortDownDistanceText,
-        event.situation?.possessionText
-      ),
-      lastPlay: event.situation?.lastPlay ?? null,
-    }));
-  }
+    const leagues: LeaguesImport[] = flatten(tmp);
 
-  static transformFastcastCompetitorsToTeams(
+    const temp2: EventsImport[][] = [];
+
+    for (let i = 0; i < leagues.length; i++) {
+      temp2.push(leagues[i].events);
+    }
+
+    const flattenTemp: EventsImport[] = flatten(temp2);
+
+    return EspnService.transformEventImportToFastcastEvent(flattenTemp);
+  };
+
+  static transformFastcastCompetitorsToTeams = (
     data: CompetitorsImport[],
-    situation: Situation | null
-  ): { [homeAway: string]: FastcastEventTeam } {
+    situation: SituationImport | null
+  ): { [homeAway: string]: FastcastEventTeam } => {
     const winPctMap: { home: number | null; away: number | null } = { home: null, away: null };
 
     if (!situation) {
@@ -138,17 +123,40 @@ export class EspnService {
         rank: val.rank ?? null,
         winPct: winPctMap[val.homeAway],
         hasPossession: situation?.possession === val.id,
+        isRedzone: (situation?.possession === val.id && situation?.isRedZone) ?? false,
       };
       return acc;
     }, {});
-  }
+  };
 
-  static transformDownDistancePostitionText(downDistanceText: string | null, possessionText: string | null): string | null {
+  static transformDownDistancePostitionText = (downDistanceText: string | null, possessionText: string | null): string | null => {
     if (downDistanceText && possessionText) {
       return `${downDistanceText}, ${possessionText}`;
     }
     return null;
-  }
+  };
+
+  static transformEventImportToFastcastEvent = (events: EventsImport[]): FastcastEvent[] =>
+    events.map(event => ({
+      id: event.id,
+      priority: event.priority,
+      timestamp: new Date(event.date).getTime(),
+      state: event.fullStatus.type.state,
+      status: event.status,
+      name: event.name,
+      shortname: event.shortName,
+      location: event.location,
+      clock: event.clock,
+      summary: event.summary,
+      period: event.period,
+      teams: EspnService.transformFastcastCompetitorsToTeams(event.competitors, event.situation),
+      isHalftime: event.fullStatus.type?.id ? Number(event.fullStatus?.type?.id) === GameStatusId.Halftime : false,
+      downDistancePositionText: EspnService.transformDownDistancePostitionText(
+        event.situation?.shortDownDistanceText,
+        event.situation?.possessionText
+      ),
+      lastPlay: event.situation?.lastPlay ?? null,
+    }));
 
   /**
    * Update Espn Fantasy Team
@@ -231,8 +239,8 @@ export class EspnService {
    * @param url
    * @returns
    */
-  espnFastcast(url: string) {
-    return this.api.get<FastCastImport>(url).pipe(map(res => EspnService.transformFastCastToEvent(res)));
+  espnFastcast(url: string): Observable<FastcastEvent[]> {
+    return this.api.get<FastCastImport>(url).pipe(map(res => EspnService.transformSportsImportToEventsImport(res.sports)));
   }
 
   /**

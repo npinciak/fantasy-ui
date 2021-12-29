@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 import { ApiService } from '@app/@shared/services/api.service';
 import { FASTCAST_WS_HOST } from './espn.const';
-import { EspnWebSocket, OPCode, SocketRes, WebSocketBuilder } from './models/espn-fastcast-socket.model';
+import { EspnWebSocket, OperationCode, SocketRes, WebSocketBuilder } from './models/espn-fastcast-socket.model';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +29,7 @@ export class EspnFastcastService {
   connect(uri: string): void {
     if (!this.webSocketSubject$ || this.webSocketSubject$.closed) {
       this.webSocketSubject$ = webSocket(uri);
-      this.sendMessage({ op: OPCode.C });
+      this.sendMessage({ op: OperationCode.C });
     }
   }
 

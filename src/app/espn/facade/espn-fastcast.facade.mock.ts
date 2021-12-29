@@ -1,22 +1,17 @@
 import { Observable, of } from 'rxjs';
+import { FastcastEvent } from '../models/fastcast-event.model';
 import { MOCK_FASTCAST_EVENT_1 } from '../models/fastcast-event.model.mock';
-import { LeagueEventList } from '../state/espn-fastcast.state';
 import { EspnFastcastFacade } from './espn-fastcast.facade';
 
 export type Mock<T> = { [key in keyof T]: T[key] };
 
 export class EspnFastcastFacadeMock implements Mock<EspnFastcastFacade> {
-  selectSportMapOptions$: Observable<any> = of(['nfl']);
-  selectLeagueListBySlug$: Observable<any[]>;
-  selectLastRefresh$: Observable<number> = of(13245654);
+  selectEventsMapList$: Observable<FastcastEvent[]> = of([MOCK_FASTCAST_EVENT_1]);
+  selectLastRefresh$: Observable<number>;
+  selectLastDisconnect$: Observable<number>;
 
-  selectLeagueListBySlug(sport: string): LeagueEventList[] {
-    return [
-      {
-        league: 'nfl',
-        events: [MOCK_FASTCAST_EVENT_1],
-      },
-    ];
+  connect(): Observable<void> {
+    return of();
   }
 
   disconnect(): Observable<void> {

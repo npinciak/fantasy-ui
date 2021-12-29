@@ -17,9 +17,8 @@ import { EspnListTeamComponent } from './espn-list-team.component';
 class EspnListTeamSandboxComponent {
   readonly HomeAwayTeam = HomeAwayTeam;
 
-  public entity = {
-    events: [MOCK_FASTCAST_EVENT_1],
-  };
+  public events = MOCK_FASTCAST_EVENT_1;
+
   constructor() {}
 }
 export default sandboxOf(EspnListTeamSandboxComponent, {

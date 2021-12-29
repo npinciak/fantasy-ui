@@ -3,11 +3,10 @@
     <app-espn-scoreboard-card-team [team]="event?.teams?.away"></app-espn-scoreboard-card-team>
     <div></div>
     <app-espn-scoreboard-card-team [team]="event?.teams?.home"></app-espn-scoreboard-card-team>
-
     <table class="ui-margin-auto">
-      <tr [ngStyle]="{ 'background-color': event?.isRedzone ? 'red' : null, color: '#ffffff' }">
+      <tr>
         <td colspan="3">
-          <div class="game-summary-container" [ngStyle]="{ color: event?.isRedzone ? '#ffffff' : null }">
+          <div class="game-summary-container">
             <div class="game-summary">
               <ng-container *ngIf="!event?.isHalftime; else halftime"> {{ event?.summary }} </ng-container>
               <ng-template #halftime>
@@ -19,9 +18,7 @@
       </tr>
       <tr>
         <td colspan="3">
-          <ng-container *ngIf="event?.state === FastCastGameStatus.InProgress; else showLocation">
-            <div style="font-size: 14px">{{ event?.downDistancePositionText }}</div>
-          </ng-container>
+          <div style="font-size: 14px">{{ event?.downDistancePositionText }}</div>
         </td>
       </tr>
     </table>

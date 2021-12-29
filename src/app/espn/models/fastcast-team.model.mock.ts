@@ -13,6 +13,7 @@ export const MOCK_FASTCAST_TEAM_1: FastcastEventTeam = {
   rank: null,
   winPct: 0.9812,
   hasPossession: true,
+  inRedzone: true,
 };
 
 export const MOCK_FASTCAST_TEAM_2: FastcastEventTeam = {
@@ -22,10 +23,11 @@ export const MOCK_FASTCAST_TEAM_2: FastcastEventTeam = {
   logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/atl.png',
   isWinner: false,
   name: 'Falcons',
-  color: '',
+  color: '000000',
   altColor: '',
   record: '11-5',
   rank: null,
   winPct: 0.0298,
   hasPossession: false,
+  inRedzone: false,
 };

@@ -20,6 +20,8 @@
   <span class="example-spacer"></span>
 </mat-toolbar>
 <div class="container">
-  <app-espn-scoreboard></app-espn-scoreboard>
+  <ng-container *ngIf="shellFacade.showFastcastScoreboard$ | async">
+    <app-espn-scoreboard></app-espn-scoreboard>
+  </ng-container>
   <ng-content></ng-content>
 </div>

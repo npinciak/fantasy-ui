@@ -1,3 +1,6 @@
+import { EventsEntity as EventsImport } from '../models/espn-fastcast.model';
+import { FastcastEvent } from '../models/fastcast-event.model';
+
 export class ConnectWebSocket {
   static readonly type = `[fastcast] ConnectWebSocket`;
 }
@@ -13,5 +16,5 @@ export class FetchFastcast {
 
 export class PatchEvents {
   static readonly type = `[fastcast] PatchEvents`;
-  constructor(public payload: { events: any[] }) {}
+  constructor(public payload: { map: { [id: string]: FastcastEvent } }) {}
 }

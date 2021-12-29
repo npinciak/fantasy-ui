@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ShellFacade } from '@app/@core/shell/facade/shell.facade';
 import { GRID_TEMPLATE } from '@app/@shared/helpers/grid';
 import { UrlService } from '@app/@shared/services/url.service';
 import { UrlFragments, UrlQueryParams } from '@app/@shared/url-builder';
+import { EspnFastcastFacade } from '@app/espn/facade/espn-fastcast.facade';
 
 @Component({
   selector: 'app-page-layout',
@@ -16,9 +18,16 @@ export class PageLayoutComponent implements OnInit {
   readonly URL_FRAGMENT = UrlFragments;
   readonly URL_QUERY_PARAMS = UrlQueryParams;
 
-  constructor(private router: Router, private urlService: UrlService) {}
+  constructor(
+    readonly shellFacade: ShellFacade,
+    private fastcastFacade: EspnFastcastFacade,
+    private router: Router,
+    private urlService: UrlService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fastcastFacade.connect();
+  }
 
   get dfsNflConfig() {
     return this.router.navigate([this.urlService.getDfsNfl()], { queryParams: { site: 'draftkings' } });

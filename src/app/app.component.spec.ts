@@ -7,9 +7,9 @@ import { AppComponent } from './app.component';
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, NgxsModule.forRoot()],
+      imports: [RouterTestingModule],
       declarations: [AppComponent],
-      providers: [{ provide: Store, useClass: Store }],
+      providers: [],
     }).compileComponents();
   });
 

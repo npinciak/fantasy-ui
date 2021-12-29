@@ -1,30 +1,16 @@
 import { Selector } from '@ngxs/store';
 
-import { EspnFastcastState, LeagueEventList, LeagueMapModel, SportMapModel } from '../state/espn-fastcast.state';
+import { FastcastEvent } from '../models/fastcast-event.model';
+import { EspnFastcastState } from '../state/espn-fastcast.state';
 
 export class EspnFastcastSelectors {
-  @Selector([EspnFastcastState.selectSportMap])
-  static selectSportMap(sportMap: { [id: string]: SportMapModel }): { [id: string]: SportMapModel } {
-    return sportMap;
+  @Selector([EspnFastcastState.selectMap])
+  static selectEventById(eventMap: { [uid: string]: FastcastEvent }): (id: string) => FastcastEvent {
+    return (id: string) => eventMap[id];
   }
 
-  @Selector([EspnFastcastState.selectSportMap])
-  static selectSportMapOptions(sportMap: { [id: string]: SportMapModel }): SportMapModel[] {
-    return Object.values(sportMap);
-  }
-
-  @Selector([EspnFastcastSelectors.selectSportMap])
-  static selectLeagueListBySlug(sport: { [slug: string]: SportMapModel }): (slug: string) => LeagueEventList[] {
-    return (slug: string) => {
-      const league = sport[slug].league;
-      const leagueKeys = Object.keys(league);
-
-      return leagueKeys.map(key => ({ league: key, events: league[key].event }));
-    };
-  }
-
-  @Selector([EspnFastcastSelectors.selectLeagueListBySlug])
-  static selectLeagueBySportSlugList(league: string, selectLeagueListBySlug: (slug: string) => LeagueEventList) {
-    return (slug: string) => selectLeagueListBySlug(slug);
+  @Selector([EspnFastcastState.selectMap])
+  static selectEventsMapList(eventMap: { [id: string]: FastcastEvent }): FastcastEvent[] {
+    return Object.values(eventMap).sort((a, b) => a.priority - b.priority);
   }
 }

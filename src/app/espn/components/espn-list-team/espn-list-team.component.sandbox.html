@@ -1,4 +1,4 @@
-<ng-container *ngFor="let event of entity?.events">
+<ng-container *ngFor="let event of events">
   <app-espn-list-team [team]="event.teams?.away" [homeAway]="HomeAwayTeam.Away"></app-espn-list-team>
   <app-espn-list-team [team]="event.teams?.home" [homeAway]="HomeAwayTeam.Home"></app-espn-list-team>
 </ng-container>
