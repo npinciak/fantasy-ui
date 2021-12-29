@@ -3,6 +3,8 @@ import { FastcastEventTeam } from './fastcast-team.model';
 
 export interface FastcastEventProperties {
   id: string;
+  priority: number | null;
+  timestamp: number | null;
   state: string | null;
   status: string | null;
   name: string | null;
@@ -12,7 +14,6 @@ export interface FastcastEventProperties {
   summary: string | null;
   period: number | null;
   teams: { [homeAway: string]: FastcastEventTeam };
-  isRedzone: boolean;
   isHalftime: boolean;
   downDistancePositionText: string | null;
 }
