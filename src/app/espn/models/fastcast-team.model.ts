@@ -11,4 +11,5 @@ export interface FastcastEventTeam {
   rank: number | null;
   winPct: number | null;
   hasPossession: boolean;
+  inRedzone: boolean;
 }

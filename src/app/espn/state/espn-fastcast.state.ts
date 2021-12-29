@@ -1,5 +1,5 @@
-/* eslint-disable max-len */
 import { Injectable } from '@angular/core';
+import { flatten } from '@app/@shared/helpers/utils';
 import { entityMap } from '@app/@shared/operators';
 import { State, Selector, Action, StateContext, Store } from '@ngxs/store';
 import { ConnectWebSocket, DisconnectWebSocket, FetchFastcast, PatchEvents } from '../actions/espn-fastcast.actions';
@@ -7,11 +7,12 @@ import { ConnectWebSocket, DisconnectWebSocket, FetchFastcast, PatchEvents } fro
 import { EspnFastcastService } from '../espn-fastcast.service';
 import { FASTCAST_BASE } from '../espn.const';
 import { EspnService } from '../espn.service';
-import { OPCode } from '../models/espn-fastcast-socket.model';
+import { FastcastEventType, OperationCode } from '../models/espn-fastcast-socket.model';
+import { SportsEntity as SportsImport, LeaguesEntity as LeaguesImport, EventsEntity as EventsImport } from '../models/espn-fastcast.model';
 import { FastcastEvent } from '../models/fastcast-event.model';
 
 export interface EspnFastcastStateModel {
-  map: { [id: string]: SportMapModel };
+  map: { [id: string]: FastcastEvent };
   disconnect: number;
   connect: number;
   lastRefresh: number;
@@ -24,23 +25,6 @@ export enum FastCastSportSlug {
   MMA = 'mma',
   Football = 'football',
   Hockey = 'hockey',
-}
-
-export interface SportMapModel {
-  [slug: string]: LeagueMapModel;
-}
-
-export interface LeagueMapModel {
-  [league: string]: LeagueEvents;
-}
-
-export interface LeagueEvents {
-  event: FastcastEvent[];
-}
-
-export interface LeagueEventList {
-  league: string;
-  events: FastcastEvent[];
 }
 
 @State<EspnFastcastStateModel>({
@@ -57,9 +41,7 @@ export class EspnFastcastState {
   constructor(private fastcastService: EspnFastcastService, private espnService: EspnService, private store: Store) {}
 
   @Selector()
-  static selectSportMap(state: EspnFastcastStateModel): {
-    [id: string]: SportMapModel;
-  } {
+  static selectMap(state: EspnFastcastStateModel) {
     return state.map;
   }
 
@@ -68,36 +50,39 @@ export class EspnFastcastState {
     return state.lastRefresh;
   }
 
+  @Selector()
+  static selectLastDisconnect(state: EspnFastcastStateModel): number {
+    return state.disconnect;
+  }
+
   @Action(ConnectWebSocket)
   async connectWebsocket({ getState, patchState }: StateContext<EspnFastcastStateModel>) {
     const state = getState();
     await this.fastcastService.fastCastWebsocket().toPromise();
+
     this.fastcastService.webSocketSubject$.subscribe(message => {
       switch (message.op) {
-        case OPCode.C:
+        case OperationCode.C:
           const msg = {
-            op: OPCode.S,
+            op: OperationCode.S,
             sid: message.sid,
             tc: FastcastEventType.Top,
           };
           this.fastcastService.sendMessage(msg);
           break;
-        case OPCode.P:
-          const test: { ts: number; '~c': number; pl: string } = JSON.parse(message.pl);
-          break;
-        case OPCode.H:
+        case OperationCode.H:
           this.store.dispatch(new FetchFastcast({ uri: message.pl }));
           break;
-        case OPCode.I:
+        case OperationCode.I:
           const uri = `${FASTCAST_BASE}/${message.mid}/checkpoint`;
-
           this.store.dispatch(new FetchFastcast({ uri }));
           break;
-        case OPCode.Error:
-          console.error(`SOCKET ERROR ${OPCode.Error}`);
-
+        case OperationCode.Error:
+          console.error(`SOCKET ERROR ${OperationCode.Error}`);
+          this.store.dispatch(new DisconnectWebSocket());
+          const disconnect = new Date().getTime();
+          patchState({ ...state, disconnect });
           break;
-
         default:
           break;
       }
@@ -116,34 +101,18 @@ export class EspnFastcastState {
   }
 
   @Action(FetchFastcast)
-  async fetchFastcast({ getState, patchState }: StateContext<EspnFastcastStateModel>, { payload: { uri } }: FetchFastcast) {
-    const state = getState();
-    const data = await this.espnService.espnFastcast(uri).toPromise();
+  fetchFastcast({ dispatch }: StateContext<EspnFastcastStateModel>, { payload: { uri } }: FetchFastcast) {
+    return this.espnService.espnFastcast(uri).subscribe(data => {
+      const map = entityMap(data, event => event.id);
+      dispatch(new PatchEvents({ map }));
+    });
+  }
 
-    const map = entityMap(data, sport => sport.slug);
+  @Action(PatchEvents)
+  patchEvents({ patchState, getState }: StateContext<EspnFastcastStateModel>, { payload: { map } }: PatchEvents) {
+    const state = getState();
     const lastRefresh = new Date().getTime();
 
     patchState({ ...state, map, lastRefresh });
   }
-
-  @Action(PatchEvents)
-  patchEvents(ctx: StateContext<EspnFastcastStateModel>, { payload: { events } }: PatchEvents) {
-    // ctx.setState(setMap(events, event => event.id));
-  }
-}
-
-const opCodeKeyMap: { [key in OPCode]: string } = {
-  [OPCode.B]: '',
-  [OPCode.C]: '',
-  [OPCode.H]: '',
-  [OPCode.S]: '',
-  [OPCode.R]: '',
-  [OPCode.P]: '',
-  [OPCode.I]: '',
-  [OPCode.Error]: '',
-};
-
-export enum FastcastEventType {
-  Top = 'event-topevents',
-  Soccer = 'event-soccer',
 }
