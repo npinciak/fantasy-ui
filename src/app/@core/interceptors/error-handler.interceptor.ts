@@ -24,6 +24,11 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   }
 }
 
+export enum StatusCode {
+  Ok = 200,
+  BadRequest = 400,
+}
+
 export enum ErrorStatusCode {
   Unknown = 0,
   BadRequest = 400,
