@@ -75,7 +75,7 @@ export enum FastCastGameStatus {
 export class EspnService {
   constructor(private api: ApiService) {}
 
-  static transformSportsImportToEventsImport = (sportsImport: SportsImport[]): FastcastEvent[] => {
+  static transformSportsImportToEventsImport = (sportsImport: SportsImport[]) => {
     const tmp: LeaguesImport[][] = [];
 
     for (let i = 0; i < sportsImport.length; i++) {
@@ -92,7 +92,7 @@ export class EspnService {
 
     const flattenTemp: EventsImport[] = flatten(temp2);
 
-    return EspnService.transformEventImportToFastcastEvent(flattenTemp);
+    return leagues; //EspnService.transformEventImportToFastcastEvent(flattenTemp);
   };
 
   static transformFastcastCompetitorsToTeams = (
@@ -239,7 +239,7 @@ export class EspnService {
    * @param url
    * @returns
    */
-  espnFastcast(url: string): Observable<FastcastEvent[]> {
+  espnFastcast(url: string) {
     return this.api.get<FastCastImport>(url).pipe(map(res => EspnService.transformSportsImportToEventsImport(res.sports)));
   }
 
