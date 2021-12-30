@@ -1,8 +1,8 @@
 {
   "name": "sports-ui",
   "short_name": "sports-ui",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "theme_color": "#488aff",
+  "background_color": "#488aff",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
