@@ -31,6 +31,7 @@ import { BaseballTeamState } from './espn/mlb/state/baseball-team.state';
 import { EspnFastcastState } from './espn/state/espn-fastcast.state';
 import { ShellModule } from './@core/shell/shell.module';
 import { ShellState } from './@core/shell/state/shell.state';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [AppComponent],
@@ -67,6 +68,12 @@ import { ShellState } from './@core/shell/state/shell.state';
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsDispatchPluginModule.forRoot(),
     AppRoutingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
