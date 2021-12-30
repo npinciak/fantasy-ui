@@ -4,8 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port=4400",
-    "build": "ng build --outputHashing=\"all\" && npm run createEnv:Prod",
-    "generate:feature": " schematics ./schematics/feature/src/collection.json:feature --debug=false",
+    "build": "ng build",
+    "generate:component": "cd schematics/component && tsc -p tsconfig.json && cd ../.. && npx schematics ./schematics/component/src/collection.json:component --debug=false",
+    "generate:feature": "cd schematics/feature && tsc -p tsconfig.json && cd ../.. && npx schematics ./schematics/component/src/collection.json:feature --debug=false",
     "generate:state": "cd schematics/state && tsc -p tsconfig.json && cd ../.. && npx schematics ./schematics/state/src/collection.json:state --debug=false",
     "test": "ng test --configuration=develop --code-coverage --watch=true",
     "test:ci": "npm run lint && npm run test",
