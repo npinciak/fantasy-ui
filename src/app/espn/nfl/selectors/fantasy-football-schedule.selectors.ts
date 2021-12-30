@@ -2,7 +2,7 @@ import { EspnClientScheduleEntity, EspnClientTeam } from '@app/espn/espn-client.
 import { Selector } from '@ngxs/store';
 import { FantasyMatchup } from '../models/fantasy-schedule.model';
 import { FantasyTeam } from '../models/fantasy-team.model';
-import { FantasyFootballScheduleState } from '../state/fantasy-football-schedule';
+import { FantasyFootballScheduleState } from '../state/fantasy-football-schedule.state';
 import { FantasyFootballTeamsSelectors } from './fantasy-football-teams.selectors';
 
 export class FantasyFootballScheduleSelectors {

@@ -2,7 +2,7 @@ import { Selector } from '@ngxs/store';
 
 import { EspnClientTeam } from '@app/espn/espn-client.model';
 import { FantasyTeam } from '../models/fantasy-team.model';
-import { FantasyFootballTeamsState } from '../state/fantasy-football-teams';
+import { FantasyFootballTeamsState } from '../state/fantasy-football-teams.state';
 
 export class FantasyFootballTeamsSelectors {
   static transformTeamImportToFantasyTeam(teamImport: EspnClientTeam): FantasyTeam {

@@ -6,7 +6,7 @@ import { NFLFacade } from '../facade/nfl.facade';
 @Injectable({
   providedIn: 'root',
 })
-export class NFLLeagueResolver implements Resolve<void> {
+export class FantasyFootballLeagueResolver implements Resolve<void> {
   constructor(readonly nflFacade: NFLFacade) {}
 
   async resolve(route: ActivatedRouteSnapshot): Promise<void> {

@@ -4,17 +4,17 @@ import { State, Action, Selector, StateContext, Store } from '@ngxs/store';
 
 import { FetchFootballLeague } from '../actions/nfl.actions';
 import { NflService } from '../services/nfl.service';
-import { PatchFantasyFootballSchedule } from './fantasy-football-schedule';
-import { PatchFantasyFootballTeams } from './fantasy-football-teams';
+import { PatchFantasyFootballSchedule } from './fantasy-football-schedule.state';
+import { PatchFantasyFootballTeams } from './fantasy-football-teams.state';
 
-interface NflStateModel {
+interface FantasyFootballLeagueStateModel {
   seasonId: number | null;
   scoringPeriodId: number | null;
   isLoading: boolean;
 }
 
-@State<NflStateModel>({
-  name: 'nfl',
+@State<FantasyFootballLeagueStateModel>({
+  name: 'fantasyFootballLeague',
   defaults: {
     seasonId: null,
     scoringPeriodId: null,
@@ -22,22 +22,21 @@ interface NflStateModel {
   },
 })
 @Injectable()
-export class NflState {
+export class FantasyFootballLeagueState {
   constructor(private espnService: EspnService, private nflService: NflService, private store: Store) {}
 
   @Selector()
-  static scoringPeriod(state: NflStateModel) {
+  static scoringPeriod(state: FantasyFootballLeagueStateModel) {
     return state.scoringPeriodId;
   }
 
   @Action(FetchFootballLeague)
-  async footballLeague({ getState, patchState, dispatch }: StateContext<NflStateModel>, { leagueId }: FetchFootballLeague) {
+  async footballLeague(
+    { getState, patchState, dispatch }: StateContext<FantasyFootballLeagueStateModel>,
+    { leagueId }: FetchFootballLeague
+  ) {
     const state = getState();
 
-    // if (NflState.scoringPeriod !== null) {
-    //   console.log(`League ${leagueId} already in state, retrieving cache`);
-    //   return;
-    // }
     const league = await this.nflService.footballLeague(Number(leagueId)).toPromise();
 
     const scoringPeriodId = league.scoringPeriodId;

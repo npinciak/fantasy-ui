@@ -16,9 +16,8 @@ import { MlbState } from './espn/mlb/state/mlb.state';
 import { httpInterceptorProviders } from './@core/interceptors';
 import { WeatherState } from './espn/weather/state/weather.state';
 import { SharedModule } from './@shared/shared.module';
-import { NflState } from './espn/nfl/state/nfl.state';
+import { FantasyFootballLeagueState } from './espn/nfl/state/fantasy-football-league.state';
 import { MlbDfsState } from './dfs/mlb/state/mlb-dfs.state';
-import { DfsModule } from './dfs/dfs.module';
 import { DfsSlateState } from './dfs/mlb/state/dfs-slate.state';
 import { NflDfsState } from './dfs/nfl/state/nfl-dfs.state';
 import { NflDfsProfilerState } from './dfs/nfl/state/nfl-dfs-profiler.state';
@@ -31,8 +30,8 @@ import { BaseballTeamState } from './espn/mlb/state/baseball-team.state';
 import { EspnFastcastState } from './espn/state/espn-fastcast.state';
 import { ShellModule } from './@core/shell/shell.module';
 import { ShellState } from './@core/shell/state/shell.state';
-import { FantasyFootballScheduleState } from './espn/nfl/state/fantasy-football-schedule';
-import { FantasyFootballTeamsState } from './espn/nfl/state/fantasy-football-teams';
+import { FantasyFootballScheduleState } from './espn/nfl/state/fantasy-football-schedule.state';
+import { FantasyFootballTeamsState } from './espn/nfl/state/fantasy-football-teams.state';
 
 @NgModule({
   declarations: [AppComponent],
@@ -49,6 +48,7 @@ import { FantasyFootballTeamsState } from './espn/nfl/state/fantasy-football-tea
         CoreState,
         DfsSlateState,
         EspnFastcastState,
+        FantasyFootballLeagueState,
         FantasyFootballScheduleState,
         FantasyFootballTeamsState,
         MlbDfsState,
@@ -60,7 +60,6 @@ import { FantasyFootballTeamsState } from './espn/nfl/state/fantasy-football-tea
         NflDfsPlayerMasterState,
         NflDfsPlayerSlateState,
         NflDfsLineupState,
-        NflState,
         WeatherState,
         ShellState,
       ],
