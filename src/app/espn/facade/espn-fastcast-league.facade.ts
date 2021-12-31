@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
 
 import { FastcastEvent } from '../models/fastcast-event.model';
 import { EspnFastcastLeagueSelectors } from '../selectors/espn-fastcast-league.selectors';
@@ -8,6 +9,8 @@ import { EspnFastcastLeagueSelectors } from '../selectors/espn-fastcast-league.s
   providedIn: 'root',
 })
 export class EspnFastcastLeagueFacade {
+  @Select(EspnFastcastLeagueSelectors.selectPrettyLeagueList) prettyLeagueList$: Observable<any[]>;
+
   constructor(private store: Store) {}
 
   fastcastEventsByLeagueId(id: string): FastcastEvent[] {

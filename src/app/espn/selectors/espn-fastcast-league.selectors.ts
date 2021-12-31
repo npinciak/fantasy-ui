@@ -77,8 +77,11 @@ export class EspnFastcastLeagueSelectors {
   }
 
   @Selector([EspnFastcastLeagueState.selectMap])
-  static selectLeagueList(eventMap: { [id: string]: LeaguesEntity }): LeaguesEntity[] {
-    return Object.values(eventMap);
+  static selectPrettyLeagueList(map: { [id: string]: LeaguesEntity }): { id: string; name: string }[] {
+    return Object.values(map).map(l => ({
+      id: l.id,
+      name: l.shortName,
+    }));
   }
 
   @Selector([EspnFastcastLeagueSelectors.selectLeagueById])

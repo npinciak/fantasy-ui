@@ -28,9 +28,9 @@ import { NflDfsLineupState } from './dfs/nfl/state/nfl-dfs-lineup.state';
 import { MlbEventState } from './espn/mlb/state/mlb-event.state';
 import { BaseballTeamState } from './espn/mlb/state/baseball-team.state';
 import { EspnFastcastState } from './espn/state/espn-fastcast.state';
+import { EspnFastcastLeagueState } from './espn/state/espn-fastcast-league.state';
 import { ShellModule } from './@core/shell/shell.module';
 import { ShellState } from './@core/shell/state/shell.state';
-import { EspnFastcastLeagueState } from './espn/state/espn-fastcast-league.state';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({

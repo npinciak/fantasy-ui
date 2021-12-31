@@ -67,7 +67,7 @@ export class EspnFastcastState {
           const msg = {
             op: OperationCode.S,
             sid: message.sid,
-            tc: FastcastEventType.Top,
+            tc: FastcastEventType.TopEvents,
           };
           this.fastcastService.sendMessage(msg);
           break;
