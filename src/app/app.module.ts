@@ -13,7 +13,6 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { CoreState } from './@core/store/core/core.state';
 import { environment } from 'src/environments/environment';
 import { httpInterceptorProviders } from './@core/interceptors';
-import { WeatherState } from './espn/weather/state/weather.state';
 import { SharedModule } from './@shared/shared.module';
 import { MlbDfsState } from './dfs/mlb/state/mlb-dfs.state';
 import { DfsSlateState } from './dfs/mlb/state/dfs-slate.state';
@@ -48,7 +47,6 @@ import { ShellState } from './@core/shell/state/shell.state';
         NflDfsPlayerMasterState,
         NflDfsPlayerSlateState,
         NflDfsLineupState,
-        WeatherState,
         ShellState,
       ],
       {
@@ -58,6 +56,12 @@ import { ShellState } from './@core/shell/state/shell.state';
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsDispatchPluginModule.forRoot(),
     AppRoutingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],

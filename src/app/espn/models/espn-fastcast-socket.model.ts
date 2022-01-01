@@ -63,7 +63,8 @@ const opCodeKeyMap: { [key in OperationCode]: string } = {
 };
 
 export enum FastcastEventType {
-  Top = 'event-topevents',
+  TopEvents = 'event-topevents',
+  Soccer = 'event-topsoccer',
 }
 
 export class WebSocketBuilder {
