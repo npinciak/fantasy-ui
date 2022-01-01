@@ -14,7 +14,6 @@ import { CoreState } from './@core/store/core/core.state';
 import { environment } from 'src/environments/environment';
 import { FantasyBaseballLeagueState } from './espn/mlb/state/fantasy-baseball-league.state';
 import { httpInterceptorProviders } from './@core/interceptors';
-import { WeatherState } from './espn/weather/state/weather.state';
 import { SharedModule } from './@shared/shared.module';
 import { FantasyFootballLeagueState } from './espn/nfl/state/fantasy-football-league.state';
 import { MlbDfsState } from './dfs/mlb/state/mlb-dfs.state';
@@ -58,7 +57,6 @@ import { FantasyFootballTeamsState } from './espn/nfl/state/fantasy-football-tea
         NflDfsPlayerMasterState,
         NflDfsPlayerSlateState,
         NflDfsLineupState,
-        WeatherState,
         ShellState,
       ],
       {
