@@ -20,6 +20,12 @@ import { HomeComponent as NFLHomeComponent } from './nfl/pages/home/home.compone
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 import { EspnRoutingModule } from './espn-routing.module';
 import { EspnListTeamComponent } from './components/espn-list-team/espn-list-team.component';
+import { NgxsModule } from '@ngxs/store';
+import { FantasyBaseballLeagueState } from './mlb/state/fantasy-baseball-league.state';
+import { FantasyBaseballTeamState } from './mlb/state/fantasy-baseball-team.state';
+import { FantasyFootballLeagueState } from './nfl/state/fantasy-football-league.state';
+import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-schedule.state';
+import { FantasyFootballTeamsState } from './nfl/state/fantasy-football-teams.state';
 
 const components = [
   EspnHomeComponent,
@@ -39,9 +45,17 @@ const components = [
   EspnListTeamComponent,
 ];
 
+const states = [
+  FantasyFootballLeagueState,
+  FantasyFootballScheduleState,
+  FantasyFootballTeamsState,
+  FantasyBaseballLeagueState,
+  FantasyBaseballTeamState,
+];
+
 @NgModule({
   declarations: components,
-  imports: [CommonModule, EspnRoutingModule, MaterialModule, FlexLayoutModule, GridModule, SharedModule],
+  imports: [CommonModule, EspnRoutingModule, MaterialModule, FlexLayoutModule, GridModule, SharedModule, NgxsModule.forFeature(states)],
   exports: [StandingsComponent, RosterComponent],
 })
 export class EspnModule {}

@@ -14,7 +14,7 @@ interface FantasyBaseballTeamStateModel {
 }
 
 @State<FantasyBaseballTeamStateModel>({
-  name: 'fantasyBaseballTeam',
+  name: 'fantasyBaseballTeams',
   defaults: {
     map: {},
   },
