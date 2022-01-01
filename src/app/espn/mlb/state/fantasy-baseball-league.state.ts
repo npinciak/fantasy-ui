@@ -3,6 +3,7 @@ import { State, Action, Selector, StateContext, Store } from '@ngxs/store';
 
 import { FetchBaseballLeague, UpdateStatType } from '../actions/mlb.actions';
 import { MlbService } from '../services/mlb.service';
+import { PatchTeams } from './fantasy-baseball-team.state';
 
 export interface FantasyBaseballLeagueStateModel {
   map: { [id: string]: any };
@@ -45,19 +46,17 @@ export class FantasyBaseballLeagueState {
   }
 
   @Action(FetchBaseballLeague)
-  async baseballLeague(ctx: StateContext<FantasyBaseballLeagueStateModel>, { leagueId }: FetchBaseballLeague) {
-    if (ctx.getState().scoringPeriodId) {
+  async baseballLeague({ getState, dispatch }: StateContext<FantasyBaseballLeagueStateModel>, { leagueId }: FetchBaseballLeague) {
+    if (getState().scoringPeriodId) {
       console.log(`League ${leagueId} already in state, retrieving cache`);
       return;
     }
 
     const league = await this.mlbService.baseballLeague(leagueId).toPromise();
-
-    // this.store.dispatch(new PatchTeams({ teams: league.teams }));
   }
 
   @Action(UpdateStatType)
-  update(ctx: StateContext<FantasyBaseballLeagueStateModel>, { statTypeId }: UpdateStatType) {
-    return ctx.patchState({ statTypeId });
+  update({ patchState }: StateContext<FantasyBaseballLeagueStateModel>, { statTypeId }: UpdateStatType) {
+    patchState({ statTypeId });
   }
 }
