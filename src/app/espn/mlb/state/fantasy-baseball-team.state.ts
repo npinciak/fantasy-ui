@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { setMap } from '@app/@shared/operators';
+import { entityMap } from '@app/@shared/operators';
 import { State, Selector, Action, StateContext } from '@ngxs/store';
 
 import { Team } from '../models/team.model';
@@ -14,7 +14,7 @@ interface FantasyBaseballTeamStateModel {
 }
 
 @State<FantasyBaseballTeamStateModel>({
-  name: 'fantasyBaseballTeam',
+  name: 'fantasyBaseballTeams',
   defaults: {
     map: {},
   },
@@ -29,7 +29,9 @@ export class FantasyBaseballTeamState {
   }
 
   @Action(PatchTeams)
-  patchTeams(ctx: StateContext<FantasyBaseballTeamStateModel>, { payload: { teams } }: PatchTeams) {
-    ctx.setState(setMap(teams, team => team.id));
+  patchTeams({ patchState, getState }: StateContext<FantasyBaseballTeamStateModel>, { payload: { teams } }: PatchTeams) {
+    const state = getState();
+    const map = entityMap(teams, team => team.id);
+    patchState({ ...state, map });
   }
 }
