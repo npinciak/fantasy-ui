@@ -12,13 +12,11 @@ import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { CoreState } from './@core/store/core/core.state';
 import { environment } from 'src/environments/environment';
-import { MlbState } from './espn/mlb/state/mlb.state';
+import { FantasyBaseballLeagueState } from './espn/mlb/state/fantasy-baseball-league.state';
 import { httpInterceptorProviders } from './@core/interceptors';
-import { WeatherState } from './espn/weather/state/weather.state';
 import { SharedModule } from './@shared/shared.module';
-import { NflState } from './espn/nfl/state/nfl.state';
+import { FantasyFootballLeagueState } from './espn/nfl/state/fantasy-football-league.state';
 import { MlbDfsState } from './dfs/mlb/state/mlb-dfs.state';
-import { DfsModule } from './dfs/dfs.module';
 import { DfsSlateState } from './dfs/mlb/state/dfs-slate.state';
 import { NflDfsState } from './dfs/nfl/state/nfl-dfs.state';
 import { NflDfsProfilerState } from './dfs/nfl/state/nfl-dfs-profiler.state';
@@ -26,11 +24,13 @@ import { NflDfsPlayerMasterState } from './dfs/nfl/state/nfl-dfs-player-master.s
 import { NflDfsPlayerSlateState } from './dfs/nfl/state/nfl-dfs-player-slate.state';
 import { NflDfsTeamState } from './dfs/nfl/state/nfl-dfs-team.state';
 import { NflDfsLineupState } from './dfs/nfl/state/nfl-dfs-lineup.state';
-import { MlbEventState } from './espn/mlb/state/mlb-event.state';
-import { BaseballTeamState } from './espn/mlb/state/baseball-team.state';
+import { FantasyBaseballTeamState } from './espn/mlb/state/fantasy-baseball-team.state';
 import { EspnFastcastState } from './espn/state/espn-fastcast.state';
+import { EspnFastcastLeagueState } from './espn/state/espn-fastcast-league.state';
 import { ShellModule } from './@core/shell/shell.module';
 import { ShellState } from './@core/shell/state/shell.state';
+import { FantasyFootballScheduleState } from './espn/nfl/state/fantasy-football-schedule.state';
+import { FantasyFootballTeamsState } from './espn/nfl/state/fantasy-football-teams.state';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
@@ -44,21 +44,22 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     NgxsSelectSnapshotModule.forRoot(),
     NgxsModule.forRoot(
       [
-        BaseballTeamState,
+        FantasyBaseballTeamState,
         CoreState,
         DfsSlateState,
         EspnFastcastState,
+        FantasyFootballLeagueState,
+        FantasyFootballScheduleState,
+        FantasyFootballTeamsState,
+        EspnFastcastLeagueState,
         MlbDfsState,
-        MlbEventState,
-        MlbState,
+        FantasyBaseballLeagueState,
         NflDfsState,
         NflDfsTeamState,
         NflDfsProfilerState,
         NflDfsPlayerMasterState,
         NflDfsPlayerSlateState,
         NflDfsLineupState,
-        NflState,
-        WeatherState,
         ShellState,
       ],
       {
@@ -72,7 +73,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
   providers: [httpInterceptorProviders],

@@ -1,25 +1,32 @@
-<ng-container *ngFor="let event of fastcastFacade.selectEventsMapList$ | async">
-  <div fxLayout="row" fxLayoutGap="10px">
-    <div class="ui-w-100">
-      <mat-card style="margin: 10px 0">
-        <mat-card-content>
-          <app-espn-scoreboard-card-team [team]="event?.teams?.away"></app-espn-scoreboard-card-team>
-          <app-espn-scoreboard-card-team [team]="event?.teams?.home"></app-espn-scoreboard-card-team>
-        </mat-card-content>
-        <mat-card-actions align="end">
-          <div fxLayout="row">
-            <ng-container *ngIf="!event?.isHalftime; else halftime">
-              <div>{{ event?.summary }}</div>
-            </ng-container>
-
-            <div style="font-size: 14px">{{ event?.downDistancePositionText }}</div>
-          </div>
-        </mat-card-actions>
-      </mat-card>
+<ng-container *ngFor="let league of fastcastLeagueFacade.prettyLeagueList$ | async">
+  <h4>{{ league.name }}</h4>
+  <ng-container *ngFor="let event of fastcastLeagueFacade.fastcastEventsByLeagueId(league.id)">
+    <div fxLayout="col" fxLayoutGap="10px">
+      <div fxFlex.gt-md="30" fxFlex.lt-md="100" fxFlex.lt-sm="100">
+        <mat-card style="margin: 10px 0">
+          <mat-card-content>
+            <div>
+              <app-espn-list-team [team]="event?.teams?.away" [homeAway]="HomeAwayTeam.Away"></app-espn-list-team>
+            </div>
+            <div>
+              <app-espn-list-team [team]="event?.teams?.home" [homeAway]="HomeAwayTeam.Home"></app-espn-list-team>
+            </div>
+          </mat-card-content>
+          <mat-card-actions fxLayout="col" align="end">
+            <div>
+              <ng-container *ngIf="!event?.isHalftime; else halftime">
+                <div style="margin-bottom: 5px">{{ event?.summary }}</div>
+              </ng-container>
+              <div style="margin-bottom: 5px">{{ event?.downDistancePositionText }}</div>
+              <div style="font-size: 14px">{{ event?.lastPlay?.text }}</div>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
     </div>
-  </div>
-</ng-container>
+  </ng-container>
 
-<ng-template #halftime>
-  {{ event?.isHalftime ? 'Halftime' : null }}
-</ng-template>
+  <ng-template #halftime>
+    {{ event?.isHalftime ? 'Halftime' : null }}
+  </ng-template>
+</ng-container>

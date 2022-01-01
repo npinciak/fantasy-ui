@@ -1,6 +1,6 @@
 import { BaseballPlayer } from './baseball-player.model';
 
-export interface Team {
+export interface TeamProperties {
   id: string;
   name: string;
   abbrev: string;
@@ -9,3 +9,5 @@ export interface Team {
   totalPoints: number;
   currentRank: number;
 }
+
+export type Team = TeamProperties;
