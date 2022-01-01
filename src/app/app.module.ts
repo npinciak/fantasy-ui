@@ -12,10 +12,8 @@ import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { CoreState } from './@core/store/core/core.state';
 import { environment } from 'src/environments/environment';
-import { FantasyBaseballLeagueState } from './espn/mlb/state/fantasy-baseball-league.state';
 import { httpInterceptorProviders } from './@core/interceptors';
 import { SharedModule } from './@shared/shared.module';
-import { FantasyFootballLeagueState } from './espn/nfl/state/fantasy-football-league.state';
 import { MlbDfsState } from './dfs/mlb/state/mlb-dfs.state';
 import { DfsSlateState } from './dfs/mlb/state/dfs-slate.state';
 import { NflDfsState } from './dfs/nfl/state/nfl-dfs.state';
@@ -24,13 +22,9 @@ import { NflDfsPlayerMasterState } from './dfs/nfl/state/nfl-dfs-player-master.s
 import { NflDfsPlayerSlateState } from './dfs/nfl/state/nfl-dfs-player-slate.state';
 import { NflDfsTeamState } from './dfs/nfl/state/nfl-dfs-team.state';
 import { NflDfsLineupState } from './dfs/nfl/state/nfl-dfs-lineup.state';
-import { FantasyBaseballTeamState } from './espn/mlb/state/fantasy-baseball-team.state';
 import { EspnFastcastState } from './espn/state/espn-fastcast.state';
-import { EspnFastcastLeagueState } from './espn/state/espn-fastcast-league.state';
 import { ShellModule } from './@core/shell/shell.module';
 import { ShellState } from './@core/shell/state/shell.state';
-import { FantasyFootballScheduleState } from './espn/nfl/state/fantasy-football-schedule.state';
-import { FantasyFootballTeamsState } from './espn/nfl/state/fantasy-football-teams.state';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
@@ -44,16 +38,10 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     NgxsSelectSnapshotModule.forRoot(),
     NgxsModule.forRoot(
       [
-        FantasyBaseballTeamState,
         CoreState,
         DfsSlateState,
         EspnFastcastState,
-        FantasyFootballLeagueState,
-        FantasyFootballScheduleState,
-        FantasyFootballTeamsState,
-        EspnFastcastLeagueState,
         MlbDfsState,
-        FantasyBaseballLeagueState,
         NflDfsState,
         NflDfsTeamState,
         NflDfsProfilerState,
