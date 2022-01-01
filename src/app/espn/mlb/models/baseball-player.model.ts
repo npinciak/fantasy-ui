@@ -1,4 +1,3 @@
-import { EspnClientGameStatus } from '../interface/player';
 import { Player } from './player.model';
 
 export interface BaseballPlayerProperties {
@@ -7,7 +6,7 @@ export interface BaseballPlayerProperties {
   defaultPosition: string;
   proTeam: string;
   isStarting: boolean;
-  startingStatus: EspnClientGameStatus;
+  startingStatus: string;
   isPitcher: boolean;
 }
 

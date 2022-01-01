@@ -5,31 +5,31 @@ import { State, Selector, Action, StateContext } from '@ngxs/store';
 import { Team } from '../models/team.model';
 
 export class PatchTeams {
-  static readonly type = `[baseballTeam] PatchTeams`;
+  static readonly type = `[fantasyBaseballTeam] PatchTeams`;
   constructor(public payload: { teams: Team[] }) {}
 }
 
-interface BaseballTeamStateModel {
+interface FantasyBaseballTeamStateModel {
   map: { [id: string]: Team };
 }
 
-@State<BaseballTeamStateModel>({
-  name: 'baseballTeam',
+@State<FantasyBaseballTeamStateModel>({
+  name: 'fantasyBaseballTeam',
   defaults: {
     map: {},
   },
 })
 @Injectable()
-export class BaseballTeamState {
+export class FantasyBaseballTeamState {
   constructor() {}
 
   @Selector()
-  static getBaseballTeamMap(state: BaseballTeamStateModel) {
+  static getBaseballTeamMap(state: FantasyBaseballTeamStateModel) {
     return state.map;
   }
 
   @Action(PatchTeams)
-  patchTeams(ctx: StateContext<BaseballTeamStateModel>, { payload: { teams } }: PatchTeams) {
+  patchTeams(ctx: StateContext<FantasyBaseballTeamStateModel>, { payload: { teams } }: PatchTeams) {
     ctx.setState(setMap(teams, team => team.id));
   }
 }

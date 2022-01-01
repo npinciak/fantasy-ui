@@ -8,7 +8,7 @@ export const MOCK_BASEBALL_PLAYER_1: BaseballPlayer = {
   defaultPosition: '',
   proTeam: '',
   isStarting: true,
-  startingStatus: {},
+  startingStatus: null,
   isPitcher: false,
 };
 
@@ -19,6 +19,6 @@ export const MOCK_BASEBALL_PLAYER_2: BaseballPlayer = {
   defaultPosition: '',
   proTeam: '',
   isStarting: true,
-  startingStatus: {},
+  startingStatus: null,
   isPitcher: true,
 };

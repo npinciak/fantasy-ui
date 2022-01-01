@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
+
 import { entityMap } from '@app/@shared/operators';
-import { EspnClientScheduleEntity } from '@app/espn/espn-client.model';
-import { EspnClientTeam } from '@app/espn/mlb/interface';
+import { EspnClientTeam } from '@app/espn/espn-client.model';
+
 import { State, Action, Selector, StateContext, Store } from '@ngxs/store';
 
 export class PatchFantasyFootballTeams {

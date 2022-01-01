@@ -1,16 +1,14 @@
-import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { ApiService } from '@app/@shared/services/api.service';
 import { EspnService, Sports } from '@app/espn/espn.service';
-import { isPitcher, logoImgBuilder } from '../helpers';
+import { isPitcher } from '../helpers';
 import { BaseballLeague } from '../models/baseball-league.model';
 import { BaseballPlayer } from '../models/baseball-player.model';
-import { MlbEvent, MlbEventTeams } from '../models/mlb-event.model';
+
 import { Team } from '../models/team.model';
-import { EspnClientCompetitor, EspnClientEvent, EspnClientLeague, EspnClientPlayer, EspnClientTeam } from '@app/espn/espn-client.model';
+import { EspnClientLeague, EspnClientPlayer, EspnClientTeam } from '@app/espn/espn-client.model';
 
 @Injectable({
   providedIn: 'root',
@@ -51,30 +49,7 @@ export class MlbService {
     }));
   }
 
-  static transformEspnClientEventListToMlbEventList(events: EspnClientEvent[]): MlbEvent[] {
-    return events.map(event => ({
-      id: event.id,
-      date: event.date,
-      summary: event.summary,
-      teams: MlbService.transformCompetitorToTeam(event.competitors),
-    }));
-  }
-
-  static transformCompetitorToTeam(competitors: EspnClientCompetitor[]): { [homeAway: string]: MlbEventTeams } {
-    return competitors.reduce((acc, val, i) => {
-      acc[val.homeAway] = {
-        score: val.score,
-        abbrev: val.abbreviation,
-        logo: logoImgBuilder('mlb', val.abbreviation),
-        isWinner: val.winner,
-      };
-      return acc;
-    }, {});
-  }
-
-  baseballLeague(leagueId: number): Observable<BaseballLeague> {
-    return this.espnClient
-      .espnFantasyLeagueBySport(Sports.baseball, leagueId)
-      .pipe(map(res => MlbService.transformEspnClientLeagueToBaseballLeague(res)));
+  baseballLeague(leagueId: number): Observable<EspnClientLeague> {
+    return this.espnClient.espnFantasyLeagueBySport(Sports.baseball, leagueId).pipe(map(res => res));
   }
 }

@@ -3,7 +3,7 @@ import { stadiumConditionsMap } from '@app/@shared/helpers/mapping';
 import { entityMap, patchMap } from '@app/@shared/operators';
 import { MlbStateModel } from '@mlb/state/mlb-state.model';
 import { GameMap } from '@app/espn/mlb/state/mlb-state.model';
-import { MlbState } from '@app/espn/mlb/state/mlb.state';
+import { MlbState } from '@app/espn/mlb/state/fantasy-baseball-league.state';
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 import { WeatherService } from '../weather.service';
