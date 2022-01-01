@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FastcastEventTeam } from '@app/espn/models/fastcast-team.model';
 
 enum HomeAwayTeam {
@@ -11,13 +11,17 @@ enum HomeAwayTeam {
   templateUrl: './espn-list-team.component.html',
   styleUrls: ['./espn-list-team.component.scss'],
 })
-export class EspnListTeamComponent implements OnInit {
+export class EspnListTeamComponent {
   @Input() team: FastcastEventTeam;
   @Input() homeAway: HomeAwayTeam;
 
   readonly HomeAwayTeam = HomeAwayTeam;
 
-  constructor() {}
+  get homeAwayLayout() {
+    return this.homeAway === HomeAwayTeam.Away ? 'row' : 'row-reverse';
+  }
 
-  ngOnInit(): void {}
+  get homeAwayLayoutAlign() {
+    return this.homeAway === HomeAwayTeam.Away ? 'end' : 'start';
+  }
 }

@@ -26,10 +26,12 @@ import { NflDfsTeamState } from './dfs/nfl/state/nfl-dfs-team.state';
 import { NflDfsLineupState } from './dfs/nfl/state/nfl-dfs-lineup.state';
 import { FantasyBaseballTeamState } from './espn/mlb/state/fantasy-baseball-team.state';
 import { EspnFastcastState } from './espn/state/espn-fastcast.state';
+import { EspnFastcastLeagueState } from './espn/state/espn-fastcast-league.state';
 import { ShellModule } from './@core/shell/shell.module';
 import { ShellState } from './@core/shell/state/shell.state';
 import { FantasyFootballScheduleState } from './espn/nfl/state/fantasy-football-schedule.state';
 import { FantasyFootballTeamsState } from './espn/nfl/state/fantasy-football-teams.state';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [AppComponent],
@@ -49,6 +51,7 @@ import { FantasyFootballTeamsState } from './espn/nfl/state/fantasy-football-tea
         FantasyFootballLeagueState,
         FantasyFootballScheduleState,
         FantasyFootballTeamsState,
+        EspnFastcastLeagueState,
         MlbDfsState,
         FantasyBaseballLeagueState,
         NflDfsState,
@@ -66,6 +69,12 @@ import { FantasyFootballTeamsState } from './espn/nfl/state/fantasy-football-tea
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsDispatchPluginModule.forRoot(),
     AppRoutingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
