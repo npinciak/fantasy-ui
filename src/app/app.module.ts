@@ -25,7 +25,6 @@ import { NflDfsPlayerMasterState } from './dfs/nfl/state/nfl-dfs-player-master.s
 import { NflDfsPlayerSlateState } from './dfs/nfl/state/nfl-dfs-player-slate.state';
 import { NflDfsTeamState } from './dfs/nfl/state/nfl-dfs-team.state';
 import { NflDfsLineupState } from './dfs/nfl/state/nfl-dfs-lineup.state';
-import { MlbEventState } from './espn/mlb/state/mlb-event.state';
 import { BaseballTeamState } from './espn/mlb/state/baseball-team.state';
 import { EspnFastcastState } from './espn/state/espn-fastcast.state';
 import { ShellModule } from './@core/shell/shell.module';
@@ -52,7 +51,6 @@ import { FantasyFootballTeamsState } from './espn/nfl/state/fantasy-football-tea
         FantasyFootballScheduleState,
         FantasyFootballTeamsState,
         MlbDfsState,
-        MlbEventState,
         MlbState,
         NflDfsState,
         NflDfsTeamState,

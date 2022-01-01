@@ -77,14 +77,4 @@ export class MlbService {
       .espnFantasyLeagueBySport(Sports.baseball, leagueId)
       .pipe(map(res => MlbService.transformEspnClientLeagueToBaseballLeague(res)));
   }
-
-  /**
-   *
-   * @deprecated replace with fastcast
-   */
-  baseballEvents(): Observable<MlbEvent[]> {
-    return this.espnClient
-      .espnFantasyEventsBySport(Sports.baseball)
-      .pipe(map(res => MlbService.transformEspnClientEventListToMlbEventList(res.events)));
-  }
 }

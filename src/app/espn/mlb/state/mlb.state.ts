@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { State, Action, Selector, StateContext, Store } from '@ngxs/store';
 
-import { EspnService } from '@espn/espn.service';
 import { EventMap, MlbStateModel, TeamMap } from './mlb-state.model';
 import { FetchBaseballLeague, UpdateStatType } from '../actions/mlb.actions';
 import { MlbService } from '../services/mlb.service';
-import { PatchEvents } from './mlb-event.state';
 import { PatchTeams } from './baseball-team.state';
 
 @State<MlbStateModel>({
@@ -66,10 +64,8 @@ export class MlbState {
     }
 
     const league = await this.mlbService.baseballLeague(leagueId).toPromise();
-    const events = await this.mlbService.baseballEvents().toPromise();
 
     this.store.dispatch(new PatchTeams({ teams: league.teams }));
-    this.store.dispatch(new PatchEvents({ events }));
   }
 
   @Action(UpdateStatType)
