@@ -1,4 +1,4 @@
-interface Ballpark {
+export interface Ballpark {
   [id: number]: {
     team: string;
     name: string;
@@ -7,5 +7,3 @@ interface Ballpark {
     lng: number;
   };
 }
-
-export { Ballpark };
