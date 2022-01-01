@@ -1,4 +1,4 @@
-import { SeasonConst } from '../interface/adv.stats';
+import { SeasonConst } from '../interface/adv-stats.model';
 import { StatAbbrev } from '../consts/stats.const';
 
 export class AdvStats {

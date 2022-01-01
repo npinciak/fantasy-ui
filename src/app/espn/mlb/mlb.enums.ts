@@ -1,12 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
-enum GameStatus {
-  Postponed = 'STATUS_POSTPONED',
-}
-
-enum GameStatusById {
-  Postponed = 6,
-}
 
 enum StatTypeId {
   // season,
