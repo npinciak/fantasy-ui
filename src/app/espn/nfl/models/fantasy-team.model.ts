@@ -1,5 +1,4 @@
 import { EspnClientTeam } from '@app/espn/espn-client.model';
+import { Team } from '@app/espn/models/team.model';
 
-// export interface FantasyTeamProperties {}
-
-export type FantasyTeam = EspnClientTeam;
+export type FantasyTeam = Team; //& Partial<EspnClientTeam>;

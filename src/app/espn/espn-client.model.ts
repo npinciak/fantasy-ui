@@ -53,6 +53,25 @@ export interface EspnClientTeam {
   valuesByStat: {
     [key: number]: number;
   };
+  record: EspnClientTeamRecordEntity;
+}
+
+export interface EspnClientTeamRecordEntity {
+  away: RecordEntity;
+  division: RecordEntity;
+  home: RecordEntity;
+  overall: RecordEntity;
+}
+export interface RecordEntity {
+  gamesBack: number;
+  losses: number;
+  percentage: number;
+  pointsAgainst: number;
+  pointsFor: number;
+  streakLength: number;
+  streakType: string;
+  ties: number;
+  wins: number;
 }
 
 export interface EspnClientRoster {

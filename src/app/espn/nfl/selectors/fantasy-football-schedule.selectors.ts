@@ -36,14 +36,12 @@ export class FantasyFootballScheduleSelectors {
         id: m.id,
         matchupPeriodId: m.matchupPeriodId,
         homeTeam: {
-          nickname: home.nickname,
-          location: home.location,
+          ...home,
           totalPoints: m.home.totalPoints,
           isWinner: m.winner === 'HOME' ?? null,
         },
         awayTeam: {
-          nickname: away.nickname,
-          location: away.location,
+          ...away,
           totalPoints: m.away.totalPoints,
           isWinner: m.winner === 'AWAY' ?? null,
         },

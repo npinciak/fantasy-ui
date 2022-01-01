@@ -7,5 +7,4 @@ export interface FantasyMatchupProperties {
 }
 
 export type FantasyMatchup = FantasyMatchupProperties & Pick<EspnClientScheduleEntity, 'id' | 'matchupPeriodId'>;
-export type FantasyMatchupTeam = Pick<FantasyTeam, 'nickname' | 'location'> &
-  Pick<EspnClientScheduleTeam, 'totalPoints'> & { isWinner: boolean | null };
+export type FantasyMatchupTeam = FantasyTeam & Pick<EspnClientScheduleTeam, 'totalPoints'> & { isWinner: boolean | null };

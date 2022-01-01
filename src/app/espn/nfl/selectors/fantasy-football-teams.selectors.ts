@@ -6,7 +6,12 @@ import { FantasyFootballTeamsState } from '../state/fantasy-football-teams.state
 
 export class FantasyFootballTeamsSelectors {
   static transformTeamImportToFantasyTeam(teamImport: EspnClientTeam): FantasyTeam {
-    return { ...teamImport };
+    return {
+      id: teamImport.id.toString(),
+      name: `${teamImport.location} ${teamImport.nickname}`,
+      logo: teamImport.logo,
+      record: `${teamImport.record.overall.wins}-${teamImport.record.overall.ties}-${teamImport.record.overall.losses}`,
+    };
   }
 
   @Selector([FantasyFootballTeamsState.map])
@@ -15,7 +20,7 @@ export class FantasyFootballTeamsSelectors {
   }
 
   @Selector([FantasyFootballTeamsState.map])
-  static selectMatchupList(map: { [id: number]: EspnClientTeam }): FantasyTeam[] {
+  static selectFantasyTeamList(map: { [id: number]: EspnClientTeam }): FantasyTeam[] {
     return Object.values(map).map(m => FantasyFootballTeamsSelectors.transformTeamImportToFantasyTeam(m));
   }
 }
