@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Team } from '../../models/team.model';
+import { Team } from '@app/espn/models/team.model';
 
 @Component({
   selector: 'app-league-scoreboard',

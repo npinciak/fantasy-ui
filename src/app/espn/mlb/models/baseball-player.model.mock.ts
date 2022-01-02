@@ -1,5 +1,5 @@
+import { MOCK_PLAYER_1, MOCK_PLAYER_2 } from '@app/espn/models/player.model.mock';
 import { BaseballPlayer } from './baseball-player.model';
-import { MOCK_PLAYER_1, MOCK_PLAYER_2 } from './player.model.mock';
 
 export const MOCK_BASEBALL_PLAYER_1: BaseballPlayer = {
   ...MOCK_PLAYER_1,

@@ -1,4 +1,4 @@
-import { Player } from './player.model';
+import { Player } from '@app/espn/models/player.model';
 
 export interface BaseballPlayerProperties {
   playerImg: string;
@@ -8,6 +8,13 @@ export interface BaseballPlayerProperties {
   isStarting: boolean;
   startingStatus: string;
   isPitcher: boolean;
+  isInjured: boolean;
+  injuryStatus: string;
+  playerRatings: any;
+  playerOwnership: {
+    change: number;
+    percentOwned: number;
+  };
 }
 
-export type BaseballPlayer = Partial<BaseballPlayerProperties> & Player;
+export type BaseballPlayer = Player & Partial<BaseballPlayerProperties>;
