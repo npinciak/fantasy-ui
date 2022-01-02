@@ -1,4 +1,4 @@
-import { Ballpark } from '../interface/ballpark.model';
+import { Ballpark } from '../models/ballpark.model';
 import { MLBTeam } from '../mlb.enums';
 
 export const MLB_TEAM = {

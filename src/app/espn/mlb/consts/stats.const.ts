@@ -1,15 +1,13 @@
 interface Stats {
-  [key: number]: {
-    abbrev: string;
-    description: string;
-    displayOrder?: number;
-    statCategoryId?: number;
-    statTypeId?: number;
-    statDerivation?: unknown;
-  };
+  abbrev: string;
+  description: string;
+  displayOrder: number;
+  statCategoryId: number;
+  statTypeId: number;
+  statDerivation: unknown;
 }
 
-export const MLB_STATS: Stats = {
+export const MLB_STATS: { [id: number]: Partial<Stats> } = {
   0: {
     abbrev: 'AB',
     description: 'At Bats',
@@ -30,14 +28,14 @@ export const MLB_STATS: Stats = {
     displayOrder: 30,
     statCategoryId: 1,
     statDerivation: {
-      defaultInvalid: 'null',
+      defaultInvalid: null,
       derivedFromStats: {
         a: 1,
         b: 0,
       },
       equation: 'a / b',
-      invalidStatCheck: 'null',
-      secondaryDefaultInvalid: 'null',
+      invalidStatCheck: null,
+      secondaryDefaultInvalid: null,
     },
     statTypeId: 1,
   },
@@ -89,7 +87,7 @@ export const MLB_STATS: Stats = {
     displayOrder: 32,
     statCategoryId: 1,
     statDerivation: {
-      defaultInvalid: 'null',
+      defaultInvalid: null,
       derivedFromStats: {
         a: 1,
         b: 3,
@@ -98,8 +96,8 @@ export const MLB_STATS: Stats = {
         e: 0,
       },
       equation: '(a + b + c*2 + d*3) / e',
-      invalidStatCheck: 'null',
-      secondaryDefaultInvalid: 'null',
+      invalidStatCheck: null,
+      secondaryDefaultInvalid: null,
     },
     statTypeId: 1,
   },
@@ -167,8 +165,8 @@ export const MLB_STATS: Stats = {
         e: 13,
       },
       equation: '(a + b + c) / (d + b + c + e)',
-      invalidStatCheck: 'null',
-      secondaryDefaultInvalid: 'null',
+      invalidStatCheck: null,
+      secondaryDefaultInvalid: null,
     },
     statTypeId: 1,
   },
@@ -190,8 +188,8 @@ export const MLB_STATS: Stats = {
         h: 0,
       },
       equation: '((a + e + f) / (h + e + f + g)) + ((a + b + c*2 + d*3) / h)',
-      invalidStatCheck: 'null',
-      secondaryDefaultInvalid: 'null',
+      invalidStatCheck: null,
+      secondaryDefaultInvalid: null,
     },
     statTypeId: 1,
   },
@@ -211,8 +209,8 @@ export const MLB_STATS: Stats = {
         f: 0,
       },
       equation: '((a + b) * (a + c + d*2 + e*3 )) / (f + b)',
-      invalidStatCheck: 'null',
-      secondaryDefaultInvalid: 'null',
+      invalidStatCheck: null,
+      secondaryDefaultInvalid: null,
     },
     statTypeId: 1,
   },
@@ -295,8 +293,8 @@ export const MLB_STATS: Stats = {
         f: 14,
       },
       equation: 'a / (b + c + d + e + f)',
-      invalidStatCheck: 'null',
-      secondaryDefaultInvalid: 'null',
+      invalidStatCheck: null,
+      secondaryDefaultInvalid: null,
     },
     statTypeId: 1,
   },
@@ -373,8 +371,8 @@ export const MLB_STATS: Stats = {
         g: 80,
       },
       equation: 'a / (b - c - d - e - f - g)',
-      invalidStatCheck: 'null',
-      secondaryDefaultInvalid: 'null',
+      invalidStatCheck: null,
+      secondaryDefaultInvalid: null,
     },
     statTypeId: 2,
   },
@@ -406,7 +404,7 @@ export const MLB_STATS: Stats = {
       },
       equation: '((a + b) * 3.0) / c',
       invalidStatCheck: ['a', 'b'],
-      secondaryDefaultInvalid: 'null',
+      secondaryDefaultInvalid: null,
     },
     statTypeId: 2,
   },
@@ -431,8 +429,8 @@ export const MLB_STATS: Stats = {
         d: 35,
       },
       equation: '(a + b + c) / d',
-      invalidStatCheck: 'null',
-      secondaryDefaultInvalid: 'null',
+      invalidStatCheck: null,
+      secondaryDefaultInvalid: null,
     },
     statTypeId: 2,
   },
@@ -470,7 +468,7 @@ export const MLB_STATS: Stats = {
       },
       equation: '(a * 27.0) / b',
       invalidStatCheck: ['a'],
-      secondaryDefaultInvalid: 'null',
+      secondaryDefaultInvalid: null,
     },
     statTypeId: 2,
   },
@@ -493,8 +491,8 @@ export const MLB_STATS: Stats = {
         b: 34,
       },
       equation: '(a * 27.0) / b',
-      invalidStatCheck: 'null',
-      secondaryDefaultInvalid: 'null',
+      invalidStatCheck: null,
+      secondaryDefaultInvalid: null,
     },
     statTypeId: 2,
   },
@@ -545,8 +543,8 @@ export const MLB_STATS: Stats = {
         b: 54,
       },
       equation: 'a / (a + b)',
-      invalidStatCheck: 'null',
-      secondaryDefaultInvalid: 'null',
+      invalidStatCheck: null,
+      secondaryDefaultInvalid: null,
     },
     statTypeId: 2,
   },
@@ -583,8 +581,8 @@ export const MLB_STATS: Stats = {
         b: 56,
       },
       equation: 'a / b',
-      invalidStatCheck: 'null',
-      secondaryDefaultInvalid: 'null',
+      invalidStatCheck: null,
+      secondaryDefaultInvalid: null,
     },
     statTypeId: 2,
   },
@@ -678,8 +676,8 @@ export const MLB_STATS: Stats = {
         c: 72,
       },
       equation: '(a + b) / (a + b + c)',
-      invalidStatCheck: 'null',
-      secondaryDefaultInvalid: 'null',
+      invalidStatCheck: null,
+      secondaryDefaultInvalid: null,
     },
     statTypeId: 3,
   },
@@ -782,8 +780,8 @@ export const MLB_STATS: Stats = {
         b: 60,
       },
       equation: 'a + b',
-      invalidStatCheck: 'null',
-      secondaryDefaultInvalid: 'null',
+      invalidStatCheck: null,
+      secondaryDefaultInvalid: null,
     },
     statTypeId: 2,
   },
@@ -797,59 +795,59 @@ export const MLB_STATS: Stats = {
 };
 
 export interface StatAbbrev {
-  ab?: number;
-  h?: number;
-  ha?: number;
-  er?: number;
-  avg?: number;
-  '2b'?: number;
-  '3b'?: number;
-  hr?: number;
-  xbh?: number;
-  '1b'?: number;
-  tb?: number;
-  slg?: number;
-  bb?: number;
-  ibb?: number;
-  hbp?: number;
-  sf?: number;
-  sh?: number;
-  sac?: number;
-  pa?: number;
-  obp?: number;
-  ops?: number;
-  rc?: number;
-  r?: number;
-  rbi?: number;
-  gwrbi?: number;
-  sb?: number;
-  cs?: number;
-  sbn?: number;
-  gidp?: number;
-  ko?: number;
-  tp?: number;
-  ppa?: number;
-  gshr?: number;
-  fc?: number;
-  po?: number;
-  ast?: number;
-  ofast?: number;
-  fpct?: number;
-  e?: number;
-  dpt?: number;
-  btw?: number;
-  btl?: number;
-  ptw?: number;
-  ptl?: number;
-  gp?: number;
-  gs?: number;
-  w?: number;
-  hra?: number;
-  sv?: number;
-  era?: number;
-  whip?: number;
-  ip?: number;
-  bbi?: number;
-  k?: number;
-  hb?: number;
+  ab: number;
+  h: number;
+  ha: number;
+  er: number;
+  avg: number;
+  '2b': number;
+  '3b': number;
+  hr: number;
+  xbh: number;
+  '1b': number;
+  tb: number;
+  slg: number;
+  bb: number;
+  ibb: number;
+  hbp: number;
+  sf: number;
+  sh: number;
+  sac: number;
+  pa: number;
+  obp: number;
+  ops: number;
+  rc: number;
+  r: number;
+  rbi: number;
+  gwrbi: number;
+  sb: number;
+  cs: number;
+  sbn: number;
+  gidp: number;
+  ko: number;
+  tp: number;
+  ppa: number;
+  gshr: number;
+  fc: number;
+  po: number;
+  ast: number;
+  ofast: number;
+  fpct: number;
+  e: number;
+  dpt: number;
+  btw: number;
+  btl: number;
+  ptw: number;
+  ptl: number;
+  gp: number;
+  gs: number;
+  w: number;
+  hra: number;
+  sv: number;
+  era: number;
+  whip: number;
+  ip: number;
+  bbi: number;
+  k: number;
+  hb: number;
 }

@@ -1,22 +1,20 @@
 export interface MlbLineup {
-  [key: number]: {
-    abbrev: string;
-    active: boolean;
-    bench: boolean;
-    canApplyLimitIndividually: boolean;
-    display: boolean;
-    displayOrder: number;
-    eligiblePositions: number[];
-    id: number;
-    injuryRequired: boolean;
-    lineupSlotEligible: boolean;
-    name: string;
-    parentId: number;
-    starter: boolean;
-  };
+  abbrev: string;
+  active: boolean;
+  bench: boolean;
+  canApplyLimitIndividually: boolean;
+  display: boolean;
+  displayOrder: number;
+  eligiblePositions: number[];
+  id: number;
+  injuryRequired: boolean;
+  lineupSlotEligible: boolean;
+  name: string;
+  parentId: number;
+  starter: boolean;
 }
 
-export const MLB_LINEUP = {
+export const MLB_LINEUP: { [id: number]: MlbLineup } = {
   0: {
     abbrev: 'C',
     active: true,

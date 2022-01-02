@@ -1,4 +1,3 @@
-import { EventsEntity as EventsImport } from '../models/espn-fastcast.model';
 import { FastcastEvent } from '../models/fastcast-event.model';
 
 export class ConnectWebSocket {

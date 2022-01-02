@@ -1,5 +1,4 @@
 import { environment } from 'src/environments/environment';
-import { EspnWebSocket } from './models/espn-fastcast-socket.model';
 
 export const ESPN_TEXT = {
   NO_GAMES_TEXT: `No games scheduled for today`,
@@ -18,6 +17,3 @@ export const FIELD_IMAGE_BASE = (id: number) => `https://a.espncdn.com/redesign/
 
 export const NO_LOGO =
   'https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/default-team-logo-500.png&h=100&scale=crop&w=100&location=origin';
-
-export const WEBSOCKET_BASE = (config: EspnWebSocket) =>
-  `wss://${config.ip}:${config.securePort}/FastcastService/pubsub/profiles/12000?TrafficManager-Token=${config.token}`;

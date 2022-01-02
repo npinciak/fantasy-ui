@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
+import { Team } from '@app/espn/models/team.model';
 import { Dispatch } from '@ngxs-labs/dispatch-decorator';
 import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
 import { FetchBaseballLeague } from '../actions/mlb.actions';
-import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.state';
 import { FantasyBaseballLeagueSelectors } from '../selectors/fantasy-baseball-league.selectors';
-import { Team } from '../models/team.model';
+import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.state';
 
 @Injectable({
   providedIn: 'root',
