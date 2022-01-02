@@ -7,8 +7,8 @@ import { isPitcher } from '../helpers';
 import { BaseballLeague } from '../models/baseball-league.model';
 import { BaseballPlayer } from '../models/baseball-player.model';
 
-import { Team } from '../models/team.model';
 import { EspnClientLeague, EspnClientPlayer, EspnClientTeam } from '@app/espn/espn-client.model';
+import { Team } from '@app/espn/models/team.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,13 +16,13 @@ import { EspnClientLeague, EspnClientPlayer, EspnClientTeam } from '@app/espn/es
 export class MlbService {
   constructor(private espnClient: EspnService) {}
 
-  static transformEspnClientLeagueToBaseballLeague(espnLeague: EspnClientLeague): BaseballLeague {
+  static transformEspnClientLeagueToBaseballLeague(espnLeague: EspnClientLeague) {
     return {
       teams: MlbService.transformEspnClientTeamListToTeamList(espnLeague.teams),
     };
   }
 
-  static transformEspnClientTeamListToTeamList(teams: EspnClientTeam[]): Team[] {
+  static transformEspnClientTeamListToTeamList(teams: EspnClientTeam[]) {
     return teams.map(team => ({
       id: team.id.toString(),
       name: `${team.location} ${team.nickname}`,
@@ -34,7 +34,7 @@ export class MlbService {
     }));
   }
 
-  static transformEspnClientTeamPlayerListToBaseballPlayerList(players: EspnClientPlayer[]): BaseballPlayer[] {
+  static transformEspnClientTeamPlayerListToBaseballPlayerList(players: EspnClientPlayer[]) {
     return players.map(player => ({
       id: player.playerId.toString(),
       name: player.playerPoolEntry.player.fullName,

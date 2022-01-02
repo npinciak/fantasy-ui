@@ -1,5 +1,5 @@
-import { SeasonConst } from './interface/adv-stats.model';
 import { MLBTeam, RotoColumn, StatsColumn, TeamColumn } from './mlb.enums';
+import { SeasonConst } from './models/adv-stats.model';
 
 const domeStadiums = [MLBTeam.Tor, MLBTeam.Ari, MLBTeam.TB, MLBTeam.Min, MLBTeam.Hou, MLBTeam.Mia, MLBTeam.Tex];
 

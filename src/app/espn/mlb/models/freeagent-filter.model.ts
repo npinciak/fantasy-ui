@@ -1,6 +1,6 @@
-import { MLB_LINEUP } from '../consts';
+import { MLB_LINEUP } from '../consts/lineup.const';
 
-class Filter {
+export class FreeAgentFilter {
   private _playerStatus: string[] = [];
   private _filterInjured = false;
   private _offset = 0;
@@ -76,5 +76,3 @@ class Filter {
     };
   }
 }
-
-export { Filter };

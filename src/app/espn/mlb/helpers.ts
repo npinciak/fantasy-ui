@@ -1,8 +1,8 @@
 import { MLB_STATS, StatAbbrev } from './consts/stats.const';
 import { MLBLineup } from './mlb.enums';
 
-export const statsKeyMap = (obj): StatAbbrev => {
-  const map: StatAbbrev = {};
+export const statsKeyMap = (obj): Partial<StatAbbrev> => {
+  const map: Partial<StatAbbrev> = {};
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
       const statAbbrev = MLB_STATS[key].abbrev.toLowerCase();

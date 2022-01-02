@@ -1,11 +1,9 @@
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { EspnClientFastcast } from './models/espn-fastcast.model';
-import { FASTCAST_MOCK } from './models/espn-fastcast.model.mock';
 import { EspnFastcastService } from './espn-fastcast.service';
 import { SocketRes } from './models/espn-fastcast-socket.model';
-
-export type Mock<T> = { [key in keyof T]: T[key] };
+import { Mock } from '@app/@shared/models/mock.model';
 
 export class EspnFastcastServiceMock implements Mock<EspnFastcastService> {
   webSocketSubject$: WebSocketSubject<SocketRes> = new WebSocketSubject('ws://example.com');
@@ -19,7 +17,7 @@ export class EspnFastcastServiceMock implements Mock<EspnFastcastService> {
   }
 
   dataUpdates$(): Observable<EspnClientFastcast> {
-    return of(FASTCAST_MOCK);
+    return of();
   }
 
   disconnect(): void {}

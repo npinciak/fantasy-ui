@@ -1,3 +1,6 @@
+/**
+ * Base team model
+ */
 interface TeamProperties {
   id: string;
   name: string;

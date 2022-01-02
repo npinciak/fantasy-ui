@@ -1,4 +1,4 @@
-import { Team } from './team.model';
+import { Team } from '@app/espn/models/team.model';
 
 export interface BaseballLeagueProperties {
   teams: Team[];
