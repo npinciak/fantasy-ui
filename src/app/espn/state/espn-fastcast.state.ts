@@ -18,7 +18,7 @@ export interface EspnFastcastStateModel {
 }
 
 @State<EspnFastcastStateModel>({
-  name: 'fastcast',
+  name: 'espnFastcast',
   defaults: {
     map: {},
     disconnect: null,

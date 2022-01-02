@@ -13,12 +13,13 @@ import {
   Situation as SituationImport,
   SportsEntity as SportsImport,
 } from './models/espn-fastcast.model';
-import { FANTASY_BASE_V2, FANTASY_BASE_V3, NO_LOGO } from './espn.const';
+import { FANTASY_BASE_V2, FANTASY_BASE_V3, NO_LOGO, ONE_FEED_BASE } from './espn.const';
 import { FastcastEvent } from './models/fastcast-event.model';
 import { FastcastEventTeam } from './models/fastcast-team.model';
 import { enumAsList } from '@app/@shared/helpers/enum-as-list';
 import { Observable } from 'rxjs';
 import { flatten } from 'lodash';
+import { EspnClientOneFeed } from './models/espn-onefeed.model';
 
 export enum Sports {
   baseball = 'flb',
@@ -244,6 +245,17 @@ export class EspnService {
   }
 
   /**
+   * OneFeed
+   *
+   * @param url
+   * @returns
+   */
+  espnOneFeed() {
+    const endpoint = new EspnEndpointBuilder();
+    return this.api.get<EspnClientOneFeed>(endpoint.oneFeedFrontpage).pipe(map(res => res));
+  }
+
+  /**
    * @todo
    */
   private get postHeaders() {
@@ -277,12 +289,14 @@ export class EspnService {
 export class EspnEndpointBuilder {
   private static fantasyBaseV3 = FANTASY_BASE_V3;
   private static fantasyBaseV2 = FANTASY_BASE_V2;
+  private static oneFeedBase = ONE_FEED_BASE;
+
   private static year = new Date().getFullYear();
 
   private _leagueId: number;
   private _sport: Sports;
 
-  constructor(sport: Sports, leagueId?: number) {
+  constructor(sport?: Sports, leagueId?: number) {
     this._leagueId = leagueId;
     this._sport = sport;
   }
@@ -301,6 +315,10 @@ export class EspnEndpointBuilder {
 
   get fantasyLeague() {
     return `${this.fantasyBaseV3WithFragments}/segments/0/leagues/${this._leagueId}`;
+  }
+
+  get oneFeedFrontpage() {
+    return `${EspnEndpointBuilder.oneFeedBase}/oneFeed/frontpage`;
   }
 
   private get fantasyBaseV3WithFragments() {
