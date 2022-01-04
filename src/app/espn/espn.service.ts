@@ -13,12 +13,14 @@ import {
   Situation as SituationImport,
   SportsEntity as SportsImport,
 } from './models/espn-fastcast.model';
-import { FANTASY_BASE_V2, FANTASY_BASE_V3, NO_LOGO } from './espn.const';
+import { FANTASY_BASE_V2, FANTASY_BASE_V3, NO_LOGO, ONE_FEED_BASE } from './espn.const';
 import { FastcastEvent } from './models/fastcast-event.model';
 import { FastcastEventTeam } from './models/fastcast-team.model';
 import { enumAsList } from '@app/@shared/helpers/enum-as-list';
 import { Observable } from 'rxjs';
-import { flatten } from 'lodash';
+import { EspnClientOneFeed, FeedArticle as FeedArticleImport, FeedArticleType, FeedEntity } from './models/espn-onefeed.model';
+import { flatten } from '@app/@shared/helpers/utils';
+import { FeedArticle } from './models/feed.model';
 
 export enum Sports {
   baseball = 'flb',
@@ -158,6 +160,18 @@ export class EspnService {
       lastPlay: event.situation?.lastPlay ?? null,
     }));
 
+  static transformFeedArticleImportToFeedArticle(articleImport: FeedArticleImport): FeedArticle {
+    return {
+      id: articleImport.id.toString(),
+      headline: articleImport.headline,
+      description: articleImport.description,
+      image: articleImport?.images[0]?.url ?? null,
+      link: articleImport.links.web.href,
+      published: articleImport.published,
+      author: '',
+    };
+  }
+
   /**
    * Update Espn Fantasy Team
    *
@@ -244,6 +258,44 @@ export class EspnService {
   }
 
   /**
+   * OneFeed
+   *
+   * @param url
+   * @returns
+   */
+  espnOneFeed(offset: number = 0, limit: number = 20): Observable<FeedArticle[]> {
+    const endpoint = new EspnEndpointBuilder();
+    let params = new HttpParams();
+    params = params.append('offset', offset.toString());
+    params = params.append('limit', limit.toString());
+
+    const league = 'nfl';
+
+    return this.api.get<EspnClientOneFeed>(endpoint.oneFeed + `/leagues/${league}`, { params }).pipe(
+      map(res => {
+        const feeds: FeedArticleImport[][] = [];
+
+        res.feed.map(f => {
+          feeds.push(f.data.now);
+        });
+
+        const feedOverviews: FeedArticleImport[] = flatten(feeds);
+
+        // const feeds2: FeedArticleImport[][] = [];
+        // feedOverviews.map(f => feeds2.push(f));
+
+        return feedOverviews.map(i => EspnService.transformFeedArticleImportToFeedArticle(i));
+
+        // return (
+        //   flatten(feeds2)
+        //     // .filter(o => o.moduleType === FeedArticleType.Story)
+        //
+        // );
+      })
+    );
+  }
+
+  /**
    * @todo
    */
   private get postHeaders() {
@@ -277,12 +329,14 @@ export class EspnService {
 export class EspnEndpointBuilder {
   private static fantasyBaseV3 = FANTASY_BASE_V3;
   private static fantasyBaseV2 = FANTASY_BASE_V2;
+  private static oneFeedBase = ONE_FEED_BASE;
+
   private static year = new Date().getFullYear();
 
   private _leagueId: number;
   private _sport: Sports;
 
-  constructor(sport: Sports, leagueId?: number) {
+  constructor(sport?: Sports, leagueId?: number) {
     this._leagueId = leagueId;
     this._sport = sport;
   }
@@ -301,6 +355,10 @@ export class EspnEndpointBuilder {
 
   get fantasyLeague() {
     return `${this.fantasyBaseV3WithFragments}/segments/0/leagues/${this._leagueId}`;
+  }
+
+  get oneFeed() {
+    return `${EspnEndpointBuilder.oneFeedBase}/oneFeed`;
   }
 
   private get fantasyBaseV3WithFragments() {
