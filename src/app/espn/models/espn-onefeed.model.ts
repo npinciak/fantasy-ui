@@ -11,7 +11,7 @@ export interface FeedOverview {
 
 export interface FeedOverviewData {
   event: unknown;
-  now: FeedEntity[];
+  now: FeedArticle[];
 }
 
 export interface FeedEntity {
@@ -20,9 +20,35 @@ export interface FeedEntity {
 
 export interface FeedArticle {
   id: number;
+  moduleType: FeedArticleType | undefined;
+  type: string;
+  header: {
+    images: Pick<FeedArticleImageMeta, 'url'>[];
+    title: string | undefined;
+    uid: string;
+  };
+  headline: string;
   description: string;
-  image: string;
-  link: string;
+  images: FeedArticleImageMeta[];
   published: string;
-  author: string;
+  links: FeedArticleLinkProperties;
+}
+
+export interface FeedArticleImageMeta {
+  caption: string;
+  name: string;
+  url: string;
+  height: number;
+  width: number;
+}
+
+export interface FeedArticleLinkProperties {
+  web: {
+    href: string;
+  };
+}
+
+export enum FeedArticleType {
+  Story = 'story',
+  Media = 'media',
 }

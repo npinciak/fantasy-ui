@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { entityMap } from '@app/@shared/operators';
 import { State, Selector, Action, StateContext } from '@ngxs/store';
 
 import { EspnService } from '../espn.service';
-import { FeedArticle } from '../models/espn-onefeed.model';
+import { FeedArticle } from '../models/feed.model';
 
 export class FetchFeed {
   static readonly type = `[espnFeed] FetchFeed`;
@@ -10,11 +11,11 @@ export class FetchFeed {
 
 export class PatchFeed {
   static readonly type = `[espnFeed] PatchFeed`;
-  constructor(public payload: { feed: FeedArticle }) {}
+  constructor(public payload: { feed: FeedArticle[] }) {}
 }
 
 export interface EspnFeedStateModel {
-  map: { [id: string]: FeedArticle };
+  map: { [id: string]: FeedArticle[] };
 }
 
 @State<EspnFeedStateModel>({
@@ -33,15 +34,17 @@ export class EspnFeedState {
   }
 
   @Action(FetchFeed)
-  async fetchEspnOnefeed() {
-    const feed = this.espnService.espnOneFeed().toPromise();
+  async fetchEspnOnefeed({ dispatch }: StateContext<EspnFeedStateModel>) {
+    const feed = await this.espnService.espnOneFeed().toPromise();
+
+    dispatch(new PatchFeed({ feed }));
   }
 
   @Action(PatchFeed)
   patchEvents({ patchState, getState }: StateContext<EspnFeedStateModel>, { payload: { feed } }: PatchFeed) {
     const state = getState();
-    const lastRefresh = new Date().getTime();
+    const map = entityMap(feed);
 
-    // patchState({ ...state, map });
+    patchState({ ...state, map });
   }
 }
