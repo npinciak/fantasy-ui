@@ -1,6 +1,6 @@
 <ng-container *ngFor="let league of fastcastLeagueFacade.prettyLeagueList$ | async">
   <h4>{{ league.name }}</h4>
-  <ng-container *ngFor="let event of fastcastLeagueFacade.fastcastEventsByLeagueId(league.id)">
+  <ng-container *ngFor="let event of fastcastEventFacade.fastcastEventsByLeagueId(league.id)">
     <div fxLayout="col" fxLayoutGap="10px">
       <div fxFlex.gt-md="30" fxFlex.lt-md="100" fxFlex.lt-sm="100">
         <mat-card style="margin: 10px 0">

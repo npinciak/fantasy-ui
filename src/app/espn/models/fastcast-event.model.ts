@@ -3,6 +3,7 @@ import { FastcastEventTeam } from './fastcast-team.model';
 
 export interface FastcastEventProperties {
   id: string;
+  leagueId: string;
   priority: number | null;
   timestamp: number | null;
   state: string | null;

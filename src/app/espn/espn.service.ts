@@ -21,6 +21,8 @@ import { Observable } from 'rxjs';
 import { EspnClientOneFeed, FeedArticle as FeedArticleImport, FeedArticleType, FeedEntity } from './models/espn-onefeed.model';
 import { flatten } from '@app/@shared/helpers/utils';
 import { FeedArticle } from './models/feed.model';
+import { FastcastLeague } from './models/fastcast-league.model';
+import { League } from './models/league.model';
 
 export enum Sports {
   baseball = 'flb',
@@ -77,24 +79,25 @@ export enum FastCastGameStatus {
 export class EspnService {
   constructor(private api: ApiService) {}
 
-  static transformSportsImportToEventsImport = (sportsImport: SportsImport[]) => {
-    const tmp: LeaguesImport[][] = [];
+  static transformLeagueImportEventImport = (
+    sportsImport: SportsImport[]
+  ): { transformLeaguesImportToLeagues: League[]; transformEventImportToFastcastEvent: FastcastEvent[] } => {
+    const leagues = sportsImport.map(i => i.leagues);
 
-    for (let i = 0; i < sportsImport.length; i++) {
-      tmp.push(sportsImport[i].leagues);
-    }
+    const flattenLeaguesImport = flatten(leagues);
 
-    const leagues: LeaguesImport[] = flatten(tmp);
+    const transformLeaguesImportToLeagues = EspnService.transformLeaguesImportToLeagues(flattenLeaguesImport);
 
-    const temp2: EventsImport[][] = [];
+    const events = flattenLeaguesImport.map(l => l.events);
 
-    for (let i = 0; i < leagues.length; i++) {
-      temp2.push(leagues[i].events);
-    }
+    const flattenEventsImport = flatten(events);
 
-    const flattenTemp: EventsImport[] = flatten(temp2);
+    const transformEventImportToFastcastEvent = EspnService.transformEventImportToFastcastEvent(flattenEventsImport);
 
-    return leagues; //EspnService.transformEventImportToFastcastEvent(flattenTemp);
+    return {
+      transformLeaguesImportToLeagues,
+      transformEventImportToFastcastEvent,
+    };
   };
 
   static transformFastcastCompetitorsToTeams = (
@@ -112,6 +115,10 @@ export class EspnService {
     }
 
     return data.reduce((acc, val) => {
+      if (!val.homeAway) {
+        return null;
+      }
+
       acc[val.homeAway] = {
         id: val.id,
         score: val.score,
@@ -138,9 +145,17 @@ export class EspnService {
     return null;
   };
 
-  static transformEventImportToFastcastEvent = (events: EventsImport[]): FastcastEvent[] =>
-    events.map(event => ({
+  static transformUidToId(uid: string): string | null {
+    if (!uid) {
+      return null;
+    }
+    return uid.split('~')[1].replace('l:', '');
+  }
+
+  static transformEventImportToFastcastEvent = (eventsImport: EventsImport[]): FastcastEvent[] =>
+    eventsImport.map(event => ({
       id: event.id,
+      leagueId: EspnService.transformUidToId(event?.uid),
       priority: event.priority,
       timestamp: new Date(event.date).getTime(),
       state: event.fullStatus.type.state,
@@ -158,6 +173,15 @@ export class EspnService {
         event.situation?.possessionText
       ),
       lastPlay: event.situation?.lastPlay ?? null,
+    }));
+
+  static transformLeaguesImportToLeagues = (leaguesImport: LeaguesImport[]): League[] =>
+    leaguesImport.map(l => ({
+      id: l.id,
+      uid: l.uid,
+      name: l.name,
+      abbreviation: l.abbreviation,
+      shortName: l.shortName,
     }));
 
   static transformFeedArticleImportToFeedArticle(articleImport: FeedArticleImport): FeedArticle {
@@ -253,8 +277,10 @@ export class EspnService {
    * @param url
    * @returns
    */
-  espnFastcast(url: string) {
-    return this.api.get<FastCastImport>(url).pipe(map(res => EspnService.transformSportsImportToEventsImport(res.sports)));
+  espnFastcast(
+    url: string
+  ): Observable<{ transformLeaguesImportToLeagues: League[]; transformEventImportToFastcastEvent: FastcastEvent[] }> {
+    return this.api.get<FastCastImport>(url).pipe(map(res => EspnService.transformLeagueImportEventImport(res.sports)));
   }
 
   /**
