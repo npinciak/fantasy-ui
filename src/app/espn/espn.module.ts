@@ -28,6 +28,7 @@ import { FantasyBaseballTeamState } from './mlb/state/fantasy-baseball-team.stat
 import { FantasyFootballLeagueState } from './nfl/state/fantasy-football-league.state';
 import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-schedule.state';
 import { FantasyFootballTeamsState } from './nfl/state/fantasy-football-teams.state';
+import { EspnFeedState } from './state/espn-feed.state';
 
 const components = [
   EspnHomeComponent,
@@ -53,6 +54,7 @@ const states = [
   FantasyFootballTeamsState,
   FantasyBaseballLeagueState,
   FantasyBaseballTeamState,
+  EspnFeedState,
 ];
 
 const modules = [

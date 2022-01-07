@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FastCastGameStatus } from '@app/espn/espn.service';
+import { EspnFastcastEventFacade } from '@app/espn/facade/espn-fastcast-event.facade';
 import { EspnFastcastLeagueFacade } from '@app/espn/facade/espn-fastcast-league.facade';
 import { EspnFastcastFacade } from '@app/espn/facade/espn-fastcast.facade';
 import { HomeAwayTeam } from '@app/espn/models/espn-home-away.model';
@@ -13,7 +14,11 @@ export class EspnHomeComponent implements OnInit {
   readonly HomeAwayTeam = HomeAwayTeam;
   readonly FastCastGameStatus = FastCastGameStatus;
 
-  constructor(readonly fastcastFacade: EspnFastcastFacade, readonly fastcastLeagueFacade: EspnFastcastLeagueFacade) {}
+  constructor(
+    readonly fastcastFacade: EspnFastcastFacade,
+    readonly fastcastLeagueFacade: EspnFastcastLeagueFacade,
+    readonly fastcastEventFacade: EspnFastcastEventFacade
+  ) {}
 
   ngOnInit(): void {}
 }

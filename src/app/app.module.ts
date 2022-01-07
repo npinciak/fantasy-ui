@@ -27,6 +27,7 @@ import { ShellModule } from './@core/shell/shell.module';
 import { ShellState } from './@core/shell/state/shell.state';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { EspnFastcastLeagueState } from './espn/state/espn-fastcast-league.state';
+import { EspnFastcastEventState } from './espn/state/espn-fastcast-event.state';
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,6 +43,7 @@ import { EspnFastcastLeagueState } from './espn/state/espn-fastcast-league.state
         CoreState,
         DfsSlateState,
         EspnFastcastState,
+        EspnFastcastEventState,
         EspnFastcastLeagueState,
         MlbDfsState,
         NflDfsState,

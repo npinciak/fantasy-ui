@@ -13,6 +13,8 @@ export const FANTASY_BASE_V3 = environment.espnFantasyBaseV3;
 export const FASTCAST_BASE = environment.espnFastcastBase;
 export const FASTCAST_WS_HOST = environment.espnWebsocketHost;
 
+export const ONE_FEED_BASE = environment.espnOneFeed;
+
 export const FIELD_IMAGE_BASE = (id: number) => `https://a.espncdn.com/redesign/assets/img/mlb/fields/${id}.png`;
 
 export const NO_LOGO =
