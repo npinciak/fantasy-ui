@@ -1,8 +1,6 @@
 import { Selector } from '@ngxs/store';
 
-import { FastcastEvent } from '../models/fastcast-event.model';
 import { FeedArticle } from '../models/feed.model';
-import { EspnFastcastState } from '../state/espn-fastcast.state';
 import { EspnFeedState } from '../state/espn-feed.state';
 
 export class EspnFeedSelectors {

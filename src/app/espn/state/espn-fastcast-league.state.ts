@@ -1,31 +1,29 @@
 import { Injectable } from '@angular/core';
-import { State, Selector, Action, StateContext, Store } from '@ngxs/store';
+import { State, Selector, Action, StateContext } from '@ngxs/store';
 
-import { EspnFastcastService } from '../espn-fastcast.service';
-import { EspnService } from '../espn.service';
-import { LeaguesEntity as LeaguesImport } from '../models/espn-fastcast.model';
+import { FastcastLeague } from '../models/fastcast-league.model';
 
 export class PatchFastcastLeague {
-  static readonly type = `[fastcastLeague] PatchFastcastLeague`;
-  constructor(public payload: { map: { [id: string]: LeaguesImport } }) {}
+  static readonly type = `[espnFastcastLeague] PatchFastcastLeague`;
+  constructor(public payload: { map: { [id: string]: FastcastLeague } }) {}
 }
 
 export interface EspnFastcastLeagueModel {
-  map: { [id: string]: LeaguesImport };
+  map: { [id: string]: FastcastLeague };
 }
 
 @State<EspnFastcastLeagueModel>({
-  name: 'fastcastLeague',
+  name: 'espnFastcastLeague',
   defaults: {
     map: {},
   },
 })
 @Injectable()
 export class EspnFastcastLeagueState {
-  constructor(private fastcastService: EspnFastcastService, private espnService: EspnService, private store: Store) {}
+  constructor() {}
 
   @Selector()
-  static selectMap(state: EspnFastcastLeagueModel): { [id: string]: LeaguesImport } {
+  static selectMap(state: EspnFastcastLeagueModel): { [id: string]: FastcastLeague } {
     return state.map;
   }
 

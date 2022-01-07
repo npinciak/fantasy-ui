@@ -8,6 +8,7 @@ import { FASTCAST_BASE } from '../espn.const';
 import { EspnService } from '../espn.service';
 import { FastcastEventType, OperationCode } from '../models/espn-fastcast-socket.model';
 import { FastcastEvent } from '../models/fastcast-event.model';
+import { PatchFastcastEvents } from './espn-fastcast-event.state';
 import { PatchFastcastLeague } from './espn-fastcast-league.state';
 
 export interface EspnFastcastStateModel {
@@ -93,9 +94,10 @@ export class EspnFastcastState {
   @Action(FetchFastcast)
   fetchFastcast({ dispatch }: StateContext<EspnFastcastStateModel>, { payload: { uri } }: FetchFastcast) {
     return this.espnService.espnFastcast(uri).subscribe(data => {
-      const map = entityMap(data, event => event.id);
+      const leagues = entityMap(data.transformLeaguesImportToLeagues, l => l.id);
+      const events = entityMap(data.transformEventImportToFastcastEvent, e => e.id);
 
-      dispatch(new PatchFastcastLeague({ map }));
+      dispatch([new PatchFastcastLeague({ map: leagues }), new PatchFastcastEvents({ map: events })]);
     });
   }
 
