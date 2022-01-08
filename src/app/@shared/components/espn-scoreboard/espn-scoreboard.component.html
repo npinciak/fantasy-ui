@@ -5,8 +5,11 @@
 
 <div fxLayout="row" style="margin: 10px 0px">
   <div class="scoreboard-container">
-    <ng-container *ngFor="let event of fastcastFacade.selectEventsMapList$ | async">
-      <app-espn-scoreboard-card [event]="event"></app-espn-scoreboard-card>
+    <ng-container *ngFor="let league of fastcastLeagueFacade.prettyLeagueList$ | async">
+      {{ league.shortName }}
+      <ng-container *ngFor="let event of fastcastEventFacade.fastcastEventsByLeagueId(league.id)">
+        <app-espn-scoreboard-card [event]="event"></app-espn-scoreboard-card>
+      </ng-container>
     </ng-container>
   </div>
 </div>
