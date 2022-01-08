@@ -14,20 +14,14 @@ import { CoreState } from './@core/store/core/core.state';
 import { environment } from 'src/environments/environment';
 import { httpInterceptorProviders } from './@core/interceptors';
 import { SharedModule } from './@shared/shared.module';
-import { MlbDfsState } from './dfs/mlb/state/mlb-dfs.state';
-import { DfsSlateState } from './dfs/mlb/state/dfs-slate.state';
-import { NflDfsState } from './dfs/nfl/state/nfl-dfs.state';
-import { NflDfsProfilerState } from './dfs/nfl/state/nfl-dfs-profiler.state';
-import { NflDfsPlayerMasterState } from './dfs/nfl/state/nfl-dfs-player-master.state';
-import { NflDfsPlayerSlateState } from './dfs/nfl/state/nfl-dfs-player-slate.state';
-import { NflDfsTeamState } from './dfs/nfl/state/nfl-dfs-team.state';
-import { NflDfsLineupState } from './dfs/nfl/state/nfl-dfs-lineup.state';
 import { EspnFastcastState } from './espn/state/espn-fastcast.state';
 import { ShellModule } from './@core/shell/shell.module';
 import { ShellState } from './@core/shell/state/shell.state';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { EspnFastcastLeagueState } from './espn/state/espn-fastcast-league.state';
 import { EspnFastcastEventState } from './espn/state/espn-fastcast-event.state';
+
+const states = [CoreState, EspnFastcastState, EspnFastcastEventState, EspnFastcastLeagueState, ShellState];
 
 @NgModule({
   declarations: [AppComponent],
@@ -38,26 +32,9 @@ import { EspnFastcastEventState } from './espn/state/espn-fastcast-event.state';
     BrowserModule,
     BrowserAnimationsModule,
     NgxsSelectSnapshotModule.forRoot(),
-    NgxsModule.forRoot(
-      [
-        CoreState,
-        DfsSlateState,
-        EspnFastcastState,
-        EspnFastcastEventState,
-        EspnFastcastLeagueState,
-        MlbDfsState,
-        NflDfsState,
-        NflDfsTeamState,
-        NflDfsProfilerState,
-        NflDfsPlayerMasterState,
-        NflDfsPlayerSlateState,
-        NflDfsLineupState,
-        ShellState,
-      ],
-      {
-        developmentMode: !environment.production,
-      }
-    ),
+    NgxsModule.forRoot(states, {
+      developmentMode: !environment.production,
+    }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsDispatchPluginModule.forRoot(),
     AppRoutingModule,
