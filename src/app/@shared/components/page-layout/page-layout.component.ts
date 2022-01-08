@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ShellFacade } from '@app/@core/shell/facade/shell.facade';
 import { GRID_TEMPLATE } from '@app/@shared/helpers/grid';
 import { UrlService } from '@app/@shared/services/url.service';
-import { UrlFragments, UrlQueryParams } from '@app/@shared/url-builder';
+import { UrlBuilder, UrlFragments, UrlQueryParams } from '@app/@shared/url-builder';
 import { EspnFastcastFacade } from '@app/espn/facade/espn-fastcast.facade';
 
 @Component({
@@ -17,6 +17,7 @@ export class PageLayoutComponent implements OnInit {
   readonly GRID_TEMPLATE = GRID_TEMPLATE;
   readonly URL_FRAGMENT = UrlFragments;
   readonly URL_QUERY_PARAMS = UrlQueryParams;
+  readonly UrlBuilder = UrlBuilder;
 
   constructor(
     readonly shellFacade: ShellFacade,
