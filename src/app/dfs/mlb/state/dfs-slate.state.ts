@@ -3,8 +3,8 @@ import { entityMap } from '@app/@shared/operators';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { DfsSlate, SlateMaster } from '../models/slateMaster.interface';
 import { SiteSlateConfig } from '../models/slateSettings.interface';
-import { DfsService } from '../service/dfs.service';
-import { SlateService } from '../service/slate.service';
+import { DfsService } from '../../service/dfs.service';
+import { SlateService } from '../../service/slate.service';
 import { DfsSlateAction, FetchResources, FetchSlates } from './dfs-slate.actions';
 import { FetchSlateConfigs } from './mlb-dfs.actions';
 

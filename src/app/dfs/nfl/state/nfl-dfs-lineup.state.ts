@@ -7,7 +7,7 @@ import { DfsSlatePlayer, CoreSchedule, Schedule, TeamAwayOrTeamHome } from '../.
 import { GameAttributes, PlayerAttributes, TeamAttributes } from '../../mlb/models/slate.interface';
 import { SiteSlateConfig, Slot } from '../../mlb/models/slateSettings.interface';
 import { DfsService } from '../service/dfs.service';
-import { PlayerService } from '../../mlb/service/player.service';
+import { PlayerService } from '../../service/player.service';
 import {
   NFLClientPlayerAttributes,
   NFLClientSlateAttributes,

@@ -2,8 +2,8 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { currentDate } from '@app/@shared/helpers/date';
 import { ApiService } from '@app/@shared/services/api.service';
-import { SlateMaster } from '../models/slateMaster.interface';
-import { SiteSlateConfig } from '../models/slateSettings.interface';
+import { SlateMaster } from '../mlb/models/slateMaster.interface';
+import { SiteSlateConfig } from '../mlb/models/slateSettings.interface';
 
 @Injectable({
   providedIn: 'root',

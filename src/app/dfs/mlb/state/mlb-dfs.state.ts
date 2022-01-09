@@ -11,8 +11,8 @@ import { DfsSlate } from '../models/slateMaster.interface';
 import { SlatePlayerAttr } from '../models/slatePlayer.interface';
 import { SiteSlateConfig, SlateConfig } from '../models/slateSettings.interface';
 import { GameAttrTeam } from '../models/slateTeam.interface';
-import { DfsService } from '../service/dfs.service';
-import { PlayerService } from '../service/player.service';
+import { DfsService } from '../../service/dfs.service';
+import { PlayerService } from '../../service/player.service';
 import { FetchResources } from './dfs-slate.actions';
 import { FetchSlateConfigs, FetchSlates, UpdateStatLine } from './mlb-dfs.actions';
 

@@ -2,27 +2,14 @@ import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
 import { FetchNFLResources } from '@app/dfs/mlb/state/dfs-slate.actions';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
-import { PlayerFilter } from '../../mlb/class/filter.class';
-import { DfsSlatePlayer, CoreSchedule, Schedule, TeamAwayOrTeamHome } from '../../mlb/models/dfsPlayer.interface';
-import { GameAttributes, PlayerAttributes, TeamAttributes } from '../../mlb/models/slate.interface';
-import { SiteSlateConfig } from '../../mlb/models/slateSettings.interface';
+import { DfsSlatePlayer, CoreSchedule, Schedule } from '../../mlb/models/dfsPlayer.interface';
 import { DfsService } from '../service/dfs.service';
-import { PlayerService } from '../../mlb/service/player.service';
-import {
-  NFLClientPlayerAttributes,
-  NFLClientSlateAttributes,
-  NFLClientTeam,
-  NFLClientTeamAttributes,
-} from '../models/nfl-slate-attr.model';
+import { PlayerService } from '../../service/player.service';
+import { NFLClientPlayerAttributes, NFLClientTeamAttributes } from '../models/nfl-slate-attr.model';
 import { PatchProfiler } from './nfl-dfs-profiler.actions';
 import { GridIronPlayer } from '../models/nfl-gridiron.model';
-import { env } from 'process';
-import { environment } from 'src/environments/environment';
 import { DfsUrlBuilder } from '../class/url-builder.class';
-import { updateItem } from '@ngxs/store/operators';
-import { SlateSelectors } from '@app/dfs/mlb/selectors/slate.selector';
 import { PatchTeamsFromSchedule } from './nfl-dfs-team.actions';
-import { state } from '@angular/animations';
 
 export class NflDfsStateModel {
   schedule: { [id: string]: CoreSchedule };
@@ -95,14 +82,18 @@ export class NflDfsState {
   }
 
   @Action(FetchNFLResources)
-  async nflResources(ctx: StateContext<NflDfsStateModel>, { sport, site, slate }: FetchNFLResources): Promise<void> {
+  async nflResources(
+    { getState, patchState, setState }: StateContext<NflDfsStateModel>,
+    { sport, site, slate }: FetchNFLResources
+  ): Promise<void> {
     const urlBuilder = new DfsUrlBuilder('nfl');
+    const state = getState();
 
     const original = urlBuilder.slateNonHttps;
     const newHttps = urlBuilder.slateHttps;
 
     try {
-      ctx.patchState({ loading: true });
+      patchState({ loading: true });
 
       const dfsPlayers = await this.playerService.playersBySlate(slate.slate_path.replace(original, newHttps)).toPromise();
       const slateAttributes = await this.dfsService.getGameAttrBySlateId(sport, site, slate.importId).toPromise();
@@ -128,7 +119,7 @@ export class NflDfsState {
 
       this.store.dispatch(new PatchTeamsFromSchedule(schedule));
 
-      ctx.setState({
+      setState({
         ...state,
         schedule,
         masterPlayers,
