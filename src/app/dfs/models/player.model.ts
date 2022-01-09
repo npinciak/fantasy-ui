@@ -1,3 +1,5 @@
+import { DfsSlatePlayer } from './daily-fantasy-client.model';
+
 /**
  * Base player model
  */
@@ -9,4 +11,4 @@ interface PlayerProperties {
   position: string;
 }
 
-export type Player = PlayerProperties & { teamId: string };
+export type Player = PlayerProperties & Pick<DfsSlatePlayer, 'schedule'> & { teamId: string };

@@ -46,7 +46,7 @@
 </div>
 
 <mat-paginator [length]="dfsPlayers.length" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons> </mat-paginator>
-<pre>
+<!-- <pre>
   {{ selection.selected.length }}
 
 SUM - {{ sum }}
@@ -61,7 +61,7 @@ Proj Points Ceil - {{ projectedPointsCeil }}
 
 Proj Points Floor - {{ projectedPointsFloor }}
 
-</pre>
+</pre> -->
 
 <ul>
   <li *ngFor="let player of selectedPlayerList">{{ player?.name }} ({{ player?.siteId }}), {{ player?.position }}</li>

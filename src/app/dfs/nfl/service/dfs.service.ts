@@ -27,6 +27,13 @@ export class DfsService {
     return forkJoin([$players, $games]);
   };
 
+  /**
+   * Moved to `player.service`
+   *
+   * @param slatePath
+   * @returns
+   * @deprecated
+   */
   getPlayersBySlate(slatePath) {
     return this.apiService.get<DfsSlatePlayer[]>(slatePath, { params: this.httpParams });
   }

@@ -5,6 +5,7 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { Player } from '../models/player.model';
 import { DfsUrlBuilder } from '../nfl/class/url-builder.class';
 import { PlayerService } from '../service/player.service';
+import { PatchSchedule } from './daily-fantasy-schedule.state';
 
 export class FetchPlayers {
   static readonly type = `[dailyFantasyPlayers] FetchPlayers`;
@@ -46,8 +47,9 @@ export class DailyFantasyPlayersState {
     const newHttps = urlBuilder.slateHttps;
 
     const players = await this.playerService.playersBySlate(slatePath.replace(original, newHttps)).toPromise();
+    const schedule = players.map(p => p.schedule);
 
-    dispatch(new PatchPlayers({ players }));
+    dispatch([new PatchPlayers({ players }), new PatchSchedule({ schedule })]);
   }
 
   @Action(PatchPlayers)

@@ -12,7 +12,6 @@ import { DfsUrlBuilder } from '../class/url-builder.class';
 import { PatchTeamsFromSchedule } from './nfl-dfs-team.actions';
 
 export class NflDfsStateModel {
-  schedule: { [id: string]: CoreSchedule };
   masterPlayers: { [id: string]: DfsSlatePlayer };
   slatePlayers: { [id: string]: NFLClientPlayerAttributes };
   slateTeams: { [id: string]: NFLClientTeamAttributes };
@@ -23,7 +22,6 @@ export class NflDfsStateModel {
 }
 
 const defaults = {
-  schedule: {},
   masterPlayers: {},
   slatePlayers: {},
   slateTeams: {},
@@ -54,11 +52,6 @@ export class NflDfsState {
   @Selector()
   static site(state: NflDfsStateModel): string {
     return state.site;
-  }
-
-  @Selector()
-  static schedule(state: NflDfsStateModel): { [id: number]: CoreSchedule } {
-    return state.schedule;
   }
 
   @Selector()
@@ -101,15 +94,7 @@ export class NflDfsState {
 
       const gridIronPlayers = entityMap(gridPlayers, player => player.PLAYERID);
 
-      const masterPlayers = entityMap(dfsPlayers, player => player.player.id);
-
-      const mschedule = {};
-
-      dfsPlayers.map(p => {
-        mschedule[p.schedule.id] = p.schedule;
-      });
-
-      const schedule: { [id: string]: Schedule } = { ...mschedule };
+      const masterPlayers = entityMap(dfsPlayers, player => player.id);
 
       const slateTeams = { ...slateAttributes.teams };
       const slatePlayers = { ...slateAttributes.players };
@@ -117,11 +102,10 @@ export class NflDfsState {
 
       this.store.dispatch(new PatchProfiler({ profiler }));
 
-      this.store.dispatch(new PatchTeamsFromSchedule(schedule));
+      // this.store.dispatch(new PatchTeamsFromSchedule(schedule));
 
       setState({
         ...state,
-        schedule,
         masterPlayers,
         slateTeams,
         slatePlayers,

@@ -4,7 +4,8 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '@app/@shared/services/api.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DfsSlatePlayer } from '../mlb/models/dfsPlayer.interface';
+import { DfsSlatePlayer } from '../models/daily-fantasy-client.model';
+
 import { Player } from '../models/player.model';
 
 @Injectable({
@@ -21,12 +22,13 @@ export class PlayerService {
       img: null,
       team: null,
       teamId: dfsClientPlayer.player.team_id,
+      schedule: dfsClientPlayer.schedule,
     };
   }
 
   playersBySlate(slatePath: string): Observable<Player[]> {
     let params = new HttpParams();
-    params = params.append('timestamp', `${+new Date()}`);
+    params = params.append('timestamp', new Date().toISOString());
     return this.apiService
       .get<DfsSlatePlayer[]>(slatePath, { params })
       .pipe(map(res => res.map(p => PlayerService.transformDfsClientPlayerToPlayer(p))));
