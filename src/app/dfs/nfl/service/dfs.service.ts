@@ -26,26 +26,25 @@ export class DfsService {
     return forkJoin([$players, $games]);
   };
 
-  getPlayersBySlate = slatePath => this.apiService.get<DfsSlatePlayer[]>(slatePath, { params: this.httpParams });
+  getPlayersBySlate(slatePath) {
+    return this.apiService.get<DfsSlatePlayer[]>(slatePath, { params: this.httpParams });
+  }
 
-  getGameAttrBySlateId = (sport: string, site: string, slateId: string) =>
-    this.apiService.get<NFLClientSlateAttributes>(this.API.slateAttr, {
+  getGameAttrBySlateId(sport: string, site: string, slateId: string) {
+    return this.apiService.get<NFLClientSlateAttributes>(this.API.slateAttr, {
       params: this.gameAttributeParams.append('slate_id', slateId).append('site', site ?? 'draftkings'),
     });
+  }
 
- 
-  getSlatesByDate = (site: string, sport: string) => this.apiService.get<SlateMaster>(this.API.slateMaster);
+  getSlatesByDate(site: string, sport: string) {
+    return this.apiService.get<SlateMaster>(this.API.slateMaster);
+  }
 
-  /**
-   * TODO: Remove
-   *
-   * @deprecated
-   *
-   */
-  getSlatesSettings = () => this.apiService.get<SiteSlateConfig>(this.API.lineupHeadquarters, { params: this.httpParams });
-
-  getGridIronPlayers = (site: string) =>
-    this.apiService.get<GridIronPlayer[]>(this.API.gridIron, { params: new HttpParams().append('site', site ?? 'draftkings') });
+  getGridIronPlayers(site: string) {
+    let params = new HttpParams();
+    params = params.append('site', site ?? 'draftkings');
+    return this.apiService.get<GridIronPlayer[]>(this.API.gridIron, { params });
+  }
 
   // https://www.playerprofiler.com/api/v1/player/KO-0725(<player_id>)
   // https://www.playerprofiler.com/api/v1/players
