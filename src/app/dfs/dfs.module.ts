@@ -29,10 +29,12 @@ import { NflDfsTeamState } from './nfl/state/nfl-dfs-team.state';
 import { NflDfsState } from './nfl/state/nfl-dfs.state';
 import { DailyFantasyPlayersState } from './state/daily-fantasy-players.state';
 import { DailyFantasyScheduleState } from './state/daily-fantasy-schedule.state';
+import { DailyFantasySlateState } from './state/daily-fantasy-slate.state';
 
 const states = [
   DailyFantasyPlayersState,
   DailyFantasyScheduleState,
+  DailyFantasySlateState,
   DfsSlateState,
   MlbDfsState,
   NflDfsState,

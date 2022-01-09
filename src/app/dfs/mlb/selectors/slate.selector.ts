@@ -4,8 +4,8 @@ import { DfsSite } from '../../dfs.const';
 import { DfsSlate, SlateMaster } from '../models/slateMaster.interface';
 import { SlatePlayerAttr } from '../models/slatePlayer.interface';
 import { SiteConfig, SiteSlateConfig } from '../models/slateSettings.interface';
-import { DfsSlateState } from '../state/dfs-slate.state';
 import { MlbDfsState } from '../state/mlb-dfs.state';
+import { DailyFantasySlateState } from '@app/dfs/state/daily-fantasy-slate.state';
 
 export enum SlateType {
   classic = 'classic',
@@ -19,12 +19,12 @@ export class SlateSelectors {
     return (site: string) => sites[site];
   }
 
-  @Selector([DfsSlateState.slates])
+  @Selector([DailyFantasySlateState.slates])
   static selectSlateById(slates: { [id: number]: DfsSlate }): (id: number) => DfsSlate {
     return (id: number) => slates[id];
   }
 
-  @Selector([DfsSlateState.slates])
+  @Selector([DailyFantasySlateState.slates])
   static selectSlateList(slates: { [id: number]: DfsSlate }): DfsSlate[] {
     return Object.values(slates);
   }

@@ -18,6 +18,11 @@ const defaults = {
   slates: {},
 };
 
+/**
+ * Moved to `daily-fantasy-slate.state`
+ *
+ * @deprecated
+ */
 @State<DfsSlateStateModel>({
   name: 'dfsSlate',
   defaults,
@@ -41,8 +46,7 @@ export class DfsSlateState {
     try {
       const slateConfigs = await this.slateService.slateConfigurations().toPromise();
 
-
-      ctx.patchState({ slateConfigs});
+      ctx.patchState({ slateConfigs });
     } catch (error) {}
   }
 

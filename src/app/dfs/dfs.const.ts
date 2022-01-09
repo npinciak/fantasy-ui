@@ -1,5 +1,7 @@
 import { RotogrindMLBTeam } from './teams.enum';
 
+export const DAILY_FANTASY_BASE = environment.dailyFantasyBase;
+
 export enum DfsSite {
   DraftKings = 'draftkings',
   FanDuel = 'fanduel',
