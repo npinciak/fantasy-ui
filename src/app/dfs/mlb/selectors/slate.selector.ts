@@ -1,8 +1,5 @@
 import { Selector } from '@ngxs/store';
-import { DfsPlayer } from '../class/player.class';
-import { DfsSite } from '../../dfs.const';
-import { DfsSlate, SlateMaster } from '../models/slateMaster.interface';
-import { SlatePlayerAttr } from '../models/slatePlayer.interface';
+import { DfsSlate } from '../models/slateMaster.interface';
 import { SiteConfig, SiteSlateConfig } from '../models/slateSettings.interface';
 import { MlbDfsState } from '../state/mlb-dfs.state';
 import { DailyFantasySlateState } from '@app/dfs/state/daily-fantasy-slate.state';

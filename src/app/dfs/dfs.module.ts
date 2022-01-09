@@ -18,7 +18,6 @@ import { HomeComponent as NFLHomeComponent } from './nfl/pages/home/home.compone
 import { PlayerTableComponent as NFLPlayerTableHomeComponent } from './nfl/components/player-table/player-table.component';
 import { MatchupTableComponent } from './nfl/components/matchup-table/matchup-table.component';
 import { PlayerTableRankingColumnComponent } from './nfl/components/player-table-ranking-column/player-table-ranking-column.component';
-import { DfsSlateState } from './mlb/state/dfs-slate.state';
 import { NgxsModule } from '@ngxs/store';
 import { MlbDfsState } from './mlb/state/mlb-dfs.state';
 import { NflDfsLineupState } from './nfl/state/nfl-dfs-lineup.state';
@@ -35,7 +34,6 @@ const states = [
   DailyFantasyPlayersState,
   DailyFantasyScheduleState,
   DailyFantasySlateState,
-  DfsSlateState,
   MlbDfsState,
   NflDfsState,
   NflDfsTeamState,

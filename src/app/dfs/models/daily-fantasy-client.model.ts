@@ -216,7 +216,7 @@ export type DfsSlateGamesEntity = SiteSlateGameEntity;
 export interface DfsSlatePlayer {
   attributes: BattingAttributes;
   fpts: number;
-  player: Player;
+  player: SlatePlayerEntity;
   schedule: Schedule;
   stat_group: string;
   status: null;
@@ -231,7 +231,7 @@ export interface BattingOrder {
   confirmed: number;
 }
 
-export interface Player {
+export interface SlatePlayerEntity {
   id: string;
   rg_id: string;
   first_name: string;

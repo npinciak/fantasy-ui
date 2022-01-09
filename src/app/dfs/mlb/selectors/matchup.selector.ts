@@ -1,17 +1,9 @@
 import { Selector } from '@ngxs/store';
-import { ChartDataset } from 'chart.js';
 import { DfsMatchup } from '../class/matchup.class';
 import { MLBDfsMatchup } from '../class/mlb-matchup.class';
-import { DfsPlayer } from '../class/player.class';
 import { TeamAttributes } from '../models/slate.interface';
-import { DfsSlate } from '../models/slateMaster.interface';
-import { SlatePlayerAttr } from '../models/slatePlayer.interface';
 import { MlbDfsState } from '../state/mlb-dfs.state';
 import { Schedule } from '../models/dfsPlayer.interface';
-
-class NFLMatchup {
-  constructor(home: any, away: any) {}
-}
 
 export class MatchupSelectors {
   @Selector([MlbDfsState.slateTeams])

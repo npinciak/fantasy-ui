@@ -17,6 +17,7 @@ export class PlayerService {
   static transformDfsClientPlayerToPlayer(dfsClientPlayer: DfsSlatePlayer): Player {
     return {
       id: dfsClientPlayer.player.id,
+      rg_id: dfsClientPlayer.player.rg_id,
       name: `${dfsClientPlayer.player.first_name} ${dfsClientPlayer.player.last_name}`,
       position: dfsClientPlayer.player.position,
       img: null,

@@ -1,20 +1,14 @@
 import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
 import { State, Action, StateContext, Selector } from '@ngxs/store';
-import { tap } from 'rxjs/operators';
 import { PlayerFilter } from '../class/filter.class';
-import { DfsMatchup } from '../class/matchup.class';
-import { DFS_MLB_TEAM_MAP } from '../../dfs.const';
 import { DfsSlatePlayer, Schedule } from '../models/dfsPlayer.interface';
 import { GameAttributes, PlayerAttributes, TeamAttributes } from '../models/slate.interface';
-import { DfsSlate } from '../models/slateMaster.interface';
-import { SlatePlayerAttr } from '../models/slatePlayer.interface';
-import { SiteSlateConfig, SlateConfig } from '../models/slateSettings.interface';
-import { GameAttrTeam } from '../models/slateTeam.interface';
+import { SiteSlateConfig } from '../models/slateSettings.interface';
 import { DfsService } from '../../service/dfs.service';
 import { PlayerService } from '../../service/player.service';
 import { FetchResources } from './dfs-slate.actions';
-import { FetchSlateConfigs, FetchSlates, UpdateStatLine } from './mlb-dfs.actions';
+import { UpdateStatLine } from './mlb-dfs.actions';
 
 export class MlbDfsStateModel {
   schedule: { [id: number]: Schedule };
@@ -95,7 +89,7 @@ export class MlbDfsState {
         mschedule[p.schedule.id] = p.schedule;
       });
 
-      const masterPlayers = entityMap(dfsPlayers, player => Number(player.player.rg_id));
+      const masterPlayers = entityMap(dfsPlayers, player => Number(player.rg_id));
 
       const schedule = { ...mschedule };
 
