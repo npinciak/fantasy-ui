@@ -1,5 +1,6 @@
 import { Selector } from '@ngxs/store';
-import { DfsSlatePlayer } from '../models/dfsPlayer.interface';
+
+import { DfsSlatePlayer } from '@app/dfs/models/daily-fantasy-client.model';
 import { MlbDfsState } from '../state/mlb-dfs.state';
 
 export class PlayerSelectors {

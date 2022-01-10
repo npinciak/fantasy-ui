@@ -12,9 +12,9 @@ enum Fragments {
 }
 
 export class DfsUrlBuilder {
-  private DFS_JSON = environment.dfsJson;
-  private BASE_URL = environment.dfsBase;
-  private AWS_BASE_URL = environment.dfsAws;
+  private DFS_JSON = null;
+  private BASE_URL = null;
+  private AWS_BASE_URL = null;
 
   private _sport: string;
 

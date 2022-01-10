@@ -1,4 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+/**
+ * Moved to `daily-fantasy-client.model.ts`
+ *
+ * @deprecated
+ */
 export interface DfsSlatePlayer {
   attributes: Attributes;
   fpts: number;
@@ -17,6 +22,11 @@ export interface BattingOrder {
   confirmed: number;
 }
 
+/**
+ * Moved to `daily-fantasy-client.model.ts`
+ *
+ * @deprecated
+ */
 export interface Player {
   id: string;
   rg_id: string;
@@ -29,6 +39,11 @@ export interface Player {
   xml_id?: string | null;
 }
 
+/**
+ * Moved to `daily-fantasy-client.model.ts`
+ *
+ * @deprecated
+ */
 export interface Schedule {
   date: string;
   id: string;
@@ -39,6 +54,11 @@ export interface Schedule {
   salaries?: SalariesEntity[] | null;
 }
 
+/**
+ * Moved to `daily-fantasy-client.model.ts`
+ *
+ * @deprecated
+ */
 export interface TeamAwayOrTeamHome {
   hashtag: string;
   id: string;
@@ -46,6 +66,11 @@ export interface TeamAwayOrTeamHome {
   name: string;
 }
 
+/**
+ * Moved to `daily-fantasy-client.model.ts`
+ *
+ * @deprecated
+ */
 export interface SalariesEntity {
   position: string;
   salary: number;
@@ -53,6 +78,5 @@ export interface SalariesEntity {
 }
 
 export type CoreSlatePlayer = Pick<DfsSlatePlayer, 'attributes'>;
-
 
 export type CoreSchedule = Pick<Schedule, 'date' | 'id' | 'rg_id' | 'sport_id' | 'team_away' | 'team_home' | 'salaries'>;

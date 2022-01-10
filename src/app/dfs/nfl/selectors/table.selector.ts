@@ -174,7 +174,7 @@ export class NFLTableSelectors {
 }
 
 const tooltipHelper = (opp: string, rank: number): string => {
-  if (rank == undefined) {
+  if (rank === undefined) {
     return;
   }
 

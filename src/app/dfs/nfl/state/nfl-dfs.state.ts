@@ -2,30 +2,16 @@ import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
 import { FetchNFLResources } from '@app/dfs/mlb/state/dfs-slate.actions';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
-import { PlayerFilter } from '../../mlb/class/filter.class';
-import { DfsSlatePlayer, CoreSchedule, Schedule, TeamAwayOrTeamHome } from '../../mlb/models/dfsPlayer.interface';
-import { GameAttributes, PlayerAttributes, TeamAttributes } from '../../mlb/models/slate.interface';
-import { SiteSlateConfig } from '../../mlb/models/slateSettings.interface';
+import { DfsSlatePlayer, CoreSchedule, Schedule } from '../../mlb/models/dfsPlayer.interface';
 import { DfsService } from '../service/dfs.service';
-import { PlayerService } from '../../mlb/service/player.service';
-import {
-  NFLClientPlayerAttributes,
-  NFLClientSlateAttributes,
-  NFLClientTeam,
-  NFLClientTeamAttributes,
-} from '../models/nfl-slate-attr.model';
+import { PlayerService } from '../../service/player.service';
+import { NFLClientPlayerAttributes, NFLClientTeamAttributes } from '../models/nfl-slate-attr.model';
 import { PatchProfiler } from './nfl-dfs-profiler.actions';
 import { GridIronPlayer } from '../models/nfl-gridiron.model';
-import { env } from 'process';
-import { environment } from 'src/environments/environment';
 import { DfsUrlBuilder } from '../class/url-builder.class';
-import { updateItem } from '@ngxs/store/operators';
-import { SlateSelectors } from '@app/dfs/mlb/selectors/slate.selector';
 import { PatchTeamsFromSchedule } from './nfl-dfs-team.actions';
-import { state } from '@angular/animations';
 
 export class NflDfsStateModel {
-  schedule: { [id: string]: CoreSchedule };
   masterPlayers: { [id: string]: DfsSlatePlayer };
   slatePlayers: { [id: string]: NFLClientPlayerAttributes };
   slateTeams: { [id: string]: NFLClientTeamAttributes };
@@ -36,7 +22,6 @@ export class NflDfsStateModel {
 }
 
 const defaults = {
-  schedule: {},
   masterPlayers: {},
   slatePlayers: {},
   slateTeams: {},
@@ -70,11 +55,6 @@ export class NflDfsState {
   }
 
   @Selector()
-  static schedule(state: NflDfsStateModel): { [id: number]: CoreSchedule } {
-    return state.schedule;
-  }
-
-  @Selector()
   static gridIronPlayers(state: NflDfsStateModel): { [id: string]: GridIronPlayer } {
     return state.gridIronPlayers;
   }
@@ -95,14 +75,18 @@ export class NflDfsState {
   }
 
   @Action(FetchNFLResources)
-  async nflResources(ctx: StateContext<NflDfsStateModel>, { sport, site, slate }: FetchNFLResources): Promise<void> {
+  async nflResources(
+    { getState, patchState, setState }: StateContext<NflDfsStateModel>,
+    { sport, site, slate }: FetchNFLResources
+  ): Promise<void> {
     const urlBuilder = new DfsUrlBuilder('nfl');
+    const state = getState();
 
     const original = urlBuilder.slateNonHttps;
     const newHttps = urlBuilder.slateHttps;
 
     try {
-      ctx.patchState({ loading: true });
+      patchState({ loading: true });
 
       const dfsPlayers = await this.playerService.playersBySlate(slate.slate_path.replace(original, newHttps)).toPromise();
       const slateAttributes = await this.dfsService.getGameAttrBySlateId(sport, site, slate.importId).toPromise();
@@ -110,15 +94,7 @@ export class NflDfsState {
 
       const gridIronPlayers = entityMap(gridPlayers, player => player.PLAYERID);
 
-      const masterPlayers = entityMap(dfsPlayers, player => player.player.id);
-
-      const mschedule = {};
-
-      dfsPlayers.map(p => {
-        mschedule[p.schedule.id] = p.schedule;
-      });
-
-      const schedule: { [id: string]: Schedule } = { ...mschedule };
+      const masterPlayers = entityMap(dfsPlayers, player => player.id);
 
       const slateTeams = { ...slateAttributes.teams };
       const slatePlayers = { ...slateAttributes.players };
@@ -126,11 +102,10 @@ export class NflDfsState {
 
       this.store.dispatch(new PatchProfiler({ profiler }));
 
-      this.store.dispatch(new PatchTeamsFromSchedule(schedule));
+      // this.store.dispatch(new PatchTeamsFromSchedule(schedule));
 
-      ctx.setState({
+      setState({
         ...state,
-        schedule,
         masterPlayers,
         slateTeams,
         slatePlayers,

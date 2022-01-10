@@ -1,8 +1,4 @@
 import { Selector } from '@ngxs/store';
-import { DfsPlayer } from '../class/player.class';
-import { DfsSlate } from '../models/slateMaster.interface';
-import { SlatePlayerAttr } from '../models/slatePlayer.interface';
-import { MlbDfsState } from '../state/mlb-dfs.state';
 import { MlbPlayerSlateAttrSelectors } from './playerSlateAttr.selector';
 
 export interface TableColumn {

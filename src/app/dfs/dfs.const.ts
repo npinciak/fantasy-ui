@@ -1,4 +1,8 @@
+import { enumAsList } from '@app/@shared/helpers/enum-as-list';
+import { environment } from 'src/environments/environment';
 import { RotogrindMLBTeam } from './teams.enum';
+
+export const DAILY_FANTASY_BASE = environment.dailyFantasyBase;
 
 export enum DfsSite {
   DraftKings = 'draftkings',
@@ -12,9 +16,9 @@ export enum DfsSiteType {
   Yahoo = 50,
 }
 
-export const dfsSiteToDfsSiteTypeMap: { [val: string]: DfsSiteType } = {
-  [DfsSite.DraftKings]: DfsSiteType.DraftKings,
+export const dfsSiteToDfsSiteTypeMap: { [key in DfsSite]: DfsSiteType } = {
   [DfsSite.FanDuel]: DfsSiteType.FanDuel,
+  [DfsSite.DraftKings]: DfsSiteType.DraftKings,
   [DfsSite.Yahoo]: DfsSiteType.Yahoo,
 };
 
@@ -43,6 +47,8 @@ export enum DfsSport {
   wnba = 'wnba',
 }
 
+export const dfsSportEnumList: DfsSport[] = enumAsList(DfsSport);
+
 export enum Threshold {
   excellent,
   great,
@@ -63,18 +69,17 @@ export enum ThresholdClass {
   awful = 'awful',
 }
 
-export const DFS_NFL_TEAM_MAP = {
-  2: 'CIN',
-  8: 'MIN',
-  12: 'NYJ',
-  16: 'TEN',
-  17: 'DAL',
-  22: 'CAR',
-  24: 'TB',
-  29: 'AZ',
+export const thresholdMap: { [key in Threshold]: ThresholdClass } = {
+  [Threshold.excellent]: ThresholdClass.excellent,
+  [Threshold.great]: ThresholdClass.great,
+  [Threshold.aboveAvg]: ThresholdClass.aboveAvg,
+  [Threshold.avg]: ThresholdClass.avg,
+  [Threshold.belowAvg]: ThresholdClass.belowAvg,
+  [Threshold.poor]: ThresholdClass.poor,
+  [Threshold.awful]: ThresholdClass.awful,
 };
 
-export const DFS_MLB_TEAM_MAP = {
+export const DFS_MLB_TEAM_MAP: { [key in RotogrindMLBTeam]: string } = {
   [RotogrindMLBTeam.Bal]: 'Bal',
   [RotogrindMLBTeam.Bos]: 'Bos',
   [RotogrindMLBTeam.LAA]: 'LAA',

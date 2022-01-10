@@ -5,6 +5,7 @@ import { TeamAttributes } from '@app/dfs/mlb/models/slate.interface';
 import { DfsSlateGamesEntity } from '@app/dfs/mlb/models/slateMaster.interface';
 import { SlateMap, SlateSelectors } from '@app/dfs/mlb/selectors/slate.selector';
 import { NflDfsState } from '@app/dfs/nfl/state/nfl-dfs.state';
+import { DailyFantasyScheduleState } from '@app/dfs/state/daily-fantasy-schedule.state';
 import { Selector } from '@ngxs/store';
 import { camelCase } from 'lodash';
 import { NFLClientTeam, NFLClientTeamAttributes } from '../models/nfl-slate-attr.model';
@@ -37,12 +38,12 @@ interface ScheduleAdjustedFantasyPts {
 }
 
 export class NFLScheduleSelectors {
-  @Selector([NflDfsState.schedule])
+  @Selector([DailyFantasyScheduleState.getMap])
   static getScheduleList(schedule: { [id: string]: CoreSchedule }): CoreSchedule[] {
     return Object.values(schedule);
   }
 
-  @Selector([NflDfsState.schedule])
+  @Selector([DailyFantasyScheduleState.getMap])
   static getScheduleById(schedule: { [id: string]: CoreSchedule }): (id: string) => CoreSchedule {
     return (id: string) => schedule[id];
   }

@@ -1,8 +1,17 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+/**
+ * Moved to daily-fantasy-client.model.ts
+ *
+ * @deprecated
+ */
 export interface SlatePlayer {
   players: { [id: number]: SlatePlayerAttr };
 }
 
+/**
+ * Moved to daily-fantasy-client.model.ts
+ *
+ * @deprecated
+ */
 export interface SlatePlayerAttr {
   hand: string;
   xml_id: string;
@@ -17,11 +26,21 @@ export interface SlatePlayerAttr {
   ecr: Ecr;
 }
 
+/**
+ * Moved to daily-fantasy-client.model.ts
+ *
+ * @deprecated
+ */
 export interface Ecr {
   2: { rank: number; average: number };
   20: { rank: number; average: number };
 }
 
+/**
+ * Moved to daily-fantasy-client.model.ts
+ *
+ * @deprecated
+ */
 export interface StatSplit {
   'last-two': Stats;
   season: Stats;
@@ -31,6 +50,12 @@ export interface StatSplit {
   '1week': Stats;
   yesterday: YesterdayOr4weeksOr2weeksOr1week;
 }
+
+/**
+ * Moved to daily-fantasy-client.model.ts
+ *
+ * @deprecated
+ */
 export interface Stats {
   xwoba: string;
   wellHitPct: string;
@@ -53,6 +78,12 @@ export interface Stats {
   id: string;
   name: string;
 }
+
+/**
+ * Moved to daily-fantasy-client.model.ts
+ *
+ * @deprecated
+ */
 export interface YesterdayOr4weeksOr2weeksOr1week {
   muwoba: string;
   ab: string;
@@ -68,12 +99,24 @@ export interface YesterdayOr4weeksOr2weeksOr1week {
   id: string;
   name: string;
 }
+
+/**
+ * Moved to daily-fantasy-client.model.ts
+ *
+ * @deprecated
+ */
 export interface SalaryDiff {
   2: DKFD;
   20: DKFD;
   // 50: 50;
   // 71: 71;
 }
+
+/**
+ * Moved to daily-fantasy-client.model.ts
+ *
+ * @deprecated
+ */
 export interface DKFD {
   salary: string;
   position: string;

@@ -6,7 +6,6 @@
     <mat-action-list>
       <ng-container *ngFor="let slate of slateList | keyvalue">
         <h3 matLine>{{ slate.key }}</h3>
-
         <button mat-list-item *ngFor="let item of slate.value" (click)="selectSlate.emit(item)">
           {{ item.name }}
         </button>
