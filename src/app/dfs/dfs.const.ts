@@ -1,4 +1,5 @@
 import { enumAsList } from '@app/@shared/helpers/enum-as-list';
+import { environment } from 'src/environments/environment';
 import { RotogrindMLBTeam } from './teams.enum';
 
 export const DAILY_FANTASY_BASE = environment.dailyFantasyBase;

@@ -10,6 +10,11 @@ import { DfsSlate, SlateMaster } from '../mlb/models/slateMaster.interface';
 import { SlatePlayerAttr } from '../mlb/models/slatePlayer.interface';
 import { SiteSlateConfig, SlateConfig } from '../mlb/models/slateSettings.interface';
 
+/**
+ * moved to player.service, slate.service
+ *
+ * @deprecated
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -66,4 +71,3 @@ export class DfsService {
     return params;
   }
 }
-

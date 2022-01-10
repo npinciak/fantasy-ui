@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
 import { State, Action, StateContext, Selector } from '@ngxs/store';
-import { PlayerFilter } from '../class/filter.class';
 import { DfsSlatePlayer, Schedule } from '../models/dfsPlayer.interface';
 import { GameAttributes, PlayerAttributes, TeamAttributes } from '../models/slate.interface';
 import { SiteSlateConfig } from '../models/slateSettings.interface';
@@ -17,7 +16,6 @@ export class MlbDfsStateModel {
   slatePlayers: { [id: number]: PlayerAttributes };
   slateTeams: { [id: number]: TeamAttributes };
   slateConfigs: SiteSlateConfig;
-  filter: PlayerFilter;
   statLine: string;
 }
 
@@ -28,10 +26,12 @@ const defaults = {
   slatePlayers: {},
   slateTeams: {},
   slateConfigs: null,
-  filter: new PlayerFilter({}),
   statLine: 'oneWeek',
 };
 
+/**
+ * @deprecated moved to daily-fantasy-players.state,  daily-fantasy-schedule.state, daily-fantasy-slate.state
+ */
 @State<MlbDfsStateModel>({
   name: 'mlbDfs',
   defaults,
