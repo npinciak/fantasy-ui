@@ -5,6 +5,10 @@ import { DfsSlate } from '../models/slateMaster.interface';
 import { SlateSelectors, SlateType } from '../selectors/slate.selector';
 import { FetchSlateConfigs } from '../state/mlb-dfs.actions';
 
+/**
+ * @deprecated replace with dfs.facade
+ *
+ */
 @Injectable({
   providedIn: 'root',
 })

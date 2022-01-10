@@ -13,8 +13,9 @@ import { DfsRoutingModule } from './dfs-routing.module';
 import { SlateListComponent } from './components/slate-list/slate-list.component';
 
 import { HomeComponent as MLBHomeComponent } from './mlb/pages/home/home.component';
-
 import { HomeComponent as NFLHomeComponent } from './nfl/pages/home/home.component';
+import { HomeComponent as DfsHomeComponent } from './pages/home/home.component';
+
 import { PlayerTableComponent as NFLPlayerTableHomeComponent } from './nfl/components/player-table/player-table.component';
 import { MatchupTableComponent } from './nfl/components/matchup-table/matchup-table.component';
 import { PlayerTableRankingColumnComponent } from './nfl/components/player-table-ranking-column/player-table-ranking-column.component';
@@ -52,6 +53,7 @@ const states = [
     NFLPlayerTableHomeComponent,
     MatchupTableComponent,
     PlayerTableRankingColumnComponent,
+    DfsHomeComponent,
   ],
   imports: [
     CommonModule,
