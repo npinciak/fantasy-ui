@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { DfsSite } from '../../dfs.const';
 import { DfsSlate } from '../models/slateMaster.interface';
 import { SlateSelectors, SlateType } from '../selectors/slate.selector';
 import { FetchSlateConfigs } from '../state/mlb-dfs.actions';

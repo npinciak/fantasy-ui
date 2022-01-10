@@ -1,17 +1,9 @@
 import { Selector } from '@ngxs/store';
-import { ChartDataset } from 'chart.js';
-import { DfsMatchup } from '../class/matchup.class';
-import { MLBDfsMatchup } from '../class/mlb-matchup.class';
-import { DfsPlayer } from '../class/player.class';
 import { TeamAttributes } from '../models/slate.interface';
-import { DfsSlate } from '../models/slateMaster.interface';
-import { SlatePlayerAttr } from '../models/slatePlayer.interface';
 import { MlbDfsState } from '../state/mlb-dfs.state';
-import { Schedule } from '../models/dfsPlayer.interface';
-
-class NFLMatchup {
-  constructor(home: any, away: any) {}
-}
+import { MLBDfsMatchup } from '../models/mlb-matchup.model';
+import { Matchup } from '@app/dfs/models/matchup.model';
+import { Schedule } from '@app/dfs/models/daily-fantasy-client.model';
 
 export class MatchupSelectors {
   @Selector([MlbDfsState.slateTeams])
@@ -19,7 +11,17 @@ export class MatchupSelectors {
     const matchups: { [id: string]: MLBDfsMatchup } = {};
 
     for (const [key, value] of Object.entries(slates)) {
-      matchups[key] = new MLBDfsMatchup(key, value);
+      matchups[key] = {
+        teamId: null,
+        matchupAttr: null,
+        teamTotal: value.team_total,
+        team: null,
+        stackValue: Number(value.stack_value),
+        topValue: Number(value.top_value),
+        smashVal: Number(value.smash_value),
+        stackLeverage: Number(value.stack_leverage),
+        stackDiff: Number(value.stack_diff),
+      };
     }
 
     return Object.values(matchups).sort((a, b) => b.teamTotal - a.teamTotal);
@@ -45,7 +47,7 @@ export class MatchupSelectors {
   }
 
   @Selector([MatchupSelectors.getMatchups])
-  static matchupsEmpty(slates: DfsMatchup[]): boolean {
+  static matchupsEmpty(slates: Matchup[]): boolean {
     return slates.length === 0;
   }
 

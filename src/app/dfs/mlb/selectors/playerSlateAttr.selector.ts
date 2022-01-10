@@ -1,7 +1,7 @@
 import { Selector } from '@ngxs/store';
-import { DfsPlayer } from '../class/player.class';
-import { DfsSlatePlayer } from '../models/dfsPlayer.interface';
-import { SlatePlayerAttr } from '../models/slatePlayer.interface';
+
+import { DfsSlatePlayer, SlatePlayerAttr } from '@app/dfs/models/daily-fantasy-client.model';
+import { MlbDfsPlayer } from '../models/mlb-player.model';
 import { MlbDfsState } from '../state/mlb-dfs.state';
 import { PlayerSelectors } from './player.selector';
 
@@ -12,13 +12,16 @@ export class MlbPlayerSlateAttrSelectors {
   }
 
   @Selector([MlbDfsState.slatePlayers, PlayerSelectors.getPlayerById])
-  static slatePlayersToArr(slatePlayers: { [id: number]: SlatePlayerAttr }, selectPlayerById: (id: number) => DfsSlatePlayer): DfsPlayer[] {
+  static slatePlayersToArr(
+    slatePlayers: { [id: number]: SlatePlayerAttr },
+    selectPlayerById: (id: number) => DfsSlatePlayer
+  ): MlbDfsPlayer[] {
     const arr = [];
 
     for (const [key, val] of Object.entries(slatePlayers)) {
       const masterPlayer = selectPlayerById(Number(key));
 
-      const dfsPlayer = new DfsPlayer(val, masterPlayer);
+      const dfsPlayer = null; // TODO: add transformer new MlbDfsPlayer(val, masterPlayer);
 
       arr.push(dfsPlayer);
     }
@@ -27,27 +30,27 @@ export class MlbPlayerSlateAttrSelectors {
   }
 
   @Selector([MlbPlayerSlateAttrSelectors.slatePlayersToArr])
-  static batters(players: DfsPlayer[]): DfsPlayer[] {
-    return players.filter(player => player.isBatter).sort((a, b) => b.plateIq?.score.overall ?? 0 - a.plateIq?.score.overall ?? 0);
+  static batters(players: MlbDfsPlayer[]): MlbDfsPlayer[] {
+    return players.filter(player => player.isBatter).sort((a, b) => b.plateiq?.score.overall ?? 0 - a.plateiq?.score.overall ?? 0);
   }
 
   @Selector([MlbPlayerSlateAttrSelectors.batters])
-  static teamOverall(players: DfsPlayer[]): DfsPlayer[] {
+  static teamOverall(players: MlbDfsPlayer[]): MlbDfsPlayer[] {
     return players.filter(player => player.team);
   }
 
   @Selector([MlbPlayerSlateAttrSelectors.batters])
-  static battersEmpty(players: DfsPlayer[]): boolean {
+  static battersEmpty(players: MlbDfsPlayer[]): boolean {
     return players.length === 0;
   }
 
   @Selector([MlbPlayerSlateAttrSelectors.slatePlayersToArr])
-  static pitchers(players: DfsPlayer[]): DfsPlayer[] {
-    return players.filter(player => player.isPitcher).sort((a, b) => b.plateIq?.score.overall ?? 0 - a.plateIq?.score.overall ?? 0);
+  static pitchers(players: MlbDfsPlayer[]): MlbDfsPlayer[] {
+    return players.filter(player => player.isPitcher).sort((a, b) => b.plateiq?.score.overall ?? 0 - a.plateiq?.score.overall ?? 0);
   }
 
   @Selector([MlbPlayerSlateAttrSelectors.pitchers])
-  static pitchersEmpty(players: DfsPlayer[]): boolean {
+  static pitchersEmpty(players: MlbDfsPlayer[]): boolean {
     return players.length === 0;
   }
 }

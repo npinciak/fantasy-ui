@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { sortAccessor } from '@app/@shared/helpers/sort';
-import { DfsMatchup } from '@app/dfs/mlb/class/matchup.class';
+import { Matchup } from '@app/dfs/models/matchup.model';
 
 @Component({
   selector: 'app-team-matchup-table',
@@ -11,14 +11,14 @@ import { DfsMatchup } from '@app/dfs/mlb/class/matchup.class';
   styleUrls: ['./team-matchup-table.component.scss'],
 })
 export class TeamMatchupTableComponent implements OnInit, AfterViewInit, OnChanges {
-  @Input() dfsMatchup: DfsMatchup[];
+  @Input() dfsMatchup: Matchup[];
   @Input() tableColumns: string;
   @Input() sport = 'mlb';
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
-  dataSource = new MatTableDataSource<DfsMatchup>();
+  dataSource = new MatTableDataSource<Matchup>();
 
   // readonly tableColumns: string[] = [
   //   'team',
@@ -38,8 +38,6 @@ export class TeamMatchupTableComponent implements OnInit, AfterViewInit, OnChang
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    console.log(this.dfsMatchup[0]);
-
     this.dataSource.data = this.dfsMatchup;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;

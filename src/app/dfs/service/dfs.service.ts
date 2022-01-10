@@ -3,13 +3,18 @@ import { Injectable } from '@angular/core';
 import { currentDate } from '@app/@shared/helpers/date';
 import { ApiService } from '@app/@shared/services/api.service';
 import { forkJoin } from 'rxjs';
-import { DfsSite, DfsSport } from '../../dfs.const';
-import { DfsSlatePlayer } from '../models/dfsPlayer.interface';
-import { SlateAttributes } from '../models/slate.interface';
-import { DfsSlate, SlateMaster } from '../models/slateMaster.interface';
-import { SlatePlayerAttr } from '../models/slatePlayer.interface';
-import { SiteSlateConfig, SlateConfig } from '../models/slateSettings.interface';
+import { DfsSite, DfsSport } from '../dfs.const';
+import { DfsSlatePlayer } from '../mlb/models/dfsPlayer.interface';
+import { SlateAttributes } from '../mlb/models/slate.interface';
+import { DfsSlate, SlateMaster } from '../mlb/models/slateMaster.interface';
+import { SlatePlayerAttr } from '../mlb/models/slatePlayer.interface';
+import { SiteSlateConfig, SlateConfig } from '../mlb/models/slateSettings.interface';
 
+/**
+ * moved to player.service, slate.service
+ *
+ * @deprecated
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -66,4 +71,3 @@ export class DfsService {
     return params;
   }
 }
-

@@ -1,23 +1,18 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSelectChange } from '@angular/material/select';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { sortAccessor } from '@app/@shared/helpers/sort';
-import { DfsPlayer } from '@app/dfs/mlb/class/player.class';
 import { FilterType } from '@app/dfs/components/player-table/player-table.component';
-import { ThresholdClass } from '@app/dfs/dfs.const';
-import { DfsFacade } from '@app/dfs/mlb/facade/dfs.facade';
 import { TableColumn } from '@app/dfs/mlb/selectors/table.selector';
 import { NFLPlayerFacade } from '../../facade/player.facade';
 import { ScheduleFacade } from '../../facade/schedule.facade';
 import { NFL_STAT_GROUP_MAP } from '../../models/stat-group.model';
-import { blendColors, colorScaleTable } from '@app/@shared/helpers/color-blender';
-import { toInt } from '@app/@shared/helpers/toInt';
+import { colorScaleTable } from '@app/@shared/helpers/color-blender';
 import { NFLTeamFacade } from '../../facade/team.facade';
 import { NFLTableColumn } from '../../models/nfl-table.model';
 import { SelectionModel } from '@angular/cdk/collections';
-import { NFLPlayerTableRow, PlayerTableRow } from '../../models/nfl-player-table-row.model';
+import { NFLPlayerTableRow } from '../../models/nfl-player-table-row.model';
 import { NFLDfsLineupFacade } from '../../facade/nfl-dfs-lineup.facade';
 
 const threshold = {
@@ -73,8 +68,6 @@ export class PlayerTableComponent implements OnInit, AfterViewInit, OnChanges {
     this.dataSource.data = this.dfsPlayers;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-
-    console.log(this.dfsPlayers[0]);
 
     this.dataSource.filter = this.filter;
     this.dataSource.sortingDataAccessor = (obj, path) => sortAccessor(obj, path);
