@@ -1,7 +1,13 @@
 import { DfsSiteType, DFS_MLB_TEAM_MAP } from '../../dfs.const';
 import { DfsSlatePlayer } from '../models/dfsPlayer.interface';
-import { Plateiq, SlatePlayerAttr, Stats, StatSplit } from '../models/slatePlayer.interface';
+import { Plateiq, SlatePlayerAttr, StatSplit } from '../models/slatePlayer.interface';
 
+/**
+ * moved to mlb-player.model.ts
+ *
+ * @deprecated
+ *
+ */
 export class DfsPlayer {
   protected _slateAttr: SlatePlayerAttr;
   protected _dfsPlayer: DfsSlatePlayer;
