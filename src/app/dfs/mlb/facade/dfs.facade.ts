@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
 import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
 import { Select, Store } from '@ngxs/store';
-import { Observable, of } from 'rxjs';
-import { DfsMatchup } from '../class/matchup.class';
-import { MLBDfsMatchup } from '../class/mlb-matchup.class';
+import { Observable } from 'rxjs';
 import { DfsPlayer } from '../class/player.class';
 import { DfsSite } from '../../dfs.const';
 import { CoreDfsSlate, DfsSlate } from '../models/slateMaster.interface';
 import { MatchupSelectors } from '../selectors/matchup.selector';
 import { MlbPlayerSlateAttrSelectors } from '../selectors/playerSlateAttr.selector';
 import { SlateSelectors } from '../selectors/slate.selector';
-import { TableColumn, TableSelectors } from '../selectors/table.selector';
 import { FetchNFLResources, FetchResources } from '../state/dfs-slate.actions';
 import { UpdateStatLine } from '../state/mlb-dfs.actions';
 import { MlbDfsState } from '../state/mlb-dfs.state';
+import { MLBDfsMatchup } from '../models/mlb-matchup.model';
 
 @Injectable({
   providedIn: 'root',
