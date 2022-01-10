@@ -5,10 +5,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogService } from '@app/@shared/components/dialog/dialog.service';
 import { sortAccessor } from '@app/@shared/helpers/sort';
-import { DfsPlayer } from '@app/dfs/mlb/class/player.class';
 import { DFS_TOOLTIPS, positionFilter, ThresholdClass, tierFilter } from '@app/dfs/dfs.const';
 import { DfsFacade } from '@app/dfs/mlb/facade/dfs.facade';
 import { TableColumn } from '@app/dfs/mlb/selectors/table.selector';
+import { MlbDfsPlayer } from '@app/dfs/mlb/models/mlb-player.model';
 
 export enum FilterType {
   team,
@@ -29,7 +29,7 @@ interface FilterOption {
   styleUrls: ['./player-table.component.scss'],
 })
 export class PlayerTableComponent implements OnInit, AfterViewInit, OnChanges {
-  @Input() dfsPlayers: DfsPlayer[];
+  @Input() dfsPlayers: MlbDfsPlayer[];
   @Input() tableColumns: TableColumn[];
   @Input() displayColumns: TableColumn[];
 
@@ -41,7 +41,7 @@ export class PlayerTableComponent implements OnInit, AfterViewInit, OnChanges {
   readonly positionFilter = positionFilter;
   readonly tierFilter = tierFilter;
 
-  dataSource = new MatTableDataSource<DfsPlayer>();
+  dataSource = new MatTableDataSource<MlbDfsPlayer>();
   displayedColumns: string[];
   filter = '';
   filterTypeSelected: FilterType;
@@ -77,7 +77,7 @@ export class PlayerTableComponent implements OnInit, AfterViewInit, OnChanges {
     this.dataSource.filter = change.value;
   }
 
-  dataSourceFilter(): (data: DfsPlayer, filterVal: string) => boolean {
+  dataSourceFilter(): (data: MlbDfsPlayer, filterVal: string) => boolean {
     return (data, filterVal): boolean => {
       if (filterVal === '') {
         return true;
