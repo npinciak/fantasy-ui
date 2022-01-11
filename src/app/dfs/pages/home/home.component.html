@@ -30,6 +30,15 @@
     <div class="blocks four" gdArea="content">
       Content <br />
       More content than we had before so this column is now quite tall.
+
+      <ng-container *ngIf="(dailyFantasyPlayersFacade.playersEmpty$ | async) === false">
+        <!-- <app-nfl-player-table
+          *ngIf="dailyFantasyPlayersFacade.playerTableRows$ | async"
+          [dfsPlayers]="dailyFantasyPlayersFacade.playerTableRows$ | async"
+          [dataColumns]="tableFacade.playerTableList$ | async"
+          [displayColumns]="tableFacade.playerDisplayColumns$ | async"
+        ></app-nfl-player-table> -->
+      </ng-container>
     </div>
     <div class="blocks five" gdArea="footer">Footer</div>
   </div>
