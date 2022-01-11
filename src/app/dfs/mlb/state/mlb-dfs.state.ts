@@ -81,17 +81,19 @@ export class MlbDfsState {
     const newHttps = 'https://s3.amazonaws.com/json.rotogrinders.com';
 
     try {
-      const dfsPlayers = await this.playerService.playersBySlate(slate.slate_path.replace(original, newHttps)).toPromise();
+      const data = await this.playerService.playersBySlate(slate.slate_path.replace(original, newHttps)).toPromise();
       const slateAttributes = await this.dfsService.getGameAttrBySlateId(sport, site, slate.importId).toPromise();
 
-      const mschedule = {};
-      dfsPlayers.map(p => {
-        mschedule[p.schedule.id] = p.schedule;
-      });
+      const dfsPlayers = data.map(p => p.player);
 
-      const masterPlayers = entityMap(dfsPlayers, player => Number(player.rg_id));
+      const schedule = data
+        .map(p => p.game)
+        .reduce((obj, val) => {
+          obj[val.id] = val;
+          return obj;
+        }, {});
 
-      const schedule = { ...mschedule };
+      const masterPlayers = entityMap(dfsPlayers, player => Number(player.rgId));
 
       const slateTeams = { ...slateAttributes.teams };
       const slateGames = { ...slateAttributes.games };

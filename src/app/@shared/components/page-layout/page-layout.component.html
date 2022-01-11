@@ -14,18 +14,24 @@
   </mat-menu>
 
   <mat-menu #dfs="matMenu">
+    <button mat-menu-item [matMenuTriggerFor]="dfsNbaSite">NBA</button>
     <button mat-menu-item [matMenuTriggerFor]="dfsNflSite">NFL</button>
     <button mat-menu-item [matMenuTriggerFor]="dfsMlbSite">MLB</button>
   </mat-menu>
 
   <mat-menu #dfsNflSite="matMenu">
-    <button mat-menu-item [routerLink]="UrlBuilder.dfsNflBase">DK</button>
-    <button mat-menu-item [routerLink]="UrlBuilder.espnNflBase">FD</button>
+    <button mat-menu-item [routerLink]="UrlBuilder.dfsBase" [queryParams]="{ sport: 'nfl', site: 'draftkings' }">DK</button>
+    <button mat-menu-item [routerLink]="UrlBuilder.dfsBase" [queryParams]="{ sport: 'nfl', site: 'fanduel' }">FD</button>
   </mat-menu>
 
   <mat-menu #dfsMlbSite="matMenu">
-    <button mat-menu-item [routerLink]="UrlBuilder.dfsNflBase">DK</button>
-    <button mat-menu-item [routerLink]="UrlBuilder.espnNflBase">FD</button>
+    <button mat-menu-item [routerLink]="UrlBuilder.dfsBase" [queryParams]="{ sport: 'mlb', site: 'draftkings' }">DK</button>
+    <button mat-menu-item [routerLink]="UrlBuilder.dfsBase" [queryParams]="{ sport: 'mlb', site: 'fanduel' }">FD</button>
+  </mat-menu>
+
+  <mat-menu #dfsNbaSite="matMenu">
+    <button mat-menu-item [routerLink]="UrlBuilder.dfsBase" [queryParams]="{ sport: 'nba', site: 'draftkings' }">DK</button>
+    <button mat-menu-item [routerLink]="UrlBuilder.dfsBase" [queryParams]="{ sport: 'nba', site: 'fanduel' }">FD</button>
   </mat-menu>
 
   <span>{{ pageTitle }}</span>

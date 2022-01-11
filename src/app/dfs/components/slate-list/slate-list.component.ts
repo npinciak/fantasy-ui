@@ -6,6 +6,7 @@ import { SlateType } from '@app/dfs/mlb/selectors/slate.selector';
 @Component({
   selector: 'app-slate-list',
   templateUrl: './slate-list.component.html',
+  styles: ['.mat-list-base .mat-list-item{font-size:14px}'],
 })
 export class SlateListComponent implements OnInit {
   @Input() slateList: { [slateType in SlateType]: DfsSlate[] };

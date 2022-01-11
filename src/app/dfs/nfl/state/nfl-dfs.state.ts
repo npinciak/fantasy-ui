@@ -88,12 +88,13 @@ export class NflDfsState {
     try {
       patchState({ loading: true });
 
-      const dfsPlayers = await this.playerService.playersBySlate(slate.slate_path.replace(original, newHttps)).toPromise();
+      const data = await this.playerService.playersBySlate(slate.slate_path.replace(original, newHttps)).toPromise();
       const slateAttributes = await this.dfsService.getGameAttrBySlateId(sport, site, slate.importId).toPromise();
       const gridPlayers = await this.dfsService.getGridIronPlayers(site).toPromise();
 
       const gridIronPlayers = entityMap(gridPlayers, player => player.PLAYERID);
 
+      const dfsPlayers = data.map(p => p.player);
       const masterPlayers = entityMap(dfsPlayers, player => player.id);
 
       const slateTeams = { ...slateAttributes.teams };

@@ -38,6 +38,6 @@ export class DailyFantasyEndpointBuilder {
   }
 
   private get awsJson() {
-    return `${DailyFantasyEndpointBuilder.awsBase}/${DailyFantasyEndpointBuilder.dailyFantasyJsonBase}`;
+    return `https://${DailyFantasyEndpointBuilder.awsBase}/${DailyFantasyEndpointBuilder.dailyFantasyJsonBase}`;
   }
 }

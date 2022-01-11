@@ -3,6 +3,10 @@ export class UrlBuilder {
     return UrlFragments.Empty;
   }
 
+  static get dfsBase() {
+    return `${UrlFragments.Dfs}`;
+  }
+
   static get dfsMlbBase() {
     return `${UrlFragments.Dfs}/${UrlFragments.MLB}`;
   }
