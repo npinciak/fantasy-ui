@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-
-import { Schedule } from '../models/daily-fantasy-client.model';
+import { Schedule } from '../models/schedule.model';
 
 export class PatchSchedule {
-  static readonly type = `[dailyFantasySchedule] PatchPlayers`;
+  static readonly type = `[dailyFantasySchedule] PatchSchedule`;
   constructor(public payload: { schedule: Schedule[] }) {}
 }
 

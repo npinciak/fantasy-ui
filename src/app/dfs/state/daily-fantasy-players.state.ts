@@ -3,6 +3,7 @@ import { entityMap } from '@app/@shared/operators';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 
 import { Player } from '../models/player.model';
+import { Schedule } from '../models/schedule.model';
 import { DfsUrlBuilder } from '../nfl/class/url-builder.class';
 import { PlayerService } from '../service/player.service';
 import { PatchSchedule } from './daily-fantasy-schedule.state';
@@ -46,8 +47,21 @@ export class DailyFantasyPlayersState {
     const original = urlBuilder.slateNonHttps;
     const newHttps = urlBuilder.slateHttps;
 
-    const players = await this.playerService.playersBySlate(slatePath.replace(original, newHttps)).toPromise();
-    const schedule = players.map(p => p.schedule);
+    const data = await this.playerService.playersBySlate(slatePath.replace(original, newHttps)).toPromise();
+    const players = data.map(p => p.player);
+
+    const games = data.map(p => p.game);
+    const map = new Map<string, Schedule>();
+
+    games.map(p => {
+      if (map.has(p.id)) {
+        return;
+      } else {
+        map.set(p.id, p);
+      }
+    });
+
+    const schedule = Array.from(map, ([key, value]) => ({ ...value }));
 
     dispatch([new PatchPlayers({ players }), new PatchSchedule({ schedule })]);
   }

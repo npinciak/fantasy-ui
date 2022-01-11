@@ -4,9 +4,10 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '@app/@shared/services/api.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DfsSlatePlayer, Schedule, ScheduleTeamEntity } from '../models/daily-fantasy-client.model';
+import { DfsSlatePlayer, Schedule as ScheduleImport, ScheduleTeamEntity } from '../models/daily-fantasy-client.model';
 
 import { Player } from '../models/player.model';
+import { Schedule } from '../models/schedule.model';
 import { Team } from '../models/team.model';
 
 @Injectable({
@@ -15,28 +16,24 @@ import { Team } from '../models/team.model';
 export class PlayerService {
   constructor(private apiService: ApiService) {}
 
-  static transformDfsClientPlayerToPlayer(dfsClientPlayer: DfsSlatePlayer): Player {
-    console.log(PlayerService.transformDfsClientSchduleToSchedule(dfsClientPlayer.schedule));
-
+  static transformDfsClientPlayerToPlayer(dfsClientPlayer: DfsSlatePlayer): { player: Player; game: Schedule } {
     return {
-      id: dfsClientPlayer.player.id,
-      rgId: dfsClientPlayer.player.rg_id,
-      name: `${dfsClientPlayer.player.first_name} ${dfsClientPlayer.player.last_name}`,
-      position: dfsClientPlayer.player.position,
-      teamId: dfsClientPlayer.player.team_id,
-      rgTeamId: dfsClientPlayer.player.rg_team_id,
-      img: null,
-      team: null,
+      player: {
+        id: dfsClientPlayer.player.id,
+        rgId: dfsClientPlayer.player.rg_id,
+        name: `${dfsClientPlayer.player.first_name} ${dfsClientPlayer.player.last_name}`,
+        position: dfsClientPlayer.player.position,
+        teamId: dfsClientPlayer.player.team_id,
+        rgTeamId: dfsClientPlayer.player.rg_team_id,
+        gameId: dfsClientPlayer.schedule.id,
+        img: null,
+        team: null,
+      },
+      game: PlayerService.transformDfsClientSchduleToSchedule(dfsClientPlayer.schedule),
     };
   }
 
-  /**
-   * @todo Create model
-   *
-   * @param dfsClientSchedule `Schedule`
-   * @returns
-   */
-  static transformDfsClientSchduleToSchedule(dfsClientSchedule: Schedule) {
+  static transformDfsClientSchduleToSchedule(dfsClientSchedule: ScheduleImport): Schedule {
     const awayTeam = PlayerService.transformScheduleTeamEntityToTeam(dfsClientSchedule.team_away);
     const homeTeam = PlayerService.transformScheduleTeamEntityToTeam(dfsClientSchedule.team_home);
     return {
@@ -57,7 +54,7 @@ export class PlayerService {
     };
   }
 
-  playersBySlate(slatePath: string): Observable<Player[]> {
+  playersBySlate(slatePath: string): Observable<{ player: Player; game: Schedule }[]> {
     let params = new HttpParams();
     params = params.append('timestamp', new Date().toISOString());
     return this.apiService
