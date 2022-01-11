@@ -1,41 +1,26 @@
-<div fxLayout="row" fxLayoutGap="20px">
-  <div fxLayout="column" fxFlex="30%">
-    <ng-container *ngIf="(slateFacade.slatesEmpty$ | async) === false">
-      <app-slate-list [slateList]="slateFacade.selectSlateByType()" (selectSlate)="dfsFacade.getResources('nfl', SITE, $event)"></app-slate-list>
-    </ng-container>
-  </div>
-  <div fxLayout="column" fxFlex="70%">
-    Player Data - <mat-icon [class.excellent]="(playerFacade.playersEmpty$ | async) === false">check_circle</mat-icon>
-    <br />
-    Matchup Data - <mat-icon [class.excellent]="(scheduleFacade.nflMatchupsEmpty$ | async) === false">check_circle</mat-icon>
-    <br />
-    Loading - <mat-icon [class.excellent]="(NFLDfsFacade.loading$ | async) === true">check_circle</mat-icon>
+<ng-container *ngIf="(slateFacade.slatesEmpty$ | async) === false">
+  <app-slate-list [slateList]="slateFacade.selectSlateByType()" (selectSlate)="select($event)"></app-slate-list>
+</ng-container>
 
-    <ng-container *ngIf="(NFLDfsFacade.loading$ | async) === false; else loading">
-      <ng-container *ngIf="(scheduleFacade.nflMatchupsEmpty$ | async) === false">
-        <app-matchup-table
-          [tableData]="scheduleFacade.selectNflMatchupList$ | async"
-          [dataColumns]="tableFacade.matchupTableList$ | async"
-          [displayColumns]="tableFacade.matchupDisplayColumns$ | async"
-        ></app-matchup-table>
-      </ng-container>
+<ng-container *ngIf="(NFLDfsFacade.loading$ | async) === false; else loading">
+  <ng-container *ngIf="(scheduleFacade.nflMatchupsEmpty$ | async) === false">
+    <app-matchup-table
+      [tableData]="scheduleFacade.selectNflMatchupList$ | async"
+      [dataColumns]="tableFacade.matchupTableList$ | async"
+      [displayColumns]="tableFacade.matchupDisplayColumns$ | async"
+    ></app-matchup-table>
+  </ng-container>
 
-      <div style="padding: 20px 0"></div>
-      <ng-container *ngIf="(playerFacade.playersEmpty$ | async) === false">
-        <app-nfl-player-table
-          *ngIf="playerFacade.playerTableRows$ | async"
-          [dfsPlayers]="playerFacade.playerTableRows$ | async"
-          [dataColumns]="tableFacade.playerTableList$ | async"
-          [displayColumns]="tableFacade.playerDisplayColumns$ | async"
-        ></app-nfl-player-table>
-      </ng-container>
-      <div style="padding: 20px 0"></div>
-    </ng-container>
-  </div>
-</div>
+  <div style="padding: 20px 0"></div>
+  <ng-container *ngIf="(playerFacade.playersEmpty$ | async) === false">
+    <app-nfl-player-table
+      *ngIf="playerFacade.playerTableRows$ | async"
+      [dfsPlayers]="playerFacade.playerTableRows$ | async"
+      [dataColumns]="tableFacade.playerTableList$ | async"
+      [displayColumns]="tableFacade.playerDisplayColumns$ | async"
+    ></app-nfl-player-table>
+  </ng-container>
+  <div style="padding: 20px 0"></div>
+</ng-container>
 
-<div class="footer" gdArea="footer">Footer</div>
-
-<ng-template #loading>
-  <div style="padding: 10px">Loading...</div>
-</ng-template>
+<ng-template #loading> <mat-progress-spinner color="primary" mode="indeterminate"> </mat-progress-spinner></ng-template>
