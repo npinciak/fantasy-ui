@@ -9,4 +9,4 @@ interface PlayerProperties {
   position: string;
 }
 
-export type Player = PlayerProperties & { rgId: string; teamId: string; rgTeamId: string };
+export type Player = PlayerProperties & { rgId: string; teamId: string; rgTeamId: string; gameId: string };
