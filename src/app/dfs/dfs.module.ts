@@ -13,8 +13,9 @@ import { DfsRoutingModule } from './dfs-routing.module';
 import { SlateListComponent } from './components/slate-list/slate-list.component';
 
 import { HomeComponent as MLBHomeComponent } from './mlb/pages/home/home.component';
-
 import { HomeComponent as NFLHomeComponent } from './nfl/pages/home/home.component';
+import { HomeComponent as DfsHomeComponent } from './pages/home/home.component';
+
 import { PlayerTableComponent as NFLPlayerTableHomeComponent } from './nfl/components/player-table/player-table.component';
 import { MatchupTableComponent } from './nfl/components/matchup-table/matchup-table.component';
 import { PlayerTableRankingColumnComponent } from './nfl/components/player-table-ranking-column/player-table-ranking-column.component';
@@ -29,11 +30,13 @@ import { NflDfsState } from './nfl/state/nfl-dfs.state';
 import { DailyFantasyPlayersState } from './state/daily-fantasy-players.state';
 import { DailyFantasyScheduleState } from './state/daily-fantasy-schedule.state';
 import { DailyFantasySlateState } from './state/daily-fantasy-slate.state';
+import { DailyFantasyTeamsState } from './state/daily-fantasy-team.state';
 
 const states = [
   DailyFantasyPlayersState,
   DailyFantasyScheduleState,
   DailyFantasySlateState,
+  DailyFantasyTeamsState,
   MlbDfsState,
   NflDfsState,
   NflDfsTeamState,
@@ -52,6 +55,7 @@ const states = [
     NFLPlayerTableHomeComponent,
     MatchupTableComponent,
     PlayerTableRankingColumnComponent,
+    DfsHomeComponent,
   ],
   imports: [
     CommonModule,

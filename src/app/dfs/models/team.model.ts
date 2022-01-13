@@ -3,9 +3,9 @@
  */
 interface TeamProperties {
   id: string;
-  name: string;
-  logo: string;
-  record: string | null;
+  rgId: string | null;
+  name: string | null;
+  shortName: string | null;
 }
 
 export type Team = TeamProperties;
