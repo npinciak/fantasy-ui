@@ -7,7 +7,6 @@ import { DfsSite, DfsSport, DFS_MLB_TEAM_MAP } from '@app/dfs/dfs.const';
 import { DfsFacade } from '@app/dfs/mlb/facade/dfs.facade';
 import { SlateFacade } from '@app/dfs/mlb/facade/slate.facade';
 import { TableFacade } from '@app/dfs/mlb/facade/table.facade';
-import { DfsService } from '@app/dfs/service/dfs.service';
 import { FetchSlateConfigs, FetchSlates } from '@app/dfs/mlb/state/mlb-dfs.actions';
 import { Store, Actions, ofActionCompleted } from '@ngxs/store';
 
