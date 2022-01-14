@@ -1,4 +1,3 @@
-import { cellDataAccessor } from '@app/@shared/helpers/utils';
 import { Selector } from '@ngxs/store';
 import { TableColumn } from '../models/table.model';
 

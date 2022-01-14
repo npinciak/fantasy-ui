@@ -1,15 +1,9 @@
-/* eslint-disable arrow-body-style */
-import { toInt } from '@app/@shared/helpers/toInt';
-import { CoreSchedule, Schedule } from '@app/dfs/mlb/models/dfsPlayer.interface';
-import { TeamAttributes } from '@app/dfs/mlb/models/slate.interface';
-import { DfsSlateGamesEntity } from '@app/dfs/mlb/models/slateMaster.interface';
-import { SlateMap, SlateSelectors } from '@app/dfs/mlb/selectors/slate.selector';
+import { CoreSchedule } from '@app/dfs/mlb/models/dfsPlayer.interface';
 import { NflDfsState } from '@app/dfs/nfl/state/nfl-dfs.state';
 import { DailyFantasyScheduleState } from '@app/dfs/state/daily-fantasy-schedule.state';
 import { Selector } from '@ngxs/store';
 import { camelCase } from 'lodash';
-import { NFLClientTeam, NFLClientTeamAttributes } from '../models/nfl-slate-attr.model';
-import { NFLPlayerSelectors } from './player.selector';
+import { NFLClientTeamAttributes } from '../models/nfl-slate-attr.model';
 
 interface NFLMatchup {
   home: TeamDetails;
@@ -108,18 +102,16 @@ const transformTeam = (
   team: NFLClientTeamAttributes | null,
   opponent: NFLClientTeamAttributes | null,
   homeAway: 'team_home' | 'team_away'
-): MatchupTableRow => {
-  return {
-    teamName: schedule[homeAway].hashtag,
-    opponent: homeAway === 'team_home' ? schedule?.team_away.hashtag : `@ ${schedule?.team_home.hashtag}`,
-    vegasOU: team?.vegas['o/u'] ?? 0,
-    vegasLine: team?.vegas.line ?? 0,
-    vegasTotal: team?.vegas.total ?? 0,
-    vegasMovement: team?.vegas.movement ?? 0,
+): MatchupTableRow => ({
+  teamName: schedule[homeAway].hashtag,
+  opponent: homeAway === 'team_home' ? schedule?.team_away.hashtag : `@ ${schedule?.team_home.hashtag}`,
+  vegasOU: team?.vegas['o/u'] ?? 0,
+  vegasLine: team?.vegas.line ?? 0,
+  vegasTotal: team?.vegas.total ?? 0,
+  vegasMovement: team?.vegas.movement ?? 0,
 
-    ...transformScheduleAdjusted(opponent?.safpts),
-  };
-};
+  ...transformScheduleAdjusted(opponent?.safpts),
+});
 
 const transformScheduleAdjusted = (val: { [id: string]: string }): TransformedScheduleAdjusted => {
   const transformed: TransformedScheduleAdjusted = {};

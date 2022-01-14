@@ -1,8 +1,8 @@
 import { Selector } from '@ngxs/store';
-import { of } from 'rxjs';
-
-import { Player } from '../models/player.model';
+import { Player, PlayerTableRow } from '../models/player.model';
+import { Team } from '../models/team.model';
 import { DailyFantasyPlayersState } from '../state/daily-fantasy-players.state';
+import { DailyFantasyTeamsSelectors } from './daily-fantasy-team.selectors';
 
 export class DailyFantasyPlayersSelectors {
   @Selector([DailyFantasyPlayersState.getMap])
@@ -16,12 +16,28 @@ export class DailyFantasyPlayersSelectors {
   }
 
   @Selector([DailyFantasyPlayersSelectors.selectPlayerList])
-  static selectPlayerTableRows(playerList: Player[]) {
-    return [];
+  static selectPositionsList(players: Player[]): string[] {
+    const set = new Set<string>();
+    players.map(val => {
+      if (val.position) {
+        set.add(val.position);
+      }
+    });
+    return Array.from(set);
+  }
+
+  @Selector([DailyFantasyPlayersSelectors.selectPlayerList, DailyFantasyTeamsSelectors.selectTeamById])
+  static selectPlayerTableRows(playerList: Player[], selectTeamById: (id: string) => Team): PlayerTableRow[] {
+    return playerList.map(p => ({
+      ...p,
+      team: selectTeamById(p.teamId).name,
+      salary: null,
+      siteId: null,
+    }));
   }
 
   @Selector([DailyFantasyPlayersSelectors.selectPlayerList])
   static selectPlayersEmpty(playerList: Player[]): boolean {
-    return false;
+    return playerList.length === 0;
   }
 }

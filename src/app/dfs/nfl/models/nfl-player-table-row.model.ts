@@ -1,9 +1,9 @@
 export interface PlayerTableRow {
-  name: string;
-  position: string;
-  team: string;
-  salary: number;
-  siteId: string;
+  name: string | null;
+  position: string | null;
+  team: string | null;
+  salary: number | null;
+  siteId: string | null;
 }
 
 export interface NFLPlayerTableRow extends PlayerTableRow {

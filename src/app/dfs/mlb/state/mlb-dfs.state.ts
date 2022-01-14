@@ -4,7 +4,6 @@ import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { DfsSlatePlayer, Schedule } from '../models/dfsPlayer.interface';
 import { GameAttributes, PlayerAttributes, TeamAttributes } from '../models/slate.interface';
 import { SiteSlateConfig } from '../models/slateSettings.interface';
-import { DfsService } from '../../service/dfs.service';
 import { PlayerService } from '../../service/player.service';
 import { FetchResources } from './dfs-slate.actions';
 import { UpdateStatLine } from './mlb-dfs.actions';
@@ -38,7 +37,7 @@ const defaults = {
 })
 @Injectable()
 export class MlbDfsState {
-  constructor(private dfsService: DfsService, private playerService: PlayerService) {}
+  constructor(private playerService: PlayerService) {}
 
   @Selector()
   static schedule(state: MlbDfsStateModel): { [id: number]: Schedule } {
@@ -80,33 +79,33 @@ export class MlbDfsState {
     const original = 'http://json.rotogrinders.com.s3.amazonaws.com';
     const newHttps = 'https://s3.amazonaws.com/json.rotogrinders.com';
 
-    try {
-      const data = await this.playerService.playersBySlate(slate.slate_path.replace(original, newHttps)).toPromise();
-      const slateAttributes = await this.dfsService.getGameAttrBySlateId(sport, site, slate.importId).toPromise();
+    // try {
+    //   const data = await this.playerService.playersBySlate(slate.slate_path.replace(original, newHttps)).toPromise();
+    //   const slateAttributes = await this.dfsService.getGameAttrBySlateId(sport, site, slate.importId).toPromise();
 
-      const dfsPlayers = data.map(p => p.player);
+    //   const dfsPlayers = data.map(p => p.player);
 
-      const schedule = data
-        .map(p => p.game)
-        .reduce((obj, val) => {
-          obj[val.id] = val;
-          return obj;
-        }, {});
+    //   const schedule = data
+    //     .map(p => p.game)
+    //     .reduce((obj, val) => {
+    //       obj[val.id] = val;
+    //       return obj;
+    //     }, {});
 
-      const masterPlayers = entityMap(dfsPlayers, player => Number(player.rgId));
+    //   const masterPlayers = entityMap(dfsPlayers, player => Number(player.rgId));
 
-      const slateTeams = { ...slateAttributes.teams };
-      const slateGames = { ...slateAttributes.games };
-      const slatePlayers = { ...slateAttributes.players };
+    //   const slateTeams = { ...slateAttributes.teams };
+    //   const slateGames = { ...slateAttributes.games };
+    //   const slatePlayers = { ...slateAttributes.players };
 
-      ctx.patchState({
-        schedule,
-        masterPlayers,
-        slateTeams,
-        slateGames,
-        slatePlayers,
-      });
-    } catch (error) {}
+    //   ctx.patchState({
+    //     schedule,
+    //     masterPlayers,
+    //     slateTeams,
+    //     slateGames,
+    //     slatePlayers,
+    //   });
+    // } catch (error) {}
   }
 
   // @Action(FetchSlates)
