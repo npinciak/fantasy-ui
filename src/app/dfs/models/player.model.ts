@@ -10,6 +10,7 @@ interface PlayerProperties {
 }
 
 export type Player = PlayerProperties & { rgId: string | null; teamId: string | null; rgTeamId: string | null; gameId: string | null };
+export type PlayerMap = Record<string, Player>;
 
 /**
  * Base player-table-row.model

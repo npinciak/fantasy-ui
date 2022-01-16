@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-
-import { Player } from '../models/player.model';
+import { Player, PlayerMap } from '../models/player.model';
 import { Schedule } from '../models/schedule.model';
 import { Team } from '../models/team.model';
 import { DfsUrlBuilder } from '../nfl/class/url-builder.class';
@@ -21,7 +20,7 @@ export class PatchPlayers {
 }
 
 export class DailyFantasyPlayersStateModel {
-  map: { [id: string]: Player };
+  map: PlayerMap;
 }
 
 @State<DailyFantasyPlayersStateModel>({
@@ -35,7 +34,7 @@ export class DailyFantasyPlayersState {
   constructor(private playerService: PlayerService) {}
 
   @Selector([DailyFantasyPlayersState])
-  static getMap(state: DailyFantasyPlayersStateModel): { [id: string]: Player } {
+  static getMap(state: DailyFantasyPlayersStateModel): PlayerMap {
     return state.map;
   }
 

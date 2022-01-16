@@ -1,17 +1,17 @@
 import { Selector } from '@ngxs/store';
-import { Player, PlayerTableRow } from '../models/player.model';
+import { Player, PlayerMap, PlayerTableRow } from '../models/player.model';
 import { Team } from '../models/team.model';
 import { DailyFantasyPlayersState } from '../state/daily-fantasy-players.state';
 import { DailyFantasyTeamsSelectors } from './daily-fantasy-team.selectors';
 
 export class DailyFantasyPlayersSelectors {
   @Selector([DailyFantasyPlayersState.getMap])
-  static selectPlayerById(map: { [id: string]: Player }): (id: string) => Player {
+  static selectPlayerById(map: PlayerMap): (id: string) => Player {
     return (id: string) => map[id];
   }
 
   @Selector([DailyFantasyPlayersState.getMap])
-  static selectPlayerList(map: { [id: string]: Player }): Player[] {
+  static selectPlayerList(map: PlayerMap): Player[] {
     return Object.values(map);
   }
 
