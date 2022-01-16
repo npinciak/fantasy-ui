@@ -8,9 +8,14 @@ import { DailyFantasyTeamsSelectors } from '@app/dfs/selectors/daily-fantasy-tea
 import { Selector } from '@ngxs/store';
 import { camelCase } from 'lodash';
 import { Player } from '../../models/player.model';
-import { GridIronPlayer } from '../models/nfl-gridiron.model';
+import {
+  NFLClientGridIronPlayer,
+  NFLClientGridIronPlayerMap,
+  NFLClientPlayerAttributes,
+  NFLClientSlateAttrTeam,
+  PlayerOwnershipByDfsSiteTypeBySlate,
+} from '../models/nfl-client.model';
 import { PlayerTableRow } from '../models/nfl-player-table-row.model';
-import { NFLClientPlayerAttributes, NFLClientSlateOwnershipBySite, NFLClientTeamAttributes } from '../models/nfl-slate-attr.model';
 import { NflDfsProfilerState } from '../state/nfl-dfs-profiler.state';
 import { NFLScheduleSelectors } from './schedule.selector';
 import { NFLTeamSelectors } from './team.selector';
@@ -40,7 +45,7 @@ function _opponentMap(val: Player): TeamAwayOrTeamHome | null {
 }
 
 export class NFLPlayerSelectors {
-  static transformSlateOwnership = (slate: string, site: string, data: NFLClientSlateOwnershipBySite): number | null => {
+  static transformSlateOwnership = (slate: string, site: string, data: PlayerOwnershipByDfsSiteTypeBySlate): number | null => {
     if (data === undefined) {
       return 0;
     }
@@ -102,7 +107,7 @@ export class NFLPlayerSelectors {
   }
 
   @Selector([NflDfsState.gridIronPlayers])
-  static getGridIronPlayerById(players: { [id: string]: GridIronPlayer }): (id: string) => GridIronPlayer {
+  static getGridIronPlayerById(players: NFLClientGridIronPlayerMap): (id: string) => NFLClientGridIronPlayer {
     return (id: string) => players[id];
   }
 
@@ -161,8 +166,8 @@ export class NFLPlayerSelectors {
     masterPlayerList: Player[],
     getSlatePlayerById: (id: string) => NFLClientPlayerAttributes,
     getPlayerProfilerSeasonById: (id: string) => any,
-    getGridIronPlayerById: (id: string) => GridIronPlayer,
-    getTeamAttrById: (id: string) => NFLClientTeamAttributes,
+    getGridIronPlayerById: (id: string) => NFLClientGridIronPlayer,
+    getTeamAttrById: (id: string) => NFLClientSlateAttrTeam,
     selectTeamById: (id: string) => Team,
     getTeamByRgId: (id: string) => TeamAwayOrTeamHome
   ): PlayerTableRow[] {
@@ -219,7 +224,7 @@ export class NFLPlayerSelectors {
             info: opponent,
             passDef: toInt(teamInfo?.outsiders?.['Opp PaDef']).int ?? 0,
             passDefRk: toInt(teamInfo?.outsiders?.['Opp PaDef Rk']).int ?? 0,
-            fptsAllowedRk: { ...NFLPlayerSelectors.transformScheduleAdjusted(opponentInfo?.safpts) },
+            fptsAllowedRk: null, //{ ...NFLPlayerSelectors.transformScheduleAdjusted(opponentInfo?.safpts) },
           },
           profilerPlayer,
           opponentInfo,

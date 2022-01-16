@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { NFLClientPlayerAttributes } from '../models/nfl-slate-attr.model';
+import { NFLClientPlayerAttributesMap } from '../models/nfl-client.model';
 import { PatchPlayerSlate } from './nfl-dfs-player-slate.actions';
 
 export class NflDfsPlayerSlateStateModel {
-  map!: { [id: string]: NFLClientPlayerAttributes };
+  map!: NFLClientPlayerAttributesMap;
 }
 
 const defaults = {
@@ -18,7 +18,7 @@ const defaults = {
 @Injectable()
 export class NflDfsPlayerSlateState {
   @Selector([NflDfsPlayerSlateState])
-  static getPlayerSlateMap(state: NflDfsPlayerSlateStateModel): { [id: string]: NFLClientPlayerAttributes } {
+  static getPlayerSlateMap(state: NflDfsPlayerSlateStateModel): NFLClientPlayerAttributesMap {
     return state.map;
   }
 

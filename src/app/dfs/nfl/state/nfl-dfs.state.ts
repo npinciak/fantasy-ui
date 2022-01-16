@@ -1,20 +1,16 @@
 import { Injectable } from '@angular/core';
-import { entityMap } from '@app/@shared/operators';
 import { FetchNFLResources } from '@app/dfs/mlb/state/dfs-slate.actions';
-import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
-import { DfsSlatePlayer, CoreSchedule, Schedule } from '../../mlb/models/dfsPlayer.interface';
-import { DfsService } from '../service/dfs.service';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
+import { DfsSlatePlayer } from '../../mlb/models/dfsPlayer.interface';
 import { PlayerService } from '../../service/player.service';
-import { NFLClientPlayerAttributes, NFLClientTeamAttributes } from '../models/nfl-slate-attr.model';
-import { PatchProfiler } from './nfl-dfs-profiler.actions';
-import { GridIronPlayer } from '../models/nfl-gridiron.model';
 import { DfsUrlBuilder } from '../class/url-builder.class';
-import { PatchTeamsFromSchedule } from './nfl-dfs-team.actions';
+import { NFLClientPlayerAttributesMap, NFLClientSlateAttrTeamMap } from '../models/nfl-client.model';
+import { GridIronPlayer } from '../models/nfl-gridiron.model';
 
 export class NflDfsStateModel {
   masterPlayers: { [id: string]: DfsSlatePlayer };
-  slatePlayers: { [id: string]: NFLClientPlayerAttributes };
-  slateTeams: { [id: string]: NFLClientTeamAttributes };
+  slatePlayers: NFLClientPlayerAttributesMap;
+  slateTeams: NFLClientSlateAttrTeamMap;
   gridIronPlayers: { [id: string]: GridIronPlayer };
   slate: string;
   site: string;
@@ -37,7 +33,7 @@ const defaults = {
 })
 @Injectable()
 export class NflDfsState {
-  constructor(private store: Store, private playerService: PlayerService, private dfsService: DfsService) {}
+  constructor(private store: Store, private playerService: PlayerService) {}
 
   @Selector()
   static loading(state: NflDfsStateModel): boolean {
@@ -65,12 +61,12 @@ export class NflDfsState {
   }
 
   @Selector()
-  static slatePlayers(state: NflDfsStateModel): { [id: string]: NFLClientPlayerAttributes } {
+  static slatePlayers(state: NflDfsStateModel): NFLClientPlayerAttributesMap {
     return state.slatePlayers;
   }
 
   @Selector()
-  static slateTeams(state: NflDfsStateModel): { [id: string]: NFLClientTeamAttributes } {
+  static slateTeams(state: NflDfsStateModel): NFLClientSlateAttrTeamMap {
     return state.slateTeams;
   }
 
@@ -88,29 +84,29 @@ export class NflDfsState {
     try {
       patchState({ loading: true });
 
-      const data = await this.playerService.playersBySlate(slate.slate_path.replace(original, newHttps)).toPromise();
-      const slateAttributes = await this.dfsService.getGameAttrBySlateId(sport, site, slate.importId).toPromise();
-      const gridPlayers = await this.dfsService.getGridIronPlayers(site).toPromise();
+      // const data = await this.playerService.playersBySlate(slate.slate_path.replace(original, newHttps)).toPromise();
+      // const slateAttributes = await this.dfsService.getGameAttrBySlateId(sport, site, slate.importId).toPromise();
+      // const gridPlayers = await this.dfsService.getGridIronPlayers(site).toPromise();
 
-      const gridIronPlayers = entityMap(gridPlayers, player => player.PLAYERID);
+      // const gridIronPlayers = entityMap(gridPlayers, player => player.PLAYERID);
 
-      const dfsPlayers = data.map(p => p.player);
-      const masterPlayers = entityMap(dfsPlayers, player => player.id);
+      // const dfsPlayers = data.map(p => p.player);
+      // const masterPlayers = entityMap(dfsPlayers, player => player.id);
 
-      const slateTeams = { ...slateAttributes.teams };
-      const slatePlayers = { ...slateAttributes.players };
-      const profiler = { ...slateAttributes.stat_groups };
+      // const slateTeams = { ...slateAttributes.teams };
+      // const slatePlayers = { ...slateAttributes.players };
+      // const profiler = { ...slateAttributes.stat_groups };
 
-      this.store.dispatch(new PatchProfiler({ profiler }));
+      // this.store.dispatch(new PatchProfiler({ profiler }));
 
       // this.store.dispatch(new PatchTeamsFromSchedule(schedule));
 
       setState({
         ...state,
-        masterPlayers,
-        slateTeams,
-        slatePlayers,
-        gridIronPlayers,
+        // masterPlayers,
+        // slateTeams,
+        // // slatePlayers,
+        // gridIronPlayers,
         site,
         slate: slate.importId,
         loading: false,

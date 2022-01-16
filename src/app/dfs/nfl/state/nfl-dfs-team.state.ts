@@ -1,7 +1,7 @@
 import { state } from '@angular/animations';
 import { Injectable } from '@angular/core';
 import { getKey } from '@app/@shared/operators';
-import { State, Selector, Action, StateContext } from '@ngxs/store';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { TeamAwayOrTeamHome } from '../../mlb/models/dfsPlayer.interface';
 import { PatchTeamsFromSchedule } from './nfl-dfs-team.actions';
 
@@ -15,22 +15,34 @@ const defaults = {
   defaultTeams: {},
 };
 
+/**
+ * @deprecated moved to daily-fantasy-team.state
+ */
 @State<NflDfsTeamStateModel>({
   name: 'nflDfsTeam',
   defaults,
 })
 @Injectable()
 export class NflDfsTeamState {
-  @Selector()
-  static rgTeams(state: NflDfsTeamStateModel): { [id: string]: TeamAwayOrTeamHome } {
-    return state.rgTeams;
+  /**
+   * @deprecated
+   */
+  @Selector([NflDfsTeamState])
+  static rgTeams(x: NflDfsTeamStateModel): { [id: string]: TeamAwayOrTeamHome } {
+    return x.rgTeams;
   }
 
+  /**
+   * @deprecated
+   */
   @Selector()
-  static teams(state: NflDfsTeamStateModel): { [id: string]: TeamAwayOrTeamHome } {
-    return state.defaultTeams;
+  static teams(x: NflDfsTeamStateModel): { [id: string]: TeamAwayOrTeamHome } {
+    return x.defaultTeams;
   }
 
+  /**
+   * @deprecated
+   */
   @Action(PatchTeamsFromSchedule)
   async patchTeamsFromSchedule(ctx: StateContext<NflDfsTeamStateModel>, { schedule }: PatchTeamsFromSchedule): Promise<void> {
     const scheduleList = Object.values(schedule);

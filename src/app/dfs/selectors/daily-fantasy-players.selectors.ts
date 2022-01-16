@@ -30,7 +30,7 @@ export class DailyFantasyPlayersSelectors {
   static selectPlayerTableRows(playerList: Player[], selectTeamById: (id: string) => Team): PlayerTableRow[] {
     return playerList.map(p => ({
       ...p,
-      team: selectTeamById(p.teamId).name,
+      team: selectTeamById(p?.rgTeamId)?.name,
       salary: null,
       siteId: null,
     }));

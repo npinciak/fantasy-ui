@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { State, Action, StateContext, Selector } from '@ngxs/store';
-import { ProfilerInfoQB, ProfilerInfoRB, ProfilerInfoReceiver } from '../models/nfl-slate-attr.model';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { ProfilerInfoQB, ProfilerInfoRB, ProfilerInfoReceiver } from '../models/nfl-client.model';
 import { PatchProfiler } from './nfl-dfs-profiler.actions';
 
 interface ProfilerInfo {

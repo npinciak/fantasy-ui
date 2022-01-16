@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UrlQueryParams } from '@app/@shared/url-builder';
-import { DfsSite } from '@app/dfs/dfs.const';
 import { DailyFantasyPlayersFacade } from '@app/dfs/facade/daily-fantasy-players.facade';
 import { DfsFacade } from '@app/dfs/mlb/facade/dfs.facade';
 import { SlateFacade } from '@app/dfs/mlb/facade/slate.facade';
@@ -10,8 +9,6 @@ import { NFLDfsFacade } from '../../facade/nfl-dfs.facade';
 import { NFLPlayerFacade } from '../../facade/player.facade';
 import { ScheduleFacade } from '../../facade/schedule.facade';
 import { NFLTableFacade } from '../../facade/table.facade';
-import { MOCK_NFL_SLATE_ATTR } from '../../models/nfl-slate-attr-model.mock';
-import { MOCK_NFL_SLATE_PLAYER } from '../../models/nfl-slate-player.model.mock';
 
 @Component({
   selector: 'app-home',

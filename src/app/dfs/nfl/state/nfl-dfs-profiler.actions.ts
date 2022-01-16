@@ -1,4 +1,4 @@
-import { NFLClientStatGroup } from '../models/nfl-slate-attr.model';
+import { NFLClientStatGroup } from '../models/nfl-client.model';
 
 const $scope = 'NflProfilerDfs';
 

@@ -3,7 +3,7 @@ import { NflDfsState } from '@app/dfs/nfl/state/nfl-dfs.state';
 import { DailyFantasyScheduleState } from '@app/dfs/state/daily-fantasy-schedule.state';
 import { Selector } from '@ngxs/store';
 import { camelCase } from 'lodash';
-import { NFLClientTeamAttributes } from '../models/nfl-slate-attr.model';
+import { NFLClientSlateAttrTeam, NFLClientSlateAttrTeamMap } from '../models/nfl-client.model';
 
 interface NFLMatchup {
   home: TeamDetails;
@@ -43,7 +43,7 @@ export class NFLScheduleSelectors {
   }
 
   @Selector([NflDfsState.slateTeams])
-  static getTeamAttrById(team: { [id: string]: NFLClientTeamAttributes }): (id: string) => NFLClientTeamAttributes {
+  static getTeamAttrById(team: NFLClientSlateAttrTeamMap): (id: string) => NFLClientSlateAttrTeam {
     return (id: string) => team[id];
   }
 
@@ -62,7 +62,7 @@ export class NFLScheduleSelectors {
     site: string,
     slate: number,
     scheduleList: CoreSchedule[],
-    getTeamAttrById: (id: string) => NFLClientTeamAttributes
+    getTeamAttrById: (id: string) => NFLClientSlateAttrTeam
   ): { [id: string]: MatchupTableRow } {
     const teams = {};
 
@@ -99,8 +99,8 @@ export class NFLScheduleSelectors {
 const transformTeam = (
   teamId: string,
   schedule: CoreSchedule,
-  team: NFLClientTeamAttributes | null,
-  opponent: NFLClientTeamAttributes | null,
+  team: NFLClientSlateAttrTeam | null,
+  opponent: NFLClientSlateAttrTeam | null,
   homeAway: 'team_home' | 'team_away'
 ): MatchupTableRow => ({
   teamName: schedule[homeAway].hashtag,
@@ -110,7 +110,7 @@ const transformTeam = (
   vegasTotal: team?.vegas.total ?? 0,
   vegasMovement: team?.vegas.movement ?? 0,
 
-  ...transformScheduleAdjusted(opponent?.safpts),
+  // ...transformScheduleAdjusted(opponent?.safpts),
 });
 
 const transformScheduleAdjusted = (val: { [id: string]: string }): TransformedScheduleAdjusted => {

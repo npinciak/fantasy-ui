@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { State, Action, StateContext, Selector } from '@ngxs/store';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { DfsSlate } from '../mlb/models/slateMaster.interface';
-
 import { SlateService } from '../service/slate.service';
 
 export class FetchSlates {
@@ -10,11 +9,11 @@ export class FetchSlates {
 }
 
 export class DailyFantasySlateStateModel {
-  slates: { [id: number]: DfsSlate };
+  map: { [id: number]: DfsSlate };
 }
 
 const defaults = {
-  slates: {},
+  map: {},
 };
 
 @State<DailyFantasySlateStateModel>({
@@ -27,14 +26,14 @@ export class DailyFantasySlateState {
 
   @Selector()
   static slates(state: DailyFantasySlateStateModel): { [id: number]: DfsSlate } {
-    return state.slates;
+    return state.map;
   }
 
   @Action(FetchSlates)
   async fetchSlates({ patchState }: StateContext<DailyFantasySlateStateModel>, { payload: { site, sport } }: FetchSlates): Promise<void> {
     const res = await this.slateService.slatesByDate(sport).toPromise();
-    const slates: { [id: number]: DfsSlate } = res[site];
+    const map: { [id: number]: DfsSlate } = res[site];
 
-    patchState({ slates });
+    patchState({ map });
   }
 }
