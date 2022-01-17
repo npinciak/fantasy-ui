@@ -16,6 +16,7 @@
       ],
       "rules": {
         "prefer-arrow/prefer-arrow-functions": "off",
+        "allowNamedFunctions": true,
         "no-underscore-dangle": "off",
         "no-shadow": "off",
         "@typescript-eslint/prefer-for-of": "off",
