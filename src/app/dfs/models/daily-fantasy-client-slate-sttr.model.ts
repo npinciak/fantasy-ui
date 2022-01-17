@@ -1,3 +1,4 @@
+import { MLBClientSlateAttrTeam } from '../mlb/models/mlb-client.model';
 import { NBAClientPlayerAttributes, NBAClientSlateAttrTeam } from '../nba/models/nba-client.model';
 import {
   NFLClientPlayerAttributes,
@@ -7,7 +8,6 @@ import {
   PlayerOwnershipByDfsSiteTypeBySlate,
   SalaryDiffByDfsSiteType,
 } from '../nfl/models/nfl-client.model';
-import { SlateAttrTeamProperties } from './team.model';
 
 export interface SlateAttributes {
   stat_groups: NFLClientStatGroup | any;
@@ -23,8 +23,3 @@ export interface ClientPlayerAttributes {
   value_pct: PlayerAttributesByDfsSite;
   smash_pct: PlayerAttributesByDfsSite;
 }
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface MLBSlateAttrTeamProperties {}
-
-export type MLBClientSlateAttrTeam = SlateAttrTeamProperties & MLBSlateAttrTeamProperties;

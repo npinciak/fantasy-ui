@@ -5,7 +5,8 @@ import { ApiService } from '@app/@shared/services/api.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { DailyFantasyEndpointBuilder } from '../daily-fantasy-url-builder';
-import { MLBClientSlateAttrTeam, SlateAttributes } from '../models/daily-fantasy-client-slate-sttr.model';
+import { MLBClientSlateAttrTeam } from '../mlb/models/mlb-client.model';
+import { SlateAttributes } from '../models/daily-fantasy-client-slate-sttr.model';
 import { SlateMaster } from '../models/daily-fantasy-client.model';
 import { NBAClientPlayerAttributes, NBAClientSlateAttrTeam } from '../nba/models/nba-client.model';
 import { NFLClientPlayerAttributes, NFLClientSlateAttrTeam, NFLClientStatGroup } from '../nfl/models/nfl-client.model';
@@ -87,18 +88,22 @@ export class SlateService {
     }));
   }
 
-  slatesByDate(sport: string): Observable<SlateMaster> {
-    const endpoint = new DailyFantasyEndpointBuilder(sport);
+  slatesByDate(request: { sport: string }): Observable<SlateMaster> {
+    const endpoint = new DailyFantasyEndpointBuilder(request.sport);
     return this.apiService.get<SlateMaster>(endpoint.slateMaster);
   }
 
-  getGameAttrBySlateId(sport: string, site: string, slateId: string): Observable<{ teams: SlateTeamAttributes[]; players: any[] }> {
-    const endpoint = new DailyFantasyEndpointBuilder(sport);
+  getGameAttrBySlateId(request: {
+    sport: string;
+    site: string;
+    slateId: string;
+  }): Observable<{ teams: SlateTeamAttributes[]; players: any[] }> {
+    const endpoint = new DailyFantasyEndpointBuilder(request.sport);
 
     let params = new HttpParams();
     params = params.append('date', currentDate('-'));
-    params = params.append('site', site);
-    params = params.append('slate_id', slateId);
+    params = params.append('site', request.site);
+    params = params.append('slate_id', request.slateId);
     return this.apiService.get<SlateAttributes>(endpoint.slateAttr, { params }).pipe(
       map(res => ({
         teams: SlateService.transformTeamSlateAttributes(res.teams),

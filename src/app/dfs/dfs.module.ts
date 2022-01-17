@@ -11,9 +11,6 @@ import { DfsRoutingModule } from './dfs-routing.module';
 import { MatchupTableComponent } from './nfl/components/matchup-table/matchup-table.component';
 import { PlayerTableRankingColumnComponent } from './nfl/components/player-table-ranking-column/player-table-ranking-column.component';
 import { PlayerTableComponent as NFLPlayerTableHomeComponent } from './nfl/components/player-table/player-table.component';
-import { HomeComponent as NFLHomeComponent } from './nfl/pages/home/home.component';
-
-import { HomeComponent as DfsHomeComponent } from './pages/home/home.component';
 import { NflDfsLineupState } from './nfl/state/nfl-dfs-lineup.state';
 import { NflDfsPlayerMasterState } from './nfl/state/nfl-dfs-player-master.state';
 import { NflDfsPlayerSlateState } from './nfl/state/nfl-dfs-player-slate.state';
@@ -44,7 +41,6 @@ const states = [
   declarations: [
     TeamMatchupTableComponent,
     SlateListComponent,
-    NFLHomeComponent,
     NFLPlayerTableHomeComponent,
     MatchupTableComponent,
     PlayerTableRankingColumnComponent,

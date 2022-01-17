@@ -105,10 +105,10 @@ const transformTeam = (
 ): MatchupTableRow => ({
   teamName: schedule[homeAway].hashtag,
   opponent: homeAway === 'team_home' ? schedule?.team_away.hashtag : `@ ${schedule?.team_home.hashtag}`,
-  vegasOU: team?.vegas['o/u'] ?? 0,
-  vegasLine: team?.vegas.line ?? 0,
-  vegasTotal: team?.vegas.total ?? 0,
-  vegasMovement: team?.vegas.movement ?? 0,
+  // vegasOU: team?.vegas['o/u'] ?? 0,
+  // vegasLine: team?.vegas.line ?? 0,
+  // vegasTotal: team?.vegas.total ?? 0,
+  // vegasMovement: team?.vegas.movement ?? 0,
 
   // ...transformScheduleAdjusted(opponent?.safpts),
 });
@@ -126,10 +126,10 @@ const transformScheduleAdjusted = (val: { [id: string]: string }): TransformedSc
 export interface MatchupTableRow {
   teamName: string;
   opponent: string;
-  vegasOU: number | null;
-  vegasLine: number | null;
-  vegasTotal: number | null;
-  vegasMovement: number | null;
+  // vegasOU: number | null;
+  // vegasLine: number | null;
+  // vegasTotal: number | null;
+  // vegasMovement: number | null;
   oppAdjQb?: number | null;
   oppAdjRb?: number | null;
   oppAdjTe?: number | null;

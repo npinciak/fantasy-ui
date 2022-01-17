@@ -1,6 +1,6 @@
 import { cellDataAccessor } from '@app/@shared/helpers/utils';
+import { PlayerTableRow } from '@app/dfs/models/player.model';
 import { Selector } from '@ngxs/store';
-import { PlayerTableRow } from '../models/nfl-player-table-row.model';
 import { NFLTableColumn } from '../models/nfl-table.model';
 
 export interface TableColumn {

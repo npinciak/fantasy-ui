@@ -1,45 +1,41 @@
-<div class="colorNested box" style="height: auto">
-  <!-- <div
-        gdAreas.xs="header | sidebar | content | sidebar2 | footer"
-        gdGap="1em"
-        gdColumns.xs="none"
-        gdAreas.sm="header header | sidebar content | sidebar2 sidebar2 | footer footer"
-        gdColumns.sm="20%!"
-        gdAreas.gt-sm="header header header | sidebar content sidebar2 | footer footer footer"
-        gdColumns.gt-sm="120px auto 120px"
-        gdGap.gt-sm="20px"
-        [ngStyle]="{ 'max-width': 'auto' }"
-        [ngStyle.gt-sm]="{ 'max-width': '600px' }"
-      > -->
-  <div
-    gdAreas.xs="sidebar | content | footer"
-    gdGap="1em"
-    gdColumns.xs="none"
-    gdAreas.sm="sidebar content | footer footer"
-    gdColumns.sm="30%!"
-    gdAreas.gt-sm="sidebar content  | footer footer "
-    gdColumns.gt-sm="30% auto"
-    gdGap.gt-sm="20px"
-    [ngStyle]="{ 'max-width': 'auto' }"
-  >
-    <div class="blocks two" gdArea="sidebar">
-      <ng-container *ngIf="(slateFacade.slatesEmpty$ | async) === false">
-        <app-slate-list [slateList]="slateFacade.selectSlateByType()" (selectSlate)="select($event)"></app-slate-list>
-      </ng-container>
-    </div>
-    <div class="blocks four" gdArea="content">
-      Content <br />
-      More content than we had before so this column is now quite tall.
+<div
+  gdAreas.xs="sidebar | content | footer"
+  gdGap="1em"
+  gdColumns.xs="none"
+  gdAreas.sm="sidebar content | footer footer"
+  gdColumns.sm="30%!"
+  gdAreas.gt-sm="sidebar content  | footer footer "
+  gdColumns.gt-sm="30% auto"
+  gdGap.gt-sm="20px"
+  [ngStyle]="{ 'max-width': 'auto' }"
+>
+  <div class="blocks two" gdArea="sidebar">
+    <ng-container *ngIf="(dailyFantasySlateFacade.slatesEmpty$ | async) === false">
+      <app-slate-list [slateList]="dailyFantasySlateFacade.selectSlateByType$ | async" (selectSlate)="select($event)"></app-slate-list>
+    </ng-container>
+  </div>
+  <div class="blocks four" gdArea="content">
+    Content <br />
+    More content than we had before so this column is now quite tall.
 
-      <ng-container *ngIf="(dailyFantasyPlayersFacade.playersEmpty$ | async) === false">
-        <!-- <app-nfl-player-table
+    <ng-container *ngIf="(dailyFantasyPlayersFacade.playersEmpty$ | async) === false">
+      {{ dailyFantasyPlayersFacade.positionList$ | async | json }}
+
+      <table>
+        <tr *ngFor="let p of dailyFantasyPlayersFacade.playerTableRows$ | async">
+          <td>{{ p.name }}</td>
+          <td>{{ p.team }}</td>
+          <td>{{ p.position }}</td>
+        </tr>
+      </table>
+
+      <!-- <app-player-table
           *ngIf="dailyFantasyPlayersFacade.playerTableRows$ | async"
           [dfsPlayers]="dailyFantasyPlayersFacade.playerTableRows$ | async"
           [dataColumns]="tableFacade.playerTableList$ | async"
           [displayColumns]="tableFacade.playerDisplayColumns$ | async"
-        ></app-nfl-player-table> -->
-      </ng-container>
-    </div>
-    <div class="blocks five" gdArea="footer">Footer</div>
+        ></app-player-table> -->
+    </ng-container>
   </div>
+  <div class="blocks five" gdArea="footer">Footer</div>
 </div>

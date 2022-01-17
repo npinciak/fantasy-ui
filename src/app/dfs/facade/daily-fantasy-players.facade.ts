@@ -16,7 +16,7 @@ export class DailyFantasyPlayersFacade {
 
   constructor(private store: Store) {}
 
-  fetchPlayers(slatePath: string, league: string) {
-    return this.store.dispatch(new FetchPlayers({ slatePath, league }));
+  fetchPlayers(slatePath: string) {
+    return this.store.dispatch(new FetchPlayers({ slatePath }));
   }
 }

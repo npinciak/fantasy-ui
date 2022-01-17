@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { NFLTableSelectors, TableColumn } from '../selectors/table.selector';
 import { NflDfsState } from '../state/nfl-dfs.state';
 
 @Injectable({

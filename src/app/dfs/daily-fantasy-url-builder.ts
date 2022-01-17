@@ -34,7 +34,7 @@ export class DailyFantasyEndpointBuilder {
   }
 
   get slateHttps() {
-    return `https://${this.awsJson}`;
+    return this.awsJson;
   }
 
   private get awsJson() {

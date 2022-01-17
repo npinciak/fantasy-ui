@@ -1,17 +1,13 @@
 import { Injectable } from '@angular/core';
-import { FetchNFLResources } from '@app/dfs/mlb/state/dfs-slate.actions';
-import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
-import { DfsSlatePlayer } from '../../mlb/models/dfsPlayer.interface';
+import { Selector, State, Store } from '@ngxs/store';
 import { PlayerService } from '../../service/player.service';
-import { DfsUrlBuilder } from '../class/url-builder.class';
 import { NFLClientPlayerAttributesMap, NFLClientSlateAttrTeamMap } from '../models/nfl-client.model';
-import { GridIronPlayer } from '../models/nfl-gridiron.model';
 
 export class NflDfsStateModel {
-  masterPlayers: { [id: string]: DfsSlatePlayer };
+  masterPlayers: { [id: string]: any };
   slatePlayers: NFLClientPlayerAttributesMap;
   slateTeams: NFLClientSlateAttrTeamMap;
-  gridIronPlayers: { [id: string]: GridIronPlayer };
+  gridIronPlayers: { [id: string]: any };
   slate: string;
   site: string;
   loading: boolean;
@@ -51,12 +47,12 @@ export class NflDfsState {
   }
 
   @Selector()
-  static gridIronPlayers(state: NflDfsStateModel): { [id: string]: GridIronPlayer } {
+  static gridIronPlayers(state: NflDfsStateModel): { [id: string]: any } {
     return state.gridIronPlayers;
   }
 
   @Selector()
-  static masterPlayers(state: NflDfsStateModel): { [id: string]: DfsSlatePlayer } {
+  static masterPlayers(state: NflDfsStateModel): { [id: string]: any } {
     return state.masterPlayers;
   }
 
@@ -68,49 +64,5 @@ export class NflDfsState {
   @Selector()
   static slateTeams(state: NflDfsStateModel): NFLClientSlateAttrTeamMap {
     return state.slateTeams;
-  }
-
-  @Action(FetchNFLResources)
-  async nflResources(
-    { getState, patchState, setState }: StateContext<NflDfsStateModel>,
-    { sport, site, slate }: FetchNFLResources
-  ): Promise<void> {
-    const urlBuilder = new DfsUrlBuilder('nfl');
-    const state = getState();
-
-    const original = urlBuilder.slateNonHttps;
-    const newHttps = urlBuilder.slateHttps;
-
-    try {
-      patchState({ loading: true });
-
-      // const data = await this.playerService.playersBySlate(slate.slate_path.replace(original, newHttps)).toPromise();
-      // const slateAttributes = await this.dfsService.getGameAttrBySlateId(sport, site, slate.importId).toPromise();
-      // const gridPlayers = await this.dfsService.getGridIronPlayers(site).toPromise();
-
-      // const gridIronPlayers = entityMap(gridPlayers, player => player.PLAYERID);
-
-      // const dfsPlayers = data.map(p => p.player);
-      // const masterPlayers = entityMap(dfsPlayers, player => player.id);
-
-      // const slateTeams = { ...slateAttributes.teams };
-      // const slatePlayers = { ...slateAttributes.players };
-      // const profiler = { ...slateAttributes.stat_groups };
-
-      // this.store.dispatch(new PatchProfiler({ profiler }));
-
-      // this.store.dispatch(new PatchTeamsFromSchedule(schedule));
-
-      setState({
-        ...state,
-        // masterPlayers,
-        // slateTeams,
-        // // slatePlayers,
-        // gridIronPlayers,
-        site,
-        slate: slate.importId,
-        loading: false,
-      });
-    } catch (error) {}
   }
 }

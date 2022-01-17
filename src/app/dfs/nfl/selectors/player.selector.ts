@@ -15,7 +15,6 @@ import {
   NFLClientSlateAttrTeam,
   PlayerOwnershipByDfsSiteTypeBySlate,
 } from '../models/nfl-client.model';
-import { PlayerTableRow } from '../models/nfl-player-table-row.model';
 import { NflDfsProfilerState } from '../state/nfl-dfs-profiler.state';
 import { NFLScheduleSelectors } from './schedule.selector';
 import { NFLTeamSelectors } from './team.selector';
@@ -170,7 +169,7 @@ export class NFLPlayerSelectors {
     getTeamAttrById: (id: string) => NFLClientSlateAttrTeam,
     selectTeamById: (id: string) => Team,
     getTeamByRgId: (id: string) => TeamAwayOrTeamHome
-  ): PlayerTableRow[] {
+  ): any[] {
     return masterPlayerList
       .map(p => {
         const team = selectTeamById(p.teamId).name;

@@ -1,3 +1,6 @@
+import { Schedule } from './schedule.model';
+import { Team } from './team.model';
+
 /**
  * Base player model
  */
@@ -21,3 +24,5 @@ interface PlayerTableRowProperties {
 }
 
 export type PlayerTableRow = PlayerTableRowProperties & PlayerProperties;
+
+export type PlayersBySlate = { players: Player[]; schedule: Schedule[]; teams: Team[] };

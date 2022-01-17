@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { DfsSlate } from '../mlb/models/slateMaster.interface';
 import { SlateAttrTeam } from '../models/team.model';
 import { SlateService } from '../service/slate.service';
+import { SlateMasterMap } from './daily-fantasy-slate.state';
 
 export class FetchSlateAttr {
   public static readonly type = `[dailyFantasySlateAttr] FetchSlateAttr`;
@@ -10,7 +10,7 @@ export class FetchSlateAttr {
 }
 
 export class DailyFantasySlateAttrStateModel {
-  map: Record<number, DfsSlate>;
+  map: SlateMasterMap;
   // slatePlayers: { [id: string]: NFLClientPlayerAttributes };
   teams: Record<string, SlateAttrTeam>;
   players: Record<string, any>;
@@ -31,7 +31,7 @@ export class DailyFantasySlateAttrState {
   constructor(private slateService: SlateService) {}
 
   @Selector()
-  static slates(state: DailyFantasySlateAttrStateModel): { [id: number]: DfsSlate } {
+  static slates(state: DailyFantasySlateAttrStateModel): SlateMasterMap {
     return state.map;
   }
 
@@ -40,7 +40,7 @@ export class DailyFantasySlateAttrState {
     { patchState, dispatch }: StateContext<DailyFantasySlateAttrStateModel>,
     { payload: { sport, site, slateId } }: FetchSlateAttr
   ): Promise<void> {
-    const res = await this.slateService.getGameAttrBySlateId(sport, site, slateId).toPromise();
+    const res = await this.slateService.getGameAttrBySlateId({sport, site, slateId}).toPromise();
 
     patchState({});
   }
