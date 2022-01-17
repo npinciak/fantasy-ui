@@ -1,6 +1,5 @@
-import { Selector } from '@ngxs/store';
-
 import { TeamAwayOrTeamHome } from '@app/dfs/mlb/models/dfsPlayer.interface';
+import { Selector } from '@ngxs/store';
 import { NflDfsTeamState } from '../state/nfl-dfs-team.state';
 
 export class NFLTeamSelectors {

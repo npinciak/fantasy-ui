@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { MatchupSelectors } from '@app/dfs/mlb/selectors/matchup.selector';
-import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
-import { Select, Store } from '@ngxs/store';
-import { Observable, of } from 'rxjs';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
 import { NFLScheduleSelectors } from '../selectors/schedule.selector';
 
 @Injectable({

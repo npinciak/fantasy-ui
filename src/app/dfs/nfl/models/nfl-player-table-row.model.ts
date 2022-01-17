@@ -1,18 +1,14 @@
-export interface PlayerTableRow {
-  name: string;
-  position: string;
-  team: string;
-  salary: number;
-  siteId: string;
-}
+import { PlayerTableRow } from '@app/dfs/models/player.model';
 
-export interface NFLPlayerTableRow extends PlayerTableRow {
-  isHome?: boolean;
+export interface NFLPlayerTableRowProperties extends PlayerTableRow {
+  isHome: boolean;
   statGroup: string;
   playerAdvanced: PlayerTableRowPlayerAdvanced;
   playerProjection: PlayerTableRowPlayerProjection;
   opponent: PlayerTableRowOpponent;
 }
+
+export type NFLPlayerTableRow = PlayerTableRow & NFLPlayerTableRowProperties;
 
 export interface PlayerTableRowPlayerAdvanced {
   fptsPerGame: number;
@@ -46,7 +42,7 @@ export interface PlayerTableRowInfo {
   id: string;
   rg_id: string;
   name: string;
-  isHome?: boolean;
+  isHome: boolean;
 }
 export interface PlayerTableRowFptsAllowedRk {
   allowedToRawQb: number;

@@ -1,5 +1,4 @@
 import { Selector } from '@ngxs/store';
-import { MlbPlayerSlateAttrSelectors } from './playerSlateAttr.selector';
 
 export interface TableColumn {
   columnDef: string;
@@ -9,7 +8,7 @@ export interface TableColumn {
 }
 
 export class TableSelectors {
-  @Selector([MlbPlayerSlateAttrSelectors.selectStatLine])
+  @Selector([])
   static stat(statLine: string): string {
     return statLine;
   }
@@ -36,7 +35,7 @@ export class TableSelectors {
     ];
   }
 
-  @Selector([MlbPlayerSlateAttrSelectors.selectStatLine])
+  @Selector([])
   static selectBatterColumns(statLine: string): TableColumn[] {
     return [
       { columnDef: 'name', headerCell: 'name', headerLabel: 'Name' },
@@ -64,7 +63,7 @@ export class TableSelectors {
     ];
   }
 
-  @Selector([MlbPlayerSlateAttrSelectors.selectStatLine])
+  @Selector([])
   static selectPitcherColumns(statLine: string): TableColumn[] {
     return [
       { columnDef: 'name', headerCell: 'name', headerLabel: 'Name' },

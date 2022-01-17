@@ -28,7 +28,7 @@ export class DailyFantasyTeamsState {
   @Action(PatchTeams)
   patchPlayers({ getState, patchState }: StateContext<DailyFantasyTeamsStateModel>, { payload: { teams } }: PatchTeams) {
     const state = getState();
-    const map = entityMap(teams);
+    const map = entityMap(teams, team => team.rgId);
 
     patchState({ ...state, map });
   }

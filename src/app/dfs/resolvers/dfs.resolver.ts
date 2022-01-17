@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { ShellFacade } from '@app/@core/shell/facade/shell.facade';
 import { UrlQueryParams } from '@app/@shared/url-builder';
 import { Store } from '@ngxs/store';
-import { SlateFacade } from '../mlb/facade/slate.facade';
 import { FetchSlates } from '../state/daily-fantasy-slate.state';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DfsResolver implements Resolve<void> {
-  constructor(readonly shellFacade: ShellFacade, readonly slateFacade: SlateFacade, private store: Store) {}
+  constructor(readonly shellFacade: ShellFacade, private store: Store) {}
 
   async resolve(route: ActivatedRouteSnapshot): Promise<void> {
     const site = route.queryParamMap.get(UrlQueryParams.Site) ?? 'draftkings';
     const sport = route.queryParamMap.get(UrlQueryParams.Sport) ?? 'nfl';
 
-    await Promise.all([this.store.dispatch(new FetchSlates({ site, sport })), this.slateFacade.fetchSlateConfigs().toPromise()]);
+    await Promise.all([this.store.dispatch(new FetchSlates({ site, sport }))]);
     await this.shellFacade.showFastcastScoreboard(true);
   }
 }

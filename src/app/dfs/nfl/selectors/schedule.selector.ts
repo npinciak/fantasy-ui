@@ -1,15 +1,9 @@
-/* eslint-disable arrow-body-style */
-import { toInt } from '@app/@shared/helpers/toInt';
-import { CoreSchedule, Schedule } from '@app/dfs/mlb/models/dfsPlayer.interface';
-import { TeamAttributes } from '@app/dfs/mlb/models/slate.interface';
-import { DfsSlateGamesEntity } from '@app/dfs/mlb/models/slateMaster.interface';
-import { SlateMap, SlateSelectors } from '@app/dfs/mlb/selectors/slate.selector';
+import { CoreSchedule } from '@app/dfs/mlb/models/dfsPlayer.interface';
 import { NflDfsState } from '@app/dfs/nfl/state/nfl-dfs.state';
 import { DailyFantasyScheduleState } from '@app/dfs/state/daily-fantasy-schedule.state';
 import { Selector } from '@ngxs/store';
 import { camelCase } from 'lodash';
-import { NFLClientTeam, NFLClientTeamAttributes } from '../models/nfl-slate-attr.model';
-import { NFLPlayerSelectors } from './player.selector';
+import { NFLClientSlateAttrTeam, NFLClientSlateAttrTeamMap } from '../models/nfl-client.model';
 
 interface NFLMatchup {
   home: TeamDetails;
@@ -49,7 +43,7 @@ export class NFLScheduleSelectors {
   }
 
   @Selector([NflDfsState.slateTeams])
-  static getTeamAttrById(team: { [id: string]: NFLClientTeamAttributes }): (id: string) => NFLClientTeamAttributes {
+  static getTeamAttrById(team: NFLClientSlateAttrTeamMap): (id: string) => NFLClientSlateAttrTeam {
     return (id: string) => team[id];
   }
 
@@ -68,7 +62,7 @@ export class NFLScheduleSelectors {
     site: string,
     slate: number,
     scheduleList: CoreSchedule[],
-    getTeamAttrById: (id: string) => NFLClientTeamAttributes
+    getTeamAttrById: (id: string) => NFLClientSlateAttrTeam
   ): { [id: string]: MatchupTableRow } {
     const teams = {};
 
@@ -105,21 +99,19 @@ export class NFLScheduleSelectors {
 const transformTeam = (
   teamId: string,
   schedule: CoreSchedule,
-  team: NFLClientTeamAttributes | null,
-  opponent: NFLClientTeamAttributes | null,
+  team: NFLClientSlateAttrTeam | null,
+  opponent: NFLClientSlateAttrTeam | null,
   homeAway: 'team_home' | 'team_away'
-): MatchupTableRow => {
-  return {
-    teamName: schedule[homeAway].hashtag,
-    opponent: homeAway === 'team_home' ? schedule?.team_away.hashtag : `@ ${schedule?.team_home.hashtag}`,
-    vegasOU: team?.vegas['o/u'] ?? 0,
-    vegasLine: team?.vegas.line ?? 0,
-    vegasTotal: team?.vegas.total ?? 0,
-    vegasMovement: team?.vegas.movement ?? 0,
+): MatchupTableRow => ({
+  teamName: schedule[homeAway].hashtag,
+  opponent: homeAway === 'team_home' ? schedule?.team_away.hashtag : `@ ${schedule?.team_home.hashtag}`,
+  // vegasOU: team?.vegas['o/u'] ?? 0,
+  // vegasLine: team?.vegas.line ?? 0,
+  // vegasTotal: team?.vegas.total ?? 0,
+  // vegasMovement: team?.vegas.movement ?? 0,
 
-    ...transformScheduleAdjusted(opponent?.safpts),
-  };
-};
+  // ...transformScheduleAdjusted(opponent?.safpts),
+});
 
 const transformScheduleAdjusted = (val: { [id: string]: string }): TransformedScheduleAdjusted => {
   const transformed: TransformedScheduleAdjusted = {};
@@ -134,10 +126,10 @@ const transformScheduleAdjusted = (val: { [id: string]: string }): TransformedSc
 export interface MatchupTableRow {
   teamName: string;
   opponent: string;
-  vegasOU: number | null;
-  vegasLine: number | null;
-  vegasTotal: number | null;
-  vegasMovement: number | null;
+  // vegasOU: number | null;
+  // vegasLine: number | null;
+  // vegasTotal: number | null;
+  // vegasMovement: number | null;
   oppAdjQb?: number | null;
   oppAdjRb?: number | null;
   oppAdjTe?: number | null;
