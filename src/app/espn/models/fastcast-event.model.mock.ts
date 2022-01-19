@@ -4,7 +4,7 @@ import { MOCK_FASTCAST_TEAM_1, MOCK_FASTCAST_TEAM_2 } from './fastcast-team.mode
 
 export const MOCK_FASTCAST_EVENT_1: FastcastEvent = {
   id: '400927752',
-  priority: 0,
+  leagueId: '40',
   timestamp: 12345678,
   state: FastCastGameStatus.Post,
   status: 'STATUS_IN_PROGRESS',

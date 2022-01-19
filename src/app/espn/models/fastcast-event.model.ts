@@ -4,7 +4,6 @@ import { FastcastEventTeam } from './fastcast-team.model';
 export interface FastcastEventProperties {
   id: string;
   leagueId: string;
-  priority: number | null;
   timestamp: number | null;
   state: string | null;
   status: string | null;
@@ -14,9 +13,11 @@ export interface FastcastEventProperties {
   clock: string | null;
   summary: string | null;
   period: number | null;
-  teams: { [homeAway: string]: FastcastEventTeam };
+  teams: Record<string, FastcastEventTeam>;
   isHalftime: boolean;
   downDistancePositionText: string | null;
 }
 
 export type FastcastEvent = FastcastEventProperties & Pick<Partial<Situation>, 'lastPlay'>;
+
+export type FastcastEventMap = Record<string, FastcastEvent>;

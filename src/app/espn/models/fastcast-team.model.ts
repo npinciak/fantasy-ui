@@ -1,6 +1,6 @@
 import { Team } from './team.model';
 
-export interface FastcastEventTeamProperties extends Team {
+export interface FastcastEventTeamProperties {
   score: string | null;
   abbrev: string | null;
   isWinner: boolean;
@@ -12,4 +12,4 @@ export interface FastcastEventTeamProperties extends Team {
   inRedzone: boolean;
 }
 
-export type FastcastEventTeam = FastcastEventTeamProperties;
+export type FastcastEventTeam = FastcastEventTeamProperties & Team;
