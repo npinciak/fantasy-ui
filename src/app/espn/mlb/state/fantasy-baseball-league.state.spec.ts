@@ -1,10 +1,8 @@
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
+import { EspnService } from '@espn/service/espn.service';
 import { NgxsModule, Store } from '@ngxs/store';
 import { FantasyBaseballLeagueState } from './fantasy-baseball-league.state';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { MOCK_DATA_ESPN } from '@app/@shared/helpers/testConfigs';
-
-import { EspnService } from '@espn/espn.service';
 
 describe('[fantasyBaseballLeague] Store', () => {
   let store: Store;

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { EspnService } from '@app/espn/espn.service';
-import { State, Action, Selector, StateContext, Store } from '@ngxs/store';
-
+import { EspnService } from '@app/espn/service/espn.service';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { FetchFootballLeague } from '../actions/nfl.actions';
 import { NflService } from '../services/nfl.service';
 import { PatchFantasyFootballSchedule } from './fantasy-football-schedule.state';

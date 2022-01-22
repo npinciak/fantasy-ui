@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
-
 import { FastcastEvent } from '../models/fastcast-event.model';
 import { EspnFastcastEventSelectors } from '../selectors/espn-fastcast-event.selectors';
 
@@ -10,13 +9,19 @@ import { EspnFastcastEventSelectors } from '../selectors/espn-fastcast-event.sel
   providedIn: 'root',
 })
 export class EspnFastcastEventFacade {
-  fastcastFilteredEvents$ = new Subject<FastcastEvent[]>();
+  fastcastFilteredEventsSidebar$ = new Subject<FastcastEvent[]>();
+  fastcastFilteredEventsLeaderboard$ = new Subject<FastcastEvent[]>();
 
   constructor(private store: Store) {}
 
-  fastcastLeagueChange(event: MatSelectChange): void {
+  fastcastLeagueChangeSidebar(event: MatSelectChange): void {
     const events = this.fastcastEventsByLeagueId(event.value);
-    return this.fastcastFilteredEvents$.next(events);
+    return this.fastcastFilteredEventsSidebar$.next(events);
+  }
+
+  fastcastLeagueChangeLeaderboard(event: MatSelectChange): void {
+    const events = this.fastcastEventsByLeagueId(event.value);
+    return this.fastcastFilteredEventsLeaderboard$.next(events);
   }
 
   fastcastEventsByLeagueId(id: string): FastcastEvent[] {

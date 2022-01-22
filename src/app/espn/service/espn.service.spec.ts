@@ -2,14 +2,14 @@ import { HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { NgxsModule, Store } from '@ngxs/store';
-
-import { EspnEndpointBuilder, EspnService, EspnViewParamFragment, Sports } from './espn.service';
+import { EspnEndpointBuilder, EspnViewParamFragment, FantasySports } from '../models/espn-endpoint-builder.model';
+import { EspnService } from './espn.service';
 
 describe('EspnService', () => {
   let service: EspnService;
   let httpTestingController: HttpTestingController;
 
-  const sport = Sports.baseball;
+  const sport = FantasySports.baseball;
   const scoringPeriodId = 1;
   const leagueId = 1;
   const playerId = 12345;

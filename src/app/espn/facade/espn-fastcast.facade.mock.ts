@@ -6,6 +6,7 @@ import { EspnFastcastFacade } from './espn-fastcast.facade';
 export type Mock<T> = { [key in keyof T]: T[key] };
 
 export class EspnFastcastFacadeMock implements Mock<EspnFastcastFacade> {
+  connected$: Observable<number>;
   selectEventsMapList$: Observable<FastcastEvent[]> = of([MOCK_FASTCAST_EVENT_1]);
   selectLastRefresh$: Observable<number>;
   selectLastDisconnect$: Observable<number>;

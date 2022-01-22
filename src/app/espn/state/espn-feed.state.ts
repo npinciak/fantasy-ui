@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
-import { State, Selector, Action, StateContext } from '@ngxs/store';
-
-import { EspnService } from '../espn.service';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { FeedArticle } from '../models/feed.model';
+import { EspnService } from '../service/espn.service';
 
 export class FetchFeed {
   static readonly type = `[espnFeed] FetchFeed`;

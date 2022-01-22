@@ -50,18 +50,6 @@ export enum OperationCode {
   Error = 'ERROR',
 }
 
-const opCodeKeyMap: { [key in OperationCode]: string } = {
-  [OperationCode.B]: '',
-  [OperationCode.C]: '',
-  [OperationCode.H]: '',
-  [OperationCode.S]: '',
-  [OperationCode.R]: '',
-  [OperationCode.P]: '',
-  [OperationCode.I]: '',
-  [OperationCode.Error]: '',
-  [OperationCode.Replace]: '',
-};
-
 export enum FastcastEventType {
   TopEvents = 'event-topevents',
   Soccer = 'event-topsoccer',

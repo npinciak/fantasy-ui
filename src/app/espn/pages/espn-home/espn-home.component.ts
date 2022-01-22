@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FastCastGameStatus } from '@app/espn/espn.service';
 import { EspnFastcastEventFacade } from '@app/espn/facade/espn-fastcast-event.facade';
 import { EspnFastcastLeagueFacade } from '@app/espn/facade/espn-fastcast-league.facade';
 import { EspnFastcastFacade } from '@app/espn/facade/espn-fastcast.facade';
 import { HomeAwayTeam } from '@app/espn/models/espn-home-away.model';
+import { FastCastGameStatus } from '@app/espn/service/espn.service';
 
 @Component({
   selector: 'app-espn-home',

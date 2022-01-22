@@ -1,8 +1,8 @@
 import { FastcastEvent } from './fastcast-event.model';
 import { League } from './league.model';
 
-export interface FastcastLeagueProperties extends League {
+export interface FastcastLeagueProperties {
   events: FastcastEvent[];
 }
 
-export type FastcastLeague = League;
+export type FastcastLeague = FastcastLeagueProperties & League;

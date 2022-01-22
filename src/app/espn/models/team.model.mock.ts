@@ -1,15 +1,17 @@
 import { Team } from './team.model';
 
 export const MOCK_TEAM_1: Team = {
-  id: '',
-  name: '',
+  id: '1',
+  name: 'FantasyTeam 1',
   logo: '',
-  record: '',
+  record: '2-0',
 };
 
 export const MOCK_TEAM_2: Team = {
-  id: '',
-  name: '',
+  id: '2',
+  name: 'FantasyTeam 2',
   logo: '',
-  record: '',
+  record: '0-2',
 };
+
+

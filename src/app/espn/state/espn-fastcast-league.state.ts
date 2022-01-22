@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import { State, Selector, Action, StateContext } from '@ngxs/store';
-
+import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { FastcastLeague } from '../models/fastcast-league.model';
+
+export type EspnFastcastLeagueModelMap = Record<string, FastcastLeague>;
 
 export class PatchFastcastLeague {
   static readonly type = `[espnFastcastLeague] PatchFastcastLeague`;
-  constructor(public payload: { map: { [id: string]: FastcastLeague } }) {}
+  constructor(public payload: { map: EspnFastcastLeagueModelMap }) {}
 }
 
 export interface EspnFastcastLeagueModel {
-  map: { [id: string]: FastcastLeague };
+  map: EspnFastcastLeagueModelMap;
 }
 
 @State<EspnFastcastLeagueModel>({
@@ -23,7 +24,7 @@ export class EspnFastcastLeagueState {
   constructor() {}
 
   @Selector()
-  static selectMap(state: EspnFastcastLeagueModel): { [id: string]: FastcastLeague } {
+  static selectMap(state: EspnFastcastLeagueModel): EspnFastcastLeagueModelMap {
     return state.map;
   }
 

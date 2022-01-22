@@ -1,10 +1,19 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { flatten } from '@app/@shared/helpers/utils';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { currentDate } from 'src/app/@shared/helpers/date';
-
 import { ApiService } from 'src/app/@shared/services/api.service';
-import { EspnClientEventList, EspnClientLeague } from './espn-client.model';
+import { EspnClientEventList, EspnClientLeague } from '../espn-client.model';
+import { NO_LOGO } from '../espn.const';
+import {
+  EspnEndpointBuilder,
+  EspnParamFragment,
+  EspnViewParamFragment,
+  espnViewParamFragmentList,
+  FantasySports,
+} from '../models/espn-endpoint-builder.model';
 import {
   CompetitorsEntity as CompetitorsImport,
   EspnClientFastcast as FastCastImport,
@@ -12,24 +21,12 @@ import {
   LeaguesEntity as LeaguesImport,
   Situation as SituationImport,
   SportsEntity as SportsImport,
-} from './models/espn-fastcast.model';
-import { FANTASY_BASE_V2, FANTASY_BASE_V3, NO_LOGO, ONE_FEED_BASE } from './espn.const';
-import { FastcastEvent } from './models/fastcast-event.model';
-import { FastcastEventTeam } from './models/fastcast-team.model';
-import { enumAsList } from '@app/@shared/helpers/enum-as-list';
-import { Observable } from 'rxjs';
-import { EspnClientOneFeed, FeedArticle as FeedArticleImport, FeedArticleType, FeedEntity } from './models/espn-onefeed.model';
-import { flatten } from '@app/@shared/helpers/utils';
-import { FeedArticle } from './models/feed.model';
-import { FastcastLeague } from './models/fastcast-league.model';
-import { League } from './models/league.model';
-
-export enum Sports {
-  baseball = 'flb',
-  football = 'ffl',
-  basketball = 'fba',
-  hockey = 'fhl',
-}
+} from '../models/espn-fastcast.model';
+import { EspnClientOneFeed, FeedArticle as FeedArticleImport } from '../models/espn-onefeed.model';
+import { FastcastEvent } from '../models/fastcast-event.model';
+import { FastcastEventTeam } from '../models/fastcast-team.model';
+import { FeedArticle } from '../models/feed.model';
+import { League } from '../models/league.model';
 
 export enum GameStatusId {
   Scheduled = 1,
@@ -82,7 +79,7 @@ export class EspnService {
   static transformLeagueImportEventImport = (
     sportsImport: SportsImport[]
   ): { transformLeaguesImportToLeagues: League[]; transformEventImportToFastcastEvent: FastcastEvent[] } => {
-    const leagues = sportsImport.map(i => i.leagues);
+    const leagues = sportsImport.filter(s => s.slug !== 'tennis' && s.slug !== 'golf' && s.slug !== 'mma').map(i => i.leagues);
 
     const flattenLeaguesImport = flatten(leagues);
 
@@ -156,7 +153,6 @@ export class EspnService {
     eventsImport.map(event => ({
       id: event.id,
       leagueId: EspnService.transformUidToId(event?.uid),
-      priority: event.priority,
       timestamp: new Date(event.date).getTime(),
       state: event.fullStatus.type.state,
       status: event.status,
@@ -203,7 +199,7 @@ export class EspnService {
    * @param leagueId
    * @returns
    */
-  espnUpdateFantasyTeam(payload: unknown, sport: Sports, leagueId: number) {
+  espnUpdateFantasyTeam(payload: unknown, sport: FantasySports, leagueId: number) {
     const endpoint = new EspnEndpointBuilder(sport, leagueId);
     return this.api.post<any>(endpoint.fantasyPlayerTransaction, payload, {
       withCredentials: true,
@@ -218,7 +214,7 @@ export class EspnService {
    * @param sport
    * @returns EspnClientLeague
    */
-  espnFantasyLeagueBySport(sport: Sports, leagueId: number) {
+  espnFantasyLeagueBySport(sport: FantasySports, leagueId: number) {
     const endpoint = new EspnEndpointBuilder(sport, leagueId);
     return this.api.get<EspnClientLeague>(endpoint.fantasyLeague, { params: this.params });
   }
@@ -231,7 +227,7 @@ export class EspnService {
    * @param sport
    * @returns Player news
    */
-  espnFantasyPlayerNewsBySport(sport: Sports, numDays: number, playerId: number) {
+  espnFantasyPlayerNewsBySport(sport: FantasySports, numDays: number, playerId: number) {
     const endpoint = new EspnEndpointBuilder(sport);
     const params = new HttpParams().set(EspnParamFragment.Days, numDays.toString()).set(EspnParamFragment.PlayerId, playerId.toString());
     return this.api.get<any>(endpoint.fantasyPlayerNews, { params });
@@ -247,7 +243,7 @@ export class EspnService {
    * @param headers 'X-Fantasy-Filter' header required
    * @returns List of free agents
    */
-  espnFantasyFreeAgentsBySport(sport: Sports, leagueId: number, scoringPeriod: number, headers: HttpHeaders) {
+  espnFantasyFreeAgentsBySport(sport: FantasySports, leagueId: number, scoringPeriod: number, headers: HttpHeaders) {
     const endpoint = new EspnEndpointBuilder(sport, leagueId);
     const params = new HttpParams()
       .set(EspnParamFragment.ScoringPeriod, scoringPeriod.toString())
@@ -266,7 +262,7 @@ export class EspnService {
    *
    * @returns list of events
    */
-  espnFantasyEventsBySport(sport: Sports) {
+  espnFantasyEventsBySport(sport: FantasySports) {
     const endpoint = new EspnEndpointBuilder(sport);
     return this.api.get<EspnClientEventList>(endpoint.espnEvents, { params: this.espnEventParams });
   }
@@ -351,67 +347,3 @@ export class EspnService {
     return params;
   }
 }
-
-export class EspnEndpointBuilder {
-  private static fantasyBaseV3 = FANTASY_BASE_V3;
-  private static fantasyBaseV2 = FANTASY_BASE_V2;
-  private static oneFeedBase = ONE_FEED_BASE;
-
-  private static year = new Date().getFullYear();
-
-  private _leagueId: number;
-  private _sport: Sports;
-
-  constructor(sport?: Sports, leagueId?: number) {
-    this._leagueId = leagueId;
-    this._sport = sport;
-  }
-
-  get fantasyPlayerNews() {
-    return `${this.fantasyBaseV2WithFragments}/news/players`;
-  }
-
-  get espnEvents() {
-    return `${this.fantasyBaseV2WithFragments}/games`;
-  }
-
-  get fantasyPlayerTransaction() {
-    return `${this.fantasyLeague}/transactions`;
-  }
-
-  get fantasyLeague() {
-    return `${this.fantasyBaseV3WithFragments}/segments/0/leagues/${this._leagueId}`;
-  }
-
-  get oneFeed() {
-    return `${EspnEndpointBuilder.oneFeedBase}/oneFeed`;
-  }
-
-  private get fantasyBaseV3WithFragments() {
-    return `${EspnEndpointBuilder.fantasyBaseV3}/games/${this._sport}/seasons/${EspnEndpointBuilder.year}`;
-  }
-
-  private get fantasyBaseV2WithFragments() {
-    return `${EspnEndpointBuilder.fantasyBaseV2}/games/${this._sport}`;
-  }
-}
-
-export enum EspnParamFragment {
-  ScoringPeriod = 'scoringPeriodId',
-  View = 'view',
-  UseMap = 'useMap',
-  Dates = 'dates',
-  Days = 'days',
-  PlayerId = 'playerId',
-}
-
-export enum EspnViewParamFragment {
-  PlayerInfo = 'kona_player_info',
-  LiveScoring = 'mLiveScoring',
-  MatchupScore = 'mMatchupScore',
-  Roster = 'mRoster',
-  Scoreboard = 'mScoreboard',
-  Team = 'mTeam',
-}
-
-export const espnViewParamFragmentList = enumAsList(EspnViewParamFragment);
