@@ -1,5 +1,4 @@
 import { Selector } from '@ngxs/store';
-
 import { FastcastEvent } from '../models/fastcast-event.model';
 import { EspnFastcastEventState } from '../state/espn-fastcast-event.state';
 
@@ -16,6 +15,6 @@ export class EspnFastcastEventSelectors {
 
   @Selector([EspnFastcastEventSelectors.selectEventList])
   static selectFastcastEventsByLeagueId(selectEventList: FastcastEvent[]): (id: string) => FastcastEvent[] {
-    return (id: string) => selectEventList.filter(e => e.leagueId === id);
+    return (id: string) => selectEventList.filter(e => e.leagueId === id).sort((a, b) => a.timestamp - b.timestamp);
   }
 }

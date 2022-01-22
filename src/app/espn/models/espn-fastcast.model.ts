@@ -1,5 +1,4 @@
-﻿/* eslint-disable max-len */
-export interface EspnClientFastcast {
+﻿export interface EspnClientFastcast {
   sports?: SportsEntity[] | null;
 }
 export interface SportsEntity {

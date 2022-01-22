@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
-import { State, Selector, Action, StateContext, Store } from '@ngxs/store';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { ConnectWebSocket, DisconnectWebSocket, FetchFastcast, PatchEvents } from '../actions/espn-fastcast.actions';
-
-import { EspnFastcastService } from '../espn-fastcast.service';
 import { FASTCAST_BASE } from '../espn.const';
-import { EspnService } from '../espn.service';
 import { FastcastEventType, OperationCode } from '../models/espn-fastcast-socket.model';
-import { FastcastEvent } from '../models/fastcast-event.model';
+import { FastcastEventMap } from '../models/fastcast-event.model';
+import { EspnFastcastService } from '../service/espn-fastcast.service';
+import { EspnService } from '../service/espn.service';
 import { PatchFastcastEvents } from './espn-fastcast-event.state';
 import { PatchFastcastLeague } from './espn-fastcast-league.state';
 
 export interface EspnFastcastStateModel {
-  map: { [id: string]: FastcastEvent };
+  map: FastcastEventMap;
   disconnect: number;
   connect: number;
   lastRefresh: number;
@@ -46,6 +45,11 @@ export class EspnFastcastState {
     return state.disconnect;
   }
 
+  @Selector()
+  static selectConnected(state: EspnFastcastStateModel): number {
+    return state.connect;
+  }
+
   @Action(ConnectWebSocket)
   async connectWebsocket({ getState, patchState }: StateContext<EspnFastcastStateModel>) {
     const state = getState();
@@ -66,6 +70,10 @@ export class EspnFastcastState {
           break;
         case OperationCode.I:
           const uri = `${FASTCAST_BASE}/${message.mid}/checkpoint`;
+
+          const lastRefresh = new Date().getTime();
+          patchState({ ...state, lastRefresh });
+
           this.store.dispatch(new FetchFastcast({ uri }));
           break;
         case OperationCode.Error:

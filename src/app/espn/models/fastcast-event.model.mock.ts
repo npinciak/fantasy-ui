@@ -20,5 +20,14 @@ export const MOCK_FASTCAST_EVENT_1: FastcastEvent = {
   },
   isHalftime: false,
   downDistancePositionText: '1st & 10, ATL 20',
-  lastPlay: null,
+  lastPlay: {
+    id: '',
+    type: {
+      id: '',
+      text: '',
+      abbreviation: '',
+    },
+    scoreValue: 6,
+    text: 'James White 2 Yd Run',
+  },
 };

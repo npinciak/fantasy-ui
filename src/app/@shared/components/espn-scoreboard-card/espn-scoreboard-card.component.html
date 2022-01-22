@@ -3,28 +3,13 @@
     <app-espn-scoreboard-card-team [team]="event?.teams?.away"></app-espn-scoreboard-card-team>
     <div></div>
     <app-espn-scoreboard-card-team [team]="event?.teams?.home"></app-espn-scoreboard-card-team>
-    <table class="ui-margin-auto">
-      <tr>
-        <td colspan="3">
-          <div class="game-summary-container">
-            <div class="game-summary">
-              <ng-container *ngIf="!event?.isHalftime; else halftime"> {{ event?.summary }} </ng-container>
-              <ng-template #halftime>
-                {{ event?.isHalftime ? 'Halftime' : null }}
-              </ng-template>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="3">
-          <div style="font-size: 14px">{{ event?.downDistancePositionText }}</div>
-        </td>
-      </tr>
-    </table>
   </mat-card-content>
-</mat-card>
+  <mat-card-actions fxLayout="col" align="end" style="font-size: 14px; text-align: right">
+    {{ event?.downDistancePositionText }}
 
-<ng-template #showLocation>
-  <small>{{ event?.location }}</small>
-</ng-template>
+    <ng-container *ngIf="!event?.isHalftime; else halftime"> {{ event?.summary }} </ng-container>
+    <ng-template #halftime>
+      {{ event?.isHalftime ? 'Halftime' : null }}
+    </ng-template></mat-card-actions
+  >
+</mat-card>

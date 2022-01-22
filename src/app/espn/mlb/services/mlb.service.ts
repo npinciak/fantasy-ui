@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
+import { EspnClientLeague, EspnClientPlayer, EspnClientTeam } from '@app/espn/espn-client.model';
+import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
+import { EspnService } from '@app/espn/service/espn.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import { EspnService, Sports } from '@app/espn/espn.service';
 import { isPitcher } from '../helpers';
-import { BaseballLeague } from '../models/baseball-league.model';
-import { BaseballPlayer } from '../models/baseball-player.model';
-
-import { EspnClientLeague, EspnClientPlayer, EspnClientTeam } from '@app/espn/espn-client.model';
-import { Team } from '@app/espn/models/team.model';
 
 @Injectable({
   providedIn: 'root',
@@ -50,6 +46,6 @@ export class MlbService {
   }
 
   baseballLeague(leagueId: number): Observable<EspnClientLeague> {
-    return this.espnClient.espnFantasyLeagueBySport(Sports.baseball, leagueId).pipe(map(res => res));
+    return this.espnClient.espnFantasyLeagueBySport(FantasySports.baseball, leagueId).pipe(map(res => res));
   }
 }

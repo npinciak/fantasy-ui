@@ -9,7 +9,5 @@ export class EspnFastcastLeagueMock implements Mock<EspnFastcastLeagueFacade> {
   fastcastEventsByLeagueId(id: string): FastcastEvent[] {
     throw new Error('Method not implemented.');
   }
-  // fastcastEventsByLeagueId(id: string): FastcastEvent[] {
-  //   throw new Error('Method not implemented.');
-  // }
+ 
 }

@@ -3,3 +3,12 @@
   display: flex;
   overflow: scroll;
 }
+
+mat-card.league-separator {
+  margin: 10px;
+  width: 100px;
+  min-width: 100px;
+  height: 175px;
+  text-align: center;
+  padding: 55px 0;
+}

@@ -1,36 +1,50 @@
-<mat-select style="width: 50%" aria-label="" aria-labelledby="" (selectionChange)="fastcastEventFacade.fastcastLeagueChange($event)">
-  <mat-option *ngFor="let league of fastcastLeagueFacade.prettyLeagueList$ | async" [value]="league.id">{{ league.shortName }} </mat-option>
-</mat-select>
-
-<!-- <ng-container *ngFor="let league of fastcastLeagueFacade.prettyLeagueList$ | async">
-  <h4>{{ league.name }}</h4> -->
-<ng-container *ngFor="let event of fastcastEventFacade.fastcastFilteredEvents$ | async">
-  <div fxLayout="col" fxLayoutGap="10px">
-    <div fxFlex.gt-md="30" fxFlex.lt-md="100" fxFlex.lt-sm="100">
-      <mat-card style="margin: 10px 0">
-        <mat-card-content>
-          <div>
-            <app-espn-list-team [team]="event?.teams?.away" [homeAway]="HomeAwayTeam.Away"></app-espn-list-team>
-          </div>
-          <div>
-            <app-espn-list-team [team]="event?.teams?.home" [homeAway]="HomeAwayTeam.Home"></app-espn-list-team>
-          </div>
-        </mat-card-content>
-        <mat-card-actions fxLayout="col" align="end" style="text-align: right">
-          <div>
-            <ng-container *ngIf="!event?.isHalftime; else halftime">
-              <div style="margin-bottom: 5px">{{ event?.summary }}</div>
-            </ng-container>
-            <div style="margin-bottom: 5px">{{ event?.downDistancePositionText }}</div>
-            <div style="font-size: 14px">{{ event?.lastPlay?.text }}</div>
-          </div>
-        </mat-card-actions>
-      </mat-card>
-    </div>
+<div
+  gdAreas.xs="sidebar | content | footer"
+  gdGap="1em"
+  gdColumns.xs="none"
+  gdAreas.sm="sidebar content | footer footer"
+  gdColumns.sm="30%!"
+  gdAreas.gt-sm="sidebar content  | footer footer "
+  gdColumns.gt-sm="30% auto"
+  gdGap.gt-sm="20px"
+  [ngStyle]="{ 'max-width': 'auto' }"
+>
+  <div class="blocks two" gdArea="sidebar">
+    <mat-form-field>
+      <mat-select aria-label="" aria-labelledby="" (selectionChange)="fastcastEventFacade.fastcastLeagueChangeSidebar($event)">
+        <mat-option *ngFor="let league of fastcastLeagueFacade.prettyLeagueList$ | async" [value]="league.id">{{ league.shortName }} </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <ng-container *ngFor="let event of fastcastEventFacade.fastcastFilteredEventsSidebar$ | async">
+      <my-cool-webcomponent></my-cool-webcomponent>
+      <div fxLayout="col" fxLayoutGap="10px">
+        <div fxFlex.gt-md="100" fxFlex.lt-md="100" fxFlex.lt-sm="100">
+          <mat-card style="margin: 10px 0">
+            <mat-card-content>
+              <div>
+                <app-espn-list-team [team]="event?.teams?.away" [homeAway]="HomeAwayTeam.Away"></app-espn-list-team>
+              </div>
+              <div>
+                <app-espn-list-team [team]="event?.teams?.home" [homeAway]="HomeAwayTeam.Home"></app-espn-list-team>
+              </div>
+            </mat-card-content>
+            <mat-card-actions fxLayout="col" align="end" style="text-align: right">
+              <div>
+                <ng-container *ngIf="!event?.isHalftime; else halftime">
+                  <div style="margin-bottom: 5px">{{ event?.summary }}</div>
+                </ng-container>
+                <div style="margin-bottom: 5px">{{ event?.downDistancePositionText }}</div>
+                <div style="font-size: 14px">{{ event?.lastPlay?.text }}</div>
+              </div>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+      <ng-template #halftime>
+        {{ event?.isHalftime ? 'Halftime' : null }}
+      </ng-template>
+    </ng-container>
   </div>
-  <!-- </ng-container> -->
-
-  <ng-template #halftime>
-    {{ event?.isHalftime ? 'Halftime' : null }}
-  </ng-template>
-</ng-container>
+  <div class="blocks four" gdArea="content"></div>
+  <div class="blocks five" gdArea="footer">Footer</div>
+</div>

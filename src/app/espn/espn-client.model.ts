@@ -47,12 +47,8 @@ export interface EspnClientTeam {
   draftDayProjectedRank: number;
   currentProjectedRank: number;
   rankCalculatedFinal: number;
-  pointsByStat: {
-    [key: number]: number;
-  };
-  valuesByStat: {
-    [key: number]: number;
-  };
+  pointsByStat: Record<number, number>;
+  valuesByStat: Record<number, number>;
   record: EspnClientTeamRecordEntity;
 }
 
@@ -103,9 +99,7 @@ export interface EspnClientPlayerInfo {
   starterStatusByProGame: EspnClientGameStatus;
 }
 
-export interface EspnClientGameStatus {
-  [key: number]: string;
-}
+export type EspnClientGameStatus = Record<number, string>;
 
 export interface EspnClientPlayerOwnership {
   averageDraftPosition: number;
@@ -114,13 +108,13 @@ export interface EspnClientPlayerOwnership {
   percentStarted: number;
 }
 
-export interface EspnClientPlayerRatings {
-  [key: number]: {
-    positionalRanking: number;
-    totalRanking: number;
-    totalRating: number;
-  };
-}
+export type EspnClientPlayerRatingsEntity = {
+  positionalRanking: number;
+  totalRanking: number;
+  totalRating: number;
+};
+
+export type EspnClientPlayerRatings = Record<number, EspnClientPlayerRatingsEntity>;
 
 export interface EspnClientPlayerStatsYear {
   seasonId: number;
@@ -129,9 +123,7 @@ export interface EspnClientPlayerStatsYear {
   stats: EspnClientPlayerStatsEntity;
 }
 
-export interface EspnClientPlayerStatsEntity {
-  [key: number]: number;
-}
+export type EspnClientPlayerStatsEntity = Record<number, number>;
 
 export interface EspnClientPlayerNews {
   timestamp: string;

@@ -1,8 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-
+import { FASTCAST_WS_HOST } from '../espn.const';
 import { EspnFastcastService } from './espn-fastcast.service';
-import { FASTCAST_WS_HOST } from './espn.const';
 
 describe('EspnFastcastService', () => {
   let service: EspnFastcastService;
