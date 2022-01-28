@@ -1,0 +1,18 @@
+<p>data-vis-component works!</p>
+<div>
+  <div>
+    <div style="display: block; width: 600px; height: auto">
+      <canvas
+        baseChart
+        [data]="chartData"
+        [options]="scatterChartOptions"
+        [type]="scatterChartType"
+        (chartClick)="chartClicked($event)"
+        (chartHover)="chartHover($event)"
+      >
+      </canvas>
+    </div>
+  </div>
+</div>
+
+<div #container></div>
