@@ -8,7 +8,7 @@ import { Player, PlayerMap } from '../models/player.model';
 import { Schedule } from '../models/schedule.model';
 import { Team } from '../models/team.model';
 import { NFLClientGridIronPlayer } from '../nfl/models/nfl-client.model';
-import { NFLPlayerSelectors } from '../nfl/selectors/player.selector';
+import { NFLDfsPlayerSelectors } from '../nfl/selectors/nfl-dfs-player.selector';
 import { SlateTeam } from '../service/slate.service';
 import { DailyFantasyPlayersState } from '../state/daily-fantasy-players.state';
 import { DailyFantasySlateAttrState } from '../state/daily-fantasy-slate-attr.state';
@@ -63,8 +63,8 @@ export class DailyFantasyPlayersSelectors {
     DailyFantasyTeamsSelectors.selectTeamById,
     DailyFantasySlateAttrSelectors.selectPlayerById,
     DailyFantasyScheduleSelectors.selectGameById,
-    NFLPlayerSelectors.getPlayerProfilerSeasonById,
-    NFLPlayerSelectors.getGridIronPlayerById,
+    NFLDfsPlayerSelectors.getPlayerProfilerSeasonById,
+    NFLDfsPlayerSelectors.getGridIronPlayerById,
   ])
   static selectPlayerTableRows(
     site: string,
@@ -122,7 +122,7 @@ export class DailyFantasyPlayersSelectors {
             fptsVal: toInt(getNestedValue(gridIronPlayer, ['FPTS/$'])).int ?? 0,
             ceil: toInt(gridIronPlayer?.CEIL).int ?? 0,
             floor: toInt(gridIronPlayer?.FLOOR).int ?? 0,
-            slateOwnership: NFLPlayerSelectors.transformSlateOwnership(slate, site, slatePlayer?.slate_ownership) ?? 0,
+            slateOwnership: null,
             expertRating: getNestedValue(slatePlayer, ['ecr', [dfsSiteToDfsSiteTypeMap[site]], 'rank']),
           },
           opponent: {
