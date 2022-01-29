@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { uniqueBy } from '@app/@shared/helpers/unique-by';
 import { ApiService } from '@app/@shared/services/api.service';
@@ -70,5 +71,13 @@ export class PlayerService {
         };
       })
     );
+  }
+
+  getGridIronPlayers(request: { site: string }) {
+    let params = new HttpParams();
+    params = params.append('site', request.site ?? 'draftkings');
+
+    const endpointBuilder = new DailyFantasyEndpointBuilder();
+    return this.apiService.get<any[]>(endpointBuilder.gridIron, { params });
   }
 }

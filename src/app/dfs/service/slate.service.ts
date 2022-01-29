@@ -2,14 +2,17 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { currentDate } from '@app/@shared/helpers/date';
 import { ApiService } from '@app/@shared/services/api.service';
+import { camelCase } from 'lodash';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/internal/operators/map';
+import { map } from 'rxjs/operators';
 import { DailyFantasyEndpointBuilder } from '../daily-fantasy-url-builder';
 import { MLBClientSlateAttrTeam } from '../mlb/models/mlb-client.model';
 import { SlateAttributes } from '../models/daily-fantasy-client-slate-sttr.model';
-import { SlateMaster } from '../models/daily-fantasy-client.model';
-import { NBAClientPlayerAttributes, NBAClientSlateAttrTeam } from '../nba/models/nba-client.model';
-import { NFLClientPlayerAttributes, NFLClientSlateAttrTeam, NFLClientStatGroup } from '../nfl/models/nfl-client.model';
+import { SlateMaster, Vegas } from '../models/daily-fantasy-client.model';
+import { Team } from '../models/team.model';
+import { NBAClientPlayerAttributes, NBAClientSlateAttrTeam, RestEntity } from '../nba/models/nba-client.model';
+import { NFLClientPlayerAttributes, NFLClientProfiler, NFLClientSlateAttrTeam, NFLClientStatGroup } from '../nfl/models/nfl-client.model';
+import { OutsidersProps, ScheduleAdjFptsProps } from '../nfl/models/nfl-slate-attr.model';
 
 @Injectable({
   providedIn: 'root',
@@ -39,9 +42,19 @@ export class SlateService {
 
   static transform(teamAttributes: SlateTeamAttributes) {
     if (SlateService.isNFL(teamAttributes)) {
+      const safpts = <ScheduleAdjFptsProps>{};
+      for (const prop in teamAttributes.safpts) {
+        safpts[camelCase(prop)] = teamAttributes.safpts[prop];
+      }
+
+      const outsiders = <OutsidersProps>{};
+      for (const prop in teamAttributes.safpts) {
+        outsiders[camelCase(prop)] = teamAttributes.outsiders[prop];
+      }
+
       return {
-        safpts: teamAttributes.safpts,
-        outsiders: teamAttributes.outsiders,
+        safpts,
+        outsiders,
       };
     }
 
@@ -62,7 +75,7 @@ export class SlateService {
 
   static transformTeamSlateAttributes(teams: SlateTeamAttributesMap) {
     return Object.entries(teams).map(([id, team]) => ({
-      id,
+      id: id,
       vegas: team.vegas,
       outsiders: SlateService.transform(team).outsiders ?? null,
       safpts: SlateService.transform(team).safpts ?? null,
@@ -93,11 +106,16 @@ export class SlateService {
     return this.apiService.get<SlateMaster>(endpoint.slateMaster);
   }
 
-  getGameAttrBySlateId(request: {
-    sport: string;
-    site: string;
-    slateId: string;
-  }): Observable<{ teams: SlateTeamAttributes[]; players: any[] }> {
+  getGameAttrBySlateId(request: { sport: string; site: string; slateId: string }): Observable<{
+    teams: SlateTeam[];
+    players: any[];
+    statGroups: {
+      qb: NFLClientProfiler;
+      rb: NFLClientProfiler;
+      te: NFLClientProfiler;
+      wr: NFLClientProfiler;
+    };
+  }> {
     const endpoint = new DailyFantasyEndpointBuilder(request.sport);
 
     let params = new HttpParams();
@@ -114,10 +132,20 @@ export class SlateService {
   }
 }
 
-type SlateTeamAttributes = NFLClientSlateAttrTeam | MLBClientSlateAttrTeam | NBAClientSlateAttrTeam | null | undefined;
-type SlateTeamAttributesMap = Record<string, SlateTeamAttributes>;
 
-type SlateStatGroups = NFLClientStatGroup | null | undefined;
 
-type SlatePlayerAttributes = NFLClientPlayerAttributes | NBAClientPlayerAttributes | null | undefined;
-type SlatePlayerAttributesMap = Record<string, SlatePlayerAttributes>;
+export type SlateTeamAttributes = NFLClientSlateAttrTeam | MLBClientSlateAttrTeam | NBAClientSlateAttrTeam;
+export type SlateTeamAttributesMap = Record<string, SlateTeamAttributes>;
+
+export type SlateTeam = Pick<Team, 'id'> & { vegas: Vegas } & Partial<{
+    outsiders: OutsidersProps | null;
+    safpts: ScheduleAdjFptsProps | null;
+    rest: RestEntity | null;
+  }>;
+
+export type SlateTeamMap = Record<string, SlateTeam>;
+
+export type SlateStatGroups = NFLClientStatGroup;
+
+export type SlatePlayerAttributes = NFLClientPlayerAttributes | NBAClientPlayerAttributes;
+export type SlatePlayerAttributesMap = Record<string, SlatePlayerAttributes>;
