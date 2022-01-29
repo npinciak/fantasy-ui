@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { NFLScheduleSelectors } from '../selectors/schedule.selector';
 
+/**
+ * @deprecated moved to daily-fantasy-schedule.facade
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class ScheduleFacade {
-  @Select(NFLScheduleSelectors.selectNflMatchupList) public selectNflMatchupList$: Observable<any[]>;
+  @Select() public selectNflMatchupList$: Observable<any[]>;
 
-  @Select(NFLScheduleSelectors.nflMatchupsEmpty) public nflMatchupsEmpty$: Observable<boolean>;
-  @Select(NFLScheduleSelectors.selectTeamsInSlate) public selectTeamsInSlate$: Observable<string[]>;
+  @Select() public nflMatchupsEmpty$: Observable<boolean>;
+  @Select() public selectTeamsInSlate$: Observable<string[]>;
 }

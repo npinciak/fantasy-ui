@@ -4,7 +4,7 @@ import { blendColors } from '@app/@shared/helpers/color-blender';
 @Component({
   selector: 'app-player-table-ranking-column',
   templateUrl: './player-table-ranking-column.component.html',
-  styleUrls: ['./player-table-ranking-column.component.css'],
+  styleUrls: ['./player-table-ranking-column.component.scss'],
 })
 export class PlayerTableRankingColumnComponent implements OnInit {
   @Input() cellData: number;
