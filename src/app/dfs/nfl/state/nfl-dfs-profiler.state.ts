@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { ProfilerInfoQB, ProfilerInfoRB, ProfilerInfoReceiver } from '../models/nfl-client.model';
-import { PatchProfiler } from './nfl-dfs-profiler.actions';
+import { NFLClientStatGroup, ProfilerInfoQB, ProfilerInfoRB, ProfilerInfoReceiver } from '../models/nfl-client.model';
+
+export class PatchProfiler {
+  static readonly type = `[nflDfsProfiler] PatchProfiler`;
+  constructor(public payload: { profiler: NFLClientStatGroup }) {}
+}
 
 interface ProfilerInfo {
-  season: { [id: string]: ProfilerInfoQB | ProfilerInfoRB | ProfilerInfoReceiver };
-  lastSeason: { [id: string]: ProfilerInfoQB | ProfilerInfoRB | ProfilerInfoReceiver };
-  combined: { [id: string]: ProfilerInfoQB | ProfilerInfoRB | ProfilerInfoReceiver };
+  season: ProfilerInfoMap;
+  lastSeason: ProfilerInfoMap;
+  combined: ProfilerInfoMap;
 }
+
+export type ProfilerInfoMap = Record<string, ProfilerInfoQB | ProfilerInfoRB | ProfilerInfoReceiver>;
 
 export class NflDfsProfilerStateModel {
   qb: ProfilerInfo;
@@ -32,7 +38,7 @@ const defaults = {
 @Injectable()
 export class NflDfsProfilerState {
   @Selector()
-  static season(state: NflDfsProfilerStateModel) {
+  static season(state: NflDfsProfilerStateModel): ProfilerInfoMap {
     return { ...state.qb.season, ...state.rb.season, ...state.te.season, ...state.wr.season };
   }
 

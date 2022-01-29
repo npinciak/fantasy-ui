@@ -11,6 +11,7 @@ interface TeamProperties {
 }
 
 export type Team = TeamProperties;
+export type TeamMap = Record<string, Team>;
 
 /**
  * Base slate attr team model

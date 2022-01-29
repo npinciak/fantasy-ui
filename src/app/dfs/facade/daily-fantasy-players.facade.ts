@@ -10,6 +10,7 @@ import { FetchPlayers } from '../state/daily-fantasy-players.state';
 })
 export class DailyFantasyPlayersFacade {
   @Select(DailyFantasyPlayersSelectors.selectPositionsList) positionList$: Observable<string[]>;
+  @Select(DailyFantasyPlayersSelectors.selectTeamList) teamList$: Observable<string[]>;
 
   @Select(DailyFantasyPlayersSelectors.selectPlayerTableRows) playerTableRows$: Observable<PlayerTableRow[]>;
   @Select(DailyFantasyPlayersSelectors.selectPlayersEmpty) playersEmpty$: Observable<boolean>;

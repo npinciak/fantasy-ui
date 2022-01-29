@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { flatten } from '@app/@shared/helpers/utils';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { currentDate } from 'src/app/@shared/helpers/date';
+import { currentDate } from '@app/@shared/helpers/date';
 import { ApiService } from 'src/app/@shared/services/api.service';
 import { EspnClientEventList, EspnClientLeague } from '../espn-client.model';
 import { NO_LOGO } from '../espn.const';

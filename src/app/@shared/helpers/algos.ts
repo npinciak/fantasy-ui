@@ -7,25 +7,23 @@
  * @param sortProperty
  * @returns
  */
-const insertionSortDesc = (arr, sortProperty) => {
-  if (!Array.isArray(arr)) {
-    return [];
-  }
-
+export function insertionSortDesc<T>(arr: T[], getter: (t: T) => number | string) {
   const length = arr.length;
+
   for (let i = 1; i < length; i++) {
     const key = arr[i];
     let j = i - 1;
-    while (j >= 0 && arr[j][sortProperty] < key[sortProperty]) {
+
+    while (j >= 0 && getter(arr[j]) < getter(key)) {
       arr[j + 1] = arr[j];
       j = j - 1;
     }
     arr[j + 1] = key;
   }
   return arr;
-};
+}
 
-const binarySearch = (arr, val) => {
+export function binarySearch<T>(arr: T[], val) {
   let low = 0;
   let high = arr.length - 1;
   while (low <= high) {
@@ -44,6 +42,4 @@ const binarySearch = (arr, val) => {
     }
   }
   return null;
-};
-
-export { insertionSortDesc, binarySearch };
+}

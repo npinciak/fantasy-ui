@@ -8,7 +8,7 @@ export enum PlayerTableDataAccessor {
 interface TableProperties {
   columnLabel: string | null;
   columnDef: string | null;
-  cellDataAccessor: PlayerTableDataAccessor | null;
+  cellDataAccessor: <T>(data: T[]) => PlayerTableDataAccessor | null;
   tooltip: string | null;
 }
 

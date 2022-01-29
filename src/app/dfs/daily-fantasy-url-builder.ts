@@ -22,7 +22,7 @@ export class DailyFantasyEndpointBuilder {
   }
 
   get gridIron() {
-    return `${DailyFantasyEndpointBuilder.dailyFantasyBase}/grids/3350867.json`;
+    return `${DailyFantasyEndpointBuilder.dailyFantasyBase}/grids/3350867.json`; // TODO: *.json dynamic?
   }
 
   get slateMaster() {
