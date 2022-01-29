@@ -1,9 +1,9 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { currentDate } from '@app/@shared/helpers/date';
 import { flatten } from '@app/@shared/helpers/utils';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { currentDate } from '@app/@shared/helpers/date';
 import { ApiService } from 'src/app/@shared/services/api.service';
 import { EspnClientEventList, EspnClientLeague } from '../espn-client.model';
 import { NO_LOGO } from '../espn.const';
@@ -230,7 +230,7 @@ export class EspnService {
   espnFantasyPlayerNewsBySport(sport: FantasySports, numDays: number, playerId: number) {
     const endpoint = new EspnEndpointBuilder(sport);
     const params = new HttpParams().set(EspnParamFragment.Days, numDays.toString()).set(EspnParamFragment.PlayerId, playerId.toString());
-    return this.api.get<any>(endpoint.fantasyPlayerNews, { params });
+    return this.api.get(endpoint.fantasyPlayerNews, { params });
   }
 
   /**
@@ -248,7 +248,7 @@ export class EspnService {
     const params = new HttpParams()
       .set(EspnParamFragment.ScoringPeriod, scoringPeriod.toString())
       .set(EspnParamFragment.View, EspnViewParamFragment.PlayerInfo);
-    return this.api.get<any>(endpoint.fantasyLeague, { params, headers });
+    return this.api.get(endpoint.fantasyLeague, { params, headers });
   }
 
   /**

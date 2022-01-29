@@ -8,7 +8,6 @@ import { sortAccessor } from '@app/@shared/helpers/sort';
 import { DailyFantasyPlayersFacade } from '@app/dfs/facade/daily-fantasy-players.facade';
 import { TableColumn } from '@app/dfs/mlb/selectors/table.selector';
 import { NFLDfsLineupFacade } from '../../facade/nfl-dfs-lineup.facade';
-import { ScheduleFacade } from '../../facade/schedule.facade';
 import { NFLPlayerTableRow } from '../../models/nfl-player-table-row.model';
 import { NFLTableColumn } from '../../models/nfl-table.model';
 import { NFL_STAT_GROUP_MAP } from '../../models/stat-group.model';
@@ -59,8 +58,7 @@ export class PlayerTableComponent implements OnInit, AfterViewInit, OnChanges {
   constructor(
     readonly lineupFacade: NFLDfsLineupFacade,
     readonly playerFacade: DailyFantasyPlayersFacade,
-    private cdr: ChangeDetectorRef,
-    readonly scheduleFacade: ScheduleFacade
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {}

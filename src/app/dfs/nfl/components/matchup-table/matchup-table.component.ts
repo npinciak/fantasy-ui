@@ -3,8 +3,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { blendColors } from '@app/@shared/helpers/color-blender';
-import { sortAccessor } from '@app/@shared/helpers/sort';
-import { ThresholdClass } from '@app/dfs/dfs.const';
 import { TableColumn } from '@app/dfs/mlb/selectors/table.selector';
 
 @Component({

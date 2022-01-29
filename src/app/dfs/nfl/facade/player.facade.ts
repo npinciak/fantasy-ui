@@ -11,7 +11,7 @@ export class NFLPlayerFacade {
   @Select(NFLPlayerSelectors.selectPositions) public selectPositions$: Observable<string[]>;
   @Select(NFLPlayerSelectors.selectStatGroups) public selectStatGroups$: Observable<string[]>;
 
-  @Select(NFLPlayerSelectors.playerTableRows) public playerTableRows$: Observable<any[]>;
+  @Select() public playerTableRows$: Observable<any[]>;
 
   @Select(NFLPlayerSelectors.getPlayerList) public getPlayerList$: Observable<Player[]>;
   @Select(NFLPlayerSelectors.playersEmpty) public playersEmpty$: Observable<boolean>;
