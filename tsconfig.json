@@ -19,7 +19,8 @@
       "@espn/*": ["src/app/espn/*"],
       "@mlb/*": ["src/app/espn/mlb/*"],
       "@dfsNfl/*": ["src/app/dfs/nfl/*"]
-    }
+    },
+    "typeRoots": ["./node_modules/@types"]
   },
   "exclude": ["schematics"]
 }

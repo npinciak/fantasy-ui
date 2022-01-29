@@ -1,28 +1,21 @@
 <div>
-  <!-- <mat-form-field appearance="standard">
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="filterChange($event, filterType.name)" placeholder="Ex. ium" #input />
-  </mat-form-field> -->
+  <mat-form-field>
+    <mat-label>Position</mat-label>
+    <mat-select (selectionChange)="filterChange($event, filterType.pos)">
+      <mat-option value="">All</mat-option>
+      <mat-option *ngFor="let pos of playerFacade.positionList$ | async" [value]="pos">{{ pos }}</mat-option>
+    </mat-select>
+  </mat-form-field>
 
   <mat-form-field>
     <mat-label>Team</mat-label>
     <mat-select (selectionChange)="filterChange($event, filterType.team)">
       <mat-option value="">All</mat-option>
-      <mat-option *ngFor="let team of teamFacade.selectTeamsInSlate$ | async" [value]="team">
-        {{ team }}
-      </mat-option>
+      <mat-option *ngFor="let pos of playerFacade.teamList$ | async" [value]="pos">{{ pos }}</mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Position</mat-label>
-    <mat-select (selectionChange)="filterChange($event, filterType.pos)">
-      <mat-option value="">All</mat-option>
-      <mat-option *ngFor="let pos of playerFacade.selectPositions$ | async" [value]="pos">{{ pos }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field>
+  <!-- <mat-form-field>
     <mat-label>Position Group</mat-label>
     <mat-select (selectionChange)="filterChange($event, filterType.statGroup)">
       <mat-option value="">All</mat-option>
@@ -31,22 +24,10 @@
       }}</mat-option>
     </mat-select>
   </mat-form-field>
-  <!-- 
-  <mat-slider
-    class="example-margin"
-    [disabled]="false"
-    [invert]="false"
-    [max]="10000"
-    [min]="0"
-    (change)="salarySliderChange($event)"
-    [(ngModel)]="salarySliderVal"
-    aria-labelledby="example-name-label"
-  >
-  </mat-slider> -->
-</div>
+</div> -->
 
-<mat-paginator [length]="dfsPlayers.length" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons> </mat-paginator>
-<!-- <pre>
+  <mat-paginator [length]="dfsPlayers.length" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons> </mat-paginator>
+  <!-- <pre>
   {{ selection.selected.length }}
 
 SUM - {{ sum }}
@@ -62,57 +43,58 @@ Proj Points Ceil - {{ projectedPointsCeil }}
 Proj Points Floor - {{ projectedPointsFloor }}
 
 </pre> -->
+<!-- 
+  <ul>
+    <li *ngFor="let player of selectedPlayerList">{{ player?.name }} ({{ player?.siteId }}), {{ player?.position }}</li>
+  </ul> -->
 
-<ul>
-  <li *ngFor="let player of selectedPlayerList">{{ player?.name }} ({{ player?.siteId }}), {{ player?.position }}</li>
-</ul>
+  <mat-card *ngIf="dataSource">
+    <app-scrollable-table>
+      <table class="ui-w-100" mat-table [dataSource]="dataSource" matSort>
+        <ng-container *ngFor="let col of dataColumns; let colIndex = index" [matColumnDef]="col?.columnDef">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header [matTooltip]="col?.tooltip">{{ col?.headerLabel }}</th>
 
-<mat-card *ngIf="dataSource">
-  <app-scrollable-table>
-    <table class="ui-w-100" mat-table [dataSource]="dataSource" matSort>
-      <ng-container *ngFor="let col of dataColumns; let colIndex = index" [matColumnDef]="col?.columnDef">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header [matTooltip]="col?.tooltip">{{ col?.headerLabel }}</th>
+          <td
+            mat-cell
+            *matCellDef="let player"
+            [class.threshold-col]="col?.columnDef !== 'name'"
+            [ngStyle]="{ 'background-color': colorScaleTable(col.thresholdMin, col.thresholdMax, col?.cellData(player), col?.thresholdType) }"
+          >
+            <ng-container *ngIf="col?.columnDef === 'name'; else normalCell">
+              <app-sticky-table-cell>
+                <table class="ui-w-100">
+                  <tr>
+                    <!-- <img src="https://rical-players-nfl.s3.amazonaws.com/250x250/{{ player.img }}.jpg" /> -->
+                    <td>{{ player?.name }}, {{ player?.position }}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-size: 12px; color: #4c555f">
+                      <span [ngStyle]="{ 'font-weight': !player?.isHome ? 'bold' : '' }">
+                        {{ !player?.isHome ? player?.team : player?.opp }}
+                      </span>
+                      @
+                      <span [ngStyle]="{ 'font-weight': player?.isHome ? 'bold' : '' }"> {{ player?.isHome ? player?.team : player?.opp }}</span>
+                    </td>
+                  </tr>
+                </table>
+              </app-sticky-table-cell>
+            </ng-container>
 
-        <td
-          mat-cell
-          *matCellDef="let player"
-          [class.threshold-col]="col?.columnDef !== 'name'"
-          [ngStyle]="{ 'background-color': colorScaleTable(col.thresholdMin, col.thresholdMax, col?.cellData(player), col?.thresholdType) }"
-        >
-          <ng-container *ngIf="col?.columnDef === 'name'; else normalCell">
-            <app-sticky-table-cell>
-              <table class="ui-w-100">
-                <tr>
-                  <!-- <img src="https://rical-players-nfl.s3.amazonaws.com/250x250/{{ player.img }}.jpg" /> -->
-                  <td>{{ player?.name }}, {{ player?.position }}</td>
-                </tr>
-                <tr>
-                  <td style="font-size: 12px; color: #4c555f">
-                    <span [ngStyle]="{ 'font-weight': !player?.isHome ? 'bold' : '' }">
-                      {{ !player?.isHome ? player?.team : player?.opponent.info.hashtag }}
-                    </span>
-                    @
-                    <span [ngStyle]="{ 'font-weight': player?.isHome ? 'bold' : '' }"> {{ player?.isHome ? player?.team : player?.opponent.info.hashtag }}</span>
-                  </td>
-                </tr>
-              </table>
-            </app-sticky-table-cell>
-          </ng-container>
+            <ng-template #normalCell>
+              {{ col?.cellData(player) ? (col?.cellData(player) | number) : '-' }}
+            </ng-template>
+          </td>
+        </ng-container>
 
-          <ng-template #normalCell>
-            {{ col?.cellData(player) ? (col?.cellData(player) | number) : '-' }}
-          </ng-template>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let rowData; columns: displayColumns"
-        (click)="selectRow(rowData)"
-        (change)="$event ? selection.toggle(rowData) : null"
-        [class.great]="selection.isSelected(rowData)"
-      ></tr>
-    </table>
-  </app-scrollable-table>
-</mat-card>
+        <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let rowData; columns: displayColumns"
+          (click)="selectRow(rowData)"
+          (change)="$event ? selection.toggle(rowData) : null"
+          [class.great]="selection.isSelected(rowData)"
+        ></tr>
+      </table>
+    </app-scrollable-table>
+  </mat-card>
+</div>

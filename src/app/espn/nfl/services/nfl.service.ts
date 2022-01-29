@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { EspnClientCompetitor, EspnClientEvent, EspnClientLeague } from '@app/espn/espn-client.model';
-import { EspnService, Sports } from '@app/espn/espn.service';
-import { logoImgBuilder } from '@app/espn/mlb/helpers';
+import { EspnClientLeague } from '@app/espn/espn-client.model';
+import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
+import { EspnService } from '@app/espn/service/espn.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -17,7 +17,7 @@ export class NflService {
 
   footballLeague(leagueId: number): Observable<EspnClientLeague> {
     return this.espnClient
-      .espnFantasyLeagueBySport(Sports.football, leagueId)
+      .espnFantasyLeagueBySport(FantasySports.football, leagueId)
       .pipe(map(res => NflService.transformEspnClientLeagueToFootballLeague(res)));
   }
 }

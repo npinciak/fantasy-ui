@@ -1,10 +1,10 @@
-import { FastCastGameStatus } from '../espn.service';
+import { FastCastGameStatus } from '../service/espn.service';
 import { FastcastEvent } from './fastcast-event.model';
 import { MOCK_FASTCAST_TEAM_1, MOCK_FASTCAST_TEAM_2 } from './fastcast-team.model.mock';
 
 export const MOCK_FASTCAST_EVENT_1: FastcastEvent = {
   id: '400927752',
-  priority: 0,
+  leagueId: '40',
   timestamp: 12345678,
   state: FastCastGameStatus.Post,
   status: 'STATUS_IN_PROGRESS',
@@ -20,5 +20,14 @@ export const MOCK_FASTCAST_EVENT_1: FastcastEvent = {
   },
   isHalftime: false,
   downDistancePositionText: '1st & 10, ATL 20',
-  lastPlay: null,
+  lastPlay: {
+    id: '',
+    type: {
+      id: '',
+      text: '',
+      abbreviation: '',
+    },
+    scoreValue: 6,
+    text: 'James White 2 Yd Run',
+  },
 };

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { EspnFastcastEventFacade } from '@app/espn/facade/espn-fastcast-event.facade';
 import { EspnFastcastLeagueFacade } from '@app/espn/facade/espn-fastcast-league.facade';
 import { EspnFastcastFacade } from '@app/espn/facade/espn-fastcast.facade';
@@ -8,12 +8,10 @@ import { EspnFastcastFacade } from '@app/espn/facade/espn-fastcast.facade';
   templateUrl: './espn-scoreboard.component.html',
   styleUrls: ['./espn-scoreboard.component.scss'],
 })
-export class EspnScoreboardComponent implements OnInit {
+export class EspnScoreboardComponent {
   constructor(
     readonly fastcastFacade: EspnFastcastFacade,
     readonly fastcastEventFacade: EspnFastcastEventFacade,
     readonly fastcastLeagueFacade: EspnFastcastLeagueFacade
   ) {}
-
-  ngOnInit(): void {}
 }

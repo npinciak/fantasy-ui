@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UrlQueryParams } from '@app/@shared/url-builder';
 import { DailyFantasyPlayersFacade } from '@app/dfs/facade/daily-fantasy-players.facade';
-import { SlateFacade } from '@app/dfs/mlb/facade/slate.facade';
-import { DfsSlate } from '@app/dfs/models/daily-fantasy-client.model';
+import { DailyFantasySlateAttrFacade } from '@app/dfs/facade/daily-fantasy-slate-attr.facade';
+import { DailyFantasySlateFacade } from '@app/dfs/facade/daily-fantasy-slate.facade';
+import { SiteSlateEntity } from '@app/dfs/models/daily-fantasy-client.model';
+import { NFLTableFacade } from '@app/dfs/nfl/facade/table.facade';
 
 @Component({
   selector: 'app-home',
@@ -11,17 +13,21 @@ import { DfsSlate } from '@app/dfs/models/daily-fantasy-client.model';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  readonly LEAGUE = this.activatedRoute.snapshot.queryParamMap.get(UrlQueryParams.Sport) ?? 'nfl';
+  readonly LEAGUE = this.activatedRoute.snapshot.queryParamMap.get(UrlQueryParams.Sport);
+  readonly SITE = this.activatedRoute.snapshot.queryParamMap.get(UrlQueryParams.Site);
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    readonly slateFacade: SlateFacade,
-    readonly dailyFantasyPlayersFacade: DailyFantasyPlayersFacade
+    readonly tableFacade: NFLTableFacade,
+    readonly dailyFantasyPlayersFacade: DailyFantasyPlayersFacade,
+    readonly dailyFantasySlateFacade: DailyFantasySlateFacade,
+    readonly dailyFantasySlateAttrFacade: DailyFantasySlateAttrFacade
   ) {}
 
   ngOnInit(): void {}
 
-  select(event: DfsSlate) {
-    this.dailyFantasyPlayersFacade.fetchPlayers(event.slate_path, this.LEAGUE);
+  select(event: SiteSlateEntity) {
+    this.dailyFantasyPlayersFacade.fetchPlayers(event.slate_path);
+    this.dailyFantasySlateFacade.fetchSlateAttr(this.LEAGUE, this.SITE, event.importId);
   }
 }

@@ -1,11 +1,9 @@
-import { TeamAttributes } from '../mlb/models/slate.interface';
-
 /**
  * Base matchup model
  */
 interface MatchupProperties {
   teamId: string;
-  matchupAttr: TeamAttributes;
+  matchupAttr: unknown;
 }
 
 export type Matchup = MatchupProperties;

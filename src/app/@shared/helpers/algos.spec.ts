@@ -1,21 +1,11 @@
-import { binarySearch, insertionSortDesc } from './algos';
+import { insertionSortDesc } from './algos';
 
 describe('[Algo] Insertion Sort', () => {
   it('should return empty arr if array size is 0', () => {
-    const actual = insertionSortDesc([], 'liveScore');
+    const actual = insertionSortDesc([], team => team.liveScore);
     const expected = 0;
     expect(actual).toEqual([]);
     expect(actual.length).toEqual(expected);
-  });
-
-  it('should return empty arr if array is object', () => {
-    const actual = insertionSortDesc({}, 'liveScore');
-    expect(actual).toEqual([]);
-  });
-
-  it('should return empty array if input is number', () => {
-    const actual = insertionSortDesc(4, 'liveScore');
-    expect(actual).toEqual([]);
   });
 
   it('should return array largest -> small', () => {
@@ -31,7 +21,7 @@ describe('[Algo] Insertion Sort', () => {
       { id: 213, name: 'test3', liveScore: 14 },
     ];
 
-    const actual = insertionSortDesc(teams, 'liveScore');
+    const actual = insertionSortDesc(teams, team => team.liveScore);
     expect(actual).toEqual(expected);
   });
 
@@ -40,7 +30,7 @@ describe('[Algo] Insertion Sort', () => {
 
     const expected = [{ id: 3, name: 'test3', liveScore: 14 }];
 
-    const actual = insertionSortDesc(teams, 'liveScore');
+    const actual = insertionSortDesc(teams, team => team.liveScore);
 
     expect(actual.length).toEqual(1);
     expect(actual).toEqual(expected);
@@ -61,7 +51,7 @@ describe('[Algo] Insertion Sort', () => {
       { id: 213, name: 'test3', liveScore: 14 },
     ];
 
-    const actual = insertionSortDesc(teams, 'liveScore');
+    const actual = insertionSortDesc(teams, team => team.liveScore);
     expect(actual).toEqual(expected);
   });
 });

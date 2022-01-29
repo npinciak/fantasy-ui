@@ -12,3 +12,4 @@ interface ScheduleProperties {
 }
 
 export type Schedule = ScheduleProperties;
+export type ScheduleMap = Record<string, Schedule>;

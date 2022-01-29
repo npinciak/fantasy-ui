@@ -1,15 +1,14 @@
-import { cellDataAccessor } from '@app/@shared/helpers/utils';
 import { Selector } from '@ngxs/store';
 import { TableColumn } from '../models/table.model';
 
 export class DailyFantasyTableSelectors {
   @Selector()
-  static temp() {
-    return;
+  static playerTableList(playerColumns: any[]): any[] {
+    return [];
   }
 
   @Selector()
-  static tableColumns(): TableColumn[] {
+  static playerDisplayColumns(tableColumns: TableColumn[]): string[] {
     return [];
   }
 }

@@ -1,24 +1,30 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { sortAccessor } from '@app/@shared/helpers/sort';
-import { FilterType } from '@app/dfs/components/player-table/player-table.component';
-import { TableColumn } from '@app/dfs/mlb/selectors/table.selector';
-import { NFLPlayerFacade } from '../../facade/player.facade';
-import { ScheduleFacade } from '../../facade/schedule.facade';
-import { NFL_STAT_GROUP_MAP } from '../../models/stat-group.model';
 import { colorScaleTable } from '@app/@shared/helpers/color-blender';
-import { NFLTeamFacade } from '../../facade/team.facade';
-import { NFLTableColumn } from '../../models/nfl-table.model';
-import { SelectionModel } from '@angular/cdk/collections';
-import { NFLPlayerTableRow } from '../../models/nfl-player-table-row.model';
+import { sortAccessor } from '@app/@shared/helpers/sort';
+import { DailyFantasyPlayersFacade } from '@app/dfs/facade/daily-fantasy-players.facade';
+import { TableColumn } from '@app/dfs/mlb/selectors/table.selector';
 import { NFLDfsLineupFacade } from '../../facade/nfl-dfs-lineup.facade';
+import { ScheduleFacade } from '../../facade/schedule.facade';
+import { NFLPlayerTableRow } from '../../models/nfl-player-table-row.model';
+import { NFLTableColumn } from '../../models/nfl-table.model';
+import { NFL_STAT_GROUP_MAP } from '../../models/stat-group.model';
 
 const threshold = {
   QB: 1,
   RB: 3,
 };
+
+enum FilterType {
+  team,
+  pos,
+  name,
+  statGroup,
+  salary,
+}
 
 @Component({
   selector: 'app-nfl-player-table',
@@ -26,18 +32,18 @@ const threshold = {
   styleUrls: ['./player-table.component.scss'],
 })
 export class PlayerTableComponent implements OnInit, AfterViewInit, OnChanges {
-  @Input() dfsPlayers: any[];
-  @Input() displayColumns: string[];
-  @Input() dataColumns: TableColumn[];
+  @Input() dfsPlayers: any[] = [];
+  @Input() displayColumns: string[] = [];
+  @Input() dataColumns: TableColumn[] = [];
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[];
+  displayedColumns: string[] = [];
 
   filter = '';
-  filterTypeSelected: FilterType;
+  filterTypeSelected: FilterType = 0;
   readonly filterType = FilterType;
   readonly NFL_STAT_GROUP_MAP = NFL_STAT_GROUP_MAP;
   readonly colorScaleTable = colorScaleTable;
@@ -52,8 +58,7 @@ export class PlayerTableComponent implements OnInit, AfterViewInit, OnChanges {
 
   constructor(
     readonly lineupFacade: NFLDfsLineupFacade,
-    readonly teamFacade: NFLTeamFacade,
-    readonly playerFacade: NFLPlayerFacade,
+    readonly playerFacade: DailyFantasyPlayersFacade,
     private cdr: ChangeDetectorRef,
     readonly scheduleFacade: ScheduleFacade
   ) {}

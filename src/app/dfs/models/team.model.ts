@@ -1,3 +1,5 @@
+import { Vegas } from './daily-fantasy-client.model';
+
 /**
  * Base team model
  */
@@ -9,3 +11,13 @@ interface TeamProperties {
 }
 
 export type Team = TeamProperties;
+export type TeamMap = Record<string, Team>;
+
+/**
+ * Base slate attr team model
+ */
+export interface SlateAttrTeamProperties {
+  vegas: Vegas;
+}
+
+export type SlateAttrTeam = SlateAttrTeamProperties;

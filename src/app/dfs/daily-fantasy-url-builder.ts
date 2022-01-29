@@ -22,7 +22,7 @@ export class DailyFantasyEndpointBuilder {
   }
 
   get gridIron() {
-    return `${DailyFantasyEndpointBuilder.dailyFantasyBase}/grids/3350867.json`;
+    return `${DailyFantasyEndpointBuilder.dailyFantasyBase}/grids/3350867.json`; // TODO: *.json dynamic?
   }
 
   get slateMaster() {
@@ -34,7 +34,7 @@ export class DailyFantasyEndpointBuilder {
   }
 
   get slateHttps() {
-    return `https://${this.awsJson}`;
+    return this.awsJson;
   }
 
   private get awsJson() {

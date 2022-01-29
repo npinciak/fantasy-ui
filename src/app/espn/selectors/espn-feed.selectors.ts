@@ -1,5 +1,4 @@
 import { Selector } from '@ngxs/store';
-
 import { FeedArticle } from '../models/feed.model';
 import { EspnFeedState } from '../state/espn-feed.state';
 

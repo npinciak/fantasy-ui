@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { Schedule } from '../models/schedule.model';
+import { Schedule, ScheduleMap } from '../models/schedule.model';
 
 export class PatchSchedule {
   static readonly type = `[dailyFantasySchedule] PatchSchedule`;
@@ -9,7 +9,7 @@ export class PatchSchedule {
 }
 
 export class DailyFantasyScheduleStateModel {
-  map: { [id: string]: Schedule };
+  map: ScheduleMap;
 }
 
 @State<DailyFantasyScheduleStateModel>({
@@ -21,7 +21,7 @@ export class DailyFantasyScheduleStateModel {
 @Injectable()
 export class DailyFantasyScheduleState {
   @Selector([DailyFantasyScheduleState])
-  static getMap(state: DailyFantasyScheduleStateModel): { [id: string]: Schedule } {
+  static getMap(state: DailyFantasyScheduleStateModel): ScheduleMap {
     return state.map;
   }
 

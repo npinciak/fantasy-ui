@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
-import { State, Action, StateContext, Selector } from '@ngxs/store';
-import { DfsSlate } from '../mlb/models/slateMaster.interface';
-
+import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { SlateMaster } from '../models/daily-fantasy-client.model';
 import { SlateService } from '../service/slate.service';
 
+export type SlateMasterMap = Record<string, SlateMaster>;
 export class FetchSlates {
   public static readonly type = `[dailyFantasySlate] FetchSlates`;
   constructor(public payload: { site: string; sport: string }) {}
 }
 
 export class DailyFantasySlateStateModel {
-  slates: { [id: number]: DfsSlate };
+  map: SlateMasterMap;
+  site: string | null;
 }
 
 const defaults = {
-  slates: {},
+  map: {},
+  site: null,
 };
 
 @State<DailyFantasySlateStateModel>({
@@ -26,15 +28,22 @@ export class DailyFantasySlateState {
   constructor(private slateService: SlateService) {}
 
   @Selector()
-  static slates(state: DailyFantasySlateStateModel): { [id: number]: DfsSlate } {
-    return state.slates;
+  static slateMap(state: DailyFantasySlateStateModel): SlateMasterMap {
+    return state.map;
+  }
+
+  @Selector()
+  static site(state: DailyFantasySlateStateModel): string {
+    return state.site;
   }
 
   @Action(FetchSlates)
   async fetchSlates({ patchState }: StateContext<DailyFantasySlateStateModel>, { payload: { site, sport } }: FetchSlates): Promise<void> {
-    const res = await this.slateService.slatesByDate(sport).toPromise();
-    const slates: { [id: number]: DfsSlate } = res[site];
+    const res = await this.slateService.slatesByDate({ sport }).toPromise();
 
-    patchState({ slates });
+    const map: SlateMasterMap = res[site];
+
+    patchState({ map });
   }
 }
+

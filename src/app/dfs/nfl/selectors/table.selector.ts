@@ -1,8 +1,6 @@
-/* eslint-disable arrow-body-style */
-import { sortAccessor } from '@app/@shared/helpers/sort';
 import { cellDataAccessor } from '@app/@shared/helpers/utils';
+import { PlayerTableRow } from '@app/dfs/models/player.model';
 import { Selector } from '@ngxs/store';
-import { PlayerTableRow } from '../models/nfl-player-table-row.model';
 import { NFLTableColumn } from '../models/nfl-table.model';
 
 export interface TableColumn {
@@ -106,16 +104,14 @@ export class NFLTableSelectors {
 
   @Selector([NFLTableSelectors.playerColList])
   static playerTableList(playerCols: any[]): any[] {
-    return playerCols.map(col => {
-      return {
-        columnDef: col.data,
-        cellData: (data: PlayerTableRow) => cellDataAccessor(data, col.data),
-        headerLabel: col.headerLabel,
-        thresholdType: col.thresholdType,
-        thresholdMin: col.thresholdMin,
-        thresholdMax: col.thresholdMax,
-      };
-    });
+    return playerCols.map(col => ({
+      columnDef: col.data,
+      cellData: (data: PlayerTableRow) => cellDataAccessor(data, col.data),
+      headerLabel: col.headerLabel,
+      thresholdType: col.thresholdType,
+      thresholdMin: col.thresholdMin,
+      thresholdMax: col.thresholdMax,
+    }));
   }
 
   @Selector([NFLTableSelectors.playerTableList])

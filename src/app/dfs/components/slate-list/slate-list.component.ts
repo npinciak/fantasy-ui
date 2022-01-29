@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DfsFacade } from '@app/dfs/mlb/facade/dfs.facade';
-import { DfsSlate } from '@app/dfs/mlb/models/slateMaster.interface';
-import { SlateType } from '@app/dfs/mlb/selectors/slate.selector';
+import { SiteSlateEntity } from '@app/dfs/models/daily-fantasy-client.model';
+import { SlateTypeMap } from '@app/dfs/selectors/daily-fantasy-slate.selectors';
 
 @Component({
   selector: 'app-slate-list',
@@ -9,10 +8,10 @@ import { SlateType } from '@app/dfs/mlb/selectors/slate.selector';
   styles: ['.mat-list-base .mat-list-item{font-size:14px}'],
 })
 export class SlateListComponent implements OnInit {
-  @Input() slateList: { [slateType in SlateType]: DfsSlate[] };
-  @Output() selectSlate = new EventEmitter<DfsSlate>();
+  @Input() slateList: SlateTypeMap;
+  @Output() selectSlate = new EventEmitter<SiteSlateEntity>();
 
-  constructor(readonly dfsFacade: DfsFacade) {}
+  constructor() {}
 
   ngOnInit(): void {}
 }
