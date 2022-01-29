@@ -7,7 +7,7 @@ import { NFLTableSelectors, TableColumn } from '../selectors/table.selector';
   providedIn: 'root',
 })
 export class NFLTableFacade {
-  @Select(NFLTableSelectors.playerTableList) public playerTableList$: Observable<TableColumn[]>;
+  @Select(NFLTableSelectors.playerTableList) public playerTableList$: Observable<Partial<TableColumn>[]>;
   @Select(NFLTableSelectors.playerDisplayColumns) public playerDisplayColumns$: Observable<string[]>;
 
   @Select(NFLTableSelectors.matchupTableList) public matchupTableList$: Observable<TableColumn[]>;
