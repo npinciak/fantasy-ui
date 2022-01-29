@@ -1,16 +1,18 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NoDataComponent } from './components/no-data/no-data.component';
-import { MaterialModule } from '@app/material.module';
+import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
+import { MaterialModule } from '@app/material.module';
+import { ChartsModule } from 'ng2-charts';
+import { DataVisComponent } from './components/data-vis/data-vis.component';
 import { DialogComponent } from './components/dialog/dialog.component';
-import { ScrollableTableComponent } from './components/scrollable-table/scrollable-table.component';
-import { StickyTableCellComponent } from './components/sticky-table-cell/sticky-table-cell.component';
 import { DropdownFilterComponent } from './components/dropdown-filter/dropdown-filter.component';
 import { EspnScoreboardCardTeamComponent } from './components/espn-scoreboard-card-team/espn-scoreboard-card-team.component';
 import { EspnScoreboardCardComponent } from './components/espn-scoreboard-card/espn-scoreboard-card.component';
 import { EspnScoreboardComponent } from './components/espn-scoreboard/espn-scoreboard.component';
+import { NoDataComponent } from './components/no-data/no-data.component';
+import { ScrollableTableComponent } from './components/scrollable-table/scrollable-table.component';
+import { StickyTableCellComponent } from './components/sticky-table-cell/sticky-table-cell.component';
 
 @NgModule({
   declarations: [
@@ -22,9 +24,11 @@ import { EspnScoreboardComponent } from './components/espn-scoreboard/espn-score
     EspnScoreboardComponent,
     EspnScoreboardCardComponent,
     EspnScoreboardCardTeamComponent,
+    DataVisComponent,
   ],
-  imports: [RouterModule, MaterialModule, FlexLayoutModule, CommonModule],
+  imports: [RouterModule, MaterialModule, FlexLayoutModule, CommonModule, ChartsModule],
   exports: [
+    DataVisComponent,
     NoDataComponent,
     DialogComponent,
     ScrollableTableComponent,
