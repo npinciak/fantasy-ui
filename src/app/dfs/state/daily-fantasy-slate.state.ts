@@ -11,10 +11,12 @@ export class FetchSlates {
 
 export class DailyFantasySlateStateModel {
   map: SlateMasterMap;
+  site: string | null;
 }
 
 const defaults = {
   map: {},
+  site: null,
 };
 
 @State<DailyFantasySlateStateModel>({
@@ -30,11 +32,18 @@ export class DailyFantasySlateState {
     return state.map;
   }
 
+  @Selector()
+  static site(state: DailyFantasySlateStateModel): string {
+    return state.site;
+  }
+
   @Action(FetchSlates)
   async fetchSlates({ patchState }: StateContext<DailyFantasySlateStateModel>, { payload: { site, sport } }: FetchSlates): Promise<void> {
     const res = await this.slateService.slatesByDate({ sport }).toPromise();
+
     const map: SlateMasterMap = res[site];
 
     patchState({ map });
   }
 }
+

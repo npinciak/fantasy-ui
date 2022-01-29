@@ -2,8 +2,6 @@ import { toInt } from '@app/@shared/helpers/toInt';
 import { getNestedValue } from '@app/@shared/helpers/utils';
 import { dfsSiteToDfsSiteTypeMap } from '@app/dfs/dfs.const';
 import { Team } from '@app/dfs/models/team.model';
-import { NflDfsState } from '@app/dfs/nfl/state/nfl-dfs.state';
-import { DailyFantasyPlayersSelectors } from '@app/dfs/selectors/daily-fantasy-players.selectors';
 import { DailyFantasyTeamsSelectors } from '@app/dfs/selectors/daily-fantasy-team.selectors';
 import { Selector } from '@ngxs/store';
 import { camelCase } from 'lodash';
@@ -15,9 +13,9 @@ import {
   NFLClientSlateAttrTeam,
   PlayerOwnershipByDfsSiteTypeBySlate,
 } from '../models/nfl-client.model';
+import { NflDfsPlayerGridIronState } from '../state/nfl-dfs-player-gridiron.state';
 import { NflDfsProfilerState } from '../state/nfl-dfs-profiler.state';
 import { NFLScheduleSelectors } from './schedule.selector';
-import { NFLTeamSelectors } from './team.selector';
 
 interface TeamAwayOrTeamHome {
   hashtag: string;
@@ -70,32 +68,32 @@ export class NFLPlayerSelectors {
     return transformed;
   };
 
-  @Selector([NflDfsState.slate])
+  @Selector([])
   static getSlate(slate: number): number {
     return slate;
   }
 
-  @Selector([NflDfsState.site])
+  @Selector([])
   static getSite(site: string): string {
     return site;
   }
 
-  @Selector([DailyFantasyPlayersSelectors.selectPlayerList])
+  @Selector([])
   static getPlayerList(players: { [id: number]: Player }): Player[] {
     return Object.values(players);
   }
 
-  @Selector([NflDfsState.slatePlayers])
+  @Selector([])
   static getSlatePlayerList(players: { [id: number]: NFLClientPlayerAttributes }): NFLClientPlayerAttributes[] {
     return Object.values(players);
   }
 
-  @Selector([NflDfsState.slatePlayers])
+  @Selector([])
   static getSlatePlayerById(players: { [id: number]: NFLClientPlayerAttributes }): (id: string) => NFLClientPlayerAttributes[] {
     return (id: string) => players[id];
   }
 
-  @Selector([NflDfsState.masterPlayers])
+  @Selector([])
   static getPlayerById(players: { [id: string]: Player }): (id: string) => Player {
     return (id: string) => players[id];
   }
@@ -105,7 +103,7 @@ export class NFLPlayerSelectors {
     return (id: string) => players[id];
   }
 
-  @Selector([NflDfsState.gridIronPlayers])
+  @Selector([NflDfsPlayerGridIronState.getGridIronPlayerMap])
   static getGridIronPlayerById(players: NFLClientGridIronPlayerMap): (id: string) => NFLClientGridIronPlayer {
     return (id: string) => players[id];
   }
@@ -157,7 +155,6 @@ export class NFLPlayerSelectors {
     NFLPlayerSelectors.getGridIronPlayerById,
     NFLScheduleSelectors.getTeamAttrById,
     DailyFantasyTeamsSelectors.selectTeamById,
-    NFLTeamSelectors.getTeamByRgId,
   ])
   static playerTableRows(
     slate: string,
@@ -167,8 +164,7 @@ export class NFLPlayerSelectors {
     getPlayerProfilerSeasonById: (id: string) => any,
     getGridIronPlayerById: (id: string) => NFLClientGridIronPlayer,
     getTeamAttrById: (id: string) => NFLClientSlateAttrTeam,
-    selectTeamById: (id: string) => Team,
-    getTeamByRgId: (id: string) => TeamAwayOrTeamHome
+    selectTeamById: (id: string) => Team
   ): any[] {
     return masterPlayerList
       .map(p => {

@@ -1,5 +1,4 @@
 import { CoreSchedule } from '@app/dfs/mlb/models/dfsPlayer.interface';
-import { NflDfsState } from '@app/dfs/nfl/state/nfl-dfs.state';
 import { DailyFantasyScheduleState } from '@app/dfs/state/daily-fantasy-schedule.state';
 import { Selector } from '@ngxs/store';
 import { camelCase } from 'lodash';
@@ -42,7 +41,7 @@ export class NFLScheduleSelectors {
     return (id: string) => schedule[id];
   }
 
-  @Selector([NflDfsState.slateTeams])
+  @Selector([])
   static getTeamAttrById(team: NFLClientSlateAttrTeamMap): (id: string) => NFLClientSlateAttrTeam {
     return (id: string) => team[id];
   }
@@ -57,7 +56,7 @@ export class NFLScheduleSelectors {
     return Array.from(set);
   }
 
-  @Selector([NflDfsState.site, NflDfsState.slate, NFLScheduleSelectors.getScheduleList, NFLScheduleSelectors.getTeamAttrById])
+  @Selector([])
   static selectNflMatchups(
     site: string,
     slate: number,

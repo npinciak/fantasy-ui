@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 
 export type DeepPartial<T> = T extends Primitive

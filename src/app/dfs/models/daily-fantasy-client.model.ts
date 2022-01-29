@@ -42,11 +42,11 @@ export type Multiplier = Record<number, number>;
 export type Slot = { posName: string; posOpts: Record<number, string> };
 
 export interface Vegas {
-  'o/u': string;
-  opp_total: string;
-  total: string;
-  line: string;
-  movement: string;
+  'o/u': number;
+  opp_total: number;
+  total: number;
+  line: number;
+  movement: number;
 }
 
 export type SlateMaster = { [site in ClientSite]: Record<string, SiteSlateEntity> };
