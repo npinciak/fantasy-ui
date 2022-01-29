@@ -5,17 +5,17 @@ import { NFLTableColumn } from '../models/nfl-table.model';
 
 export interface TableColumn {
   columnDef: string;
-  tooltip?: string | null;
+  tooltip: string | null;
   data: string;
   headerLabel: string;
-  thresholdType?: string; // 'lowToHigh' | 'highToLow' ;
-  thresholdMin?: number;
-  thresholdMax?: number;
+  thresholdType: string; // 'lowToHigh' | 'highToLow' ;
+  thresholdMin: number;
+  thresholdMax: number;
 }
 
 export class NFLTableSelectors {
   @Selector()
-  static playerColList(): any[] {
+  static playerColList(): Partial<TableColumn>[] {
     return [
       { data: NFLTableColumn.Name, thresholdType: '', headerLabel: '' },
       { data: NFLTableColumn.Salary, thresholdType: '', headerLabel: '' },
@@ -62,48 +62,8 @@ export class NFLTableSelectors {
     ];
   }
 
-  @Selector()
-  static playerColListWR(): any[] {
-    return [
-      { data: 'name', thresholdType: '', headerLabel: '' },
-      { data: 'salary', thresholdType: '', headerLabel: '' },
-      { data: 'playerProjection.fpts', thresholdMin: 0, thresholdMax: 30, thresholdType: 'lowToHigh', headerLabel: 'fpts' },
-      { data: 'playerProjection.ceil', thresholdMin: 0, thresholdMax: 45, thresholdType: 'lowToHigh', headerLabel: 'ceiling' },
-      { data: 'playerProjection.floor', thresholdMin: 0, thresholdMax: 20, thresholdType: 'lowToHigh', headerLabel: 'floor' },
-      { data: 'playerAdvanced.fptsPerGame', thresholdMin: 0, thresholdMax: 40, thresholdType: 'lowToHigh', headerLabel: 'FPts/g' },
-      { data: 'playerAdvanced.targetShare', thresholdMin: 0, thresholdMax: 50, thresholdType: 'lowToHigh', headerLabel: 'Target %' },
-      { data: 'playerAdvanced.rzTargetShare', thresholdMin: 0, thresholdMax: 50, thresholdType: 'lowToHigh', headerLabel: 'RZ Target %' },
-      {
-        data: 'playerAdvanced.dominatorRating',
-        thresholdMin: 0,
-        thresholdMax: 100,
-        thresholdType: 'lowToHigh',
-        headerLabel: 'Dominator Rating',
-      },
-      { data: 'playerAdvanced.aDOT', thresholdMin: 0, thresholdMax: 100, thresholdType: 'lowToHigh', headerLabel: 'aDOT' },
-      {
-        data: 'playerAdvanced.avgTargetDist',
-        thresholdMin: 0,
-        thresholdMax: 50,
-        thresholdType: 'lowToHigh',
-        headerLabel: 'Avg Tar Dist',
-      },
-      {
-        data: 'playerAdvanced.catchableTargetRate',
-        thresholdMin: 0,
-        thresholdMax: 100,
-        thresholdType: 'lowToHigh',
-        headerLabel: 'Catchable Tar. %',
-      },
-      { data: 'playerAdvanced.gameScript', thresholdMin: -11, thresholdMax: 11, thresholdType: 'lowToHigh', headerLabel: 'gameScript' },
-      { data: 'opponent.passDefRk', thresholdType: 'lowToHigh', headerLabel: 'OppPassDefRk' },
-      { data: 'opponent.fptsAllowedRk.allowedToAdjQb', thresholdType: 'highToLow', headerLabel: 'allowedToAdjQb' },
-      { data: 'opponent.fptsAllowedRk.allowedToAdjWr', thresholdType: 'highToLow', headerLabel: 'allowedToAdjWr' },
-    ];
-  }
-
   @Selector([NFLTableSelectors.playerColList])
-  static playerTableList(playerCols: any[]): any[] {
+  static playerTableList(playerCols: Partial<TableColumn>[]) {
     return playerCols.map(col => ({
       columnDef: col.data,
       cellData: (data: PlayerTableRow) => cellDataAccessor(data, col.data),
@@ -120,7 +80,7 @@ export class NFLTableSelectors {
   }
 
   @Selector()
-  static matchupTableList(): any[] {
+  static matchupTableList() {
     return [
       { columnDef: 'teamName', cellData: 'teamName', headerLabel: '', hasTooltip: false },
       { columnDef: 'opponent', cellData: 'opponent', headerLabel: 'Opp', hasTooltip: false },

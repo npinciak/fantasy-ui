@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Chart, ChartData, ChartType } from 'chart.js';
+import { ChartData, ChartType } from 'chart.js';
 
 @Component({
   selector: `app-data-vis`,
@@ -17,7 +17,7 @@ export class DataVisComponent implements OnInit {
   // scatter
   //  Chart.overrides[type].plugins.tooltip
 
-  public scatterChartOptions: Chart.ChartOptions = {
+  public scatterChartOptions = {
     responsive: true,
     events: ['click', 'mousemove'],
     plugins: {
@@ -102,46 +102,4 @@ export class DataVisComponent implements OnInit {
     //     };
     //   });
   }
-}
-
-/**
- * Exported for ease of use
- *
- */
-export interface MetaData {
-  _chart: Chart;
-  _datasetIndex: number;
-  _index: number;
-  _model: Model;
-  _start?: any;
-  _view: Model;
-  _xScale: Chart.ChartScales;
-  _yScale: Chart.ChartScales;
-  hidden?: boolean;
-}
-
-interface Model {
-  backgroundColor: string;
-  borderAlign?: Chart.BorderAlignment;
-  borderColor: string;
-  borderWidth?: number;
-  circumference?: number;
-  controlPointNextX: number;
-  controlPointNextY: number;
-  controlPointPreviousX: number;
-  controlPointPreviousY: number;
-  endAngle?: number;
-  hitRadius: number;
-  innerRadius?: number;
-  outerRadius?: number;
-  pointStyle: string;
-  radius: number | string;
-  skip?: boolean;
-  startAngle?: number;
-  steppedLine?: boolean;
-  tension: number;
-  x: number;
-  y: number;
-  base: number;
-  head: number;
 }
