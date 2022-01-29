@@ -8,6 +8,6 @@ import { DailyFantasyTableSelectors } from '../selectors/daily-fantasy-table.sel
   providedIn: 'root',
 })
 export class DailyFantasyTableFacade {
-  @Select(DailyFantasyTableSelectors.playerTableList) public playerTableList$: Observable<TableColumn[]>;
-  @Select(DailyFantasyTableSelectors.playerDisplayColumns) public playerDisplayColumns$: Observable<string[]>;
+  // @Select(DailyFantasyTableSelectors.playerTableList) public playerTableList$: Observable<TableColumn[]>;
+  // @Select(DailyFantasyTableSelectors.playerDisplayColumns) public playerDisplayColumns$: Observable<string[]>;
 }

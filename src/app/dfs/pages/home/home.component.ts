@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UrlQueryParams } from '@app/@shared/url-builder';
 import { DailyFantasyPlayersFacade } from '@app/dfs/facade/daily-fantasy-players.facade';
+import { DailyFantasySlateAttrFacade } from '@app/dfs/facade/daily-fantasy-slate-attr.facade';
 import { DailyFantasySlateFacade } from '@app/dfs/facade/daily-fantasy-slate.facade';
 import { SiteSlateEntity } from '@app/dfs/models/daily-fantasy-client.model';
+import { NFLTableFacade } from '@app/dfs/nfl/facade/table.facade';
 
 @Component({
   selector: 'app-home',
@@ -16,8 +18,10 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    readonly tableFacade: NFLTableFacade,
     readonly dailyFantasyPlayersFacade: DailyFantasyPlayersFacade,
-    readonly dailyFantasySlateFacade: DailyFantasySlateFacade
+    readonly dailyFantasySlateFacade: DailyFantasySlateFacade,
+    readonly dailyFantasySlateAttrFacade: DailyFantasySlateAttrFacade
   ) {}
 
   ngOnInit(): void {}
