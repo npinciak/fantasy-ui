@@ -1,5 +1,6 @@
 import { pickAxisData, scatterData } from '@app/@shared/helpers/graph.helpers';
 import { toInt } from '@app/@shared/helpers/toInt';
+import { unique } from '@app/@shared/helpers/unique-by';
 import { getNestedValue } from '@app/@shared/helpers/utils';
 import { Selector } from '@ngxs/store';
 import { ChartData } from 'chart.js';
@@ -36,24 +37,14 @@ export class DailyFantasyPlayersSelectors {
 
   @Selector([DailyFantasyPlayersSelectors.selectPlayerList])
   static selectPositionsList(players: Player[]): string[] {
-    const set = new Set<string>();
-    players.map(val => {
-      if (val.position) {
-        set.add(val.position);
-      }
-    });
-    return Array.from(set);
+    const positions = players.map(p => p.position);
+    return unique(positions);
   }
 
   @Selector([DailyFantasyPlayersSelectors.selectPlayerList])
   static selectTeamList(players: Player[]): string[] {
-    const set = new Set<string>();
-    players.map(val => {
-      if (val.team) {
-        set.add(val.team);
-      }
-    });
-    return Array.from(set);
+    const teams = players.map(p => p.team);
+    return unique(teams);
   }
 
   @Selector([
@@ -166,91 +157,3 @@ export class DailyFantasyPlayersSelectors {
     };
   }
 }
-
-// @Selector([
-//   NFLPlayerSelectors.getSlate,
-//   NFLPlayerSelectors.getSite,
-//   NFLPlayerSelectors.getPlayerList,
-//   NFLPlayerSelectors.getSlatePlayerById,
-//   NFLPlayerSelectors.getPlayerProfilerSeasonById,
-//   NFLPlayerSelectors.getGridIronPlayerById,
-//   NFLScheduleSelectors.getTeamAttrById,
-//   DailyFantasyTeamsSelectors.selectTeamById,
-//   NFLTeamSelectors.getTeamByRgId,
-// ])
-// static playerTableRows(
-//   slate: string,
-//   site: string,
-//   masterPlayerList: Player[],
-//   getSlatePlayerById: (id: string) => NFLClientPlayerAttributes,
-//   getPlayerProfilerSeasonById: (id: string) => any,
-//   getGridIronPlayerById: (id: string) => NFLClientGridIronPlayer,
-//   getTeamAttrById: (id: string) => NFLClientSlateAttrTeam,
-//   selectTeamById: (id: string) => Team,
-//   getTeamByRgId: (id: string) => TeamAwayOrTeamHome
-// ): unknown[] {
-//   return masterPlayerList
-//     .map(p => {
-//       const team = selectTeamById(p.teamId).name;
-
-//       const playerRgId = p.rgId;
-
-//       const slatePlayer = getSlatePlayerById(playerRgId);
-//       const gridIronPlayer = getGridIronPlayerById(playerRgId);
-//       const opponent: TeamAwayOrTeamHome = _opponentMap(p) ?? null;
-//       const profilerPlayer = getPlayerProfilerSeasonById(playerRgId);
-
-//       const teamInfo = getTeamAttrById(p.rgTeamId);
-//       const opponentInfo = getTeamAttrById(opponent.rgId);
-
-//       return {
-//         siteId: null,
-//         rgId: playerRgId,
-//         name: p.name,
-//         position: p.position,
-//         team,
-//         isHome: !opponent.isHome,
-//         statGroup: slatePlayer?.stat_group ?? '',
-//         salary: toInt(gridIronPlayer?.SALARY).int ?? 0,
-//         playerAdvanced: {
-//           fptsPerGame: toInt(profilerPlayer?.['Fantasy Points Per Game']).int ?? 0,
-//           targetShare: toInt(profilerPlayer?.['Target Share']).int ?? 0, // WR
-//           rzTargetShare: toInt(profilerPlayer?.['Red Zone Target Share']).int ?? 0,
-//           dominatorRating: toInt(profilerPlayer?.['Dominator Rating']).int ?? 0,
-//           aDOT: toInt(profilerPlayer?.['Average Target Distance']).int ?? 0,
-//           avgTargetDist: toInt(profilerPlayer?.['Average Target Distance']).int ?? 0,
-//           catchableTargetRate: toInt(profilerPlayer?.['Catchable Target Rate']).int ?? 0,
-//           gameScript: toInt(profilerPlayer?.['Game Script']).int ?? 0,
-//           goalLineCarriesGame: toInt(profilerPlayer?.['Goal Line Carries Per Game']).int ?? 0,
-//           rzOppShare: toInt(profilerPlayer?.['Red Zone Opportunity Share']).int ?? 0,
-//           epa: toInt(profilerPlayer?.['Expected Points Added']).int ?? 0,
-//           epaPass: toInt(profilerPlayer?.['Pass EPA']).int ?? 0,
-//           epaRun: toInt(profilerPlayer?.['Run EPA']).int ?? 0,
-//           productionPrem: toInt(profilerPlayer?.['Production Premium']).int ?? 0,
-//           productionPremRank: toInt(profilerPlayer?.['Production Premium Rank']).int ?? 0,
-//         },
-//         playerProjection: {
-//           targets: toInt(gridIronPlayer?.TAR).int ?? 0,
-//           fpts: toInt(gridIronPlayer?.FPTS).int ?? 0,
-//           fptsVal: toInt(getNestedValue(gridIronPlayer, ['FPTS/$'])).int ?? 0,
-//           ceil: toInt(gridIronPlayer?.CEIL).int ?? 0,
-//           floor: toInt(gridIronPlayer?.FLOOR).int ?? 0,
-//           slateOwnership: NFLPlayerSelectors.transformSlateOwnership(slate, site, slatePlayer?.slate_ownership) ?? 0,
-//           expertRating: getNestedValue(slatePlayer, ['ecr', [dfsSiteToDfsSiteTypeMap[site]], 'rank']),
-//         },
-//         opponent: {
-//           info: opponent,
-//           passDef: toInt(teamInfo?.outsiders?.['Opp PaDef']).int ?? 0,
-//           passDefRk: toInt(teamInfo?.outsiders?.['Opp PaDef Rk']).int ?? 0,
-//           fptsAllowedRk: null, //{ ...NFLPlayerSelectors.transformScheduleAdjusted(opponentInfo?.safpts) },
-//         },
-//         profilerPlayer,
-//         opponentInfo,
-//         slatePlayer,
-//         gridIronPlayer,
-//         p,
-//       };
-//     })
-//     .filter(p => p.salary !== 0)
-//     .sort((a, b) => b.salary - a.salary);
-// }
