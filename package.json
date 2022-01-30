@@ -31,7 +31,6 @@
     "@angular/platform-browser-dynamic": "~11.0.9",
     "@angular/router": "~11.0.9",
     "@angular/service-worker": "~11.0.9",
-    "@ngxs-labs/dispatch-decorator": "^2.1.0",
     "@ngxs-labs/select-snapshot": "^2.0.1",
     "@ngxs/schematics": "0.0.1-alpha.5",
     "@ngxs/store": "^3.7.1",

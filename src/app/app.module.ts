@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
 import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsModule } from '@ngxs/store';
@@ -34,7 +33,6 @@ const states = [CoreState, EspnFastcastState, EspnFastcastEventState, EspnFastca
       developmentMode: !environment.production,
     }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsDispatchPluginModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
