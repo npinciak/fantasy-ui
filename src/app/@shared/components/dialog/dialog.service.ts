@@ -8,7 +8,7 @@ import { DialogComponent } from './dialog.component';
 export class DialogService {
   constructor(public dialog: MatDialog) {}
 
-  public async openDialog(options?: any): Promise<boolean> {
+  public async openDialog(options?: unknown): Promise<boolean> {
     const dialogRef = this.dialog.open(DialogComponent, {
       minWidth: 500,
       maxWidth: 650,

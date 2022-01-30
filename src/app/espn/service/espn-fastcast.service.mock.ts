@@ -24,5 +24,5 @@ export class EspnFastcastServiceMock implements Mock<EspnFastcastService> {
 
   closeConnection(): void {}
 
-  sendMessage(msg: any): void {}
+  sendMessage(msg: unknown): void {}
 }

@@ -5,7 +5,7 @@ import { Component, Input } from '@angular/core';
   templateUrl: './team-info-col.component.html',
 })
 export class TeamInfoColComponent {
-  @Input() team: any;
+  @Input() team: unknown;
   @Input() isLeader: boolean;
   constructor() {}
 }

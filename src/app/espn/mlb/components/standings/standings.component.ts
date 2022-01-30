@@ -1,11 +1,11 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MlbFacade } from '../../facade/mlb.facade';
 import * as _ from 'lodash';
-import { MatButtonToggleChange } from '@angular/material/button-toggle';
-import { RotoColumn, StatsColumn, TeamColumn } from '../../mlb.enums';
+import { MlbFacade } from '../../facade/mlb.facade';
 import { standingsColumns } from '../../mlb.const';
+import { RotoColumn, StatsColumn, TeamColumn } from '../../mlb.enums';
 import { BaseballTeam } from '../../models/baseball-team.model';
 
 @Component({
@@ -25,7 +25,7 @@ export class StandingsComponent implements OnInit, OnChanges, AfterViewInit {
 
   dataSource = new MatTableDataSource<BaseballTeam>();
   tableColumns: string[];
-  viewOptions: any;
+  viewOptions: unknown;
 
   constructor(readonly mlbFacade: MlbFacade, private cdr: ChangeDetectorRef) {}
 

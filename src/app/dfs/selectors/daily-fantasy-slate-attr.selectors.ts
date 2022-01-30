@@ -8,7 +8,7 @@ import { DailyFantasyTeamsSelectors } from './daily-fantasy-team.selectors';
 
 export class DailyFantasySlateAttrSelectors {
   @Selector([DailyFantasySlateAttrState.playerMap])
-  static selectPlayerById(map: SlateTeamMap): (id: string) => any {
+  static selectPlayerById(map: SlateTeamMap): (id: string) => unknown {
     return (id: string) => map[id];
   }
 

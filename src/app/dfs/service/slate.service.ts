@@ -108,7 +108,7 @@ export class SlateService {
 
   getGameAttrBySlateId(request: { sport: string; site: string; slateId: string }): Observable<{
     teams: SlateTeam[];
-    players: any[];
+    players: unknown[];
     statGroups: {
       qb: NFLClientProfiler;
       rb: NFLClientProfiler;
@@ -131,8 +131,6 @@ export class SlateService {
     );
   }
 }
-
-
 
 export type SlateTeamAttributes = NFLClientSlateAttrTeam | MLBClientSlateAttrTeam | NBAClientSlateAttrTeam;
 export type SlateTeamAttributesMap = Record<string, SlateTeamAttributes>;

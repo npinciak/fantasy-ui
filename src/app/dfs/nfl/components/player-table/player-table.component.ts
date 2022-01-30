@@ -31,7 +31,7 @@ enum FilterType {
   styleUrls: ['./player-table.component.scss'],
 })
 export class PlayerTableComponent implements OnInit, AfterViewInit, OnChanges {
-  @Input() dfsPlayers: any[] = [];
+  @Input() dfsPlayers: unknown[] = [];
   @Input() displayColumns: string[] = [];
   @Input() dataColumns: TableColumn[] = [];
 
@@ -83,13 +83,13 @@ export class PlayerTableComponent implements OnInit, AfterViewInit, OnChanges {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  filterChange(change: any, filterType: FilterType) {
+  filterChange(change: unknown, filterType: FilterType) {
     this.filter = change.value;
     this.filterTypeSelected = filterType;
     this.dataSource.filter = change.value;
   }
 
-  dataSourceFilter(): (data: any, filterVal: string) => boolean {
+  dataSourceFilter(): (data: unknown, filterVal: string) => boolean {
     return (data, filterVal): boolean => {
       if (filterVal === '') {
         return true;
