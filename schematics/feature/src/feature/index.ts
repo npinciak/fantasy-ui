@@ -1,7 +1,7 @@
 import { strings } from '@angular-devkit/core';
 import { apply, branchAndMerge, mergeWith, move, Rule, SchematicContext, template, Tree, url } from '@angular-devkit/schematics';
 
-export function feature(options: any): Rule {
+export function feature(options: unknown): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     if (!tree) {
       throw new Error('tree cannot be null');

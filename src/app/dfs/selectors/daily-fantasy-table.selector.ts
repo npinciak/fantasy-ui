@@ -3,7 +3,7 @@ import { TableColumn } from '../models/table.model';
 
 export class DailyFantasyTableSelectors {
   @Selector()
-  static playerTableList(playerColumns: any[]): any[] {
+  static playerTableList(playerColumns: unknown[]): unknown[] {
     return [];
   }
 

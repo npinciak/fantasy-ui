@@ -35,7 +35,7 @@ export interface PlayerTableRowOpponent {
   info: PlayerTableRowInfo;
   passDef: number;
   passDefRk: number;
-  fptsAllowedRk: any;
+  fptsAllowedRk: unknown;
 }
 export interface PlayerTableRowInfo {
   hashtag: string;

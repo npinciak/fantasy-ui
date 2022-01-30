@@ -11,7 +11,7 @@ import { TableColumn } from '@app/dfs/models/table.model';
   styleUrls: ['./player-table.component.scss'],
 })
 export class PlayerTableComponent implements OnInit {
-  @Input() dfsPlayers: any[] = [];
+  @Input() dfsPlayers: unknown[] = [];
   @Input() displayColumns: string[] = [];
   @Input() dataColumns: TableColumn[] = [];
 

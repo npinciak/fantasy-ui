@@ -2,7 +2,7 @@ import { Selector } from '@ngxs/store';
 
 export interface TableColumn {
   columnDef: string;
-  nested?: any | null;
+  nested?: unknown | null;
   headerCell: string;
   headerLabel: string;
 }

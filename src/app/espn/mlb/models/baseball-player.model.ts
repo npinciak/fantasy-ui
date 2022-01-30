@@ -10,7 +10,7 @@ export interface BaseballPlayerProperties {
   isPitcher: boolean;
   isInjured: boolean;
   injuryStatus: string;
-  playerRatings: any;
+  playerRatings: unknown;
   playerOwnership: {
     change: number;
     percentOwned: number;

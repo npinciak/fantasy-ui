@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { State, Action, Selector, StateContext, Store } from '@ngxs/store';
-
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { FetchBaseballLeague, UpdateStatType } from '../actions/mlb.actions';
 import { MlbService } from '../services/mlb.service';
-import { PatchTeams } from './fantasy-baseball-team.state';
 
 export interface FantasyBaseballLeagueStateModel {
-  map: { [id: string]: any };
+  map: { [id: string]: unknown };
   statTypeId: number;
   isLoading: boolean;
   scoringPeriodId: number;
