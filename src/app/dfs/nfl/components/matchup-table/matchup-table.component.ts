@@ -11,7 +11,7 @@ import { TableColumn } from '@app/dfs/mlb/selectors/table.selector';
   styleUrls: ['./matchup-table.component.scss'],
 })
 export class MatchupTableComponent implements OnInit, AfterViewInit, OnChanges {
-  @Input() tableData: any[];
+  @Input() tableData: unknown[];
   @Input() displayColumns: string[];
   @Input() dataColumns: TableColumn[];
 

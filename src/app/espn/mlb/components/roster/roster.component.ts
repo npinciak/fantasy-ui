@@ -1,8 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import * as _ from 'lodash';
-import { rosterColumns, PlayerInfoColumn } from '@mlb/mlb.const';
+import { PlayerInfoColumn, rosterColumns } from '@mlb/mlb.const';
 import { StatTypeId } from '@mlb/mlb.enums';
 import { BaseballPlayer } from '../../models/baseball-player.model';
 
@@ -21,8 +20,8 @@ export class RosterComponent implements OnInit, AfterViewInit {
   readonly tableColumns: string[] = rosterColumns.batters;
 
   dataSource = new MatTableDataSource<BaseballPlayer>();
-  playerNews: any;
-  viewOptions: any;
+  playerNews: unknown;
+  viewOptions: unknown;
 
   view: StatTypeId = 0;
 

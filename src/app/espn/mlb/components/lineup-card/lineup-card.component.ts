@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./lineup-card.component.scss'],
 })
 export class LineupCardComponent implements OnInit {
-  @Input() lineup: any[];
+  @Input() lineup: unknown[];
   constructor() {}
 
   ngOnInit(): void {}

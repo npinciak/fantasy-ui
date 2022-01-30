@@ -8,6 +8,7 @@ import { Player, PlayerMap } from '../models/player.model';
 import { Schedule } from '../models/schedule.model';
 import { Team } from '../models/team.model';
 import { NFLClientGridIronPlayer } from '../nfl/models/nfl-client.model';
+import { PlayerProfiler } from '../nfl/models/nfl-profiler.model';
 import { NFLDfsPlayerSelectors } from '../nfl/selectors/nfl-dfs-player.selector';
 import { SlateTeam } from '../service/slate.service';
 import { DailyFantasyPlayersState } from '../state/daily-fantasy-players.state';
@@ -74,7 +75,7 @@ export class DailyFantasyPlayersSelectors {
     selectTeamById: (id: string) => Team,
     selectPlayerById: (id: string) => any,
     selectGameById: (id: string) => Schedule,
-    getPlayerProfilerSeasonById: (id: string) => any,
+    getPlayerProfilerSeasonById: (id: string) => PlayerProfiler,
     getGridIronPlayerById: (id: string) => NFLClientGridIronPlayer
   ) {
     return playerList
@@ -187,7 +188,7 @@ export class DailyFantasyPlayersSelectors {
 //   getTeamAttrById: (id: string) => NFLClientSlateAttrTeam,
 //   selectTeamById: (id: string) => Team,
 //   getTeamByRgId: (id: string) => TeamAwayOrTeamHome
-// ): any[] {
+// ): unknown[] {
 //   return masterPlayerList
 //     .map(p => {
 //       const team = selectTeamById(p.teamId).name;

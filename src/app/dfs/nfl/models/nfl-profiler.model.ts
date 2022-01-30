@@ -3,3 +3,5 @@ import { ProfilerInfoQB, ProfilerInfoRB, ProfilerInfoReceiver } from './nfl-clie
 export type ProfilerQB = ProfilerInfoQB;
 export type ProfilerRB = ProfilerInfoRB;
 export type ProfilerReceiver = ProfilerInfoReceiver;
+
+export type PlayerProfiler = ProfilerInfoQB | ProfilerInfoRB | ProfilerInfoReceiver;

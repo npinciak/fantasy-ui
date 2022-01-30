@@ -32,7 +32,7 @@ export class EspnFastcastService {
     }
   }
 
-  sendMessage(msg: any): void {
+  sendMessage(msg: unknown): void {
     return this.webSocketSubject$.next(msg);
   }
 

@@ -5,7 +5,7 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './ranking-col.component.html',
 })
 export class RankingColComponent implements OnInit {
-  @Input() team: any;
+  @Input() team: unknown;
   constructor() {}
 
   ngOnInit(): void {}
