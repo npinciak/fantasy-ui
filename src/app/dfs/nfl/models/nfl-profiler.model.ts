@@ -1,7 +1,7 @@
-import { ProfilerInfoQB, ProfilerInfoRB, ProfilerInfoReceiver } from './nfl-client.model';
+import { NFLClientProfilerQBProperties, NFLClientProfilerRBProperties, NFLClientProfilerReceiverProperties } from './nfl-client.model';
 
-export type ProfilerQB = ProfilerInfoQB;
-export type ProfilerRB = ProfilerInfoRB;
-export type ProfilerReceiver = ProfilerInfoReceiver;
+export type ProfilerQB = NFLClientProfilerQBProperties;
+export type ProfilerRB = NFLClientProfilerRBProperties;
+export type ProfilerReceiver = NFLClientProfilerReceiverProperties;
 
-export type PlayerProfiler = ProfilerInfoQB | ProfilerInfoRB | ProfilerInfoReceiver;
+export type PlayerProfiler = NFLClientProfilerQBProperties | NFLClientProfilerRBProperties | NFLClientProfilerReceiverProperties;

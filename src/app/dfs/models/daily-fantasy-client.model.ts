@@ -66,11 +66,6 @@ export interface SiteSlateEntity {
   hidden: boolean;
 }
 
-/**
- * @deprecated use SiteSlateEntity
- */
-export type DfsSlate = SiteSlateEntity;
-
 export interface SiteSlateGameEntity {
   date: string;
   time: string;
@@ -132,7 +127,3 @@ export interface SalariesEntity {
   salary: number;
   player_id: string;
 }
-
-export type CoreSlatePlayer = Pick<DfsSlatePlayer, 'attributes'>;
-
-export type CoreSchedule = Pick<Schedule, 'date' | 'id' | 'rg_id' | 'sport_id' | 'team_away' | 'team_home' | 'salaries'>;

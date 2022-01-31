@@ -83,13 +83,13 @@ export class PlayerTableComponent implements OnInit, AfterViewInit, OnChanges {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  filterChange(change: unknown, filterType: FilterType) {
+  filterChange(change: { value: string }, filterType: FilterType) {
     this.filter = change.value;
     this.filterTypeSelected = filterType;
     this.dataSource.filter = change.value;
   }
 
-  dataSourceFilter(): (data: unknown, filterVal: string) => boolean {
+  dataSourceFilter(): (data: NFLPlayerTableRow, filterVal: string) => boolean {
     return (data, filterVal): boolean => {
       if (filterVal === '') {
         return true;

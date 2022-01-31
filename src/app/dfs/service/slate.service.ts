@@ -6,8 +6,14 @@ import { camelCase } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DailyFantasyEndpointBuilder } from '../daily-fantasy-url-builder';
-import { MLBClientSlateAttrTeam } from '../mlb/models/mlb-client.model';
-import { SlateAttributes } from '../models/daily-fantasy-client-slate-sttr.model';
+import {
+  ClientSlateAttributes,
+  ClientSlatePlayerAttributes,
+  ClientSlatePlayerAttributesMap,
+  ClientSlateStatGroups,
+  ClientSlateTeamAttributes,
+  ClientSlateTeamAttributesMap,
+} from '../models/daily-fantasy-client-slate-attr.model';
 import { SlateMaster, Vegas } from '../models/daily-fantasy-client.model';
 import { Team } from '../models/team.model';
 import { NBAClientPlayerAttributes, NBAClientSlateAttrTeam, RestEntity } from '../nba/models/nba-client.model';
@@ -20,27 +26,35 @@ import { OutsidersProps, ScheduleAdjFptsProps } from '../nfl/models/nfl-slate-at
 export class SlateService {
   constructor(private apiService: ApiService) {}
 
-  static isNFL(team: SlateTeamAttributes): team is NFLClientSlateAttrTeam {
+  static isNFL(team: ClientSlateTeamAttributes): team is NFLClientSlateAttrTeam {
     return 'safpts' in team;
   }
 
-  static isNFLStatGroup(statGroup: SlateStatGroups): statGroup is NFLClientStatGroup {
+  static isNFLStatGroup(statGroup: ClientSlateStatGroups): statGroup is NFLClientStatGroup {
     return 'qb' in statGroup;
   }
 
-  static isNFLPlayer(player: SlatePlayerAttributes): player is NFLClientPlayerAttributes {
+  static isNFLPlayer(player: ClientSlatePlayerAttributes): player is NFLClientPlayerAttributes {
     return 'ecr' in player;
   }
 
-  static isNBA(team: SlateTeamAttributes): team is NBAClientSlateAttrTeam {
+  static isNBA(team: ClientSlateTeamAttributes): team is NBAClientSlateAttrTeam {
     return 'rest' in team;
   }
 
-  static isNBAPlayer(player: SlatePlayerAttributes): player is NBAClientPlayerAttributes {
+  static isNBAPlayer(player: ClientSlatePlayerAttributes): player is NBAClientPlayerAttributes {
     return 'dvp' in player;
   }
 
-  static transform(teamAttributes: SlateTeamAttributes) {
+  static transformStatGroups(statGroup: ClientSlateStatGroups) {
+    if (SlateService.isNFLStatGroup(statGroup)) {
+      return {
+        ...(statGroup ?? null),
+      };
+    }
+  }
+
+  static transform(teamAttributes: ClientSlateTeamAttributes) {
     if (SlateService.isNFL(teamAttributes)) {
       const safpts = <ScheduleAdjFptsProps>{};
       for (const prop in teamAttributes.safpts) {
@@ -65,15 +79,7 @@ export class SlateService {
     }
   }
 
-  static transformStatGroups(statGroup: SlateStatGroups) {
-    if (SlateService.isNFLStatGroup(statGroup)) {
-      return {
-        ...(statGroup ?? null),
-      };
-    }
-  }
-
-  static transformTeamSlateAttributes(teams: SlateTeamAttributesMap) {
+  static transformTeamSlateAttributes(teams: ClientSlateTeamAttributesMap) {
     return Object.entries(teams).map(([id, team]) => ({
       id: id,
       vegas: team.vegas,
@@ -87,7 +93,7 @@ export class SlateService {
     return SlateService.transformStatGroups(statGroup);
   }
 
-  static transformPlayerSlateAttributes(players: SlatePlayerAttributesMap) {
+  static transformPlayerSlateAttributes(players: ClientSlatePlayerAttributesMap) {
     return Object.entries(players).map(([id, player]) => ({
       id,
       statGroup: player.stat_group ?? null,
@@ -96,8 +102,8 @@ export class SlateService {
       ownership: player.ownership ?? null,
       value: player.value_pct ?? null,
       smash: player.smash_pct ?? null,
-      ecr: SlateService.isNFLPlayer(player) ?? null,
-      dvp: SlateService.isNBAPlayer(player) ?? null,
+      expertRanking: null, // SlateService.isNFLPlayer(player),
+      defenseVsPos: null, // NBA SlateService.isNBAPlayer(player) ?? null,
     }));
   }
 
@@ -106,23 +112,14 @@ export class SlateService {
     return this.apiService.get<SlateMaster>(endpoint.slateMaster);
   }
 
-  getGameAttrBySlateId(request: { sport: string; site: string; slateId: string }): Observable<{
-    teams: SlateTeam[];
-    players: unknown[];
-    statGroups: {
-      qb: NFLClientProfiler;
-      rb: NFLClientProfiler;
-      te: NFLClientProfiler;
-      wr: NFLClientProfiler;
-    };
-  }> {
+  getGameAttrBySlateId(request: { sport: string; site: string; slateId: string }): Observable<SlateAttributes> {
     const endpoint = new DailyFantasyEndpointBuilder(request.sport);
 
     let params = new HttpParams();
     params = params.append('date', currentDate('-'));
     params = params.append('site', request.site);
     params = params.append('slate_id', request.slateId);
-    return this.apiService.get<SlateAttributes>(endpoint.slateAttr, { params }).pipe(
+    return this.apiService.get<ClientSlateAttributes>(endpoint.slateAttr, { params }).pipe(
       map(res => ({
         teams: SlateService.transformTeamSlateAttributes(res.teams),
         statGroups: SlateService.transformStatGroupSlateAttributes(res.stat_groups),
@@ -132,9 +129,6 @@ export class SlateService {
   }
 }
 
-export type SlateTeamAttributes = NFLClientSlateAttrTeam | MLBClientSlateAttrTeam | NBAClientSlateAttrTeam;
-export type SlateTeamAttributesMap = Record<string, SlateTeamAttributes>;
-
 export type SlateTeam = Pick<Team, 'id'> & { vegas: Vegas } & Partial<{
     outsiders: OutsidersProps | null;
     safpts: ScheduleAdjFptsProps | null;
@@ -143,7 +137,13 @@ export type SlateTeam = Pick<Team, 'id'> & { vegas: Vegas } & Partial<{
 
 export type SlateTeamMap = Record<string, SlateTeam>;
 
-export type SlateStatGroups = NFLClientStatGroup;
-
-export type SlatePlayerAttributes = NFLClientPlayerAttributes | NBAClientPlayerAttributes;
-export type SlatePlayerAttributesMap = Record<string, SlatePlayerAttributes>;
+type SlateAttributes = {
+  teams: SlateTeam[];
+  players: unknown[];
+  statGroups: {
+    qb: NFLClientProfiler;
+    rb: NFLClientProfiler;
+    te: NFLClientProfiler;
+    wr: NFLClientProfiler;
+  };
+};

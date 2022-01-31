@@ -1,6 +1,6 @@
 import { StateOperator } from '@ngxs/store';
 import { patch } from '@ngxs/store/operators';
-import { EntitiesStateModel } from '../models';
+import { EntitiesStateModel } from '../models/entities-state.model';
 
 type EntitiesStateModelType<T> = T extends EntitiesStateModel<infer U> ? U : never;
 
@@ -12,7 +12,6 @@ export const entityMap = <T>(entities: T[], getId?: (t: T) => number | string) =
     return acc;
   }, {});
 
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function setMap<W extends EntitiesStateModel<U>, U>(
   entities: EntitiesStateModelType<W>[],
   getId?: (t: EntitiesStateModelType<W>) => number | string

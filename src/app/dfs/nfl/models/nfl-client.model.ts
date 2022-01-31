@@ -1,161 +1,150 @@
 import { DfsSiteType } from '@app/dfs/dfs.const';
-import { ClientPlayerAttributes } from '@app/dfs/models/daily-fantasy-client-slate-sttr.model';
+import { ClientPlayerAttributes } from '@app/dfs/models/daily-fantasy-client-slate-attr.model';
 import { SlateAttrTeamProperties } from '@app/dfs/models/team.model';
 
-export interface SafptsEntity {
-  RawQB: string;
-  AdjQB: string;
-  DifQB: string;
-  RAWRB: string;
-  AdjRB: string;
-  DifRB: string;
-  RawWR: string;
-  AdjWR: string;
-  DifWR: string;
-  RawTE: string;
-  AdjTE: string;
-  DifTE: string;
-}
+type SafptsProperties =
+  | 'RawQB'
+  | 'AdjQB'
+  | 'DifQB'
+  | 'RAWRB'
+  | 'AdjRB'
+  | 'DifRB'
+  | 'RawWR'
+  | 'AdjWR'
+  | 'DifWR'
+  | 'RawTE'
+  | 'AdjTE'
+  | 'DifTE';
 
-export interface OutsidersEntity {
-  'D Power': string;
-  'D Power Rk': string;
-  'D Stuffed': string;
-  'D Stuffed Rk': string;
-  'DL SkRate': string;
-  'DL SkRate Rk': string;
-  'O Power': string;
-  'O Power Rk': string;
-  'O Stuffed': string;
-  'O Stuffed Rk': string;
-  'OL SkRate': string;
-  'OL SkRate Rk': string;
-  'Opp PaDef': string;
-  'Opp PaDef Rk': string;
-  'Opp RuDef': string;
-  'Opp RuDef Rk': string;
-  PaOff: string;
-  'PaOff Rk': string;
-  RuOff: string;
-  'RuOff Rk': string;
-}
+type OutsidersProperties =
+  | 'D Power'
+  | 'D Power Rk'
+  | 'D Stuffed'
+  | 'D Stuffed Rk'
+  | 'DL SkRate'
+  | 'DL SkRate Rk'
+  | 'O Power'
+  | 'O Power Rk'
+  | 'O Stuffed'
+  | 'O Stuffed Rk'
+  | 'OL SkRate'
+  | 'OL SkRate Rk'
+  | 'Opp PaDef'
+  | 'Opp PaDef Rk'
+  | 'Opp RuDef'
+  | 'Opp RuDef Rk'
+  | 'PaOff'
+  | 'PaOff Rk'
+  | 'RuOff'
+  | 'RuOff Rk';
 
 export interface NFLSlateAttrTeamProperties {
-  safpts: SafptsEntity;
-  outsiders: OutsidersEntity;
+  safpts: NFLClientSafptsProperties;
+  outsiders: NFLClientOutsidersProperties;
 }
 
 export type NFLClientSlateAttrTeam = SlateAttrTeamProperties & NFLSlateAttrTeamProperties;
 export type NFLClientSlateAttrTeamMap = Record<string, SlateAttrTeamProperties & NFLSlateAttrTeamProperties>;
 
-export interface NFLClientStatGroup {
-  qb: NFLClientProfiler;
-  rb: NFLClientProfiler;
-  te: NFLClientProfiler;
-  wr: NFLClientProfiler;
-}
+type NFLClientStatGroupProps = 'qb' | 'rb' | 'te' | 'wr';
+export type NFLClientStatGroup = { [prop in NFLClientStatGroupProps]: NFLClientProfiler };
 
-export interface NFLClientProfiler {
+export type NFLClientProfiler = {
   profiler: NFLClientProfilerEntity;
-}
+};
 
-export interface NFLClientProfilerEntity {
-  season: NFLClientProfilerTimeFrameEntity;
-  'last-season': NFLClientProfilerTimeFrameEntity;
-  combined: NFLClientProfilerTimeFrameEntity;
-}
+type ProfilerTimeFrameProps = 'season' | 'last-season' | 'combined';
 
-export interface ProfilerInfoQB {
-  profilerId: string;
-  'Expected Points Added': string;
-  'Pass EPA': string;
-  'Rush EPA': string;
-  'Fantasy Points Per Game': string;
-  'Production Premium': string;
-  'Production Premium Rank': string;
-  'Total QBR': string;
-  'Offensive Line Rank': string;
-  'Air Yards Per Attempt': string;
-  'Air Yards Per Game': string;
-  'Attempts Inside 10 Per Game': string;
-  'Carries Inside 5 Per Game': string;
-  'Pass Attempt Distance': string;
-  'Passing Attempts': string;
-  'Deep Ball Attempts Rank': string;
-  'Deep Ball Completion Percentage': string;
-  'Under Pressure Attempts Rank': string;
-  'Pressured Completion Percentage': string;
-  'Protection Rate': string;
-  'Receiver Target Separation': string;
-  'Catchable Passes Per Game': string;
-  'Attempts Per Game': string;
-  'Receiver Contested Catch Rate': string;
-  'Supporting Cast Efficiency': string;
-  'Receiver Yards After The Catch Per Target': string;
-  'Interceptable Passes': string;
-  'Play-action Pass Completion Percentage': string;
-  'True Passer Rating': string;
-  'Under Pressure Attempts Per Game': string;
-  'Weekly Volatility': string;
-}
+export type NFLClientProfilerEntity = { [prop in ProfilerTimeFrameProps]: NFLClientProfilerTimeFrameEntity };
 
-export interface ProfilerInfoRB {
-  profilerId: string;
-  'Expected Points Added': string;
-  'Rush EPA': string;
-  'Receiving EPA': string;
-  'Fantasy Points Per Game': string;
-  'Production Premium': string;
-  'Production Premium Rank': string;
-  'Dominator Rating': string;
-  'Goal Line Carries Per Game': string;
-  'Game Script': string;
-  'Breakaway Run Rate': string;
-  'Evaded Tackles': string;
-  'Juke Rate': string;
-  'Stacked Front Carry Rate': string;
-  'Base Front Carry Rate': string;
-  'Light Front Carry Rate': string;
-  'Offensive Line Rank': string;
-  'Opportunity Share': string;
-  'Weekly Volatility': string;
-  'Yards Per Carry': string;
-  'Stacked Front Yards Per Carry': string;
-  'Base Front Yards Per Carry': string;
-  'Light Front Yards Per Carry': string;
-  'Red Zone Opportunity Share': string;
-  'Run Blocking Efficiency Rank': string;
-  'Weighted Opportunities Per Game': string;
-  'Yards Created Per Touch': string;
-}
+type ProfilerQBProperties =
+  | 'profilerId'
+  | 'Expected Points Added'
+  | 'Pass EPA'
+  | 'Rush EPA'
+  | 'Fantasy Points Per Game'
+  | 'Production Premium'
+  | 'Production Premium Rank'
+  | 'Total QBR'
+  | 'Offensive Line Rank'
+  | 'Air Yards Per Attempt'
+  | 'Air Yards Per Game'
+  | 'Attempts Inside 10 Per Game'
+  | 'Carries Inside 5 Per Game'
+  | 'Pass Attempt Distance'
+  | 'Passing Attempts'
+  | 'Deep Ball Attempts Rank'
+  | 'Deep Ball Completion Percentage'
+  | 'Under Pressure Attempts Rank'
+  | 'Pressured Completion Percentage'
+  | 'Protection Rate'
+  | 'Receiver Target Separation'
+  | 'Catchable Passes Per Game'
+  | 'Attempts Per Game'
+  | 'Receiver Contested Catch Rate'
+  | 'Supporting Cast Efficiency'
+  | 'Receiver Yards After The Catch Per Target'
+  | 'Interceptable Passes'
+  | 'Play-action Pass Completion Percentage'
+  | 'True Passer Rating'
+  | 'Under Pressure Attempts Per Game'
+  | 'Weekly Volatility';
 
-export interface ProfilerInfoReceiver {
-  profilerId: string;
-  'Expected Points Added': string;
-  'EPA Per Target': string;
-  'Production Premium': string;
-  'Target Premium': string;
-  'Dominator Rating': string;
-  'Route Participation': string;
-  'Yards Per Route Run': string;
-  'Fantasy Points Per Game': string;
-  'Fantasy Points Per Route Run': string;
-  'Catchable Target Rate': string;
-  'Average Target Distance': string;
-  'Air Yards Per Target': string;
-  'Air Yards Share': string;
-  'Target Share': string;
-  'Deep Targets Per Game': string;
-  'Red Zone Target Share': string;
-  'Slot Rate': string;
-  'Contested Catch Conversion Rate': string;
-  'Drop Rate': string;
-  'Target Separation': string;
-  'Hog Rate': string;
-  'Weekly Volatility': string;
-  'Likely CB': string;
-  'Matchup Rtg': string;
-}
+type ProfilerRBProperties =
+  | 'profilerId'
+  | 'Expected Points Added'
+  | 'Rush EPA'
+  | 'Receiving EPA'
+  | 'Fantasy Points Per Game'
+  | 'Production Premium'
+  | 'Production Premium Rank'
+  | 'Dominator Rating'
+  | 'Goal Line Carries Per Game'
+  | 'Game Script'
+  | 'Breakaway Run Rate'
+  | 'Evaded Tackles'
+  | 'Juke Rate'
+  | 'Stacked Front Carry Rate'
+  | 'Base Front Carry Rate'
+  | 'Light Front Carry Rate'
+  | 'Offensive Line Rank'
+  | 'Opportunity Share'
+  | 'Weekly Volatility'
+  | 'Yards Per Carry'
+  | 'Stacked Front Yards Per Carry'
+  | 'Base Front Yards Per Carry'
+  | 'Light Front Yards Per Carry'
+  | 'Red Zone Opportunity Share'
+  | 'Run Blocking Efficiency Rank'
+  | 'Weighted Opportunities Per Game'
+  | 'Yards Created Per Touch';
+
+type ProfilerReceiverProperties =
+  | 'profilerId'
+  | 'Expected Points Added'
+  | 'EPA Per Target'
+  | 'Production Premium'
+  | 'Target Premium'
+  | 'Dominator Rating'
+  | 'Route Participation'
+  | 'Yards Per Route Run'
+  | 'Fantasy Points Per Game'
+  | 'Fantasy Points Per Route Run'
+  | 'Catchable Target Rate'
+  | 'Average Target Distance'
+  | 'Air Yards Per Target'
+  | 'Air Yards Share'
+  | 'Target Share'
+  | 'Deep Targets Per Game'
+  | 'Red Zone Target Share'
+  | 'Slot Rate'
+  | 'Contested Catch Conversion Rate'
+  | 'Drop Rate'
+  | 'Target Separation'
+  | 'Hog Rate'
+  | 'Weekly Volatility'
+  | 'Likely CB'
+  | 'Matchup Rtg';
 
 export interface NFLClientSalaryDiff {
   diff: number;
@@ -165,10 +154,8 @@ export interface NFLClientSalaryDiff {
   salary: string;
 }
 
-export interface NFLClientEcr {
-  rank: string;
-  avg: string;
-}
+type EcrProps = 'rank | avg';
+export type NFLClientEcr = { [prop in EcrProps]: string };
 
 export interface NFLClientPlayerAttributesEntity {
   team: string;
@@ -204,11 +191,21 @@ export interface NFLClientGridIronPlayer {
 }
 
 export type NFLClientGridIronPlayerMap = Record<string, NFLClientGridIronPlayer>;
-
 export type NFLClientPlayerAttributes = NFLClientPlayerAttributesEntity & ClientPlayerAttributes;
+
 export type NFLClientPlayerAttributesMap = Record<string, NFLClientPlayerAttributes>;
 
-export type NFLClientProfilerTimeFrameEntity = Record<number, ProfilerInfoQB | ProfilerInfoRB | ProfilerInfoReceiver>;
+export type NFLClientSafptsProperties = { [prop in SafptsProperties]: string };
+export type NFLClientOutsidersProperties = { [prop in OutsidersProperties]: string };
+
+export type NFLClientProfilerQBProperties = { [prop in ProfilerQBProperties]: string };
+export type NFLClientProfilerRBProperties = { [prop in ProfilerRBProperties]: string };
+export type NFLClientProfilerReceiverProperties = { [prop in ProfilerReceiverProperties]: string };
+
+export type NFLClientProfilerTimeFrameEntity = Record<
+  number,
+  NFLClientProfilerQBProperties | NFLClientProfilerRBProperties | NFLClientProfilerReceiverProperties
+>;
 
 export type SalaryDiffByDfsSiteType = Record<DfsSiteType, NFLClientSalaryDiff>;
 export type PlayerAttributesByDfsSite = Record<DfsSiteType, string>;
