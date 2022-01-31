@@ -9,8 +9,8 @@ import {
   SalaryDiffByDfsSiteType,
 } from '../nfl/models/nfl-client.model';
 
-export interface SlateAttributes {
-  stat_groups: NFLClientStatGroup | any;
+export interface ClientSlateAttributes {
+  stat_groups: NFLClientStatGroup;
   players: Record<string, NFLClientPlayerAttributes | NBAClientPlayerAttributes>;
   teams: Record<string, NBAClientSlateAttrTeam | NFLClientSlateAttrTeam | MLBClientSlateAttrTeam>;
 }
@@ -23,3 +23,11 @@ export interface ClientPlayerAttributes {
   value_pct: PlayerAttributesByDfsSite;
   smash_pct: PlayerAttributesByDfsSite;
 }
+
+export type ClientSlateStatGroups = NFLClientStatGroup;
+
+export type ClientSlatePlayerAttributes = NFLClientPlayerAttributes | NBAClientPlayerAttributes;
+export type ClientSlatePlayerAttributesMap = Record<string, ClientSlatePlayerAttributes>;
+
+export type ClientSlateTeamAttributes = NFLClientSlateAttrTeam | MLBClientSlateAttrTeam | NBAClientSlateAttrTeam;
+export type ClientSlateTeamAttributesMap = Record<string, ClientSlateTeamAttributes>;

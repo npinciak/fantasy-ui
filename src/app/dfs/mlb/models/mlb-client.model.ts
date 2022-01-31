@@ -1,4 +1,4 @@
-import { ClientPlayerAttributes } from '@app/dfs/models/daily-fantasy-client-slate-sttr.model';
+import { ClientPlayerAttributes } from '@app/dfs/models/daily-fantasy-client-slate-attr.model';
 import { SlateAttrTeamProperties } from '@app/dfs/models/team.model';
 import { PlayerEcrByDfsSiteType } from '@app/dfs/nfl/models/nfl-client.model';
 

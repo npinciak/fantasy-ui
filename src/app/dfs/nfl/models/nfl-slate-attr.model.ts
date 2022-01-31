@@ -1,10 +1,15 @@
+import { PlayerSlateAttr } from '@app/dfs/models/player-slate-attr.model';
 import { SlateAttrTeam } from '@app/dfs/models/team.model';
-import { OutsidersEntity, SafptsEntity } from './nfl-client.model';
+import { NFLClientOutsidersProperties, NFLClientSafptsProperties, PlayerEcrByDfsSiteType } from './nfl-client.model';
 
-export type ScheduleAdjFptsProps = SafptsEntity;
-export type OutsidersProps = OutsidersEntity;
+export type ScheduleAdjFptsProps = NFLClientSafptsProperties;
+export type OutsidersProps = NFLClientOutsidersProperties;
 
 export type NFLSlateAttrTeam = SlateAttrTeam & {
   safpts: ScheduleAdjFptsProps;
   outsiders: OutsidersProps;
+};
+
+export type NFLPlayerSlateAttr = PlayerSlateAttr & {
+  expertRanking: PlayerEcrByDfsSiteType;
 };

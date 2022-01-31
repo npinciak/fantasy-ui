@@ -1,12 +1,12 @@
-<table [id]="'team' + team.teamId">
+<table [id]="'team' + team.id">
   <tr>
-    <td rowspan="2" [attr.aria-label]="team.teamName" [attr.aria-labelledby]="'team' + team.teamId">
-      <img width="48" height="35" [alt]="team.teamName" [src]="team.teamLogo" [alt]="team.teamName" />
+    <td rowspan="2" [attr.aria-label]="team.name" [attr.aria-labelledby]="'team' + team.id">
+      <img width="48" height="35" [alt]="team.name" [src]="team.logo" [alt]="team.name" />
     </td>
   </tr>
   <tr>
     <td>
-      {{ team.teamAbbrev }}
+      {{ team.name }}
     </td>
   </tr>
 </table>

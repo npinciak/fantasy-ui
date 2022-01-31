@@ -1,4 +1,3 @@
-/* eslint-disable prefer-arrow/prefer-arrow-functions */
 export function enumAsList<T extends string>(_enum: { [key: string]: T }): T[];
 export function enumAsList<T, U extends T[keyof T] & number>(_enum: U extends Exclude<U, string> ? T : never): U[];
 export function enumAsList<T, U extends T[keyof T] & (string | number)>(_enum: U): U[] {

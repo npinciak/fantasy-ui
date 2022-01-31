@@ -1,4 +1,4 @@
-import { ClientPlayerAttributes } from '@app/dfs/models/daily-fantasy-client-slate-sttr.model';
+import { ClientPlayerAttributes } from '@app/dfs/models/daily-fantasy-client-slate-attr.model';
 import { SlateAttrTeamProperties } from '@app/dfs/models/team.model';
 
 export interface RestEntity {
@@ -8,12 +8,17 @@ export interface RestEntity {
   '4in5': number;
 }
 
+export interface DvpEntity {
+  rank: number;
+  dvp: string;
+}
+
 export interface NBAClientTeamAttrProperties {
   rest: RestEntity;
 }
 
 export interface NBAClientPlayerAttributeProperties {
-  dvp: unknown;
+  dvp: Record<number, DvpEntity>;
 }
 
 export type NBAClientSlateAttrTeam = SlateAttrTeamProperties & NBAClientTeamAttrProperties;

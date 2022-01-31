@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { NFLClientStatGroup, ProfilerInfoQB, ProfilerInfoRB, ProfilerInfoReceiver } from '../models/nfl-client.model';
+import {
+  NFLClientProfilerQBProperties,
+  NFLClientProfilerRBProperties,
+  NFLClientProfilerReceiverProperties,
+  NFLClientStatGroup,
+} from '../models/nfl-client.model';
 
 export class PatchProfiler {
   static readonly type = `[nflDfsProfiler] PatchProfiler`;
@@ -13,7 +18,10 @@ interface ProfilerInfo {
   combined: ProfilerInfoMap;
 }
 
-export type ProfilerInfoMap = Record<string, ProfilerInfoQB | ProfilerInfoRB | ProfilerInfoReceiver>;
+export type ProfilerInfoMap = Record<
+  string,
+  NFLClientProfilerQBProperties | NFLClientProfilerRBProperties | NFLClientProfilerReceiverProperties
+>;
 
 export class NflDfsProfilerStateModel {
   qb: ProfilerInfo;

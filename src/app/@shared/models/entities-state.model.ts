@@ -1,5 +1,3 @@
-interface EntitiesStateModel<T> {
-  map: { [id: string]: T };
+export interface EntitiesStateModel<T> {
+  map: Record<string, T>;
 }
-
-export { EntitiesStateModel };
