@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Team } from '@app/espn/models/team.model';
-import { Dispatch } from '@ngxs-labs/dispatch-decorator';
 import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -20,5 +19,5 @@ export class MlbFacade {
 
   @SelectSnapshot(FantasyBaseballLeagueState.scoringPeriod) public scoringPeriod: number;
 
-  @Dispatch() getLeague = (leagueId: number) => new FetchBaseballLeague(leagueId);
+  getLeague = (leagueId: number) => new FetchBaseballLeague(leagueId);
 }
