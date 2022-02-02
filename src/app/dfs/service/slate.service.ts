@@ -17,7 +17,8 @@ import {
 import { SlateMaster, Vegas } from '../models/daily-fantasy-client.model';
 import { Team } from '../models/team.model';
 import { NBAClientPlayerAttributes, NBAClientSlateAttrTeam, RestEntity } from '../nba/models/nba-client.model';
-import { NFLClientPlayerAttributes, NFLClientProfiler, NFLClientSlateAttrTeam, NFLClientStatGroup } from '../nfl/models/nfl-client.model';
+import { NFLClientPlayerAttributes, NFLClientSlateAttrTeam, NFLClientStatGroup } from '../nfl/models/nfl-client.model';
+import { PlayerProfilerEntityMap, PlayerProfilerTimeframeMap } from '../nfl/models/nfl-profiler.model';
 import { OutsidersProps, ScheduleAdjFptsProps } from '../nfl/models/nfl-slate-attr.model';
 
 @Injectable({
@@ -46,10 +47,41 @@ export class SlateService {
     return 'dvp' in player;
   }
 
-  static transformStatGroups(statGroup: ClientSlateStatGroups) {
+  static transformStatGroupsToProfiler(statGroup: ClientSlateStatGroups): PlayerProfilerEntityMap {
     if (SlateService.isNFLStatGroup(statGroup)) {
+      const qb = <PlayerProfilerTimeframeMap>{};
+      for (const prop in statGroup.qb.profiler.season) {
+        qb.season[camelCase(prop)] = statGroup.qb.profiler.season[prop];
+        qb.lastSeason[camelCase(prop)] = statGroup.qb.profiler['last-season'][prop];
+        qb.combined[camelCase(prop)] = statGroup.qb.profiler.combined[prop];
+      }
+
+      const rb = <PlayerProfilerTimeframeMap>{};
+      for (const prop in statGroup.rb.profiler.season) {
+        rb.season[camelCase(prop)] = statGroup.rb.profiler.season[prop];
+        rb.lastSeason[camelCase(prop)] = statGroup.rb.profiler['last-season'][prop];
+        rb.combined[camelCase(prop)] = statGroup.rb.profiler.combined[prop];
+      }
+
+      const wr = <PlayerProfilerTimeframeMap>{};
+      for (const prop in statGroup.wr.profiler.season) {
+        wr.season[camelCase(prop)] = statGroup.wr.profiler.season[prop];
+        wr.lastSeason[camelCase(prop)] = statGroup.wr.profiler['last-season'][prop];
+        wr.combined[camelCase(prop)] = statGroup.wr.profiler.combined[prop];
+      }
+
+      const te = <PlayerProfilerTimeframeMap>{};
+      for (const prop in statGroup.te.profiler.season) {
+        te.season[camelCase(prop)] = statGroup.te.profiler.season[prop];
+        te.lastSeason[camelCase(prop)] = statGroup.te.profiler['last-season'][prop];
+        te.combined[camelCase(prop)] = statGroup.te.profiler.combined[prop];
+      }
+
       return {
-        ...(statGroup ?? null),
+        qb,
+        rb,
+        te,
+        wr,
       };
     }
   }
@@ -90,7 +122,7 @@ export class SlateService {
   }
 
   static transformStatGroupSlateAttributes(statGroup: NFLClientStatGroup) {
-    return SlateService.transformStatGroups(statGroup);
+    return SlateService.transformStatGroupsToProfiler(statGroup);
   }
 
   static transformPlayerSlateAttributes(players: ClientSlatePlayerAttributesMap) {
@@ -140,10 +172,5 @@ export type SlateTeamMap = Record<string, SlateTeam>;
 type SlateAttributes = {
   teams: SlateTeam[];
   players: unknown[];
-  statGroups: {
-    qb: NFLClientProfiler;
-    rb: NFLClientProfiler;
-    te: NFLClientProfiler;
-    wr: NFLClientProfiler;
-  };
+  statGroups: PlayerProfilerEntityMap;
 };

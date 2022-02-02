@@ -46,14 +46,14 @@ export interface NFLSlateAttrTeamProperties {
 export type NFLClientSlateAttrTeam = SlateAttrTeamProperties & NFLSlateAttrTeamProperties;
 export type NFLClientSlateAttrTeamMap = Record<string, SlateAttrTeamProperties & NFLSlateAttrTeamProperties>;
 
-type NFLClientStatGroupProps = 'qb' | 'rb' | 'te' | 'wr';
+export type NFLClientStatGroupProps = 'qb' | 'rb' | 'te' | 'wr';
 export type NFLClientStatGroup = { [prop in NFLClientStatGroupProps]: NFLClientProfiler };
 
 export type NFLClientProfiler = {
   profiler: NFLClientProfilerEntity;
 };
 
-type ProfilerTimeFrameProps = 'season' | 'last-season' | 'combined';
+export type ProfilerTimeFrameProps = 'season' | 'last-season' | 'combined';
 
 export type NFLClientProfilerEntity = { [prop in ProfilerTimeFrameProps]: NFLClientProfilerTimeFrameEntity };
 
