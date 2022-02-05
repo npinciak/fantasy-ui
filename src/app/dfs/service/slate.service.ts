@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { currentDate } from '@app/@shared/helpers/date';
 import { objectIsEmpty, transformPercToNumber } from '@app/@shared/helpers/utils';
+import { CamelCasedProperties } from '@app/@shared/models/camel-case.model';
 import { ApiService } from '@app/@shared/services/api.service';
 import { camelCase } from 'lodash';
 import { Observable } from 'rxjs';
@@ -20,7 +21,13 @@ import { SlateMaster, Vegas } from '../models/daily-fantasy-client.model';
 import { PlayerSlateAttr } from '../models/player-slate-attr.model';
 import { Team } from '../models/team.model';
 import { NBAClientPlayerAttributes, NBAClientSlateAttrTeam, RestEntity } from '../nba/models/nba-client.model';
-import { NFLClientPlayerAttributes, NFLClientSlateAttrTeam, NFLClientStatGroup } from '../nfl/models/nfl-client.model';
+import {
+  NFLClientOutsidersProperties,
+  NFLClientPlayerAttributes,
+  NFLClientSafptsProperties,
+  NFLClientSlateAttrTeam,
+  NFLClientStatGroup,
+} from '../nfl/models/nfl-client.model';
 import { PlayerProfilerSeason, PlayerProfilerSeasonMap } from '../nfl/models/nfl-profiler.model';
 import { OutsidersProps, ScheduleAdjFptsProps } from '../nfl/models/nfl-slate-attr.model';
 
@@ -50,7 +57,18 @@ export class SlateService {
     return 'dvp' in player;
   }
 
-  static transform(teamAttributes: ClientSlateTeamAttributes) {
+  // TODO: Update return type here
+  static transform(teamAttributes: ClientSlateTeamAttributes):
+    | {
+        safpts: CamelCasedProperties<NFLClientSafptsProperties>;
+        outsiders: CamelCasedProperties<NFLClientOutsidersProperties>;
+        rest?: undefined;
+      }
+    | {
+        safpts?: undefined;
+        outsiders?: undefined;
+        rest: RestEntity;
+      } {
     if (SlateService.isNFL(teamAttributes)) {
       const safpts = {} as ScheduleAdjFptsProps;
       for (const prop in teamAttributes.safpts) {
@@ -79,7 +97,7 @@ export class SlateService {
     }
   }
 
-  static transformTeamSlateAttributes(teams: ClientSlateTeamAttributesMap) {
+  static transformTeamSlateAttributes(teams: ClientSlateTeamAttributesMap): SlateTeam[] | null {
     if (objectIsEmpty(teams)) {
       return [];
     }

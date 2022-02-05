@@ -45,7 +45,7 @@ export class NflDfsPlayerGridIronState {
   }
 
   @Action(PatchGridIronPlayer)
-  patchPlayerGridIron({ patchState }: StateContext<NflDfsPlayerGridIronStateModel>, { payload: { players } }: PatchGridIronPlayer) {
+  patchPlayerGridIron({ patchState }: StateContext<NflDfsPlayerGridIronStateModel>, { payload: { players } }: PatchGridIronPlayer): void {
     const map = entityMap(players, p => p.playerId.toString());
     patchState({ map });
   }

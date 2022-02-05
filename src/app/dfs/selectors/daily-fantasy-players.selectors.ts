@@ -68,7 +68,7 @@ export class DailyFantasyPlayersSelectors {
     selectGameById: (id: string) => Schedule,
     getPlayerProfilerSeasonById: (id: string) => PlayerProfiler,
     getGridIronPlayerById: (id: string) => GridIronPlayer
-  ) {
+  ): unknown[] {
     return playerList
       .map(p => {
         const playerRgId = p.rgId;

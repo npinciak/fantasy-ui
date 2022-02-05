@@ -23,13 +23,13 @@ export class DailyFantasyPlayersFacade {
   @Select(DailyFantasyPlayersSelectors.filterableNbaAttributes) filterableNbaAttributes$: Observable<string[]>;
 
   @Select(DailyFantasyPlayersSelectors.selectNbaPlayerTableRows) selectNbaPlayerTableRows$: Observable<PlayerTableRow[]>;
-  @Select(DailyFantasyPlayersSelectors.selectNflPlayerTableRows) selectNflPlayerTableRows$: Observable<PlayerTableRow[]>;
+  @Select(DailyFantasyPlayersSelectors.selectNflPlayerTableRows) selectNflPlayerTableRows$: Observable<unknown[]>;
 
   @Select(DailyFantasyPlayersSelectors.selectPlayersEmpty) playersEmpty$: Observable<boolean>;
 
   constructor(private store: Store) {}
 
-  fetchPlayers(slatePath: string) {
+  fetchPlayers(slatePath: string): Observable<unknown> {
     return this.store.dispatch(new FetchPlayers({ slatePath }));
   }
 }
