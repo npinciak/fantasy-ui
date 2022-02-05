@@ -7,7 +7,6 @@ import { camelCase } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DailyFantasyEndpointBuilder } from '../daily-fantasy-url-builder';
-import { testSiteMap } from '../dfs.const';
 import {
   ClientSlateAttributes,
   ClientSlatePlayerAttributes,
@@ -54,12 +53,16 @@ export class SlateService {
     if (SlateService.isNFL(teamAttributes)) {
       const safpts = {} as ScheduleAdjFptsProps;
       for (const prop in teamAttributes.safpts) {
-        safpts[camelCase(prop)] = teamAttributes.safpts[prop];
+        if (teamAttributes.safpts.hasOwnProperty(prop)) {
+          safpts[camelCase(prop)] = teamAttributes.safpts[prop];
+        }
       }
 
       const outsiders = {} as OutsidersProps;
       for (const prop in teamAttributes.outsiders) {
-        outsiders[camelCase(prop)] = teamAttributes.outsiders[prop];
+        if (teamAttributes.outsiders.hasOwnProperty(prop)) {
+          outsiders[camelCase(prop)] = teamAttributes.outsiders[prop];
+        }
       }
 
       return {

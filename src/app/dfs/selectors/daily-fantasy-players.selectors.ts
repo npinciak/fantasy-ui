@@ -169,7 +169,7 @@ export class DailyFantasyPlayersSelectors {
   }
 
   @Selector()
-  static filterableNbaAttributes() {
+  static filterableNbaAttributes(): string[] {
     return ['ownership', 'value', 'smash']; //playerList.map(p => {});
   }
 

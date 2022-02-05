@@ -16,10 +16,16 @@ export enum DfsSiteType {
   Yahoo = 50,
 }
 
-export const dfsSiteToDfsSiteTypeMap: { [key in DfsSite]: DfsSiteType } = {
+export const dfsSiteToDfsSiteTypeMap = {
   [DfsSite.FanDuel]: DfsSiteType.FanDuel,
   [DfsSite.DraftKings]: DfsSiteType.DraftKings,
   [DfsSite.Yahoo]: DfsSiteType.Yahoo,
+};
+
+export const testSiteMap = {
+  fanduel: 2,
+  draftkings: 20,
+  yahoo: 50,
 };
 
 export enum DfsSport {
