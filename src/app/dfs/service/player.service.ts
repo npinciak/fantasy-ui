@@ -16,7 +16,7 @@ import { Team } from '../models/team.model';
 export class PlayerService {
   constructor(private apiService: ApiService) {}
 
-  static transformDfsClientPlayerToPlayer(dfsClientPlayer: DfsSlatePlayer): Player {
+  static transformDfsClientPlayerToPlayer(dfsClientPlayer: DfsSlatePlayer): Omit<Player, 'img' | 'team'> {
     return {
       id: dfsClientPlayer.player.id,
       rgId: dfsClientPlayer.player.rg_id,
@@ -25,8 +25,6 @@ export class PlayerService {
       teamId: dfsClientPlayer.player.team_id,
       rgTeamId: dfsClientPlayer.player.rg_team_id,
       gameId: dfsClientPlayer.schedule.id,
-      img: null,
-      team: null,
     };
   }
 
