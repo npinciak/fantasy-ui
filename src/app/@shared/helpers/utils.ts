@@ -21,7 +21,7 @@ export function objectIsEmpty<T>(obj: T): boolean {
 }
 
 export function transformToCamelCase<T>(obj: T): CamelCasedProperties<T> {
-  const map = <CamelCasedProperties<T>>{};
+  const map = {} as CamelCasedProperties<T>;
   for (const prop in obj) {
     obj[camelCase(prop)] = obj[prop];
   }

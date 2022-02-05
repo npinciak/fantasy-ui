@@ -52,12 +52,12 @@ export class SlateService {
 
   static transform(teamAttributes: ClientSlateTeamAttributes) {
     if (SlateService.isNFL(teamAttributes)) {
-      const safpts = <ScheduleAdjFptsProps>{};
+      const safpts = {} as ScheduleAdjFptsProps;
       for (const prop in teamAttributes.safpts) {
         safpts[camelCase(prop)] = teamAttributes.safpts[prop];
       }
 
-      const outsiders = <OutsidersProps>{};
+      const outsiders = {} as OutsidersProps;
       for (const prop in teamAttributes.outsiders) {
         outsiders[camelCase(prop)] = teamAttributes.outsiders[prop];
       }
@@ -80,7 +80,7 @@ export class SlateService {
       return [];
     }
     return Object.entries(teams).map(([id, team]) => ({
-      id: id,
+      id,
       vegas: team.vegas,
       outsiders: SlateService.transform(team).outsiders ?? null,
       safpts: SlateService.transform(team).safpts ?? null,
@@ -92,28 +92,28 @@ export class SlateService {
     if (objectIsEmpty(statGroup)) {
       return {};
     }
-    const qb = <PlayerProfilerSeason>{};
+    const qb = {} as PlayerProfilerSeason;
     for (const prop in statGroup.qb.profiler.season) {
       qb.season[camelCase(prop)] = Number(statGroup.qb.profiler.season[prop]);
       // qb.lastSeason[camelCase(prop)] = Number(statGroup.qb.profiler['last-season'][prop]);
       //  qb.combined[camelCase(prop)] = Number(statGroup.qb.profiler.combined[prop]);
     }
 
-    const rb = <PlayerProfilerSeason>{};
+    const rb = {} as PlayerProfilerSeason;
     for (const prop in statGroup.rb.profiler.season) {
       rb.season[camelCase(prop)] = Number(statGroup.rb.profiler.season[prop]);
       // rb.lastSeason[camelCase(prop)] = Number(statGroup.rb.profiler['last-season'][prop]);
       // rb.combined[camelCase(prop)] = Number(statGroup.rb.profiler.combined[prop]);
     }
 
-    const wr = <PlayerProfilerSeason>{};
+    const wr = {} as PlayerProfilerSeason;
     for (const prop in statGroup.wr.profiler.season) {
       wr.season[camelCase(prop)] = Number(statGroup.wr.profiler.season[prop]);
       // wr.lastSeason[camelCase(prop)] = Number(statGroup.wr.profiler['last-season'][prop]);
       // wr.combined[camelCase(prop)] = Number(statGroup.wr.profiler.combined[prop]);
     }
 
-    const te = <PlayerProfilerSeason>{};
+    const te = {} as PlayerProfilerSeason;
     for (const prop in statGroup.te.profiler.season) {
       te.season[camelCase(prop)] = Number(statGroup.te.profiler.season[prop]);
       // te.lastSeason[camelCase(prop)] = Number(statGroup.te.profiler['last-season'][prop]);
