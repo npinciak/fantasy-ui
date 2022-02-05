@@ -176,8 +176,8 @@ export class EspnService {
       id: l.id,
       uid: l.uid,
       name: l.name,
-      abbreviation: l.abbreviation,
-      shortName: l.shortName,
+      abbreviation: l.abbreviation ?? l.name,
+      shortName: l.shortName ?? l.name,
     }));
 
   static transformFeedArticleImportToFeedArticle(articleImport: FeedArticleImport): FeedArticle {

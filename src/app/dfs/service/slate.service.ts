@@ -98,28 +98,36 @@ export class SlateService {
     }
     const qb = {} as PlayerProfilerSeason;
     for (const prop in statGroup.qb.profiler.season) {
-      qb.season[camelCase(prop)] = Number(statGroup.qb.profiler.season[prop]);
+      if (statGroup.qb.profiler.season.hasOwnProperty(prop)) {
+        qb.season[camelCase(prop)] = Number(statGroup.qb.profiler.season[prop]);
+      }
       // qb.lastSeason[camelCase(prop)] = Number(statGroup.qb.profiler['last-season'][prop]);
       //  qb.combined[camelCase(prop)] = Number(statGroup.qb.profiler.combined[prop]);
     }
 
     const rb = {} as PlayerProfilerSeason;
     for (const prop in statGroup.rb.profiler.season) {
-      rb.season[camelCase(prop)] = Number(statGroup.rb.profiler.season[prop]);
+      if (statGroup.rb.profiler.season.hasOwnProperty(prop)) {
+        rb.season[camelCase(prop)] = Number(statGroup.rb.profiler.season[prop]);
+      }
       // rb.lastSeason[camelCase(prop)] = Number(statGroup.rb.profiler['last-season'][prop]);
       // rb.combined[camelCase(prop)] = Number(statGroup.rb.profiler.combined[prop]);
     }
 
     const wr = {} as PlayerProfilerSeason;
     for (const prop in statGroup.wr.profiler.season) {
-      wr.season[camelCase(prop)] = Number(statGroup.wr.profiler.season[prop]);
+      if (statGroup.wr.profiler.season.hasOwnProperty(prop)) {
+        wr.season[camelCase(prop)] = Number(statGroup.wr.profiler.season[prop]);
+      }
       // wr.lastSeason[camelCase(prop)] = Number(statGroup.wr.profiler['last-season'][prop]);
       // wr.combined[camelCase(prop)] = Number(statGroup.wr.profiler.combined[prop]);
     }
 
     const te = {} as PlayerProfilerSeason;
     for (const prop in statGroup.te.profiler.season) {
-      te.season[camelCase(prop)] = Number(statGroup.te.profiler.season[prop]);
+      if (statGroup.te.profiler.season.hasOwnProperty(prop)) {
+        te.season[camelCase(prop)] = Number(statGroup.te.profiler.season[prop]);
+      }
       // te.lastSeason[camelCase(prop)] = Number(statGroup.te.profiler['last-season'][prop]);
       // te.combined[camelCase(prop)] = Number(statGroup.te.profiler.combined[prop]);
     }
