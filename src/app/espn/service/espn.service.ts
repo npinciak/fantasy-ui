@@ -5,7 +5,7 @@ import { flatten } from '@app/@shared/helpers/utils';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from 'src/app/@shared/services/api.service';
-import { EspnClientEventList, EspnClientLeague } from '../espn-client.model';
+import { EspnClientLeague } from '../espn-client.model';
 import { NO_LOGO } from '../espn.const';
 import {
   EspnEndpointBuilder,
@@ -199,9 +199,9 @@ export class EspnService {
    * @param leagueId
    * @returns
    */
-  espnUpdateFantasyTeam(payload: unknown, sport: FantasySports, leagueId: number) {
+  espnUpdateFantasyTeam(payload: unknown, sport: FantasySports, leagueId: number): Observable<unknown> {
     const endpoint = new EspnEndpointBuilder(sport, leagueId);
-    return this.api.post<any>(endpoint.fantasyPlayerTransaction, payload, {
+    return this.api.post(endpoint.fantasyPlayerTransaction, payload, {
       withCredentials: true,
       headers: this.postHeaders,
     });
@@ -214,7 +214,7 @@ export class EspnService {
    * @param sport
    * @returns EspnClientLeague
    */
-  espnFantasyLeagueBySport(sport: FantasySports, leagueId: number) {
+  espnFantasyLeagueBySport(sport: FantasySports, leagueId: number): Observable<EspnClientLeague> {
     const endpoint = new EspnEndpointBuilder(sport, leagueId);
     return this.api.get<EspnClientLeague>(endpoint.fantasyLeague, { params: this.params });
   }
@@ -227,7 +227,7 @@ export class EspnService {
    * @param sport
    * @returns Player news
    */
-  espnFantasyPlayerNewsBySport(sport: FantasySports, numDays: number, playerId: number) {
+  espnFantasyPlayerNewsBySport(sport: FantasySports, numDays: number, playerId: number): Observable<unknown> {
     const endpoint = new EspnEndpointBuilder(sport);
     const params = new HttpParams().set(EspnParamFragment.Days, numDays.toString()).set(EspnParamFragment.PlayerId, playerId.toString());
     return this.api.get(endpoint.fantasyPlayerNews, { params });
@@ -249,22 +249,6 @@ export class EspnService {
       .set(EspnParamFragment.ScoringPeriod, scoringPeriod.toString())
       .set(EspnParamFragment.View, EspnViewParamFragment.PlayerInfo);
     return this.api.get(endpoint.fantasyLeague, { params, headers });
-  }
-
-  /**
-   * Retrieve games for current date
-   *
-   * @deprecated fastcast service might replace this
-   *
-   * @description Fetches espn fantasy api for current games for today
-   *
-   * @param sport
-   *
-   * @returns list of events
-   */
-  espnFantasyEventsBySport(sport: FantasySports) {
-    const endpoint = new EspnEndpointBuilder(sport);
-    return this.api.get<EspnClientEventList>(endpoint.espnEvents, { params: this.espnEventParams });
   }
 
   /**
@@ -303,16 +287,7 @@ export class EspnService {
 
         const feedOverviews: FeedArticleImport[] = flatten(feeds);
 
-        // const feeds2: FeedArticleImport[][] = [];
-        // feedOverviews.map(f => feeds2.push(f));
-
         return feedOverviews.map(i => EspnService.transformFeedArticleImportToFeedArticle(i));
-
-        // return (
-        //   flatten(feeds2)
-        //     // .filter(o => o.moduleType === FeedArticleType.Story)
-        //
-        // );
       })
     );
   }
@@ -320,7 +295,7 @@ export class EspnService {
   /**
    * @todo
    */
-  private get postHeaders() {
+  private get postHeaders(): HttpHeaders {
     let headers = new HttpHeaders();
     headers = headers.append('Cookie', 'ESPN-ONESITE.WEB-PROD.token');
     return headers;
@@ -329,7 +304,7 @@ export class EspnService {
   /**
    * @todo
    */
-  private get espnEventParams() {
+  private get espnEventParams(): HttpParams {
     let params = new HttpParams();
     params = params.append(EspnParamFragment.UseMap, 'true');
     params = params.append(EspnParamFragment.Dates, currentDate());

@@ -1,7 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Mock } from '@app/@shared/models/mock.model';
 import { Observable } from 'rxjs';
-import { EspnClientEventList, EspnClientLeague } from '../espn-client.model';
+import { EspnClientLeague } from '../espn-client.model';
 import { FantasySports } from '../models/espn-endpoint-builder.model';
 import { FastcastEvent } from '../models/fastcast-event.model';
 import { FeedArticle } from '../models/feed.model';
@@ -21,9 +21,7 @@ export class EspnServiceMock implements Mock<EspnService> {
   espnFantasyFreeAgentsBySport(sport: FantasySports, leagueId: number, scoringPeriod: number, headers: HttpHeaders): Observable<any> {
     throw new Error('Method not implemented.');
   }
-  espnFantasyEventsBySport(sport: FantasySports): Observable<EspnClientEventList> {
-    throw new Error('Method not implemented.');
-  }
+
   espnFastcast(
     url: string
   ): Observable<{ transformLeaguesImportToLeagues: League[]; transformEventImportToFastcastEvent: FastcastEvent[] }> {
