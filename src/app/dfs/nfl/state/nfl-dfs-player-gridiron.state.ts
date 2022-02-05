@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
 import { PlayerService } from '@app/dfs/service/player.service';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { NFLClientGridIronPlayer } from '../models/nfl-client.model';
+import { GridIronPlayerMap } from '../models/nfl-gridIron.model';
 
 export class PatchGridIronPlayer {
   static readonly type = `[nflDfsPlayerGridIron] PatchGridIronPlayer`;
-  constructor(public payload: { players: NFLClientGridIronPlayer[] }) {}
+  constructor(public payload: { players: GridIronPlayerMap[] }) {}
 }
 
 export class FetchGridIronPlayers {
@@ -14,10 +14,8 @@ export class FetchGridIronPlayers {
   constructor(public payload: { site: string }) {}
 }
 
-type NflDfsPlayerGridIronPlayerMap = Record<string, NFLClientGridIronPlayer>;
-
 export class NflDfsPlayerGridIronStateModel {
-  map: NflDfsPlayerGridIronPlayerMap;
+  map: GridIronPlayerMap;
 }
 
 const defaults = {
@@ -31,7 +29,7 @@ const defaults = {
 @Injectable()
 export class NflDfsPlayerGridIronState {
   @Selector([NflDfsPlayerGridIronState])
-  static getGridIronPlayerMap(state: NflDfsPlayerGridIronStateModel): NflDfsPlayerGridIronPlayerMap {
+  static getGridIronPlayerMap(state: NflDfsPlayerGridIronStateModel): GridIronPlayerMap {
     return state.map;
   }
 
@@ -47,8 +45,8 @@ export class NflDfsPlayerGridIronState {
   }
 
   @Action(PatchGridIronPlayer)
-  patchPlayerGridIron({ patchState }: StateContext<NflDfsPlayerGridIronStateModel>, { payload: { players } }: PatchGridIronPlayer) {
-    const map = entityMap(players, p => p.PLAYERID);
+  patchPlayerGridIron({ patchState }: StateContext<NflDfsPlayerGridIronStateModel>, { payload: { players } }: PatchGridIronPlayer): void {
+    const map = entityMap(players, p => p.playerId.toString());
     patchState({ map });
   }
 }

@@ -1,14 +1,14 @@
 import { pickAxisData, scatterData } from '@app/@shared/helpers/graph.helpers';
 import { toInt } from '@app/@shared/helpers/toInt';
 import { unique } from '@app/@shared/helpers/unique-by';
-import { getNestedValue } from '@app/@shared/helpers/utils';
 import { Selector } from '@ngxs/store';
 import { ChartData } from 'chart.js';
-import { dfsSiteToDfsSiteTypeMap } from '../dfs.const';
+import { ClientSalaryDiff } from '../models/daily-fantasy-client-slate-attr.model';
+import { PlayerSlateAttr } from '../models/player-slate-attr.model';
 import { Player, PlayerMap } from '../models/player.model';
 import { Schedule } from '../models/schedule.model';
 import { Team } from '../models/team.model';
-import { NFLClientGridIronPlayer } from '../nfl/models/nfl-client.model';
+import { GridIronPlayer } from '../nfl/models/nfl-gridIron.model';
 import { PlayerProfiler } from '../nfl/models/nfl-profiler.model';
 import { NFLDfsPlayerSelectors } from '../nfl/selectors/nfl-dfs-player.selector';
 import { SlateTeam } from '../service/slate.service';
@@ -58,7 +58,7 @@ export class DailyFantasyPlayersSelectors {
     NFLDfsPlayerSelectors.getPlayerProfilerSeasonById,
     NFLDfsPlayerSelectors.getGridIronPlayerById,
   ])
-  static selectPlayerTableRows(
+  static selectNflPlayerTableRows(
     site: string,
     slate: string,
     playerList: Player[],
@@ -67,8 +67,8 @@ export class DailyFantasyPlayersSelectors {
     selectPlayerById: (id: string) => any,
     selectGameById: (id: string) => Schedule,
     getPlayerProfilerSeasonById: (id: string) => PlayerProfiler,
-    getGridIronPlayerById: (id: string) => NFLClientGridIronPlayer
-  ) {
+    getGridIronPlayerById: (id: string) => GridIronPlayer
+  ): unknown[] {
     return playerList
       .map(p => {
         const playerRgId = p.rgId;
@@ -90,37 +90,39 @@ export class DailyFantasyPlayersSelectors {
           opp: p.rgTeamId === game?.homeTeam?.rgId ? game?.awayTeam.shortName : game?.homeTeam.shortName,
           isHome: p.rgTeamId === game?.homeTeam?.rgId ?? false,
           statGroup: slatePlayer?.stat_group ?? '',
-          salary: toInt(gridIronPlayer?.SALARY).int ?? 0,
-          playerAdvanced: {
-            fptsPerGame: toInt(profilerPlayer?.['Fantasy Points Per Game']).int ?? 0,
-            targetShare: toInt(profilerPlayer?.['Target Share']).int ?? 0, // WR
-            rzTargetShare: toInt(profilerPlayer?.['Red Zone Target Share']).int ?? 0,
-            dominatorRating: toInt(profilerPlayer?.['Dominator Rating']).int ?? 0,
-            aDOT: toInt(profilerPlayer?.['Average Target Distance']).int ?? 0,
-            avgTargetDist: toInt(profilerPlayer?.['Average Target Distance']).int ?? 0,
-            catchableTargetRate: toInt(profilerPlayer?.['Catchable Target Rate']).int ?? 0,
-            gameScript: toInt(profilerPlayer?.['Game Script']).int ?? 0,
-            goalLineCarriesGame: toInt(profilerPlayer?.['Goal Line Carries Per Game']).int ?? 0,
-            rzOppShare: toInt(profilerPlayer?.['Red Zone Opportunity Share']).int ?? 0,
-            epa: toInt(profilerPlayer?.['Expected Points Added']).int ?? 0,
-            epaPass: toInt(profilerPlayer?.['Pass EPA']).int ?? 0,
-            epaRun: toInt(profilerPlayer?.['Run EPA']).int ?? 0,
-            productionPrem: toInt(profilerPlayer?.['Production Premium']).int ?? 0,
-            productionPremRank: toInt(profilerPlayer?.['Production Premium Rank']).int ?? 0,
-          },
-          playerProjection: {
-            targets: toInt(gridIronPlayer?.TAR).int ?? 0,
-            fpts: toInt(gridIronPlayer?.FPTS).int ?? 0,
-            fptsVal: toInt(getNestedValue(gridIronPlayer, ['FPTS/$'])).int ?? 0,
-            ceil: toInt(gridIronPlayer?.CEIL).int ?? 0,
-            floor: toInt(gridIronPlayer?.FLOOR).int ?? 0,
-            slateOwnership: null,
-            expertRating: getNestedValue(slatePlayer, ['ecr', [dfsSiteToDfsSiteTypeMap[site]], 'rank']),
-          },
+          salary: gridIronPlayer?.salary ?? 0,
+          advancedProfiler: { ...profilerPlayer },
+          // playerAdvanced: {
+          //   fptsPerGame: toInt(profilerPlayer?.['Fantasy Points Per Game']).int ?? 0,
+          //   targetShare: toInt(profilerPlayer?.['Target Share']).int ?? 0, // WR
+          //   rzTargetShare: toInt(profilerPlayer?.['Red Zone Target Share']).int ?? 0,
+          //   dominatorRating: toInt(profilerPlayer?.['Dominator Rating']).int ?? 0,
+          //   aDOT: toInt(profilerPlayer?.['Average Target Distance']).int ?? 0,
+          //   avgTargetDist: toInt(profilerPlayer?.['Average Target Distance']).int ?? 0,
+          //   catchableTargetRate: toInt(profilerPlayer?.['Catchable Target Rate']).int ?? 0,
+          //   gameScript: toInt(profilerPlayer?.['Game Script']).int ?? 0,
+          //   goalLineCarriesGame: toInt(profilerPlayer?.['Goal Line Carries Per Game']).int ?? 0,
+          //   rzOppShare: toInt(profilerPlayer?.['Red Zone Opportunity Share']).int ?? 0,
+          //   epa: toInt(profilerPlayer?.['Expected Points Added']).int ?? 0,
+          //   epaPass: toInt(profilerPlayer?.['Pass EPA']).int ?? 0,
+          //   epaRun: toInt(profilerPlayer?.['Run EPA']).int ?? 0,
+          //   productionPrem: toInt(profilerPlayer?.['Production Premium']).int ?? 0,
+          //   productionPremRank: toInt(profilerPlayer?.['Production Premium Rank']).int ?? 0,
+          // },
+          gridIron: { ...gridIronPlayer },
+          // playerProjection: {
+          //   targets: toInt(gridIronPlayer?.TAR).int ?? 0,
+          //   fpts: toInt(gridIronPlayer?.FPTS).int ?? 0,
+          //   fptsVal: toInt(getNestedValue(gridIronPlayer, ['FPTS/$'])).int ?? 0,
+          //   ceil: toInt(gridIronPlayer?.CEIL).int ?? 0,
+          //   floor: toInt(gridIronPlayer?.FLOOR).int ?? 0,
+          //   slateOwnership: null,
+          //   expertRating: getNestedValue(slatePlayer, ['ecr', [dfsSiteToDfsSiteTypeMap[site]], 'rank']),
+          // },
           opponent: {
             info: null,
-            passDef: toInt(teamSlateAttr?.outsiders?.['Opp PaDef']).int ?? 0,
-            passDefRk: toInt(teamSlateAttr?.outsiders?.['Opp PaDef Rk']).int ?? 0,
+            passDef: toInt(teamSlateAttr?.outsiders.oppPaDef).int ?? 0,
+            passDefRk: toInt(teamSlateAttr?.outsiders?.oppPaDefRk).int ?? 0,
             fptsAllowedRk: null, //{ ...NFLPlayerSelectors.transformScheduleAdjusted(opponentInfo?.safpts) },
           },
         };
@@ -129,17 +131,55 @@ export class DailyFantasyPlayersSelectors {
       .sort((a, b) => b.salary - a.salary);
   }
 
+  @Selector([
+    DailyFantasyPlayersSelectors.selectPlayerList,
+    DailyFantasyScheduleSelectors.selectGameById,
+    DailyFantasySlateAttrSelectors.selectPlayerById,
+  ])
+  static selectNbaPlayerTableRows(
+    playerList: Player[],
+    selectGameById: (id: string) => Schedule,
+    selectPlayerById: (id: string) => PlayerSlateAttr
+  ): NbaPlayerTableRow[] {
+    return playerList.map(p => {
+      const game = selectGameById(p.gameId);
+
+      const playerSlateAttr = selectPlayerById(p.rgId);
+
+      return {
+        name: p.name,
+        position: p.position,
+        siteId: null,
+        rgId: p.rgId,
+        team: p.team,
+        opp: p.rgTeamId === game?.homeTeam?.rgId ? game?.awayTeam.shortName : game?.homeTeam.shortName,
+        isHome: p.rgTeamId === game?.homeTeam?.rgId ?? false,
+        salaryDiff: playerSlateAttr?.salaryDiff,
+        slateOwn: playerSlateAttr?.slateOwn,
+        ownership: playerSlateAttr?.ownership,
+        value: playerSlateAttr?.value,
+        smash: playerSlateAttr?.smash,
+      };
+    });
+  }
+
   @Selector([DailyFantasyPlayersSelectors.selectPlayerList])
   static selectPlayersEmpty(playerList: Player[]): boolean {
     return playerList.length === 0;
   }
 
-  @Selector([])
-  static scatterChartData(teamList: Player[], labels: string[]): ChartData<'scatter'> {
-    const xaxis = pickAxisData(teamList, obj => obj.id);
-    const yaxis = pickAxisData(teamList, obj => obj.teamId);
+  @Selector()
+  static filterableNbaAttributes(): string[] {
+    return ['ownership', 'value', 'smash']; //playerList.map(p => {});
+  }
+
+  @Selector([DailyFantasyPlayersSelectors.selectNbaPlayerTableRows])
+  static nbaScatterChartData(playerList: NbaPlayerTableRow[]): ChartData<'scatter'> {
+    const xaxis = pickAxisData(playerList, obj => obj?.ownership);
+    const yaxis = pickAxisData(playerList, obj => obj?.smash);
 
     const data = scatterData(xaxis, yaxis);
+    const labels = playerList.map(p => p.name);
 
     return {
       labels,
@@ -156,4 +196,43 @@ export class DailyFantasyPlayersSelectors {
       ],
     };
   }
+
+  @Selector([])
+  static scatterChartData(playerList: { name: string; salary: number; fpts: number }[], labels: string[]): ChartData<'scatter'> {
+    const xaxis = pickAxisData(playerList, obj => obj.fpts);
+    const yaxis = pickAxisData(playerList, obj => obj.salary);
+
+    const data = scatterData(xaxis, yaxis);
+    const testLabels = playerList.map(p => p.name);
+
+    return {
+      labels: testLabels,
+      datasets: [
+        {
+          data: data,
+          label: 'Series A',
+          pointRadius: 5,
+          borderColor: '#F37723',
+          backgroundColor: '#F37723',
+          pointBackgroundColor: '#F37723',
+          pointBorderColor: '#F37723',
+        },
+      ],
+    };
+  }
 }
+
+type NbaPlayerTableRow = {
+  name: string;
+  position: string;
+  siteId: number | null;
+  rgId: string;
+  team: string;
+  opp: string;
+  isHome: boolean;
+  salaryDiff: ClientSalaryDiff;
+  slateOwn: Record<number, string>;
+  ownership: number;
+  value: number;
+  smash: number;
+};

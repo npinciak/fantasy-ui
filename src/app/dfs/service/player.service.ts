@@ -9,6 +9,7 @@ import { DfsSlatePlayer, Schedule as ScheduleImport, ScheduleTeamEntity } from '
 import { Player, PlayersBySlate } from '../models/player.model';
 import { Schedule } from '../models/schedule.model';
 import { Team } from '../models/team.model';
+import { GridIronPlayerMap } from '../nfl/models/nfl-gridIron.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ import { Team } from '../models/team.model';
 export class PlayerService {
   constructor(private apiService: ApiService) {}
 
-  static transformDfsClientPlayerToPlayer(dfsClientPlayer: DfsSlatePlayer): Player {
+  static transformDfsClientPlayerToPlayer(dfsClientPlayer: DfsSlatePlayer): Omit<Player, 'img' | 'team'> {
     return {
       id: dfsClientPlayer.player.id,
       rgId: dfsClientPlayer.player.rg_id,
@@ -25,8 +26,6 @@ export class PlayerService {
       teamId: dfsClientPlayer.player.team_id,
       rgTeamId: dfsClientPlayer.player.rg_team_id,
       gameId: dfsClientPlayer.schedule.id,
-      img: null,
-      team: null,
     };
   }
 
@@ -73,11 +72,11 @@ export class PlayerService {
     );
   }
 
-  getGridIronPlayers(request: { site: string }) {
+  getGridIronPlayers(request: { site: string }): Observable<GridIronPlayerMap[]> {
     let params = new HttpParams();
     params = params.append('site', request.site ?? 'draftkings');
-
+    // TODO: Add get<returnType>
     const endpointBuilder = new DailyFantasyEndpointBuilder();
-    return this.apiService.get<any[]>(endpointBuilder.gridIron, { params });
+    return this.apiService.get(endpointBuilder.gridIron, { params });
   }
 }
