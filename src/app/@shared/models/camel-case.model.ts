@@ -1,4 +1,4 @@
-export type WordSeparators = '-' | '_' | ' ';
+export type WordSeparators = '-' | '_' | ' ' | '+' | '/';
 
 export type Split<S extends string, Delimiter extends string> = S extends `${infer Head}${Delimiter}${infer Tail}`
   ? [Head, ...Split<Tail, Delimiter>]
