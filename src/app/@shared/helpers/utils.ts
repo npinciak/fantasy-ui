@@ -1,3 +1,6 @@
+import { camelCase } from 'lodash';
+import { CamelCasedProperties } from '../models/camel-case.model';
+
 export function cellDataAccessor<T>(obj: T, path) {
   return path.split('.').reduce((o, p) => o && o[p], obj);
 }
@@ -8,4 +11,41 @@ export function getNestedValue(obj, keys) {
 
 export function flatten<T>(array2D: T[][]): T[] {
   return [].concat(...array2D);
+}
+
+export function objectIsEmpty<T>(obj: T): boolean {
+  if (Object.keys(obj).length === 0 && obj.constructor === Object) {
+    return true;
+  }
+  return false;
+}
+
+export function transformToCamelCase<T>(obj: T): CamelCasedProperties<T> {
+  const map = <CamelCasedProperties<T>>{};
+  for (const prop in obj) {
+    obj[camelCase(prop)] = obj[prop];
+  }
+  return map;
+}
+
+export function transformPercToNumber(str: string): number {
+  if (str !== undefined) {
+    return Number(str.split('%')[0]);
+  }
+  return null;
+}
+
+export function transformNestedToCamelCase<T>(obj: T) {
+  function myFunction(obj: T) {
+    const map = {};
+    Object.keys(obj).forEach(k => {
+      if (typeof obj[k] === 'object') {
+        map[k] = myFunction(obj[k]);
+      } else {
+        map[camelCase(k)] = obj[k];
+      }
+    });
+    return map;
+  }
+  return myFunction(obj);
 }
