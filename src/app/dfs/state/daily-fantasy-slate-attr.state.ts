@@ -22,6 +22,7 @@ export class DailyFantasySlateAttrStateModel {
   teams: SlateTeamMap;
   players: Record<string, any>;
   slate: string | null;
+  site: number | string | null;
 }
 
 const defaults = {
@@ -29,6 +30,7 @@ const defaults = {
   teams: {},
   players: {},
   slate: null,
+  site: null,
 };
 
 @State<DailyFantasySlateAttrStateModel>({
@@ -59,21 +61,17 @@ export class DailyFantasySlateAttrState {
     { patchState, dispatch }: StateContext<DailyFantasySlateAttrStateModel>,
     { payload: { sport, site, slateId } }: FetchSlateAttr
   ): Promise<void> {
-    const res = await this.slateService.getGameAttrBySlateId({ sport, site, slateId }).toPromise();
-    const profiler = { ...res.statGroups };
+    const { statGroups, teams, players } = await this.slateService.getGameAttrBySlateId({ sport, site, slateId }).toPromise();
+    dispatch(new PatchProfiler({ profiler: statGroups }));
 
-    dispatch([new PatchProfiler({ profiler }), new FetchGridIronPlayers({ site })]);
-
-    // if (sport === 'nfl') {
-    //   dispatch([new PatchNFLTeamSlateAttr({ teams: res.teams })]);
-    // }
+    if (sport === 'nfl') {
+      dispatch([new FetchGridIronPlayers({ site })]);
+    }
 
     // if (sport === 'nba') {
     //   dispatch([new PatchNbaTeamSlateAttr({ teams: res.teams })]);
     // }
 
-    const teams = entityMap(res.teams);
-
-    patchState({ teams, slate: slateId });
+    patchState({ teams: entityMap(teams), slate: slateId, players: entityMap(players) });
   }
 }

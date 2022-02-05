@@ -32,7 +32,7 @@ export class DailyFantasySlateAttrSelectors {
 
   @Selector([DailyFantasySlateAttrSelectors.selectTeamList, DailyFantasySlateAttrSelectors.scatterChartLabels])
   static scatterChartData(teamList: TeamList[], labels: string[]): ChartData<'scatter'> {
-    const xaxis = pickAxisData(teamList, obj => obj.safpts.RawQB);
+    const xaxis = pickAxisData(teamList, obj => obj.safpts.rawQB);
     const yaxis = pickAxisData(teamList, obj => obj.vegas.total);
 
     const data = scatterData(xaxis, yaxis);

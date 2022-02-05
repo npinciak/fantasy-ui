@@ -207,7 +207,4 @@ export type NFLClientProfilerTimeFrameEntity = Record<
   NFLClientProfilerQBProperties | NFLClientProfilerRBProperties | NFLClientProfilerReceiverProperties
 >;
 
-export type SalaryDiffByDfsSiteType = Record<DfsSiteType, NFLClientSalaryDiff>;
-export type PlayerAttributesByDfsSite = Record<DfsSiteType, string>;
-export type PlayerOwnershipByDfsSiteTypeBySlate = Record<DfsSiteType, Record<number, string>>;
 export type PlayerEcrByDfsSiteType = Record<DfsSiteType, NFLClientEcr>;

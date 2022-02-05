@@ -1,5 +1,5 @@
 import { Selector } from '@ngxs/store';
-import { NFLClientGridIronPlayer, NFLClientGridIronPlayerMap } from '../models/nfl-client.model';
+import { GridIronPlayer, GridIronPlayerMap } from '../models/nfl-gridIron.model';
 import { PlayerProfiler, PlayerProfilerTimeframeMap } from '../models/nfl-profiler.model';
 import { NflDfsPlayerGridIronState } from '../state/nfl-dfs-player-gridiron.state';
 import { NflDfsProfilerState } from '../state/nfl-dfs-profiler.state';
@@ -11,7 +11,7 @@ export class NFLDfsPlayerSelectors {
   }
 
   @Selector([NflDfsPlayerGridIronState.getGridIronPlayerMap])
-  static getGridIronPlayerById(players: NFLClientGridIronPlayerMap): (id: string) => NFLClientGridIronPlayer {
+  static getGridIronPlayerById(players: GridIronPlayerMap): (id: string) => GridIronPlayer {
     return (id: string) => players[id];
   }
 }

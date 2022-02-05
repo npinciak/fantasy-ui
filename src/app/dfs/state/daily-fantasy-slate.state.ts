@@ -43,7 +43,6 @@ export class DailyFantasySlateState {
 
     const map: SlateMasterMap = res[site];
 
-    patchState({ map });
+    patchState({ map, site });
   }
 }
-

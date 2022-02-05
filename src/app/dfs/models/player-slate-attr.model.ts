@@ -1,4 +1,5 @@
-import { PlayerAttributesByDfsSite, PlayerOwnershipByDfsSiteTypeBySlate, SalaryDiffByDfsSiteType } from '../nfl/models/nfl-client.model';
+import { CamelCasedProperties } from '@app/@shared/models/camel-case.model';
+import { ClientSalaryDiff } from './daily-fantasy-client-slate-attr.model';
 import { Player } from './player.model';
 
 /**
@@ -6,11 +7,11 @@ import { Player } from './player.model';
  */
 interface PlayerSlateAttrProperties {
   statGroup: string;
-  salaryDiff: SalaryDiffByDfsSiteType;
-  slateOwn: PlayerOwnershipByDfsSiteTypeBySlate;
-  ownership: PlayerAttributesByDfsSite;
-  value: PlayerAttributesByDfsSite;
-  smash: PlayerAttributesByDfsSite;
+  salaryDiff: ClientSalaryDiff;
+  slateOwn: Record<number, string>;
+  ownership: number;
+  value: number;
+  smash: number;
 }
 
 export type PlayerSlateAttr = Pick<Player, 'id'> & PlayerSlateAttrProperties;

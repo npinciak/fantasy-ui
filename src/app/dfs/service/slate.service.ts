@@ -1,11 +1,13 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { currentDate } from '@app/@shared/helpers/date';
+import { objectIsEmpty, transformPercToNumber } from '@app/@shared/helpers/utils';
 import { ApiService } from '@app/@shared/services/api.service';
 import { camelCase } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DailyFantasyEndpointBuilder } from '../daily-fantasy-url-builder';
+import { testSiteMap } from '../dfs.const';
 import {
   ClientSlateAttributes,
   ClientSlatePlayerAttributes,
@@ -15,10 +17,11 @@ import {
   ClientSlateTeamAttributesMap,
 } from '../models/daily-fantasy-client-slate-attr.model';
 import { SlateMaster, Vegas } from '../models/daily-fantasy-client.model';
+import { PlayerSlateAttr } from '../models/player-slate-attr.model';
 import { Team } from '../models/team.model';
 import { NBAClientPlayerAttributes, NBAClientSlateAttrTeam, RestEntity } from '../nba/models/nba-client.model';
 import { NFLClientPlayerAttributes, NFLClientSlateAttrTeam, NFLClientStatGroup } from '../nfl/models/nfl-client.model';
-import { PlayerProfilerEntityMap, PlayerProfilerTimeframeMap } from '../nfl/models/nfl-profiler.model';
+import { PlayerProfilerSeason, PlayerProfilerSeasonMap } from '../nfl/models/nfl-profiler.model';
 import { OutsidersProps, ScheduleAdjFptsProps } from '../nfl/models/nfl-slate-attr.model';
 
 @Injectable({
@@ -47,45 +50,6 @@ export class SlateService {
     return 'dvp' in player;
   }
 
-  static transformStatGroupsToProfiler(statGroup: ClientSlateStatGroups): PlayerProfilerEntityMap {
-    if (SlateService.isNFLStatGroup(statGroup)) {
-      const qb = <PlayerProfilerTimeframeMap>{};
-      for (const prop in statGroup.qb.profiler.season) {
-        qb.season[camelCase(prop)] = statGroup.qb.profiler.season[prop];
-        qb.lastSeason[camelCase(prop)] = statGroup.qb.profiler['last-season'][prop];
-        qb.combined[camelCase(prop)] = statGroup.qb.profiler.combined[prop];
-      }
-
-      const rb = <PlayerProfilerTimeframeMap>{};
-      for (const prop in statGroup.rb.profiler.season) {
-        rb.season[camelCase(prop)] = statGroup.rb.profiler.season[prop];
-        rb.lastSeason[camelCase(prop)] = statGroup.rb.profiler['last-season'][prop];
-        rb.combined[camelCase(prop)] = statGroup.rb.profiler.combined[prop];
-      }
-
-      const wr = <PlayerProfilerTimeframeMap>{};
-      for (const prop in statGroup.wr.profiler.season) {
-        wr.season[camelCase(prop)] = statGroup.wr.profiler.season[prop];
-        wr.lastSeason[camelCase(prop)] = statGroup.wr.profiler['last-season'][prop];
-        wr.combined[camelCase(prop)] = statGroup.wr.profiler.combined[prop];
-      }
-
-      const te = <PlayerProfilerTimeframeMap>{};
-      for (const prop in statGroup.te.profiler.season) {
-        te.season[camelCase(prop)] = statGroup.te.profiler.season[prop];
-        te.lastSeason[camelCase(prop)] = statGroup.te.profiler['last-season'][prop];
-        te.combined[camelCase(prop)] = statGroup.te.profiler.combined[prop];
-      }
-
-      return {
-        qb,
-        rb,
-        te,
-        wr,
-      };
-    }
-  }
-
   static transform(teamAttributes: ClientSlateTeamAttributes) {
     if (SlateService.isNFL(teamAttributes)) {
       const safpts = <ScheduleAdjFptsProps>{};
@@ -94,7 +58,7 @@ export class SlateService {
       }
 
       const outsiders = <OutsidersProps>{};
-      for (const prop in teamAttributes.safpts) {
+      for (const prop in teamAttributes.outsiders) {
         outsiders[camelCase(prop)] = teamAttributes.outsiders[prop];
       }
 
@@ -112,6 +76,9 @@ export class SlateService {
   }
 
   static transformTeamSlateAttributes(teams: ClientSlateTeamAttributesMap) {
+    if (objectIsEmpty(teams)) {
+      return [];
+    }
     return Object.entries(teams).map(([id, team]) => ({
       id: id,
       vegas: team.vegas,
@@ -121,21 +88,63 @@ export class SlateService {
     }));
   }
 
-  static transformStatGroupSlateAttributes(statGroup: NFLClientStatGroup) {
-    return SlateService.transformStatGroupsToProfiler(statGroup);
+  static transformStatGroupsToProfiler(statGroup: ClientSlateStatGroups): PlayerProfilerSeasonMap | null | undefined {
+    if (objectIsEmpty(statGroup)) {
+      return {};
+    }
+    const qb = <PlayerProfilerSeason>{};
+    for (const prop in statGroup.qb.profiler.season) {
+      qb.season[camelCase(prop)] = Number(statGroup.qb.profiler.season[prop]);
+      // qb.lastSeason[camelCase(prop)] = Number(statGroup.qb.profiler['last-season'][prop]);
+      //  qb.combined[camelCase(prop)] = Number(statGroup.qb.profiler.combined[prop]);
+    }
+
+    const rb = <PlayerProfilerSeason>{};
+    for (const prop in statGroup.rb.profiler.season) {
+      rb.season[camelCase(prop)] = Number(statGroup.rb.profiler.season[prop]);
+      // rb.lastSeason[camelCase(prop)] = Number(statGroup.rb.profiler['last-season'][prop]);
+      // rb.combined[camelCase(prop)] = Number(statGroup.rb.profiler.combined[prop]);
+    }
+
+    const wr = <PlayerProfilerSeason>{};
+    for (const prop in statGroup.wr.profiler.season) {
+      wr.season[camelCase(prop)] = Number(statGroup.wr.profiler.season[prop]);
+      // wr.lastSeason[camelCase(prop)] = Number(statGroup.wr.profiler['last-season'][prop]);
+      // wr.combined[camelCase(prop)] = Number(statGroup.wr.profiler.combined[prop]);
+    }
+
+    const te = <PlayerProfilerSeason>{};
+    for (const prop in statGroup.te.profiler.season) {
+      te.season[camelCase(prop)] = Number(statGroup.te.profiler.season[prop]);
+      // te.lastSeason[camelCase(prop)] = Number(statGroup.te.profiler['last-season'][prop]);
+      // te.combined[camelCase(prop)] = Number(statGroup.te.profiler.combined[prop]);
+    }
+
+    return {
+      qb,
+      rb,
+      te,
+      wr,
+    };
   }
 
-  static transformPlayerSlateAttributes(players: ClientSlatePlayerAttributesMap) {
+  static transformPlayerSlateAttributes(players: ClientSlatePlayerAttributesMap, site: string): PlayerSlateAttr[] {
+    if (objectIsEmpty(players)) {
+      return [];
+    }
+
+    const siteMap = testSiteMap[site];
+
     return Object.entries(players).map(([id, player]) => ({
       id,
       statGroup: player.stat_group ?? null,
-      salaryDiff: player.salary_diff ?? null,
-      slateOwn: player.slate_ownership ?? null,
-      ownership: player.ownership ?? null,
-      value: player.value_pct ?? null,
-      smash: player.smash_pct ?? null,
-      expertRanking: null, // SlateService.isNFLPlayer(player),
-      defenseVsPos: null, // NBA SlateService.isNBAPlayer(player) ?? null,
+      salaryDiff: player.salary_diff?.[siteMap] ?? null,
+      slateOwn: player.slate_ownership?.[siteMap] ?? null,
+      ownership: transformPercToNumber(player.ownership?.[siteMap]) ?? null,
+      value: transformPercToNumber(player.value_pct?.[siteMap]) ?? null,
+      smash: transformPercToNumber(player.smash_pct?.[siteMap]) ?? null,
+      expertRanking: SlateService.isNFLPlayer(player) ? player.ecr : null,
+      defenseVsPos: SlateService.isNBAPlayer(player) ? player.dvp : null,
     }));
   }
 
@@ -154,23 +163,23 @@ export class SlateService {
     return this.apiService.get<ClientSlateAttributes>(endpoint.slateAttr, { params }).pipe(
       map(res => ({
         teams: SlateService.transformTeamSlateAttributes(res.teams),
-        statGroups: SlateService.transformStatGroupSlateAttributes(res.stat_groups),
-        players: SlateService.transformPlayerSlateAttributes(res.players),
+        statGroups: SlateService.transformStatGroupsToProfiler(res?.stat_groups),
+        players: SlateService.transformPlayerSlateAttributes(res.players, request.site),
       }))
     );
   }
 }
 
 export type SlateTeam = Pick<Team, 'id'> & { vegas: Vegas } & Partial<{
-    outsiders: OutsidersProps | null;
-    safpts: ScheduleAdjFptsProps | null;
-    rest: RestEntity | null;
+    outsiders: OutsidersProps | null | undefined;
+    safpts: ScheduleAdjFptsProps | null | undefined;
+    rest: RestEntity | null | undefined;
   }>;
 
 export type SlateTeamMap = Record<string, SlateTeam>;
 
 type SlateAttributes = {
-  teams: SlateTeam[];
-  players: unknown[];
-  statGroups: PlayerProfilerEntityMap;
+  teams: SlateTeam[] | null;
+  players: PlayerSlateAttr[] | null;
+  statGroups: PlayerProfilerSeasonMap | null | undefined;
 };
