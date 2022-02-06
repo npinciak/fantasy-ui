@@ -1,28 +1,22 @@
-import { EspnClientRoster, EspnClientTeam } from '@app/espn/espn-client.model';
 import { Selector } from '@ngxs/store';
 import { MLB_LINEUP } from '../consts/lineup.const';
-
 import { BaseballPlayer } from '../models/baseball-player.model';
+import { BaseballTeam, BaseballTeamMap } from '../models/baseball-team.model';
 import { FantasyBaseballTeamState } from '../state/fantasy-baseball-team.state';
 
 export class FantasyBaseballTeamSelectors {
-  @Selector([FantasyBaseballTeamState.getBaseballTeamMap])
-  static selectTeamMap(teams: { [id: string]: EspnClientTeam }): { [id: string]: EspnClientTeam } {
-    return teams;
-  }
-
-  @Selector([FantasyBaseballTeamSelectors.selectTeamMap])
-  static selectTeamList(teams: { [id: string]: EspnClientTeam }): EspnClientTeam[] {
+  @Selector([FantasyBaseballTeamState.map])
+  static selectTeamList(teams: BaseballTeamMap): BaseballTeam[] {
     return Object.values(teams);
   }
 
-  @Selector([FantasyBaseballTeamSelectors.selectTeamMap])
-  static selectTeamById(teams: { [id: string]: EspnClientTeam }): (id: string) => EspnClientTeam {
+  @Selector([FantasyBaseballTeamState.map])
+  static selectTeamById(teams: BaseballTeamMap): (id: string) => BaseballTeam {
     return (id: string) => teams[id];
   }
 
   @Selector([FantasyBaseballTeamSelectors.selectTeamById])
-  static selectRosterByTeamId(selectTeamById: (id: string) => EspnClientTeam): (id: string) => EspnClientRoster {
+  static selectRosterByTeamId(selectTeamById: (id: string) => BaseballTeam): (id: string) => BaseballPlayer[] {
     return (id: string) => selectTeamById(id).roster;
   }
 

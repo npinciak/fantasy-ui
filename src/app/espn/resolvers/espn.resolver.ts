@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { ShellFacade } from '@app/@core/shell/facade/shell.facade';
 import { EspnFeedFacade } from '../facade/espn-feed.facade';
 

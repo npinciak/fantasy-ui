@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
-import { EspnClientTeam } from '@app/espn/espn-client.model';
-import { State, Selector, Action, StateContext } from '@ngxs/store';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { BaseballTeam, BaseballTeamMap } from '../models/baseball-team.model';
 
-export class PatchTeams {
-  static readonly type = `[fantasyBaseballTeam] PatchTeams`;
-  constructor(public payload: { teams: EspnClientTeam[] }) {}
+export class PatchFantasyBaseballTeams {
+  static readonly type = `[fantasyBaseballTeam] PatchFantasyBaseballTeams`;
+  constructor(public payload: { teams: BaseballTeam[] }) {}
 }
 
 interface FantasyBaseballTeamStateModel {
-  map: { [id: string]: EspnClientTeam };
+  map: BaseballTeamMap;
 }
 
 @State<FantasyBaseballTeamStateModel>({
@@ -23,12 +23,12 @@ export class FantasyBaseballTeamState {
   constructor() {}
 
   @Selector()
-  static getBaseballTeamMap(state: FantasyBaseballTeamStateModel) {
+  static map(state: FantasyBaseballTeamStateModel): BaseballTeamMap {
     return state.map;
   }
 
-  @Action(PatchTeams)
-  patchTeams({ patchState, getState }: StateContext<FantasyBaseballTeamStateModel>, { payload: { teams } }: PatchTeams) {
+  @Action(PatchFantasyBaseballTeams)
+  patchTeams({ patchState, getState }: StateContext<FantasyBaseballTeamStateModel>, { payload: { teams } }: PatchFantasyBaseballTeams) {
     const state = getState();
     const map = entityMap(teams, team => team.id);
     patchState({ ...state, map });

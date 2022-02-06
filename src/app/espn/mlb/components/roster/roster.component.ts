@@ -1,6 +1,7 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { sortAccessor } from '@app/@shared/helpers/sort';
 import { PlayerInfoColumn, rosterColumns } from '@mlb/mlb.const';
 import { StatTypeId } from '@mlb/mlb.enums';
 import { BaseballPlayer } from '../../models/baseball-player.model';
@@ -9,6 +10,7 @@ import { BaseballPlayer } from '../../models/baseball-player.model';
   selector: 'app-roster',
   templateUrl: './roster.component.html',
   styleUrls: ['./roster.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RosterComponent implements OnInit, AfterViewInit {
   @Input() fantasyPlayers: BaseballPlayer[];
@@ -25,18 +27,13 @@ export class RosterComponent implements OnInit, AfterViewInit {
 
   view: StatTypeId = 0;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor() {}
 
   ngOnInit() {}
 
   ngAfterViewInit() {
     this.dataSource.data = this.fantasyPlayers;
     this.dataSource.sort = this.sort;
-    this.dataSource.sortingDataAccessor = (player, stat) => this.sortAccessor(player, stat);
-    this.cdr.detectChanges();
-  }
-
-  private sortAccessor(player, stat) {
-    return player.playerStats.get(this.view)[stat];
+    this.dataSource.sortingDataAccessor = (player, stat) => sortAccessor(player, stat);
   }
 }

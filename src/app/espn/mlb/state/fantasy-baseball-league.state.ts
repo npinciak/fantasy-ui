@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { FetchBaseballLeague, UpdateStatType } from '../actions/mlb.actions';
 import { MlbService } from '../services/mlb.service';
+import { PatchFantasyBaseballTeams } from './fantasy-baseball-team.state';
 
 export interface FantasyBaseballLeagueStateModel {
   map: { [id: string]: unknown };
@@ -44,13 +45,18 @@ export class FantasyBaseballLeagueState {
   }
 
   @Action(FetchBaseballLeague)
-  async baseballLeague({ getState, dispatch }: StateContext<FantasyBaseballLeagueStateModel>, { leagueId }: FetchBaseballLeague) {
+  async baseballLeague(
+    { getState, dispatch }: StateContext<FantasyBaseballLeagueStateModel>,
+    { payload: { leagueId } }: FetchBaseballLeague
+  ) {
     if (getState().scoringPeriodId) {
       console.log(`League ${leagueId} already in state, retrieving cache`);
       return;
     }
 
-    const league = await this.mlbService.baseballLeague(leagueId).toPromise();
+    const { teams } = await this.mlbService.baseballLeague(leagueId).toPromise();
+
+    dispatch([new PatchFantasyBaseballTeams({ teams })]);
   }
 
   @Action(UpdateStatType)

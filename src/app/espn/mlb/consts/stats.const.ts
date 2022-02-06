@@ -7,7 +7,7 @@ interface Stats {
   statDerivation: unknown;
 }
 
-export const MLB_STATS: { [id: number]: Partial<Stats> } = {
+export const MLB_STATS: Record<number, Partial<Stats>> = {
   0: {
     abbrev: 'AB',
     description: 'At Bats',

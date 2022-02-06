@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ESPN_TEXT } from '../../../espn.const';
-import { MlbFacade } from '../../facade/mlb.facade';
+import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
+import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
 
 @Component({
   selector: 'app-home',
@@ -13,9 +14,13 @@ export class HomeComponent implements OnInit {
 
   readonly NO_GAMES_TEXT = ESPN_TEXT.NO_GAMES_TEXT;
 
-  constructor(readonly mlbFacade: MlbFacade, private activatedRoute: ActivatedRoute) {}
+  constructor(
+    readonly fantasyBaseballLeagueFacade: FantasyBaseballLeagueFacade,
+    readonly fantasyBaseballTeamFacade: FantasyBaseballTeamFacade,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.mlbFacade.getLeague(this.leagueId);
+    this.fantasyBaseballLeagueFacade.getLeague(this.leagueId);
   }
 }

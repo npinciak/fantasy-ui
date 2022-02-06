@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { UrlFragments, UrlParams } from '@app/@shared/url-builder';
+import { HomeComponent as MlbHomeComponent } from './mlb/pages/home/home.component';
 import { HomeComponent as NflHomeComponent } from './nfl/pages/home/home.component';
-import { FantasyFootballLeagueResolver } from './nfl/resolvers/fantasy-football-league.resolver';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 import { EspnResolver } from './resolvers/espn.resolver';
 
@@ -22,7 +22,20 @@ export const routes: Routes = [
       {
         path: UrlParams.LeagueId,
         component: NflHomeComponent,
-        resolve: [FantasyFootballLeagueResolver],
+        resolve: [],
+      },
+    ],
+  },
+  {
+    path: UrlFragments.MLB,
+    children: [
+      {
+        path: UrlFragments.Empty,
+        component: MlbHomeComponent,
+      },
+      {
+        path: UrlParams.LeagueId,
+        component: MlbHomeComponent,
       },
     ],
   },

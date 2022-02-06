@@ -7,11 +7,14 @@ export interface BaseballTeamProperties {
   roster: BaseballPlayer[];
   totalPoints: number;
   currentRank: number;
-  stats: Partial<StatAbbrev>;
   rotoStats: Partial<StatAbbrev>;
+  liveScore: number;
+  stats: Partial<StatAbbrev>;
   totalBattingRoto: number;
   totalPitchingRoto: number;
-  liveScore: number;
 }
 
-export type BaseballTeam = BaseballTeamProperties & Team;
+export type BaseballTeam = Omit<Team, 'record'> &
+  Omit<BaseballTeamProperties, 'liveScore' | 'stats' | 'totalBattingRoto' | 'totalPitchingRoto'>;
+
+export type BaseballTeamMap = Record<string, BaseballTeam>;

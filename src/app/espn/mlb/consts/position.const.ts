@@ -1,4 +1,4 @@
-export const MLB_POSITION: { [id: number]: { abbrev: string; name: string } } = {
+export const MLB_POSITION_MAP: Record<number, { abbrev: string; name: string }> = {
   0: {
     abbrev: 'POS0',
     name: 'POS0',

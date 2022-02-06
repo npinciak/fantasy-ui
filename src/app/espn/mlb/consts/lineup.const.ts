@@ -14,7 +14,7 @@ export interface MlbLineup {
   starter: boolean;
 }
 
-export const MLB_LINEUP: { [id: number]: MlbLineup } = {
+export const MLB_LINEUP: Record<number, MlbLineup> = {
   0: {
     abbrev: 'C',
     active: true,
