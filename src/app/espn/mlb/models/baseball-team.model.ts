@@ -1,6 +1,6 @@
 import { Team } from '@app/espn/models/team.model';
-import { StatAbbrev } from '../consts/stats.const';
 import { BaseballPlayer } from './baseball-player.model';
+import { StatAbbrev } from './mlb-stats.model';
 
 export interface BaseballTeamProperties {
   abbrev: string;

@@ -4,7 +4,7 @@ import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
 import { EspnService } from '@app/espn/service/espn.service';
 import { map } from 'rxjs/operators';
 import { MLB_POSITION_MAP } from '../consts/position.const';
-import { isPitcher } from '../helpers';
+import { isPitcher, statsKeyMap } from '../helpers';
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { BaseballTeam } from '../models/baseball-team.model';
 
@@ -23,7 +23,7 @@ export class MlbService {
       roster: team.roster.entries.map(e => MlbService.transformEspnClientTeamPlayerToBaseballPlayer(e)),
       totalPoints: team.points,
       currentRank: team.playoffSeed,
-      rotoStats: team.valuesByStat,
+      rotoStats: statsKeyMap(team.valuesByStat),
     };
   }
 

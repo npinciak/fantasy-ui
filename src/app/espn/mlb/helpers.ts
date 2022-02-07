@@ -1,11 +1,12 @@
-import { MLB_STATS, StatAbbrev } from './consts/stats.const';
+import { MLB_STATS_MAP } from './consts/stats.const';
 import { MLBLineup } from './mlb.enums';
+import { StatAbbrev } from './models/mlb-stats.model';
 
-export function statsKeyMap(obj): Partial<StatAbbrev> {
-  const map = {} as Partial<StatAbbrev>;
+export function statsKeyMap(obj: Record<number, number>): StatAbbrev {
+  const map = {} as StatAbbrev;
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      const statAbbrev = MLB_STATS[key].abbrev.toLowerCase();
+      const statAbbrev = MLB_STATS_MAP[key].abbrev.toLowerCase();
       const statValue = obj[key];
       map[statAbbrev] = statValue;
     }
