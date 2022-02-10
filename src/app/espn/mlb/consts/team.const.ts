@@ -1,7 +1,7 @@
 import { MLBTeam } from '../mlb.enums';
 import { Ballpark } from '../models/ballpark.model';
 
-export const MLB_TEAM: Record<number, string> = {
+export const MLB_TEAM_MAP: Record<number, string> = {
   0: 'FA',
   1: 'Bal',
   2: 'Bos',

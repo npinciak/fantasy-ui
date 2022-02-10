@@ -1,15 +1,16 @@
-export interface SeasonConst {
-  wOBA?: number;
-  wOBAScale?: number;
-  wBB?: number;
-  wHBP?: number;
-  w1B?: number;
-  w2B?: number;
-  w3B?: number;
-  wHR?: number;
-  runSB?: number;
-  runCS?: number;
-  'r/PA'?: number;
-  'r/W'?: number;
-  cFIP?: number;
-}
+type SeasonConstantsProperties =
+  | 'wOBA'
+  | 'wOBAScale'
+  | 'wBB'
+  | 'wHBP'
+  | 'w1B'
+  | 'w2B'
+  | 'w3B'
+  | 'wHR'
+  | 'runSB'
+  | 'runCS'
+  | 'r/PA'
+  | 'r/W'
+  | 'cFIP';
+
+export type SeasonConst = { [p in SeasonConstantsProperties]?: number };

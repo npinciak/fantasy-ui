@@ -1,6 +1,5 @@
-
-enum StatTypeId {
-  // season,
+export enum StatTypeId {
+  regularSeason,
   last7Days = 1,
   last15Days,
   last30Days,
@@ -8,20 +7,21 @@ enum StatTypeId {
   live = 5,
 }
 
-enum TeamColumn {
+export enum TeamColumn {
   rank = 'currentRank',
-  name = 'teamName',
+  name = 'name',
   totalPoints = 'totalPoints',
   liveScore = 'liveScore',
 }
 
-enum PlayingStatus {
-  probable = 'PROBABLE',
-  notStarting = 'NOTSTARTING',
-  active = 'ACTIVE',
+export enum PlayingStatus {
+  Probable = 'PROBABLE',
+  NotStarting = 'NOTSTARTING',
+  Starting = 'STARTING',
+  Active = 'ACTIVE',
 }
 
-enum RotoColumn {
+export enum RotoColumn {
   run = 'rotoStats.r',
   homeRun = 'rotoStats.hr',
   rbi = 'rotoStats.rbi',
@@ -37,7 +37,7 @@ enum RotoColumn {
   pitchingTotal = 'totalPitchingRoto',
 }
 
-enum StatsColumn {
+export enum StatsColumn {
   hits = 'stats.h',
   run = 'stats.r',
   homeRun = 'stats.hr',
@@ -51,7 +51,7 @@ enum StatsColumn {
   whip = 'stats.whip',
 }
 
-enum MLBPosition {
+export enum MLBPosition {
   POS0,
   SP,
   C,
@@ -68,7 +68,7 @@ enum MLBPosition {
   PR,
 }
 
-enum MLBLineup {
+export enum MLBLineup {
   C,
   '1B',
   '2B',
@@ -94,7 +94,7 @@ enum MLBLineup {
   MISC,
 }
 
-enum MLBTeam {
+export enum MLBTeam {
   FA,
   Bal,
   Bos,
@@ -127,5 +127,3 @@ enum MLBTeam {
   Ari,
   TB,
 }
-
-export { MLBTeam, MLBPosition, MLBLineup, StatsColumn, RotoColumn, TeamColumn, StatTypeId, PlayingStatus };

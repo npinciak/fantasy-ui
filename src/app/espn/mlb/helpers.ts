@@ -24,8 +24,3 @@ export function isPitcher(eligiblePos: number[]): boolean {
     return false;
   }
 }
-
-export const logoImgBuilder = (league: 'mlb' | 'nfl', abbrev: string) =>
-  `https://a.espncdn.com/combiner/i?img=/i/teamlogos/${league}/500/${abbrev.toLowerCase()}.png&h=100&w=100`;
-
-export const fieldImgBuilder = (id: number) => `https://a.espncdn.com/redesign/assets/img/mlb/fields/${id}.png`;
