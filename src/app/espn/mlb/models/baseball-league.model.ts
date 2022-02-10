@@ -1,7 +1,7 @@
-import { Team } from '@app/espn/models/team.model';
+import { BaseballTeam } from './baseball-team.model';
 
 export interface BaseballLeagueProperties {
-  teams: Team[];
+  teams: BaseballTeam[];
 }
 
 // TODO: Create new FE model

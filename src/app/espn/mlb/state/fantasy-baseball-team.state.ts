@@ -31,6 +31,7 @@ export class FantasyBaseballTeamState {
   patchTeams({ patchState, getState }: StateContext<FantasyBaseballTeamStateModel>, { payload: { teams } }: PatchFantasyBaseballTeams) {
     const state = getState();
     const map = entityMap(teams, team => team.id);
+
     patchState({ ...state, map });
   }
 }

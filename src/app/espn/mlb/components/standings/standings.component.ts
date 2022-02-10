@@ -17,6 +17,9 @@ import { BaseballTeam } from '../../models/baseball-team.model';
 })
 export class StandingsComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() teams: BaseballTeam[];
+  @Input() dataColumns: any[];
+  @Input() headers: any[];
+
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   public scoringPeriod = this.fantasyBaseballLeagueFacade.scoringPeriod;
@@ -31,9 +34,8 @@ export class StandingsComponent implements OnInit, OnChanges, AfterViewInit {
 
   constructor(
     readonly fantasyBaseballLeagueFacade: FantasyBaseballLeagueFacade,
-    readonly fantasyBaseballTeamFacade: FantasyBaseballTeamFacade
-  ) // private cdr: ChangeDetectorRef
-  {}
+    readonly fantasyBaseballTeamFacade: FantasyBaseballTeamFacade // private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.tableColumns = standingsColumns.batting.rotoValue;

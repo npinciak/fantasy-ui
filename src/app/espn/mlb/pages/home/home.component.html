@@ -1,6 +1,3 @@
-
-
-
 <div
   gdAreas.xs="sidebar | content | footer"
   gdGap="1em"
@@ -13,9 +10,21 @@
   [ngStyle]="{ 'max-width': 'auto' }"
 >
   <div class="blocks two" gdArea="sidebar">
-    <app-standings [teams]="fantasyBaseballTeamFacade.standings$ | async"></app-standings>
-
+    <app-league-scoreboard [teams]="fantasyBaseballLeagueFacade.standings$ | async"></app-league-scoreboard>
   </div>
-  <div class="blocks four" gdArea="content"></div>
+  <div class="blocks four" gdArea="content">
+    <app-data-vis
+      [xAxisFilterOptions]="fantasyBaseballTeamFacade.statListFilters$ | async"
+      [yAxisFilterOptions]="fantasyBaseballTeamFacade.statListFilters$ | async"
+      [chartData]="teamDynamicScatterChartData"
+      (filterChangeEvent)="filterChange($event)"
+    ></app-data-vis>
+
+    <app-standings
+      [dataColumns]="espnTableFacade.standingsTableRow$ | async"
+      [headers]="espnTableFacade.tableTableHeaders$ | async"
+      [teams]="fantasyBaseballTeamFacade.teamList$ | async"
+    ></app-standings>
+  </div>
   <div class="blocks five" gdArea="footer"></div>
 </div>
