@@ -6,14 +6,14 @@ export class EspnEndpointBuilder {
   private static fantasyBaseV2 = FANTASY_BASE_V2;
   private static oneFeedBase = ONE_FEED_BASE;
 
-  private static year = new Date().getFullYear();
-
   private _leagueId: number;
   private _sport: FantasySports;
+  private _year: number;
 
-  constructor(sport?: FantasySports, leagueId?: number) {
+  constructor(sport?: FantasySports, leagueId?: number, year = new Date().getFullYear()) {
     this._leagueId = leagueId;
     this._sport = sport;
+    this._year = year;
   }
 
   get fantasyPlayerNews() {
@@ -37,7 +37,7 @@ export class EspnEndpointBuilder {
   }
 
   private get fantasyBaseV3WithFragments() {
-    return `${EspnEndpointBuilder.fantasyBaseV3}/games/${this._sport}/seasons/${EspnEndpointBuilder.year}`;
+    return `${EspnEndpointBuilder.fantasyBaseV3}/games/${this._sport}/seasons/${this._year}`;
   }
 
   private get fantasyBaseV2WithFragments() {

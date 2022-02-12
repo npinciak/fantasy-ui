@@ -1,16 +1,23 @@
 <p>data-vis-component works!</p>
 <div>
+  <mat-form-field>
+    <mat-label>xAxis</mat-label>
+    <mat-select #xAxisFilter (selectionChange)="filterChange(xAxisFilter.value, AxisFilter.xAxis)">
+      <mat-option value="">Reset</mat-option>
+      <mat-option *ngFor="let item of xAxisFilterOptions" [value]="item.value">{{ item.label }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>yAxis</mat-label>
+    <mat-select #yAxisFilter (selectionChange)="filterChange(yAxisFilter.value, AxisFilter.yAxis)">
+      <mat-option value="">Reset</mat-option>
+      <mat-option *ngFor="let item of yAxisFilterOptions" [value]="item.value">{{ item.label }}</mat-option>
+    </mat-select>
+  </mat-form-field>
   <div>
     <div style="display: block; width: 600px; height: auto">
-      <canvas
-        baseChart
-        [data]="chartData"
-        [options]="scatterChartOptions"
-        [type]="scatterChartType"
-        (chartClick)="chartClicked($event)"
-        (chartHover)="chartHover($event)"
-      >
-      </canvas>
+      <canvas baseChart [data]="chartData" [options]="scatterChartOptions" [type]="scatterChartType"> </canvas>
     </div>
   </div>
 </div>

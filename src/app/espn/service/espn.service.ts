@@ -1,11 +1,10 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { currentDate } from '@app/@shared/helpers/date';
 import { flatten } from '@app/@shared/helpers/utils';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from 'src/app/@shared/services/api.service';
-import { EspnClientLeague } from '../espn-client.model';
+import { EspnClientLeague, EspnClientPlayer } from '../espn-client.model';
 import { NO_LOGO } from '../espn.const';
 import {
   EspnEndpointBuilder,
@@ -95,7 +94,7 @@ export class EspnService {
       transformLeaguesImportToLeagues,
       transformEventImportToFastcastEvent,
     };
-  }
+  };
 
   static transformFastcastCompetitorsToTeams = (
     data: CompetitorsImport[],
@@ -133,14 +132,14 @@ export class EspnService {
       };
       return acc;
     }, {});
-  }
+  };
 
   static transformDownDistancePostitionText = (downDistanceText: string | null, possessionText: string | null): string | null => {
     if (downDistanceText && possessionText) {
       return `${downDistanceText}, ${possessionText}`;
     }
     return null;
-  }
+  };
 
   static transformUidToId(uid: string): string | null {
     if (!uid) {
@@ -169,7 +168,7 @@ export class EspnService {
         event.situation?.possessionText
       ),
       lastPlay: event.situation?.lastPlay ?? null,
-    }))
+    }));
 
   static transformLeaguesImportToLeagues = (leaguesImport: LeaguesImport[]): League[] =>
     leaguesImport.map(l => ({
@@ -178,7 +177,7 @@ export class EspnService {
       name: l.name,
       abbreviation: l.abbreviation ?? l.name,
       shortName: l.shortName ?? l.name,
-    }))
+    }));
 
   static transformFeedArticleImportToFeedArticle(articleImport: FeedArticleImport): FeedArticle {
     return {
@@ -215,7 +214,7 @@ export class EspnService {
    * @returns EspnClientLeague
    */
   espnFantasyLeagueBySport(sport: FantasySports, leagueId: number): Observable<EspnClientLeague> {
-    const endpoint = new EspnEndpointBuilder(sport, leagueId);
+    const endpoint = new EspnEndpointBuilder(sport, leagueId, 2021);
     return this.api.get<EspnClientLeague>(endpoint.fantasyLeague, { params: this.params });
   }
 
@@ -243,12 +242,17 @@ export class EspnService {
    * @param headers 'X-Fantasy-Filter' header required
    * @returns List of free agents
    */
-  espnFantasyFreeAgentsBySport(sport: FantasySports, leagueId: number, scoringPeriod: number, headers: HttpHeaders): Observable<unknown> {
+  espnFantasyFreeAgentsBySport(
+    sport: FantasySports,
+    leagueId: number,
+    scoringPeriod: number,
+    headers: HttpHeaders
+  ): Observable<EspnClientPlayer[]> {
     const endpoint = new EspnEndpointBuilder(sport, leagueId);
     const params = new HttpParams()
       .set(EspnParamFragment.ScoringPeriod, scoringPeriod.toString())
       .set(EspnParamFragment.View, EspnViewParamFragment.PlayerInfo);
-    return this.api.get(endpoint.fantasyLeague, { params, headers });
+    return this.api.get<EspnClientPlayer[]>(endpoint.fantasyLeague, { params, headers });
   }
 
   /**
@@ -299,16 +303,6 @@ export class EspnService {
     let headers = new HttpHeaders();
     headers = headers.append('Cookie', 'ESPN-ONESITE.WEB-PROD.token');
     return headers;
-  }
-
-  /**
-   * @todo
-   */
-  private get espnEventParams(): HttpParams {
-    let params = new HttpParams();
-    params = params.append(EspnParamFragment.UseMap, 'true');
-    params = params.append(EspnParamFragment.Dates, currentDate());
-    return params;
   }
 
   /**

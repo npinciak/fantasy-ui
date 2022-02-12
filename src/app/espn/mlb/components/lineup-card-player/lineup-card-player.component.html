@@ -1,12 +1,12 @@
 <table class="ui-w-100">
   <tr>
     <td rowspan="4" style="width: 60px">
-      {{ player?.lineupSlot.abbrev }}
+      {{ player?.lineupSlot }}
     </td>
   </tr>
   <tr>
     <td rowspan="4" style="width: 60px">
-      <img width="48" height="35" [src]="player?.playerImg" [alt]="player.name" />
+      <img width="48" height="35" [src]="player?.img" [alt]="player?.name" />
     </td>
   </tr>
   <tr>
@@ -16,15 +16,16 @@
     </td>
     <td
       rowspan="4"
-      style="width: 60px"
+      style="width: 70px"
       [ngStyle]="{
         color: player.playerRatings[1]?.totalRating <= 0 ? '#cd2026' : '#2e8540'
       }"
     >
       {{ player.playerRatings[1]?.totalRating | number }}
+      <mat-icon>{{ player.playerRatings[1]?.totalRating <= 0 ? '' : 'trending_up' }}</mat-icon>
     </td>
   </tr>
   <tr>
-    <td>{{ player?.proTeam }}, {{ player?.defaultPosition }}</td>
+    <td>{{ player?.team }}, {{ player?.position }}</td>
   </tr>
 </table>

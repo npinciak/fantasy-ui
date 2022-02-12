@@ -1,7 +1,7 @@
-import { Ballpark } from '../models/ballpark.model';
 import { MLBTeam } from '../mlb.enums';
+import { Ballpark } from '../models/ballpark.model';
 
-export const MLB_TEAM = {
+export const MLB_TEAM_MAP: Record<number, string> = {
   0: 'FA',
   1: 'Bal',
   2: 'Bos',
@@ -37,7 +37,7 @@ export const MLB_TEAM = {
 
 // https://a.espncdn.com/redesign/assets/img/mlb/fields/5.png
 
-export const MLB_STADIUM_MAP: { [id: number]: Ballpark } = {
+export const MLB_STADIUM_MAP: Record<number, Ballpark> = {
   [MLBTeam.LAA]: {
     team: 'Anaheim Angels',
     name: 'Edison International Field',

@@ -1,9 +1,9 @@
 import { MLBTeam, RotoColumn, StatsColumn, TeamColumn } from './mlb.enums';
 import { SeasonConst } from './models/adv-stats.model';
 
-const domeStadiums = [MLBTeam.Tor, MLBTeam.Ari, MLBTeam.TB, MLBTeam.Min, MLBTeam.Hou, MLBTeam.Mia, MLBTeam.Tex];
+export const domeStadiums = [MLBTeam.Tor, MLBTeam.Ari, MLBTeam.TB, MLBTeam.Min, MLBTeam.Hou, MLBTeam.Mia, MLBTeam.Tex];
 
-const weights2020: SeasonConst = {
+export const weights2020: SeasonConst = {
   wBB: 0.699,
   wHBP: 0.728,
   w1B: 0.883,
@@ -12,7 +12,7 @@ const weights2020: SeasonConst = {
   wHR: 1.979,
 };
 
-const weights2021: SeasonConst = {
+export const weights2021: SeasonConst = {
   wBB: 0.711,
   wHBP: 0.742,
   w1B: 0.901,
@@ -22,7 +22,7 @@ const weights2021: SeasonConst = {
   cFIP: 3.073,
 };
 
-const standingsColumns = {
+export const standingsColumns = {
   batting: {
     rotoValue: [
       // TeamColumn.rank,
@@ -66,7 +66,7 @@ const standingsColumns = {
   },
 };
 
-enum PlayerInfoColumn {
+export enum PlayerInfoColumn {
   slot = 'lineupSlot',
   name = 'name',
   injuryStatus = 'injuryStatus',
@@ -76,7 +76,7 @@ enum PlayerInfoColumn {
   percentOwned = 'percentOwned',
 }
 
-enum BattingStatColumn {
+export enum BattingStatColumn {
   hits = `h`,
   run = 'r',
   homeRun = 'hr',
@@ -89,7 +89,7 @@ enum BattingStatColumn {
   runsCreated = 'rc',
 }
 
-enum PitchingStatColumn {
+export enum PitchingStatColumn {
   strikeOut = 'k',
   win = 'w',
   save = 'sv',
@@ -97,7 +97,7 @@ enum PitchingStatColumn {
   whip = 'whip',
 }
 
-const battingStats = {
+export const battingStats = {
   hits: 'h',
   run: 'r',
   homeRun: 'hr',
@@ -106,11 +106,11 @@ const battingStats = {
   avg: 'avg',
 };
 
-const advBattingStats = {
+export const advBattingStats = {
   obp: '',
 };
 
-const pitchingStats = {
+export const pitchingStats = {
   strikeOut: 'k',
   win: 'w',
   save: 'sv',
@@ -118,7 +118,7 @@ const pitchingStats = {
   whip: 'whip',
 };
 
-const rosterColumns = {
+export const rosterColumns = {
   batters: [
     // PlayerInfoColumn.slot,
     PlayerInfoColumn.name,
@@ -132,5 +132,3 @@ const rosterColumns = {
   ],
   pitchers: [],
 };
-
-export { PlayerInfoColumn, rosterColumns, standingsColumns, weights2020, weights2021, domeStadiums };

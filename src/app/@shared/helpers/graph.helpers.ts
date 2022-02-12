@@ -20,3 +20,20 @@ export enum AxisFilter {
   xAxis,
   yAxis,
 }
+
+const scaleProperties = {
+  display: true,
+  title: {
+    display: true,
+    text: '',
+  },
+  ticks: {
+    color: '',
+  },
+};
+export const scatterChartScales = {
+  scales: {
+    x: scaleProperties,
+    y: scaleProperties,
+  },
+};
