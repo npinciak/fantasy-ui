@@ -1,19 +1,19 @@
 import { Lineup } from '../models/lineup.model';
 
 export const MLB_LINEUP_MAP: Record<string, Lineup> = {
-  '0': { name: 'Catcher', abbrev: 'C', bench: false, starter: true, eligiblePositions: [2], lineupSlotEligible: true },
-  '1': { name: 'First Base', abbrev: '1B', bench: false, starter: true, eligiblePositions: [3], lineupSlotEligible: true },
-  '2': { name: 'Second Base', abbrev: '2B', bench: false, starter: true, eligiblePositions: [4], lineupSlotEligible: true },
-  '3': { name: 'Third Base', abbrev: '3B', bench: false, starter: true, eligiblePositions: [5], lineupSlotEligible: true },
-  '4': { name: 'Shortstop', abbrev: 'SS', bench: false, starter: true, eligiblePositions: [6], lineupSlotEligible: true },
-  '5': { name: 'Outfield', abbrev: 'OF', bench: false, starter: true, eligiblePositions: [7, 8, 9], lineupSlotEligible: true },
-  '6': { name: 'Middle Infielder', abbrev: '2B/SS', bench: false, starter: true, eligiblePositions: [4, 6], lineupSlotEligible: true },
-  '7': { name: 'Corner Infielder', abbrev: '1B/3B', bench: false, starter: true, eligiblePositions: [3, 5], lineupSlotEligible: true },
-  '8': { name: 'Left Field', abbrev: 'LF', bench: false, starter: true, eligiblePositions: [7], lineupSlotEligible: true },
-  '9': { name: 'Center Field', abbrev: 'CF', bench: false, starter: true, eligiblePositions: [8], lineupSlotEligible: true },
-  '10': { name: 'Right Field', abbrev: 'RF', bench: false, starter: true, eligiblePositions: [9], lineupSlotEligible: true },
-  '11': { name: 'Designated Hitter', abbrev: 'DH', bench: false, starter: true, eligiblePositions: [10], lineupSlotEligible: true },
-  '12': {
+  0: { name: 'Catcher', abbrev: 'C', bench: false, starter: true, eligiblePositions: [2], lineupSlotEligible: true },
+  1: { name: 'First Base', abbrev: '1B', bench: false, starter: true, eligiblePositions: [3], lineupSlotEligible: true },
+  2: { name: 'Second Base', abbrev: '2B', bench: false, starter: true, eligiblePositions: [4], lineupSlotEligible: true },
+  3: { name: 'Third Base', abbrev: '3B', bench: false, starter: true, eligiblePositions: [5], lineupSlotEligible: true },
+  4: { name: 'Shortstop', abbrev: 'SS', bench: false, starter: true, eligiblePositions: [6], lineupSlotEligible: true },
+  5: { name: 'Outfield', abbrev: 'OF', bench: false, starter: true, eligiblePositions: [7, 8, 9], lineupSlotEligible: true },
+  6: { name: 'Middle Infielder', abbrev: '2B/SS', bench: false, starter: true, eligiblePositions: [4, 6], lineupSlotEligible: true },
+  7: { name: 'Corner Infielder', abbrev: '1B/3B', bench: false, starter: true, eligiblePositions: [3, 5], lineupSlotEligible: true },
+  8: { name: 'Left Field', abbrev: 'LF', bench: false, starter: true, eligiblePositions: [7], lineupSlotEligible: true },
+  9: { name: 'Center Field', abbrev: 'CF', bench: false, starter: true, eligiblePositions: [8], lineupSlotEligible: true },
+  10: { name: 'Right Field', abbrev: 'RF', bench: false, starter: true, eligiblePositions: [9], lineupSlotEligible: true },
+  11: { name: 'Designated Hitter', abbrev: 'DH', bench: false, starter: true, eligiblePositions: [10], lineupSlotEligible: true },
+  12: {
     name: 'Utility',
     abbrev: 'UTIL',
     bench: false,
@@ -21,10 +21,10 @@ export const MLB_LINEUP_MAP: Record<string, Lineup> = {
     eligiblePositions: [2, 3, 4, 5, 6, 7, 8, 9, 10],
     lineupSlotEligible: true,
   },
-  '13': { name: 'Pitcher', abbrev: 'P', bench: false, starter: true, eligiblePositions: [1, 11], lineupSlotEligible: true },
-  '14': { name: 'Starting Pitcher', abbrev: 'SP', bench: false, starter: true, eligiblePositions: [1], lineupSlotEligible: true },
-  '15': { name: 'Relief Pitcher', abbrev: 'RP', bench: false, starter: true, eligiblePositions: [11], lineupSlotEligible: true },
-  '16': {
+  13: { name: 'Pitcher', abbrev: 'P', bench: false, starter: true, eligiblePositions: [1, 11], lineupSlotEligible: true },
+  14: { name: 'Starting Pitcher', abbrev: 'SP', bench: false, starter: true, eligiblePositions: [1], lineupSlotEligible: true },
+  15: { name: 'Relief Pitcher', abbrev: 'RP', bench: false, starter: true, eligiblePositions: [11], lineupSlotEligible: true },
+  16: {
     name: 'Bench',
     abbrev: 'BE',
     bench: true,
@@ -32,7 +32,7 @@ export const MLB_LINEUP_MAP: Record<string, Lineup> = {
     eligiblePositions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     lineupSlotEligible: true,
   },
-  '17': {
+  17: {
     name: 'Injured List',
     abbrev: 'IL',
     bench: false,
@@ -40,9 +40,9 @@ export const MLB_LINEUP_MAP: Record<string, Lineup> = {
     eligiblePositions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     lineupSlotEligible: true,
   },
-  '18': { name: 'Invalid Player', abbrev: 'INV', bench: false, starter: false, eligiblePositions: [], lineupSlotEligible: false },
-  '19': { name: 'Infielder', abbrev: 'IF', bench: false, starter: true, eligiblePositions: [3, 4, 5, 6], lineupSlotEligible: true },
-  '21': {
+  18: { name: 'Invalid Player', abbrev: 'INV', bench: false, starter: false, eligiblePositions: [], lineupSlotEligible: false },
+  19: { name: 'Infielder', abbrev: 'IF', bench: false, starter: true, eligiblePositions: [3, 4, 5, 6], lineupSlotEligible: true },
+  21: {
     name: 'Batters',
     abbrev: 'B',
     bench: false,
@@ -50,6 +50,6 @@ export const MLB_LINEUP_MAP: Record<string, Lineup> = {
     eligiblePositions: [2, 3, 4, 5, 6, 7, 8, 9, 10],
     lineupSlotEligible: false,
   },
-  '22': { name: 'Pitchers', abbrev: 'P', bench: false, starter: false, eligiblePositions: [1, 11], lineupSlotEligible: false },
-  '23': { name: 'Miscellaneous', abbrev: 'MISC', bench: false, starter: false, eligiblePositions: [], lineupSlotEligible: false },
+  22: { name: 'Pitchers', abbrev: 'P', bench: false, starter: false, eligiblePositions: [1, 11], lineupSlotEligible: false },
+  23: { name: 'Miscellaneous', abbrev: 'MISC', bench: false, starter: false, eligiblePositions: [], lineupSlotEligible: false },
 };
