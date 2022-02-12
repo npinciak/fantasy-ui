@@ -1,7 +1,6 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/npinciak/fantasy-ui/badge)](https://www.codefactor.io/repository/github/npinciak/fantasy-ui)
 
 ## Notes
-Web Application can be found https://focused-impala.000webhostapp.com
 - Still under development
 
 # SportsUi
