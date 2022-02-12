@@ -13,5 +13,5 @@ export class LineupCardPlayerComponent implements OnInit {
 
   ngOnInit(): void {}
 
- 
+
 }
