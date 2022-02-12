@@ -3,6 +3,7 @@ import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { FetchBaseballLeague } from '../actions/mlb.actions';
 import { BaseballTeamMap } from '../models/baseball-team.model';
 import { MlbService } from '../services/mlb.service';
+import { PatchFantasyBaseballFreeAgents } from './fantasy-baseball-free-agents.state';
 import { PatchFantasyBaseballTeams } from './fantasy-baseball-team.state';
 
 export interface FantasyBaseballLeagueStateModel {
@@ -56,9 +57,9 @@ export class FantasyBaseballLeagueState {
       return;
     }
 
-    const { scoringPeriodId, teams } = await this.mlbService.baseballLeague(leagueId).toPromise();
+    const { scoringPeriodId, teams, freeAgents } = await this.mlbService.baseballLeague(leagueId).toPromise();
 
-    dispatch([new PatchFantasyBaseballTeams({ teams })]);
+    dispatch([new PatchFantasyBaseballTeams({ teams }), new PatchFantasyBaseballFreeAgents({ freeAgents })]);
 
     patchState({ scoringPeriodId });
   }

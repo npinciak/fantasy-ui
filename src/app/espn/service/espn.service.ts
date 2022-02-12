@@ -4,7 +4,7 @@ import { flatten } from '@app/@shared/helpers/utils';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from 'src/app/@shared/services/api.service';
-import { EspnClientLeague } from '../espn-client.model';
+import { EspnClientLeague, EspnClientPlayer } from '../espn-client.model';
 import { NO_LOGO } from '../espn.const';
 import {
   EspnEndpointBuilder,
@@ -242,12 +242,17 @@ export class EspnService {
    * @param headers 'X-Fantasy-Filter' header required
    * @returns List of free agents
    */
-  espnFantasyFreeAgentsBySport(sport: FantasySports, leagueId: number, scoringPeriod: number, headers: HttpHeaders): Observable<unknown> {
+  espnFantasyFreeAgentsBySport(
+    sport: FantasySports,
+    leagueId: number,
+    scoringPeriod: number,
+    headers: HttpHeaders
+  ): Observable<EspnClientPlayer[]> {
     const endpoint = new EspnEndpointBuilder(sport, leagueId);
     const params = new HttpParams()
       .set(EspnParamFragment.ScoringPeriod, scoringPeriod.toString())
       .set(EspnParamFragment.View, EspnViewParamFragment.PlayerInfo);
-    return this.api.get(endpoint.fantasyLeague, { params, headers });
+    return this.api.get<EspnClientPlayer[]>(endpoint.fantasyLeague, { params, headers });
   }
 
   /**

@@ -16,3 +16,4 @@ export interface BaseballPlayerProperties {
 }
 
 export type BaseballPlayer = Player & BaseballPlayerProperties;
+export type BaseballPlayerMap = Record<string, BaseballPlayer>;

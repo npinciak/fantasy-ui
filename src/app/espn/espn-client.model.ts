@@ -5,6 +5,7 @@ export interface EspnClientLeague {
   seasonId: number;
   settings: { name: string };
   teams: EspnClientTeam[];
+  players: EspnClientFreeAgent[];
 }
 
 export interface EspnClientScheduleProperties {
@@ -21,19 +22,6 @@ export interface EspnClientScheduleTeam {
 }
 
 export type EspnClientScheduleEntity = EspnClientScheduleProperties;
-
-/**
- * @deprecated
- */
-export interface EspnClientScheduleEntry {
-  teams: EspnClientScheduleTeams[];
-}
-
-export interface EspnClientScheduleTeams {
-  teamId: number;
-  totalPoints: number;
-  totalPointsLive: number;
-}
 
 export interface EspnClientTeam {
   id: number;
@@ -52,23 +40,14 @@ export interface EspnClientTeam {
   record: EspnClientTeamRecordEntity;
 }
 
-export interface EspnClientTeamRecordEntity {
-  away: RecordEntity;
-  division: RecordEntity;
-  home: RecordEntity;
-  overall: RecordEntity;
-}
-export interface RecordEntity {
-  gamesBack: number;
-  losses: number;
-  percentage: number;
-  pointsAgainst: number;
-  pointsFor: number;
-  streakLength: number;
+type EspnClientTeamRecordEntityProps = 'away' | 'division' | 'home' | 'overall';
+export type EspnClientTeamRecordEntity = { [prop in EspnClientTeamRecordEntityProps]: RecordEntity };
+
+type RecordEntityProps = 'gamesBack' | 'losses' | 'percentage' | 'pointsAgainst' | 'pointsFor' | 'streakLength' | 'ties' | 'wins';
+
+export type RecordEntity = { [prop in RecordEntityProps]: number } & {
   streakType: string;
-  ties: number;
-  wins: number;
-}
+};
 
 export interface EspnClientRoster {
   entries: EspnClientPlayer[];
@@ -80,7 +59,10 @@ export interface EspnClientPlayer {
   playerPoolEntry: EspnClientPlayerEntry;
 }
 
+export type EspnClientFreeAgent = EspnClientPlayerEntry;
+
 export interface EspnClientPlayerEntry {
+  id: number;
   player: EspnClientPlayerInfo;
   ratings: EspnClientPlayerRatings;
 }
@@ -101,18 +83,11 @@ export interface EspnClientPlayerInfo {
 
 export type EspnClientGameStatus = Record<number, string>;
 
-export interface EspnClientPlayerOwnership {
-  averageDraftPosition: number;
-  percentChange: number;
-  percentOwned: number;
-  percentStarted: number;
-}
+type EspnClientPlayerOwnershipProps = 'averageDraftPosition' | 'percentChange' | 'percentOwned' | 'percentStarted';
+export type EspnClientPlayerOwnership = { [prop in EspnClientPlayerOwnershipProps]: number };
 
-export type EspnClientPlayerRatingsEntity = {
-  positionalRanking: number;
-  totalRanking: number;
-  totalRating: number;
-};
+type EspnClientPlayerRatingsProps = 'positionalRanking' | 'totalRanking' | 'totalRating';
+export type EspnClientPlayerRatingsEntity = { [prop in EspnClientPlayerRatingsProps]: number };
 
 export type EspnClientPlayerRatings = Record<number, EspnClientPlayerRatingsEntity>;
 

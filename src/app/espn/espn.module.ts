@@ -18,6 +18,7 @@ import { StandingsComponent } from './mlb/components/standings/standings.compone
 import { TeamInfoColComponent } from './mlb/components/standings/team-info-col/team-info-col.component';
 import { HomeComponent as FantasyBaseballHomeComponent } from './mlb/pages/home/home.component';
 import { TeamComponent } from './mlb/pages/team/team.component';
+import { FantasyBaseballFreeAgentsState } from './mlb/state/fantasy-baseball-free-agents.state';
 import { FantasyBaseballLeagueState } from './mlb/state/fantasy-baseball-league.state';
 import { FantasyBaseballTeamState } from './mlb/state/fantasy-baseball-team.state';
 import { HomeComponent as FantasyFootballHomeComponent } from './nfl/pages/home/home.component';
@@ -51,6 +52,7 @@ const states = [
   FantasyFootballTeamsState,
   FantasyBaseballLeagueState,
   FantasyBaseballTeamState,
+  FantasyBaseballFreeAgentsState,
   EspnFeedState,
 ];
 
