@@ -2,7 +2,7 @@ import { pickAxisData, scatterData } from '@app/@shared/helpers/graph.helpers';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@ngxs/store';
 import { ChartData } from 'chart.js';
-import { MLB_LINEUP_MAP } from '../consts/lineup.const';
+import { MLB_LINEUP, MLB_LINEUP_MAP } from '../consts/lineup.const';
 import { MLB_STATS_MAP } from '../consts/stats.const';
 import { statsKeyMap } from '../helpers';
 import { BaseballPlayer } from '../models/baseball-player.model';
@@ -23,11 +23,10 @@ export class FantasyBaseballTeamsSelector {
     const stats = teams.map(p => p.rotoStats)[0];
 
     const arr: FilterOptions[] = [];
-    for (const prop in stats) {
-      if (stats.hasOwnProperty(prop)) {
-        arr.push({ value: MLB_STATS_MAP[prop].abbrev, label: MLB_STATS_MAP[prop].description });
-      }
-    }
+
+    Object.keys(stats).forEach(prop => {
+      arr.push({ value: MLB_STATS_MAP[prop].abbrev, label: MLB_STATS_MAP[prop].description });
+    });
 
     return arr;
   }
@@ -54,7 +53,7 @@ export class FantasyBaseballTeamsSelector {
   static getTeamStartingBatters(selectTeamBatters: (id: string) => BaseballPlayer[]) {
     return (id: string) =>
       selectTeamBatters(id)
-        .filter(p => !p.isInjured && !MLB_LINEUP_MAP[p.lineupSlotId].bench && p.lineupSlotId !== 17)
+        .filter(p => !p.isInjured && !MLB_LINEUP_MAP[p.lineupSlotId].bench && p.lineupSlotId !== MLB_LINEUP.IL)
         .sort((a, b) => a.lineupSlotId - b.lineupSlotId);
   }
 

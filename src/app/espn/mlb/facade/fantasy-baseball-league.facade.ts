@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Team } from '@app/espn/models/team.model';
 import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -14,6 +13,8 @@ import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.sta
 export class FantasyBaseballLeagueFacade {
   @Select(FantasyBaseballLeagueState.isLoading) public isLoading$: Observable<boolean>;
   @Select(FantasyBaseballLeagueSelectors.standings) public standings$: Observable<BaseballTeam[]>;
+
+  @Select(FantasyBaseballLeagueSelectors.statsGroup) public statsGroup$: Observable<string[]>;
 
   constructor(private store: Store) {}
 

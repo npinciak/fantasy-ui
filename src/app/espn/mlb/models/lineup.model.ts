@@ -1,4 +1,5 @@
 export interface Lineup {
+  parentId: number;
   abbrev: string;
   bench: boolean;
   eligiblePositions: number[];

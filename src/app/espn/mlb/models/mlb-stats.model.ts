@@ -3,6 +3,15 @@ export enum StatCategory {
   Pitching,
 }
 
+export enum StatTypePeriodId {
+  regularSeason,
+  last7Days,
+  last15Days,
+  last30Days,
+  //currentYear = 4,?
+  live = 5,
+}
+
 export enum StatType {
   Batting = 1,
   Pitching,

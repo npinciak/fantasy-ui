@@ -1,4 +1,4 @@
-import { EspnClientPlayerRatings, EspnClientPlayerStatsYear } from '@app/espn/espn-client.model';
+import { EspnClientPlayerRatings, EspnClientPlayerStatsEntityMap } from '@app/espn/espn-client.model';
 import { Player } from '@app/espn/models/player.model';
 
 export interface BaseballPlayerProperties {
@@ -8,7 +8,7 @@ export interface BaseballPlayerProperties {
   isStarting: boolean;
   startingStatus: string;
   playerRatings: EspnClientPlayerRatings;
-  stats: EspnClientPlayerStatsYear[];
+  stats: EspnClientPlayerStatsEntityMap;
   playerOwnershipChange: number;
   playerOwnershipPercentOwned: number;
   isPitcher: boolean;
