@@ -1,11 +1,6 @@
 import { dataSetColor, pickAxisData, scatterData } from '@app/@shared/helpers/graph.helpers';
-import { objectIsEmpty } from '@app/@shared/helpers/utils';
-import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@ngxs/store';
 import { ChartData } from 'chart.js';
-import { flatten } from 'lodash';
-import { MLB_STATS_MAP } from '../consts/stats.const';
-import { statsKeyMap } from '../helpers';
 import { BaseballPlayer, BaseballPlayerMap } from '../models/baseball-player.model';
 import { FantasyBaseballFreeAgentsState } from '../state/fantasy-baseball-free-agents.state';
 
@@ -21,18 +16,8 @@ export class FantasyBaseballFreeAgentsSelector {
   }
 
   @Selector([FantasyBaseballFreeAgentsSelector.selectPlayerList])
-  static selectStatListFilters(players: BaseballPlayer[]): FilterOptions[] {
-    const list = players.filter(p => p?.stats?.length > 0).map(p => p?.stats);
-    // console.log(list);
-    const flat = flatten(list).filter(p => !objectIsEmpty(p.stats))[0].stats;
-    const arr: FilterOptions[] = [];
-    const test = statsKeyMap(flat);
-
-    Object.keys(flat).forEach(prop => {
-      arr.push({ value: MLB_STATS_MAP[prop]?.abbrev, label: MLB_STATS_MAP[prop]?.description });
-    });
-
-    return arr;
+  static selectStatListFilters(players: BaseballPlayer[]) {
+    return;
   }
 
   @Selector([FantasyBaseballFreeAgentsSelector.selectPlayerList])

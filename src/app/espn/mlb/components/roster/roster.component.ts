@@ -1,10 +1,11 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { sortAccessor } from '@app/@shared/helpers/sort';
 import { PlayerInfoColumn, rosterColumns } from '@mlb/mlb.const';
-import { StatTypeId } from '@mlb/mlb.enums';
 import { BaseballPlayer } from '../../models/baseball-player.model';
+import { StatTypePeriodId } from '../../models/mlb-stats.model';
 
 @Component({
   selector: 'app-roster',
@@ -16,8 +17,9 @@ export class RosterComponent implements OnInit, AfterViewInit {
   @Input() dataColumns: any[];
   @Input() headers: any[];
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
-  readonly StatType = StatTypeId;
+  readonly StatType = StatTypePeriodId;
   readonly rosterColumns = rosterColumns;
   readonly playerInfoColumn = PlayerInfoColumn;
   readonly tableColumns: string[] = rosterColumns.batters;
@@ -26,17 +28,28 @@ export class RosterComponent implements OnInit, AfterViewInit {
   playerNews: unknown;
   viewOptions: unknown;
 
-  view: StatTypeId = 0;
+  view: StatTypePeriodId = StatTypePeriodId.regularSeason;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
-  ngAfterViewInit() {
-    this.dataSource.data = this.fantasyPlayers;
-    this.dataSource.sort = this.sort;
-    this.dataSource.sortingDataAccessor = (player, stat) => sortAccessor(player, stat);
+  public ngOnChanges(changes: SimpleChanges) {
+    this.dataSource = new MatTableDataSource(changes.fantasyPlayers.currentValue);
+    this.initTable();
+  }
+
+  ngAfterViewInit(): void {
+    this.initTable();
 
     this.cdr.detectChanges();
+  }
+
+  initTable(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.data = this.fantasyPlayers;
+
+    this.dataSource.sortingDataAccessor = (player, stat) => sortAccessor(player, stat);
   }
 }

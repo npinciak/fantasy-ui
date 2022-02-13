@@ -1,3 +1,24 @@
+import { enumAsList } from '@app/@shared/helpers/enum-as-list';
+
+export enum MLB_POSITION {
+  POS0,
+  SP,
+  C,
+  '1B',
+  '2B',
+  '3B',
+  SS,
+  LF,
+  CF,
+  RF,
+  DH,
+  RP,
+  PH,
+  PR,
+}
+
+export const mlbPositionList = enumAsList(MLB_POSITION);
+
 export const MLB_POSITION_MAP: Record<number, { abbrev: string; name: string }> = {
   0: {
     abbrev: 'POS0',
@@ -56,3 +77,6 @@ export const MLB_POSITION_MAP: Record<number, { abbrev: string; name: string }> 
     name: 'Pinch Runner',
   },
 };
+
+export const pitchingPositions = [MLB_POSITION];
+export const fieldingPositions = [];

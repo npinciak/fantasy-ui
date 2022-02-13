@@ -95,10 +95,12 @@ export interface EspnClientPlayerStatsYear {
   seasonId: number;
   statSplitTypeId: number;
   scoringPeriodId: number;
+  id: string;
   stats: EspnClientPlayerStatsEntity;
 }
 
 export type EspnClientPlayerStatsEntity = Record<number, number>;
+export type EspnClientPlayerStatsEntityMap = Record<string, EspnClientPlayerStatsEntity>;
 
 export interface EspnClientPlayerNews {
   timestamp: string;
