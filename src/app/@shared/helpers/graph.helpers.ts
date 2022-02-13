@@ -1,3 +1,5 @@
+import { CoreChartOptions, PointPrefixedOptions } from 'chart.js';
+
 export function pickAxisData<T>(data: T[], getter: (t: T) => number | string | undefined): number[] {
   return data.map(d => {
     if (getter(d) !== undefined) {
@@ -21,6 +23,18 @@ export enum AxisFilter {
   yAxis,
 }
 
+export function dataSetColor(
+  color: string
+): Pick<CoreChartOptions<'scatter' | 'line'>, 'borderColor' | 'backgroundColor'> &
+  Pick<PointPrefixedOptions, 'pointBackgroundColor' | 'pointBorderColor'> {
+  return {
+    borderColor: color,
+    backgroundColor: color,
+    pointBackgroundColor: color,
+    pointBorderColor: color,
+  };
+}
+
 const scaleProperties = {
   display: true,
   title: {
@@ -31,6 +45,7 @@ const scaleProperties = {
     color: '',
   },
 };
+
 export const scatterChartScales = {
   scales: {
     x: scaleProperties,
