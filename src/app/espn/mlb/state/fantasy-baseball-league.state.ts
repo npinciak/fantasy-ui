@@ -11,7 +11,6 @@ export interface FantasyBaseballLeagueStateModel {
   statTypeId: number;
   isLoading: boolean;
   scoringPeriodId: number;
-  statsGroup: any;
 }
 
 @State<FantasyBaseballLeagueStateModel>({
@@ -21,7 +20,6 @@ export interface FantasyBaseballLeagueStateModel {
     statTypeId: 1,
     scoringPeriodId: null,
     isLoading: true,
-    statsGroup: null,
   },
 })
 @Injectable()
@@ -31,11 +29,6 @@ export class FantasyBaseballLeagueState {
   @Selector()
   static getState(state: FantasyBaseballLeagueStateModel) {
     return state;
-  }
-
-  @Selector()
-  static statsGroup(state: FantasyBaseballLeagueStateModel) {
-    return state.statsGroup;
   }
 
   @Selector([FantasyBaseballLeagueState.getState])
@@ -64,10 +57,10 @@ export class FantasyBaseballLeagueState {
       return;
     }
 
-    const { scoringPeriodId, teams, freeAgents, statsGroup } = await this.mlbService.baseballLeague(leagueId).toPromise();
+    const { scoringPeriodId, teams, freeAgents } = await this.mlbService.baseballLeague(leagueId).toPromise();
 
     dispatch([new PatchFantasyBaseballTeams({ teams }), new PatchFantasyBaseballFreeAgents({ freeAgents })]);
 
-    patchState({ scoringPeriodId, statsGroup });
+    patchState({ scoringPeriodId });
   }
 }
