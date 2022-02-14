@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnChanges, On
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { FilterOptions } from '@app/@shared/models/filter.model';
 import * as _ from 'lodash';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
@@ -41,14 +42,14 @@ export class StandingsComponent implements OnInit, OnChanges, AfterViewInit {
     this.tableColumns = standingsColumns.batting.rotoValue;
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.dataSource.data = this.teams;
     this.dataSource.sort = this.sort;
     this.dataSource.sortingDataAccessor = _.get;
     // this.cdr.detectChanges();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     for (const propName in changes) {
       if (changes.hasOwnProperty(propName)) {
         switch (propName) {
@@ -67,7 +68,7 @@ export class StandingsComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
-  get statsView() {
+  get statsView(): FilterOptions[] {
     return [
       { value: 'battingStatsRoto', label: 'B Roto' },
       { value: 'pitchingStatsRoto', label: 'P Roto' },
@@ -76,7 +77,7 @@ export class StandingsComponent implements OnInit, OnChanges, AfterViewInit {
     ];
   }
 
-  updateView(event: MatButtonToggleChange) {
+  updateView(event: MatButtonToggleChange): void {
     switch (event.value) {
       case 'battingStats':
         this.tableColumns = standingsColumns.batting.statValue;

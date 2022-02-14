@@ -94,7 +94,7 @@ export class EspnService {
       transformLeaguesImportToLeagues,
       transformEventImportToFastcastEvent,
     };
-  }
+  };
 
   static transformFastcastCompetitorsToTeams = (
     data: CompetitorsImport[],
@@ -132,14 +132,14 @@ export class EspnService {
       };
       return acc;
     }, {});
-  }
+  };
 
   static transformDownDistancePostitionText = (downDistanceText: string | null, possessionText: string | null): string | null => {
     if (downDistanceText && possessionText) {
       return `${downDistanceText}, ${possessionText}`;
     }
     return null;
-  }
+  };
 
   static transformUidToId(uid: string): string | null {
     if (!uid) {
@@ -168,7 +168,7 @@ export class EspnService {
         event.situation?.possessionText
       ),
       lastPlay: event.situation?.lastPlay ?? null,
-    }))
+    }));
 
   static transformLeaguesImportToLeagues = (leaguesImport: LeaguesImport[]): League[] =>
     leaguesImport.map(l => ({
@@ -177,7 +177,7 @@ export class EspnService {
       name: l.name,
       abbreviation: l.abbreviation ?? l.name,
       shortName: l.shortName ?? l.name,
-    }))
+    }));
 
   static transformFeedArticleImportToFeedArticle(articleImport: FeedArticleImport): FeedArticle {
     return {
@@ -214,7 +214,7 @@ export class EspnService {
    * @returns EspnClientLeague
    */
   espnFantasyLeagueBySport(sport: FantasySports, leagueId: number): Observable<EspnClientLeague> {
-    const endpoint = new EspnEndpointBuilder(sport, leagueId, 2021);
+    const endpoint = new EspnEndpointBuilder(sport, leagueId, 2022);
     return this.api.get<EspnClientLeague>(endpoint.fantasyLeague, { params: this.params });
   }
 

@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
   filterChange(event: { xAxis: string; yAxis: string }) {
     this.fantasyBaseballTeamFacade.selectTeamBatterStats('5');
 
+  filterChange(event: { xAxis: string; yAxis: string }): void {
     this.teamDynamicScatterChartData = this.fantasyBaseballTeamFacade.teamDynamicScatterChartData(event.xAxis ?? '', event.yAxis ?? '');
   }
 }
