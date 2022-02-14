@@ -67,13 +67,6 @@ export class FantasyBaseballTeamsSelector {
     return (id: string) => selectRosterByTeamId(id).filter(p => p.isPitcher);
   }
 
-  @Selector([FantasyBaseballTeamsSelector.selectTeamBatters])
-  static selectTeamBatterStats(selectRosterByTeamId: (id: string) => BaseballPlayer[]) {
-    return (id: string) => {
-      const roster = selectRosterByTeamId(id);
-    };
-  }
-
   @Selector([FantasyBaseballTeamsSelector.selectTeamList])
   static teamDynamicScatterChartData(teamList: BaseballTeamTableRow[]): (xAxis: string, yAxis: string) => ChartData<'scatter'> {
     return (xAxis: string, yAxis: string) => {

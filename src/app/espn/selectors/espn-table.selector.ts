@@ -20,8 +20,16 @@ export class EspnTableSelectors {
     return [
       { columnDef: 'lineupSlot', headerCell: 'lineupSlot', headerLabel: '' },
       { columnDef: 'name', headerCell: 'name', headerLabel: '' },
-      { columnDef: 'position', headerCell: 'position', headerLabel: 'Pos' },
-      { columnDef: 'team', headerCell: 'team', headerLabel: 'Team' },
+    ];
+  }
+
+  @Selector()
+  static freeAgentsColumns(): TableColumn[] {
+    return [
+      { columnDef: 'name', headerCell: 'name', headerLabel: '' },
+      { columnDef: 'playerOwnershipChange', headerCell: 'playerOwnershipChange', headerLabel: 'playerOwnershipChange' },
+      { columnDef: 'playerOwnershipPercentOwned', headerCell: 'playerOwnershipPercentOwned', headerLabel: 'playerOwnershipPercentOwned' },
+      { columnDef: `stats.012021.ops`, headerCell: 'stats.012021.h', headerLabel: 'stats' },
     ];
   }
 
@@ -43,8 +51,22 @@ export class EspnTableSelectors {
     }));
   }
 
+  @Selector([EspnTableSelectors.freeAgentsColumns])
+  static freeAgentsTableRow(playerCols: Partial<TableColumn>[]) {
+    return playerCols.map(col => ({
+      columnDef: col.columnDef,
+      cellData: data => cellDataAccessor(data, col.columnDef),
+      headerLabel: col.headerLabel,
+    }));
+  }
+
   @Selector([EspnTableSelectors.rosterTableRow])
   static rosterTableHeaders(tableColumns: TableColumn[]): string[] {
+    return tableColumns.map(col => col.columnDef);
+  }
+
+  @Selector([EspnTableSelectors.freeAgentsTableRow])
+  static freeAgentsTableHeaders(tableColumns: TableColumn[]): string[] {
     return tableColumns.map(col => col.columnDef);
   }
 

@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,7 +12,7 @@ import { StatTypePeriodId } from '../../models/mlb-stats.model';
   templateUrl: './roster.component.html',
   styleUrls: ['./roster.component.scss'],
 })
-export class RosterComponent implements OnInit, AfterViewInit {
+export class RosterComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() fantasyPlayers: BaseballPlayer[];
   @Input() dataColumns: any[];
   @Input() headers: any[];
@@ -34,7 +34,7 @@ export class RosterComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {}
 
-  public ngOnChanges(changes: SimpleChanges) {
+  public ngOnChanges(changes: SimpleChanges): void {
     this.dataSource = new MatTableDataSource(changes.fantasyPlayers.currentValue);
     this.initTable();
   }
@@ -49,6 +49,8 @@ export class RosterComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.dataSource.data = this.fantasyPlayers;
+
+    console.log(this.fantasyPlayers);
 
     this.dataSource.sortingDataAccessor = (player, stat) => sortAccessor(player, stat);
   }

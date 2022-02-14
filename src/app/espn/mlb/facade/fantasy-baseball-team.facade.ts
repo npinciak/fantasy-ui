@@ -32,8 +32,4 @@ export class FantasyBaseballTeamFacade {
   teamDynamicScatterChartData(xAxis, yAxis): ChartData<'scatter', (number | ScatterDataPoint)[], unknown> {
     return this.store.selectSnapshot(FantasyBaseballTeamsSelector.teamDynamicScatterChartData)(xAxis, yAxis);
   }
-
-  selectTeamBatterStats(id: string): void {
-    return this.store.selectSnapshot(FantasyBaseballTeamsSelector.selectTeamBatterStats)(id);
-  }
 }
