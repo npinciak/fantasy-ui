@@ -4,6 +4,8 @@ export const ESPN_TEXT = {
   NO_GAMES_TEXT: `No games scheduled for today`,
 };
 
+export const COMMON_V3 = environment.espnCommon;
+
 export const FANTASY_BASEBALL_LEAGUE_ID = environment.espnFantasyBaseballLeague;
 export const FANTASY_FOOTBALL_LEAGUE_ID = environment.espnFantasyBaseballLeague;
 
