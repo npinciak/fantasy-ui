@@ -1,1 +1,37 @@
-<p>free-agents-component works!</p>
+<div
+  gdAreas.xs="content | footer"
+  gdGap="1em"
+  gdColumns.xs="none"
+  gdAreas.sm="content content | footer footer"
+  gdColumns.sm="30%!"
+  gdAreas.gt-sm="content content  | footer footer "
+  gdColumns.gt-sm="30% auto"
+  gdGap.gt-sm="20px"
+  [ngStyle]="{ 'max-width': 'auto' }"
+>
+  <!-- <div class="blocks two" gdArea="sidebar"></div> -->
+  <div class="blocks four" gdArea="content">
+    <app-data-vis
+      [xAxisFilterOptions]="fantasyBaseballFreeAgentsFacade.selectStatListFilters$ | async"
+      [yAxisFilterOptions]="[]"
+      [chartData]="freeAgentDynamicLineChartData"
+      [chartType]="'bar'"
+      (filterChangeEvent)="filterChangeFreeAgent($event)"
+    ></app-data-vis>
+
+    <app-data-vis
+      [xAxisFilterOptions]="fantasyBaseballFreeAgentsFacade.selectStatListFilters$ | async"
+      [yAxisFilterOptions]="fantasyBaseballFreeAgentsFacade.selectStatListFilters$ | async"
+      [chartData]="freeAgentDynamicScatterChartData"
+      (filterChangeEvent)="filterChange($event)"
+    ></app-data-vis>
+
+    <app-roster
+      #freeAgents
+      [fantasyPlayers]="fantasyBaseballFreeAgentsFacade.playerList$ | async"
+      [dataColumns]="espnTableFacade.freeAgentsTableRow$ | async"
+      [headers]="espnTableFacade.freeAgentsTableHeaders$ | async"
+    ></app-roster>
+  </div>
+  <div class="blocks five" gdArea="footer"></div>
+</div>

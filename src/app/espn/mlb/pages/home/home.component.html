@@ -13,14 +13,22 @@
     <app-league-scoreboard [teams]="fantasyBaseballLeagueFacade.standings$ | async"></app-league-scoreboard>
   </div>
   <div class="blocks four" gdArea="content">
-    <app-data-vis
+    <!-- <app-data-vis
+      [xAxisFilterOptions]="[{ value: 'playerOwnershipChange', label: 'playerOwnershipChange' }]"
+      [yAxisFilterOptions]="[{ value: 'playerOwnershipPercentOwned', label: 'playerOwnershipPercentOwned' }]"
+      [chartData]="freeAgentDynamicScatterChartData"
+      (filterChangeEvent)="filterChangeFreeAgent($event)"
+    ></app-data-vis> -->
+
+    <!-- <app-data-vis
       [xAxisFilterOptions]="fantasyBaseballTeamFacade.statListFilters$ | async"
       [yAxisFilterOptions]="fantasyBaseballTeamFacade.statListFilters$ | async"
       [chartData]="teamDynamicScatterChartData"
       (filterChangeEvent)="filterChange($event)"
-    ></app-data-vis>
+    ></app-data-vis> -->
 
     <app-standings
+      #standings
       [dataColumns]="espnTableFacade.standingsTableRow$ | async"
       [headers]="espnTableFacade.tableTableHeaders$ | async"
       [teams]="fantasyBaseballTeamFacade.teamList$ | async"
