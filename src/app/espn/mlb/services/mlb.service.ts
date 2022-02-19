@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   EspnClientFreeAgent,
@@ -103,5 +104,30 @@ export class MlbService {
         freeAgents: MlbService.transformEspnClientFreeAgentToBaseballPlayer(res.players),
       }))
     );
+  }
+
+  baseballFreeAgents(payload: { leagueId: number; scoringPeriodId: number }): Observable<BaseballPlayer[]> {
+    let headers = new HttpHeaders();
+    headers = headers.append('X-Fantasy-Filter', JSON.stringify(this.filterHeaders));
+    return this.espnClient
+      .espnFantasyFreeAgentsBySport(FantasySports.baseball, payload.leagueId, payload.scoringPeriodId, headers)
+      .pipe(map(res => MlbService.transformEspnClientFreeAgentToBaseballPlayer(res.players)));
+  }
+
+  private get filterHeaders() {
+    return {
+      players: {
+        filterStatus: { value: ['FREEAGENT', 'WAIVERS'] },
+        filterSlotIds: { value: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 19] },
+        filterRanksForScoringPeriodIds: { value: [1] },
+        sortPercOwned: { sortPriority: 2, sortAsc: false },
+        sortDraftRanks: { sortPriority: 100, sortAsc: true, value: 'STANDARD' },
+        limit: 50,
+        filterStatsForTopScoringPeriodIds: {
+          value: 5,
+          additionalValue: ['002022', '102022', '002021', '012022', '022022', '032022', '042022', '062022', '010002022'],
+        },
+      },
+    };
   }
 }
