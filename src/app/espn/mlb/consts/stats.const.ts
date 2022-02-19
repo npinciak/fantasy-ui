@@ -94,6 +94,7 @@ export const MLB_STATS_MAP: StatsMap = {
 };
 
 export const MLB_STATS_LIST = Object.values(MLB_STATS_MAP);
+export const MLB_STATS_KEYS = Object.keys(MLB_STATS_MAP)
 
 export const BATTER_STATS_LIST = MLB_STATS_LIST.filter(s => s.statTypeId === StatType.Batting);
 export const BATTER_STATS_CATEGORY_LIST = MLB_STATS_LIST.filter(s => s.statCategoryId === StatCategory.Batting);

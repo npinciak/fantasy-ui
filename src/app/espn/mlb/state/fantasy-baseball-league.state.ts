@@ -3,7 +3,7 @@ import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { FetchBaseballLeague } from '../actions/mlb.actions';
 import { BaseballTeamMap } from '../models/baseball-team.model';
 import { MlbService } from '../services/mlb.service';
-import { PatchFantasyBaseballFreeAgents } from './fantasy-baseball-free-agents.state';
+import { FetchFantasyBaseballFreeAgents } from './fantasy-baseball-free-agents.state';
 import { PatchFantasyBaseballTeams } from './fantasy-baseball-team.state';
 
 export interface FantasyBaseballLeagueStateModel {
@@ -26,7 +26,7 @@ export interface FantasyBaseballLeagueStateModel {
 export class FantasyBaseballLeagueState {
   constructor(private store: Store, private mlbService: MlbService) {}
 
-  @Selector()
+  @Selector([FantasyBaseballLeagueState])
   static getState(state: FantasyBaseballLeagueStateModel) {
     return state;
   }
@@ -36,12 +36,12 @@ export class FantasyBaseballLeagueState {
     return state.isLoading;
   }
 
-  @Selector()
+  @Selector([FantasyBaseballLeagueState])
   static statTypeId(state: FantasyBaseballLeagueStateModel) {
     return state.statTypeId;
   }
 
-  @Selector()
+  @Selector([FantasyBaseballLeagueState])
   static scoringPeriod(state: FantasyBaseballLeagueStateModel) {
     return state.scoringPeriodId;
   }
@@ -57,9 +57,9 @@ export class FantasyBaseballLeagueState {
       return;
     }
 
-    const { scoringPeriodId, teams, freeAgents } = await this.mlbService.baseballLeague(leagueId).toPromise();
+    const { scoringPeriodId, teams } = await this.mlbService.baseballLeague(leagueId).toPromise();
 
-    dispatch([new PatchFantasyBaseballTeams({ teams }), new PatchFantasyBaseballFreeAgents({ freeAgents })]);
+    dispatch([new PatchFantasyBaseballTeams({ teams }), new FetchFantasyBaseballFreeAgents({ leagueId, scoringPeriodId })]);
 
     patchState({ scoringPeriodId });
   }

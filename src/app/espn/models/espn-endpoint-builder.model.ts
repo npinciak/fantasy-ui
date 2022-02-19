@@ -1,10 +1,11 @@
 import { enumAsList } from '@app/@shared/helpers/enum-as-list';
-import { FANTASY_BASE_V2, FANTASY_BASE_V3, ONE_FEED_BASE } from '../espn.const';
+import { COMMON_V3, FANTASY_BASE_V2, FANTASY_BASE_V3, ONE_FEED_BASE } from '../espn.const';
 
 export class EspnEndpointBuilder {
   private static fantasyBaseV3 = FANTASY_BASE_V3;
   private static fantasyBaseV2 = FANTASY_BASE_V2;
   private static oneFeedBase = ONE_FEED_BASE;
+  private static commonV3 = COMMON_V3;
 
   private _leagueId: number;
   private _sport: FantasySports;
@@ -30,6 +31,10 @@ export class EspnEndpointBuilder {
 
   get fantasyLeague() {
     return `${this.fantasyBaseV3WithFragments}/segments/0/leagues/${this._leagueId}`;
+  }
+
+  get positions() {
+    return `${EspnEndpointBuilder.commonV3}/${this._sport}/mlb/positions`;
   }
 
   get oneFeed() {

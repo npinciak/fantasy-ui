@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
-import { ConnectWebSocket, DisconnectWebSocket, FetchFastcast, PatchEvents } from '../actions/espn-fastcast.actions';
+import { ConnectWebSocket, DisconnectWebSocket, FetchFastcast } from '../actions/espn-fastcast.actions';
 import { FASTCAST_BASE } from '../espn.const';
 import { FastcastEventType, OperationCode } from '../models/espn-fastcast-socket.model';
-import { FastcastEventMap } from '../models/fastcast-event.model';
 import { EspnFastcastService } from '../service/espn-fastcast.service';
 import { EspnService } from '../service/espn.service';
 import { PatchFastcastEvents } from './espn-fastcast-event.state';
 import { PatchFastcastLeague } from './espn-fastcast-league.state';
 
 export interface EspnFastcastStateModel {
-  map: FastcastEventMap;
   disconnect: number;
   connect: number;
   lastRefresh: number;
@@ -20,7 +18,6 @@ export interface EspnFastcastStateModel {
 @State<EspnFastcastStateModel>({
   name: 'espnFastcast',
   defaults: {
-    map: {},
     disconnect: null,
     connect: null,
     lastRefresh: null,
@@ -29,11 +26,6 @@ export interface EspnFastcastStateModel {
 @Injectable()
 export class EspnFastcastState {
   constructor(private fastcastService: EspnFastcastService, private espnService: EspnService, private store: Store) {}
-
-  @Selector()
-  static selectMap(state: EspnFastcastStateModel) {
-    return state.map;
-  }
 
   @Selector()
   static selectLastRefresh(state: EspnFastcastStateModel): number {
@@ -70,10 +62,8 @@ export class EspnFastcastState {
           break;
         case OperationCode.I:
           const uri = `${FASTCAST_BASE}/${message.mid}/checkpoint`;
-
           const lastRefresh = new Date().getTime();
           patchState({ ...state, lastRefresh });
-
           this.store.dispatch(new FetchFastcast({ uri }));
           break;
         case OperationCode.Error:
@@ -107,13 +97,5 @@ export class EspnFastcastState {
 
       dispatch([new PatchFastcastLeague({ map: leagues }), new PatchFastcastEvents({ map: events })]);
     });
-  }
-
-  @Action(PatchEvents)
-  patchEvents({ patchState, getState }: StateContext<EspnFastcastStateModel>, { payload: { map } }: PatchEvents) {
-    const state = getState();
-    const lastRefresh = new Date().getTime();
-
-    patchState({ ...state, map, lastRefresh });
   }
 }

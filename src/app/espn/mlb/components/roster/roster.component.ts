@@ -3,7 +3,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { sortAccessor } from '@app/@shared/helpers/sort';
-import { PlayerInfoColumn, rosterColumns } from '@mlb/mlb.const';
 import { BaseballPlayer } from '../../models/baseball-player.model';
 import { StatTypePeriodId } from '../../models/mlb-stats.model';
 
@@ -20,9 +19,6 @@ export class RosterComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
   readonly StatType = StatTypePeriodId;
-  readonly rosterColumns = rosterColumns;
-  readonly playerInfoColumn = PlayerInfoColumn;
-  readonly tableColumns: string[] = rosterColumns.batters;
 
   dataSource = new MatTableDataSource<BaseballPlayer>();
   playerNews: unknown;
@@ -49,8 +45,6 @@ export class RosterComponent implements OnInit, AfterViewInit, OnChanges {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.dataSource.data = this.fantasyPlayers;
-
-    console.log(this.fantasyPlayers);
 
     this.dataSource.sortingDataAccessor = (player, stat) => sortAccessor(player, stat);
   }

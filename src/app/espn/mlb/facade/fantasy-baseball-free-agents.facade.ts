@@ -22,7 +22,11 @@ export class FantasyBaseballFreeAgentsFacade {
     return this.store.selectSnapshot(FantasyBaseballFreeAgentsSelector.selectPlayerById)(id);
   }
 
-  freeAgentDynamicLineChartData(xAxis): ChartData<'line' | 'bar', (number | ScatterDataPoint)[], unknown> {
-    return this.store.selectSnapshot(FantasyBaseballFreeAgentsSelector.freeAgentDynamicLineChartData)(xAxis);
+  freeAgentDynamicLineChartData(xAxis, stat): ChartData<'line' | 'bar', (number | ScatterDataPoint)[], unknown> {
+    return this.store.selectSnapshot(FantasyBaseballFreeAgentsSelector.freeAgentDynamicLineChartData)(xAxis, stat);
+  }
+
+  freeAgentScatterChartData(xAxis, yaxis, statTimePeriodId): ChartData<'scatter', (number | ScatterDataPoint)[], unknown> {
+    return this.store.selectSnapshot(FantasyBaseballFreeAgentsSelector.freeAgentDynamicScatterChartData)(xAxis, yaxis, statTimePeriodId);
   }
 }

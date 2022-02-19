@@ -9,6 +9,9 @@ import { League } from '../models/league.model';
 import { EspnService } from './espn.service';
 
 export class EspnServiceMock implements Mock<EspnService> {
+  espnPositions(sport: any, league: any): Observable<unknown> {
+    throw new Error('Method not implemented.');
+  }
   espnUpdateFantasyTeam(payload: unknown, sport: FantasySports, leagueId: number): Observable<any> {
     throw new Error('Method not implemented.');
   }

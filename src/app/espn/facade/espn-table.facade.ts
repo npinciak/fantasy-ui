@@ -12,4 +12,7 @@ export class EspnTableFacade {
 
   @Select(EspnTableSelectors.rosterTableRow) rosterTableRow$;
   @Select(EspnTableSelectors.rosterTableHeaders) rosterTableHeaders$: Observable<string[]>;
+
+  @Select(EspnTableSelectors.freeAgentsTableRow) freeAgentsTableRow$;
+  @Select(EspnTableSelectors.freeAgentsTableHeaders) freeAgentsTableHeaders$: Observable<string[]>;
 }

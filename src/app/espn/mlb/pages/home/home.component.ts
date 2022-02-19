@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EspnTableFacade } from '@app/espn/facade/espn-table.facade';
+import { EspnService } from '@app/espn/service/espn.service';
+import { Store } from '@ngxs/store';
 import { ESPN_TEXT } from '../../../espn.const';
+import { FantasyBaseballFreeAgentsFacade } from '../../facade/fantasy-baseball-free-agents.facade';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
 
@@ -15,23 +18,16 @@ export class HomeComponent implements OnInit {
 
   readonly NO_GAMES_TEXT = ESPN_TEXT.NO_GAMES_TEXT;
 
-  teamDynamicScatterChartData: any;
-
   constructor(
+    private store: Store,
+    private espnService: EspnService,
     readonly espnTableFacade: EspnTableFacade,
+    readonly fantasyBaseballFreeAgentsFacade: FantasyBaseballFreeAgentsFacade,
     readonly fantasyBaseballLeagueFacade: FantasyBaseballLeagueFacade,
     readonly fantasyBaseballTeamFacade: FantasyBaseballTeamFacade,
     private activatedRoute: ActivatedRoute
   ) {}
-
   ngOnInit() {
     this.fantasyBaseballLeagueFacade.getLeague(this.leagueId);
   }
-
-  filterChange(event: { xAxis: string; yAxis: string }) {
-    this.fantasyBaseballTeamFacade.selectTeamBatterStats('5');
-
-    filterChange(event: { xAxis: string; yAxis: string });: void {
-    this.teamDynamicScatterChartData = this.fantasyBaseballTeamFacade.teamDynamicScatterChartData(event.xAxis ?? '', event.yAxis ?? '');
-  };
 }

@@ -4,7 +4,7 @@ import { flatten } from '@app/@shared/helpers/utils';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from 'src/app/@shared/services/api.service';
-import { EspnClientLeague, EspnClientPlayer } from '../espn-client.model';
+import { EspnClientFreeAgent, EspnClientLeague } from '../espn-client.model';
 import { NO_LOGO } from '../espn.const';
 import {
   EspnEndpointBuilder,
@@ -75,10 +75,16 @@ export enum FastCastGameStatus {
 export class EspnService {
   constructor(private api: ApiService) {}
 
-  static transformLeagueImportEventImport = (
-    sportsImport: SportsImport[]
-  ): { transformLeaguesImportToLeagues: League[]; transformEventImportToFastcastEvent: FastcastEvent[] } => {
-    const leagues = sportsImport.filter(s => s.slug !== 'tennis' && s.slug !== 'golf' && s.slug !== 'mma').map(i => i.leagues);
+  static excludeSports(id: string) {
+    const set = new Set(['18', '52', '41', '850', '3301', '1100']);
+    return !set.has(id);
+  }
+
+  static transformLeagueImportEventImport(sportsImport: SportsImport[]): {
+    transformLeaguesImportToLeagues: League[];
+    transformEventImportToFastcastEvent: FastcastEvent[];
+  } {
+    const leagues = sportsImport.filter(s => EspnService.excludeSports(s.id)).map(i => i.leagues);
 
     const flattenLeaguesImport = flatten(leagues);
 
@@ -98,16 +104,16 @@ export class EspnService {
 
   static transformFastcastCompetitorsToTeams = (
     data: CompetitorsImport[],
-    situation: SituationImport | null
+    situation: SituationImport
   ): { [homeAway: string]: FastcastEventTeam } => {
-    const winPctMap: { home: number | null; away: number | null } = { home: null, away: null };
+    const winPctMap = {};
 
     if (!situation) {
-      winPctMap.home = null;
-      winPctMap.away = null;
+      winPctMap['home'] = null;
+      winPctMap['away'] = null;
     } else {
-      winPctMap.home = situation.lastPlay?.probability?.homeWinPercentage;
-      winPctMap.away = situation.lastPlay?.probability?.awayWinPercentage;
+      winPctMap['home'] = situation.lastPlay?.probability?.homeWinPercentage;
+      winPctMap['away'] = situation.lastPlay?.probability?.awayWinPercentage;
     }
 
     return data.reduce((acc, val) => {
@@ -132,14 +138,14 @@ export class EspnService {
       };
       return acc;
     }, {});
-  }
+  };
 
   static transformDownDistancePostitionText = (downDistanceText: string | null, possessionText: string | null): string | null => {
     if (downDistanceText && possessionText) {
       return `${downDistanceText}, ${possessionText}`;
     }
     return null;
-  }
+  };
 
   static transformUidToId(uid: string): string | null {
     if (!uid) {
@@ -148,8 +154,8 @@ export class EspnService {
     return uid.split('~')[1].replace('l:', '');
   }
 
-  static transformEventImportToFastcastEvent = (eventsImport: EventsImport[]): FastcastEvent[] =>
-    eventsImport.map(event => ({
+  static transformEventImportToFastcastEvent(eventsImport: EventsImport[]): FastcastEvent[] {
+    return eventsImport.map(event => ({
       id: event.id,
       leagueId: EspnService.transformUidToId(event?.uid),
       timestamp: new Date(event.date).getTime(),
@@ -168,16 +174,18 @@ export class EspnService {
         event.situation?.possessionText
       ),
       lastPlay: event.situation?.lastPlay ?? null,
-    }))
+    }));
+  }
 
-  static transformLeaguesImportToLeagues = (leaguesImport: LeaguesImport[]): League[] =>
-    leaguesImport.map(l => ({
+  static transformLeaguesImportToLeagues(leaguesImport: LeaguesImport[]): League[] {
+    return leaguesImport.map(l => ({
       id: l.id,
       uid: l.uid,
       name: l.name,
       abbreviation: l.abbreviation ?? l.name,
       shortName: l.shortName ?? l.name,
-    }))
+    }));
+  }
 
   static transformFeedArticleImportToFeedArticle(articleImport: FeedArticleImport): FeedArticle {
     return {
@@ -213,9 +221,9 @@ export class EspnService {
    * @param sport
    * @returns EspnClientLeague
    */
-  espnFantasyLeagueBySport(sport: FantasySports, leagueId: number): Observable<EspnClientLeague> {
+  espnFantasyLeagueBySport(sport: FantasySports, leagueId: number, headers?: HttpHeaders): Observable<EspnClientLeague> {
     const endpoint = new EspnEndpointBuilder(sport, leagueId, 2022);
-    return this.api.get<EspnClientLeague>(endpoint.fantasyLeague, { params: this.params });
+    return this.api.get<EspnClientLeague>(endpoint.fantasyLeague, { params: this.params, headers });
   }
 
   /**
@@ -247,12 +255,17 @@ export class EspnService {
     leagueId: number,
     scoringPeriod: number,
     headers: HttpHeaders
-  ): Observable<EspnClientPlayer[]> {
+  ): Observable<{ players: EspnClientFreeAgent[] }> {
     const endpoint = new EspnEndpointBuilder(sport, leagueId);
     const params = new HttpParams()
       .set(EspnParamFragment.ScoringPeriod, scoringPeriod.toString())
       .set(EspnParamFragment.View, EspnViewParamFragment.PlayerInfo);
-    return this.api.get<EspnClientPlayer[]>(endpoint.fantasyLeague, { params, headers });
+    return this.api.get<{ players: EspnClientFreeAgent[] }>(endpoint.fantasyLeague, { params, headers });
+  }
+
+  espnPositions(sport, league) {
+    const endpoint = new EspnEndpointBuilder(sport);
+    return this.api.get(endpoint.positions);
   }
 
   /**
@@ -261,9 +274,7 @@ export class EspnService {
    * @param url
    * @returns
    */
-  espnFastcast(
-    url: string
-  ): Observable<{ transformLeaguesImportToLeagues: League[]; transformEventImportToFastcastEvent: FastcastEvent[] }> {
+  espnFastcast(url: string): Observable<FastcastTransform> {
     return this.api.get<FastCastImport>(url).pipe(map(res => EspnService.transformLeagueImportEventImport(res.sports)));
   }
 
@@ -316,3 +327,5 @@ export class EspnService {
     return params;
   }
 }
+
+export type FastcastTransform = { transformLeaguesImportToLeagues: League[]; transformEventImportToFastcastEvent: FastcastEvent[] };

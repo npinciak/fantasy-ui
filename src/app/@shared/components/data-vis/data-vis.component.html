@@ -1,4 +1,3 @@
-<p>data-vis-component works!</p>
 <div>
   <mat-form-field>
     <mat-label>xAxis</mat-label>
@@ -8,7 +7,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field *ngIf="yAxisFilterOptions.length > 0">
     <mat-label>yAxis</mat-label>
     <mat-select #yAxisFilter (selectionChange)="filterChange(yAxisFilter.value, AxisFilter.yAxis)">
       <mat-option value="">Reset</mat-option>
@@ -17,9 +16,15 @@
   </mat-form-field>
   <div>
     <div style="display: block; width: 600px; height: auto">
-      <canvas baseChart [data]="chartData" [options]="scatterChartOptions" [type]="scatterChartType"> </canvas>
+      <ng-container *ngIf="chartType === 'scatter'; else lineChart">
+        <canvas baseChart [data]="chartData" [options]="scatterChartOptions" [type]="scatterChartType"> </canvas>
+      </ng-container>
     </div>
   </div>
 </div>
 
 <div #container></div>
+
+<ng-template #lineChart>
+  <canvas baseChart [data]="chartData" [options]="lineChartOptions" [type]="chartType"> </canvas>
+</ng-template>

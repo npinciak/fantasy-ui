@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { BaseballPlayer, BaseballPlayerMap } from '../models/baseball-player.model';
+import { MlbService } from '../services/mlb.service';
+
+export class PatchFantasyBaseballFreeAgents {
+  static readonly type = `[fantasyBaseballFreeAgents] PatchFantasyBaseballFreeAgents`;
+  constructor(public payload: { freeAgents: BaseballPlayer[] }) {}
+}
 
 export class FetchFantasyBaseballFreeAgents {
   static readonly type = `[fantasyBaseballFreeAgents] FetchFantasyBaseballFreeAgents`;
-  // constructor(public payload: { players: BaseballPlayer[] }) {}
-}
-
-export class PatchFantasyBaseballFreeAgents {
-  static readonly type = `[fantasyBaseballFreeAgents] PatchFantasyBaseballFreeAgentss`;
-  constructor(public payload: { freeAgents: BaseballPlayer[] }) {}
+  constructor(public payload: { leagueId; scoringPeriodId }) {}
 }
 
 interface FantasyBaseballFreeAgentsStateModel {
@@ -25,15 +26,25 @@ interface FantasyBaseballFreeAgentsStateModel {
 })
 @Injectable()
 export class FantasyBaseballFreeAgentsState {
-  constructor() {}
+  constructor(private mlbService: MlbService) {}
 
-  @Selector()
+  @Selector([FantasyBaseballFreeAgentsState])
   static map(state: FantasyBaseballFreeAgentsStateModel): BaseballPlayerMap {
     return state.map;
   }
 
+  @Action(FetchFantasyBaseballFreeAgents)
+  async fetchFantasyBaseballFreeAgents(
+    { dispatch, getState }: StateContext<FantasyBaseballFreeAgentsStateModel>,
+    { payload: { leagueId, scoringPeriodId } }: FetchFantasyBaseballFreeAgents
+  ) {
+    const freeAgents = await this.mlbService.baseballFreeAgents({ leagueId, scoringPeriodId }).toPromise();
+
+    dispatch([new PatchFantasyBaseballFreeAgents({ freeAgents })]);
+  }
+
   @Action(PatchFantasyBaseballFreeAgents)
-  patchTeams(
+  patchFantasyBaseballFreeAgents(
     { patchState, getState }: StateContext<FantasyBaseballFreeAgentsStateModel>,
     { payload: { freeAgents } }: PatchFantasyBaseballFreeAgents
   ) {

@@ -14,7 +14,7 @@
       {{ player?.name }}
       <mat-icon class="injury" [matTooltip]="player?.injuryStatus" *ngIf="player?.isInjured">medical_services </mat-icon>
     </td>
-    <td
+    <!-- <td
       rowspan="4"
       style="width: 70px"
       [ngStyle]="{
@@ -23,7 +23,7 @@
     >
       {{ player.playerRatings[1]?.totalRating | number }}
       <mat-icon>{{ player.playerRatings[1]?.totalRating <= 0 ? '' : 'trending_up' }}</mat-icon>
-    </td>
+    </td> -->
   </tr>
   <tr>
     <td>{{ player?.team }}, {{ player?.position }}</td>

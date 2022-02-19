@@ -16,6 +16,7 @@ import { RosterComponent } from './mlb/components/roster/roster.component';
 import { RankingColComponent } from './mlb/components/standings/ranking-col/ranking-col.component';
 import { StandingsComponent } from './mlb/components/standings/standings.component';
 import { TeamInfoColComponent } from './mlb/components/standings/team-info-col/team-info-col.component';
+import { FreeAgentsComponent } from './mlb/pages/free-agents/free-agents.component';
 import { HomeComponent as FantasyBaseballHomeComponent } from './mlb/pages/home/home.component';
 import { TeamComponent } from './mlb/pages/team/team.component';
 import { FantasyBaseballFreeAgentsState } from './mlb/state/fantasy-baseball-free-agents.state';
@@ -31,6 +32,7 @@ import { EspnFeedState } from './state/espn-feed.state';
 const components = [
   EspnHomeComponent,
   FantasyBaseballHomeComponent,
+  FreeAgentsComponent,
   StandingsComponent,
   TeamComponent,
   RosterComponent,

@@ -43,6 +43,7 @@ export enum UrlFragments {
   MLB = 'mlb',
   NFL = 'nfl',
   Team = 'team',
+  FreeAgents = 'free-agents',
 }
 
 export enum UrlParams {
