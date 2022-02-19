@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
-import { FetchBaseballLeague, UpdateStatType } from '../actions/mlb.actions';
+import { FetchBaseballLeague } from '../actions/mlb.actions';
+import { BaseballTeamMap } from '../models/baseball-team.model';
 import { MlbService } from '../services/mlb.service';
+import { FetchFantasyBaseballFreeAgents } from './fantasy-baseball-free-agents.state';
+import { PatchFantasyBaseballTeams } from './fantasy-baseball-team.state';
 
 export interface FantasyBaseballLeagueStateModel {
-  map: { [id: string]: unknown };
+  map: BaseballTeamMap;
   statTypeId: number;
   isLoading: boolean;
   scoringPeriodId: number;
@@ -23,38 +26,41 @@ export interface FantasyBaseballLeagueStateModel {
 export class FantasyBaseballLeagueState {
   constructor(private store: Store, private mlbService: MlbService) {}
 
-  @Selector()
+  @Selector([FantasyBaseballLeagueState])
   static getState(state: FantasyBaseballLeagueStateModel) {
     return state;
   }
 
   @Selector([FantasyBaseballLeagueState.getState])
-  static isLoading(_: FantasyBaseballLeagueStateModel, getState: FantasyBaseballLeagueStateModel) {
-    return getState.isLoading;
+  static isLoading(state: FantasyBaseballLeagueStateModel) {
+    return state.isLoading;
   }
 
-  @Selector()
+  @Selector([FantasyBaseballLeagueState])
   static statTypeId(state: FantasyBaseballLeagueStateModel) {
     return state.statTypeId;
   }
 
-  @Selector()
+  @Selector([FantasyBaseballLeagueState])
   static scoringPeriod(state: FantasyBaseballLeagueStateModel) {
     return state.scoringPeriodId;
   }
 
   @Action(FetchBaseballLeague)
-  async baseballLeague({ getState, dispatch }: StateContext<FantasyBaseballLeagueStateModel>, { leagueId }: FetchBaseballLeague) {
-    if (getState().scoringPeriodId) {
+  async baseballLeague(
+    { getState, patchState, dispatch }: StateContext<FantasyBaseballLeagueStateModel>,
+    { payload: { leagueId } }: FetchBaseballLeague
+  ) {
+    const state = getState();
+    if (state.scoringPeriodId) {
       console.log(`League ${leagueId} already in state, retrieving cache`);
       return;
     }
 
-    const league = await this.mlbService.baseballLeague(leagueId).toPromise();
-  }
+    const { scoringPeriodId, teams } = await this.mlbService.baseballLeague(leagueId).toPromise();
 
-  @Action(UpdateStatType)
-  update({ patchState }: StateContext<FantasyBaseballLeagueStateModel>, { statTypeId }: UpdateStatType) {
-    patchState({ statTypeId });
+    dispatch([new PatchFantasyBaseballTeams({ teams }), new FetchFantasyBaseballFreeAgents({ leagueId, scoringPeriodId })]);
+
+    patchState({ scoringPeriodId });
   }
 }

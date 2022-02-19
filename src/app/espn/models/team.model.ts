@@ -9,3 +9,5 @@ interface TeamProperties {
 }
 
 export type Team = TeamProperties;
+export type TeamMap = Record<string, Team>;
+export type PartialTeam = Partial<Team>;

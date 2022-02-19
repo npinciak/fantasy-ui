@@ -1,10 +1,16 @@
-import { Team } from '@app/espn/models/team.model';
+import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@ngxs/store';
-import { FantasyBaseballTeamSelectors } from './fantasy-baseball-team.selector';
+import { BaseballTeam } from '../models/baseball-team.model';
+import { FantasyBaseballTeamsSelector } from './fantasy-baseball-teams.selector';
 
 export class FantasyBaseballLeagueSelectors {
-  @Selector([FantasyBaseballTeamSelectors.selectTeamList])
-  static selectStandings(teams: Team[]) {
-    return teams;
+  @Selector([FantasyBaseballTeamsSelector.selectTeamList])
+  static standings(teamList: BaseballTeam[]): BaseballTeam[] {
+    return teamList.sort((a, b) => b.totalPoints - a.totalPoints);
+  }
+
+  @Selector()
+  static statsGroup(list: string[]): FilterOptions[] {
+    return [];
   }
 }

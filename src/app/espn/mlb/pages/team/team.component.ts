@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { EspnTableFacade } from '@app/espn/facade/espn-table.facade';
+import { Store } from '@ngxs/store';
+import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
+import { BaseballPlayer } from '../../models/baseball-player.model';
+import { FantasyBaseballTeamsSelector } from '../../selectors/fantasy-baseball-teams.selector';
 
 @Component({
   selector: 'app-team',
@@ -8,17 +13,21 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./team.component.scss'],
 })
 export class TeamComponent implements OnInit {
+  teamLineup: BaseballPlayer[];
+
   public dataSource = new MatTableDataSource<any>();
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  readonly teamId = this.activatedRoute.snapshot.params.teamId.toString();
 
-  ngOnInit(): void {}
+  constructor(
+    private store: Store,
+    readonly espnTableFacade: EspnTableFacade,
+    readonly fantasyBaseballTeamFacade: FantasyBaseballTeamFacade,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
-  get leagueId() {
-    return this.activatedRoute.snapshot.params.leagueId;
-  }
-
-  get teamId(): number {
-    return +this.activatedRoute.snapshot.params.teamId;
+  ngOnInit(): void {
+    this.teamLineup = this.fantasyBaseballTeamFacade.getTeamStartingBatters(this.teamId);
+    this.store.selectSnapshot(FantasyBaseballTeamsSelector.selectTeamBatterStats)(this.teamId, '102021');
   }
 }

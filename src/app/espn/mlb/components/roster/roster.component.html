@@ -1,163 +1,24 @@
-<div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
-  <div fxFlex>
-    <mat-button-toggle-group class="small" #group="matButtonToggleGroup" [value]="viewOptions">
-      <!-- <mat-button-toggle [value]="StatType.season" ariaLabelledby="Stat View" (change)="updateView($event)">
-                season</mat-button-toggle> -->
-      <!-- <mat-button-toggle [value]="StatType.last7Days" ariaLabelledby="Stat View" (change)="mlbTeamFacade.updateStatType($event.value)">
-        l7
-      </mat-button-toggle>
-      <mat-button-toggle [value]="StatType.last15Days" ariaLabelledby="Stat View" (change)="mlbTeamFacade.updateStatType($event.value)">
-        l15
-      </mat-button-toggle>
-      <mat-button-toggle [value]="StatType.last30Days" ariaLabelledby="Stat View" (change)="mlbTeamFacade.updateStatType($event.value)">
-        l30
-      </mat-button-toggle> -->
-    </mat-button-toggle-group>
-    <div style="padding: 20px 0"></div>
-
-    <mat-card>
-      <mat-card-content>
-        <!-- season,
-                last7Days = 1,
-                last15Days = 2,
-                last30Days = 3, -->
-        <mat-table [dataSource]="dataSource" matSort>
-          <ng-container matColumnDef="lineupSlot">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Lineup</mat-header-cell>
-            <mat-cell *matCellDef="let player">
-              <small>{{ player?.lineupSlot.abbrev }}</small>
-            </mat-cell>
+<mat-card>
+  <mat-card-content>
+    <app-scrollable-table>
+      <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons> </mat-paginator>
+      <table class="ui-w-100" mat-table [dataSource]="dataSource" matSortDirection="asc" matSort matSortDisableClear>
+        <ng-container *ngFor="let col of dataColumns">
+          <ng-container [matColumnDef]="col?.columnDef">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ col?.headerLabel }}</th>
+            <td mat-cell *matCellDef="let data">
+              <ng-container *ngIf="col.columnDef === 'name'; else normalCell">
+                <app-player-info-col [player]="data"></app-player-info-col>
+              </ng-container>
+              <ng-template #normalCell>
+                {{ col?.cellData(data) }}
+              </ng-template>
+            </td>
           </ng-container>
-          <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef>player</mat-header-cell>
-            <mat-cell *matCellDef="let player">
-              <app-player-info-col [player]="player"></app-player-info-col>
-            </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="h">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>h/ab</mat-header-cell>
-            <mat-cell *matCellDef="let player">
-              {{ player.playerStats[this.mlbTeamFacade.statTypeId$ | async]?.h }}/{{ player.playerStats[this.mlbTeamFacade.statTypeId$ | async]?.ab }}
-            </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="rc">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>runs created</mat-header-cell>
-            <mat-cell *matCellDef="let player">
-              {{ player.playerStats.get(this.mlbTeamFacade.statTypeId$ | async)?.rc | number }}
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="r">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>r</mat-header-cell>
-            <mat-cell *matCellDef="let player">
-              {{ player.playerStats.get(this.mlbTeamFacade.statTypeId$ | async)?.r | number }}
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="hr">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>hr</mat-header-cell>
-            <mat-cell *matCellDef="let player">
-              {{ player.playerStats.get(this.mlbTeamFacade.statTypeId$ | async)?.hr | number }}
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="rbi">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>rbi</mat-header-cell>
-            <mat-cell *matCellDef="let player">
-              {{ player.playerStats.get(this.mlbTeamFacade.statTypeId$ | async)?.rbi | number }}
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="sb">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>sb</mat-header-cell>
-            <mat-cell *matCellDef="let player">
-              {{ player.playerStats.get(this.mlbTeamFacade.statTypeId$ | async)?.sb | number }}
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="avg">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>avg</mat-header-cell>
-            <mat-cell *matCellDef="let player">
-              {{ player.playerStats.get(this.mlbTeamFacade.statTypeId$ | async)?.avg | number }}
-            </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="obp">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>obp</mat-header-cell>
-            <mat-cell *matCellDef="let player">
-              {{ player.playerStats.get(this.mlbTeamFacade.statTypeId$ | async)?.obp | number }}
-            </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="ops">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>ops</mat-header-cell>
-            <mat-cell *matCellDef="let player">
-              {{ player.playerStats.get(this.mlbTeamFacade.statTypeId$ | async)?.ops | number }}
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="slg">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>slg</mat-header-cell>
-            <mat-cell *matCellDef="let player">
-              {{ player.playerStats.get(this.mlbTeamFacade.statTypeId$ | async)?.slg | number }}
-            </mat-cell>
-          </ng-container>
-
-          <!--  
-                    <ng-container matColumnDef="wRAA">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>wRAA</mat-header-cell>
-                        <mat-cell *matCellDef="let player">
-                            {{player.wRAA | number}}
-                        </mat-cell>
-                    </ng-container>
-
-                    
-                    <ng-container matColumnDef="babip2020">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>babip 2020</mat-header-cell>
-                        <mat-cell *matCellDef="let player">
-                            {{player.babip2020 | number}}
-                        </mat-cell>
-                    </ng-container>
-
-                    <ng-container matColumnDef="wOBA2020">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>wOBA 2020</mat-header-cell>
-                        <mat-cell *matCellDef="let player">
-                            {{player.wOBA2020 | number}}
-                        </mat-cell>
-                    </ng-container> -->
-
-          <ng-container [matColumnDef]="playerInfoColumn.totalRatingSeason">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Total Player Rank</mat-header-cell>
-            <mat-cell *matCellDef="let player">
-              {{ player.playerRatings.get(this.mlbTeamFacade.statTypeId$ | async)?.totalRanking | number }}
-            </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="ratingsSeason.positionalRanking">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Position Rank</mat-header-cell>
-            <mat-cell *matCellDef="let player">
-              {{ player.ratingsSeason?.positionalRanking }}
-            </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="ownershipChange">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>ownershipChange</mat-header-cell>
-            <mat-cell *matCellDef="let player">
-              <app-player-rating-col [player]="player" key="ownershipChange"></app-player-rating-col>
-            </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="percentOwned">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>percentOwned</mat-header-cell>
-            <mat-cell *matCellDef="let player">
-              {{ player.percentOwned | number }}
-            </mat-cell>
-          </ng-container>
-          <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
-          <mat-row *matRowDef="let rowData; columns: tableColumns"> </mat-row>
-        </mat-table>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-  <!-- <div fxFlex>
-
-        <app-player *ngIf="playerNews" [playerNews]="playerNews"></app-player>
-
-    </div> -->
-</div>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="headers"></tr>
+        <tr mat-row *matRowDef="let team; columns: headers"></tr>
+      </table>
+    </app-scrollable-table>
+  </mat-card-content>
+</mat-card>

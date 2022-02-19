@@ -1,17 +1,22 @@
 import { Team } from '@app/espn/models/team.model';
-import { StatAbbrev } from '../consts/stats.const';
 import { BaseballPlayer } from './baseball-player.model';
+import { StatAbbrev } from './mlb-stats.model';
 
 export interface BaseballTeamProperties {
   abbrev: string;
   roster: BaseballPlayer[];
   totalPoints: number;
   currentRank: number;
-  stats: Partial<StatAbbrev>;
-  rotoStats: Partial<StatAbbrev>;
+  rotoStats: Record<number, number>;
+  liveScore: number;
   totalBattingRoto: number;
   totalPitchingRoto: number;
-  liveScore: number;
 }
 
-export type BaseballTeam = BaseballTeamProperties & Team;
+export type BaseballTeam = Omit<Team, 'record'> &
+  Omit<BaseballTeamProperties, 'liveScore' | 'stats' | 'totalBattingRoto' | 'totalPitchingRoto'>;
+
+export type BaseballTeamMap = Record<string, BaseballTeam>;
+
+type StatsMapProperties = 'rotoStatsMap';
+export type BaseballTeamTableRow = BaseballTeam & { [p in StatsMapProperties]: Partial<StatAbbrev> };

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { pickAxisData, scatterData } from '@app/@shared/helpers/graph.helpers';
 import { MOCK_DFS_TEAM_1, MOCK_DFS_TEAM_2, MOCK_DFS_TEAM_VEGAS_LIST } from '@app/dfs/models/team.model.mock';
+import { MaterialModule } from '@app/material.module';
 import { sandboxOf } from 'angular-playground';
 import { ChartsModule } from 'ng2-charts';
 import { of } from 'rxjs';
@@ -34,7 +36,7 @@ class DataVisSandboxComponent {
 
 export default sandboxOf(DataVisSandboxComponent, {
   declarations: [DataVisComponent],
-  imports: [ChartsModule],
+  imports: [ChartsModule, MaterialModule, BrowserAnimationsModule],
 }).add('DataVisSandboxComponent', {
   template: `<app-data-vis-sandbox></app-data-vis-sandbox>`,
 });

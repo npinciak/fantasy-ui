@@ -1,5 +1,5 @@
-import { SeasonConst } from '../interface/adv-stats.model';
-import { StatAbbrev } from '../consts/stats.const';
+import { SeasonConst } from "../models/adv-stats.model";
+import { StatAbbrev } from "../models/mlb-stats.model";
 
 export class AdvStats {
   private _stats: StatAbbrev;

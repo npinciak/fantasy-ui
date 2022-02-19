@@ -1,9 +1,9 @@
-import { MLBTeam, RotoColumn, StatsColumn, TeamColumn } from './mlb.enums';
+import { MLB_TEAM } from './consts/team.const';
 import { SeasonConst } from './models/adv-stats.model';
 
-const domeStadiums = [MLBTeam.Tor, MLBTeam.Ari, MLBTeam.TB, MLBTeam.Min, MLBTeam.Hou, MLBTeam.Mia, MLBTeam.Tex];
+export const domeStadiums = [MLB_TEAM.Tor, MLB_TEAM.Ari, MLB_TEAM.TB, MLB_TEAM.Min, MLB_TEAM.Hou, MLB_TEAM.Mia, MLB_TEAM.Tex];
 
-const weights2020: SeasonConst = {
+export const weights2020: SeasonConst = {
   wBB: 0.699,
   wHBP: 0.728,
   w1B: 0.883,
@@ -12,7 +12,7 @@ const weights2020: SeasonConst = {
   wHR: 1.979,
 };
 
-const weights2021: SeasonConst = {
+export const weights2021: SeasonConst = {
   wBB: 0.711,
   wHBP: 0.742,
   w1B: 0.901,
@@ -21,116 +21,3 @@ const weights2021: SeasonConst = {
   wHR: 2.035,
   cFIP: 3.073,
 };
-
-const standingsColumns = {
-  batting: {
-    rotoValue: [
-      // TeamColumn.rank,
-      TeamColumn.name,
-      RotoColumn.run,
-      RotoColumn.homeRun,
-      RotoColumn.rbi,
-      RotoColumn.sb,
-      RotoColumn.avg,
-      RotoColumn.battingTotal,
-    ],
-    statValue: [
-      // TeamColumn.rank,
-      TeamColumn.name,
-      StatsColumn.run,
-      StatsColumn.homeRun,
-      StatsColumn.rbi,
-      StatsColumn.sb,
-      StatsColumn.avg,
-    ],
-  },
-  pitching: {
-    rotoValue: [
-      // TeamColumn.rank,
-      TeamColumn.name,
-      RotoColumn.strikeOut,
-      RotoColumn.win,
-      RotoColumn.save,
-      RotoColumn.era,
-      RotoColumn.whip,
-      RotoColumn.pitchingTotal,
-    ],
-    statValue: [
-      // TeamColumn.rank,
-      TeamColumn.name,
-      StatsColumn.win,
-      StatsColumn.save,
-      StatsColumn.strikeOut,
-      StatsColumn.whip,
-    ],
-  },
-};
-
-enum PlayerInfoColumn {
-  slot = 'lineupSlot',
-  name = 'name',
-  injuryStatus = 'injuryStatus',
-  totalRatingSeason = 'ratingsSeason.totalRating',
-  positionalRankingSeason = 'ratingsSeason.positionalRanking',
-  ownershipChange = 'ownershipChange',
-  percentOwned = 'percentOwned',
-}
-
-enum BattingStatColumn {
-  hits = `h`,
-  run = 'r',
-  homeRun = 'hr',
-  rbi = 'rbi',
-  stolenBase = 'sb',
-  avg = 'avg',
-  obp = 'obp',
-  ops = 'ops',
-  slg = 'slg',
-  runsCreated = 'rc',
-}
-
-enum PitchingStatColumn {
-  strikeOut = 'k',
-  win = 'w',
-  save = 'sv',
-  era = 'era',
-  whip = 'whip',
-}
-
-const battingStats = {
-  hits: 'h',
-  run: 'r',
-  homeRun: 'hr',
-  rbi: 'rbi',
-  sb: 'sb',
-  avg: 'avg',
-};
-
-const advBattingStats = {
-  obp: '',
-};
-
-const pitchingStats = {
-  strikeOut: 'k',
-  win: 'w',
-  save: 'sv',
-  era: 'era',
-  whip: 'whip',
-};
-
-const rosterColumns = {
-  batters: [
-    // PlayerInfoColumn.slot,
-    PlayerInfoColumn.name,
-    BattingStatColumn.run,
-    BattingStatColumn.homeRun,
-    BattingStatColumn.rbi,
-    BattingStatColumn.stolenBase,
-    BattingStatColumn.runsCreated,
-    BattingStatColumn.avg,
-    BattingStatColumn.ops,
-  ],
-  pitchers: [],
-};
-
-export { PlayerInfoColumn, rosterColumns, standingsColumns, weights2020, weights2021, domeStadiums };

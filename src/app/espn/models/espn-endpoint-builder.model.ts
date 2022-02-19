@@ -1,19 +1,20 @@
 import { enumAsList } from '@app/@shared/helpers/enum-as-list';
-import { FANTASY_BASE_V2, FANTASY_BASE_V3, ONE_FEED_BASE } from '../espn.const';
+import { COMMON_V3, FANTASY_BASE_V2, FANTASY_BASE_V3, ONE_FEED_BASE } from '../espn.const';
 
 export class EspnEndpointBuilder {
   private static fantasyBaseV3 = FANTASY_BASE_V3;
   private static fantasyBaseV2 = FANTASY_BASE_V2;
   private static oneFeedBase = ONE_FEED_BASE;
-
-  private static year = new Date().getFullYear();
+  private static commonV3 = COMMON_V3;
 
   private _leagueId: number;
   private _sport: FantasySports;
+  private _year: number;
 
-  constructor(sport?: FantasySports, leagueId?: number) {
+  constructor(sport?: FantasySports, leagueId?: number, year = new Date().getFullYear()) {
     this._leagueId = leagueId;
     this._sport = sport;
+    this._year = year;
   }
 
   get fantasyPlayerNews() {
@@ -32,12 +33,16 @@ export class EspnEndpointBuilder {
     return `${this.fantasyBaseV3WithFragments}/segments/0/leagues/${this._leagueId}`;
   }
 
+  get positions() {
+    return `${EspnEndpointBuilder.commonV3}/${this._sport}/mlb/positions`;
+  }
+
   get oneFeed() {
     return `${EspnEndpointBuilder.oneFeedBase}/oneFeed`;
   }
 
   private get fantasyBaseV3WithFragments() {
-    return `${EspnEndpointBuilder.fantasyBaseV3}/games/${this._sport}/seasons/${EspnEndpointBuilder.year}`;
+    return `${EspnEndpointBuilder.fantasyBaseV3}/games/${this._sport}/seasons/${this._year}`;
   }
 
   private get fantasyBaseV2WithFragments() {

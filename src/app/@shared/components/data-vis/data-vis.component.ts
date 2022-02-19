@@ -1,4 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AxisFilter, scatterChartScales } from '@app/@shared/helpers/graph.helpers';
+import { FilterOptions } from '@app/@shared/models/filter.model';
+import { MLB_STATS_MAP } from '@app/espn/mlb/consts/stats.const';
 import { ChartData, ChartType } from 'chart.js';
 
 @Component({
@@ -6,100 +9,75 @@ import { ChartData, ChartType } from 'chart.js';
   templateUrl: './data-vis.component.html',
   styleUrls: ['./data-vis.component.scss'],
 })
-export class DataVisComponent implements OnInit {
+export class DataVisComponent {
   @Input() chartData: ChartData;
-  @Input() chartLabels: string[];
+  @Input() xAxisFilterOptions: FilterOptions[];
+  @Input() yAxisFilterOptions: FilterOptions[];
+  @Input() chartType = 'scatter';
 
-  constructor() {}
+  @Output() filterChangeEvent = new EventEmitter<{ xAxis: string; yAxis: string }>();
 
-  ngOnInit(): void {}
+  readonly AxisFilter = AxisFilter;
 
-  // scatter
-  //  Chart.overrides[type].plugins.tooltip
+  readonly scatterChartScales = scatterChartScales;
+  readonly scatterChartType: ChartType = 'scatter';
 
-  public scatterChartOptions = {
+  xAxisFilter: string;
+  yAxisFilter: string;
+
+  scatterChartOptions = {
     responsive: true,
-    events: ['click', 'mousemove'],
     plugins: {
       tooltip: {
         callbacks: {
           label: ctx => {
-            const labelMap = this.chartLabels.reduce((obj, val, i) => {
+            const labelMap = this.chartData.labels.reduce((obj, val, i) => {
               obj[i] = val;
               return obj;
             }, {} as { [i: number]: string });
 
-            // console.log(labelMap[ctx.dataIndex]);
-            let label = `${labelMap[ctx.dataIndex]}: ${ctx.parsed.x} , ' + ctx.parsed.y`; //ctx.dataset.labels[ctx.dataIndex];
-            // label += ' (' + ctx.parsed.x + ', ' + ctx.parsed.y + ')';
-            return label;
+            return `${labelMap[ctx.dataIndex]} - ${MLB_STATS_MAP[this.xAxisFilter].abbrev}: ${ctx.parsed.x} / ${
+              MLB_STATS_MAP[this.yAxisFilter].abbrev
+            }: ${ctx.parsed.y}`;
+          },
+        },
+      },
+    },
+    ...scatterChartScales,
+  };
+
+  lineChartOptions = {
+    responsive: true,
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: ctx => {
+            const labelMap = this.chartData.labels.reduce((obj, val, i) => {
+              obj[i] = val;
+              return obj;
+            }, {} as { [i: number]: string });
+
+            return `${labelMap[ctx.dataIndex]}: ${ctx.parsed.x}`;
           },
         },
       },
     },
   };
-  public scatterChartLabels: string[];
 
-  public scatterChartData: ChartData<'scatter'>;
-  public scatterChartType: ChartType = 'scatter';
+  filterChange(value: any, filterType: AxisFilter) {
+    switch (filterType) {
+      case AxisFilter.xAxis:
+        this.xAxisFilter = value;
+        break;
+      case AxisFilter.yAxis:
+        this.yAxisFilter = value;
+        break;
+      default:
+        break;
+    }
+    this.scatterChartOptions.scales.x.title.text = this.xAxisFilter;
+    this.scatterChartOptions.scales.y.title.text = this.yAxisFilter;
 
-  public ChartColor = [
-    {
-      pointBackgroundColor: '#0499C2',
-      pointBorderColor: '#ffffff',
-      pointRadius: 3,
-    },
-  ];
-  chartClicked($event) {}
-
-  chartHover({ event, active }: { event: MouseEvent; active: { index: number; dataSetIndex: number }[] }) {
-    // const labelMap = this.chartData.labels.reduce((obj, val, i) => {
-    //   obj[i] = val;
-    //   return obj;
-    // }, {} as { [i: number]: string });
-    // console.log({ label: labelMap[active[0].dataSetIndex] });
-  }
-
-  /**
-   * Update tooltip with current hover values
-   */
-  //  public chartHover({ event, active }: { event: MouseEvent; active: GraphMetaData[] }): void {
-  //   if (!active.length) {
-  //     return;
-  //   }
-  //   const i = active[0]._index;
-  //   this.chart.chart.options.annotation.annotations[1] = this.currentViewLine;
-  //   this.chart.chart.update();
-
-  //   this.currentX = this.forecastData[i][this.xAxisFilter];
-  //   this.currentY = this.forecastData[i][this.yAxisFilter];
-  //   this.forecastService.changeTableData(this.table[i].data);
-  // }
-
-  /**
-   * Draw forecast chart
-   */
-  drawChart(): void {
-    //   this.dailyFantasySlateAttrFacade.selectTeamList$.subscribe(res => {
-    //     const xaxis = res.map(d => d.vegas['o/u']);
-    //     const yaxis = res.map(d => d.vegas.total);
-    //     this.scatterChartLabels = res.map(d => d.team.name);
-    //     const data = xaxis.map((x, i) => {
-    //       return {
-    //         x: Number(x),
-    //         y: Number(yaxis[i]),
-    //       };
-    //     });
-    //     this.scatterChartData = {
-    //       labels: this.scatterChartLabels,
-    //       datasets: [
-    //         {
-    //           data,
-    //           label: 'Series A',
-    //           pointRadius: 10,
-    //         },
-    //       ],
-    //     };
-    //   });
+    this.filterChangeEvent.emit({ xAxis: this.xAxisFilter, yAxis: this.yAxisFilter });
   }
 }

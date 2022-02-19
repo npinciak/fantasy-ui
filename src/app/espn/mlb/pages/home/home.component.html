@@ -1,8 +1,38 @@
-<div fxLayout="row" fxLayoutGap="20px">
-  <div fxLayout="column" fxFlex="30%">
+<div
+  gdAreas.xs="sidebar | content | footer"
+  gdGap="1em"
+  gdColumns.xs="none"
+  gdAreas.sm="sidebar content | footer footer"
+  gdColumns.sm="30%!"
+  gdAreas.gt-sm="sidebar content  | footer footer "
+  gdColumns.gt-sm="30% auto"
+  gdGap.gt-sm="20px"
+  [ngStyle]="{ 'max-width': 'auto' }"
+>
+  <div class="blocks two" gdArea="sidebar">
+    <app-league-scoreboard [teams]="fantasyBaseballLeagueFacade.standings$ | async"></app-league-scoreboard>
   </div>
-  <div fxLayout="column" fxFlex="70%">
-    <div style="padding: 20px 0"></div>
-    <!-- <app-standings [teams]="mlbFacade.standings$ | async"></app-standings> -->
+  <div class="blocks four" gdArea="content">
+    <!-- <app-data-vis
+      [xAxisFilterOptions]="[{ value: 'playerOwnershipChange', label: 'playerOwnershipChange' }]"
+      [yAxisFilterOptions]="[{ value: 'playerOwnershipPercentOwned', label: 'playerOwnershipPercentOwned' }]"
+      [chartData]="freeAgentDynamicScatterChartData"
+      (filterChangeEvent)="filterChangeFreeAgent($event)"
+    ></app-data-vis> -->
+
+    <!-- <app-data-vis
+      [xAxisFilterOptions]="fantasyBaseballTeamFacade.statListFilters$ | async"
+      [yAxisFilterOptions]="fantasyBaseballTeamFacade.statListFilters$ | async"
+      [chartData]="teamDynamicScatterChartData"
+      (filterChangeEvent)="filterChange($event)"
+    ></app-data-vis> -->
+
+    <app-standings
+      #standings
+      [dataColumns]="espnTableFacade.standingsTableRow$ | async"
+      [headers]="espnTableFacade.tableTableHeaders$ | async"
+      [teams]="fantasyBaseballTeamFacade.teamList$ | async"
+    ></app-standings>
   </div>
+  <div class="blocks five" gdArea="footer"></div>
 </div>

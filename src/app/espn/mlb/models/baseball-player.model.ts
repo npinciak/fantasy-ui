@@ -1,20 +1,19 @@
+import { EspnClientPlayerRatings, EspnClientPlayerStatsEntityMap } from '@app/espn/espn-client.model';
 import { Player } from '@app/espn/models/player.model';
 
 export interface BaseballPlayerProperties {
-  playerImg: string;
-  lineupSlot: number;
-  defaultPosition: string;
-  proTeam: string;
-  isStarting: boolean;
-  startingStatus: string;
-  isPitcher: boolean;
   isInjured: boolean;
   injuryStatus: string;
-  playerRatings: unknown;
-  playerOwnership: {
-    change: number;
-    percentOwned: number;
-  };
+  lineupSlotId: number;
+  isStarting: boolean;
+  startingStatus: string;
+  playerRatings: EspnClientPlayerRatings;
+  stats: EspnClientPlayerStatsEntityMap;
+  playerOwnershipChange: number;
+  playerOwnershipPercentOwned: number;
+  isPitcher: boolean;
+  lineupSlot: string;
 }
 
-export type BaseballPlayer = Player & Partial<BaseballPlayerProperties>;
+export type BaseballPlayer = Player & BaseballPlayerProperties;
+export type BaseballPlayerMap = Record<string, BaseballPlayer>;

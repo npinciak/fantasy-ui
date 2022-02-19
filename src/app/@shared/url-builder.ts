@@ -27,6 +27,10 @@ export class UrlBuilder {
     return `${UrlBuilder.espnMlbBase}/${leagueId}`;
   }
 
+  public static espnMlbLeagueTeam(leagueId: string, teamId: string) {
+    return `${UrlBuilder.espnMlbBase}/${leagueId}/${UrlFragments.Team}/${teamId}`;
+  }
+
   public static espnNflLeague(leagueId: string) {
     return `${UrlBuilder.espnNflBase}/${leagueId}`;
   }
@@ -39,6 +43,7 @@ export enum UrlFragments {
   MLB = 'mlb',
   NFL = 'nfl',
   Team = 'team',
+  FreeAgents = 'free-agents',
 }
 
 export enum UrlParams {
