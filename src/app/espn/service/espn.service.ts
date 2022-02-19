@@ -75,13 +75,16 @@ export enum FastCastGameStatus {
 export class EspnService {
   constructor(private api: ApiService) {}
 
+  static excludeSports(id: string) {
+    const set = new Set(['18', '52', '41', '850', '3301', '1100']);
+    return !set.has(id);
+  }
+
   static transformLeagueImportEventImport(sportsImport: SportsImport[]): {
     transformLeaguesImportToLeagues: League[];
     transformEventImportToFastcastEvent: FastcastEvent[];
   } {
-    const leagues = sportsImport
-      .filter(s => s.slug !== 'tennis' && s.slug !== 'golf' && s.slug !== 'mma' && s.slug !== 'olympics-freestyle-skiing')
-      .map(i => i.leagues);
+    const leagues = sportsImport.filter(s => EspnService.excludeSports(s.id)).map(i => i.leagues);
 
     const flattenLeaguesImport = flatten(leagues);
 
