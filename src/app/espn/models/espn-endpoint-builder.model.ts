@@ -34,7 +34,7 @@ export class EspnEndpointBuilder {
   }
 
   get positions() {
-    return `${EspnEndpointBuilder.commonV3}/sports/${this._sport}/mlb/positions`;
+    return `${EspnEndpointBuilder.commonV3}/${this._sport}/mlb/positions`;
   }
 
   get oneFeed() {

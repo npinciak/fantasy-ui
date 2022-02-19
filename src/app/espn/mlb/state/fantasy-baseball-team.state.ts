@@ -22,7 +22,7 @@ interface FantasyBaseballTeamStateModel {
 export class FantasyBaseballTeamState {
   constructor() {}
 
-  @Selector()
+  @Selector([FantasyBaseballTeamState])
   static map(state: FantasyBaseballTeamStateModel): BaseballTeamMap {
     return state.map;
   }
