@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AxisFilter, scatterChartScales } from '@app/@shared/helpers/graph.helpers';
 import { FilterOptions } from '@app/@shared/models/filter.model';
+import { MLB_STATS_MAP } from '@app/espn/mlb/consts/stats.const';
 import { ChartData, ChartType } from 'chart.js';
 
 @Component({
@@ -12,6 +13,8 @@ export class DataVisComponent {
   @Input() chartData: ChartData;
   @Input() xAxisFilterOptions: FilterOptions[];
   @Input() yAxisFilterOptions: FilterOptions[];
+  @Input() chartType = 'scatter';
+
   @Output() filterChangeEvent = new EventEmitter<{ xAxis: string; yAxis: string }>();
 
   readonly AxisFilter = AxisFilter;
@@ -33,12 +36,32 @@ export class DataVisComponent {
               return obj;
             }, {} as { [i: number]: string });
 
-            return `${labelMap[ctx.dataIndex]} - ${this.xAxisFilter}: ${ctx.parsed.x} / ${this.yAxisFilter}: ${ctx.parsed.y}`;
+            return `${labelMap[ctx.dataIndex]} - ${MLB_STATS_MAP[this.xAxisFilter].abbrev}: ${ctx.parsed.x} / ${
+              MLB_STATS_MAP[this.yAxisFilter].abbrev
+            }: ${ctx.parsed.y}`;
           },
         },
       },
     },
     ...scatterChartScales,
+  };
+
+  lineChartOptions = {
+    responsive: true,
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: ctx => {
+            const labelMap = this.chartData.labels.reduce((obj, val, i) => {
+              obj[i] = val;
+              return obj;
+            }, {} as { [i: number]: string });
+
+            return `${labelMap[ctx.dataIndex]}: ${ctx.parsed.x}`;
+          },
+        },
+      },
+    },
   };
 
   filterChange(value: any, filterType: AxisFilter) {
