@@ -4,17 +4,18 @@
 
 export const environment = {
   production: false,
-  awsBase: 's3.amazonaws.com',
-  dfsSource: 'rotogrinders',
-  dailyFantasyBase: 'https://rotogrinders.com',
-  dailyFantasyJsonBase: 'json.rotogrinders.com',
-  espnFantasyBaseballLeague: 1209434861,
-  espnFantasyFootballLeague: 1209434861,
-  espnFantasyBaseV2: 'https://site.api.espn.com/apis/fantasy/v2',
-  espnFantasyBaseV3: 'https://fantasy.espn.com/apis/v3',
-  espnFastcastBase: 'https://fcast.espncdn.com/FastcastService/pubsub/profiles/12000/topic/event-topevents/message',
-  espnWebsocketHost: 'https://fastcast.semfs.engsvc.go.com/public/websockethost',
-  espnOneFeed: 'https://onefeed.fan.api.espn.com/apis/v3/contentEngine',
+  awsBase: '',
+  dfsSource: '',
+  dailyFantasyBase: '',
+  dailyFantasyJsonBase: '',
+  espnFantasyBaseballLeague: 0,
+  espnFantasyFootballLeague: 0,
+  espnFantasyBaseV2: '',
+  espnFantasyBaseV3: '',
+  espnFastcastBase: '',
+  espnWebsocketHost: '',
+  espnOneFeed: '',
+  espnCommon: '',
 };
 
 /*
