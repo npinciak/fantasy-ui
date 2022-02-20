@@ -68,6 +68,8 @@ export const MLB_TEAM_MAP: Record<number, string> = {
   30: 'TB',
 };
 
+export const domeStadiums = [MLB_TEAM.Tor, MLB_TEAM.Ari, MLB_TEAM.TB, MLB_TEAM.Min, MLB_TEAM.Hou, MLB_TEAM.Mia, MLB_TEAM.Tex];
+
 // https://a.espncdn.com/redesign/assets/img/mlb/fields/5.png
 
 export const MLB_STADIUM_MAP: Record<number, Ballpark> = {

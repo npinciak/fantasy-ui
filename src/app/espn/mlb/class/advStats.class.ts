@@ -1,21 +1,16 @@
-import { SeasonConst } from "../models/adv-stats.model";
-import { StatAbbrev } from "../models/mlb-stats.model";
+import { EspnClientPlayerStatsEntity } from '@app/espn/espn-client.model';
+import { SeasonConst } from '../models/adv-stats.model';
+import { Stat } from '../models/mlb-stats.model';
 
 export class AdvStats {
-  private _stats: StatAbbrev;
+  private _stats: EspnClientPlayerStatsEntity;
   private _seasonConst: SeasonConst;
 
-  constructor() {}
-
-  get stats() {
-    return this._stats;
-  }
-
-  set stats(stats: StatAbbrev) {
+  constructor(stats: EspnClientPlayerStatsEntity) {
     this._stats = stats;
   }
 
-  get seasonConst() {
+  get seasonConst(): SeasonConst {
     return this._seasonConst;
   }
 
@@ -23,40 +18,37 @@ export class AdvStats {
     this._seasonConst = seasonConst;
   }
 
-  get wOBA7() {
-    return this.hits / this.nonHits;
+  get wOBA(): number {
+    return this.weightedHits / this.nonHits;
   }
 
-  get fip() {
+  get wRAA(): number {
+    return ((this.wOBA - this.seasonConst.wOBA) / this.seasonConst.wOBAScale) * this._stats[Stat.PA];
+  }
+
+  get fip(): number {
     return (
-      (13 * this._stats.hra +
-        3 * (this._stats.bbi + this._stats.hb) -
-        2 * this._stats.k) /
-        this._stats.ip +
+      (13 * this._stats[Stat.HRA] + 3 * (this._stats[Stat.BBI] + this._stats[Stat.HB]) - 2 * this._stats[Stat.K]) / this._stats[Stat.IP] +
       this.seasonConst.cFIP
     );
   }
 
-  private get hits() {
+  private get weightedHits(): number {
     return (
       this.seasonConst.wBB * this.unintentionalBB +
-      this.seasonConst.wHBP * this._stats.hbp +
-      this.seasonConst.w1B * this._stats['1b'] +
-      this.seasonConst.w2B * this._stats['2b'] +
-      this.seasonConst.w3B * this._stats['3b'] +
-      this.seasonConst.wHR * this._stats.hr
+      this.seasonConst.wHBP * this._stats[Stat.HBP] +
+      this.seasonConst.w1B * this._stats[Stat['1B']] +
+      this.seasonConst.w2B * this._stats[Stat['2B']] +
+      this.seasonConst.w3B * this._stats[Stat['3B']] +
+      this.seasonConst.wHR * this._stats[Stat.HR]
     );
   }
 
-  private get nonHits() {
-    return (
-      this.stats.ab +
-      this.stats.bb -
-      (this.stats.ibb + this.stats.sf + this.stats.hbp)
-    );
+  private get nonHits(): number {
+    return this._stats[Stat.AB] + this._stats[Stat.BB] - (this._stats[Stat.IBB] + this._stats[Stat.SF] + this._stats[Stat.HBP]);
   }
 
-  private get unintentionalBB() {
-    return this.stats.bb - this.stats.ibb;
+  private get unintentionalBB(): number {
+    return this._stats[Stat.BB] - this._stats[Stat.IBB];
   }
 }
