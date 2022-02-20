@@ -1,4 +1,24 @@
+import { SeasonConst } from '../models/adv-stats.model';
 import { StatCategory, StatsMap, StatType } from '../models/mlb-stats.model';
+
+export const MLB_WEIGHTED_STATS_2020: SeasonConst = {
+  wBB: 0.699,
+  wHBP: 0.728,
+  w1B: 0.883,
+  w2B: 1.238,
+  w3B: 1.558,
+  wHR: 1.979,
+};
+
+export const MLB_WEIGHTED_STATS_2021: SeasonConst = {
+  wBB: 0.711,
+  wHBP: 0.742,
+  w1B: 0.901,
+  w2B: 1.269,
+  w3B: 1.6,
+  wHR: 2.035,
+  cFIP: 3.073,
+};
 
 export const MLB_STATS_MAP: StatsMap = {
   0: { abbrev: 'AB', description: 'At Bats', statCategoryId: StatCategory.Batting, statTypeId: StatType.Batting },
@@ -91,10 +111,28 @@ export const MLB_STATS_MAP: StatsMap = {
   82: { abbrev: 'K/BB', description: 'Strikeout to Walk Ratio', statCategoryId: StatCategory.Pitching, statTypeId: StatType.Pitching },
   83: { abbrev: 'SVHD', description: 'Saves Plus Holds', statCategoryId: StatCategory.Pitching, statTypeId: StatType.Pitching },
   84: { abbrev: 'PBS', description: 'Probable Start', statCategoryId: StatCategory.Pitching, statTypeId: StatType.Pitching },
+  100: {
+    abbrev: 'FIP',
+    description: 'Fielding Independent Pitching (FIP)',
+    statCategoryId: StatCategory.Pitching,
+    statTypeId: StatType.Pitching,
+  },
+  101: {
+    abbrev: 'wOBA',
+    description: 'Weighted On-Base Average (wOBA)',
+    statCategoryId: StatCategory.Batting,
+    statTypeId: StatType.Batting,
+  },
+  102: {
+    abbrev: 'wRAA',
+    description: 'Weighted Runs Above Average (wRAA)',
+    statCategoryId: StatCategory.Batting,
+    statTypeId: StatType.Batting,
+  },
 };
 
 export const MLB_STATS_LIST = Object.values(MLB_STATS_MAP);
-export const MLB_STATS_KEYS = Object.keys(MLB_STATS_MAP)
+export const MLB_STATS_KEYS = Object.keys(MLB_STATS_MAP);
 
 export const BATTER_STATS_LIST = MLB_STATS_LIST.filter(s => s.statTypeId === StatType.Batting);
 export const BATTER_STATS_CATEGORY_LIST = MLB_STATS_LIST.filter(s => s.statCategoryId === StatCategory.Batting);
