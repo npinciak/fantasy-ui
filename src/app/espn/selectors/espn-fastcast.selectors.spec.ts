@@ -1,5 +1,5 @@
 import { MOCK_FASTCAST_EVENT_1 } from '../models/fastcast-event.model.mock';
-import { EspnFastcastSelectors } from './espn-fastcast.selectors';
+import { EspnFastcastEventSelectors } from './espn-fastcast-event.selectors';
 
 describe('FastCastSelector', () => {
   describe('selectEventById', () => {
@@ -8,7 +8,7 @@ describe('FastCastSelector', () => {
 
     it('retrieves event by id', () => {
       const selectEventById = () => expected;
-      const result = EspnFastcastSelectors.selectEventById(state);
+      const result = EspnFastcastEventSelectors.selectEventById(state);
       expect(result).toEqual(expected);
     });
   });

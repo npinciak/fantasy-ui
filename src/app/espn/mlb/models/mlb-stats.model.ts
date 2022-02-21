@@ -10,7 +10,23 @@ export enum StatTypePeriodId {
   last30Days,
   //currentYear = 4,?
   live = 5,
+  unavaile = 6,
 }
+
+// 01 -- l7<year>
+// 02 -- l15<year>
+// 03 -- l30<year>
+// 002021 -- regularSeason<?><year>
+// 102022 -- proj<?><year>
+
+export const StatTypePeriodIdMap: { [key in StatTypePeriodId]: string } = {
+  0: 'Season',
+  1: 'Last 7',
+  2: 'Last 15',
+  3: 'Last 30',
+  5: 'live',
+  6: 'NOT_MAPPED',
+};
 
 export enum StatType {
   Batting = 1,
@@ -177,4 +193,5 @@ export enum Stat {
   fip = 100,
   wOBA,
   wRAA,
+  BABIP,
 }

@@ -13,4 +13,4 @@ type SeasonConstantsProperties =
   | 'r/W'
   | 'cFIP';
 
-export type SeasonConst = { [p in SeasonConstantsProperties]?: number };
+export type SeasonConst = { [p in SeasonConstantsProperties]: number };
