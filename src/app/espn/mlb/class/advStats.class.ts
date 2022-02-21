@@ -37,10 +37,7 @@ export class AdvStats {
   }
 
   get babip(): number {
-    console.log('babip ==>', this._stats[Stat.H] - this._stats[Stat.HR]); //86
-    console.log(this._stats[Stat.K]);
     if (!this.babipValid) return 0;
-
     return (
       (this._stats[Stat.H] - this._stats[Stat.HR]) /
       (this._stats[Stat.AB] - this._stats[Stat.K] - this._stats[Stat.HR] + this._stats[Stat.SF])
