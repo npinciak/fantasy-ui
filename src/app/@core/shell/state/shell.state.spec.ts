@@ -1,8 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { EspnFastcastServiceMock } from '@app/espn/espn-fastcast.service.mock';
-
-import { EspnFastcastState } from '@app/espn/state/espn-fastcast.state';
-import { Store, NgxsModule } from '@ngxs/store';
+import { NgxsModule, Store } from '@ngxs/store';
 import { ShellService } from '../shell.service';
 import { ShellState, ShellStateModel } from './shell.state';
 
