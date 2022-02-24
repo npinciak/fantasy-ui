@@ -1,9 +1,12 @@
 import { HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { EspnClientFreeAgent } from '@app/espn/espn-client.model';
 import { EspnEndpointBuilder, EspnViewParamFragment, FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
 import { NgxsModule, Store } from '@ngxs/store';
+import { MOCK_BASEBALL_FREEAGENT_1 } from '../models/baseball-player.model.mock';
 import { MOCK_BASEBALL_TEAM_1 } from '../models/baseball-team.model.mock';
+import { ESPN_BASEBALL_FREEAGENT_1 } from './free-agent.mock';
 import { MlbService } from './mlb.service';
 import { ESPN_BASEBALL_PLAYER_MOCK_1 } from './roster.mock';
 import { ESPN_BASEBALL_TEAM_MOCK } from './team.mock';
@@ -19,7 +22,7 @@ describe('MlbService', () => {
   const mockLeagueResponse = {
     scoringPeriodId,
     teams: [ESPN_BASEBALL_TEAM_MOCK],
-    players: [],
+    players: [ESPN_BASEBALL_FREEAGENT_1],
   };
 
   beforeEach(() => {
@@ -117,16 +120,16 @@ describe('MlbService', () => {
 
       expect(actual).toEqual(expected);
     });
-
-    // it('should throw error', () => {
-    //   const actual = MlbService.transformEspnClientTeamPlayerToBaseballPlayer(null);
-    //   const expected = null;
-
-    //   expect(actual).toEqual(expected);
-    // });
   });
 
   describe('transformEspnClientFreeAgentToBaseballPlayer', () => {
-    it('should transform data', () => {});
+    const freeAgents: EspnClientFreeAgent[] = mockLeagueResponse.players;
+
+    it('should transform data', () => {
+      const actual = MlbService.transformEspnClientFreeAgentToBaseballPlayer(freeAgents);
+      const expected = [MOCK_BASEBALL_FREEAGENT_1];
+
+      expect(actual).toEqual(expected);
+    });
   });
 });
