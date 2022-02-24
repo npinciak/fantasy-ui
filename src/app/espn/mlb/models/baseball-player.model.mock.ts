@@ -1,52 +1,35 @@
 import { InjuryStatusType } from '@app/espn/models/injury.model';
-import { MOCK_PLAYER_1, MOCK_PLAYER_2 } from '@app/espn/models/player.model.mock';
+import { MOCK_PLAYER_2 } from '@app/espn/models/player.model.mock';
 import { MLB_LINEUP_MAP } from '../consts/lineup.const';
+import { MLB_POSITION_MAP } from '../consts/position.const';
+import { MLB_TEAM_MAP } from '../consts/team.const';
 import { PlayingStatus } from '../mlb.enums';
+import { ESPN_BASEBALL_PLAYER_MOCK_1 } from '../services/roster.mock';
 import { BaseballPlayer } from './baseball-player.model';
 
 export const MOCK_BASEBALL_PLAYER_1: BaseballPlayer = {
-  ...MOCK_PLAYER_1,
-  isInjured: false,
-  injuryStatus: InjuryStatusType.Active,
-  playerOwnershipChange: -0.0790885222449873,
-  playerOwnershipPercentOwned: 99.70117041587118,
+  id: ESPN_BASEBALL_PLAYER_MOCK_1.playerId.toString(),
+  name: ESPN_BASEBALL_PLAYER_MOCK_1.playerPoolEntry.player.fullName,
+  img: `https://a.espncdn.com/combiner/i?img=/i/headshots/mlb/players/full/${ESPN_BASEBALL_PLAYER_MOCK_1.playerId}.png&w=96&h=70&cb=1`,
+  team: MLB_TEAM_MAP[ESPN_BASEBALL_PLAYER_MOCK_1.playerPoolEntry.player.proTeamId],
+  position: MLB_POSITION_MAP[ESPN_BASEBALL_PLAYER_MOCK_1.playerPoolEntry.player.defaultPositionId].abbrev,
+  isInjured: ESPN_BASEBALL_PLAYER_MOCK_1.playerPoolEntry.player.injured,
+  injuryStatus: ESPN_BASEBALL_PLAYER_MOCK_1.playerPoolEntry.player.injuryStatus,
+  playerOwnershipChange: ESPN_BASEBALL_PLAYER_MOCK_1.playerPoolEntry.player.ownership.percentChange,
+  playerOwnershipPercentOwned: ESPN_BASEBALL_PLAYER_MOCK_1.playerPoolEntry.player.ownership.percentOwned,
   isPitcher: false,
-  lineupSlot: MLB_LINEUP_MAP[2].abbrev,
-  lineupSlotId: 2,
-  isStarting: true,
-  startingStatus: PlayingStatus.Active,
-  playerRatings: { 0: { positionalRanking: 1, totalRanking: 20, totalRating: 10.91 } },
-  stats: {
-    1: {
-      0: 406,
-      1: 98,
-      2: 0.24137931,
-      3: 16,
-      5: 12,
-      6: 28,
-      7: 70,
-      8: 150,
-      9: 0.369458128,
-      10: 21,
-      12: 6,
-      13: 4,
-      14: 1,
-      15: 5,
-      16: 438,
-      17: 0.28604119,
-      18: 0.655499318,
-      20: 41,
-      21: 58,
-      23: 3,
-      26: 15,
-      27: 71,
-      81: 112,
-    },
-  },
+  lineupSlot: MLB_LINEUP_MAP[ESPN_BASEBALL_PLAYER_MOCK_1.lineupSlotId].abbrev,
+  lineupSlotId: ESPN_BASEBALL_PLAYER_MOCK_1.lineupSlotId,
+  isStarting: false,
+  startingStatus: null,
+  playerRatings: ESPN_BASEBALL_PLAYER_MOCK_1.playerPoolEntry.ratings,
+  stats: { '022021': ESPN_BASEBALL_PLAYER_MOCK_1.playerPoolEntry.player.stats[0].stats },
 };
 
 export const MOCK_BASEBALL_PLAYER_2: BaseballPlayer = {
   ...MOCK_PLAYER_2,
+  team: MLB_TEAM_MAP[2],
+  position: 'P',
   isInjured: true,
   injuryStatus: InjuryStatusType.O,
   playerOwnershipChange: -0.107,

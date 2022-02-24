@@ -4,7 +4,7 @@ import { Stat } from '../models/mlb-stats.model';
 import { AdvStats } from './advStats.class';
 
 describe('Advanced Stats', () => {
-  const batterStatsMock = MOCK_BASEBALL_PLAYER_1.stats[1];
+  const batterStatsMock = MOCK_BASEBALL_PLAYER_1.stats['022021'];
   const advancedStatsBatter = new AdvStats(batterStatsMock);
   advancedStatsBatter.seasonConst = MLB_WEIGHTED_STATS_2021;
 
@@ -22,7 +22,7 @@ describe('Advanced Stats', () => {
 
   describe('wOBA', () => {
     it('should return wOBA', () => {
-      const expected = 0.30683941605839415;
+      const expected = 0.28250000000000003;
       const actual = advancedStatsBatterWithMissing.wOBA;
       expect(expected).toEqual(actual);
     });
@@ -34,9 +34,23 @@ describe('Advanced Stats', () => {
     });
   });
 
+  describe('wRC', () => {
+    it('should return wRC', () => {
+      const expected = 1.7090173697270477;
+      const actual = advancedStatsBatterWithMissing.wRC;
+      expect(expected).toEqual(actual);
+    });
+
+    it('should return 0 if invalid properties', () => {
+      const expected = 0;
+      const actual = advancedStatsBatter.wRC;
+      expect(expected).toEqual(actual);
+    });
+  });
+
   describe('wRAA', () => {
     it('should return wRAA', () => {
-      const expected = -2.594156961475071;
+      const expected = -0.4689826302729524;
       const actual = advancedStatsBatterWithMissing.wRAA;
       expect(expected).toEqual(actual);
     });
@@ -65,7 +79,7 @@ describe('Advanced Stats', () => {
 
   describe('BABIP', () => {
     it('should return BABIP', () => {
-      const expected = 0.2205128205128205;
+      const expected = 0.2;
       const actual = advancedStatsBatterWithMissing.babip;
 
       expect(expected).toEqual(actual);
@@ -81,7 +95,7 @@ describe('Advanced Stats', () => {
 
   describe('weighted hits', () => {
     it('should return weighted hits', () => {
-      const expected = 126.111;
+      const expected = 3.39;
       const actual = advancedStatsBatterWithMissing.weightedHits;
 
       expect(expected).toEqual(actual);
@@ -97,7 +111,7 @@ describe('Advanced Stats', () => {
 
   describe('non hits', () => {
     it('should return non hits', () => {
-      const expected = 411;
+      const expected = 12;
       const actual = advancedStatsBatterWithMissing.nonHits;
 
       expect(expected).toEqual(actual);
@@ -113,7 +127,7 @@ describe('Advanced Stats', () => {
 
   describe('unintentionalBB', () => {
     it('should return unintentionalBB', () => {
-      const expected = 15;
+      const expected = -1;
       const actual = advancedStatsBatterWithMissing.unintentionalBB;
 
       expect(expected).toEqual(actual);
