@@ -1,4 +1,4 @@
-import { MLB_LINEUP } from '../consts/lineup.const';
+import { MLB_LINEUP_MAP } from '../consts/lineup.const';
 
 export class FreeAgentFilter {
   private _playerStatus: string[] = [];
@@ -31,7 +31,7 @@ export class FreeAgentFilter {
     const slotMap = new Map();
 
     for (const id of lineupSlots) {
-      slotMap.set(id, MLB_LINEUP[id].abbrev);
+      slotMap.set(id, MLB_LINEUP_MAP[id].abbrev);
     }
 
     return slotMap;

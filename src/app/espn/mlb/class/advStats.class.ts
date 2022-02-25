@@ -28,6 +28,11 @@ export class AdvStats {
     return ((this.wOBA - this.seasonConst.wOBA) / this.seasonConst.wOBAScale) * this._stats[Stat.PA];
   }
 
+  get wRC(): number {
+    if (!this.wRCValid) return 0;
+    return ((this.wOBA - this.seasonConst.wOBA) / this.seasonConst.wOBAScale + this.seasonConst['r/PA']) * this._stats[Stat.PA];
+  }
+
   get fip(): number {
     if (!this.fipValid) return 0;
     return (
@@ -37,10 +42,7 @@ export class AdvStats {
   }
 
   get babip(): number {
-    console.log('babip ==>', this._stats[Stat.H] - this._stats[Stat.HR]); //86
-    console.log(this._stats[Stat.K]);
     if (!this.babipValid) return 0;
-
     return (
       (this._stats[Stat.H] - this._stats[Stat.HR]) /
       (this._stats[Stat.AB] - this._stats[Stat.K] - this._stats[Stat.HR] + this._stats[Stat.SF])
@@ -78,6 +80,10 @@ export class AdvStats {
       this._stats.hasOwnProperty(Stat.HR) &&
       this._stats.hasOwnProperty(Stat.SF)
     );
+  }
+
+  private get wRCValid(): boolean {
+    return this.wRAAValid;
   }
 
   private get wRAAValid(): boolean {

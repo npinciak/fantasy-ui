@@ -118,7 +118,7 @@ export class MlbService {
     return {
       players: {
         filterStatus: { value: ['FREEAGENT', 'WAIVERS'] },
-        filterSlotIds: { value: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 19] },
+        filterSlotIds: { value: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 19] },
         filterRanksForScoringPeriodIds: { value: [1] },
         sortPercOwned: { sortPriority: 2, sortAsc: false },
         sortDraftRanks: { sortPriority: 100, sortAsc: true, value: 'STANDARD' },
