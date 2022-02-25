@@ -3,8 +3,10 @@ import { FilterOptions } from '@app/@shared/models/filter.model';
 import { EspnClientPlayerStatsEntity } from '@app/espn/espn-client.model';
 import { Selector } from '@ngxs/store';
 import { ChartData } from 'chart.js';
-import { MLB_STATS_KEYS, MLB_STATS_MAP } from '../consts/stats.const';
+import { AdvStats } from '../class/advStats.class';
+import { MLB_STATS_KEYS, MLB_STATS_MAP, MLB_WEIGHTED_STATS_2021 } from '../consts/stats.const';
 import { BaseballPlayer, BaseballPlayerMap } from '../models/baseball-player.model';
+import { Stat } from '../models/mlb-stats.model';
 import { FantasyBaseballFreeAgentsState } from '../state/fantasy-baseball-free-agents.state';
 
 export class FantasyBaseballFreeAgentsSelector {
@@ -35,9 +37,20 @@ export class FantasyBaseballFreeAgentsSelector {
         if (p.stats == null) {
           return;
         }
+
+        const playerStats = p?.stats[Number(statPeriod)];
+        const advancedStats = new AdvStats(playerStats);
+        advancedStats.seasonConst = MLB_WEIGHTED_STATS_2021;
+
+        const adv = {};
+        adv[Stat.fip] = advancedStats.fip;
+        adv[Stat.wOBA] = advancedStats.wOBA;
+        adv[Stat.wRAA] = advancedStats.wRAA;
+        adv[Stat.BABIP] = advancedStats.wRAA;
+        const stats = { ...playerStats, ...adv };
         return {
           name: p?.name,
-          stats: p?.stats[Number(statPeriod)],
+          stats,
         };
       });
     };
@@ -59,8 +72,6 @@ export class FantasyBaseballFreeAgentsSelector {
   ): (xAxis: string, statPeriod: string) => ChartData<'line' | 'bar'> {
     return (xAxis: string, statPeriod: string) => {
       const stats = selectFreeAgentStats(statPeriod).filter(p => p?.stats != undefined);
-      console.log(stats);
-
       const data = pickAxisData(stats, obj => obj.stats[xAxis]).sort((a, b) => a - b);
       const labels = stats.map(p => p.name);
       const dataColor = dataSetColor('#006cd6');
