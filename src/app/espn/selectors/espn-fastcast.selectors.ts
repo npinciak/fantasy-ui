@@ -3,13 +3,13 @@ import { EspnFastcastState } from '../state/espn-fastcast.state';
 
 export class EspnFastcastSelectors {
   @Selector([EspnFastcastState.selectConnected])
-  static selectConnected(connected: number): number | null {
-    return connected ?? null;
+  static selectConnected(connected: number): number {
+    return connected;
   }
 
   @Selector([EspnFastcastState.selectLastDisconnect])
-  static selectLastDisconnect(lastDisconnect: number): number | null {
-    return lastDisconnect ?? null;
+  static selectLastDisconnect(lastDisconnect: number): number {
+    return lastDisconnect;
   }
 
   @Selector([EspnFastcastState.selectConnected, EspnFastcastState.selectLastRefresh])
