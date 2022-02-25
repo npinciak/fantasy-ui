@@ -15,6 +15,6 @@ export class MlbServiceMock implements Mock<MlbService> {
     });
   }
   baseballFreeAgents(payload: { leagueId: number; scoringPeriodId: number }): Observable<BaseballPlayer[]> {
-    return of();
+    return of([MOCK_BASEBALL_FREEAGENT_1]);
   }
 }
