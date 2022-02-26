@@ -48,6 +48,12 @@ export class DataVisComponent {
 
   lineChartOptions = {
     responsive: true,
+    scales: {
+      x: {},
+      y: {
+        beginAtZero: true,
+      },
+    },
     plugins: {
       tooltip: {
         callbacks: {

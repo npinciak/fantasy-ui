@@ -1,19 +1,27 @@
 import { Mock } from '@app/@shared/models/mock.model';
 import { Observable, of } from 'rxjs';
-import { WebSocketSubject } from 'rxjs/webSocket';
-import { SocketRes } from '../models/espn-fastcast-socket.model';
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { EspnWebSocket, SocketRes } from '../models/espn-fastcast-socket.model';
 import { EspnClientFastcast } from '../models/espn-fastcast.model';
 import { EspnFastcastService } from './espn-fastcast.service';
 
 export class EspnFastcastServiceMock implements Mock<EspnFastcastService> {
-  webSocketSubject$: WebSocketSubject<SocketRes> = new WebSocketSubject('ws://example.com');
+  webSocketSubject$: WebSocketSubject<SocketRes>;
 
-  fastCastWebsocket(): Observable<void> {
-    return of();
+  fastCastWebsocket(): Observable<EspnWebSocket> {
+    return of({
+      ip: 'p2b6d3e30-7fa9-4f77-8624-5ace7141a04a-35-175-217-124.my.test.websocket.com',
+      token: 'MTY0NTgzNTAxNjg3Mw==:Z0IkyvJlpFGdtpKO2s9VFLkOs+E=',
+      port: 9571,
+      securePort: 9573,
+    });
   }
 
-  connect(): WebSocketSubject<EspnClientFastcast> {
-    return new WebSocketSubject<EspnClientFastcast>('');
+  connect(url: string) {
+    if (!this.webSocketSubject$ || this.webSocketSubject$.closed) {
+      this.webSocketSubject$ = webSocket(url);
+    }
+    return this.webSocketSubject$;
   }
 
   dataUpdates$(): Observable<EspnClientFastcast> {

@@ -36,8 +36,8 @@ export class FreeAgentsComponent implements OnInit {
     this.teamDynamicScatterChartData = this.fantasyBaseballTeamFacade.teamDynamicScatterChartData(event.xAxis ?? '', event.yAxis ?? '');
 
     this.freeAgentDynamicScatterChartData = this.fantasyBaseballFreeAgentsFacade.freeAgentScatterChartData(
-      event.xAxis ?? '',
-      event.yAxis ?? '',
+      event.xAxis ?? 0,
+      event.yAxis ?? 0,
       '102022'
     );
   }
