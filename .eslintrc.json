@@ -1,6 +1,16 @@
 {
   "root": true,
-  "ignorePatterns": ["projects/**/*", "schematics"],
+  "ignorePatterns": [
+    "projects/**/*",
+    "schematics",
+    ".vscode",
+    "node_modules",
+    "dist",
+    "build",
+    "src/assets",
+    "schematics/*/files/**",
+    "schematics/*/src/index.js"
+  ],
   "overrides": [
     {
       "files": ["*.ts"],

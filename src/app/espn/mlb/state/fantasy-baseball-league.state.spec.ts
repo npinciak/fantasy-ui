@@ -1,71 +1,77 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
-import { EspnService } from '@espn/service/espn.service';
 import { NgxsModule, Store } from '@ngxs/store';
+import { FetchBaseballLeague } from '../actions/mlb.actions';
+import { MlbService } from '../services/mlb.service';
+import { MlbServiceMock } from '../services/mlb.service.mock';
 import { FantasyBaseballLeagueState } from './fantasy-baseball-league.state';
 
 describe('[fantasyBaseballLeague] Store', () => {
   let store: Store;
-  let service: EspnService;
-  let httpTestingController: HttpTestingController;
+  let service: MlbService;
+
+  const leagueId = 1;
+  const scoringPeriodId = 1;
+
+  const MOCK_LEAGUE_STATE = {
+    scoringPeriodId,
+    isLoading: true,
+  };
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule, NgxsModule.forRoot([FantasyBaseballLeagueState])],
-        providers: [EspnService],
+        providers: [{ provide: MlbService, useClass: MlbServiceMock }],
       }).compileComponents();
 
       store = TestBed.inject(Store);
-      service = TestBed.inject(EspnService);
-      httpTestingController = TestBed.inject(HttpTestingController);
+      service = TestBed.inject(MlbService);
     })
   );
 
-  afterEach(() => {
-    httpTestingController.verify();
-  });
-
   describe('@Action fetchBaseballLeague', () => {
-    it('should create an action and fetch baseball league', () => {
-      // const spy = spyOn(service, 'fetchEspnBaseball').and.callThrough();
-      // const expected = MOCK_STATE;
-      // store.dispatch(new FetchBaseballLeague(MOCK_DATA_ESPN.ESPN_LEAGUE_ID));
-      // expect(spy).toHaveBeenCalledTimes(1);
-      // const requestOne = httpTestingController.expectOne(MOCK_DATA_ESPN.ESPN_LEAGUE_REQUEST);
-      // const requestTwo = httpTestingController.expectOne(MOCK_DATA_ESPN.ESPN_GAME_REQUEST);
-      // expect(requestOne.request.method).toBe('GET');
-      // expect(requestTwo.request.method).toBe('GET');
-      // requestOne.flush(MockLeague);
-      // requestTwo.flush(MockGame);
-      // const actual = store.selectSnapshot(MlbState.getState);
-      // expect(actual).toEqual(expected);
+    it('should create an action and fetch baseball league', async () => {
+      const spy = spyOn(service, 'baseballLeague').and.callThrough();
+
+      await store.dispatch(new FetchBaseballLeague({ leagueId })).toPromise();
+
+      expect(spy).toHaveBeenCalledTimes(1);
+
+      const actual = store.selectSnapshot(FantasyBaseballLeagueState.getState);
+
+      expect(actual).toEqual(MOCK_LEAGUE_STATE);
+    });
+
+    it('should create an action and NOT fetch baseball league', async () => {
+      store.reset({
+        ...store.snapshot(),
+        fantasyBaseballLeague: { scoringPeriodId: 1 },
+      });
+
+      const spy = spyOn(service, 'baseballLeague').and.callThrough();
+
+      await store.dispatch(new FetchBaseballLeague({ leagueId })).toPromise();
+
+      expect(spy).toHaveBeenCalledTimes(0);
     });
   });
 
   describe('@Selector scoringPeriodId', () => {
     it('should select scoringPeriodId', () => {
-      // const state = MOCK_STATE;
-      // const selector = FantasyBaseballLeagueState.scoringPeriod(state);
-      // const expected = MOCK_DATA_ESPN.ESPN_LEAGUE.scoringPeriodId;
-      // expect(selector).toEqual(expected);
+      const state = MOCK_LEAGUE_STATE;
+      const selector = FantasyBaseballLeagueState.scoringPeriod(state);
+      const expected = scoringPeriodId;
+      expect(selector).toEqual(expected);
     });
   });
 
-  describe('@Selector liveScore', () => {
-    it('should map teams to BaseballTeam', () => {
-      // const state = mockState;
-      // const teamSelector = MlbState.baseballTeamMap(state, state.teams, state.schedule);
-      // const expected = MOCK_DATA_ESPN.BASEBALL_TEAM_MAP;
-      // expect(teamSelector).toEqual(expected);
-    });
-
-    it('should map teams to BaseballTeam', () => {
-      // const state = mockState;
-      // const teamSelector = MlbState.baseballTeamMap(state, state.teams, state.schedule);
-      // const liveScoreSelector = MlbState.liveScore(state, teamSelector);
-      // const expected = Object.values(MOCK_DATA_ESPN.BASEBALL_TEAM_MAP);
-      // expect(liveScoreSelector).toEqual(expected);
+  describe('@Selector isLoading', () => {
+    it('should select isLoading', () => {
+      const state = MOCK_LEAGUE_STATE;
+      const selector = FantasyBaseballLeagueState.isLoading(state);
+      const expected = true;
+      expect(selector).toEqual(expected);
     });
   });
 });

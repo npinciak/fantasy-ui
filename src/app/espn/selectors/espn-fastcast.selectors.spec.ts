@@ -1,19 +1,42 @@
-import { MOCK_FASTCAST_EVENT_1 } from '../models/fastcast-event.model.mock';
+import { EspnFastcastStateModel } from '../state/espn-fastcast.state';
 import { EspnFastcastSelectors } from './espn-fastcast.selectors';
 
 describe('FastCastSelector', () => {
-  describe('selectEventById', () => {
-    const state = { [MOCK_FASTCAST_EVENT_1.id]: MOCK_FASTCAST_EVENT_1 };
-    const expected = MOCK_FASTCAST_EVENT_1;
+  const state: EspnFastcastStateModel = {
+    disconnect: new Date().getTime(),
+    connect: new Date().getTime(),
+    lastRefresh: new Date().getTime(),
+  };
 
-    it('retrieves event by id', () => {
-      const selectEventById = () => expected;
-      const result = EspnFastcastSelectors.selectEventById(state);
-      expect(result).toEqual(expected);
+  describe('selectConnected', () => {
+    it('retrieves connected timestamp', () => {
+      const expected = EspnFastcastSelectors.selectConnected(state.connect);
+      expect(expected).toEqual(state.connect);
     });
   });
 
-  describe('selectEventsMapList', () => {
-    it('retrieves event map list', () => {});
+  describe('selectLastDisconnect', () => {
+    it('retrieves disconnected timestamp', () => {
+      const expected = EspnFastcastSelectors.selectLastDisconnect(state.disconnect);
+      expect(expected).toEqual(state.disconnect);
+    });
+  });
+
+  describe('selectLastRefresh', () => {
+    const emptyLastRefresh: EspnFastcastStateModel = {
+      disconnect: new Date().getTime(),
+      connect: new Date().getTime(),
+      lastRefresh: null,
+    };
+
+    it('retrieves lastRefresh timestamp', () => {
+      const expected = EspnFastcastSelectors.selectLastRefresh(state.connect, state.lastRefresh);
+      expect(expected).toEqual(state.lastRefresh);
+    });
+
+    it('retrieves connect timestamp if no lastRefresh', () => {
+      const expected = EspnFastcastSelectors.selectLastRefresh(emptyLastRefresh.connect, emptyLastRefresh.lastRefresh);
+      expect(expected).toEqual(emptyLastRefresh.connect);
+    });
   });
 });

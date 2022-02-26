@@ -59,7 +59,13 @@ export interface EspnClientPlayer {
   playerPoolEntry: EspnClientPlayerEntry;
 }
 
-export type EspnClientFreeAgent = EspnClientPlayerEntry;
+export type EspnClientFreeAgent = EspnClientFreeAgentEntry;
+
+export type EspnClientFreeAgentEntry = {
+  id: number;
+  player: Omit<EspnClientPlayerInfo, 'playerId' | 'lastNewsDate' | 'starterStatusByProGame'>;
+  ratings: EspnClientPlayerRatings;
+};
 
 export interface EspnClientPlayerEntry {
   id: number;

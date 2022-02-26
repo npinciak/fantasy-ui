@@ -1,23 +1,47 @@
+import { StatThreshold } from '@app/@shared/models/stat-threshold.model';
 import { SeasonConst } from '../models/adv-stats.model';
 import { StatCategory, StatsMap, StatType } from '../models/mlb-stats.model';
 
 export const MLB_WEIGHTED_STATS_2020: SeasonConst = {
+  wOBA: 0,
+  wOBAScale: 0,
+  runSB: 0,
+  runCS: 0,
   wBB: 0.699,
   wHBP: 0.728,
   w1B: 0.883,
   w2B: 1.238,
   w3B: 1.558,
   wHR: 1.979,
+  'r/PA': 0,
+  'r/W': 0,
+  cFIP: 0,
 };
 
 export const MLB_WEIGHTED_STATS_2021: SeasonConst = {
+  wOBA: 0.314,
+  wOBAScale: 1.209,
+  runSB: 0.2,
+  runCS: -0.419,
   wBB: 0.711,
   wHBP: 0.742,
   w1B: 0.901,
   w2B: 1.269,
   w3B: 1.6,
   wHR: 2.035,
-  cFIP: 3.073,
+  cFIP: 3.17,
+  'r/PA': 0.121,
+  'r/W': 9.973,
+};
+
+export const wRAAThreshold: { [key in StatThreshold]: number } = {
+  [StatThreshold.excellent]: 40,
+  [StatThreshold.great]: 20,
+  [StatThreshold.aboveAvg]: 10,
+  [StatThreshold.avg]: 0,
+  [StatThreshold.belowAvg]: -5,
+  [StatThreshold.poor]: -10,
+  [StatThreshold.awful]: -20,
 };
 
 export const MLB_STATS_MAP: StatsMap = {
@@ -128,6 +152,12 @@ export const MLB_STATS_MAP: StatsMap = {
     description: 'Weighted Runs Above Average (wRAA)',
     statCategoryId: StatCategory.Batting,
     statTypeId: StatType.Batting,
+  },
+  103: {
+    abbrev: 'BABIP',
+    description: 'Batting Average on Balls In Play',
+    statCategoryId: StatCategory.Pitching,
+    statTypeId: StatType.Pitching,
   },
 };
 

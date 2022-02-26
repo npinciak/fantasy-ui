@@ -9,11 +9,11 @@ export class PatchFastcastLeague {
   constructor(public payload: { map: EspnFastcastLeagueModelMap }) {}
 }
 
-export interface EspnFastcastLeagueModel {
+export interface EspnFastcastLeagueStateModel {
   map: EspnFastcastLeagueModelMap;
 }
 
-@State<EspnFastcastLeagueModel>({
+@State<EspnFastcastLeagueStateModel>({
   name: 'espnFastcastLeague',
   defaults: {
     map: {},
@@ -24,12 +24,12 @@ export class EspnFastcastLeagueState {
   constructor() {}
 
   @Selector()
-  static selectMap(state: EspnFastcastLeagueModel): EspnFastcastLeagueModelMap {
+  static selectMap(state: EspnFastcastLeagueStateModel): EspnFastcastLeagueModelMap {
     return state.map;
   }
 
   @Action(PatchFastcastLeague)
-  patchFastcastLeague({ patchState, getState }: StateContext<EspnFastcastLeagueModel>, { payload: { map } }: PatchFastcastLeague) {
+  patchFastcastLeague({ patchState, getState }: StateContext<EspnFastcastLeagueStateModel>, { payload: { map } }: PatchFastcastLeague) {
     const state = getState();
 
     patchState({ ...state, map });
