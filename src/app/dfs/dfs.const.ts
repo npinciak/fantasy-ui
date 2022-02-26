@@ -55,36 +55,6 @@ export enum DfsSport {
 
 export const dfsSportEnumList: DfsSport[] = enumAsList(DfsSport);
 
-export enum Threshold {
-  excellent,
-  great,
-  aboveAvg,
-  avg,
-  belowAvg,
-  poor,
-  awful,
-}
-
-export enum ThresholdClass {
-  excellent = 'excellent',
-  great = 'great',
-  aboveAvg = 'above-avg',
-  avg = 'avg',
-  belowAvg = 'below-avg',
-  poor = 'poor',
-  awful = 'awful',
-}
-
-export const thresholdMap: { [key in Threshold]: ThresholdClass } = {
-  [Threshold.excellent]: ThresholdClass.excellent,
-  [Threshold.great]: ThresholdClass.great,
-  [Threshold.aboveAvg]: ThresholdClass.aboveAvg,
-  [Threshold.avg]: ThresholdClass.avg,
-  [Threshold.belowAvg]: ThresholdClass.belowAvg,
-  [Threshold.poor]: ThresholdClass.poor,
-  [Threshold.awful]: ThresholdClass.awful,
-};
-
 export const DFS_MLB_TEAM_MAP: { [key in RotogrindMLBTeam]: string } = {
   [RotogrindMLBTeam.Bal]: 'Bal',
   [RotogrindMLBTeam.Bos]: 'Bos',
