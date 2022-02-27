@@ -10,7 +10,7 @@ export class EspnResolver implements Resolve<void> {
   constructor(readonly shellFacade: ShellFacade, readonly espnFeedFacade: EspnFeedFacade) {}
 
   async resolve(route: ActivatedRouteSnapshot): Promise<void> {
-    await this.espnFeedFacade.fetchFeed();
+    // await this.espnFeedFacade.fetchFeed();
     await this.shellFacade.showFastcastScoreboard(true);
   }
 }
