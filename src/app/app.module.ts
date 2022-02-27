@@ -6,6 +6,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsModule } from '@ngxs/store';
+import { NgxsWebsocketPluginModule } from '@ngxs/websocket-plugin';
 import { ChartsModule } from 'ng2-charts';
 import { environment } from 'src/environments/environment';
 import { httpInterceptorProviders } from './@core/interceptors';
@@ -29,6 +30,7 @@ const states = [CoreState, EspnFastcastState, EspnFastcastEventState, EspnFastca
     ChartsModule,
     HttpClientModule,
     NgxsSelectSnapshotModule.forRoot(),
+    NgxsWebsocketPluginModule.forRoot(),
     NgxsModule.forRoot(states, {
       developmentMode: !environment.production,
     }),
