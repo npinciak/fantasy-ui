@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsWebsocketPluginModule } from '@ngxs/websocket-plugin';
 import { ChartsModule } from 'ng2-charts';
@@ -13,6 +14,7 @@ import { httpInterceptorProviders } from './@core/interceptors';
 import { ShellModule } from './@core/shell/shell.module';
 import { ShellState } from './@core/shell/state/shell.state';
 import { CoreState } from './@core/store/core/core.state';
+import { LocalStorageState } from './@core/store/local-storage/local-storage.state';
 import { SharedModule } from './@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,10 +33,9 @@ const states = [CoreState, EspnFastcastState, EspnFastcastEventState, EspnFastca
     HttpClientModule,
     NgxsSelectSnapshotModule.forRoot(),
     NgxsWebsocketPluginModule.forRoot(),
-    NgxsModule.forRoot(states, {
-      developmentMode: !environment.production,
-    }),
-    NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsStoragePluginModule.forRoot({ key: LocalStorageState }),
+    NgxsModule.forRoot(states, { developmentMode: !environment.production }),
+    NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
