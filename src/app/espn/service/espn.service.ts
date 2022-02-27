@@ -69,22 +69,30 @@ export enum FastCastGameStatus {
   InProgress = 'in',
 }
 
+export enum EspnSport {
+  Baseball = '1',
+  Football = '20',
+  Soccer = '600',
+  Basketball = '40',
+  Hockey = '70',
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class EspnService {
   constructor(private api: ApiService) {}
 
-  static excludeSports(id: string) {
-    const set = new Set(['18', '52', '41', '850', '3301', '1100']);
-    return !set.has(id);
+  static includeSports(id: string) {
+    const set = new Set(['1', '20', '40', '70', '600']);
+    return set.has(id);
   }
 
   static transformLeagueImportEventImport(sportsImport: SportsImport[]): {
     transformLeaguesImportToLeagues: League[];
     transformEventImportToFastcastEvent: FastcastEvent[];
   } {
-    const leagues = sportsImport.filter(s => EspnService.excludeSports(s.id)).map(i => i.leagues);
+    const leagues = sportsImport.filter(s => EspnService.includeSports(s.id)).map(i => i.leagues);
 
     const flattenLeaguesImport = flatten(leagues);
 

@@ -15,6 +15,6 @@ export class EspnFastcastEventSelectors {
 
   @Selector([EspnFastcastEventSelectors.selectEventList])
   static selectFastcastEventsByLeagueId(selectEventList: FastcastEvent[]): (id: string) => FastcastEvent[] {
-    return (id: string) => selectEventList.filter(e => e.leagueId === id).sort((a, b) => b.timestamp - a.timestamp);
+    return (id: string) => selectEventList.filter(e => e.leagueId === id).sort((a, b) => a.timestamp - b.timestamp);
   }
 }
