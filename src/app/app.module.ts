@@ -22,7 +22,7 @@ import { EspnFastcastEventState } from './espn/state/espn-fastcast-event.state';
 import { EspnFastcastLeagueState } from './espn/state/espn-fastcast-league.state';
 import { EspnFastcastState } from './espn/state/espn-fastcast.state';
 
-const states = [CoreState, EspnFastcastState, EspnFastcastEventState, EspnFastcastLeagueState, ShellState];
+const states = [CoreState, EspnFastcastState, EspnFastcastEventState, EspnFastcastLeagueState, ShellState, LocalStorageState];
 
 @NgModule({
   declarations: [AppComponent],
