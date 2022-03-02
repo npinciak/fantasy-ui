@@ -1,8 +1,9 @@
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FANTASY_BASE_V3 } from '@app/espn/espn.const';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
@@ -13,11 +14,14 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   }
 
   private errorHandler(response: HttpErrorResponse): Observable<HttpEvent<any>> {
+    const isEspnFantasy = response.url.includes(FANTASY_BASE_V3);
+
     const code = response.status || 0;
-    const message = statusCodeToMessage[code];
+    const message = isEspnFantasy ? 'Invalid League Settings' : statusCodeToMessage[code];
 
     this.snackBar.open(`${code}: ${message}`, 'x', {
       panelClass: ['mat-toolbar', 'mat-warn'],
+      duration: 3000,
     });
 
     throw response;

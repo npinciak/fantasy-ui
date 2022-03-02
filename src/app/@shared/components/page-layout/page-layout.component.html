@@ -4,13 +4,13 @@
   </button>
 
   <mat-menu #menu="matMenu">
-    <button mat-menu-item [matMenuTriggerFor]="espn">ESPN</button>
+    <button mat-menu-item [routerLink]="UrlBuilder.espnBaseUrl">ESPN</button>
     <button mat-menu-item [matMenuTriggerFor]="dfs">DFS</button>
   </mat-menu>
 
   <mat-menu #espn="matMenu">
-    <button mat-menu-item [routerLink]="UrlBuilder.espnMlbBase">NFL</button>
-    <button disabled mat-menu-item [routerLink]="UrlBuilder.espnMlbBase">MLB</button>
+    <button mat-menu-item [routerLink]="UrlBuilder.espnMlbBase" disabled>NFL</button>
+    <button disabled mat-menu-item [routerLink]="UrlBuilder.espnMlbBase" disabled>MLB</button>
   </mat-menu>
 
   <mat-menu #dfs="matMenu">
