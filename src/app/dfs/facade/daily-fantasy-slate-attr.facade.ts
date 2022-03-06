@@ -3,6 +3,7 @@ import { Select, Store } from '@ngxs/store';
 import { ChartData } from 'chart.js';
 import { Observable } from 'rxjs';
 import { DailyFantasySlateAttrSelectors, TeamList } from '../selectors/daily-fantasy-slate-attr.selectors';
+import { FetchSlateAttr } from '../state/daily-fantasy-slate-attr.state';
 
 @Injectable({
   providedIn: 'root',
@@ -16,5 +17,9 @@ export class DailyFantasySlateAttrFacade {
 
   selectTeamList(): TeamList[] {
     return this.store.selectSnapshot(DailyFantasySlateAttrSelectors.selectTeamList);
+  }
+
+  fetchSlateAttr(sport: string, site: string, slateId: string): void {
+    this.store.dispatch(new FetchSlateAttr({ sport, site, slateId }));
   }
 }
