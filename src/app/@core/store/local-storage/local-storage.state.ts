@@ -1,44 +1,47 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 
-export class Set {
-  static readonly type = `[sportsUiLocalStorage] PatchFastcastEvents`;
-  constructor(public payload: { map: {} }) {}
+export class SetLocalStorageValue {
+  static readonly type = '[sportsUiLocalStorage] SetLocalStorageValue';
+  constructor(public payload: { key: LocalStorageKeys; value: string }) {}
+}
+export class RemoveLocalStorageValue {
+  static readonly type = '[sportsUiLocalStorage] RemoveLocalStorageValue';
+  constructor(public payload: { key: LocalStorageKeys; value: string }) {}
 }
 
-export class Remove {
-  static readonly type = `[sportsUiLocalStorage] PatchFastcastEvents`;
-  constructor(public payload: { map: {} }) {}
+export enum LocalStorageKeys {
+  UserLeagues = '@@_user_leagues',
 }
 
-export interface LocalStorageStateModel {
-  map: {};
-}
+export type LocalStorageStateModel = {
+  [key in LocalStorageKeys]?: string;
+};
 
 @State<LocalStorageStateModel>({
   name: 'sportsUiLocalStorage',
-  defaults: {
-    map: {},
-  },
+  defaults: {},
 })
 @Injectable()
 export class LocalStorageState {
-  @Selector()
-  public static getState(state: LocalStorageStateModel) {
-    return state;
+  @Selector([LocalStorageState])
+  static getLocalStorageValue(state: LocalStorageStateModel): (id: LocalStorageKeys) => string | null {
+    return (key: LocalStorageKeys) => state[key] ?? null;
   }
 
-  @Action(Set)
-  setStorage({ patchState, getState }: StateContext<LocalStorageStateModel>, { payload: { map } }: Set) {
-    const state = getState();
+  constructor() {}
 
-    patchState({ ...state, map });
+  @Action(SetLocalStorageValue)
+  setLocalStorageValue({ patchState }: StateContext<LocalStorageStateModel>, { payload: { key, value } }: SetLocalStorageValue): void {
+    patchState({ [key]: value });
   }
 
-  @Action(Remove)
-  removeStorage({ patchState, getState }: StateContext<LocalStorageStateModel>, { payload: { map } }: Remove) {
+  @Action(RemoveLocalStorageValue)
+  removeLocalStorageValue(
+    { patchState, getState }: StateContext<LocalStorageStateModel>,
+    { payload: { key, value } }: RemoveLocalStorageValue
+  ): void {
     const state = getState();
-
-    patchState({ ...state, map });
+    patchState({ ...state, [key]: null });
   }
 }
