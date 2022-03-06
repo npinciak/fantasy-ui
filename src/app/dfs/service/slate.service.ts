@@ -8,7 +8,7 @@ import { camelCase } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DailyFantasyEndpointBuilder } from '../daily-fantasy-url-builder';
-import { testSiteMap } from '../dfs.const';
+import { dfsSiteToDfsSiteTypeMap } from '../dfs.const';
 import {
   ClientSlateAttributes,
   ClientSlatePlayerAttributes,
@@ -163,7 +163,7 @@ export class SlateService {
       return [];
     }
 
-    const siteMap = testSiteMap[site];
+    const siteMap = dfsSiteToDfsSiteTypeMap[site];
 
     return Object.entries(players).map(([id, player]) => ({
       id,

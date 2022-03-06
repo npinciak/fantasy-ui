@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { DailyFantasySlateSelectors, SlateTypeMap } from '../selectors/daily-fantasy-slate.selectors';
-import { FetchSlateAttr } from '../state/daily-fantasy-slate-attr.state';
+import { FetchSlates } from '../state/daily-fantasy-slate.state';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class DailyFantasySlateFacade {
 
   constructor(private store: Store) {}
 
-  fetchSlateAttr(sport: string, site: string, slateId: string) {
-    return this.store.dispatch(new FetchSlateAttr({ sport, site, slateId }));
+  fetchSlates(sport: string, site: string): void {
+    this.store.dispatch(new FetchSlates({ sport, site }));
   }
 }
