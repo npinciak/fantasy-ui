@@ -14,10 +14,12 @@
   </div>
   <div class="blocks four" gdArea="content">
     <app-roster
-      [fantasyPlayers]="teamLineup"
+      [fantasyPlayers]="fantasyBaseballTeamFacade.selectTeamBatterStats(teamId, '102022')"
       [dataColumns]="espnTableFacade.rosterTableRow$ | async"
       [headers]="espnTableFacade.rosterTableHeaders$ | async"
     ></app-roster>
   </div>
   <div class="blocks five" gdArea="footer"></div>
 </div>
+<!-- [dataColumns]="espnTableFacade.freeAgentsTableRow$ | async"
+[headers]="espnTableFacade.freeAgentsTableHeaders$ | async" -->

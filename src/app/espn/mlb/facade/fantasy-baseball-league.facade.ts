@@ -14,6 +14,8 @@ export class FantasyBaseballLeagueFacade {
   @Select(FantasyBaseballLeagueState.isLoading) public isLoading$: Observable<boolean>;
   @Select(FantasyBaseballLeagueSelectors.standings) public standings$: Observable<BaseballTeam[]>;
 
+  @Select(FantasyBaseballLeagueSelectors.getLocalStorageLeagues) public localStorageLeagueList$: Observable<any[]>;
+
   @Select(FantasyBaseballLeagueSelectors.statsGroup) public statsGroup$: Observable<string[]>;
 
   constructor(private store: Store) {}

@@ -19,6 +19,8 @@ export class FreeAgentsComponent implements OnInit {
   freeAgentDynamicScatterChartData: any;
   freeAgentDynamicLineChartData: any;
 
+  scoringPeriodId: string = '102022';
+
   constructor(
     private store: Store,
     private activatedRoute: ActivatedRoute,
@@ -32,13 +34,17 @@ export class FreeAgentsComponent implements OnInit {
     this.fantasyBaseballLeagueFacade.getLeague(this.leagueId);
   }
 
+  scoringPeriodIdChange(id: string): void {
+    this.scoringPeriodId = id;
+  }
+
   filterChange(event: { xAxis: string; yAxis: string }): void {
     this.teamDynamicScatterChartData = this.fantasyBaseballTeamFacade.teamDynamicScatterChartData(event.xAxis ?? '', event.yAxis ?? '');
 
     this.freeAgentDynamicScatterChartData = this.fantasyBaseballFreeAgentsFacade.freeAgentScatterChartData(
       event.xAxis ?? 0,
       event.yAxis ?? 0,
-      '102022'
+      this.scoringPeriodId
     );
   }
 
@@ -50,7 +56,7 @@ export class FreeAgentsComponent implements OnInit {
     // this.fantasyBaseballFreeAgentsFacade.freeAgentDynamicLineChartData(event.xAxis ?? '');
     this.freeAgentDynamicLineChartData = this.store.selectSnapshot(FantasyBaseballFreeAgentsSelector.freeAgentDynamicLineChartData)(
       event.xAxis,
-      '102022'
+      this.scoringPeriodId
     );
   }
 }

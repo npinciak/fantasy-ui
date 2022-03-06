@@ -1,17 +1,29 @@
 /**
- *
+ * Helper function to add delimeters
  * @returns Date in format yyyymmdd
  */
-const currentDate = <T>(delim?: T): string => {
+export function currentDate<T>(delim?: T): string {
   const today = new Date();
 
   const day = today.getDate();
   const month = today.getMonth() + 1;
-  const year = today.getFullYear();
+  const year = today.getFullYear().toString();
 
-  return `${year}${delim ? delim : ''}${month <= 9 ? '0' + month : month}${delim ? delim : ''}${day <= 9 ? '0' + day : day}`;
-};
+  const formatMonth = month <= 9 ? `0${month}` : month.toString();
+  const formatDay = day <= 9 ? `0${day}` : day.toString();
 
-const addHoursToDate = (date: Date, hours: number): Date => new Date(new Date(date).setHours(date.getHours() + hours));
+  const delimeter = delim ? delim : '';
 
-export { addHoursToDate, currentDate };
+  return year + delimeter + formatMonth + delimeter + formatDay;
+}
+
+/**
+ * Add hours to specific date/time
+ * @param date
+ * @param hours
+ * @returns
+ */
+export function addHoursToDate(date: Date, hours: number): Date {
+  const addHours = date.getHours() + hours;
+  return new Date(new Date(date).setHours(addHours));
+}

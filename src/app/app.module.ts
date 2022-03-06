@@ -22,7 +22,7 @@ import { EspnFastcastEventState } from './espn/state/espn-fastcast-event.state';
 import { EspnFastcastLeagueState } from './espn/state/espn-fastcast-league.state';
 import { EspnFastcastState } from './espn/state/espn-fastcast.state';
 
-const states = [CoreState, EspnFastcastState, EspnFastcastEventState, EspnFastcastLeagueState, ShellState];
+const states = [CoreState, EspnFastcastState, EspnFastcastEventState, EspnFastcastLeagueState, ShellState, LocalStorageState];
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,7 +33,11 @@ const states = [CoreState, EspnFastcastState, EspnFastcastEventState, EspnFastca
     HttpClientModule,
     NgxsSelectSnapshotModule.forRoot(),
     NgxsWebsocketPluginModule.forRoot(),
-    NgxsStoragePluginModule.forRoot({ key: LocalStorageState }),
+    NgxsStoragePluginModule.forRoot({
+      key: LocalStorageState,
+      // beforeSerialize: (obj, key) => console.log('beforeSerialize ====>', obj, key),
+      // afterDeserialize: (obj, key) => console.log('afterSerialize ====>', obj, key),
+    }),
     NgxsModule.forRoot(states, { developmentMode: !environment.production }),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
     ServiceWorkerModule.register('ngsw-worker.js', {

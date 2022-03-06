@@ -50,6 +50,12 @@
     </ng-container>
     <!-- </ng-container> -->
   </div>
-  <div class="blocks four" gdArea="content"></div>
+  <div class="blocks four" gdArea="content">
+    <app-add-league-form
+      [leagues]="fantasyLeagueFacade.localStorageLeagueList$ | async"
+      (addLeague)="onAddLeague($event)"
+      (removeLeague)="onRemoveLeague($event)"
+    ></app-add-league-form>
+  </div>
   <div class="blocks five" gdArea="footer"></div>
 </div>

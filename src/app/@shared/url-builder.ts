@@ -3,6 +3,10 @@ export class UrlBuilder {
     return UrlFragments.Empty;
   }
 
+  static get espnBaseUrl() {
+    return UrlFragments.Espn;
+  }
+
   static get dfsBase() {
     return `${UrlFragments.Dfs}`;
   }
@@ -16,11 +20,11 @@ export class UrlBuilder {
   }
 
   static get espnMlbBase() {
-    return `${UrlFragments.Espn}/${UrlFragments.MLB}`;
+    return `${UrlBuilder.espnBaseUrl}/${UrlFragments.MLB}`;
   }
 
   static get espnNflBase() {
-    return `${UrlFragments.Espn}/${UrlFragments.NFL}`;
+    return `${UrlBuilder.espnBaseUrl}/${UrlFragments.NFL}`;
   }
 
   public static espnMlbLeague(leagueId: string) {

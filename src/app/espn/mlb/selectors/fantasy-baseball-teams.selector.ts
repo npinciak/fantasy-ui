@@ -2,11 +2,13 @@ import { pickAxisData, scatterData } from '@app/@shared/helpers/graph.helpers';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@ngxs/store';
 import { ChartData } from 'chart.js';
+import { AdvStats } from '../class/advStats.class';
 import { MLB_LINEUP, MLB_LINEUP_MAP } from '../consts/lineup.const';
-import { MLB_STATS_MAP } from '../consts/stats.const';
+import { MLB_STATS_MAP, MLB_WEIGHTED_STATS_2021 } from '../consts/stats.const';
 import { statsKeyMap } from '../helpers';
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { BaseballTeamMap, BaseballTeamTableRow } from '../models/baseball-team.model';
+import { Stat } from '../models/mlb-stats.model';
 import { FantasyBaseballTeamState } from '../state/fantasy-baseball-team.state';
 
 export class FantasyBaseballTeamsSelector {
@@ -70,12 +72,34 @@ export class FantasyBaseballTeamsSelector {
   @Selector([FantasyBaseballTeamsSelector.selectTeamBatters])
   static selectTeamBatterStats(selectRosterByTeamId: (id: string) => BaseballPlayer[]) {
     return (id: string, statPeriod: string) => {
-      const roster = selectRosterByTeamId(id);
+      const players = selectRosterByTeamId(id);
 
-      return roster.map(p => ({
-        name: p.name,
-        stats: p.stats[Number(statPeriod)] ?? null,
-      }));
+      return players.map(p => {
+        if (p.stats == null) {
+          return;
+        }
+
+        const playerStats = p?.stats[statPeriod];
+        const advancedStats = new AdvStats(playerStats);
+        advancedStats.seasonConst = MLB_WEIGHTED_STATS_2021;
+
+        const adv = {};
+        adv[Stat.fip] = advancedStats.fip;
+        adv[Stat.wOBA] = advancedStats.wOBA;
+        adv[Stat.wRAA] = advancedStats.wRAA;
+        adv[Stat.BABIP] = advancedStats.wRAA;
+        const stats = { ...playerStats, ...adv };
+
+        return {
+          name: p?.name,
+          img: p.img,
+          team: p.team,
+          position: p.position,
+          playerOwnershipChange: p.playerOwnershipChange,
+          playerOwnershipPercentOwned: p.playerOwnershipPercentOwned,
+          stats,
+        };
+      });
     };
   }
 

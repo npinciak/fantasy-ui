@@ -1,35 +1,93 @@
 import { cellDataAccessor } from '@app/@shared/helpers/utils';
 import { Selector } from '@ngxs/store';
-import { TableColumn } from '../models/table.model';
+import { MLB_STATS_MAP } from '../mlb/consts/stats.const';
+import { Stat } from '../mlb/models/mlb-stats.model';
+import { TableColumn, TableColumnDataType } from '../models/table.model';
 
 export class EspnTableSelectors {
   @Selector()
   static standingsColumns(): TableColumn[] {
     return [
-      { columnDef: 'name', headerCell: 'name', headerLabel: 'Team' },
-      { columnDef: 'rotoStatsMap.r', headerCell: 'R', headerLabel: 'R' },
-      { columnDef: 'rotoStatsMap.h', headerCell: 'H', headerLabel: 'H' },
-      { columnDef: 'rotoStatsMap.rbi', headerCell: 'RBI', headerLabel: 'RBI' },
-      { columnDef: 'rotoStatsMap.hr', headerCell: 'HR', headerLabel: 'HR' },
-      { columnDef: 'rotoStatsMap.sb', headerCell: 'SB', headerLabel: 'SB' },
+      { columnDef: 'name', headerCell: 'name', headerLabel: 'Team', dataType: TableColumnDataType.String },
+      { columnDef: 'rotoStatsMap.r', headerCell: 'R', headerLabel: 'R', dataType: TableColumnDataType.Number },
+      { columnDef: 'rotoStatsMap.h', headerCell: 'H', headerLabel: 'H', dataType: TableColumnDataType.Number },
+      { columnDef: 'rotoStatsMap.rbi', headerCell: 'RBI', headerLabel: 'RBI', dataType: TableColumnDataType.Number },
+      { columnDef: 'rotoStatsMap.hr', headerCell: 'HR', headerLabel: 'HR', dataType: TableColumnDataType.Number },
+      { columnDef: 'rotoStatsMap.sb', headerCell: 'SB', headerLabel: 'SB', dataType: TableColumnDataType.Number },
     ];
   }
 
   @Selector()
   static rosterColumns(): TableColumn[] {
     return [
-      { columnDef: 'lineupSlot', headerCell: 'lineupSlot', headerLabel: '' },
-      { columnDef: 'name', headerCell: 'name', headerLabel: '' },
+      { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String },
+      {
+        columnDef: 'playerOwnershipChange',
+        headerCell: 'playerOwnershipChange',
+        headerLabel: 'Trending',
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: 'playerOwnershipPercentOwned',
+        headerCell: 'playerOwnershipPercentOwned',
+        headerLabel: '% Owned',
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.wOBA}`,
+        headerCell: `stats.${Stat.wOBA}`,
+        headerLabel: MLB_STATS_MAP[Stat.wOBA].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.wRAA}`,
+        headerCell: `stats.${Stat.wRAA}`,
+        headerLabel: MLB_STATS_MAP[Stat.wRAA].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.H}`,
+        headerCell: `stats.${Stat.H}`,
+        headerLabel: MLB_STATS_MAP[Stat.H].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
     ];
   }
 
   @Selector()
   static freeAgentsColumns(): TableColumn[] {
     return [
-      { columnDef: 'name', headerCell: 'name', headerLabel: '' },
-      { columnDef: 'playerOwnershipChange', headerCell: 'playerOwnershipChange', headerLabel: 'playerOwnershipChange' },
-      { columnDef: 'playerOwnershipPercentOwned', headerCell: 'playerOwnershipPercentOwned', headerLabel: 'playerOwnershipPercentOwned' },
-      { columnDef: `stats.012021.ops`, headerCell: 'stats.012021.h', headerLabel: 'stats' },
+      { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String },
+      {
+        columnDef: 'playerOwnershipChange',
+        headerCell: 'playerOwnershipChange',
+        headerLabel: 'Trending',
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: 'playerOwnershipPercentOwned',
+        headerCell: 'playerOwnershipPercentOwned',
+        headerLabel: '% Owned',
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.wOBA}`,
+        headerCell: `stats.${Stat.wOBA}`,
+        headerLabel: MLB_STATS_MAP[Stat.wOBA].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.wRAA}`,
+        headerCell: `stats.${Stat.wRAA}`,
+        headerLabel: MLB_STATS_MAP[Stat.wRAA].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.H}`,
+        headerCell: `stats.${Stat.H}`,
+        headerLabel: MLB_STATS_MAP[Stat.H].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
     ];
   }
 

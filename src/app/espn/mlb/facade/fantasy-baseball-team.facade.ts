@@ -29,6 +29,10 @@ export class FantasyBaseballTeamFacade {
     return this.store.selectSnapshot(FantasyBaseballTeamsSelector.getTeamStartingBatters)(id);
   }
 
+  selectTeamBatterStats(id: string, statPeriod: string) {
+    return this.store.selectSnapshot(FantasyBaseballTeamsSelector.selectTeamBatterStats)(id, statPeriod);
+  }
+
   teamDynamicScatterChartData(xAxis, yAxis): ChartData<'scatter', (number | ScatterDataPoint)[], unknown> {
     return this.store.selectSnapshot(FantasyBaseballTeamsSelector.teamDynamicScatterChartData)(xAxis, yAxis);
   }
