@@ -32,8 +32,12 @@ export class LocalStorageState {
   constructor() {}
 
   @Action(SetLocalStorageValue)
-  setLocalStorageValue({ patchState }: StateContext<LocalStorageStateModel>, { payload: { key, value } }: SetLocalStorageValue): void {
-    patchState({ [key]: value });
+  setLocalStorageValue(
+    { patchState, getState }: StateContext<LocalStorageStateModel>,
+    { payload: { key, value } }: SetLocalStorageValue
+  ): void {
+    const state = getState();
+    patchState({ ...state, [key]: value });
   }
 
   @Action(RemoveLocalStorageValue)

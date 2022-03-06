@@ -17,7 +17,8 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     const isEspnFantasy = response.url.includes(FANTASY_BASE_V3);
 
     const code = response.status || 0;
-    const message = isEspnFantasy ? 'Invalid League Settings' : statusCodeToMessage[code];
+
+    const message = isEspnFantasy ? statusCodeToEspnMessage[code] : statusCodeToMessage[code];
 
     this.snackBar.open(`${code}: ${message}`, 'x', {
       panelClass: ['mat-toolbar', 'mat-warn'],
@@ -45,6 +46,19 @@ export enum ErrorStatusCode {
   ServiceUnavailable,
   GatewayTimeout,
 }
+
+const statusCodeToEspnMessage: { [key in ErrorStatusCode]: string } = {
+  [ErrorStatusCode.Unknown]: 'Invalid LeagueId',
+  [ErrorStatusCode.BadRequest]: 'Bad Request',
+  [ErrorStatusCode.Unauthorized]: 'Unauthorized, not a public league',
+  [ErrorStatusCode.Forbidden]: 'Forbidden',
+  [ErrorStatusCode.NotFound]: 'League does not exist',
+  [ErrorStatusCode.NotAcceptable]: 'Not Acceptable',
+  [ErrorStatusCode.InternalServerError]: 'Internal Server Error',
+  [ErrorStatusCode.BadGateway]: 'Bad Gateway',
+  [ErrorStatusCode.ServiceUnavailable]: 'Service Unavailable',
+  [ErrorStatusCode.GatewayTimeout]: 'Gateway Timeout',
+};
 
 const statusCodeToMessage: { [key in ErrorStatusCode]: string } = {
   [ErrorStatusCode.Unknown]: 'Could not contact server',
