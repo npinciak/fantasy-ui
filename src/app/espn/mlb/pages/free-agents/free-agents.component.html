@@ -11,24 +11,36 @@
 >
   <!-- <div class="blocks two" gdArea="sidebar"></div> -->
   <div class="blocks four" gdArea="content">
-    <app-data-vis
-      [xAxisFilterOptions]="fantasyBaseballFreeAgentsFacade.selectStatListFilters$ | async"
-      [yAxisFilterOptions]="[]"
-      [chartData]="freeAgentDynamicLineChartData"
-      [chartType]="'bar'"
-      (filterChangeEvent)="filterChangeFreeAgent($event)"
-    ></app-data-vis>
-
-    <app-data-vis
-      [xAxisFilterOptions]="fantasyBaseballFreeAgentsFacade.selectStatListFilters$ | async"
-      [yAxisFilterOptions]="fantasyBaseballFreeAgentsFacade.selectStatListFilters$ | async"
-      [chartData]="freeAgentDynamicScatterChartData"
-      (filterChangeEvent)="filterChange($event)"
-    ></app-data-vis>
-
+    <div fxLayout="row">
+      <div>
+        <app-data-vis
+          [xAxisFilterOptions]="fantasyBaseballFreeAgentsFacade.selectStatListFilters$ | async"
+          [yAxisFilterOptions]="[]"
+          [chartData]="freeAgentDynamicLineChartData"
+          [chartType]="'bar'"
+          (filterChangeEvent)="filterChangeFreeAgent($event)"
+        ></app-data-vis>
+      </div>
+      <div>
+        <app-data-vis
+          [xAxisFilterOptions]="fantasyBaseballFreeAgentsFacade.selectStatListFilters$ | async"
+          [yAxisFilterOptions]="fantasyBaseballFreeAgentsFacade.selectStatListFilters$ | async"
+          [chartData]="freeAgentDynamicScatterChartData"
+          (filterChangeEvent)="filterChange($event)"
+        ></app-data-vis>
+      </div>
+    </div>
+    <mat-form-field>
+      <mat-select #fantasySport [value]="scoringPeriodId" (selectionChange)="scoringPeriodIdChange($event.value)">
+        <mat-option value="002021">Reg Season 2021</mat-option>
+        <mat-option value="102022">Projected 2022</mat-option>
+        <mat-option value="002022" disabled="true">Reg Season 2022</mat-option>
+      </mat-select>
+      <mat-hint>Fantasy Sport</mat-hint>
+    </mat-form-field>
     <app-roster
       #freeAgents
-      [fantasyPlayers]="fantasyBaseballFreeAgentsFacade.playerList$ | async"
+      [fantasyPlayers]="fantasyBaseballFreeAgentsFacade.selectFreeAgentStats(scoringPeriodId)"
       [dataColumns]="espnTableFacade.freeAgentsTableRow$ | async"
       [headers]="espnTableFacade.freeAgentsTableHeaders$ | async"
     ></app-roster>

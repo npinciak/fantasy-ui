@@ -1,0 +1,25 @@
+<h3>Add Public League By ID</h3>
+
+<mat-form-field>
+  <mat-select #fantasySport [value]="sportSelection" (selectionChange)="fantasySportChange($event.value)">
+    <mat-option value="MLB">Baseball</mat-option>
+  </mat-select>
+  <mat-hint>Fantasy Sport</mat-hint>
+</mat-form-field>
+
+<mat-form-field>
+  <input matInput #leagueIdInput placeholder="Ex. 21345679" autocomplete="off" />
+  <mat-hint>League Id</mat-hint>
+</mat-form-field>
+
+<button mat-flat-button color="primary" (click)="onAddLeague()">Add</button>
+
+<mat-list>
+  <mat-list-item *ngFor="let league of leagues">
+    <h3 matLine>{{ league.sport }} - {{ league.leagueId }}</h3>
+
+    <button class="btn-action" mat-flat-button color="primary" [routerLink]="['/espn/mlb/', league.leagueId]">Go</button>
+
+    <button mat-flat-button color="primary" (click)="onRemoveLeague(league.leagueId)">Remove</button>
+  </mat-list-item>
+</mat-list>

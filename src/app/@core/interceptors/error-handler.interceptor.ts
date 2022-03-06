@@ -1,8 +1,9 @@
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FANTASY_BASE_V3 } from '@app/espn/espn.const';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
@@ -13,11 +14,15 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   }
 
   private errorHandler(response: HttpErrorResponse): Observable<HttpEvent<any>> {
+    const isEspnFantasy = response.url.includes(FANTASY_BASE_V3);
+
     const code = response.status || 0;
-    const message = statusCodeToMessage[code];
+
+    const message = isEspnFantasy ? statusCodeToEspnMessage[code] : statusCodeToMessage[code];
 
     this.snackBar.open(`${code}: ${message}`, 'x', {
       panelClass: ['mat-toolbar', 'mat-warn'],
+      duration: 3000,
     });
 
     throw response;
@@ -41,6 +46,19 @@ export enum ErrorStatusCode {
   ServiceUnavailable,
   GatewayTimeout,
 }
+
+const statusCodeToEspnMessage: { [key in ErrorStatusCode]: string } = {
+  [ErrorStatusCode.Unknown]: 'Invalid LeagueId',
+  [ErrorStatusCode.BadRequest]: 'Bad Request',
+  [ErrorStatusCode.Unauthorized]: 'Unauthorized, not a public league',
+  [ErrorStatusCode.Forbidden]: 'Forbidden',
+  [ErrorStatusCode.NotFound]: 'League does not exist',
+  [ErrorStatusCode.NotAcceptable]: 'Not Acceptable',
+  [ErrorStatusCode.InternalServerError]: 'Internal Server Error',
+  [ErrorStatusCode.BadGateway]: 'Bad Gateway',
+  [ErrorStatusCode.ServiceUnavailable]: 'Service Unavailable',
+  [ErrorStatusCode.GatewayTimeout]: 'Gateway Timeout',
+};
 
 const statusCodeToMessage: { [key in ErrorStatusCode]: string } = {
   [ErrorStatusCode.Unknown]: 'Could not contact server',

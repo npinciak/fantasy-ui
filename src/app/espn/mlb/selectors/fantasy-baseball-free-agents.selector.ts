@@ -38,7 +38,7 @@ export class FantasyBaseballFreeAgentsSelector {
           return;
         }
 
-        const playerStats = p?.stats[Number(statPeriod)];
+        const playerStats = p?.stats[statPeriod];
         const advancedStats = new AdvStats(playerStats);
         advancedStats.seasonConst = MLB_WEIGHTED_STATS_2021;
 
@@ -48,8 +48,14 @@ export class FantasyBaseballFreeAgentsSelector {
         adv[Stat.wRAA] = advancedStats.wRAA;
         adv[Stat.BABIP] = advancedStats.wRAA;
         const stats = { ...playerStats, ...adv };
+        
         return {
           name: p?.name,
+          img: p.img,
+          team: p.team,
+          position: p.position,
+          playerOwnershipChange: p.playerOwnershipChange,
+          playerOwnershipPercentOwned: p.playerOwnershipPercentOwned,
           stats,
         };
       });
