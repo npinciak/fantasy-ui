@@ -4,6 +4,7 @@ import { FlexLayoutModule, GridModule } from '@angular/flex-layout';
 import { SharedModule } from '@app/@shared/shared.module';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
+import { AddLeagueFormComponent } from './components/add-league-form/add-league-form.component';
 import { EspnListTeamComponent } from './components/espn-list-team/espn-list-team.component';
 import { EspnRoutingModule } from './espn-routing.module';
 import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
@@ -46,6 +47,7 @@ const components = [
   LineupCardPlayerComponent,
   FantasyFootballHomeComponent,
   EspnListTeamComponent,
+  AddLeagueFormComponent,
 ];
 
 const states = [
