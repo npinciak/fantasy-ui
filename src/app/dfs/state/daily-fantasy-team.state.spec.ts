@@ -7,7 +7,7 @@ describe('[dailyFantasyTeams] Store', () => {
   let store: Store;
 
   const teams = [MOCK_DFS_TEAM_1, MOCK_DFS_TEAM_2];
-  const MOCK_TEAM_STATE = { [MOCK_DFS_TEAM_1.id]: MOCK_DFS_TEAM_1, [MOCK_DFS_TEAM_2.id]: MOCK_DFS_TEAM_2 };
+  const MOCK_TEAM_STATE = { [MOCK_DFS_TEAM_1.rgId]: MOCK_DFS_TEAM_1, [MOCK_DFS_TEAM_2.rgId]: MOCK_DFS_TEAM_2 };
 
   beforeEach(
     waitForAsync(() => {
