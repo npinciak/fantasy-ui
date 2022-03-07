@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
 import { PlayerService } from '@app/dfs/service/player.service';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { GridIronPlayerMap } from '../models/nfl-gridIron.model';
+import { GridIronPlayer, GridIronPlayerMap } from '../models/nfl-gridIron.model';
 
 export class PatchGridIronPlayer {
   static readonly type = `[nflDfsPlayerGridIron] PatchGridIronPlayer`;
-  constructor(public payload: { players: GridIronPlayerMap[] }) {}
+  constructor(public payload: { players: GridIronPlayer[] }) {}
 }
 
 export class FetchGridIronPlayers {
@@ -46,7 +46,7 @@ export class NflDfsPlayerGridIronState {
 
   @Action(PatchGridIronPlayer)
   patchPlayerGridIron({ patchState }: StateContext<NflDfsPlayerGridIronStateModel>, { payload: { players } }: PatchGridIronPlayer): void {
-    const map = entityMap(players, p => p.playerId.toString());
+    const map = entityMap(players, p => p.playerid.toString());
     patchState({ map });
   }
 }

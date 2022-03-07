@@ -4,7 +4,6 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { FetchGridIronPlayers } from '../nfl/state/nfl-dfs-player-gridiron.state';
 import { PatchProfiler } from '../nfl/state/nfl-dfs-profiler.state';
 import { SlateService, SlateTeamMap } from '../service/slate.service';
-import { SlateMasterMap } from './daily-fantasy-slate.state';
 
 export class FetchSlateAttr {
   public static readonly type = `[dailyFantasySlateAttr] FetchSlateAttr`;
@@ -17,7 +16,6 @@ export class PatchSlateAttr {
 }
 
 export class DailyFantasySlateAttrStateModel {
-  map: SlateMasterMap;
   // slatePlayers: { [id: string]: NFLClientPlayerAttributes };
   teams: SlateTeamMap;
   players: Record<string, any>;
@@ -26,7 +24,6 @@ export class DailyFantasySlateAttrStateModel {
 }
 
 const defaults = {
-  map: {},
   teams: {},
   players: {},
   slate: null,
@@ -62,6 +59,7 @@ export class DailyFantasySlateAttrState {
     { payload: { sport, site, slateId } }: FetchSlateAttr
   ): Promise<void> {
     const { statGroups, teams, players } = await this.slateService.getGameAttrBySlateId({ sport, site, slateId }).toPromise();
+
     dispatch(new PatchProfiler({ profiler: statGroups }));
 
     if (sport === 'nfl') {
