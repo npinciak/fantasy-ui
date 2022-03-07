@@ -10,13 +10,7 @@ export class FetchSlateAttr {
   constructor(public payload: { sport: string; site: string; slateId: string }) {}
 }
 
-export class PatchSlateAttr {
-  public static readonly type = `[dailyFantasySlateAttr] PatchSlateAttr`;
-  constructor(public payload: {}) {}
-}
-
 export class DailyFantasySlateAttrStateModel {
-  // slatePlayers: { [id: string]: NFLClientPlayerAttributes };
   teams: SlateTeamMap;
   players: Record<string, any>;
   slate: string | null;
