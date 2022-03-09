@@ -3,7 +3,7 @@ import { NgxsModule, Store } from '@ngxs/store';
 import { MOCK_SLATE_MASTER } from '../models/daily-fantasy-client-slate.mock';
 import { SlateService } from '../service/slate.service';
 import { SlateServiceMock } from '../service/slate.service.mock';
-import { DailyFantasySlateState, DailyFantasySlateStateModel, FetchSlates } from './daily-fantasy-slate.state';
+import { DailyFantasySlateState, FetchSlates } from './daily-fantasy-slate.state';
 
 describe('[dailyFantasySlate] Store', () => {
   let store: Store;
@@ -12,7 +12,7 @@ describe('[dailyFantasySlate] Store', () => {
   const site = 'draftkings';
   const sport = 'mlb';
 
-  const MOCK_STATE: DailyFantasySlateStateModel = {
+  const MOCK_STATE = {
     map: MOCK_SLATE_MASTER,
     site: null,
   };

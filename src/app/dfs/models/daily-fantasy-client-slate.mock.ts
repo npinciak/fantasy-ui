@@ -1,4 +1,4 @@
-import { SiteSlateEntity, SlateMasterMap } from './daily-fantasy-client.model';
+import { ClientSlateTypes, SiteSlateEntity, SlateMasterMap } from './daily-fantasy-client.model';
 
 export const MOCK_SITE_SLATE_ENTITY_1: SiteSlateEntity = {
   date: '',
@@ -6,7 +6,7 @@ export const MOCK_SITE_SLATE_ENTITY_1: SiteSlateEntity = {
   name: '',
   games: [],
   start: '',
-  type: '',
+  type: ClientSlateTypes.Classic,
   salaryCap: 0,
   slate_path: '',
   source: '',

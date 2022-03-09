@@ -49,6 +49,8 @@ export interface Vegas {
   movement: number;
 }
 
+export type ClientSiteSlateEntity = Record<string, SiteSlateEntity>;
+
 export type SlateMasterMap = { [site in ClientSite]: Record<string, SiteSlateEntity> };
 
 export interface SiteSlateEntity {
