@@ -8,7 +8,7 @@ import { camelCase } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DailyFantasyEndpointBuilder } from '../daily-fantasy-url-builder';
-import { testSiteMap } from '../dfs.const';
+import { dfsSiteToDfsSiteTypeMap } from '../dfs.const';
 import {
   ClientSlateAttributes,
   ClientSlatePlayerAttributes,
@@ -17,7 +17,7 @@ import {
   ClientSlateTeamAttributes,
   ClientSlateTeamAttributesMap,
 } from '../models/daily-fantasy-client-slate-attr.model';
-import { SlateMaster, Vegas } from '../models/daily-fantasy-client.model';
+import { SlateMasterMap, Vegas } from '../models/daily-fantasy-client.model';
 import { PlayerSlateAttr } from '../models/player-slate-attr.model';
 import { Team } from '../models/team.model';
 import { NBAClientPlayerAttributes, NBAClientSlateAttrTeam, RestEntity } from '../nba/models/nba-client.model';
@@ -163,7 +163,7 @@ export class SlateService {
       return [];
     }
 
-    const siteMap = testSiteMap[site];
+    const siteMap = dfsSiteToDfsSiteTypeMap[site];
 
     return Object.entries(players).map(([id, player]) => ({
       id,
@@ -178,9 +178,9 @@ export class SlateService {
     }));
   }
 
-  slatesByDate(request: { sport: string }): Observable<SlateMaster> {
+  slatesByDate(request: { sport: string }): Observable<SlateMasterMap> {
     const endpoint = new DailyFantasyEndpointBuilder(request.sport);
-    return this.apiService.get<SlateMaster>(endpoint.slateMaster);
+    return this.apiService.get<SlateMasterMap>(endpoint.slateMaster);
   }
 
   getGameAttrBySlateId(request: { sport: string; site: string; slateId: string }): Observable<SlateAttributes> {

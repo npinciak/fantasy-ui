@@ -11,24 +11,33 @@
 >
   <div class="blocks two" gdArea="sidebar">
     <ng-container *ngIf="(dailyFantasySlateFacade.slatesEmpty$ | async) === false">
-      <app-slate-list [slateList]="dailyFantasySlateFacade.selectSlateByType$ | async" (selectSlate)="select($event)"></app-slate-list>
+      <app-slate-list [slateList]="dailyFantasySlateFacade.selectSlateByType$ | async" (selectSlate)="onSelectSlate($event)"></app-slate-list>
     </ng-container>
   </div>
   <div class="blocks four" gdArea="content">
-    <ng-container *ngIf="(dailyFantasyPlayersFacade.playersEmpty$ | async) === false">
-      <!-- <app-player-table
+    <ng-container *ngIf="(dailyFantasySlateFacade.slatesEmpty$ | async) === false; else noSlates">
+      <ng-container *ngIf="(dailyFantasyPlayersFacade.playersEmpty$ | async) === false">
+        <!-- <app-player-table
           *ngIf="dailyFantasyPlayersFacade.playerTableRows$ | async"
           [dfsPlayers]="dailyFantasyPlayersFacade.playerTableRows$ | async"
           [dataColumns]="tableFacade.playerTableList$ | async"
           [displayColumns]="tableFacade.playerDisplayColumns$ | async"
         ></app-player-table> -->
-
-      <app-nfl-player-table
-        [dfsPlayers]="dailyFantasyPlayersFacade.playerTableRows$ | async"
-        [dataColumns]="tableFacade.playerTableList$ | async"
-        [displayColumns]="tableFacade.playerDisplayColumns$ | async"
-      ></app-nfl-player-table>
+        <ul>
+          <li *ngFor="let p of tableFacade.playerTableList$ | async">
+            {{ p | json }}
+          </li>
+        </ul>
+        <!-- <app-nfl-player-table
+          [dfsPlayers]="dailyFantasyPlayersFacade.playerTableRows$ | async"
+          [dataColumns]="tableFacade.playerTableList$ | async"
+          [displayColumns]="tableFacade.playerDisplayColumns$ | async"
+        ></app-nfl-player-table> -->
+      </ng-container>
     </ng-container>
   </div>
   <div class="blocks five" gdArea="footer"></div>
 </div>
+
+<ng-template #noPlayers> <app-no-data title="No Players for this Slate"></app-no-data></ng-template>
+<ng-template #noSlates> <app-no-data title="No Slates Available"></app-no-data></ng-template>

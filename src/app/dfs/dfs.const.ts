@@ -1,6 +1,5 @@
 import { enumAsList } from '@app/@shared/helpers/enum-as-list';
 import { environment } from 'src/environments/environment';
-import { RotogrindMLBTeam } from './teams.enum';
 
 export const DAILY_FANTASY_BASE = environment.dailyFantasyBase;
 
@@ -16,13 +15,46 @@ export enum DfsSiteType {
   Yahoo = 50,
 }
 
-export const dfsSiteToDfsSiteTypeMap = {
+export const dfsSiteToDfsSiteTypeMap: { [key in DfsSite]: DfsSiteType } = {
   [DfsSite.FanDuel]: DfsSiteType.FanDuel,
   [DfsSite.DraftKings]: DfsSiteType.DraftKings,
   [DfsSite.Yahoo]: DfsSiteType.Yahoo,
 };
 
-export const testSiteMap = {
+export enum RotogrindMLBTeam {
+  Bos = 95,
+  Bal,
+  ChW,
+  Cle,
+  Det,
+  KC,
+  LAA,
+  Min,
+  NYY,
+  Oak,
+  Sea,
+  TB,
+  Tex,
+  Tor,
+  Ari,
+  Atl,
+  ChC,
+  Cin,
+  Col,
+  Mia,
+  Hou,
+  LAD,
+  Mil,
+  NYM,
+  Phi,
+  Pit,
+  SD,
+  SF,
+  StL,
+  Wsh,
+}
+
+export const siteMap = {
   fanduel: 2,
   draftkings: 20,
   yahoo: 50,

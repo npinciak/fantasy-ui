@@ -12,8 +12,8 @@ export class DfsResolver implements Resolve<void> {
   constructor(readonly shellFacade: ShellFacade, private store: Store) {}
 
   async resolve(route: ActivatedRouteSnapshot): Promise<void> {
-    const site = route.queryParamMap.get(UrlQueryParams.Site) ?? 'draftkings';
-    const sport = route.queryParamMap.get(UrlQueryParams.Sport) ?? 'nfl';
+    const site = route.queryParamMap.get(UrlQueryParams.Site);
+    const sport = route.queryParamMap.get(UrlQueryParams.Sport);
 
     await Promise.all([this.store.dispatch(new FetchSlates({ site, sport }))]);
     await this.shellFacade.showFastcastScoreboard(true);
