@@ -1,6 +1,4 @@
-import { pickAxisData, scatterData } from '@app/@shared/helpers/graph.helpers';
 import { Selector } from '@ngxs/store';
-import { ChartData } from 'chart.js';
 import { Team } from '../models/team.model';
 import { SlateTeam, SlateTeamMap } from '../service/slate.service';
 import { DailyFantasySlateAttrState } from '../state/daily-fantasy-slate-attr.state';
@@ -8,7 +6,7 @@ import { DailyFantasyTeamsSelectors } from './daily-fantasy-team.selectors';
 
 export class DailyFantasySlateAttrSelectors {
   @Selector([DailyFantasySlateAttrState.playerMap])
-  static selectPlayerById(map: SlateTeamMap): (id: string) => unknown {
+  static selectPlayerById(map: Record<string, any>): (id: string) => unknown {
     return (id: string) => map[id];
   }
 
@@ -23,34 +21,6 @@ export class DailyFantasySlateAttrSelectors {
       ...t,
       team: selectTeamById(t.id),
     }));
-  }
-
-  @Selector([DailyFantasySlateAttrSelectors.selectTeamList])
-  static scatterChartLabels(teamList: TeamList[]): string[] {
-    return teamList.map(d => d.team.name);
-  }
-
-  @Selector([DailyFantasySlateAttrSelectors.selectTeamList, DailyFantasySlateAttrSelectors.scatterChartLabels])
-  static scatterChartData(teamList: TeamList[], labels: string[]): ChartData<'scatter'> {
-    const xaxis = pickAxisData(teamList, obj => obj.safpts.rawQB);
-    const yaxis = pickAxisData(teamList, obj => obj.vegas.total);
-
-    const data = scatterData(xaxis, yaxis);
-
-    return {
-      labels,
-      datasets: [
-        {
-          data: data,
-          label: 'Series A',
-          pointRadius: 5,
-          borderColor: '#F37723',
-          backgroundColor: '#F37723',
-          pointBackgroundColor: '#F37723',
-          pointBorderColor: '#F37723',
-        },
-      ],
-    };
   }
 }
 
