@@ -148,7 +148,7 @@ export class EspnService {
     }, {});
   };
 
-  static transformDownDistancePostitionText = (downDistanceText: string | null, possessionText: string | null): string | null => {
+  static transformDownDistancePositionText = (downDistanceText: string | null, possessionText: string | null): string | null => {
     if (downDistanceText && possessionText) {
       return `${downDistanceText}, ${possessionText}`;
     }
@@ -177,7 +177,7 @@ export class EspnService {
       period: event.period,
       teams: EspnService.transformFastcastCompetitorsToTeams(event.competitors, event.situation),
       isHalftime: event.fullStatus.type?.id ? Number(event.fullStatus?.type?.id) === GameStatusId.Halftime : false,
-      downDistancePositionText: EspnService.transformDownDistancePostitionText(
+      downDistancePositionText: EspnService.transformDownDistancePositionText(
         event.situation?.shortDownDistanceText,
         event.situation?.possessionText
       ),

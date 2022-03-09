@@ -36,25 +36,30 @@ const states = [
   NflDfsLineupState,
   NbaDfsTeamSlateState,
 ];
+
+const declarations = [
+  TeamMatchupTableComponent,
+  SlateListComponent,
+  NFLPlayerTableHomeComponent,
+  MatchupTableComponent,
+  PlayerTableRankingColumnComponent,
+  DfsHomeComponent,
+  PlayerTableComponent,
+];
+
+const imports = [
+  CommonModule,
+  DfsRoutingModule,
+  FormsModule,
+  MaterialModule,
+  FlexLayoutModule,
+  GridModule,
+  SharedModule,
+  NgxsModule.forFeature(states),
+];
+
 @NgModule({
-  declarations: [
-    TeamMatchupTableComponent,
-    SlateListComponent,
-    NFLPlayerTableHomeComponent,
-    MatchupTableComponent,
-    PlayerTableRankingColumnComponent,
-    DfsHomeComponent,
-    PlayerTableComponent,
-  ],
-  imports: [
-    CommonModule,
-    DfsRoutingModule,
-    FormsModule,
-    MaterialModule,
-    FlexLayoutModule,
-    GridModule,
-    SharedModule,
-    NgxsModule.forFeature(states),
-  ],
+  declarations,
+  imports,
 })
 export class DfsModule {}

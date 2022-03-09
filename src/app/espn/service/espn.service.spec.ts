@@ -225,10 +225,10 @@ describe('EspnService', () => {
     });
   });
 
-  describe('transformDownDistancePostitionText ', () => {
+  describe('transformDownDistancePositionText ', () => {
     it('should return down distance and possession ', () => {
       const expected = `${mockFastcastEvent.downDistancePositionText}, ${mockFastcastEvent.lastPlay.text}`;
-      const actual = EspnService.transformDownDistancePostitionText(
+      const actual = EspnService.transformDownDistancePositionText(
         mockFastcastEvent.downDistancePositionText,
         mockFastcastEvent.lastPlay.text
       );
@@ -236,7 +236,7 @@ describe('EspnService', () => {
     });
 
     it('should return null', () => {
-      const actual = EspnService.transformDownDistancePostitionText('', null);
+      const actual = EspnService.transformDownDistancePositionText('', null);
       expect(actual).toEqual(null);
     });
   });
