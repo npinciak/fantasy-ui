@@ -200,14 +200,14 @@ describe('EspnService', () => {
     });
   });
 
-  describe('excludeSports', () => {
+  describe('includeSports', () => {
     it('should be true', () => {
-      const actual = EspnService.excludeSports('19');
+      const actual = EspnService.includeSports('1');
       expect(actual).toBeTrue();
     });
 
     it('should be false', () => {
-      const actual = EspnService.excludeSports('18');
+      const actual = EspnService.includeSports('18');
       expect(actual).toBeFalse();
     });
   });

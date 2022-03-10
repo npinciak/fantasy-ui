@@ -13,3 +13,4 @@ export interface FastcastEventTeamProperties {
 }
 
 export type FastcastEventTeam = FastcastEventTeamProperties & Team;
+export type FastcastEventTeamMap = Record<string, FastcastEventTeam>;
