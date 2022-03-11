@@ -1,4 +1,4 @@
-import { FastCastGameStatus } from '../service/espn.service';
+import { FastCastGameStatus } from '../espn-client.model';
 import { FastcastEvent } from './fastcast-event.model';
 import { MOCK_FASTCAST_TEAM_1, MOCK_FASTCAST_TEAM_2 } from './fastcast-team.model.mock';
 
@@ -61,3 +61,5 @@ export const MOCK_FASTCAST_EVENT_2: FastcastEvent = {
     text: 'James White 2 Yd Run',
   },
 };
+
+export const MOCK_FASTCAST_EVENT_LIST = [MOCK_FASTCAST_EVENT_1, MOCK_FASTCAST_EVENT_2];

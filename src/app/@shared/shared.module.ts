@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '@app/material.module';
 import { ChartsModule } from 'ng2-charts';
 import { DataVisComponent } from './components/data-vis/data-vis.component';
-import { DialogComponent } from './components/dialog/dialog.component';
 import { DropdownFilterComponent } from './components/dropdown-filter/dropdown-filter.component';
 import { EspnScoreboardCardTeamComponent } from './components/espn-scoreboard-card-team/espn-scoreboard-card-team.component';
 import { EspnScoreboardCardComponent } from './components/espn-scoreboard-card/espn-scoreboard-card.component';
@@ -17,7 +16,6 @@ import { StickyTableCellComponent } from './components/sticky-table-cell/sticky-
 @NgModule({
   declarations: [
     NoDataComponent,
-    DialogComponent,
     ScrollableTableComponent,
     StickyTableCellComponent,
     DropdownFilterComponent,
@@ -30,7 +28,6 @@ import { StickyTableCellComponent } from './components/sticky-table-cell/sticky-
   exports: [
     DataVisComponent,
     NoDataComponent,
-    DialogComponent,
     ScrollableTableComponent,
     StickyTableCellComponent,
     DropdownFilterComponent,
