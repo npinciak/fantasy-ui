@@ -4,7 +4,8 @@ import { flatten } from '@app/@shared/helpers/utils';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from 'src/app/@shared/services/api.service';
-import { EspnClientFreeAgent, EspnClientLeague } from '../espn-client.model';
+import { EspnClientFreeAgent, EspnClientLeague, GameStatusId } from '../espn-client.model';
+import { includeSports, transformDownDistancePositionText, transformUidToId } from '../espn-helpers';
 import { NO_LOGO } from '../espn.const';
 import {
   EspnEndpointBuilder,
@@ -23,59 +24,9 @@ import {
 } from '../models/espn-fastcast.model';
 import { EspnClientOneFeed, FeedArticle as FeedArticleImport } from '../models/espn-onefeed.model';
 import { FastcastEvent } from '../models/fastcast-event.model';
-import { FastcastEventTeam } from '../models/fastcast-team.model';
+import { FastcastEventTeamMap } from '../models/fastcast-team.model';
 import { FeedArticle } from '../models/feed.model';
 import { League } from '../models/league.model';
-
-export enum GameStatusId {
-  Scheduled = 1,
-  '2nd' = 2,
-  Cancelled = 5,
-  EndOfPeriod = 22,
-  FirstHalf = 25,
-  Halftime = 23,
-  FullTime = 28,
-}
-
-enum GameStatus {
-  Scheduled = 'STATUS_SCHEDULED',
-  FirstHalf = 'STATUS_FIRST_HALF',
-  Halftime = 'STATUS_HALFTIME',
-  SecondHalf = 'STATUS_SECOND_HALF',
-  InProgress = 'STATUS_IN_PROGRESS',
-  InProgressAlt = 'STATUS_IN_PROGRESS_2',
-  RainDelay = 'STATUS_RAIN_DELAY',
-  Postponed = 'STATUS_POSTPONED',
-  Canceled = 'STATUS_CANCELED',
-  Delayed = 'STATUS_DELAYED',
-  EndOfPeriod = 'STATUS_END_PERIOD',
-  FullTime = 'STATUS_FULL_TIME',
-  Final = 'STATUS_FINAL',
-  FinalPenalties = 'STATUS_FINAL_PEN',
-  PreFight = 'STATUS_PRE_FIGHT',
-  FightersIntro = 'STATUS_FIGHTERS_INTRODUCTION',
-  FightersWalking = 'STATUS_FIGHTERS_WALKING',
-  EndOfFight = 'STATUS_END_OF_FIGHT',
-  EndOfRound = 'STATUS_END_OF_ROUND',
-  TBD = 'STATUS_TBD',
-  Uncontested = 'STATUS_UNCONTESTED',
-  Abandoned = 'STATUS_ABANDONED',
-  Forfeit = 'STATUS_FORFEIT',
-}
-
-export enum FastCastGameStatus {
-  Post = 'post',
-  Pre = 'pre',
-  InProgress = 'in',
-}
-
-export enum EspnSport {
-  Baseball = '1',
-  Football = '20',
-  Soccer = '600',
-  Basketball = '40',
-  Hockey = '70',
-}
 
 @Injectable({
   providedIn: 'root',
@@ -83,20 +34,15 @@ export enum EspnSport {
 export class EspnService {
   constructor(private api: ApiService) {}
 
-  static includeSports(id: string) {
-    const set = new Set(['1', '20', '40', '70', '600']);
-    return set.has(id);
-  }
-
   static transformLeagueImportEventImport(sportsImport: SportsImport[]): {
     transformLeaguesImportToLeagues: League[];
     transformEventImportToFastcastEvent: FastcastEvent[];
   } {
-    const leagues = sportsImport.filter(s => EspnService.includeSports(s.id)).map(i => i.leagues);
+    const leagues = sportsImport.filter(s => includeSports(s.id)).map(i => i.leagues);
 
     const flattenLeaguesImport = flatten(leagues);
 
-    const transformLeaguesImportToLeagues = EspnService.transformLeaguesImportToLeagues(flattenLeaguesImport);
+    const transformLeaguesImportToLeagues = flattenLeaguesImport.map(league => EspnService.transformLeaguesImportToLeagues(league));
 
     const events = flattenLeaguesImport.map(l => l.events);
 
@@ -110,20 +56,7 @@ export class EspnService {
     };
   }
 
-  static transformFastcastCompetitorsToTeams = (
-    data: CompetitorsImport[],
-    situation: SituationImport
-  ): { [homeAway: string]: FastcastEventTeam } => {
-    const winPctMap = {};
-
-    if (!situation) {
-      winPctMap['home'] = null;
-      winPctMap['away'] = null;
-    } else {
-      winPctMap['home'] = situation.lastPlay?.probability?.homeWinPercentage;
-      winPctMap['away'] = situation.lastPlay?.probability?.awayWinPercentage;
-    }
-
+  static transformFastcastCompetitorsToTeams = (data: CompetitorsImport[], situation: SituationImport): FastcastEventTeamMap => {
     return data.reduce((acc, val) => {
       if (!val.homeAway) {
         return null;
@@ -140,7 +73,7 @@ export class EspnService {
         altColor: `#${val.alternateColor}`,
         record: val.record,
         rank: val.rank ?? null,
-        winPct: winPctMap[val.homeAway],
+        winPct: null,
         hasPossession: situation?.possession === val.id,
         isRedzone: (situation?.possession === val.id && situation?.isRedZone) ?? false,
       };
@@ -148,24 +81,10 @@ export class EspnService {
     }, {});
   };
 
-  static transformDownDistancePositionText = (downDistanceText: string | null, possessionText: string | null): string | null => {
-    if (downDistanceText && possessionText) {
-      return `${downDistanceText}, ${possessionText}`;
-    }
-    return null;
-  };
-
-  static transformUidToId(uid: string): string | null {
-    if (!uid) {
-      return null;
-    }
-    return uid.split('~')[1].replace('l:', '');
-  }
-
   static transformEventImportToFastcastEvent(eventsImport: EventsImport[]): FastcastEvent[] {
     return eventsImport.map(event => ({
       id: event.id,
-      leagueId: EspnService.transformUidToId(event?.uid),
+      leagueId: transformUidToId(event?.uid),
       timestamp: new Date(event.date).getTime(),
       state: event.fullStatus.type.state,
       status: event.status,
@@ -177,22 +96,20 @@ export class EspnService {
       period: event.period,
       teams: EspnService.transformFastcastCompetitorsToTeams(event.competitors, event.situation),
       isHalftime: event.fullStatus.type?.id ? Number(event.fullStatus?.type?.id) === GameStatusId.Halftime : false,
-      downDistancePositionText: EspnService.transformDownDistancePositionText(
-        event.situation?.shortDownDistanceText,
-        event.situation?.possessionText
-      ),
+      downDistancePositionText: transformDownDistancePositionText(event.situation?.shortDownDistanceText, event.situation?.possessionText),
       lastPlay: event.situation?.lastPlay ?? null,
     }));
   }
 
-  static transformLeaguesImportToLeagues(leaguesImport: LeaguesImport[]): League[] {
-    return leaguesImport.map(l => ({
-      id: l.id,
-      uid: l.uid,
-      name: l.name,
-      abbreviation: l.abbreviation ?? l.name,
-      shortName: l.shortName ?? l.name,
-    }));
+  static transformLeaguesImportToLeagues(leaguesImport: LeaguesImport): League {
+    return {
+      id: leaguesImport.id,
+      uid: leaguesImport.uid,
+      name: leaguesImport.name,
+      abbreviation: leaguesImport.abbreviation ?? leaguesImport.name,
+      shortName: leaguesImport.shortName ?? leaguesImport.name,
+      sport: null,
+    };
   }
 
   static transformFeedArticleImportToFeedArticle(articleImport: FeedArticleImport): FeedArticle {

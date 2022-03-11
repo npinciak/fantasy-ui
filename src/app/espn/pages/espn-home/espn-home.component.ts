@@ -7,7 +7,7 @@ import { EspnFastcastFacade } from '@app/espn/facade/espn-fastcast.facade';
 import { FantasyBaseballLeagueFacade } from '@app/espn/mlb/facade/fantasy-baseball-league.facade';
 import { FantasyBaseballLeagueSelectors } from '@app/espn/mlb/selectors/fantasy-baseball-league.selectors';
 import { HomeAwayTeam } from '@app/espn/models/espn-home-away.model';
-import { EspnService, FastCastGameStatus } from '@app/espn/service/espn.service';
+import { EspnService } from '@app/espn/service/espn.service';
 import { Store } from '@ngxs/store';
 
 @Component({
@@ -17,7 +17,6 @@ import { Store } from '@ngxs/store';
 })
 export class EspnHomeComponent implements OnInit {
   readonly HomeAwayTeam = HomeAwayTeam;
-  readonly FastCastGameStatus = FastCastGameStatus;
 
   constructor(
     readonly fastcastFacade: EspnFastcastFacade,

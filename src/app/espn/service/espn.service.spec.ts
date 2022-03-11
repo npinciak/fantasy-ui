@@ -2,6 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { NgxsModule, Store } from '@ngxs/store';
+import { includeSports, transformDownDistancePositionText, transformUidToId } from '../espn-helpers';
 import { EspnEndpointBuilder, EspnViewParamFragment, FantasySports } from '../models/espn-endpoint-builder.model';
 import { MOCK_FASTCAST_EVENT_1 } from '../models/fastcast-event.model.mock';
 import { MOCK_FASTCAST_LEAGUE_1 } from '../models/fastcast-league.model.mock';
@@ -200,14 +201,14 @@ describe('EspnService', () => {
     });
   });
 
-  describe('excludeSports', () => {
+  describe('includeSports', () => {
     it('should be true', () => {
-      const actual = EspnService.excludeSports('19');
+      const actual = includeSports('1');
       expect(actual).toBeTrue();
     });
 
     it('should be false', () => {
-      const actual = EspnService.excludeSports('18');
+      const actual = includeSports('18');
       expect(actual).toBeFalse();
     });
   });
@@ -215,12 +216,12 @@ describe('EspnService', () => {
   describe('transformUidToId', () => {
     it('should return id', () => {
       const expected = mockFastcastLeague.id;
-      const actual = EspnService.transformUidToId(mockFastcastLeague.uid);
+      const actual = transformUidToId(mockFastcastLeague.uid);
       expect(actual).toEqual(expected);
     });
 
     it('should return null', () => {
-      const actual = EspnService.transformUidToId('');
+      const actual = transformUidToId('');
       expect(actual).toEqual(null);
     });
   });
@@ -228,15 +229,12 @@ describe('EspnService', () => {
   describe('transformDownDistancePositionText ', () => {
     it('should return down distance and possession ', () => {
       const expected = `${mockFastcastEvent.downDistancePositionText}, ${mockFastcastEvent.lastPlay.text}`;
-      const actual = EspnService.transformDownDistancePositionText(
-        mockFastcastEvent.downDistancePositionText,
-        mockFastcastEvent.lastPlay.text
-      );
+      const actual = transformDownDistancePositionText(mockFastcastEvent.downDistancePositionText, mockFastcastEvent.lastPlay.text);
       expect(actual).toEqual(expected);
     });
 
     it('should return null', () => {
-      const actual = EspnService.transformDownDistancePositionText('', null);
+      const actual = transformDownDistancePositionText('', null);
       expect(actual).toEqual(null);
     });
   });
