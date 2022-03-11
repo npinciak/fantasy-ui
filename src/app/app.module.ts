@@ -13,7 +13,6 @@ import { environment } from 'src/environments/environment';
 import { httpInterceptorProviders } from './@core/interceptors';
 import { ShellModule } from './@core/shell/shell.module';
 import { ShellState } from './@core/shell/state/shell.state';
-import { CoreState } from './@core/store/core/core.state';
 import { LocalStorageState } from './@core/store/local-storage/local-storage.state';
 import { SharedModule } from './@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -22,7 +21,7 @@ import { EspnFastcastEventState } from './espn/state/espn-fastcast-event.state';
 import { EspnFastcastLeagueState } from './espn/state/espn-fastcast-league.state';
 import { EspnFastcastState } from './espn/state/espn-fastcast.state';
 
-const states = [CoreState, EspnFastcastState, EspnFastcastEventState, EspnFastcastLeagueState, ShellState, LocalStorageState];
+const states = [EspnFastcastState, EspnFastcastEventState, EspnFastcastLeagueState, ShellState, LocalStorageState];
 
 @NgModule({
   declarations: [AppComponent],
