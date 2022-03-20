@@ -1,15 +1,12 @@
 <mat-card class="game-card">
   <mat-card-content>
-    <app-espn-scoreboard-card-team [team]="event?.teams?.away"></app-espn-scoreboard-card-team>
+    <app-espn-scoreboard-card-team [isTournament]="isTournament" [team]="event?.teams?.away"></app-espn-scoreboard-card-team>
     <div></div>
-    <app-espn-scoreboard-card-team [team]="event?.teams?.home"></app-espn-scoreboard-card-team>
+    <app-espn-scoreboard-card-team [isTournament]="isTournament" [team]="event?.teams?.home"></app-espn-scoreboard-card-team>
   </mat-card-content>
-  <mat-card-actions fxLayout="col" align="end" style="font-size: 14px; text-align: right">
+  <mat-card-actions fxLayout="col" align="end" style="font-size: 10px; text-align: right">
     {{ event?.downDistancePositionText }}
-
-    <ng-container *ngIf="!event?.isHalftime; else halftime"> {{ event?.summary }} </ng-container>
-    <ng-template #halftime>
-      {{ event?.isHalftime ? 'Halftime' : null }}
-    </ng-template></mat-card-actions
-  >
+    <ng-container *ngIf="!event.completed || (event.completed && !isTournament)">{{ event?.summary }}</ng-container>
+    <ng-container *ngIf="event.completed && isTournament">{{ event?.note }}</ng-container>
+  </mat-card-actions>
 </mat-card>

@@ -1,4 +1,4 @@
-import { Situation } from './espn-fastcast.model';
+import { EventsEntity, Situation, Type } from './espn-fastcast.model';
 import { FastcastEventTeam } from './fastcast-team.model';
 
 export interface FastcastEventProperties {
@@ -18,6 +18,9 @@ export interface FastcastEventProperties {
   downDistancePositionText: string | null;
 }
 
-export type FastcastEvent = FastcastEventProperties & Pick<Partial<Situation>, 'lastPlay'>;
+export type FastcastEvent = FastcastEventProperties &
+  Pick<Partial<Situation>, 'lastPlay'> &
+  Pick<EventsEntity, 'note'> &
+  Pick<Type, 'completed'>;
 
 export type FastcastEventMap = Record<string, FastcastEvent>;

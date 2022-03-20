@@ -8,4 +8,5 @@ import { FastcastEventTeam } from '@app/espn/models/fastcast-team.model';
 })
 export class EspnScoreboardCardTeamComponent {
   @Input() team: FastcastEventTeam;
+  @Input() isTournament: boolean;
 }

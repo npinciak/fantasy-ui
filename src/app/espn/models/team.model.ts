@@ -1,3 +1,5 @@
+import { RecordEntity } from '../espn-client.model';
+
 /**
  * Base team model
  */
@@ -5,7 +7,7 @@ interface TeamProperties {
   id: string;
   name: string;
   logo: string;
-  record: string | null;
+  record: string | RecordEntity[] | null;
 }
 
 export type Team = TeamProperties;

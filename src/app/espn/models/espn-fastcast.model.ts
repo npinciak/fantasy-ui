@@ -152,7 +152,8 @@ export interface CompetitorsEntity {
   order: number;
   homeAway: string;
   score: string;
-  record: string;
+  aggregateScore?: number;
+  record: string | RecordEntity[];
   logo: string;
   logoDark: string;
   winner: boolean;
@@ -175,6 +176,12 @@ export interface CompetitorsEntity {
   form?: string | null;
   isNational?: boolean | null;
   uniform?: Uniform | null;
+}
+
+export interface RecordEntity {
+  type: string;
+  summary: string;
+  displayValue: string;
 }
 
 export interface Leaders {

@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '@app/material.module';
-import { ChartsModule } from 'ng2-charts';
 import { DataVisComponent } from './components/data-vis/data-vis.component';
 import { DropdownFilterComponent } from './components/dropdown-filter/dropdown-filter.component';
 import { EspnScoreboardCardTeamComponent } from './components/espn-scoreboard-card-team/espn-scoreboard-card-team.component';
@@ -24,7 +23,7 @@ import { StickyTableCellComponent } from './components/sticky-table-cell/sticky-
     EspnScoreboardCardTeamComponent,
     DataVisComponent,
   ],
-  imports: [RouterModule, MaterialModule, FlexLayoutModule, CommonModule, ChartsModule],
+  imports: [RouterModule, MaterialModule, FlexLayoutModule, CommonModule],
   exports: [
     DataVisComponent,
     NoDataComponent,

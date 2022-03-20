@@ -71,9 +71,10 @@ export class EspnService {
         name: val.name ?? val.abbreviation,
         color: val.color === 'ffffff' || val.color === 'ffff00' ? '#1a1a1a' : `#${val.color}`,
         altColor: `#${val.alternateColor}`,
-        record: val.record,
+        record: Array.isArray(val.record) ? null : val.record,
         rank: val.rank ?? null,
         winPct: null,
+        aggregateScore: val.aggregateScore ?? null,
         hasPossession: situation?.possession === val.id,
         isRedzone: (situation?.possession === val.id && situation?.isRedZone) ?? false,
       };
@@ -87,6 +88,7 @@ export class EspnService {
       leagueId: transformUidToId(event?.uid),
       timestamp: new Date(event.date).getTime(),
       state: event.fullStatus.type.state,
+      completed: event.fullStatus.type.completed,
       status: event.status,
       name: event.name,
       shortname: event.shortName,
@@ -94,6 +96,7 @@ export class EspnService {
       clock: event.clock,
       summary: event.summary,
       period: event.period,
+      note: event.note,
       teams: EspnService.transformFastcastCompetitorsToTeams(event.competitors, event.situation),
       isHalftime: event.fullStatus.type?.id ? Number(event.fullStatus?.type?.id) === GameStatusId.Halftime : false,
       downDistancePositionText: transformDownDistancePositionText(event.situation?.shortDownDistanceText, event.situation?.possessionText),
@@ -108,6 +111,7 @@ export class EspnService {
       name: leaguesImport.name,
       abbreviation: leaguesImport.abbreviation ?? leaguesImport.name,
       shortName: leaguesImport.shortName ?? leaguesImport.name,
+      isTournament: leaguesImport.isTournament,
       sport: null,
     };
   }

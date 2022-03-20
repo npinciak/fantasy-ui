@@ -19,7 +19,7 @@
         <div style="padding: 25px 0">{{ league.shortName }}</div>
       </mat-card>
       <ng-container *ngFor="let event of fastcastEventFacade.fastcastEventsByLeagueId(league.id)">
-        <app-espn-scoreboard-card [event]="event"></app-espn-scoreboard-card>
+        <app-espn-scoreboard-card [isTournament]="league.isTournament" [event]="event"></app-espn-scoreboard-card>
       </ng-container>
     </ng-container>
     <!-- </ng-container> -->
@@ -28,6 +28,6 @@
 
 <ng-template #filteredEvents>
   <ng-container *ngFor="let event of fastcastEventFacade.fastcastFilteredEventsLeaderboard$ | async">
-    <app-espn-scoreboard-card [event]="event"></app-espn-scoreboard-card>
+    <app-espn-scoreboard-card [isTournament]="isTournament" [event]="event"></app-espn-scoreboard-card>
   </ng-container>
 </ng-template>

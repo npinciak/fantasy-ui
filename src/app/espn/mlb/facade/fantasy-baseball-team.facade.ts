@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Select, Store } from '@ngxs/store';
-import { ChartData, ScatterDataPoint } from 'chart.js';
 import { Observable } from 'rxjs';
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { BaseballTeamTableRow } from '../models/baseball-team.model';
@@ -33,7 +32,7 @@ export class FantasyBaseballTeamFacade {
     return this.store.selectSnapshot(FantasyBaseballTeamsSelector.selectTeamBatterStats)(id, statPeriod);
   }
 
-  teamDynamicScatterChartData(xAxis, yAxis): ChartData<'scatter', (number | ScatterDataPoint)[], unknown> {
+  teamDynamicScatterChartData(xAxis, yAxis) {
     return this.store.selectSnapshot(FantasyBaseballTeamsSelector.teamDynamicScatterChartData)(xAxis, yAxis);
   }
 }
