@@ -44,6 +44,16 @@ export const wRAAThreshold: { [key in StatThreshold]: number } = {
   [StatThreshold.awful]: -20,
 };
 
+export const wOBAThreshold: { [key in StatThreshold]: number } = {
+  [StatThreshold.excellent]: 0.4,
+  [StatThreshold.great]: 0.37,
+  [StatThreshold.aboveAvg]: 0.34,
+  [StatThreshold.avg]: 0.32,
+  [StatThreshold.belowAvg]: 0.31,
+  [StatThreshold.poor]: 0.3,
+  [StatThreshold.awful]: 0.29,
+};
+
 export const MLB_STATS_MAP: StatsMap = {
   0: { abbrev: 'AB', description: 'At Bats', statCategoryId: StatCategory.Batting, statTypeId: StatType.Batting },
   1: { abbrev: 'H', description: 'Hits', statCategoryId: StatCategory.Batting, statTypeId: StatType.Batting },
