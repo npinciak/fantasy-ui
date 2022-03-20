@@ -17,7 +17,9 @@
         </tr>
         <tr>
           <td>
-            <small>{{ team?.record }}</small>
+            <ng-container *ngIf="!isTournament; else tournamentAggregate">
+              <small>{{ team?.record }}</small>
+            </ng-container>
           </td>
         </tr>
       </table>
@@ -29,3 +31,6 @@
     </td>
   </tr>
 </table>
+<ng-template #tournamentAggregate>
+  <small>Aggregate: {{ team?.aggregateScore }}</small>
+</ng-template>

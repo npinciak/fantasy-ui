@@ -88,6 +88,18 @@ export class EspnTableSelectors {
         headerLabel: MLB_STATS_MAP[Stat.H].abbrev,
         dataType: TableColumnDataType.Number,
       },
+      {
+        columnDef: `stats.${Stat.R}`,
+        headerCell: `stats.${Stat.R}`,
+        headerLabel: MLB_STATS_MAP[Stat.R].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.HR}`,
+        headerCell: `stats.${Stat.HR}`,
+        headerLabel: MLB_STATS_MAP[Stat.HR].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
     ];
   }
 
