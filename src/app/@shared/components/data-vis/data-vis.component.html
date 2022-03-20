@@ -16,15 +16,9 @@
   </mat-form-field>
   <div>
     <div style="display: block; width: 600px; height: auto">
-      <ng-container *ngIf="chartType === 'scatter'; else lineChart">
-        <canvas baseChart [data]="chartData" [options]="scatterChartOptions" [type]="scatterChartType"> </canvas>
-      </ng-container>
     </div>
   </div>
 </div>
 
 <div #container></div>
 
-<ng-template #lineChart>
-  <canvas baseChart [data]="chartData" [options]="lineChartOptions" [type]="chartType"> </canvas>
-</ng-template>

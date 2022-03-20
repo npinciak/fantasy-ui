@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Select, Store } from '@ngxs/store';
-import { ChartData, ScatterDataPoint } from 'chart.js';
 import { Observable } from 'rxjs';
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { FantasyBaseballFreeAgentsSelector } from '../selectors/fantasy-baseball-free-agents.selector';
@@ -16,6 +15,7 @@ export class FantasyBaseballFreeAgentsFacade {
   @Select(FantasyBaseballFreeAgentsSelector.selectStatListFilters) public selectStatListFilters$: Observable<FilterOptions[]>;
 
   @Select(FantasyBaseballLeagueState.isLoading) public isLoading$: Observable<boolean>;
+  @Select(FantasyBaseballFreeAgentsSelector.selectFreeAgentStatsObserv) public selectFreeAgentStatsObserv$: Observable<any[]>;
 
   constructor(private store: Store) {}
 
@@ -27,11 +27,11 @@ export class FantasyBaseballFreeAgentsFacade {
     return this.store.selectSnapshot(FantasyBaseballFreeAgentsSelector.selectPlayerById)(id);
   }
 
-  freeAgentDynamicLineChartData(xAxis, stat): ChartData<'line' | 'bar', (number | ScatterDataPoint)[], unknown> {
+  freeAgentDynamicLineChartData(xAxis, stat) {
     return this.store.selectSnapshot(FantasyBaseballFreeAgentsSelector.freeAgentDynamicLineChartData)(xAxis, stat);
   }
 
-  freeAgentScatterChartData(xAxis, yaxis, statTimePeriodId): ChartData<'scatter', (number | ScatterDataPoint)[], unknown> {
+  freeAgentScatterChartData(xAxis, yaxis, statTimePeriodId) {
     return this.store.selectSnapshot(FantasyBaseballFreeAgentsSelector.freeAgentDynamicScatterChartData)(xAxis, yaxis, statTimePeriodId);
   }
 }

@@ -1,7 +1,6 @@
 import { pickAxisData, scatterData } from '@app/@shared/helpers/graph.helpers';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@ngxs/store';
-import { ChartData } from 'chart.js';
 import { AdvStats } from '../class/advStats.class';
 import { MLB_LINEUP, MLB_LINEUP_MAP } from '../consts/lineup.const';
 import { MLB_STATS_MAP, MLB_WEIGHTED_STATS_2021 } from '../consts/stats.const';
@@ -104,7 +103,7 @@ export class FantasyBaseballTeamsSelector {
   }
 
   @Selector([FantasyBaseballTeamsSelector.selectTeamList])
-  static teamDynamicScatterChartData(teamList: BaseballTeamTableRow[]): (xAxis: string, yAxis: string) => ChartData<'scatter'> {
+  static teamDynamicScatterChartData(teamList: BaseballTeamTableRow[]): (xAxis: string, yAxis: string) => any {
     return (xAxis: string, yAxis: string) => {
       const xaxis = pickAxisData(teamList, obj => obj?.rotoStatsMap[xAxis.toLowerCase()]);
       const yaxis = pickAxisData(teamList, obj => obj?.rotoStatsMap[yAxis.toLowerCase()]);
