@@ -30,24 +30,24 @@ export class FantasyBaseballFreeAgentsSelector {
   }
 
   @Selector([FantasyBaseballFreeAgentsSelector.selectPlayerList])
-  static selectFreeAgentStats(players: BaseballPlayer[]): (statPeriod: string) => { name: string; stats: EspnClientPlayerStatsEntity }[] {
+  static selectFreeAgentStats(players: BaseballPlayer[]): (statPeriod: string) => FreeAgentStats[] {
     return (statPeriod: string) => {
       return players.map(p => {
         if (p.stats == null) {
           return;
         }
 
-        const playerStats = p?.stats[statPeriod];
-        const advancedStats = new AdvStats(playerStats);
-        advancedStats.seasonConst = MLB_WEIGHTED_STATS_2021;
+        const statsEntity = p?.stats[statPeriod];
+        const seasonConst = MLB_WEIGHTED_STATS_2021;
+        const advancedStats = new AdvStats({ seasonConst, statsEntity });
 
         const adv = {};
         adv[Stat.fip] = advancedStats.fip;
         adv[Stat.wOBA] = advancedStats.wOBA;
         adv[Stat.wRAA] = advancedStats.wRAA;
         adv[Stat.BABIP] = advancedStats.wRAA;
-        const stats = { ...playerStats, ...adv };
-        
+        const stats = { ...statsEntity, ...adv };
+
         return {
           name: p?.name,
           img: p.img,

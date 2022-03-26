@@ -13,11 +13,14 @@
     <app-lineup-card [lineup]="teamLineup"></app-lineup-card>
   </div>
   <div class="blocks four" gdArea="content">
-    <app-roster
-      [fantasyPlayers]="fantasyBaseballTeamFacade.selectTeamBatterStats(teamId, '102022')"
-      [dataColumns]="espnTableFacade.rosterTableRow$ | async"
-      [headers]="espnTableFacade.rosterTableHeaders$ | async"
-    ></app-roster>
+    <app-dropdown-filter title="Stat Period" [filterItems]="STAT_PERIOD_FILTER_OPTIONS" (filterUpdate)="scoringPeriodIdChange($event)"></app-dropdown-filter>
+
+    <app-data-vis
+      [xAxisFilterOptions]="fantasyBaseballTeamFacade.statListFilters$ | async"
+      [yAxisFilterOptions]="fantasyBaseballTeamFacade.statListFilters$ | async"
+      [chartData]="stats$ | async"
+      (filterChangeEvent)="filterChange($event)"
+    ></app-data-vis>
   </div>
   <div class="blocks five" gdArea="footer"></div>
 </div>

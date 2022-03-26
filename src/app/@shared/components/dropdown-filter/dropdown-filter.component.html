@@ -2,6 +2,6 @@
   <mat-label>{{ title }}</mat-label>
   <mat-select (selectionChange)="filterUpdate.emit($event)">
     <mat-option val=""></mat-option>
-    <mat-option *ngFor="let item of filterItems" [value]="item">{{ item }}</mat-option>
+    <mat-option *ngFor="let item of filterItems" [value]="item.value">{{ item.label }}</mat-option>
   </mat-select>
 </mat-form-field>

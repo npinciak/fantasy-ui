@@ -28,7 +28,6 @@ export class MatchupTableComponent implements OnInit, AfterViewInit, OnChanges {
     this.dataSource.data = this.tableData;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    // this.dataSource.sortingDataAccessor = (player, stat) => sortAccessor(player, stat);
     this.cdr.detectChanges();
   }
 

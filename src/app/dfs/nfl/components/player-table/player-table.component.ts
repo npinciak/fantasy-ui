@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { colorScaleTable } from '@app/@shared/helpers/color-blender';
-import { sortAccessor } from '@app/@shared/helpers/sort';
+import { cellDataAccessor } from '@app/@shared/helpers/utils';
 import { DailyFantasyPlayersFacade } from '@app/dfs/facade/daily-fantasy-players.facade';
 import { TableColumn } from '@app/dfs/mlb/selectors/table.selector';
 import { NFLDfsLineupFacade } from '../../facade/nfl-dfs-lineup.facade';
@@ -73,7 +73,7 @@ export class PlayerTableComponent implements OnInit, AfterViewInit, OnChanges {
     this.dataSource.paginator = this.paginator;
 
     this.dataSource.filter = this.filter;
-    this.dataSource.sortingDataAccessor = (obj, path) => sortAccessor(obj, path);
+    this.dataSource.sortingDataAccessor = (obj, path) => cellDataAccessor(obj, path);
     this.dataSource.filterPredicate = this.dataSourceFilter();
     this.cdr.detectChanges();
   }

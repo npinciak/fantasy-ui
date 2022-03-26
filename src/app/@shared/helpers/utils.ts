@@ -1,7 +1,19 @@
 import { camelCase } from 'lodash';
 import { CamelCasedProperties } from '../models/camel-case.model';
 
-export function cellDataAccessor<T>(obj: T, path): T {
+export function exists<T>(value: NonNullable<T> | null | undefined): value is NonNullable<T> {
+  return value !== null && value !== undefined;
+}
+
+export function existsFilter<T>(value: (NonNullable<T> | null | undefined)[]): NonNullable<T>[] {
+  const result: NonNullable<T>[] = [];
+  value.forEach(o => {
+    if (exists(o)) result.push(o);
+  });
+  return result;
+}
+
+export function cellDataAccessor(obj, path) {
   return path.split('.').reduce((o, p) => o && o[p], obj);
 }
 

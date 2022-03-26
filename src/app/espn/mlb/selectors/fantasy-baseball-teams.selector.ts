@@ -3,7 +3,7 @@ import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@ngxs/store';
 import { AdvStats } from '../class/advStats.class';
 import { MLB_LINEUP, MLB_LINEUP_MAP } from '../consts/lineup.const';
-import { MLB_STATS_MAP, MLB_WEIGHTED_STATS_2021 } from '../consts/stats.const';
+import { MLB_STATS_KEYS, MLB_STATS_MAP, MLB_WEIGHTED_STATS_2021 } from '../consts/stats.const';
 import { statsKeyMap } from '../helpers';
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { BaseballTeamMap, BaseballTeamTableRow } from '../models/baseball-team.model';
@@ -19,17 +19,24 @@ export class FantasyBaseballTeamsSelector {
     }));
   }
 
-  @Selector([FantasyBaseballTeamsSelector.selectTeamList])
-  static selectStatListFilters(teams: BaseballTeamTableRow[]): FilterOptions[] {
-    const stats = teams.map(p => p.rotoStats)[0];
-
-    const arr: FilterOptions[] = [];
-
-    Object.keys(stats).forEach(prop => {
-      arr.push({ value: MLB_STATS_MAP[prop].abbrev, label: MLB_STATS_MAP[prop].description });
+  // @Selector([FantasyBaseballTeamsSelector.selectTeamList])
+  @Selector()
+  static selectStatListFilters(): FilterOptions[] {
+    return MLB_STATS_KEYS.map(k => {
+      return {
+        label: MLB_STATS_MAP[k].description,
+        value: k,
+      };
     });
+    // const stats = teams.map(p => p.rotoStats)[0];
 
-    return arr;
+    // const arr: FilterOptions[] = [];
+
+    // Object.keys(stats).forEach(prop => {
+    //   arr.push({ value: MLB_STATS_MAP[prop].abbrev, label: MLB_STATS_MAP[prop].description });
+    // });
+
+    // return arr;
   }
 
   @Selector([FantasyBaseballTeamState.map])
@@ -78,16 +85,16 @@ export class FantasyBaseballTeamsSelector {
           return;
         }
 
-        const playerStats = p?.stats[statPeriod];
-        const advancedStats = new AdvStats(playerStats);
-        advancedStats.seasonConst = MLB_WEIGHTED_STATS_2021;
+        const statsEntity = p?.stats[statPeriod];
+        const seasonConst = MLB_WEIGHTED_STATS_2021;
+        const advancedStats = new AdvStats({ seasonConst, statsEntity });
 
         const adv = {};
         adv[Stat.fip] = advancedStats.fip;
         adv[Stat.wOBA] = advancedStats.wOBA;
         adv[Stat.wRAA] = advancedStats.wRAA;
         adv[Stat.BABIP] = advancedStats.wRAA;
-        const stats = { ...playerStats, ...adv };
+        const stats = { ...statsEntity, ...adv };
 
         return {
           name: p?.name,

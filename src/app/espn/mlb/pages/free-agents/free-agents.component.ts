@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
 import { EspnTableFacade } from '@app/espn/facade/espn-table.facade';
 import { Store } from '@ngxs/store';
+import { BehaviorSubject } from 'rxjs';
+import { STAT_PERIOD_FILTER_OPTIONS } from '../../consts/stats.const';
 import { FantasyBaseballFreeAgentsFacade } from '../../facade/fantasy-baseball-free-agents.facade';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
-import { FantasyBaseballFreeAgentsSelector } from '../../selectors/fantasy-baseball-free-agents.selector';
 
 @Component({
   selector: `app-free-agents`,
@@ -14,12 +16,15 @@ import { FantasyBaseballFreeAgentsSelector } from '../../selectors/fantasy-baseb
 })
 export class FreeAgentsComponent implements OnInit {
   readonly leagueId = this.activatedRoute.snapshot.params.leagueId;
+  readonly STAT_PERIOD_FILTER_OPTIONS = STAT_PERIOD_FILTER_OPTIONS;
 
   teamDynamicScatterChartData: any;
   freeAgentDynamicScatterChartData: any;
   freeAgentDynamicLineChartData: any;
 
   scoringPeriodId: string = '102022';
+
+  stats$ = new BehaviorSubject<any[]>(null);
 
   constructor(
     private store: Store,
@@ -34,29 +39,15 @@ export class FreeAgentsComponent implements OnInit {
     this.fantasyBaseballLeagueFacade.getLeague(this.leagueId);
   }
 
-  scoringPeriodIdChange(id: string): void {
-    this.scoringPeriodId = id;
+  scoringPeriodIdChange(change: MatSelectChange): void {
+    this.scoringPeriodId = change.value;
+
+    const freeAgentStats = this.fantasyBaseballFreeAgentsFacade.selectFreeAgentStats(change.value);
+
+    this.stats$.next(freeAgentStats);
   }
 
-  filterChange(event: { xAxis: string; yAxis: string }): void {
-    this.teamDynamicScatterChartData = this.fantasyBaseballTeamFacade.teamDynamicScatterChartData(event.xAxis ?? '', event.yAxis ?? '');
+  filterChange(event: { xAxis: string; yAxis: string }): void {}
 
-    this.freeAgentDynamicScatterChartData = this.fantasyBaseballFreeAgentsFacade.freeAgentScatterChartData(
-      event.xAxis ?? 0,
-      event.yAxis ?? 0,
-      this.scoringPeriodId
-    );
-  }
-
-  filterChangeFreeAgent(event: { xAxis: string; yAxis: string }): void {
-    // this.freeAgentDynamicScatterChartData = this.fantasyBaseballFreeAgentsFacade.freeAgentDynamicScatterChartData(
-    //   event.xAxis ?? '',
-    //   event.yAxis ?? ''
-    // );
-    // this.fantasyBaseballFreeAgentsFacade.freeAgentDynamicLineChartData(event.xAxis ?? '');
-    this.freeAgentDynamicLineChartData = this.store.selectSnapshot(FantasyBaseballFreeAgentsSelector.freeAgentDynamicLineChartData)(
-      event.xAxis,
-      this.scoringPeriodId
-    );
-  }
+  filterChangeFreeAgent(event: { xAxis: string; yAxis: string }): void {}
 }

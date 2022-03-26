@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { sortAccessor } from '@app/@shared/helpers/sort';
+import { cellDataAccessor } from '@app/@shared/helpers/utils';
 import { TableColumn } from '@app/dfs/models/table.model';
 
 @Component({
@@ -33,7 +33,7 @@ export class PlayerTableComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
 
     // this.dataSource.filter = this.filter;
-    this.dataSource.sortingDataAccessor = (obj, path) => sortAccessor(obj, path);
+    this.dataSource.sortingDataAccessor = (obj, path) => cellDataAccessor(obj, path);
     // this.dataSource.filterPredicate = this.dataSourceFilter();
     this.cdr.detectChanges();
   }
