@@ -14,6 +14,7 @@ export const MOCK_FASTCAST_EVENT_1: FastcastEvent = {
   clock: '0:00',
   summary: 'Final/OT',
   period: 4,
+  completed: false,
   teams: {
     home: MOCK_FASTCAST_TEAM_2,
     away: MOCK_FASTCAST_TEAM_1,
@@ -49,6 +50,7 @@ export const MOCK_FASTCAST_EVENT_2: FastcastEvent = {
     away: MOCK_FASTCAST_TEAM_1,
   },
   isHalftime: false,
+  completed: true,
   downDistancePositionText: '1st & 10, ATL 20',
   lastPlay: {
     id: '',

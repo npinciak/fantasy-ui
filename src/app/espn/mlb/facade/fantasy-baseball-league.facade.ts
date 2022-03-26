@@ -22,7 +22,7 @@ export class FantasyBaseballLeagueFacade {
 
   @SelectSnapshot(FantasyBaseballLeagueState.scoringPeriod) public scoringPeriod: number;
 
-  getLeague(leagueId: number): void {
-    this.store.dispatch(new FetchBaseballLeague({ leagueId }));
+  getLeague(leagueId: number): Observable<void> {
+    return this.store.dispatch(new FetchBaseballLeague({ leagueId }));
   }
 }

@@ -15,7 +15,8 @@ export class FantasyBaseballFreeAgentsFacade {
   @Select(FantasyBaseballFreeAgentsSelector.selectStatListFilters) public selectStatListFilters$: Observable<FilterOptions[]>;
 
   @Select(FantasyBaseballLeagueState.isLoading) public isLoading$: Observable<boolean>;
-  @Select(FantasyBaseballFreeAgentsSelector.selectFreeAgentStatsObserv) public selectFreeAgentStatsObserv$: Observable<any[]>;
+
+  @Select(FantasyBaseballFreeAgentsSelector.selectFreeAgentStats) public selectFreeAgentStats$: Observable<any[]>;
 
   constructor(private store: Store) {}
 

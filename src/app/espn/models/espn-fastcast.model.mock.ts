@@ -17,6 +17,7 @@ export const MOCK_ESPN_CLIENT_FASTCAST_COMPETITOR: CompetitorsEntity = {
   location: '',
   color: '',
   group: '',
+  competitionIdPrevious: '',
 };
 
 export const MOCK_ESPN_CLIENT_FASTCAST_SITUATION: Situation = {
@@ -60,6 +61,9 @@ export const MOCK_ESPN_CLIENT_FASTCAST_EVENT: EventsEntity = {
   competitors: [MOCK_ESPN_CLIENT_FASTCAST_COMPETITOR],
   situation: MOCK_ESPN_CLIENT_FASTCAST_SITUATION,
   priority: 0,
+  group: undefined,
+  onWatch: false,
+  odds: undefined,
 };
 
 export const MOCK_ESPN_CLIENT_FASTCAST_LEAGUE: LeaguesEntity = {
