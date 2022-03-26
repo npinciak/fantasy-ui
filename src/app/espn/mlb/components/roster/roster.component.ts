@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { sortAccessor } from '@app/@shared/helpers/sort';
+import { cellDataAccessor } from '@app/@shared/helpers/utils';
 import { TableColumnDataType } from '@app/espn/models/table.model';
 import { BaseballPlayer } from '../../models/baseball-player.model';
 import { StatTypePeriodId } from '../../models/mlb-stats.model';
@@ -22,10 +22,6 @@ export class RosterComponent implements OnInit, AfterViewInit, OnChanges {
   readonly TableColumnDataType = TableColumnDataType;
 
   dataSource = new MatTableDataSource<BaseballPlayer>();
-  playerNews: unknown;
-  viewOptions: unknown;
-
-  view: StatTypePeriodId = StatTypePeriodId.regularSeason;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -46,6 +42,6 @@ export class RosterComponent implements OnInit, AfterViewInit, OnChanges {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.dataSource.data = this.fantasyPlayers;
-    this.dataSource.sortingDataAccessor = (player, stat) => sortAccessor(player, stat);
+    this.dataSource.sortingDataAccessor = (player, stat) => cellDataAccessor(player, stat);
   }
 }

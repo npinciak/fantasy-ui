@@ -1,7 +1,7 @@
 import { camelCase } from 'lodash';
 import { CamelCasedProperties } from '../models/camel-case.model';
 
-export function cellDataAccessor<T>(obj: T, path): T {
+export function cellDataAccessor(obj, path) {
   return path.split('.').reduce((o, p) => o && o[p], obj);
 }
 
