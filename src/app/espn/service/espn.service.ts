@@ -158,14 +158,14 @@ export class EspnService {
   /**
    * Fetch player news
    *
-   * @param numDays Days back for news
+   * @param lookbackDays Days back for news
    * @param playerId Player Id
    * @param sport
    * @returns Player news
    */
-  espnFantasyPlayerNewsBySport(sport: FantasySports, numDays: number, playerId: number): Observable<unknown> {
-    const endpoint = new EspnEndpointBuilder(sport);
-    const params = new HttpParams().set(EspnParamFragment.Days, numDays.toString()).set(EspnParamFragment.PlayerId, playerId.toString());
+  espnFantasyPlayerNewsBySport(data: { sport: FantasySports; lookbackDays: string; playerId: string }): Observable<unknown> {
+    const endpoint = new EspnEndpointBuilder(data.sport);
+    const params = new HttpParams().set(EspnParamFragment.Days, data.lookbackDays).set(EspnParamFragment.PlayerId, data.playerId);
     return this.api.get(endpoint.fantasyPlayerNews, { params });
   }
 
@@ -190,11 +190,6 @@ export class EspnService {
       .set(EspnParamFragment.ScoringPeriod, scoringPeriod.toString())
       .set(EspnParamFragment.View, EspnViewParamFragment.PlayerInfo);
     return this.api.get<{ players: EspnClientFreeAgent[] }>(endpoint.fantasyLeague, { params, headers });
-  }
-
-  espnPositions(sport, league) {
-    const endpoint = new EspnEndpointBuilder(sport);
-    return this.api.get(endpoint.positions);
   }
 
   /**

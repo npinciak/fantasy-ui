@@ -13,8 +13,7 @@ export interface BaseballTeamProperties {
   totalPitchingRoto: number;
 }
 
-export type BaseballTeam = Omit<Team, 'record'> &
-  Omit<BaseballTeamProperties, 'liveScore' | 'stats' | 'totalBattingRoto' | 'totalPitchingRoto'>;
+export type BaseballTeam = Omit<Team, 'record'> & Omit<BaseballTeamProperties, 'stats' | 'totalBattingRoto' | 'totalPitchingRoto'>;
 
 export type BaseballTeamMap = Record<string, BaseballTeam>;
 
