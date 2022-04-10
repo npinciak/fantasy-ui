@@ -50,7 +50,7 @@ export enum EspnSport {
 
 export interface EspnClientLeague {
   id: number;
-  schedule: EspnClientScheduleEntity[];
+  schedule: EspnClientScheduleEntityAlt; //EspnClientScheduleEntity[];
   scoringPeriodId: number;
   seasonId: number;
   settings: { name: string };
@@ -64,14 +64,17 @@ export interface EspnClientScheduleProperties {
   home: EspnClientScheduleTeam;
   away: EspnClientScheduleTeam;
   winner: string;
+  teams?: EspnClientScheduleTeam[];
 }
 
 export interface EspnClientScheduleTeam {
   teamId: number;
   totalPoints: number;
+  totalPointsLive: number;
 }
 
 export type EspnClientScheduleEntity = EspnClientScheduleProperties;
+export type EspnClientScheduleEntityAlt = Record<string, Pick<EspnClientScheduleProperties, 'id' | 'matchupPeriodId' | 'teams'>>;
 
 export interface EspnClientTeam {
   id: number;

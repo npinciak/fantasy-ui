@@ -8,7 +8,7 @@ import { FantasyBaseballTeamsSelector } from './fantasy-baseball-teams.selector'
 export class FantasyBaseballLeagueSelectors {
   @Selector([FantasyBaseballTeamsSelector.selectTeamList])
   static standings(teamList: BaseballTeam[]): BaseballTeam[] {
-    return teamList.sort((a, b) => b.totalPoints - a.totalPoints);
+    return teamList.sort((a, b) => b.liveScore - a.liveScore);
   }
 
   @Selector()

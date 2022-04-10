@@ -3,7 +3,7 @@
   gdGap="1em"
   gdColumns.xs="none"
   gdAreas.sm="sidebar content | footer footer"
-  gdColumns.sm="30%!"
+  gdColumns.sm=""
   gdAreas.gt-sm="sidebar content  | footer footer "
   gdColumns.gt-sm="30% auto"
   gdGap.gt-sm="20px"
@@ -17,7 +17,6 @@
 
     <div style="margin: 10px 0"></div>
     <app-standings
-      #standings
       [dataColumns]="espnTableFacade.standingsTableRow$ | async"
       [headers]="espnTableFacade.tableTableHeaders$ | async"
       [teams]="fantasyBaseballTeamFacade.teamList$ | async"
