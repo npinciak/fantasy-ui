@@ -5,7 +5,7 @@ import { AdvStats } from '../class/advStats.class';
 import { MLB_LINEUP, MLB_LINEUP_MAP } from '../consts/lineup.const';
 import { MLB_STATS_KEYS, MLB_STATS_MAP, MLB_WEIGHTED_STATS } from '../consts/stats.const';
 import { statsKeyMap } from '../helpers';
-import { BaseballPlayer } from '../models/baseball-player.model';
+import { BaseballPlayer, BaseballPlayerBatterStatsRow } from '../models/baseball-player.model';
 import { BaseballTeamMap, BaseballTeamTableRow } from '../models/baseball-team.model';
 import { Stat } from '../models/mlb-stats.model';
 import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.state';
@@ -20,7 +20,6 @@ export class FantasyBaseballTeamsSelector {
     }));
   }
 
-  // @Selector([FantasyBaseballTeamsSelector.selectTeamList])
   @Selector()
   static selectStatListFilters(): FilterOptions[] {
     return MLB_STATS_KEYS.map(k => {
@@ -50,7 +49,7 @@ export class FantasyBaseballTeamsSelector {
   }
 
   @Selector([FantasyBaseballTeamsSelector.selectTeamBatters])
-  static selectTeamStartingBatters(selectTeamBatters: (id: string) => BaseballPlayer[]) {
+  static selectTeamStartingBatters(selectTeamBatters: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
     return (id: string) =>
       selectTeamBatters(id)
         .filter(p => !p.isInjured && !MLB_LINEUP_MAP[p.lineupSlotId].bench && p.lineupSlotId !== MLB_LINEUP.IL)
@@ -58,7 +57,7 @@ export class FantasyBaseballTeamsSelector {
   }
 
   @Selector([FantasyBaseballTeamsSelector.selectTeamBatters])
-  static getTeamBenchBatters(selectTeamBatters: (id: string) => BaseballPlayer[]) {
+  static getTeamBenchBatters(selectTeamBatters: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
     return (id: string) => selectTeamBatters(id).filter(p => !p.isInjured && MLB_LINEUP_MAP[p.lineupSlotId].bench);
   }
 
@@ -72,7 +71,11 @@ export class FantasyBaseballTeamsSelector {
     FantasyBaseballLeagueState.seasonId,
     EspnFastcastEventSelectors.selectEventIdList,
   ])
-  static selectTeamBatterStats(selectRosterByTeamId: (id: string) => BaseballPlayer[], seasonId: string, eventIdList: string[]) {
+  static selectTeamBatterStats(
+    selectRosterByTeamId: (id: string) => BaseballPlayer[],
+    seasonId: string,
+    eventIdList: string[]
+  ): (id: string, statPeriod: string) => BaseballPlayerBatterStatsRow[] {
     return (id: string, statPeriod: string) => {
       const players = selectRosterByTeamId(id);
 

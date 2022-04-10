@@ -47,7 +47,7 @@ export class FantasyBaseballLeagueState {
   async baseballLeague(
     { getState, patchState, dispatch }: StateContext<FantasyBaseballLeagueStateModel>,
     { payload: { leagueId } }: FetchBaseballLeague
-  ) {
+  ): Promise<void> {
     const state = getState();
     if (state.scoringPeriodId) {
       console.log(`League ${leagueId} already in state, retrieving cache`);
@@ -65,7 +65,7 @@ export class FantasyBaseballLeagueState {
   }
 
   @Action(PatchSeasonId)
-  patchSeasonId({ patchState }: StateContext<FantasyBaseballLeagueStateModel>, { payload: { seasonId } }: PatchSeasonId) {
+  patchSeasonId({ patchState }: StateContext<FantasyBaseballLeagueStateModel>, { payload: { seasonId } }: PatchSeasonId): void {
     patchState({ seasonId });
   }
 
@@ -73,7 +73,7 @@ export class FantasyBaseballLeagueState {
   patchScoringPeriodId(
     { patchState }: StateContext<FantasyBaseballLeagueStateModel>,
     { payload: { scoringPeriodId } }: PatchScoringPeriodId
-  ) {
+  ): void {
     patchState({ scoringPeriodId });
   }
 }

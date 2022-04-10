@@ -56,7 +56,7 @@ export class EspnService {
     };
   }
 
-  static transformFastcastCompetitorsToTeams = (data: CompetitorsImport[], situation: SituationImport): FastcastEventTeamMap => {
+  static transformFastcastCompetitorsToTeams(data: CompetitorsImport[], situation: SituationImport): FastcastEventTeamMap {
     return data.reduce((acc, val) => {
       if (!val.homeAway) {
         return null;
@@ -80,7 +80,7 @@ export class EspnService {
       };
       return acc;
     }, {});
-  };
+  }
 
   static transformEventImportToFastcastEvent(eventsImport: EventsImport[]): FastcastEvent[] {
     return eventsImport.map(event => ({

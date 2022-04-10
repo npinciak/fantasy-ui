@@ -1,4 +1,4 @@
-export function includeSports(id: string) {
+export function includeSports(id: string): boolean {
   return new Set(['1', '20', '40', '70', '600']).has(id);
 }
 

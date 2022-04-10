@@ -9,6 +9,9 @@ import { League } from '../models/league.model';
 import { EspnService } from './espn.service';
 
 export class EspnServiceMock implements Mock<EspnService> {
+  espnFantasyPlayerNewsBySport(data: { sport: FantasySports; lookbackDays: string; playerId: string }): Observable<unknown> {
+    throw new Error('Method not implemented.');
+  }
   espnPositions(sport: any, league: any): Observable<unknown> {
     throw new Error('Method not implemented.');
   }
@@ -18,9 +21,7 @@ export class EspnServiceMock implements Mock<EspnService> {
   espnFantasyLeagueBySport(sport: FantasySports, leagueId: number): Observable<EspnClientLeague> {
     throw new Error('Method not implemented.');
   }
-  espnFantasyPlayerNewsBySport(sport: FantasySports, numDays: number, playerId: number): Observable<any> {
-    throw new Error('Method not implemented.');
-  }
+
   espnFantasyFreeAgentsBySport(sport: FantasySports, leagueId: number, scoringPeriod: number, headers: HttpHeaders): Observable<any> {
     throw new Error('Method not implemented.');
   }
