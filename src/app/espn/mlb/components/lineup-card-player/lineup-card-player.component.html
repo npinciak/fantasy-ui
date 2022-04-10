@@ -12,6 +12,7 @@
   <tr>
     <td syle="width:228px">
       {{ player?.name }}
+      <span class="injury" *ngIf="player.injuryStatus === InjuryStatusType.DTD">DTD</span>
       <mat-icon class="injury" [matTooltip]="player?.injuryStatus" *ngIf="player?.isInjured">medical_services </mat-icon>
     </td>
     <!-- <td

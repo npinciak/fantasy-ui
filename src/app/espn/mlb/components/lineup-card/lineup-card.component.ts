@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BaseballPlayer } from '../../models/baseball-player.model';
 
 @Component({
@@ -8,7 +8,13 @@ import { BaseballPlayer } from '../../models/baseball-player.model';
 })
 export class LineupCardComponent implements OnInit {
   @Input() lineup: BaseballPlayer[];
+  @Output() fetchPlayerDetails = new EventEmitter<BaseballPlayer>();
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  showPlayerDetails(player: BaseballPlayer) {
+    this.fetchPlayerDetails.emit(player);
+  }
 }

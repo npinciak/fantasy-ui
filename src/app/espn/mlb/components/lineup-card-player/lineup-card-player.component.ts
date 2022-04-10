@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { InjuryStatusType } from '@app/espn/models/injury.model';
 import { BaseballPlayer } from '../../models/baseball-player.model';
 
 @Component({
@@ -8,6 +9,8 @@ import { BaseballPlayer } from '../../models/baseball-player.model';
 })
 export class LineupCardPlayerComponent {
   @Input() player: BaseballPlayer;
+
+  readonly InjuryStatusType = InjuryStatusType;
 
   constructor() {}
 }
