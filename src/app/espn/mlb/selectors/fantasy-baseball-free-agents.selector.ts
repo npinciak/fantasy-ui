@@ -1,9 +1,8 @@
-import { pickAxisData } from '@app/@shared/helpers/graph.helpers';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { EspnClientPlayerStatsEntity } from '@app/espn/espn-client.model';
 import { Selector } from '@ngxs/store';
 import { AdvStats } from '../class/advStats.class';
-import { MLB_STATS_KEYS, MLB_STATS_MAP, MLB_WEIGHTED_STATS_2021 } from '../consts/stats.const';
+import { MLB_STATS_KEYS, MLB_STATS_MAP, MLB_WEIGHTED_STATS } from '../consts/stats.const';
 import { BaseballPlayer, BaseballPlayerMap } from '../models/baseball-player.model';
 import { Stat } from '../models/mlb-stats.model';
 import { FantasyBaseballFreeAgentsState } from '../state/fantasy-baseball-free-agents.state';
@@ -38,7 +37,7 @@ export class FantasyBaseballFreeAgentsSelector {
         }
 
         const statsEntity = p?.stats[statPeriod];
-        const seasonConst = MLB_WEIGHTED_STATS_2021;
+        const seasonConst = MLB_WEIGHTED_STATS['2022'];
         const advancedStats = new AdvStats({ seasonConst, statsEntity });
 
         const adv = {};
@@ -69,67 +68,6 @@ export class FantasyBaseballFreeAgentsSelector {
         value: k,
       };
     });
-  }
-
-  @Selector([FantasyBaseballFreeAgentsSelector.selectFreeAgentStats])
-  static freeAgentDynamicLineChartData(
-    selectFreeAgentStats: (statPeriod: string) => { name: string; stats: EspnClientPlayerStatsEntity }[]
-  ): (xAxis: string, statPeriod: string) => any {
-    return (xAxis: string, statPeriod: string) => {
-      const stats = selectFreeAgentStats(statPeriod).filter(p => p?.stats != undefined);
-      const data = pickAxisData(stats, obj => obj.stats[xAxis]).sort((a, b) => a - b);
-      const labels = stats.map(p => p.name);
-      // const dataColor = dataSetColor('#006cd6');
-
-      return {
-        labels,
-        datasets: [
-          {
-            data,
-            label: MLB_STATS_MAP[xAxis].abbrev,
-            fill: false,
-            // ...dataColor,
-          },
-        ],
-      };
-    };
-  }
-
-  @Selector([FantasyBaseballFreeAgentsSelector.selectFreeAgentStats])
-  static freeAgentDynamicScatterChartData(
-    selectFreeAgentStats: (statPeriod: string) => { name: string; stats: EspnClientPlayerStatsEntity }[]
-  ) {
-    return (xAxis: string, yAxis: string, statPeriod: string) => {
-      const stats = selectFreeAgentStats(statPeriod).filter(p => p?.stats != undefined);
-
-      // { Framework: 'Vue', Stars: '166443', Released: '2014' },
-      // { Framework: 'React', Stars: '150793', Released: '2013' },
-      // { Framework: 'Angular', Stars: '62342', Released: '2016' },
-      // { Framework: 'Backbone', Stars: '27647', Released: '2010' },
-      // { Framework: 'Ember', Stars: '21471', Released: '2011' },
-
-      // const xaxis = pickAxisData(stats, obj => obj.stats[xAxis]);
-      // const yaxis = pickAxisData(stats, obj => obj.stats[yAxis]);
-
-      // const data = scatterData(xaxis, yaxis);
-      // const labels = stats.map(p => p.name);
-      // const dataColor = dataSetColor('#006cd6');
-
-      return stats;
-
-      // {
-      //   labels,
-      //   datasets: [
-      //     {
-      //       data: data,
-      //       label: `${MLB_STATS_MAP[xAxis].abbrev} / ${MLB_STATS_MAP[yAxis].abbrev}`,
-      //       pointRadius: 5,
-      //       yAxisID: 'y',
-      //       // ...dataColor,
-      //     },
-      //   ],
-      // };
-    };
   }
 }
 
