@@ -27,9 +27,7 @@ export class EspnFastcastEventState {
   }
 
   @Action(PatchFastcastEvents)
-  PatchFastcastEvents({ patchState, getState }: StateContext<EspnFastcastEventStateModel>, { payload: { map } }: PatchFastcastEvents) {
-    const state = getState();
-
-    patchState({ ...state, map });
+  patchFastcastEvents({ patchState, getState }: StateContext<EspnFastcastEventStateModel>, { payload: { map } }: PatchFastcastEvents) {
+    patchState({ ...getState(), map });
   }
 }

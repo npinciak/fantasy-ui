@@ -1,13 +1,14 @@
-import { pickAxisData, scatterData } from '@app/@shared/helpers/graph.helpers';
 import { FilterOptions } from '@app/@shared/models/filter.model';
+import { EspnFastcastEventSelectors } from '@app/espn/selectors/espn-fastcast-event.selectors';
 import { Selector } from '@ngxs/store';
 import { AdvStats } from '../class/advStats.class';
 import { MLB_LINEUP, MLB_LINEUP_MAP } from '../consts/lineup.const';
-import { MLB_STATS_KEYS, MLB_STATS_MAP, MLB_WEIGHTED_STATS_2021 } from '../consts/stats.const';
+import { MLB_STATS_KEYS, MLB_STATS_MAP, MLB_WEIGHTED_STATS } from '../consts/stats.const';
 import { statsKeyMap } from '../helpers';
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { BaseballTeamMap, BaseballTeamTableRow } from '../models/baseball-team.model';
 import { Stat } from '../models/mlb-stats.model';
+import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.state';
 import { FantasyBaseballTeamState } from '../state/fantasy-baseball-team.state';
 
 export class FantasyBaseballTeamsSelector {
@@ -28,15 +29,6 @@ export class FantasyBaseballTeamsSelector {
         value: k,
       };
     });
-    // const stats = teams.map(p => p.rotoStats)[0];
-
-    // const arr: FilterOptions[] = [];
-
-    // Object.keys(stats).forEach(prop => {
-    //   arr.push({ value: MLB_STATS_MAP[prop].abbrev, label: MLB_STATS_MAP[prop].description });
-    // });
-
-    // return arr;
   }
 
   @Selector([FantasyBaseballTeamState.map])
@@ -58,7 +50,7 @@ export class FantasyBaseballTeamsSelector {
   }
 
   @Selector([FantasyBaseballTeamsSelector.selectTeamBatters])
-  static getTeamStartingBatters(selectTeamBatters: (id: string) => BaseballPlayer[]) {
+  static selectTeamStartingBatters(selectTeamBatters: (id: string) => BaseballPlayer[]) {
     return (id: string) =>
       selectTeamBatters(id)
         .filter(p => !p.isInjured && !MLB_LINEUP_MAP[p.lineupSlotId].bench && p.lineupSlotId !== MLB_LINEUP.IL)
@@ -70,13 +62,17 @@ export class FantasyBaseballTeamsSelector {
     return (id: string) => selectTeamBatters(id).filter(p => !p.isInjured && MLB_LINEUP_MAP[p.lineupSlotId].bench);
   }
 
-  @Selector([FantasyBaseballTeamsSelector.selectTeamBatters])
+  @Selector([FantasyBaseballTeamsSelector.selectRosterByTeamId])
   static selectTeamPitchers(selectRosterByTeamId: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
     return (id: string) => selectRosterByTeamId(id).filter(p => p.isPitcher);
   }
 
-  @Selector([FantasyBaseballTeamsSelector.selectTeamBatters])
-  static selectTeamBatterStats(selectRosterByTeamId: (id: string) => BaseballPlayer[]) {
+  @Selector([
+    FantasyBaseballTeamsSelector.selectTeamBatters,
+    FantasyBaseballLeagueState.seasonId,
+    EspnFastcastEventSelectors.selectEventIdList,
+  ])
+  static selectTeamBatterStats(selectRosterByTeamId: (id: string) => BaseballPlayer[], seasonId: string, eventIdList: string[]) {
     return (id: string, statPeriod: string) => {
       const players = selectRosterByTeamId(id);
 
@@ -86,7 +82,7 @@ export class FantasyBaseballTeamsSelector {
         }
 
         const statsEntity = p?.stats[statPeriod];
-        const seasonConst = MLB_WEIGHTED_STATS_2021;
+        const seasonConst = MLB_WEIGHTED_STATS[seasonId];
         const advancedStats = new AdvStats({ seasonConst, statsEntity });
 
         const adv = {};
@@ -106,33 +102,6 @@ export class FantasyBaseballTeamsSelector {
           stats,
         };
       });
-    };
-  }
-
-  @Selector([FantasyBaseballTeamsSelector.selectTeamList])
-  static teamDynamicScatterChartData(teamList: BaseballTeamTableRow[]): (xAxis: string, yAxis: string) => any {
-    return (xAxis: string, yAxis: string) => {
-      const xaxis = pickAxisData(teamList, obj => obj?.rotoStatsMap[xAxis.toLowerCase()]);
-      const yaxis = pickAxisData(teamList, obj => obj?.rotoStatsMap[yAxis.toLowerCase()]);
-
-      const data = scatterData(xaxis, yaxis);
-
-      const labels = teamList.map(p => p.name);
-      return {
-        labels,
-        datasets: [
-          {
-            data: data,
-            label: `${xAxis} / ${yAxis}`,
-            pointRadius: 5,
-            borderColor: '#006cd6',
-            backgroundColor: '#006cd6',
-            pointBackgroundColor: '#006cd6',
-            pointBorderColor: '#006cd6',
-            yAxisID: 'y',
-          },
-        ],
-      };
     };
   }
 }

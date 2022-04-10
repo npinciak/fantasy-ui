@@ -13,8 +13,11 @@ import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.sta
 export class FantasyBaseballTeamFacade {
   @Select(FantasyBaseballTeamsSelector.selectTeamList) public teamList$: Observable<BaseballTeamTableRow[]>;
   @Select(FantasyBaseballTeamsSelector.selectTeamList) public liveScore$: Observable<BaseballTeamTableRow[]>;
-
   @Select(FantasyBaseballTeamsSelector.selectStatListFilters) public statListFilters$: Observable<FilterOptions[]>;
+
+  @Select(FantasyBaseballTeamsSelector.selectTeamStartingBatters) public startingBatters$: Observable<(id: string) => BaseballPlayer[]>;
+  @Select(FantasyBaseballTeamsSelector.selectTeamBatterStats) public battingStats$: Observable<(id: string, statPeriod: string) => any[]>;
+  @Select(FantasyBaseballTeamsSelector.selectTeamPitchers) public pitchers$: Observable<(id: string) => BaseballPlayer[]>;
 
   @Select(FantasyBaseballLeagueState.isLoading) public isLoading$: Observable<boolean>;
 
@@ -22,17 +25,5 @@ export class FantasyBaseballTeamFacade {
 
   selectTeamById(id: string): BaseballTeamTableRow {
     return this.store.selectSnapshot(FantasyBaseballTeamsSelector.selectTeamById)(id);
-  }
-
-  getTeamStartingBatters(id: string): BaseballPlayer[] {
-    return this.store.selectSnapshot(FantasyBaseballTeamsSelector.getTeamStartingBatters)(id);
-  }
-
-  selectTeamBatterStats(id: string, statPeriod: string) {
-    return this.store.selectSnapshot(FantasyBaseballTeamsSelector.selectTeamBatterStats)(id, statPeriod);
-  }
-
-  teamDynamicScatterChartData(xAxis, yAxis) {
-    return this.store.selectSnapshot(FantasyBaseballTeamsSelector.teamDynamicScatterChartData)(xAxis, yAxis);
   }
 }

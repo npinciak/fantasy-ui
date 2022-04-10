@@ -5,6 +5,7 @@ import {
   EspnClientPlayer,
   EspnClientPlayerStatsEntityMap,
   EspnClientPlayerStatsYear,
+  EspnClientScheduleEntityAlt,
   EspnClientTeam,
 } from '@app/espn/espn-client.model';
 import { playerImgBuilder } from '@app/espn/espn.const';
@@ -25,7 +26,7 @@ import { BaseballTeam } from '../models/baseball-team.model';
 export class MlbService {
   constructor(private espnClient: EspnService) {}
 
-  static transformEspnClientTeamListToTeamList(teams: EspnClientTeam[]): BaseballTeam[] {
+  static transformEspnClientTeamListToTeamList(teams: EspnClientTeam[], schedule: EspnClientScheduleEntityAlt): BaseballTeam[] {
     return teams.map(team => ({
       id: team.id.toString(),
       name: `${team.location} ${team.nickname}`,
@@ -33,6 +34,7 @@ export class MlbService {
       logo: team.logo,
       roster: MlbService.transformEspnClientTeamPlayerToBaseballPlayer(team.roster?.entries),
       totalPoints: team.points,
+      liveScore: schedule[0].teams.find(t => t.teamId === team.id).totalPointsLive,
       currentRank: team.playoffSeed,
       rotoStats: team.valuesByStat,
     }));
@@ -56,6 +58,7 @@ export class MlbService {
       isStarting: false,
       startingStatus: null,
       lineupSlot: MLB_LINEUP_MAP[player.lineupSlotId].abbrev,
+      starterStatusByProGame: player.playerPoolEntry?.player.starterStatusByProGame,
     }));
   }
 
@@ -84,6 +87,7 @@ export class MlbService {
       isStarting: false,
       startingStatus: null,
       lineupSlot: null,
+      starterStatusByProGame: null,
     }));
   }
 
@@ -93,17 +97,30 @@ export class MlbService {
    * @returns
    */
   baseballLeague(leagueId: number): Observable<{
+    seasonId: string;
     scoringPeriodId: number;
     teams: BaseballTeam[];
     freeAgents: BaseballPlayer[];
+    schedule: EspnClientScheduleEntityAlt;
   }> {
     return this.espnClient.espnFantasyLeagueBySport(FantasySports.baseball, leagueId).pipe(
       map(res => ({
+        seasonId: res.seasonId.toString(),
         scoringPeriodId: res.scoringPeriodId,
-        teams: MlbService.transformEspnClientTeamListToTeamList(res.teams),
+        teams: MlbService.transformEspnClientTeamListToTeamList(res.teams, res.schedule),
         freeAgents: MlbService.transformEspnClientFreeAgentToBaseballPlayer(res.players),
+        schedule: res.schedule,
       }))
     );
+  }
+
+  baseballPlayerNews(payload: { lookbackDays: string; playerId: string }): Observable<unknown> {
+    const data = {
+      sport: FantasySports.baseball,
+      lookbackDays: payload.lookbackDays,
+      playerId: payload.playerId,
+    };
+    return this.espnClient.espnFantasyPlayerNewsBySport(data).pipe(map(res => res));
   }
 
   baseballFreeAgents(payload: { leagueId: number; scoringPeriodId: number }): Observable<BaseballPlayer[]> {

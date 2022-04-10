@@ -27,12 +27,4 @@ export class FantasyBaseballFreeAgentsFacade {
   selectPlayerById(id: string): BaseballPlayer {
     return this.store.selectSnapshot(FantasyBaseballFreeAgentsSelector.selectPlayerById)(id);
   }
-
-  freeAgentDynamicLineChartData(xAxis, stat) {
-    return this.store.selectSnapshot(FantasyBaseballFreeAgentsSelector.freeAgentDynamicLineChartData)(xAxis, stat);
-  }
-
-  freeAgentScatterChartData(xAxis, yaxis, statTimePeriodId) {
-    return this.store.selectSnapshot(FantasyBaseballFreeAgentsSelector.freeAgentDynamicScatterChartData)(xAxis, yaxis, statTimePeriodId);
-  }
 }

@@ -10,7 +10,7 @@ export class EspnTableFacade {
   @Select(EspnTableSelectors.standingsTableRow) standingsTableRow$;
   @Select(EspnTableSelectors.tableTableHeaders) tableTableHeaders$: Observable<string[]>;
 
-  @Select(EspnTableSelectors.rosterTableRow) rosterTableRow$;
+  @Select(EspnTableSelectors.rosterTableRow) rosterTableRow$: Observable<string[]>;
   @Select(EspnTableSelectors.rosterTableHeaders) rosterTableHeaders$: Observable<string[]>;
 
   @Select(EspnTableSelectors.freeAgentsTableRow) freeAgentsTableRow$;

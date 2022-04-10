@@ -12,9 +12,11 @@ describe('[fantasyBaseballLeague] Store', () => {
 
   const leagueId = 1;
   const scoringPeriodId = 1;
+  const seasonId = '2';
 
   const MOCK_LEAGUE_STATE = {
     scoringPeriodId,
+    seasonId,
     isLoading: true,
   };
 
@@ -54,6 +56,15 @@ describe('[fantasyBaseballLeague] Store', () => {
       await store.dispatch(new FetchBaseballLeague({ leagueId })).toPromise();
 
       expect(spy).toHaveBeenCalledTimes(0);
+    });
+  });
+
+  describe('@Selector seasonId', () => {
+    it('should select seasonId', () => {
+      const state = MOCK_LEAGUE_STATE;
+      const selector = FantasyBaseballLeagueState.seasonId(state);
+      const expected = seasonId;
+      expect(selector).toEqual(expected);
     });
   });
 
