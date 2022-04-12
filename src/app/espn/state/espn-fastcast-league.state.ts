@@ -29,7 +29,10 @@ export class EspnFastcastLeagueState {
   }
 
   @Action(PatchFastcastLeague)
-  patchFastcastLeague({ patchState, getState }: StateContext<EspnFastcastLeagueStateModel>, { payload: { map } }: PatchFastcastLeague) {
+  patchFastcastLeague(
+    { patchState, getState }: StateContext<EspnFastcastLeagueStateModel>,
+    { payload: { map } }: PatchFastcastLeague
+  ): void {
     const state = getState();
 
     patchState({ ...state, map });
