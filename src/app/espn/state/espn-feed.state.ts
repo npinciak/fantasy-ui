@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { FeedArticle } from '../models/feed.model';
+import { FeedArticle, FeedArticleMap } from '../models/feed.model';
 import { EspnService } from '../service/espn.service';
 
 export class FetchFeed {
@@ -14,7 +14,7 @@ export class PatchFeed {
 }
 
 export interface EspnFeedStateModel {
-  map: { [id: string]: FeedArticle[] };
+  map: FeedArticleMap;
 }
 
 @State<EspnFeedStateModel>({
@@ -28,19 +28,19 @@ export class EspnFeedState {
   constructor(private espnService: EspnService) {}
 
   @Selector()
-  static selectMap(state: EspnFeedStateModel) {
+  static selectMap(state: EspnFeedStateModel): FeedArticleMap {
     return state.map;
   }
 
   @Action(FetchFeed)
-  async fetchEspnOnefeed({ dispatch }: StateContext<EspnFeedStateModel>) {
+  async fetchEspnOnefeed({ dispatch }: StateContext<EspnFeedStateModel>): Promise<void> {
     const feed = await this.espnService.espnOneFeed().toPromise();
 
     dispatch(new PatchFeed({ feed }));
   }
 
   @Action(PatchFeed)
-  patchEvents({ patchState, getState }: StateContext<EspnFeedStateModel>, { payload: { feed } }: PatchFeed) {
+  patchEvents({ patchState, getState }: StateContext<EspnFeedStateModel>, { payload: { feed } }: PatchFeed): void {
     const state = getState();
     const map = entityMap(feed);
 
