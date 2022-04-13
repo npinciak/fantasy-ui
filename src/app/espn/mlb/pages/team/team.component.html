@@ -10,19 +10,36 @@
   [ngStyle]="{ 'max-width': 'auto' }"
 >
   <div class="blocks two" gdArea="sidebar">
-    <app-lineup-card [lineup]="teamLineup"></app-lineup-card>
+    <app-lineup-card
+      [lineup]="(fantasyBaseballTeamFacade.startingBatters$ | async)!(teamId)"
+      (fetchPlayerDetails)="fantasyBaseballPlayerFacade.getPlayerNews($event.id)"
+    ></app-lineup-card>
   </div>
   <div class="blocks four" gdArea="content">
     <app-dropdown-filter title="Stat Period" [filterItems]="STAT_PERIOD_FILTER_OPTIONS" (filterUpdate)="scoringPeriodIdChange($event)"></app-dropdown-filter>
-
+    <app-dropdown-filter title="Stats" [filterItems]="fantasyBaseballTeamFacade.statListFilters$ | async" (filterUpdate)="statFilterChange($event)"></app-dropdown-filter>
     <app-data-vis
       [xAxisFilterOptions]="fantasyBaseballTeamFacade.statListFilters$ | async"
       [yAxisFilterOptions]="fantasyBaseballTeamFacade.statListFilters$ | async"
-      [chartData]="stats$ | async"
-      (filterChangeEvent)="filterChange($event)"
+      [statFilter]="statFilterOption$ | async"
+      [chartData]="(fantasyBaseballTeamFacade.battingStats$ | async)!(teamId, scoringPeriodId)"
     ></app-data-vis>
+    <h3>Batting</h3>
+    <mat-slide-toggle (change)="onLiveScoringSelectChange($event)" class="example-margin" color="primary"> Live Scoring </mat-slide-toggle>
+
+    <app-roster
+      [data]="(fantasyBaseballTeamFacade.battingStats$ | async)!(teamId, scoringPeriodId)"
+      [dataColumns]="espnTableFacade.rosterBattingTableRow$ | async"
+      [headers]="espnTableFacade.rosterBattingTableHeaders$ | async"
+    >
+    </app-roster>
+    <h3>Pitching</h3>
+    <app-roster
+      [data]="(fantasyBaseballTeamFacade.pitcherStats$ | async)!(teamId, scoringPeriodId)"
+      [dataColumns]="espnTableFacade.rosterPitchingTableRow$ | async"
+      [headers]="espnTableFacade.rosterPitchingTableHeaders$ | async"
+    >
+    </app-roster>
   </div>
   <div class="blocks five" gdArea="footer"></div>
 </div>
-<!-- [dataColumns]="espnTableFacade.freeAgentsTableRow$ | async"
-[headers]="espnTableFacade.freeAgentsTableHeaders$ | async" -->
