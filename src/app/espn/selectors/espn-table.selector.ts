@@ -9,11 +9,38 @@ export class EspnTableSelectors {
   static standingsColumns(): TableColumn[] {
     return [
       { columnDef: 'name', headerCell: 'name', headerLabel: 'Team', dataType: TableColumnDataType.String },
-      { columnDef: 'rotoStatsMap.r', headerCell: 'R', headerLabel: 'R', dataType: TableColumnDataType.Number },
-      { columnDef: 'rotoStatsMap.h', headerCell: 'H', headerLabel: 'H', dataType: TableColumnDataType.Number },
-      { columnDef: 'rotoStatsMap.rbi', headerCell: 'RBI', headerLabel: 'RBI', dataType: TableColumnDataType.Number },
-      { columnDef: 'rotoStatsMap.hr', headerCell: 'HR', headerLabel: 'HR', dataType: TableColumnDataType.Number },
-      { columnDef: 'rotoStatsMap.sb', headerCell: 'SB', headerLabel: 'SB', dataType: TableColumnDataType.Number },
+      { columnDef: 'rotoStatsMap.r', headerCell: 'R', headerLabel: MLB_STATS_MAP[Stat.R].abbrev, dataType: TableColumnDataType.Number },
+      { columnDef: 'rotoStatsMap.h', headerCell: 'H', headerLabel: MLB_STATS_MAP[Stat.H].abbrev, dataType: TableColumnDataType.Number },
+      {
+        columnDef: 'rotoStatsMap.rbi',
+        headerCell: 'RBI',
+        headerLabel: MLB_STATS_MAP[Stat.RBI].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      { columnDef: 'rotoStatsMap.hr', headerCell: 'HR', headerLabel: MLB_STATS_MAP[Stat.HR].abbrev, dataType: TableColumnDataType.Number },
+      { columnDef: 'rotoStatsMap.sb', headerCell: 'SB', headerLabel: MLB_STATS_MAP[Stat.SB].abbrev, dataType: TableColumnDataType.Number },
+      {
+        columnDef: 'rotoStatsMap.avg',
+        headerCell: 'avg',
+        headerLabel: MLB_STATS_MAP[Stat.AVG].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+
+      { columnDef: 'rotoStatsMap.k', headerCell: 'K', headerLabel: MLB_STATS_MAP[Stat.K].abbrev, dataType: TableColumnDataType.Number },
+      { columnDef: 'rotoStatsMap.w', headerCell: 'W', headerLabel: MLB_STATS_MAP[Stat.W].abbrev, dataType: TableColumnDataType.Number },
+      { columnDef: 'rotoStatsMap.sv', headerCell: 'SV', headerLabel: MLB_STATS_MAP[Stat.SV].abbrev, dataType: TableColumnDataType.Number },
+      {
+        columnDef: 'rotoStatsMap.era',
+        headerCell: 'era',
+        headerLabel: MLB_STATS_MAP[Stat.ERA].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: 'rotoStatsMap.whip',
+        headerCell: 'whip',
+        headerLabel: MLB_STATS_MAP[Stat.WHIP].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
     ];
   }
 
@@ -80,6 +107,12 @@ export class EspnTableSelectors {
         columnDef: `stats.${Stat.IP}`,
         headerCell: `stats.${Stat.IP}`,
         headerLabel: MLB_STATS_MAP[Stat.IP].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.K}`,
+        headerCell: `stats.${Stat.K}`,
+        headerLabel: MLB_STATS_MAP[Stat.K].abbrev,
         dataType: TableColumnDataType.Number,
       },
       {
