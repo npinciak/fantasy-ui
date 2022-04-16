@@ -3,14 +3,18 @@
     Last Refresh: <span style="font-weight: bold; color: #777878">{{ fastcastFacade.selectLastRefresh$ | async | date: 'medium' }}</span>
   </p>
 </div>
-<div fxLayout="row" style="margin: 10px 0px">
-  <mat-card style="margin: 10px; height: 175px">
+<div fxLayout="row" fxLayoutAlign="center center" style="margin: 10px 0px">
+  <!-- <mat-card style="margin: 10px; height: 175px">
+    <mat-card-content fxLayout="row" fxLayoutAlign="center"> -->
+  <div style="padding: 0 10px">
     <mat-form-field>
       <mat-select aria-label="" aria-labelledby="" [(value)]="selectedLeagueId" (selectionChange)="onLeaderboardFilterChange($event)">
         <mat-option *ngFor="let league of fastcastLeagueFacade.prettyLeagueList$ | async" [value]="league.id">{{ league.shortName }} </mat-option>
       </mat-select>
     </mat-form-field>
-  </mat-card>
+  </div>
+  <!-- </mat-card-content>
+  </mat-card> -->
 
   <div class="scoreboard-container">
     <ng-container *ngIf="(fastcastEventFacade.eventsByLeagueId$ | async)!(selectedLeagueId) as fastcastEvents">
