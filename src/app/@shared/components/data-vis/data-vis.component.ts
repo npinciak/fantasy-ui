@@ -1,76 +1,50 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
-import { AxisFilter, Chart, ChartConfig, updateData } from '@app/@shared/helpers/graph.helpers';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Chart, ChartConfig, updateData } from '@app/@shared/helpers/graph.helpers';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Stat } from '@app/espn/mlb/models/mlb-stats.model';
 import { FreeAgentStats } from '@app/espn/mlb/selectors/fantasy-baseball-free-agents.selector';
 
 @Component({
   selector: `app-data-vis`,
-  templateUrl: './data-vis.component.html',
+  template: '<div><div id="myBar"></div></div>',
   styleUrls: ['./data-vis.component.scss'],
 })
-export class DataVisComponent implements OnChanges {
+export class DataVisComponent implements OnInit, OnChanges {
   @Input() chartData: FreeAgentStats[];
+  @Input() statFilter: Stat = Stat.AB;
   @Input() xAxisFilterOptions: FilterOptions[];
   @Input() yAxisFilterOptions: FilterOptions[];
 
-  @Input() chartType = 'scatter';
+  chart: Chart<FreeAgentStats>;
 
-  @Output() filterChangeEvent = new EventEmitter<{ xAxis: string; yAxis: string }>();
-
-  readonly AxisFilter = AxisFilter;
-
-  chart = new Chart<FreeAgentStats>({ ...this.chartConfig });
-
-  xAxisFilter: string;
-  yAxisFilter: string;
-
-  filterChange(val: MatSelectChange) {
-    console.log(val);
+  constructor() {
+    this.chart = new Chart<FreeAgentStats>({ ...this.chartConfig });
   }
 
-  // filterChange(value: any, filterType: AxisFilter) {
-  //   switch (filterType) {
-  //     case AxisFilter.xAxis:
-  //       this.xAxisFilter = value;
-  //       this.chart.statFilter = value;
+  ngOnInit(): void {
+    this.chart.createSvg();
+    this.chart.statFilter = this.statFilter;
+    this.chart.data = this.chartData
+      .filter(d => d.stats[this.chart.statFilter] !== 0)
+      .sort((a, b) => b.stats[this.chart.statFilter] - a.stats[this.chart.statFilter]);
 
-  //       this.chart.data = this.chartData
-  //         .filter(d => d.stats[this.chart.statFilter] !== 0 && d.stats[this.chart.statFilter] !== undefined)
-  //         .sort((a, b) => b.stats[this.chart.statFilter] - a.stats[this.chart.statFilter]);
-
-  //       updateData(this.chart);
-
-  //       break;
-  //     case AxisFilter.yAxis:
-  //       this.yAxisFilter = value;
-  //       break;
-  //     default:
-  //       break;
-  //   }
-
-  //   this.filterChangeEvent.emit({ xAxis: this.xAxisFilter, yAxis: this.yAxisFilter });
-  // }
+    updateData(this.chart);
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     for (const propName in changes) {
       if (changes.hasOwnProperty(propName)) {
         switch (propName) {
           case 'chartData':
-            if (!changes.chartData.isFirstChange()) {
-              this.chart.statFilter = Stat.AB;
-              this.chart.data = this.chartData
-                .sort((a, b) => b.stats[this.chart.statFilter] - a.stats[this.chart.statFilter])
-                .filter(d => d.stats[this.chart.statFilter] !== 0);
-
-              this.chart.createSvg();
-
-              updateData(this.chart);
-            }
+            this.chart.statFilter = this.statFilter;
+            this.chart.data = this.chartData
+              .filter(d => d.stats[this.chart.statFilter] !== 0)
+              .sort((a, b) => b.stats[this.chart.statFilter] - a.stats[this.chart.statFilter]);
+            updateData(this.chart);
             break;
-          case 'yAxis':
-          case 'xAxis':
+          case 'statFilter':
+            this.chart.statFilter = changes.statFilter.currentValue;
+            updateData(this.chart);
             break;
           default:
             break;

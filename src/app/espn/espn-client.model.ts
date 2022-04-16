@@ -50,7 +50,7 @@ export enum EspnSport {
 
 export interface EspnClientLeague {
   id: number;
-  schedule: EspnClientScheduleEntityAlt; //EspnClientScheduleEntity[];
+  schedule: EspnClientScheduleEntity[];
   scoringPeriodId: number;
   seasonId: number;
   settings: { name: string };
@@ -67,17 +67,14 @@ export interface EspnClientScheduleProperties {
   teams?: EspnClientScheduleTeam[];
 }
 
-export interface EspnClientScheduleTeam {
+export type EspnClientScheduleEntity = EspnClientScheduleProperties;
+
+export interface EspnClientTeamProperties {
+  id: number;
   teamId: number;
   totalPoints: number;
   totalPointsLive: number;
-}
-
-export type EspnClientScheduleEntity = EspnClientScheduleProperties;
-export type EspnClientScheduleEntityAlt = Record<string, Pick<EspnClientScheduleProperties, 'id' | 'matchupPeriodId' | 'teams'>>;
-
-export interface EspnClientTeam {
-  id: number;
+  rosterForCurrentScoringPeriod: EspnClientRoster;
   abbrev: string;
   location: string;
   nickname: string;
@@ -92,6 +89,12 @@ export interface EspnClientTeam {
   valuesByStat: Record<number, number>;
   record: EspnClientTeamRecordEntity;
 }
+
+export type EspnClientTeam = Omit<EspnClientTeamProperties, 'teamId' | 'totalPoints' | 'totalPointsLive' | 'rosterForCurrentScoringPeriod'>;
+export type EspnClientScheduleTeam = Pick<
+  EspnClientTeamProperties,
+  'teamId' | 'totalPoints' | 'totalPointsLive' | 'rosterForCurrentScoringPeriod'
+>;
 
 type EspnClientTeamRecordEntityProps = 'away' | 'division' | 'home' | 'overall';
 export type EspnClientTeamRecordEntity = { [prop in EspnClientTeamRecordEntityProps]: RecordEntity };

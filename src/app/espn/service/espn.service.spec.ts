@@ -19,8 +19,8 @@ describe('EspnService', () => {
   const scoringPeriodId = 1;
   const leagueId = 1;
   const league = 'nfl';
-  const playerId = 12345;
-  const lookbackDays = 1;
+  const playerId = '12345';
+  const lookbackDays = '1';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -111,7 +111,7 @@ describe('EspnService', () => {
 
       const expected = {};
 
-      service.espnFantasyPlayerNewsBySport(sport, lookbackDays, playerId).subscribe();
+      service.espnFantasyPlayerNewsBySport({ sport, lookbackDays, playerId }).subscribe();
 
       expect(spy).toHaveBeenCalled();
 
@@ -159,25 +159,6 @@ describe('EspnService', () => {
       const request = httpTestingController.expectOne(`${endpoint.oneFeed}/leagues/${league}${params}`);
 
       expect(request.request.method).toBe('GET');
-      request.flush(expected);
-    });
-  });
-
-  describe('espnPositions', () => {
-    it('should make request', () => {
-      const spy = spyOn(service, 'espnPositions').and.callThrough();
-
-      const expected = {};
-
-      service.espnPositions(sport, league).subscribe();
-
-      expect(spy).toHaveBeenCalled();
-
-      const endpoint = new EspnEndpointBuilder(sport);
-      const request = httpTestingController.expectOne(`${endpoint.positions}`);
-
-      expect(request.request.method).toBe('GET');
-
       request.flush(expected);
     });
   });

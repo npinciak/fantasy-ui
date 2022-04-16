@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
 
   xAxisSubject = new BehaviorSubject<any[]>(null);
   yAxisSubject = new BehaviorSubject<any[]>(null);
+  liveScore: Boolean;
 
   constructor(
     readonly espnTableFacade: EspnTableFacade,

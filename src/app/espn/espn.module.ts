@@ -22,6 +22,8 @@ import { HomeComponent as FantasyBaseballHomeComponent } from './mlb/pages/home/
 import { TeamComponent } from './mlb/pages/team/team.component';
 import { FantasyBaseballFreeAgentsState } from './mlb/state/fantasy-baseball-free-agents.state';
 import { FantasyBaseballLeagueState } from './mlb/state/fantasy-baseball-league.state';
+import { FantasyBaseballPlayerState } from './mlb/state/fantasy-baseball-player.state';
+import { FantasyBaseballTeamsLiveState } from './mlb/state/fantasy-baseball-team-live.state';
 import { FantasyBaseballTeamState } from './mlb/state/fantasy-baseball-team.state';
 import { HomeComponent as FantasyFootballHomeComponent } from './nfl/pages/home/home.component';
 import { FantasyFootballLeagueState } from './nfl/state/fantasy-football-league.state';
@@ -56,7 +58,9 @@ const states = [
   FantasyFootballTeamsState,
   FantasyBaseballLeagueState,
   FantasyBaseballTeamState,
+  FantasyBaseballTeamsLiveState,
   FantasyBaseballFreeAgentsState,
+  FantasyBaseballPlayerState,
   EspnFeedState,
 ];
 

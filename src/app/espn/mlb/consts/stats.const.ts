@@ -4,14 +4,18 @@ import { SeasonConst } from '../models/adv-stats.model';
 import { StatCategory, StatsMap, StatType, StatTypePeriodId } from '../models/mlb-stats.model';
 
 export const STAT_PERIOD_FILTER_OPTIONS: FilterOptions[] = [
-  { value: StatTypePeriodGen(StatTypePeriodId.RegularSeason, 2021), label: '2021 Season' },
-  { value: StatTypePeriodGen(StatTypePeriodId.Projected, 2022), label: '2022 Projected' },
-  { value: StatTypePeriodGen(StatTypePeriodId.RegularSeason, 2022), label: '2022 Season' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.RegularSeason, 2021), label: '2021 Season' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Projected, 2022), label: '2022 Projected' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.RegularSeason, 2022), label: '2022 Season' },
 ];
 
-export function StatTypePeriodGen(periodType: StatTypePeriodId, year: number) {
+export function YearToStatTypePeriod(periodType: StatTypePeriodId, year: number) {
   if (periodType === StatTypePeriodId.Projected) return `${periodType}${year}`;
   else return `0${periodType}${year}`;
+}
+
+export function StatTypePeriodToYear(statTypePeriod: string): string {
+  return statTypePeriod.split('').splice(2, 6).join('');
 }
 
 export const MLB_WEIGHTED_STATS: Record<string, SeasonConst> = {

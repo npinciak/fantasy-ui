@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatSelectChange } from '@angular/material/select';
 import { EspnFastcastEventFacade } from '@app/espn/facade/espn-fastcast-event.facade';
 import { EspnFastcastLeagueFacade } from '@app/espn/facade/espn-fastcast-league.facade';
 import { EspnFastcastFacade } from '@app/espn/facade/espn-fastcast.facade';
@@ -9,9 +10,16 @@ import { EspnFastcastFacade } from '@app/espn/facade/espn-fastcast.facade';
   styleUrls: ['./espn-scoreboard.component.scss'],
 })
 export class EspnScoreboardComponent {
+  selectedLeagueId: string = '10';
+
   constructor(
     readonly fastcastFacade: EspnFastcastFacade,
     readonly fastcastEventFacade: EspnFastcastEventFacade,
     readonly fastcastLeagueFacade: EspnFastcastLeagueFacade
   ) {}
+
+  onLeaderboardFilterChange(event: MatSelectChange) {
+    this.selectedLeagueId = event.value;
+    this.fastcastEventFacade.fastcastLeagueChangeLeaderboard(event.value);
+  }
 }

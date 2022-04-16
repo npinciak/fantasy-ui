@@ -56,8 +56,8 @@ export class EspnService {
     };
   }
 
-  static transformFastcastCompetitorsToTeams = (data: CompetitorsImport[], situation: SituationImport): FastcastEventTeamMap => {
-    return data.reduce((acc, val) => {
+  static transformFastcastCompetitorsToTeams(data: CompetitorsImport[], situation: SituationImport): FastcastEventTeamMap {
+    return data?.reduce((acc, val) => {
       if (!val.homeAway) {
         return null;
       }
@@ -80,28 +80,33 @@ export class EspnService {
       };
       return acc;
     }, {});
-  };
+  }
 
   static transformEventImportToFastcastEvent(eventsImport: EventsImport[]): FastcastEvent[] {
-    return eventsImport.map(event => ({
-      id: event.id,
-      leagueId: transformUidToId(event?.uid),
-      timestamp: new Date(event.date).getTime(),
-      state: event.fullStatus.type.state,
-      completed: event.fullStatus.type.completed,
-      status: event.status,
-      name: event.name,
-      shortname: event.shortName,
-      location: event.location,
-      clock: event.clock,
-      summary: event.summary,
-      period: event.period,
-      note: event.note,
-      teams: EspnService.transformFastcastCompetitorsToTeams(event.competitors, event.situation),
-      isHalftime: event.fullStatus.type?.id ? Number(event.fullStatus?.type?.id) === GameStatusId.Halftime : false,
-      downDistancePositionText: transformDownDistancePositionText(event.situation?.shortDownDistanceText, event.situation?.possessionText),
-      lastPlay: event.situation?.lastPlay ?? null,
-    }));
+    return eventsImport?.map(event => {
+      return {
+        id: event?.id,
+        leagueId: transformUidToId(event?.uid),
+        timestamp: new Date(event?.date).getTime(),
+        state: event?.fullStatus.type.state,
+        completed: event?.fullStatus.type.completed,
+        status: event?.status,
+        name: event?.name,
+        shortname: event?.shortName,
+        location: event?.location,
+        clock: event?.clock,
+        summary: event?.summary,
+        period: event?.period,
+        note: event?.note,
+        teams: EspnService.transformFastcastCompetitorsToTeams(event?.competitors, event?.situation),
+        isHalftime: event?.fullStatus.type?.id ? Number(event?.fullStatus?.type?.id) === GameStatusId.Halftime : false,
+        downDistancePositionText: transformDownDistancePositionText(
+          event?.situation?.shortDownDistanceText,
+          event?.situation?.possessionText
+        ),
+        lastPlay: event?.situation?.lastPlay ?? null,
+      };
+    });
   }
 
   static transformLeaguesImportToLeagues(leaguesImport: LeaguesImport): League {

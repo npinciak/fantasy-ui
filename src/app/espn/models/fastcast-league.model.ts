@@ -6,3 +6,4 @@ export interface FastcastLeagueProperties {
 }
 
 export type FastcastLeague = FastcastLeagueProperties & League;
+export type FastcastLeagueMap = Record<string, FastcastLeague>;

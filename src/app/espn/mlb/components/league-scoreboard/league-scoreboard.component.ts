@@ -6,6 +6,7 @@ import { BaseballTeam } from '../../models/baseball-team.model';
 @Component({
   selector: 'app-league-scoreboard',
   templateUrl: './league-scoreboard.component.html',
+  styleUrls: ['./league-scoreboard.component.scss'],
 })
 export class LeagueScoreboardComponent {
   @Input() teams: BaseballTeam[];
@@ -16,5 +17,21 @@ export class LeagueScoreboardComponent {
 
   viewTeam(id: string): void {
     this.router.navigate([UrlBuilder.espnMlbLeagueTeam(this.leagueId, id)]);
+  }
+
+  getTooltipText(team: BaseballTeam): string {
+    if (team.liveScore - team.totalPoints > 0) {
+      return `Up from ${team.totalPoints}`;
+    } else if (team.liveScore - team.totalPoints < 0) {
+      return `Down from ${team.totalPoints}`;
+    }
+  }
+
+  getColor(team: BaseballTeam): string {
+    if (team.liveScore - team.totalPoints > 0) {
+      return 'green';
+    } else if (team.liveScore - team.totalPoints < 0) {
+      return 'red';
+    }
   }
 }

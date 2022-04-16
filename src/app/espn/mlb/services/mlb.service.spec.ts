@@ -102,9 +102,10 @@ describe('MlbService', () => {
 
   describe('transformEspnClientTeamListToTeamList', () => {
     const teams = mockLeagueResponse.teams;
+    const schedule = {}; // mockLeagueResponse
 
     it('should transform data', () => {
-      const actual = MlbService.transformEspnClientTeamListToTeamList(teams);
+      const actual = MlbService.transformEspnClientTeamListToTeamList(teams, schedule);
       const expected = [MOCK_BASEBALL_TEAM_1];
 
       expect(actual).toEqual(expected);
