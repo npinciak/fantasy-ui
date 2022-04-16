@@ -5,6 +5,7 @@ import { SharedModule } from '@app/@shared/shared.module';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
 import { AddLeagueFormComponent } from './components/add-league-form/add-league-form.component';
+import { EspnFastcastEventMlbComponent } from './components/espn-fastcast-event-mlb/espn-fastcast-event-mlb.component';
 import { EspnListTeamComponent } from './components/espn-list-team/espn-list-team.component';
 import { EspnRoutingModule } from './espn-routing.module';
 import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
@@ -34,6 +35,7 @@ import { EspnFeedState } from './state/espn-feed.state';
 
 const components = [
   EspnHomeComponent,
+  EspnFastcastEventMlbComponent,
   FantasyBaseballHomeComponent,
   FreeAgentsComponent,
   StandingsComponent,
@@ -77,7 +79,7 @@ const modules = [
 @NgModule({
   declarations: components,
   imports: modules,
-  exports: [StandingsComponent, RosterComponent],
+  exports: [StandingsComponent, RosterComponent, EspnFastcastEventMlbComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class EspnModule {}
