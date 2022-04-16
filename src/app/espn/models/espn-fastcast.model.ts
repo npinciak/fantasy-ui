@@ -244,7 +244,35 @@ export interface Situation {
   homeTimeouts: number;
   awayTimeouts: number;
   possession: string;
+  balls: number;
+  strikes: number;
+  outs: number;
+  onFirst: boolean;
+  onSecond: boolean;
+  onThird: boolean;
 }
+
+export type NflSituation = Situation & {
+  down: number;
+  yardLine: number;
+  distance: number;
+  downDistanceText: string;
+  shortDownDistanceText: string;
+  possessionText: string;
+  isRedZone: boolean;
+  homeTimeouts: number;
+  awayTimeouts: number;
+  possession: string;
+};
+
+export type MlbSituation = {
+  balls: number;
+  strikes: number;
+  outs: number;
+  onFirst: boolean;
+  onSecond: boolean;
+  onThird: boolean;
+};
 
 export interface LastPlay {
   id: string;

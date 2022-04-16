@@ -84,6 +84,15 @@ export class EspnService {
 
   static transformEventImportToFastcastEvent(eventsImport: EventsImport[]): FastcastEvent[] {
     return eventsImport?.map(event => {
+      const mlbSituation = {
+        balls: event?.situation?.balls,
+        strikes: event.situation?.strikes,
+        outs: event?.situation?.outs,
+        onFirst: event?.situation?.onFirst,
+        onSecond: event?.situation?.onSecond,
+        onThird: event?.situation?.onThird,
+      };
+
       return {
         id: event?.id,
         leagueId: transformUidToId(event?.uid),
@@ -105,6 +114,7 @@ export class EspnService {
           event?.situation?.possessionText
         ),
         lastPlay: event?.situation?.lastPlay ?? null,
+        mlbSituation,
       };
     });
   }
