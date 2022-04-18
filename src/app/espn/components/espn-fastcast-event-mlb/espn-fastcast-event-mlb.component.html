@@ -1,1 +1,15 @@
-<p>espn-fastcast-event-mlb works!</p>
+<ng-container *ngIf="eventInProgress">
+  <div fxLayout="row" fxLayoutAlign="start center" style="width: 100%; height: 200px">
+    <div fxFlex>
+      <div>Balls:{{ event.mlbSituation?.balls }}</div>
+      <div>Strikes:{{ event.mlbSituation?.strikes }}</div>
+      <div>Outs:{{ event.mlbSituation?.outs }}</div>
+      <div>{{ event.mlbSituation.batter?.athlete.fullName }} {{ event.mlbSituation.batter?.summary }}</div>
+    </div>
+    <div fxFlex>
+      <span [ngClass]="{ 'base-active': event.mlbSituation.onThird }" id="thirdBase" class="base-default" style="top: 15px"></span>
+      <span [ngClass]="{ 'base-active': event.mlbSituation.onSecond }" id="secondBase" class="base-default" style="top: -10px; margin: 0 auto"></span>
+      <span [ngClass]="{ 'base-active': event.mlbSituation.onFirst }" id="firstBase" class="base-default" style="top: 15px"></span>
+    </div>
+  </div>
+</ng-container>

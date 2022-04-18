@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { LeagueIdMap } from '@app/espn/espn-helpers';
 import { FastcastEvent } from '@app/espn/models/fastcast-event.model';
 
 @Component({
@@ -9,4 +10,6 @@ import { FastcastEvent } from '@app/espn/models/fastcast-event.model';
 export class EspnScoreboardCardComponent {
   @Input() event: FastcastEvent;
   @Input() isTournament: boolean;
+
+  readonly LeagueIdMap = LeagueIdMap;
 }

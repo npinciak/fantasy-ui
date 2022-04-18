@@ -1,5 +1,5 @@
-<div fxLayout="row" fxLayoutAlign="center center" style="margin: 10px 0px">
-  <div fxFlex="10">
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="margin-bottom: 20px">
+  <div fxFlex.gt-xs="10" fxFlex.xs="100">
     <p style="font-size: 12px" *ngIf="fastcastFacade.selectLastRefresh$ | async">
       Updated at: <span style="font-weight: bold; color: #777878">{{ fastcastFacade.selectLastRefresh$ | async | date: 'short' }}</span>
     </p>
@@ -9,13 +9,11 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <div fxFlex="90">
-    <div class="scoreboard-container">
-      <ng-container *ngIf="(fastcastEventFacade.eventsByLeagueId$ | async)!(selectedLeagueId) as fastcastEvents">
-        <ng-container *ngFor="let event of fastcastEvents">
-          <app-espn-scoreboard-card [isTournament]="event.isTournament" [event]="event"></app-espn-scoreboard-card>
-        </ng-container>
+  <div fxFlex.gt-xs="90" fxFlex.xs="100" class="scoreboard-container">
+    <ng-container *ngIf="(fastcastEventFacade.eventsByLeagueId$ | async)!(selectedLeagueId) as fastcastEvents">
+      <ng-container *ngFor="let event of fastcastEvents">
+        <app-espn-scoreboard-card [isTournament]="event.isTournament" [event]="event"></app-espn-scoreboard-card>
       </ng-container>
-    </div>
+    </ng-container>
   </div>
 </div>
