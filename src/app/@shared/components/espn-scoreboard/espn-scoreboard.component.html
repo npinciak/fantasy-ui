@@ -1,26 +1,21 @@
-<div fxLayout="row" fxLayoutAlign="end" style="margin: 10px 0px">
-  <p style="font-size: 14px">
-    Last Refresh: <span style="font-weight: bold; color: #777878">{{ fastcastFacade.selectLastRefresh$ | async | date: 'medium' }}</span>
-  </p>
-</div>
 <div fxLayout="row" fxLayoutAlign="center center" style="margin: 10px 0px">
-  <!-- <mat-card style="margin: 10px; height: 175px">
-    <mat-card-content fxLayout="row" fxLayoutAlign="center"> -->
-  <div style="padding: 0 10px">
+  <div fxFlex="10">
+    <p style="font-size: 12px" *ngIf="fastcastFacade.selectLastRefresh$ | async">
+      Updated at: <span style="font-weight: bold; color: #777878">{{ fastcastFacade.selectLastRefresh$ | async | date: 'short' }}</span>
+    </p>
     <mat-form-field>
       <mat-select aria-label="" aria-labelledby="" [(value)]="selectedLeagueId" (selectionChange)="onLeaderboardFilterChange($event)">
         <mat-option *ngFor="let league of fastcastLeagueFacade.prettyLeagueList$ | async" [value]="league.id">{{ league.shortName }} </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
-  <!-- </mat-card-content>
-  </mat-card> -->
-
-  <div class="scoreboard-container">
-    <ng-container *ngIf="(fastcastEventFacade.eventsByLeagueId$ | async)!(selectedLeagueId) as fastcastEvents">
-      <ng-container *ngFor="let event of fastcastEvents">
-        <app-espn-scoreboard-card [isTournament]="event.isTournament" [event]="event"></app-espn-scoreboard-card>
+  <div fxFlex="90">
+    <div class="scoreboard-container">
+      <ng-container *ngIf="(fastcastEventFacade.eventsByLeagueId$ | async)!(selectedLeagueId) as fastcastEvents">
+        <ng-container *ngFor="let event of fastcastEvents">
+          <app-espn-scoreboard-card [isTournament]="event.isTournament" [event]="event"></app-espn-scoreboard-card>
+        </ng-container>
       </ng-container>
-    </ng-container>
+    </div>
   </div>
 </div>

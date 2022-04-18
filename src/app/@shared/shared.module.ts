@@ -11,6 +11,7 @@ import { EspnScoreboardComponent } from './components/espn-scoreboard/espn-score
 import { NoDataComponent } from './components/no-data/no-data.component';
 import { ScrollableTableComponent } from './components/scrollable-table/scrollable-table.component';
 import { StickyTableCellComponent } from './components/sticky-table-cell/sticky-table-cell.component';
+import { MlbStatPipe } from './pipes/mlb-stat.pipe';
 
 @NgModule({
   declarations: [
@@ -22,9 +23,11 @@ import { StickyTableCellComponent } from './components/sticky-table-cell/sticky-
     EspnScoreboardCardComponent,
     EspnScoreboardCardTeamComponent,
     DataVisComponent,
+    MlbStatPipe,
   ],
   imports: [RouterModule, MaterialModule, FlexLayoutModule, CommonModule],
   exports: [
+    MlbStatPipe,
     DataVisComponent,
     NoDataComponent,
     ScrollableTableComponent,

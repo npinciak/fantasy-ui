@@ -11,7 +11,7 @@
                 <app-player-info-col [player]="data"></app-player-info-col>
               </ng-container>
               <ng-template #normalCell>
-                {{ col.dataType === TableColumnDataType.number ? (col?.cellData(data) | number: '1.2') : col?.cellData(data) }}
+                {{ col.dataType === TableColumnDataType.number ? (col?.cellData(data) | mlbStat: 'number' | number: '1.2') : col?.cellData(data) }}
               </ng-template>
             </td>
           </ng-container>
