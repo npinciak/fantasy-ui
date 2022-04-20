@@ -5,7 +5,6 @@ import { SharedModule } from '@app/@shared/shared.module';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
 import { AddLeagueFormComponent } from './components/add-league-form/add-league-form.component';
-import { EspnFastcastEventMlbComponent } from './components/espn-fastcast-event-mlb/espn-fastcast-event-mlb.component';
 import { EspnListTeamComponent } from './components/espn-list-team/espn-list-team.component';
 import { EspnRoutingModule } from './espn-routing.module';
 import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
@@ -14,6 +13,7 @@ import { LineupCardComponent } from './mlb/components/lineup-card/lineup-card.co
 import { PlayerComponent } from './mlb/components/player/player.component';
 import { PlayerInfoColComponent } from './mlb/components/roster/player-info-col/player-info-col.component';
 import { PlayerRatingColComponent } from './mlb/components/roster/player-rating-col/player-rating-col.component';
+import { PlayerTrendingColComponent } from './mlb/components/roster/player-trending-col/player-trending-col.component';
 import { RosterComponent } from './mlb/components/roster/roster.component';
 import { RankingColComponent } from './mlb/components/standings/ranking-col/ranking-col.component';
 import { StandingsComponent } from './mlb/components/standings/standings.component';
@@ -33,9 +33,9 @@ import { FantasyFootballTeamsState } from './nfl/state/fantasy-football-teams.st
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 import { EspnFeedState } from './state/espn-feed.state';
 
-const components = [
+const declarations = [
   EspnHomeComponent,
-  EspnFastcastEventMlbComponent,
+
   FantasyBaseballHomeComponent,
   FreeAgentsComponent,
   StandingsComponent,
@@ -43,6 +43,7 @@ const components = [
   RosterComponent,
   PlayerComponent,
   PlayerInfoColComponent,
+  PlayerTrendingColComponent,
   PlayerRatingColComponent,
   TeamInfoColComponent,
   RankingColComponent,
@@ -66,7 +67,7 @@ const states = [
   EspnFeedState,
 ];
 
-const modules = [
+const imports = [
   CommonModule,
   EspnRoutingModule,
   MaterialModule,
@@ -76,10 +77,12 @@ const modules = [
   NgxsModule.forFeature(states),
 ];
 
+const exports = [StandingsComponent, RosterComponent];
+
 @NgModule({
-  declarations: components,
-  imports: modules,
-  exports: [StandingsComponent, RosterComponent, EspnFastcastEventMlbComponent],
+  declarations,
+  imports,
+  exports,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class EspnModule {}
