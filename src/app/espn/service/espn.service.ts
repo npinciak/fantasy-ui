@@ -85,6 +85,8 @@ export class EspnService {
   static transformEventImportToFastcastEvent(eventsImport: EventsImport[]): FastcastEvent[] {
     return eventsImport?.map(event => {
       const mlbSituation = {
+        batter: event?.situation?.batter,
+        pitcher: event?.situation?.pitcher,
         balls: event?.situation?.balls,
         strikes: event.situation?.strikes,
         outs: event?.situation?.outs,

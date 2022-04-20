@@ -250,6 +250,14 @@ export interface Situation {
   onFirst: boolean;
   onSecond: boolean;
   onThird: boolean;
+  batter: MlbSituationAthlete;
+  pitcher: MlbSituationAthlete;
+}
+
+export interface MlbSituationAthlete {
+  playerId: number;
+  summary: string;
+  athlete: Athlete;
 }
 
 export type NflSituation = Situation & {
@@ -263,15 +271,6 @@ export type NflSituation = Situation & {
   homeTimeouts: number;
   awayTimeouts: number;
   possession: string;
-};
-
-export type MlbSituation = {
-  balls: number;
-  strikes: number;
-  outs: number;
-  onFirst: boolean;
-  onSecond: boolean;
-  onThird: boolean;
 };
 
 export interface LastPlay {
