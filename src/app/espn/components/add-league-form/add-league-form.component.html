@@ -1,25 +1,54 @@
-<h3>Add Public League By ID</h3>
+<div>
+  <h3>Add Public League By ID</h3>
 
-<mat-form-field>
-  <mat-select #fantasySport [value]="sportSelection" (selectionChange)="fantasySportChange($event.value)">
-    <mat-option value="MLB">Baseball</mat-option>
-  </mat-select>
-  <mat-hint>Fantasy Sport</mat-hint>
-</mat-form-field>
+  <app-dropdown-filter
+    selectedOption="Baseball"
+    [filterItems]="[{ value: 'mlb', label: 'Baseball' }]"
+    (filterUpdate)="fantasySportChange($event.value)"
+  ></app-dropdown-filter>
 
-<mat-form-field>
-  <input matInput #leagueIdInput placeholder="Ex. 21345679" autocomplete="off" />
-  <mat-hint>League Id</mat-hint>
-</mat-form-field>
+  <mat-form-field>
+    <input matInput #leagueIdInput placeholder="Ex. 21345679" autocomplete="off" />
+    <mat-hint>League Id</mat-hint>
+  </mat-form-field>
 
-<button mat-flat-button color="primary" (click)="onAddLeague()">Add</button>
+  <button mat-flat-button color="primary" (click)="onAddLeague()">Add</button>
+</div>
 
-<mat-list>
-  <mat-list-item *ngFor="let league of leagues">
-    <h3 matLine>{{ league.sport }} - {{ league.leagueId }}</h3>
-
-    <button class="btn-action" mat-flat-button color="primary" [routerLink]="['/espn/mlb/', league.leagueId]">Go</button>
-
-    <button mat-flat-button color="primary" (click)="onRemoveLeague(league.leagueId)">Remove</button>
-  </mat-list-item>
-</mat-list>
+<div style="margin-top: 20px" fxLayout="row" fxLayoutGap="20px">
+  <div *ngFor="let league of leagues">
+    <mat-card style="display: flex" class="example-card">
+      <mat-card-header>
+        <div
+          style="
+            background-image: url('https://a.espncdn.com/redesign/assets/img/sprites/transitional-secondary-navigation-icons-v4.png');
+            background-repeat: no-repeat;
+            background-position: -4px -273px;
+            width: 32px;
+            height: 32px;
+            position: absolute;
+          "
+        ></div>
+      </mat-card-header>
+      <mat-card-content style="width: 100%; display: flex; align-items: center">
+        <div style="width: 100%">
+          <mat-card-title>{{ league.sport }}</mat-card-title>
+          <mat-card-subtitle>{{ league.leagueId }}</mat-card-subtitle>
+        </div>
+        <div>
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="League menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/espn/mlb/', league.leagueId]">
+              <span>View</span>
+            </button>
+            <button mat-menu-item (click)="onRemoveLeague(league.leagueId)">
+              <span>Remove</span>
+            </button>
+          </mat-menu>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

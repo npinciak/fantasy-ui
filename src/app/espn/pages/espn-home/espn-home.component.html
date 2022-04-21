@@ -1,5 +1,5 @@
 <div
-  gdAreas.xs="sidebar | content | footer"
+  gdAreas.xs="content | footer"
   gdGap="1em"
   gdColumns.xs="none"
   gdAreas.sm="sidebar content | footer footer"
@@ -8,7 +8,7 @@
   gdGap.gt-sm="20px"
   [ngStyle]="{ 'max-width': 'auto' }"
 >
-  <div class="blocks two" gdArea="sidebar">
+  <div gdArea="sidebar">
     <!-- <mat-form-field>
       <mat-select aria-label="" aria-labelledby="" (selectionChange)="fastcastEventFacade.fastcastLeagueChangeSidebar($event)">
         <mat-option *ngFor="let league of fastcastLeagueFacade.prettyLeagueList$ | async" [value]="league.id">{{ league.shortName }} </mat-option>
@@ -17,7 +17,7 @@
     <!-- <ng-container *ngIf="!(fastcastEventFacade.fastcastFilteredEventsLeaderboard$ | async); else filteredEvents"> -->
 
     <!-- <ng-container *ngFor="let event of fastcastEventFacade.fastcastFilteredEventsSidebar$ | async"> -->
-    <ng-container *ngFor="let league of fastcastLeagueFacade.prettyLeagueList$ | async">
+    <!-- <ng-container *ngFor="let league of fastcastLeagueFacade.prettyLeagueList$ | async">
       <ng-container *ngFor="let event of fastcastEventFacade.fastcastEventsByLeagueId(league.id)">
         <div fxLayout="col" fxLayoutGap="10px">
           <div fxFlex.gt-md="100" fxFlex.lt-md="100" fxFlex.lt-sm="100">
@@ -46,15 +46,15 @@
           {{ event?.isHalftime ? 'Halftime' : null }}
         </ng-template>
       </ng-container>
-    </ng-container>
+    </ng-container> -->
     <!-- </ng-container> -->
   </div>
-  <div class="blocks four" gdArea="content">
+  <div gdArea="content">
     <app-add-league-form
       [leagues]="fantasyLeagueFacade.localStorageLeagueList$ | async"
       (addLeague)="onAddLeague($event)"
       (removeLeague)="onRemoveLeague($event)"
     ></app-add-league-form>
   </div>
-  <div class="blocks five" gdArea="footer"></div>
+  <div gdArea="footer"></div>
 </div>

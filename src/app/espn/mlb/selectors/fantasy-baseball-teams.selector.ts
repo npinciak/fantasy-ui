@@ -4,7 +4,6 @@ import { Selector } from '@ngxs/store';
 import { AdvStats } from '../class/advStats.class';
 import { MLB_LINEUP, MLB_LINEUP_MAP } from '../consts/lineup.const';
 import { MLB_STATS_KEYS, MLB_STATS_MAP, MLB_WEIGHTED_STATS } from '../consts/stats.const';
-import { statsKeyMap } from '../helpers';
 import { BaseballPlayer, BaseballPlayerBatterStatsRow } from '../models/baseball-player.model';
 import { BaseballTeamLive, BaseballTeamMap, BaseballTeamTableRow } from '../models/baseball-team.model';
 import { Stat } from '../models/mlb-stats.model';
@@ -15,10 +14,7 @@ import { FantasyBaseballTeamState } from '../state/fantasy-baseball-team.state';
 export class FantasyBaseballTeamsSelector {
   @Selector([FantasyBaseballTeamState.map])
   static selectTeamList(teams: BaseballTeamMap): BaseballTeamTableRow[] {
-    return Object.values(teams).map(t => ({
-      ...t,
-      rotoStatsMap: statsKeyMap(t.rotoStats),
-    }));
+    return Object.values(teams);
   }
 
   @Selector([FantasyBaseballTeamState.map, FantasyBaseballTeamsLiveState.selectEntityById])
@@ -41,10 +37,7 @@ export class FantasyBaseballTeamsSelector {
 
   @Selector([FantasyBaseballTeamState.map])
   static selectTeamById(teams: BaseballTeamMap): (id: string) => BaseballTeamTableRow {
-    return (id: string) => ({
-      ...teams[id],
-      rotoStatsMap: statsKeyMap(teams[id].rotoStats),
-    });
+    return (id: string) => teams[id];
   }
 
   @Selector([FantasyBaseballTeamsSelector.selectTeamById])

@@ -15,7 +15,7 @@
                   <app-player-trending-col [data]="col?.cellData(data)"></app-player-trending-col>
                 </ng-template>
                 <ng-template [ngSwitchDefault]>
-                  {{ col.dataType === TableColumnDataType.number ? (col?.cellData(data) | mlbStat: 'number' | number: '1.2') : col?.cellData(data) }}
+                  {{ col.dataType === TableColumnDataType.number ? (col?.cellData(data) | mlbStat: 'number' | number: '1.0-3') : col?.cellData(data) }}
                 </ng-template>
               </ng-container>
             </td>
