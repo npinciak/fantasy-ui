@@ -1,3 +1,5 @@
+@import '../../../../theme/theme-variables.scss';
+
 .base-default {
   border: 1px solid #737a85;
   position: relative;
@@ -17,5 +19,5 @@
 }
 
 .base-active {
-  background-color: yellow;
+  background-color: #01579b;
 }

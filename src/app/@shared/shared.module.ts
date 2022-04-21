@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
+import { EspnFastcastEventMlbComponent } from '@app/espn/components/espn-fastcast-event-mlb/espn-fastcast-event-mlb.component';
 import { EspnScoreboardCardTeamComponent } from '@app/espn/components/espn-scoreboard-card-team/espn-scoreboard-card-team.component';
 import { EspnScoreboardCardComponent } from '@app/espn/components/espn-scoreboard-card/espn-scoreboard-card.component';
 import { MaterialModule } from '@app/material.module';
@@ -22,6 +23,7 @@ import { MlbStatPipe } from './pipes/mlb-stat.pipe';
     EspnScoreboardComponent,
     EspnScoreboardCardComponent,
     EspnScoreboardCardTeamComponent,
+    EspnFastcastEventMlbComponent,
     DataVisComponent,
     MlbStatPipe,
   ],
@@ -36,6 +38,7 @@ import { MlbStatPipe } from './pipes/mlb-stat.pipe';
     EspnScoreboardComponent,
     EspnScoreboardCardComponent,
     EspnScoreboardCardTeamComponent,
+    EspnFastcastEventMlbComponent,
   ],
 })
 export class SharedModule {}
