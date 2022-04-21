@@ -10,12 +10,17 @@ export class DailyFantasySlateSelectors {
     return Object.values(slates);
   }
 
+  @Selector([DailyFantasySlateState.slateMap, DailyFantasySlateState.site])
+  static selectSlatesBySiteList(slates: SlateMasterMap, site: string): SiteSlateEntity[] {
+    return Object.values(slates[site]);
+  }
+
   @Selector([DailyFantasySlateSelectors.selectSlateList])
   static slatesEmpty(slates: ClientSiteSlateEntity[]): boolean {
     return slates.length === 0;
   }
 
-  @Selector([DailyFantasySlateSelectors.selectSlateList])
+  @Selector([DailyFantasySlateSelectors.selectSlatesBySiteList])
   static selectSlateByType(slates: SiteSlateEntity[]): SlateTypeMap {
     return {
       [ClientSlateTypes.Classic]: slates.filter(slate => slate.type === ClientSlateTypes.Classic),
