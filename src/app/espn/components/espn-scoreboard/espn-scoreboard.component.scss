@@ -1,7 +1,11 @@
+mat-form-field {
+  width: 100%;
+}
+
 .scoreboard-container {
   max-width: 100%;
   display: flex;
-  overflow: scroll;
+  overflow: auto;
 }
 
 mat-card.league-separator {

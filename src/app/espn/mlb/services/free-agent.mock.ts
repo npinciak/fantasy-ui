@@ -93,6 +93,7 @@ export const ESPN_BASEBALL_FREEAGENT_1 = {
           '76': 0,
           '77': 0,
           '81': 1,
+          '101': 0.33,
         },
       },
     ],

@@ -1,7 +1,7 @@
 <table style="width: 100%">
   <tr [ngStyle]="{ color: team?.color }" style="text-align: left">
     <td class="game-team-logo">
-      <img height="40px" [src]="team?.logo" />
+      <img height="40px" [alt]="team.name" [src]="team?.logo" />
     </td>
     <td>
       <table style="width: 100%">
@@ -17,7 +17,9 @@
         </tr>
         <tr>
           <td>
-            <small>{{ team?.record }}</small>
+            <ng-container *ngIf="!isTournament; else tournamentAggregate">
+              <small>{{ team?.record }}</small>
+            </ng-container>
           </td>
         </tr>
       </table>
@@ -29,3 +31,6 @@
     </td>
   </tr>
 </table>
+<ng-template #tournamentAggregate>
+  <small>Aggregate: {{ team?.aggregateScore }}</small>
+</ng-template>

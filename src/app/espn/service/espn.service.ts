@@ -56,8 +56,8 @@ export class EspnService {
     };
   }
 
-  static transformFastcastCompetitorsToTeams = (data: CompetitorsImport[], situation: SituationImport): FastcastEventTeamMap => {
-    return data.reduce((acc, val) => {
+  static transformFastcastCompetitorsToTeams(data: CompetitorsImport[], situation: SituationImport): FastcastEventTeamMap {
+    return data?.reduce((acc, val) => {
       if (!val.homeAway) {
         return null;
       }
@@ -71,34 +71,54 @@ export class EspnService {
         name: val.name ?? val.abbreviation,
         color: val.color === 'ffffff' || val.color === 'ffff00' ? '#1a1a1a' : `#${val.color}`,
         altColor: `#${val.alternateColor}`,
-        record: val.record,
+        record: Array.isArray(val.record) ? null : val.record,
         rank: val.rank ?? null,
         winPct: null,
+        aggregateScore: val.aggregateScore ?? null,
         hasPossession: situation?.possession === val.id,
         isRedzone: (situation?.possession === val.id && situation?.isRedZone) ?? false,
       };
       return acc;
     }, {});
-  };
+  }
 
   static transformEventImportToFastcastEvent(eventsImport: EventsImport[]): FastcastEvent[] {
-    return eventsImport.map(event => ({
-      id: event.id,
-      leagueId: transformUidToId(event?.uid),
-      timestamp: new Date(event.date).getTime(),
-      state: event.fullStatus.type.state,
-      status: event.status,
-      name: event.name,
-      shortname: event.shortName,
-      location: event.location,
-      clock: event.clock,
-      summary: event.summary,
-      period: event.period,
-      teams: EspnService.transformFastcastCompetitorsToTeams(event.competitors, event.situation),
-      isHalftime: event.fullStatus.type?.id ? Number(event.fullStatus?.type?.id) === GameStatusId.Halftime : false,
-      downDistancePositionText: transformDownDistancePositionText(event.situation?.shortDownDistanceText, event.situation?.possessionText),
-      lastPlay: event.situation?.lastPlay ?? null,
-    }));
+    return eventsImport?.map(event => {
+      const mlbSituation = {
+        batter: event?.situation?.batter,
+        pitcher: event?.situation?.pitcher,
+        balls: event?.situation?.balls,
+        strikes: event.situation?.strikes,
+        outs: event?.situation?.outs,
+        onFirst: event?.situation?.onFirst,
+        onSecond: event?.situation?.onSecond,
+        onThird: event?.situation?.onThird,
+      };
+
+      return {
+        id: event?.id,
+        leagueId: transformUidToId(event?.uid),
+        timestamp: new Date(event?.date).getTime(),
+        state: event?.fullStatus.type.state,
+        completed: event?.fullStatus.type.completed,
+        status: event?.status,
+        name: event?.name,
+        shortname: event?.shortName,
+        location: event?.location,
+        clock: event?.clock,
+        summary: event?.summary,
+        period: event?.period,
+        note: event?.note,
+        teams: EspnService.transformFastcastCompetitorsToTeams(event?.competitors, event?.situation),
+        isHalftime: event?.fullStatus.type?.id ? Number(event?.fullStatus?.type?.id) === GameStatusId.Halftime : false,
+        downDistancePositionText: transformDownDistancePositionText(
+          event?.situation?.shortDownDistanceText,
+          event?.situation?.possessionText
+        ),
+        lastPlay: event?.situation?.lastPlay ?? null,
+        mlbSituation,
+      };
+    });
   }
 
   static transformLeaguesImportToLeagues(leaguesImport: LeaguesImport): League {
@@ -108,6 +128,7 @@ export class EspnService {
       name: leaguesImport.name,
       abbreviation: leaguesImport.abbreviation ?? leaguesImport.name,
       shortName: leaguesImport.shortName ?? leaguesImport.name,
+      isTournament: leaguesImport.isTournament,
       sport: null,
     };
   }
@@ -154,14 +175,14 @@ export class EspnService {
   /**
    * Fetch player news
    *
-   * @param numDays Days back for news
+   * @param lookbackDays Days back for news
    * @param playerId Player Id
    * @param sport
    * @returns Player news
    */
-  espnFantasyPlayerNewsBySport(sport: FantasySports, numDays: number, playerId: number): Observable<unknown> {
-    const endpoint = new EspnEndpointBuilder(sport);
-    const params = new HttpParams().set(EspnParamFragment.Days, numDays.toString()).set(EspnParamFragment.PlayerId, playerId.toString());
+  espnFantasyPlayerNewsBySport(data: { sport: FantasySports; lookbackDays: string; playerId: string }): Observable<unknown> {
+    const endpoint = new EspnEndpointBuilder(data.sport);
+    const params = new HttpParams().set(EspnParamFragment.Days, data.lookbackDays).set(EspnParamFragment.PlayerId, data.playerId);
     return this.api.get(endpoint.fantasyPlayerNews, { params });
   }
 
@@ -186,11 +207,6 @@ export class EspnService {
       .set(EspnParamFragment.ScoringPeriod, scoringPeriod.toString())
       .set(EspnParamFragment.View, EspnViewParamFragment.PlayerInfo);
     return this.api.get<{ players: EspnClientFreeAgent[] }>(endpoint.fantasyLeague, { params, headers });
-  }
-
-  espnPositions(sport, league) {
-    const endpoint = new EspnEndpointBuilder(sport);
-    return this.api.get(endpoint.positions);
   }
 
   /**

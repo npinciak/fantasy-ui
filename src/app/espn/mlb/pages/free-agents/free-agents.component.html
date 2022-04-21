@@ -9,41 +9,32 @@
   gdGap.gt-sm="20px"
   [ngStyle]="{ 'max-width': 'auto' }"
 >
-  <!-- <div class="blocks two" gdArea="sidebar"></div> -->
-  <div class="blocks four" gdArea="content">
+  <div gdArea="content">
     <div fxLayout="row">
       <div>
-        <app-data-vis
-          [xAxisFilterOptions]="fantasyBaseballFreeAgentsFacade.selectStatListFilters$ | async"
-          [yAxisFilterOptions]="[]"
-          [chartData]="freeAgentDynamicLineChartData"
-          [chartType]="'bar'"
-          (filterChangeEvent)="filterChangeFreeAgent($event)"
-        ></app-data-vis>
-      </div>
-      <div>
-        <app-data-vis
+        <app-dropdown-filter title="Stat Period" [filterItems]="STAT_PERIOD_FILTER_OPTIONS" (filterUpdate)="scoringPeriodIdChange($event)"></app-dropdown-filter>
+
+        <!-- <app-data-vis
           [xAxisFilterOptions]="fantasyBaseballFreeAgentsFacade.selectStatListFilters$ | async"
           [yAxisFilterOptions]="fantasyBaseballFreeAgentsFacade.selectStatListFilters$ | async"
-          [chartData]="freeAgentDynamicScatterChartData"
+          [chartData]="stats$ | async"
           (filterChangeEvent)="filterChange($event)"
-        ></app-data-vis>
+        ></app-data-vis> -->
       </div>
     </div>
-    <mat-form-field>
-      <mat-select #fantasySport [value]="scoringPeriodId" (selectionChange)="scoringPeriodIdChange($event.value)">
-        <mat-option value="002021">Reg Season 2021</mat-option>
-        <mat-option value="102022">Projected 2022</mat-option>
-        <mat-option value="002022" disabled="true">Reg Season 2022</mat-option>
-      </mat-select>
-      <mat-hint>Fantasy Sport</mat-hint>
-    </mat-form-field>
     <app-roster
-      #freeAgents
-      [fantasyPlayers]="fantasyBaseballFreeAgentsFacade.selectFreeAgentStats(scoringPeriodId)"
-      [dataColumns]="espnTableFacade.freeAgentsTableRow$ | async"
-      [headers]="espnTableFacade.freeAgentsTableHeaders$ | async"
+      #freeAgentBatters
+      [data]="(fantasyBaseballFreeAgentsFacade.freeAgentBatterStats$ | async)!(scoringPeriodId, '2022')"
+      [dataColumns]="espnTableFacade.batterTableRow$ | async"
+      [headers]="espnTableFacade.batterTableHeaders$ | async"
+    ></app-roster>
+
+    <app-roster
+      #freeAgentPitchers
+      [data]="(fantasyBaseballFreeAgentsFacade.freeAgentPitcherStats$ | async)!(scoringPeriodId, '2022')"
+      [dataColumns]="espnTableFacade.pitcherTableRow$ | async"
+      [headers]="espnTableFacade.pitcherTableHeaders$ | async"
     ></app-roster>
   </div>
-  <div class="blocks five" gdArea="footer"></div>
+  <div gdArea="footer"></div>
 </div>

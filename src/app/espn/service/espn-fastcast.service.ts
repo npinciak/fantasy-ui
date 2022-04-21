@@ -20,7 +20,7 @@ export class EspnFastcastService {
     return this.api.get<EspnWebSocket>(EspnFastcastService.WS_HOST).pipe(map(res => res));
   }
 
-  connect(uri: string) {
+  connect(uri: string): WebSocketSubject<SocketRes> {
     if (!this.webSocketSubject$ || this.webSocketSubject$.closed) {
       this.webSocketSubject$ = webSocket(uri);
     }

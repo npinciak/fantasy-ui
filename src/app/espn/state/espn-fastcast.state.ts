@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Subscription } from 'rxjs';
 import { startWith, tap } from 'rxjs/operators';
 import {
   ConnectWebSocket,
@@ -50,7 +51,7 @@ export class EspnFastcastState {
   }
 
   @Action(ConnectWebSocket)
-  async connectWebsocket({ getState, patchState, dispatch }: StateContext<EspnFastcastStateModel>) {
+  async connectWebsocket({ getState, patchState, dispatch }: StateContext<EspnFastcastStateModel>): Promise<void> {
     const state = getState();
     const websocketInfo = await this.fastcastService.fastCastWebsocket().toPromise();
     const connect = new Date().getTime();
@@ -71,7 +72,7 @@ export class EspnFastcastState {
   handleWebSocketMessage(
     { getState, patchState, dispatch }: StateContext<EspnFastcastStateModel>,
     { payload: { message } }: HandleWebSocketMessage
-  ) {
+  ): void {
     switch (message.op) {
       case OperationCode.C:
         const outgoing = { op: OperationCode.S, sid: message.sid, tc: FastcastEventType.TopEvents };
@@ -95,12 +96,12 @@ export class EspnFastcastState {
   }
 
   @Action(SendWebSocketMessage)
-  sendWebSocketMessage({}: StateContext<EspnFastcastStateModel>, { payload: { message } }: SendWebSocketMessage) {
+  sendWebSocketMessage({}: StateContext<EspnFastcastStateModel>, { payload: { message } }: SendWebSocketMessage): void {
     this.fastcastService.sendMessage(message);
   }
 
   @Action(DisconnectWebSocket)
-  async disconnectWebsocket({ getState, patchState }: StateContext<EspnFastcastStateModel>) {
+  async disconnectWebsocket({ getState, patchState }: StateContext<EspnFastcastStateModel>): Promise<void> {
     const state = getState();
     this.fastcastService.disconnect();
     const disconnect = new Date().getTime();
@@ -109,7 +110,7 @@ export class EspnFastcastState {
   }
 
   @Action(FetchFastcast)
-  fetchFastcast({ dispatch }: StateContext<EspnFastcastStateModel>, { payload: { uri } }: FetchFastcast) {
+  fetchFastcast({ dispatch }: StateContext<EspnFastcastStateModel>, { payload: { uri } }: FetchFastcast): Subscription {
     return this.espnService.espnFastcast(uri).subscribe(data => {
       const leagues = entityMap(data.transformLeaguesImportToLeagues, l => l.id);
       const events = entityMap(data.transformEventImportToFastcastEvent, e => e.id);

@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { sortAccessor } from '@app/@shared/helpers/sort';
+import { cellDataAccessor } from '@app/@shared/helpers/utils';
 import { Matchup } from '@app/dfs/models/matchup.model';
 
 @Component({
@@ -41,7 +41,7 @@ export class TeamMatchupTableComponent implements OnInit, AfterViewInit, OnChang
     this.dataSource.data = this.dfsMatchup;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sortingDataAccessor = (player, stat) => sortAccessor(player, stat);
+    this.dataSource.sortingDataAccessor = (player, stat) => cellDataAccessor(player, stat);
     this.cdr.detectChanges();
   }
 

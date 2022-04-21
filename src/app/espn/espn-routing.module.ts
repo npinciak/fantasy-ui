@@ -4,6 +4,7 @@ import { UrlFragments, UrlParams } from '@app/@shared/url-builder';
 import { FreeAgentsComponent } from './mlb/pages/free-agents/free-agents.component';
 import { HomeComponent as MlbHomeComponent } from './mlb/pages/home/home.component';
 import { TeamComponent as MlbTeamComponent } from './mlb/pages/team/team.component';
+import { FantasyBaseballResolver } from './mlb/resolvers/mlb.resolver';
 import { HomeComponent as NflHomeComponent } from './nfl/pages/home/home.component';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 import { EspnResolver } from './resolvers/espn.resolver';
@@ -49,6 +50,7 @@ const mlbRoutes = {
     },
     {
       path: UrlParams.LeagueId,
+      resolve: [FantasyBaseballResolver],
       children: [
         {
           path: UrlFragments.Empty,

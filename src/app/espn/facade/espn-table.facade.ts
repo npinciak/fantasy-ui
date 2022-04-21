@@ -7,12 +7,12 @@ import { EspnTableSelectors } from '../selectors/espn-table.selector';
   providedIn: 'root',
 })
 export class EspnTableFacade {
-  @Select(EspnTableSelectors.standingsTableRow) standingsTableRow$;
-  @Select(EspnTableSelectors.tableTableHeaders) tableTableHeaders$: Observable<string[]>;
+  @Select(EspnTableSelectors.selectStandingsTableRow) standingsTableRow$;
+  @Select(EspnTableSelectors.selectStandingsTableHeaders) standingsTableHeaders$: Observable<string[]>;
 
-  @Select(EspnTableSelectors.rosterTableRow) rosterTableRow$;
-  @Select(EspnTableSelectors.rosterTableHeaders) rosterTableHeaders$: Observable<string[]>;
+  @Select(EspnTableSelectors.selectBatterTableRow) batterTableRow$: Observable<string[]>;
+  @Select(EspnTableSelectors.selectBatterTableHeaders) batterTableHeaders$: Observable<string[]>;
 
-  @Select(EspnTableSelectors.freeAgentsTableRow) freeAgentsTableRow$;
-  @Select(EspnTableSelectors.freeAgentsTableHeaders) freeAgentsTableHeaders$: Observable<string[]>;
+  @Select(EspnTableSelectors.selectPitcherTableRow) pitcherTableRow$: Observable<string[]>;
+  @Select(EspnTableSelectors.selectPitcherTableHeaders) pitcherTableHeaders$: Observable<string[]>;
 }

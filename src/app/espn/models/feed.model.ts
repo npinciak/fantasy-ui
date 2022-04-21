@@ -7,3 +7,5 @@ export interface FeedArticle {
   published: string | null;
   author: string | null;
 }
+
+export type FeedArticleMap = Record<string, FeedArticle>;

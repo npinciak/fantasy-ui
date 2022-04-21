@@ -2,7 +2,6 @@ import { pickAxisData, scatterData } from '@app/@shared/helpers/graph.helpers';
 import { toInt } from '@app/@shared/helpers/toInt';
 import { unique } from '@app/@shared/helpers/unique-by';
 import { Selector } from '@ngxs/store';
-import { ChartData } from 'chart.js';
 import { ClientSalaryDiff } from '../models/daily-fantasy-client-slate-attr.model';
 import { PlayerSlateAttr } from '../models/player-slate-attr.model';
 import { Player, PlayerMap } from '../models/player.model';
@@ -174,7 +173,7 @@ export class DailyFantasyPlayersSelectors {
   }
 
   @Selector([DailyFantasyPlayersSelectors.selectNbaPlayerTableRows])
-  static nbaScatterChartData(playerList: NbaPlayerTableRow[]): ChartData<'scatter'> {
+  static nbaScatterChartData(playerList: NbaPlayerTableRow[]) {
     const xaxis = pickAxisData(playerList, obj => obj?.ownership);
     const yaxis = pickAxisData(playerList, obj => obj?.smash);
 
@@ -198,7 +197,7 @@ export class DailyFantasyPlayersSelectors {
   }
 
   @Selector([])
-  static scatterChartData(playerList: { name: string; salary: number; fpts: number }[], labels: string[]): ChartData<'scatter'> {
+  static scatterChartData(playerList: { name: string; salary: number; fpts: number }[], labels: string[]) {
     const xaxis = pickAxisData(playerList, obj => obj.fpts);
     const yaxis = pickAxisData(playerList, obj => obj.salary);
 
