@@ -15,3 +15,7 @@ export function transformUidToId(uid: string): string | null {
   }
   return uid.split('~')[1].replace('l:', '');
 }
+
+export enum LeagueIdMap {
+  MLB = '10',
+}

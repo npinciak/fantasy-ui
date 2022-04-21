@@ -36,15 +36,11 @@ export class FreeAgentsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fantasyBaseballLeagueFacade.getLeague(this.leagueId);
+    this.fantasyBaseballFreeAgentsFacade.fetchFreeAgents(this.leagueId, this.scoringPeriodId);
   }
 
   scoringPeriodIdChange(change: MatSelectChange): void {
     this.scoringPeriodId = change.value;
-
-    const freeAgentStats = this.fantasyBaseballFreeAgentsFacade.selectFreeAgentStats(change.value);
-
-    this.stats$.next(freeAgentStats);
   }
 
   filterChange(event: { xAxis: string; yAxis: string }): void {}

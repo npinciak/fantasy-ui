@@ -6,7 +6,7 @@ import { TableColumn, TableColumnDataType } from '../models/table.model';
 
 export class EspnTableSelectors {
   @Selector()
-  static standingsColumns(): TableColumn[] {
+  static selectStandingsColumns(): TableColumn[] {
     return [
       { columnDef: 'name', headerCell: 'name', headerLabel: 'Team', dataType: TableColumnDataType.String },
       { columnDef: 'rotoStatsMap.r', headerCell: 'R', headerLabel: MLB_STATS_MAP[Stat.R].abbrev, dataType: TableColumnDataType.Number },
@@ -45,19 +45,31 @@ export class EspnTableSelectors {
   }
 
   @Selector()
-  static rosterBattingColumns(): TableColumn[] {
+  static selectBatterColumns(): TableColumn[] {
     return [
       { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String },
       {
-        columnDef: 'playerOwnershipChange',
-        headerCell: 'playerOwnershipChange',
-        headerLabel: 'Trending',
+        columnDef: `stats.${Stat.H}`,
+        headerCell: `stats.${Stat.H}`,
+        headerLabel: MLB_STATS_MAP[Stat.H].abbrev,
         dataType: TableColumnDataType.Number,
       },
       {
-        columnDef: 'playerOwnershipPercentOwned',
-        headerCell: 'playerOwnershipPercentOwned',
-        headerLabel: '% Owned',
+        columnDef: `stats.${Stat.R}`,
+        headerCell: `stats.${Stat.R}`,
+        headerLabel: MLB_STATS_MAP[Stat.R].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.HR}`,
+        headerCell: `stats.${Stat.HR}`,
+        headerLabel: MLB_STATS_MAP[Stat.HR].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.RBI}`,
+        headerCell: `stats.${Stat.RBI}`,
+        headerLabel: MLB_STATS_MAP[Stat.RBI].abbrev,
         dataType: TableColumnDataType.Number,
       },
       {
@@ -73,19 +85,6 @@ export class EspnTableSelectors {
         dataType: TableColumnDataType.Number,
       },
       {
-        columnDef: `stats.${Stat.H}`,
-        headerCell: `stats.${Stat.H}`,
-        headerLabel: MLB_STATS_MAP[Stat.H].abbrev,
-        dataType: TableColumnDataType.Number,
-      },
-    ];
-  }
-
-  @Selector()
-  static rosterPitchingColumns(): TableColumn[] {
-    return [
-      { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String },
-      {
         columnDef: 'playerOwnershipChange',
         headerCell: 'playerOwnershipChange',
         headerLabel: 'Trending',
@@ -95,6 +94,20 @@ export class EspnTableSelectors {
         columnDef: 'playerOwnershipPercentOwned',
         headerCell: 'playerOwnershipPercentOwned',
         headerLabel: '% Owned',
+        dataType: TableColumnDataType.Number,
+      },
+    ];
+  }
+
+  @Selector()
+  static selectPitcherColumns(): TableColumn[] {
+    return [
+      { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String },
+
+      {
+        columnDef: `stats.${Stat.W}`,
+        headerCell: `stats.${Stat.W}`,
+        headerLabel: MLB_STATS_MAP[Stat.W].abbrev,
         dataType: TableColumnDataType.Number,
       },
       {
@@ -139,13 +152,6 @@ export class EspnTableSelectors {
         headerLabel: MLB_STATS_MAP[Stat.fip].abbrev,
         dataType: TableColumnDataType.Number,
       },
-    ];
-  }
-
-  @Selector()
-  static freeAgentsColumns(): TableColumn[] {
-    return [
-      { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String },
       {
         columnDef: 'playerOwnershipChange',
         headerCell: 'playerOwnershipChange',
@@ -158,41 +164,11 @@ export class EspnTableSelectors {
         headerLabel: '% Owned',
         dataType: TableColumnDataType.Number,
       },
-      {
-        columnDef: `stats.${Stat.wOBA}`,
-        headerCell: `stats.${Stat.wOBA}`,
-        headerLabel: MLB_STATS_MAP[Stat.wOBA].abbrev,
-        dataType: TableColumnDataType.Number,
-      },
-      {
-        columnDef: `stats.${Stat.wRAA}`,
-        headerCell: `stats.${Stat.wRAA}`,
-        headerLabel: MLB_STATS_MAP[Stat.wRAA].abbrev,
-        dataType: TableColumnDataType.Number,
-      },
-      {
-        columnDef: `stats.${Stat.H}`,
-        headerCell: `stats.${Stat.H}`,
-        headerLabel: MLB_STATS_MAP[Stat.H].abbrev,
-        dataType: TableColumnDataType.Number,
-      },
-      {
-        columnDef: `stats.${Stat.R}`,
-        headerCell: `stats.${Stat.R}`,
-        headerLabel: MLB_STATS_MAP[Stat.R].abbrev,
-        dataType: TableColumnDataType.Number,
-      },
-      {
-        columnDef: `stats.${Stat.HR}`,
-        headerCell: `stats.${Stat.HR}`,
-        headerLabel: MLB_STATS_MAP[Stat.HR].abbrev,
-        dataType: TableColumnDataType.Number,
-      },
     ];
   }
 
-  @Selector([EspnTableSelectors.standingsColumns])
-  static standingsTableRow(playerCols: Partial<TableColumn>[]) {
+  @Selector([EspnTableSelectors.selectStandingsColumns])
+  static selectStandingsTableRow(playerCols: Partial<TableColumn>[]) {
     return playerCols.map(col => ({
       columnDef: col.columnDef,
       cellData: data => cellDataAccessor(data, col.columnDef),
@@ -200,8 +176,8 @@ export class EspnTableSelectors {
     }));
   }
 
-  @Selector([EspnTableSelectors.rosterBattingColumns])
-  static rosterBattingTableRow(playerCols: Partial<TableColumn>[]) {
+  @Selector([EspnTableSelectors.selectBatterColumns])
+  static selectBatterTableRow(playerCols: Partial<TableColumn>[]) {
     return playerCols.map(col => ({
       columnDef: col.columnDef,
       cellData: data => cellDataAccessor(data, col.columnDef),
@@ -209,18 +185,8 @@ export class EspnTableSelectors {
     }));
   }
 
-  @Selector([EspnTableSelectors.rosterPitchingColumns])
-  static rosterPitchingTableRow(playerCols: Partial<TableColumn>[]) {
-    return playerCols.map(col => ({
-      columnDef: col.columnDef,
-      cellData: data => cellDataAccessor(data, col.columnDef),
-      headerLabel: col.headerLabel,
-    }));
-  }
-  rosterPitchingColumns;
-
-  @Selector([EspnTableSelectors.freeAgentsColumns])
-  static freeAgentsTableRow(playerCols: Partial<TableColumn>[]) {
+  @Selector([EspnTableSelectors.selectPitcherColumns])
+  static selectPitcherTableRow(playerCols: Partial<TableColumn>[]) {
     return playerCols.map(col => ({
       columnDef: col.columnDef,
       cellData: data => cellDataAccessor(data, col.columnDef),
@@ -228,23 +194,18 @@ export class EspnTableSelectors {
     }));
   }
 
-  @Selector([EspnTableSelectors.rosterBattingTableRow])
-  static rosterBattingTableHeaders(tableColumns: TableColumn[]): string[] {
+  @Selector([EspnTableSelectors.selectBatterTableRow])
+  static selectBatterTableHeaders(tableColumns: TableColumn[]): string[] {
     return tableColumns.map(col => col.columnDef);
   }
 
-  @Selector([EspnTableSelectors.rosterPitchingTableRow])
-  static rosterPitchingTableHeaders(tableColumns: TableColumn[]): string[] {
+  @Selector([EspnTableSelectors.selectPitcherTableRow])
+  static selectPitcherTableHeaders(tableColumns: TableColumn[]): string[] {
     return tableColumns.map(col => col.columnDef);
   }
 
-  @Selector([EspnTableSelectors.freeAgentsTableRow])
-  static freeAgentsTableHeaders(tableColumns: TableColumn[]): string[] {
-    return tableColumns.map(col => col.columnDef);
-  }
-
-  @Selector([EspnTableSelectors.standingsTableRow])
-  static standingsTableHeaders(tableColumns: TableColumn[]): string[] {
+  @Selector([EspnTableSelectors.selectStandingsTableRow])
+  static selectStandingsTableHeaders(tableColumns: TableColumn[]): string[] {
     return tableColumns.map(col => col.columnDef);
   }
 }

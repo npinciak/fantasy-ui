@@ -12,36 +12,38 @@ import { StatTypePeriodId } from '../../models/mlb-stats.model';
   templateUrl: './roster.component.html',
 })
 export class RosterComponent implements OnInit, AfterViewInit, OnChanges {
-  @Input() fantasyPlayers: BaseballPlayer[];
+  @Input() data: BaseballPlayer[];
   @Input() dataColumns: any[];
   @Input() headers: any[];
+
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
   readonly StatType = StatTypePeriodId;
   readonly TableColumnDataType = TableColumnDataType;
 
-  dataSource = new MatTableDataSource<BaseballPlayer>();
+  dataSource: MatTableDataSource<BaseballPlayer>;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) {
+    this.dataSource = new MatTableDataSource<BaseballPlayer>();
+  }
 
   ngOnInit(): void {}
 
   public ngOnChanges(changes: SimpleChanges): void {
-    this.dataSource = new MatTableDataSource(changes.fantasyPlayers.currentValue);
-    this.initTable();
+    if (changes.data) {
+      this.dataSource.data = changes.data.currentValue;
+    }
   }
 
   ngAfterViewInit(): void {
     this.initTable();
-
-    this.cdr.detectChanges();
   }
 
   initTable(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.dataSource.data = this.fantasyPlayers;
+    this.dataSource.data = this.data;
     this.dataSource.sortingDataAccessor = (player, stat) => cellDataAccessor(player, stat);
   }
 }

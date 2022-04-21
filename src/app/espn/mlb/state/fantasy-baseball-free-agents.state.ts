@@ -35,7 +35,7 @@ export class FantasyBaseballFreeAgentsState {
 
   @Action(FetchFantasyBaseballFreeAgents)
   async fetchFantasyBaseballFreeAgents(
-    { dispatch, getState }: StateContext<FantasyBaseballFreeAgentsStateModel>,
+    { dispatch }: StateContext<FantasyBaseballFreeAgentsStateModel>,
     { payload: { leagueId, scoringPeriodId } }: FetchFantasyBaseballFreeAgents
   ): Promise<void> {
     const freeAgents = await this.mlbService.baseballFreeAgents({ leagueId, scoringPeriodId }).toPromise();

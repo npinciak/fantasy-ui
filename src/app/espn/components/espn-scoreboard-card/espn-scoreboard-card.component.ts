@@ -21,7 +21,7 @@ export class EspnScoreboardCardComponent implements OnChanges {
   constructor() {
     this.eventExpanded = new SelectionModel(true);
   }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     this.isEventToggled = changes.isEventToggled.currentValue;
   }
