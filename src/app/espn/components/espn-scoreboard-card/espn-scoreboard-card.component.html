@@ -1,0 +1,46 @@
+<mat-card class="game-card">
+  <mat-card-content>
+    <app-espn-scoreboard-card-team [isTournament]="isTournament" [team]="event?.teams?.away"></app-espn-scoreboard-card-team>
+    <div></div>
+    <app-espn-scoreboard-card-team [isTournament]="isTournament" [team]="event?.teams?.home"></app-espn-scoreboard-card-team>
+  </mat-card-content>
+  <mat-card-actions>
+    <!-- <div>{{ event?.downDistancePositionText }}</div>
+      <ng-container *ngIf="!event.completed || (event.completed && !isTournament)">{{ event?.summary }}</ng-container>
+      <ng-container *ngIf="event.completed && isTournament">{{ event?.note }}</ng-container>
+      <div>{{ event?.lastPlay?.text }}</div> -->
+    <div [ngSwitch]="event?.leagueId">
+      <ng-template [ngSwitchCase]="LeagueIdMap.MLB">
+        <ng-container *ngIf="eventInProgress(event); else eventSummaryDefault">
+          <mat-accordion [multi]="true">
+            <mat-expansion-panel
+              [expanded]="isEventToggled"
+              class="mat-elevation-z0"
+              (opened)="toggleExpansionPanel(event.id)"
+              (closed)="toggleOffExpansionPanel(event.id)"
+            >
+              <mat-expansion-panel-header>
+                <mat-panel-description>
+                  <ng-container *ngIf="!event.completed || (event.completed && !isTournament)">{{ event?.summary }}</ng-container>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <app-espn-fastcast-event-mlb [event]="event"></app-espn-fastcast-event-mlb>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </ng-container>
+        <ng-template #eventSummaryDefault>
+          <span style="font-size: 14px">
+            {{ event?.summary }}
+          </span>
+        </ng-template>
+      </ng-template>
+      <ng-template [ngSwitchDefault]>
+        <ng-container *ngIf="!event.completed || (event.completed && !isTournament)">
+          <span style="font-size: 14px">
+            {{ event?.summary }}
+          </span>
+        </ng-container>
+      </ng-template>
+    </div>
+  </mat-card-actions>
+</mat-card>

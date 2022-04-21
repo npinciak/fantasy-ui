@@ -12,7 +12,13 @@
   <div fxFlex.gt-xs="90" fxFlex.xs="100" class="scoreboard-container">
     <ng-container *ngIf="(fastcastEventFacade.eventsByLeagueId$ | async)!(selectedLeagueId) as fastcastEvents">
       <ng-container *ngFor="let event of fastcastEvents">
-        <app-espn-scoreboard-card [isTournament]="event.isTournament" [event]="event"></app-espn-scoreboard-card>
+        <app-espn-scoreboard-card
+          [isEventToggled]="(fastcastEventFacade.isEventToggled$ | async)!(event.id)"
+          (toggleExpandedEvent)="onToggleExpandedEvent($event)"
+          (toggleOffExpandedEvent)="onToggleOffExpandedEvent($event)"
+          [isTournament]="event.isTournament"
+          [event]="event"
+        ></app-espn-scoreboard-card>
       </ng-container>
     </ng-container>
   </div>
