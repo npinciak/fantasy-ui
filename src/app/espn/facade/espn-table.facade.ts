@@ -7,15 +7,12 @@ import { EspnTableSelectors } from '../selectors/espn-table.selector';
   providedIn: 'root',
 })
 export class EspnTableFacade {
-  @Select(EspnTableSelectors.standingsTableRow) standingsTableRow$;
-  @Select(EspnTableSelectors.standingsTableHeaders) standingsTableHeaders$: Observable<string[]>;
+  @Select(EspnTableSelectors.selectStandingsTableRow) standingsTableRow$;
+  @Select(EspnTableSelectors.selectStandingsTableHeaders) standingsTableHeaders$: Observable<string[]>;
 
-  @Select(EspnTableSelectors.rosterBattingTableRow) rosterBattingTableRow$: Observable<string[]>;
-  @Select(EspnTableSelectors.rosterBattingTableHeaders) rosterBattingTableHeaders$: Observable<string[]>;
+  @Select(EspnTableSelectors.selectBatterTableRow) batterTableRow$: Observable<string[]>;
+  @Select(EspnTableSelectors.selectBatterTableHeaders) batterTableHeaders$: Observable<string[]>;
 
-  @Select(EspnTableSelectors.rosterPitchingTableRow) rosterPitchingTableRow$: Observable<string[]>;
-  @Select(EspnTableSelectors.rosterPitchingTableHeaders) rosterPitchingTableHeaders$: Observable<string[]>;
-
-  @Select(EspnTableSelectors.freeAgentsTableRow) freeAgentsTableRow$;
-  @Select(EspnTableSelectors.freeAgentsTableHeaders) freeAgentsTableHeaders$: Observable<string[]>;
+  @Select(EspnTableSelectors.selectPitcherTableRow) pitcherTableRow$: Observable<string[]>;
+  @Select(EspnTableSelectors.selectPitcherTableHeaders) pitcherTableHeaders$: Observable<string[]>;
 }

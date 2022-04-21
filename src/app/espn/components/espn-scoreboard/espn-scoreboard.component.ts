@@ -22,4 +22,12 @@ export class EspnScoreboardComponent {
     this.selectedLeagueId = event.value;
     this.fastcastEventFacade.fastcastLeagueChangeLeaderboard(event.value);
   }
+
+  onToggleExpandedEvent(val: string) {
+    this.fastcastEventFacade.selectExpandedEvent(val);
+  }
+
+  onToggleOffExpandedEvent(val: string) {
+    this.fastcastEventFacade.deselectExpandedEvent(val);
+  }
 }

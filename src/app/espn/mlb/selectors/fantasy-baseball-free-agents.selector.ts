@@ -28,16 +28,47 @@ export class FantasyBaseballFreeAgentsSelector {
     return Object.values(players).filter(p => p.isPitcher);
   }
 
-  @Selector([FantasyBaseballFreeAgentsSelector.selectPlayerList])
-  static selectFreeAgentStats(players: BaseballPlayer[]): (statPeriod: string) => FreeAgentStats[] {
-    return (statPeriod: string) => {
+  @Selector([FantasyBaseballFreeAgentsSelector.selectFreeAgentBatterList])
+  static selectFreeAgentBatterStats(players: BaseballPlayer[]): (statPeriod: string, seasonId: string) => FreeAgentStats[] {
+    return (statPeriod: string, seasonId: string) => {
+      return players.map(p => {
+        if (p?.stats == null) {
+          return;
+        }
+
+        const statsEntity = p?.stats[statPeriod];
+        const seasonConst = MLB_WEIGHTED_STATS[seasonId];
+        const advancedStats = new AdvStats({ seasonConst, statsEntity });
+
+        const adv = {};
+        adv[Stat.fip] = advancedStats.fip;
+        adv[Stat.wOBA] = advancedStats.wOBA;
+        adv[Stat.wRAA] = advancedStats.wRAA;
+        adv[Stat.BABIP] = advancedStats.wRAA;
+        const stats = { ...statsEntity, ...adv };
+        return {
+          name: p?.name,
+          img: p?.img,
+          team: p?.team,
+          position: p?.position,
+          playerOwnershipChange: p?.playerOwnershipChange,
+          playerOwnershipPercentOwned: p?.playerOwnershipPercentOwned,
+          stats,
+        };
+      });
+    };
+  }
+
+  @Selector([FantasyBaseballFreeAgentsSelector.selectFreeAgentPitcherList])
+  static selectFreeAgentPitcherStats(players: BaseballPlayer[]): (statPeriod: string, seasonId: string) => FreeAgentStats[] {
+    return (statPeriod: string, seasonId: string) => {
       return players.map(p => {
         if (p.stats == null) {
           return;
         }
 
         const statsEntity = p?.stats[statPeriod];
-        const seasonConst = MLB_WEIGHTED_STATS['2022'];
+        const seasonConst = MLB_WEIGHTED_STATS[seasonId];
         const advancedStats = new AdvStats({ seasonConst, statsEntity });
 
         const adv = {};

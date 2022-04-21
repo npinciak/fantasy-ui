@@ -9,38 +9,32 @@
   gdGap.gt-sm="20px"
   [ngStyle]="{ 'max-width': 'auto' }"
 >
-  <!-- <div class="blocks two" gdArea="sidebar"></div> -->
-  <div class="blocks four" gdArea="content">
+  <div gdArea="content">
     <div fxLayout="row">
-      <div>
-        <!-- <app-scatter-chart></app-scatter-chart> -->
-        <!-- <app-data-vis
-          [xAxisFilterOptions]="fantasyBaseballFreeAgentsFacade.selectStatListFilters$ | async"
-          [yAxisFilterOptions]="[]"
-          [chartData]="freeAgentDynamicLineChartData"
-          [chartType]="'bar'"
-          (filterChangeEvent)="filterChangeFreeAgent($event)"
-        ></app-data-vis> -->
-      </div>
       <div>
         <app-dropdown-filter title="Stat Period" [filterItems]="STAT_PERIOD_FILTER_OPTIONS" (filterUpdate)="scoringPeriodIdChange($event)"></app-dropdown-filter>
 
-        <app-data-vis
+        <!-- <app-data-vis
           [xAxisFilterOptions]="fantasyBaseballFreeAgentsFacade.selectStatListFilters$ | async"
           [yAxisFilterOptions]="fantasyBaseballFreeAgentsFacade.selectStatListFilters$ | async"
           [chartData]="stats$ | async"
           (filterChangeEvent)="filterChange($event)"
-        ></app-data-vis>
+        ></app-data-vis> -->
       </div>
     </div>
-    <ng-container *ngIf="stats$ | async">
-      <app-roster
-        #freeAgents
-        [fantasyPlayers]="stats$ | async"
-        [dataColumns]="espnTableFacade.freeAgentsTableRow$ | async"
-        [headers]="espnTableFacade.freeAgentsTableHeaders$ | async"
-      ></app-roster>
-    </ng-container>
+    <app-roster
+      #freeAgentBatters
+      [data]="(fantasyBaseballFreeAgentsFacade.freeAgentBatterStats$ | async)!(scoringPeriodId, '2022')"
+      [dataColumns]="espnTableFacade.batterTableRow$ | async"
+      [headers]="espnTableFacade.batterTableHeaders$ | async"
+    ></app-roster>
+
+    <app-roster
+      #freeAgentPitchers
+      [data]="(fantasyBaseballFreeAgentsFacade.freeAgentPitcherStats$ | async)!(scoringPeriodId, '2022')"
+      [dataColumns]="espnTableFacade.pitcherTableRow$ | async"
+      [headers]="espnTableFacade.pitcherTableHeaders$ | async"
+    ></app-roster>
   </div>
-  <div class="blocks five" gdArea="footer"></div>
+  <div gdArea="footer"></div>
 </div>
