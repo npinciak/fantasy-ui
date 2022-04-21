@@ -15,13 +15,14 @@ export class AddLeagueFormComponent implements OnInit {
   @Output() addLeague = new EventEmitter<LeagueStorageMap>();
   @Output() removeLeague = new EventEmitter<string>();
 
-  sportSelection: string;
+  sportOption: string = 'Baseball';
+
   constructor() {}
 
   ngOnInit(): void {}
 
   onAddLeague() {
-    const sport = this.sportSelection;
+    const sport = this.sportOption;
     const leagueId = this.leagueIdElement.nativeElement.value;
 
     const map = { [leagueId]: { leagueId, sport } };
@@ -36,9 +37,7 @@ export class AddLeagueFormComponent implements OnInit {
   }
 
   fantasySportChange(event: string) {
-    this.sportSelection = event;
-
-    // this.sportChange.emit(event);
+    this.sportOption = event;
   }
 
   resetLeagueIdInput(): void {
@@ -46,6 +45,6 @@ export class AddLeagueFormComponent implements OnInit {
   }
 
   resetSportSelection(): void {
-    this.sportSelection = null;
+    this.sportOption = null;
   }
 }

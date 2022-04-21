@@ -9,10 +9,10 @@
   gdGap.gt-sm="20px"
   [ngStyle]="{ 'max-width': 'auto' }"
 >
-  <div class="blocks two" gdArea="sidebar">
+  <div gdArea="sidebar">
     <app-league-scoreboard [teams]="fantasyBaseballLeagueFacade.standings$ | async"></app-league-scoreboard>
   </div>
-  <div class="blocks four" gdArea="content">
+  <div gdArea="content">
     <a mat-flat-button color="primary" [routerLink]="['./free-agents']">Free Agents</a>
 
     <div style="margin: 10px 0"></div>
@@ -23,7 +23,7 @@
       [teams]="fantasyBaseballTeamFacade.teamList$ | async"
     ></app-standings>
   </div>
-  <div class="blocks five" gdArea="footer"></div>
+  <div gdArea="footer"></div>
 </div>
 
 <ng-template #loading>Loading...</ng-template>
