@@ -2,13 +2,22 @@ import { LocalStorageKeys, LocalStorageState } from '@app/@core/store/local-stor
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@ngxs/store';
 import { LeagueStorageEntity } from '../models/baseball-league-storage.model';
-import { BaseballTeam } from '../models/baseball-team.model';
+import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
+import { FantasyBaseballTeamsLiveState } from '../state/fantasy-baseball-team-live.state';
 import { FantasyBaseballTeamsSelector } from './fantasy-baseball-teams.selector';
 
 export class FantasyBaseballLeagueSelectors {
-  @Selector([FantasyBaseballTeamsSelector.selectTeamList])
-  static standings(teamList: BaseballTeam[]): BaseballTeam[] {
-    return teamList.sort((a, b) => b.totalPoints - a.totalPoints);
+  @Selector([FantasyBaseballTeamsSelector.selectTeamList, FantasyBaseballTeamsLiveState.selectEntityById])
+  static standings(teamList: BaseballTeam[], selectEntityById: (id: string) => BaseballTeamLive): BaseballTeam[] {
+    return teamList
+      .map(t => {
+        const liveTeam = selectEntityById(t.id);
+        return {
+          ...t,
+          liveScore: liveTeam?.liveScore,
+        };
+      })
+      .sort((a, b) => b.liveScore - a.liveScore);
   }
 
   @Selector()

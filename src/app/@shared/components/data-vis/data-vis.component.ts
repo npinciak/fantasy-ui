@@ -1,89 +1,69 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AxisFilter, scatterChartScales } from '@app/@shared/helpers/graph.helpers';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Chart, ChartConfig, updateData } from '@app/@shared/helpers/graph.helpers';
 import { FilterOptions } from '@app/@shared/models/filter.model';
-import { MLB_STATS_MAP } from '@app/espn/mlb/consts/stats.const';
-import { ChartData, ChartType } from 'chart.js';
+import { Stat } from '@app/espn/mlb/models/mlb-stats.model';
+import { FreeAgentStats } from '@app/espn/mlb/selectors/fantasy-baseball-free-agents.selector';
 
 @Component({
   selector: `app-data-vis`,
-  templateUrl: './data-vis.component.html',
+  template: '<div><div id="myBar"></div></div>',
   styleUrls: ['./data-vis.component.scss'],
 })
-export class DataVisComponent {
-  @Input() chartData: ChartData;
+export class DataVisComponent implements OnInit, OnChanges {
+  @Input() chartData: FreeAgentStats[];
+  @Input() statFilter: Stat = Stat.AB;
   @Input() xAxisFilterOptions: FilterOptions[];
   @Input() yAxisFilterOptions: FilterOptions[];
-  @Input() chartType = 'scatter';
 
-  @Output() filterChangeEvent = new EventEmitter<{ xAxis: string; yAxis: string }>();
+  chart: Chart<FreeAgentStats>;
 
-  readonly AxisFilter = AxisFilter;
+  constructor() {
+    this.chart = new Chart<FreeAgentStats>({ ...this.chartConfig });
+  }
 
-  readonly scatterChartScales = scatterChartScales;
-  readonly scatterChartType: ChartType = 'scatter';
+  ngOnInit(): void {
+    this.chart.createSvg();
+    this.chart.statFilter = this.statFilter;
+    this.chart.data = this.chartData
+      .filter(d => d.stats[this.chart.statFilter] !== 0)
+      .sort((a, b) => b.stats[this.chart.statFilter] - a.stats[this.chart.statFilter]);
 
-  xAxisFilter: string;
-  yAxisFilter: string;
+    updateData(this.chart);
+  }
 
-  scatterChartOptions = {
-    responsive: true,
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: ctx => {
-            const labelMap = this.chartData.labels.reduce((obj, val, i) => {
-              obj[i] = val;
-              return obj;
-            }, {} as { [i: number]: string });
-
-            return `${labelMap[ctx.dataIndex]} - ${MLB_STATS_MAP[this.xAxisFilter].abbrev}: ${ctx.parsed.x} / ${
-              MLB_STATS_MAP[this.yAxisFilter].abbrev
-            }: ${ctx.parsed.y}`;
-          },
-        },
-      },
-    },
-    ...scatterChartScales,
-  };
-
-  lineChartOptions = {
-    responsive: true,
-    scales: {
-      x: {},
-      y: {
-        beginAtZero: true,
-      },
-    },
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: ctx => {
-            const labelMap = this.chartData.labels.reduce((obj, val, i) => {
-              obj[i] = val;
-              return obj;
-            }, {} as { [i: number]: string });
-
-            return `${labelMap[ctx.dataIndex]}: ${ctx.parsed.x}`;
-          },
-        },
-      },
-    },
-  };
-
-  filterChange(value: any, filterType: AxisFilter) {
-    switch (filterType) {
-      case AxisFilter.xAxis:
-        this.xAxisFilter = value;
-        break;
-      case AxisFilter.yAxis:
-        this.yAxisFilter = value;
-        break;
-      default:
-        break;
+  ngOnChanges(changes: SimpleChanges): void {
+    for (const propName in changes) {
+      if (changes.hasOwnProperty(propName)) {
+        switch (propName) {
+          case 'chartData':
+            this.chart.statFilter = this.statFilter;
+            this.chart.data = this.chartData
+              .filter(d => d.stats[this.chart.statFilter] !== 0)
+              .sort((a, b) => b.stats[this.chart.statFilter] - a.stats[this.chart.statFilter]);
+            updateData(this.chart);
+            break;
+          case 'statFilter':
+            this.chart.statFilter = changes.statFilter.currentValue;
+            updateData(this.chart);
+            break;
+          default:
+            break;
+        }
+      }
     }
-    this.scatterChartOptions.scales.x.title.text = this.xAxisFilter;
-    this.scatterChartOptions.scales.y.title.text = this.yAxisFilter;
+  }
 
-    this.filterChangeEvent.emit({ xAxis: this.xAxisFilter, yAxis: this.yAxisFilter });
+  private get chartConfig(): ChartConfig {
+    return {
+      domElement: '#myBar',
+      height: 300,
+      width: 800,
+      margin: {
+        top: 50,
+        right: 50,
+        bottom: 50,
+        left: 100,
+      },
+    };
   }
 }

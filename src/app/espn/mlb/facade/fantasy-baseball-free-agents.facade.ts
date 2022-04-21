@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Select, Store } from '@ngxs/store';
-import { ChartData, ScatterDataPoint } from 'chart.js';
 import { Observable } from 'rxjs';
 import { BaseballPlayer } from '../models/baseball-player.model';
-import { FantasyBaseballFreeAgentsSelector } from '../selectors/fantasy-baseball-free-agents.selector';
+import { FantasyBaseballFreeAgentsSelector, FreeAgentStats } from '../selectors/fantasy-baseball-free-agents.selector';
+import { FetchFantasyBaseballFreeAgents } from '../state/fantasy-baseball-free-agents.state';
 import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.state';
 
 @Injectable({
@@ -12,26 +12,23 @@ import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.sta
 })
 export class FantasyBaseballFreeAgentsFacade {
   @Select(FantasyBaseballFreeAgentsSelector.selectPlayerList) public playerList$: Observable<BaseballPlayer[]>;
+  @Select(FantasyBaseballFreeAgentsSelector.selectFreeAgentBatterStats) public freeAgentBatterStats$: Observable<
+    (id: string, statPeriod: string) => FreeAgentStats[]
+  >;
+  @Select(FantasyBaseballFreeAgentsSelector.selectFreeAgentPitcherStats) public freeAgentPitcherStats$: Observable<
+    (id: string, statPeriod: string) => FreeAgentStats[]
+  >;
 
   @Select(FantasyBaseballFreeAgentsSelector.selectStatListFilters) public selectStatListFilters$: Observable<FilterOptions[]>;
-
   @Select(FantasyBaseballLeagueState.isLoading) public isLoading$: Observable<boolean>;
 
   constructor(private store: Store) {}
 
-  selectFreeAgentStats(statPeriod: string) {
-    return this.store.selectSnapshot(FantasyBaseballFreeAgentsSelector.selectFreeAgentStats)(statPeriod);
+  fetchFreeAgents(leagueId: string, scoringPeriodId: string): void {
+    this.store.dispatch(new FetchFantasyBaseballFreeAgents({ leagueId, scoringPeriodId }));
   }
 
   selectPlayerById(id: string): BaseballPlayer {
     return this.store.selectSnapshot(FantasyBaseballFreeAgentsSelector.selectPlayerById)(id);
-  }
-
-  freeAgentDynamicLineChartData(xAxis, stat): ChartData<'line' | 'bar', (number | ScatterDataPoint)[], unknown> {
-    return this.store.selectSnapshot(FantasyBaseballFreeAgentsSelector.freeAgentDynamicLineChartData)(xAxis, stat);
-  }
-
-  freeAgentScatterChartData(xAxis, yaxis, statTimePeriodId): ChartData<'scatter', (number | ScatterDataPoint)[], unknown> {
-    return this.store.selectSnapshot(FantasyBaseballFreeAgentsSelector.freeAgentDynamicScatterChartData)(xAxis, yaxis, statTimePeriodId);
   }
 }

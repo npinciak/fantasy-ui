@@ -1,0 +1,21 @@
+<ng-container *ngIf="eventInProgress">
+  <div fxLayout="row" fxLayoutAlign="start center" style="width: 100%">
+    <div fxFlex style="font-size: 12px">
+      <div>B: {{ event?.mlbSituation.balls }}</div>
+      <div>S: {{ event?.mlbSituation.strikes }}</div>
+      <div>O: {{ event?.mlbSituation.outs }}</div>
+    </div>
+    <div fxFlex style="text-align: center; height: 60px">
+      <span [ngClass]="{ 'base-active': event.mlbSituation.onThird }" id="thirdBase" class="base-default" style="top: 15px"></span>
+      <span [ngClass]="{ 'base-active': event.mlbSituation.onSecond }" id="secondBase" class="base-default" style="top: -10px; margin: 0 auto"></span>
+      <span [ngClass]="{ 'base-active': event.mlbSituation.onFirst }" id="firstBase" class="base-default" style="top: 15px"></span>
+    </div>
+  </div>
+  <div>
+    <span style="font-size: 12px">{{ event.mlbSituation.pitcher?.athlete.shortName }} {{ event.mlbSituation.pitcher?.summary }}</span>
+  </div>
+
+  <div>
+    <span style="font-size: 12px">{{ event.mlbSituation.batter?.athlete.shortName }} {{ event.mlbSituation.batter?.summary }}</span>
+  </div>
+</ng-container>

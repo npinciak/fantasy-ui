@@ -14,7 +14,14 @@ mat-card.game-card {
   margin: 10px;
   width: 300px;
   min-width: 300px;
-  height: 175px;
+}
+
+mat-card.game-card {
+  &-mlb {
+    margin: 10px;
+    width: 300px;
+    min-width: 300px;
+  }
 }
 
 .game-score-container {
@@ -22,10 +29,6 @@ mat-card.game-card {
   flex-flow: row;
   justify-content: space-around;
   // width: 70px;
-}
-
-.game-score-winner {
-  // color: #1f252e;
 }
 
 .game-summary-container {

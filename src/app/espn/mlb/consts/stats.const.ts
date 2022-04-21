@@ -1,37 +1,69 @@
+import { FilterOptions } from '@app/@shared/models/filter.model';
 import { StatThreshold } from '@app/@shared/models/stat-threshold.model';
 import { SeasonConst } from '../models/adv-stats.model';
-import { StatCategory, StatsMap, StatType } from '../models/mlb-stats.model';
+import { StatCategory, StatsMap, StatType, StatTypePeriodId } from '../models/mlb-stats.model';
 
-export const MLB_WEIGHTED_STATS_2020: SeasonConst = {
-  wOBA: 0,
-  wOBAScale: 0,
-  runSB: 0,
-  runCS: 0,
-  wBB: 0.699,
-  wHBP: 0.728,
-  w1B: 0.883,
-  w2B: 1.238,
-  w3B: 1.558,
-  wHR: 1.979,
-  'r/PA': 0,
-  'r/W': 0,
-  cFIP: 0,
-};
+export const STAT_PERIOD_FILTER_OPTIONS: FilterOptions[] = [
+  { value: YearToStatTypePeriod(StatTypePeriodId.RegularSeason, 2021), label: '2021 Season' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Projected, 2022), label: '2022 Projected' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.RegularSeason, 2022), label: '2022 Season' },
+];
 
-export const MLB_WEIGHTED_STATS_2021: SeasonConst = {
-  wOBA: 0.314,
-  wOBAScale: 1.209,
-  runSB: 0.2,
-  runCS: -0.419,
-  wBB: 0.711,
-  wHBP: 0.742,
-  w1B: 0.901,
-  w2B: 1.269,
-  w3B: 1.6,
-  wHR: 2.035,
-  cFIP: 3.17,
-  'r/PA': 0.121,
-  'r/W': 9.973,
+export function YearToStatTypePeriod(periodType: StatTypePeriodId, year: number) {
+  if (periodType === StatTypePeriodId.Projected) return `${periodType}${year}`;
+  else return `0${periodType}${year}`;
+}
+
+export function StatTypePeriodToYear(statTypePeriod: string): string {
+  return statTypePeriod.split('').splice(2, 6).join('');
+}
+
+export const MLB_WEIGHTED_STATS: Record<string, SeasonConst> = {
+  '2020': {
+    wOBA: 0,
+    wOBAScale: 0,
+    runSB: 0,
+    runCS: 0,
+    wBB: 0.699,
+    wHBP: 0.728,
+    w1B: 0.883,
+    w2B: 1.238,
+    w3B: 1.558,
+    wHR: 1.979,
+    'r/PA': 0,
+    'r/W': 0,
+    cFIP: 0,
+  },
+  '2021': {
+    wOBA: 0.314,
+    wOBAScale: 1.209,
+    runSB: 0.2,
+    runCS: -0.419,
+    wBB: 0.711,
+    wHBP: 0.742,
+    w1B: 0.901,
+    w2B: 1.269,
+    w3B: 1.6,
+    wHR: 2.035,
+    cFIP: 3.17,
+    'r/PA': 0.121,
+    'r/W': 9.973,
+  },
+  '2022': {
+    wOBA: 0.313,
+    wOBAScale: 1.277,
+    runSB: 0.2,
+    runCS: -0.408,
+    wBB: 0.704,
+    wHBP: 0.736,
+    w1B: 0.902,
+    w2B: 1.285,
+    w3B: 1.63,
+    wHR: 2.101,
+    cFIP: 3.136,
+    'r/PA': 0.118,
+    'r/W': 9.743,
+  },
 };
 
 export const wRAAThreshold: { [key in StatThreshold]: number } = {
@@ -42,6 +74,16 @@ export const wRAAThreshold: { [key in StatThreshold]: number } = {
   [StatThreshold.belowAvg]: -5,
   [StatThreshold.poor]: -10,
   [StatThreshold.awful]: -20,
+};
+
+export const wOBAThreshold: { [key in StatThreshold]: number } = {
+  [StatThreshold.excellent]: 0.4,
+  [StatThreshold.great]: 0.37,
+  [StatThreshold.aboveAvg]: 0.34,
+  [StatThreshold.avg]: 0.32,
+  [StatThreshold.belowAvg]: 0.31,
+  [StatThreshold.poor]: 0.3,
+  [StatThreshold.awful]: 0.29,
 };
 
 export const MLB_STATS_MAP: StatsMap = {

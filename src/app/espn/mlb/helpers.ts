@@ -12,7 +12,7 @@ export function statsKeyMap(obj: Record<number, number>): StatAbbrev {
   return map;
 }
 
-export const pitcherKeys = new Set([MLB_LINEUP.P, MLB_LINEUP.SP, MLB_LINEUP.RP, MLB_LINEUP.P2]);
+export const pitcherKeys: Set<MLB_LINEUP> = new Set([MLB_LINEUP.P, MLB_LINEUP.SP, MLB_LINEUP.RP, MLB_LINEUP.P2]);
 
 export function isPitcher(eligiblePos: number[]): boolean {
   for (let i = 0; i < eligiblePos.length; i++) {

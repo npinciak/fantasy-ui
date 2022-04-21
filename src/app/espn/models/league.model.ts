@@ -8,6 +8,7 @@ interface LeagueProperties {
   abbreviation: string | null;
   shortName: string | null;
   sport: string | null;
+  isTournament: boolean;
 }
 
 export type League = LeagueProperties;

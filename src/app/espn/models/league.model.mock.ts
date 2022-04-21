@@ -7,6 +7,7 @@ export const MOCK_LEAGUE_1: League = {
   shortName: 'LaLiga',
   uid: 's:600~l:740',
   sport: 'soccer',
+  isTournament: false,
 };
 
 export const MOCK_LEAGUE_2: League = {
@@ -16,4 +17,5 @@ export const MOCK_LEAGUE_2: League = {
   shortName: 'Premier League',
   uid: 's:600~l:700',
   sport: 'soccer',
+  isTournament: true,
 };

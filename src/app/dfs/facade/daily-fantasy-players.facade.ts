@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { ChartData } from 'chart.js';
 import { Observable } from 'rxjs';
 import { PlayerTableRow } from '../models/player.model';
 import { DailyFantasyPlayersSelectors } from '../selectors/daily-fantasy-players.selectors';
@@ -16,7 +15,7 @@ export class DailyFantasyPlayersFacade {
   /**
    * move to DailyFantasySlateAttrFacade
    */
-  @Select(DailyFantasyPlayersSelectors.nbaScatterChartData) nbaScatterChartData$: Observable<ChartData<'scatter'>>;
+  @Select(DailyFantasyPlayersSelectors.nbaScatterChartData) nbaScatterChartData$: Observable<any>;
   /**
    * move to DailyFantasySlateAttrFacade
    */

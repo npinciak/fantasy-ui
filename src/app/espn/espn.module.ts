@@ -13,6 +13,7 @@ import { LineupCardComponent } from './mlb/components/lineup-card/lineup-card.co
 import { PlayerComponent } from './mlb/components/player/player.component';
 import { PlayerInfoColComponent } from './mlb/components/roster/player-info-col/player-info-col.component';
 import { PlayerRatingColComponent } from './mlb/components/roster/player-rating-col/player-rating-col.component';
+import { PlayerTrendingColComponent } from './mlb/components/roster/player-trending-col/player-trending-col.component';
 import { RosterComponent } from './mlb/components/roster/roster.component';
 import { RankingColComponent } from './mlb/components/standings/ranking-col/ranking-col.component';
 import { StandingsComponent } from './mlb/components/standings/standings.component';
@@ -22,16 +23,20 @@ import { HomeComponent as FantasyBaseballHomeComponent } from './mlb/pages/home/
 import { TeamComponent } from './mlb/pages/team/team.component';
 import { FantasyBaseballFreeAgentsState } from './mlb/state/fantasy-baseball-free-agents.state';
 import { FantasyBaseballLeagueState } from './mlb/state/fantasy-baseball-league.state';
+import { FantasyBaseballPlayerState } from './mlb/state/fantasy-baseball-player.state';
+import { FantasyBaseballTeamsLiveState } from './mlb/state/fantasy-baseball-team-live.state';
 import { FantasyBaseballTeamState } from './mlb/state/fantasy-baseball-team.state';
 import { HomeComponent as FantasyFootballHomeComponent } from './nfl/pages/home/home.component';
 import { FantasyFootballLeagueState } from './nfl/state/fantasy-football-league.state';
 import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-schedule.state';
 import { FantasyFootballTeamsState } from './nfl/state/fantasy-football-teams.state';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
+import { EspnFastcastEventToggleState } from './state/espn-fastcast-event-toggle.state';
 import { EspnFeedState } from './state/espn-feed.state';
 
-const components = [
+const declarations = [
   EspnHomeComponent,
+
   FantasyBaseballHomeComponent,
   FreeAgentsComponent,
   StandingsComponent,
@@ -39,6 +44,7 @@ const components = [
   RosterComponent,
   PlayerComponent,
   PlayerInfoColComponent,
+  PlayerTrendingColComponent,
   PlayerRatingColComponent,
   TeamInfoColComponent,
   RankingColComponent,
@@ -56,11 +62,14 @@ const states = [
   FantasyFootballTeamsState,
   FantasyBaseballLeagueState,
   FantasyBaseballTeamState,
+  FantasyBaseballTeamsLiveState,
   FantasyBaseballFreeAgentsState,
+  FantasyBaseballPlayerState,
   EspnFeedState,
+  EspnFastcastEventToggleState,
 ];
 
-const modules = [
+const imports = [
   CommonModule,
   EspnRoutingModule,
   MaterialModule,
@@ -70,10 +79,12 @@ const modules = [
   NgxsModule.forFeature(states),
 ];
 
+const exports = [StandingsComponent, RosterComponent];
+
 @NgModule({
-  declarations: components,
-  imports: modules,
-  exports: [StandingsComponent, RosterComponent],
+  declarations,
+  imports,
+  exports,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class EspnModule {}

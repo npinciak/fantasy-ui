@@ -8,7 +8,6 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsWebsocketPluginModule } from '@ngxs/websocket-plugin';
-import { ChartsModule } from 'ng2-charts';
 import { environment } from 'src/environments/environment';
 import { httpInterceptorProviders } from './@core/interceptors';
 import { ShellModule } from './@core/shell/shell.module';
@@ -28,7 +27,6 @@ const states = [EspnFastcastState, EspnFastcastEventState, EspnFastcastLeagueSta
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
-    ChartsModule,
     HttpClientModule,
     NgxsSelectSnapshotModule.forRoot(),
     NgxsWebsocketPluginModule.forRoot(),

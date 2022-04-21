@@ -1,3 +1,4 @@
+import { exists } from '@app/@shared/helpers/utils';
 import { EspnClientPlayerStatsEntity } from '@app/espn/espn-client.model';
 import { SeasonConst } from '../models/adv-stats.model';
 import { Stat } from '../models/mlb-stats.model';
@@ -6,16 +7,9 @@ export class AdvStats {
   private _stats: EspnClientPlayerStatsEntity;
   private _seasonConst: SeasonConst;
 
-  constructor(stats: EspnClientPlayerStatsEntity) {
-    this._stats = stats;
-  }
-
-  get seasonConst(): SeasonConst {
-    return this._seasonConst;
-  }
-
-  set seasonConst(seasonConst: SeasonConst) {
-    this._seasonConst = seasonConst;
+  constructor(configs: { seasonConst: SeasonConst; statsEntity: EspnClientPlayerStatsEntity }) {
+    this._stats = exists(configs.statsEntity) ? configs.statsEntity : [];
+    this._seasonConst = configs.seasonConst;
   }
 
   get wOBA(): number {
@@ -25,19 +19,19 @@ export class AdvStats {
 
   get wRAA(): number {
     if (!this.wRAAValid) return 0;
-    return ((this.wOBA - this.seasonConst.wOBA) / this.seasonConst.wOBAScale) * this._stats[Stat.PA];
+    return ((this.wOBA - this._seasonConst.wOBA) / this._seasonConst.wOBAScale) * this._stats[Stat.PA];
   }
 
   get wRC(): number {
     if (!this.wRCValid) return 0;
-    return ((this.wOBA - this.seasonConst.wOBA) / this.seasonConst.wOBAScale + this.seasonConst['r/PA']) * this._stats[Stat.PA];
+    return ((this.wOBA - this._seasonConst.wOBA) / this._seasonConst.wOBAScale + this._seasonConst['r/PA']) * this._stats[Stat.PA];
   }
 
   get fip(): number {
     if (!this.fipValid) return 0;
     return (
       (13 * this._stats[Stat.HRA] + 3 * (this._stats[Stat.BBI] + this._stats[Stat.HB]) - 2 * this._stats[Stat.K]) / this._stats[Stat.IP] +
-      this.seasonConst.cFIP
+      this._seasonConst.cFIP
     );
   }
 
@@ -52,12 +46,12 @@ export class AdvStats {
   get weightedHits(): number {
     if (!this.weightedHitsValid) return 0;
     return (
-      this.seasonConst.wBB * this.unintentionalBB +
-      this.seasonConst.wHBP * this._stats[Stat.HBP] +
-      this.seasonConst.w1B * this._stats[Stat['1B']] +
-      this.seasonConst.w2B * this._stats[Stat['2B']] +
-      this.seasonConst.w3B * this._stats[Stat['3B']] +
-      this.seasonConst.wHR * this._stats[Stat.HR]
+      this._seasonConst.wBB * this.unintentionalBB +
+      this._seasonConst.wHBP * this._stats[Stat.HBP] +
+      this._seasonConst.w1B * this._stats[Stat['1B']] +
+      this._seasonConst.w2B * this._stats[Stat['2B']] +
+      this._seasonConst.w3B * this._stats[Stat['3B']] +
+      this._seasonConst.wHR * this._stats[Stat.HR]
     );
   }
 

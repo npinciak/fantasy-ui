@@ -12,17 +12,16 @@ import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.sta
 })
 export class FantasyBaseballLeagueFacade {
   @Select(FantasyBaseballLeagueState.isLoading) public isLoading$: Observable<boolean>;
+  @Select(FantasyBaseballLeagueState.scoringPeriod) public scoringPeriod$: Observable<number>;
   @Select(FantasyBaseballLeagueSelectors.standings) public standings$: Observable<BaseballTeam[]>;
-
   @Select(FantasyBaseballLeagueSelectors.getLocalStorageLeagues) public localStorageLeagueList$: Observable<any[]>;
-
   @Select(FantasyBaseballLeagueSelectors.statsGroup) public statsGroup$: Observable<string[]>;
 
   constructor(private store: Store) {}
 
   @SelectSnapshot(FantasyBaseballLeagueState.scoringPeriod) public scoringPeriod: number;
 
-  getLeague(leagueId: number): void {
-    this.store.dispatch(new FetchBaseballLeague({ leagueId }));
+  getLeague(leagueId: number): Observable<void> {
+    return this.store.dispatch(new FetchBaseballLeague({ leagueId }));
   }
 }
