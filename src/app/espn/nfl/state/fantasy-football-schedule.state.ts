@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
 import { EspnClientScheduleEntity } from '@app/espn/espn-client.model';
-import { State, Action, Selector, StateContext, Store } from '@ngxs/store';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 
 export class PatchFantasyFootballSchedule {
   public static readonly type = `[fantasyFootballSchedule] PatchFantasyFootballSchedule`;
-  constructor(public payload: { schedule: EspnClientScheduleEntity[] }) {}
+  constructor(public payload: { schedule: any }) {}
 }
 
 interface FantasyFootballScheduleStateModel {

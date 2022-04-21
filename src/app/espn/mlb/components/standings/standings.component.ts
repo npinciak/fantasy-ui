@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { TableColumnDataType } from '@app/espn/models/table.model';
 import * as _ from 'lodash';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
@@ -20,6 +21,8 @@ export class StandingsComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   public scoringPeriod = this.fantasyBaseballLeagueFacade.scoringPeriod;
+
+  readonly TableColumnDataType = TableColumnDataType;
 
   readonly teamColumn = TeamColumn;
   readonly rotoColumn = RotoColumn;

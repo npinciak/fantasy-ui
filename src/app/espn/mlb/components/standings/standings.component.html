@@ -1,14 +1,3 @@
-<!-- <div style="padding: 10px 0"></div> -->
-
-<!-- <mat-button-toggle-group #group="matButtonToggleGroup" [value]="viewOptions" (change)="updateView($event)">
-  <mat-button-toggle value="battingStatsRoto" ariaLabelledby="Card View"> Batting Roto </mat-button-toggle>
-  <mat-button-toggle value="pitchingStatsRoto" ariaLabelledby="Card View"> Pitching Roto </mat-button-toggle>
-  <mat-button-toggle value="battingStats" ariaLabelledby="Card View"> Batter Stats</mat-button-toggle>
-  <mat-button-toggle value="pitchingStats" ariaLabelledby="Card View"> Pitching Stats</mat-button-toggle>
-</mat-button-toggle-group> -->
-
-<!-- <div style="padding: 10px 0"></div> -->
-
 <mat-card>
   <mat-card-content>
     <app-scrollable-table>
@@ -16,7 +5,14 @@
         <ng-container *ngFor="let col of dataColumns">
           <ng-container [matColumnDef]="col?.columnDef">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ col?.headerLabel }}</th>
-            <td mat-cell *matCellDef="let data">{{ col?.cellData(data) }}</td>
+            <td mat-cell *matCellDef="let data">
+              <ng-container [ngSwitch]="col.columnDef">
+                <ng-template [ngSwitchCase]="'name'"> {{ col?.cellData(data) }} </ng-template>
+                <ng-template [ngSwitchDefault]>
+                  {{ col.dataType === TableColumnDataType.number ? (col?.cellData(data) | mlbStat: 'number' | number: '1.0-3') : col?.cellData(data) }}
+                </ng-template>
+              </ng-container>
+            </td>
           </ng-container>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="headers"></tr>

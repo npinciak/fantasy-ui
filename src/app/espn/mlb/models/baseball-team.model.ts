@@ -1,6 +1,5 @@
 import { Team } from '@app/espn/models/team.model';
 import { BaseballPlayer } from './baseball-player.model';
-import { StatAbbrev } from './mlb-stats.model';
 
 export interface BaseballTeamProperties {
   abbrev: string;
@@ -20,4 +19,4 @@ export type BaseballTeamLive = Pick<BaseballTeam, 'id' | 'totalPoints' | 'liveSc
 export type BaseballTeamLiveMap = Record<string, BaseballTeamLive>;
 
 type StatsMapProperties = 'rotoStatsMap';
-export type BaseballTeamTableRow = (BaseballTeam | BaseballTeamLive) & { [p in StatsMapProperties]: Partial<StatAbbrev> };
+export type BaseballTeamTableRow = BaseballTeam | BaseballTeamLive; //& { [p in StatsMapProperties]: Partial<StatAbbrev> };
