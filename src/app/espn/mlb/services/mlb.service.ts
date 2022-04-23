@@ -14,10 +14,9 @@ import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
 import { EspnService } from '@app/espn/service/espn.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MLB_LINEUP_MAP } from '../consts/lineup.const';
+import { MLB_LINEUP_MAP, PitcherIdSet } from '../consts/lineup.const';
 import { MLB_POSITION_MAP } from '../consts/position.const';
 import { MLB_TEAM_MAP } from '../consts/team.const';
-import { isPitcher } from '../helpers';
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
 
@@ -26,6 +25,15 @@ import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
 })
 export class MlbService {
   constructor(private espnClient: EspnService) {}
+
+  static isPitcher(eligiblePos: number[]): boolean {
+    for (let i = 0; i < eligiblePos.length; i++) {
+      if (PitcherIdSet.has(eligiblePos[i])) {
+        return true;
+      }
+      return false;
+    }
+  }
 
   static transformEspnClientTeamListToTeamList(teams: EspnClientTeam[]): BaseballTeam[] {
     return teams.map(team => ({
@@ -62,7 +70,7 @@ export class MlbService {
       playerRatings: player.playerPoolEntry?.ratings,
       playerOwnershipChange: player.playerPoolEntry?.player.ownership?.percentChange,
       playerOwnershipPercentOwned: player.playerPoolEntry?.player.ownership?.percentOwned,
-      isPitcher: isPitcher(player.playerPoolEntry?.player.eligibleSlots),
+      isPitcher: MlbService.isPitcher(player.playerPoolEntry?.player.eligibleSlots),
       stats: MlbService.flattenPlayerStats(player.playerPoolEntry?.player.stats),
       lineupSlotId: player.lineupSlotId,
       isStarting: false,
@@ -91,7 +99,7 @@ export class MlbService {
       playerRatings: player.ratings,
       playerOwnershipChange: player.player.ownership?.percentChange,
       playerOwnershipPercentOwned: player.player.ownership?.percentOwned,
-      isPitcher: isPitcher(player.player.eligibleSlots),
+      isPitcher: MlbService.isPitcher(player.player.eligibleSlots),
       stats: MlbService.flattenPlayerStats(player.player.stats),
       lineupSlotId: null,
       isStarting: false,

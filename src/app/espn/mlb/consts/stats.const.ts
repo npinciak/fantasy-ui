@@ -201,6 +201,12 @@ export const MLB_STATS_MAP: StatsMap = {
     statCategoryId: StatCategory.Pitching,
     statTypeId: StatType.Pitching,
   },
+  104: {
+    abbrev: 'ISO',
+    description: 'Isolated Power',
+    statCategoryId: StatCategory.Batting,
+    statTypeId: StatType.Batting,
+  },
 };
 
 export const MLB_STATS_LIST = Object.values(MLB_STATS_MAP);

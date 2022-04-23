@@ -196,4 +196,5 @@ export enum Stat {
   wOBA,
   wRAA,
   BABIP,
+  ISO,
 }
