@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FastcastEvent } from '@app/espn/models/fastcast-event.model';
+import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
 
 @Component({
   selector: 'app-espn-fastcast-event-mlb',

@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ShellFacade } from '@app/@core/shell/facade/shell.facade';
 import { GRID_TEMPLATE } from '@app/@shared/helpers/grid';
 import { UrlBuilder, UrlFragments, UrlQueryParams } from '@app/@shared/url-builder';
-import { EspnFastcastFacade } from '@app/espn/facade/espn-fastcast.facade';
+import { EspnFastcastFacade } from '@app/espn-fastcast/facade/espn-fastcast.facade';
 
 @Component({
   selector: 'app-page-layout',

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalStorageFacade } from '@app/@core/store/local-storage/local-storage.facade';
 import { LocalStorageKeys } from '@app/@core/store/local-storage/local-storage.state';
-import { EspnFastcastEventFacade } from '@app/espn/facade/espn-fastcast-event.facade';
-import { EspnFastcastLeagueFacade } from '@app/espn/facade/espn-fastcast-league.facade';
-import { EspnFastcastFacade } from '@app/espn/facade/espn-fastcast.facade';
+import { EspnFastcastEventFacade } from '@app/espn-fastcast/facade/espn-fastcast-event.facade';
+import { EspnFastcastLeagueFacade } from '@app/espn-fastcast/facade/espn-fastcast-league.facade';
+import { EspnFastcastFacade } from '@app/espn-fastcast/facade/espn-fastcast.facade';
 import { FantasyBaseballLeagueFacade } from '@app/espn/mlb/facade/fantasy-baseball-league.facade';
 import { FantasyBaseballLeagueSelectors } from '@app/espn/mlb/selectors/fantasy-baseball-league.selectors';
 import { HomeAwayTeam } from '@app/espn/models/espn-home-away.model';

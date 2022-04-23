@@ -1,5 +1,6 @@
 import { Player, PlayerTableData } from '@app/dfs/models/player.model';
 import { Schedule } from '@app/dfs/models/schedule.model';
+import { Team } from '@app/dfs/models/team.model';
 import { DailyFantasyPlayersSelectors } from '@app/dfs/selectors/daily-fantasy-players.selectors';
 import { DailyFantasyScheduleSelectors } from '@app/dfs/selectors/daily-fantasy-schedule.selectors';
 import { DailyFantasySlateAttrSelectors } from '@app/dfs/selectors/daily-fantasy-slate-attr.selectors';
@@ -7,7 +8,6 @@ import { DailyFantasyTeamsSelectors } from '@app/dfs/selectors/daily-fantasy-tea
 import { SlateTeam } from '@app/dfs/service/slate.service';
 import { DailyFantasySlateAttrState } from '@app/dfs/state/daily-fantasy-slate-attr.state';
 import { DailyFantasySlateState } from '@app/dfs/state/daily-fantasy-slate.state';
-import { Team } from '@app/espn/models/espn-fastcast.model';
 import { Selector } from '@ngxs/store';
 
 export class DailyFantasyMlbPlayerSelectors {
