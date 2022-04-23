@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { colorScaleTable } from '@app/@shared/helpers/color-blender';
 import { cellDataAccessor } from '@app/@shared/helpers/utils';
 import { DailyFantasyPlayersFacade } from '@app/dfs/facade/daily-fantasy-players.facade';
-import { TableColumn } from '@app/dfs/mlb/selectors/table.selector';
+import { TableColumn } from '@app/espn/models/table.model';
 import { NFLDfsLineupFacade } from '../../facade/nfl-dfs-lineup.facade';
 import { NFLPlayerTableRow } from '../../models/nfl-player-table-row.model';
 import { NFLTableColumn } from '../../models/nfl-table.model';

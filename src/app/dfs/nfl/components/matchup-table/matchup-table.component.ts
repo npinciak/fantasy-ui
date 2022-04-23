@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { blendColors } from '@app/@shared/helpers/color-blender';
-import { TableColumn } from '@app/dfs/mlb/selectors/table.selector';
+import { TableColumn } from '@app/espn/models/table.model';
 
 @Component({
   selector: 'app-matchup-table',

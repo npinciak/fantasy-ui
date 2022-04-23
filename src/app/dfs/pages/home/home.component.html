@@ -17,17 +17,16 @@
   <div class="blocks four" gdArea="content">
     <ng-container *ngIf="(dailyFantasySlateFacade.slatesEmpty$ | async) === false; else noSlates">
       <ng-container *ngIf="(dailyFantasyPlayersFacade.playersEmpty$ | async) === false">
-        <!-- <app-player-table
-          *ngIf="dailyFantasyPlayersFacade.playerTableRows$ | async"
-          [dfsPlayers]="dailyFantasyPlayersFacade.playerTableRows$ | async"
-          [dataColumns]="tableFacade.playerTableList$ | async"
-          [displayColumns]="tableFacade.playerDisplayColumns$ | async"
-        ></app-player-table> -->
-        <ul>
-          <li *ngFor="let p of tableFacade.playerTableList$ | async">
+        <app-player-table
+          [data]="mlbTableFacade.getPlayerTableData$ | async"
+          [dataColumns]="mlbTableFacade.getBatterTableColumns$ | async"
+          [headers]="mlbTableFacade.batterTableHeaders$ | async"
+        ></app-player-table>
+        <!-- <ul>
+          <li *ngFor="let p of mlbTableFacade.batterColumns$ | async">
             {{ p | json }}
           </li>
-        </ul>
+        </ul> -->
         <!-- <app-nfl-player-table
           [dfsPlayers]="dailyFantasyPlayersFacade.playerTableRows$ | async"
           [dataColumns]="tableFacade.playerTableList$ | async"

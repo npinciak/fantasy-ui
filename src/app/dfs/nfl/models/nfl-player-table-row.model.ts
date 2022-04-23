@@ -1,6 +1,6 @@
-import { PlayerTableRow } from '@app/dfs/models/player.model';
+import { PlayerTableData } from '@app/dfs/models/player.model';
 
-export interface NFLPlayerTableRowProperties extends PlayerTableRow {
+export interface NFLPlayerTableRowProperties extends PlayerTableData {
   isHome: boolean;
   statGroup: string;
   playerAdvanced: PlayerTableRowPlayerAdvanced;
@@ -8,7 +8,7 @@ export interface NFLPlayerTableRowProperties extends PlayerTableRow {
   opponent: PlayerTableRowOpponent;
 }
 
-export type NFLPlayerTableRow = PlayerTableRow & NFLPlayerTableRowProperties;
+export type NFLPlayerTableRow = PlayerTableData & NFLPlayerTableRowProperties;
 
 export interface PlayerTableRowPlayerAdvanced {
   fptsPerGame: number;

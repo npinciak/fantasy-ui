@@ -1,40 +1,49 @@
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { cellDataAccessor } from '@app/@shared/helpers/utils';
-import { TableColumn } from '@app/dfs/models/table.model';
+import { TableColumnDataType } from '@app/espn/models/table.model';
 
 @Component({
   selector: 'app-player-table',
   templateUrl: './player-table.component.html',
   styleUrls: ['./player-table.component.scss'],
 })
-export class PlayerTableComponent implements OnInit {
-  @Input() dfsPlayers: unknown[] = [];
-  @Input() displayColumns: string[] = [];
-  @Input() dataColumns: TableColumn[] = [];
+export class PlayerTableComponent implements OnInit, OnChanges {
+  @Input() data: unknown[];
+  @Input() dataColumns: any[];
+  @Input() headers: any[];
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
-  dataSource = new MatTableDataSource<any>();
-  constructor(private cdr: ChangeDetectorRef) {}
+  readonly TableColumnDataType = TableColumnDataType;
+
+  dataSource: MatTableDataSource<unknown>;
+
+  constructor() {
+    this.dataSource = new MatTableDataSource<unknown>();
+  }
 
   ngOnInit(): void {}
 
-  ngOnChanges() {
-    this.dataSource.data = this.dfsPlayers;
+  public ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes.data.currentValue[0]);
+    // console.log(changes.dataColumns);
+    if (changes.data) {
+      this.dataSource.data = changes.data.currentValue;
+    }
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.data = this.dfsPlayers;
+    this.initTable();
+  }
+
+  initTable(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-
-    // this.dataSource.filter = this.filter;
-    this.dataSource.sortingDataAccessor = (obj, path) => cellDataAccessor(obj, path);
-    // this.dataSource.filterPredicate = this.dataSourceFilter();
-    this.cdr.detectChanges();
+    this.dataSource.data = this.data;
+    this.dataSource.sortingDataAccessor = (player, stat) => cellDataAccessor(player, stat);
   }
 }

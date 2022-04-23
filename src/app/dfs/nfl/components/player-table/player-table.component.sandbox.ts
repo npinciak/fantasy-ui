@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '@app/@shared/shared.module';
-import { TableFacade } from '@app/dfs/mlb/facade/table.facade';
+import { DailyFantasyMlbTableFacade } from '@app/dfs/mlb/facade/table.facade';
 import { MaterialModule } from '@app/material.module';
 import { NgxsModule } from '@ngxs/store';
 import { sandboxOf } from 'angular-playground';
