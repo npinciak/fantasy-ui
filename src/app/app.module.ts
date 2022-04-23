@@ -15,14 +15,12 @@ import { LocalStorageState } from './@core/store/local-storage/local-storage.sta
 import { SharedModule } from './@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EspnFastcastModule } from './espn-fastcast/espn-fastcast.module';
 
 const states = [ShellState, LocalStorageState];
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    EspnFastcastModule,
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,

@@ -8,7 +8,7 @@ import { MaterialModule } from '@app/material.module';
 import { ShellComponent } from './shell.component';
 
 @NgModule({
-  imports: [ SharedModule, CommonModule, MaterialModule, RouterModule],
+  imports: [EspnFastcastModule, SharedModule, CommonModule, MaterialModule, RouterModule],
   declarations: [ShellComponent, PageLayoutComponent],
   exports: [],
 })

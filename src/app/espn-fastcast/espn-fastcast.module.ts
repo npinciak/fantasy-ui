@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ComponentFactory, ComponentFactoryResolver, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { SharedModule } from '@app/@shared/shared.module';
 import { MaterialModule } from '@app/material.module';
 import { NgxsModule } from '@ngxs/store';
@@ -16,12 +17,6 @@ const states = [EspnFastcastState, EspnFastcastEventState, EspnFastcastLeagueSta
 @NgModule({
   declarations: components,
   exports: components,
-  imports: [SharedModule, MaterialModule, CommonModule, NgxsModule.forFeature(states)],
+  imports: [SharedModule, FlexLayoutModule, MaterialModule, CommonModule, NgxsModule.forFeature(states)],
 })
-export class EspnFastcastModule {
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
-
-  resolveComponent(): ComponentFactory<EspnScoreboardComponent> {
-    return this.componentFactoryResolver.resolveComponentFactory(EspnScoreboardComponent);
-  }
-}
+export class EspnFastcastModule {}
