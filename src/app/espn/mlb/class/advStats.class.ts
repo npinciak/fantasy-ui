@@ -43,6 +43,11 @@ export class AdvStats {
     );
   }
 
+  get iso(): number {
+    if (!this.isoValid) return 0;
+    return this._stats[Stat.SLG] - this._stats[Stat.AVG];
+  }
+
   get weightedHits(): number {
     if (!this.weightedHitsValid) return 0;
     return (
@@ -120,5 +125,9 @@ export class AdvStats {
       this._stats.hasOwnProperty(Stat.SF) &&
       this._stats.hasOwnProperty(Stat.HBP)
     );
+  }
+
+  private get isoValid(): boolean {
+    return this._stats.hasOwnProperty(Stat.SLG) && this._stats.hasOwnProperty(Stat.AVG);
   }
 }

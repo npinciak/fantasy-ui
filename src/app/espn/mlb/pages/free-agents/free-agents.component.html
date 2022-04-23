@@ -1,33 +1,19 @@
-<div
-  gdAreas.xs="content | footer"
-  gdGap="1em"
-  gdColumns.xs="none"
-  gdAreas.sm="content content | footer footer"
-  gdColumns.sm="30%!"
-  gdAreas.gt-sm="content content  | footer footer "
-  gdColumns.gt-sm="30% auto"
-  gdGap.gt-sm="20px"
-  [ngStyle]="{ 'max-width': 'auto' }"
->
-  <div gdArea="content">
-    <div fxLayout="row">
-      <div>
-        <app-dropdown-filter title="Stat Period" [filterItems]="STAT_PERIOD_FILTER_OPTIONS" (filterUpdate)="scoringPeriodIdChange($event)"></app-dropdown-filter>
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
+  <!-- <div fxFlex></div> -->
+  <div fxFlex>
+    <a mat-flat-button color="primary" [routerLink]="['./']">Home</a>
 
-        <!-- <app-data-vis
-          [xAxisFilterOptions]="fantasyBaseballFreeAgentsFacade.selectStatListFilters$ | async"
-          [yAxisFilterOptions]="fantasyBaseballFreeAgentsFacade.selectStatListFilters$ | async"
-          [chartData]="stats$ | async"
-          (filterChangeEvent)="filterChange($event)"
-        ></app-data-vis> -->
-      </div>
-    </div>
+    <app-dropdown-filter title="Stat Period" [filterItems]="STAT_PERIOD_FILTER_OPTIONS" (filterUpdate)="scoringPeriodIdChange($event)"></app-dropdown-filter>
+    <div style="margin: 10px 0"></div>
+
     <app-roster
       #freeAgentBatters
       [data]="(fantasyBaseballFreeAgentsFacade.freeAgentBatterStats$ | async)!(scoringPeriodId, '2022')"
       [dataColumns]="espnTableFacade.batterTableRow$ | async"
       [headers]="espnTableFacade.batterTableHeaders$ | async"
     ></app-roster>
+
+    <div style="margin: 10px 0"></div>
 
     <app-roster
       #freeAgentPitchers
@@ -36,5 +22,4 @@
       [headers]="espnTableFacade.pitcherTableHeaders$ | async"
     ></app-roster>
   </div>
-  <div gdArea="footer"></div>
 </div>

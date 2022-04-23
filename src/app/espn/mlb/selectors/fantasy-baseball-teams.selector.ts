@@ -108,6 +108,7 @@ export class FantasyBaseballTeamsSelector {
         adv[Stat.wOBA] = advancedStats.wOBA;
         adv[Stat.wRAA] = advancedStats.wRAA;
         adv[Stat.BABIP] = advancedStats.wRAA;
+        adv[Stat.ISO] = advancedStats.iso;
         const stats = { ...statsEntity, ...adv };
 
         return {

@@ -11,14 +11,14 @@ td[colspan='3'] {
 }
 
 mat-card.game-card {
-  margin: 10px;
+  margin-right: 10px;
   width: 300px;
   min-width: 300px;
 }
 
 mat-card.game-card {
   &-mlb {
-    margin: 10px;
+    margin-right: 5px;
     width: 300px;
     min-width: 300px;
   }

@@ -6,7 +6,9 @@ import { FreeAgentStats } from '@app/espn/mlb/selectors/fantasy-baseball-free-ag
 
 @Component({
   selector: `app-data-vis`,
-  template: '<div><div id="myBar"></div></div>',
+  template: ` <div class="data-vis-container">
+    <div id="myBar"></div>
+  </div>`,
   styleUrls: ['./data-vis.component.scss'],
 })
 export class DataVisComponent implements OnInit, OnChanges {
