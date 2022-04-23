@@ -113,6 +113,12 @@ export class EspnTableSelectors {
         dataType: TableColumnDataType.Number,
       },
       {
+        columnDef: `stats.${Stat.ISO}`,
+        headerCell: `stats.${Stat.ISO}`,
+        headerLabel: MLB_STATS_MAP[Stat.ISO].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
         columnDef: `stats.${Stat.wOBA}`,
         headerCell: `stats.${Stat.wOBA}`,
         headerLabel: MLB_STATS_MAP[Stat.wOBA].abbrev,

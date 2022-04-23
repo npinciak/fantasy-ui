@@ -1,5 +1,6 @@
 import { enumAsList } from '@app/@shared/helpers/enum-as-list';
 import { Lineup } from '../models/lineup.model';
+import { MLB_POSITION } from './position.const';
 
 export enum MLB_LINEUP {
   C,
@@ -32,8 +33,24 @@ export const PITCHING_LINEUP_SLOTS = [MLB_LINEUP.P, MLB_LINEUP.SP, MLB_LINEUP.RP
 export const mlbLineupList = enumAsList(MLB_LINEUP);
 
 export const MLB_LINEUP_MAP: Record<number, Lineup> = {
-  0: { parentId: 12, abbrev: 'C', bench: false, eligiblePositions: [2], lineupSlotEligible: true, name: 'Catcher', starter: true },
-  1: { parentId: 7, abbrev: '1B', bench: false, eligiblePositions: [3], lineupSlotEligible: true, name: 'First Base', starter: true },
+  0: {
+    parentId: 12,
+    abbrev: 'C',
+    bench: false,
+    eligiblePositions: [MLB_POSITION.C],
+    lineupSlotEligible: true,
+    name: 'Catcher',
+    starter: true,
+  },
+  1: {
+    parentId: 7,
+    abbrev: '1B',
+    bench: false,
+    eligiblePositions: [MLB_POSITION['1B']],
+    lineupSlotEligible: true,
+    name: 'First Base',
+    starter: true,
+  },
   2: { parentId: 6, abbrev: '2B', bench: false, eligiblePositions: [4], lineupSlotEligible: true, name: 'Second Base', starter: true },
   3: { parentId: 7, abbrev: '3B', bench: false, eligiblePositions: [5], lineupSlotEligible: true, name: 'Third Base', starter: true },
   4: { parentId: 6, abbrev: 'SS', bench: false, eligiblePositions: [6], lineupSlotEligible: true, name: 'Shortstop', starter: true },
@@ -51,7 +68,7 @@ export const MLB_LINEUP_MAP: Record<number, Lineup> = {
     parentId: 12,
     abbrev: '1B/3B',
     bench: false,
-    eligiblePositions: [3, 5],
+    eligiblePositions: [MLB_POSITION['1B'], 5],
     lineupSlotEligible: true,
     name: 'Corner Infielder',
     starter: true,
@@ -72,7 +89,7 @@ export const MLB_LINEUP_MAP: Record<number, Lineup> = {
     parentId: 21,
     abbrev: 'UTIL',
     bench: false,
-    eligiblePositions: [2, 3, 4, 5, 6, 7, 8, 9, 10],
+    eligiblePositions: [MLB_POSITION.C, MLB_POSITION['1B'], 4, 5, 6, 7, 8, 9, 10],
     lineupSlotEligible: true,
     name: 'Utility',
     starter: true,
@@ -100,7 +117,7 @@ export const MLB_LINEUP_MAP: Record<number, Lineup> = {
     parentId: 23,
     abbrev: 'BE',
     bench: true,
-    eligiblePositions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    eligiblePositions: [1, MLB_POSITION.C, MLB_POSITION['1B'], 4, 5, 6, 7, 8, 9, 10, 11],
     lineupSlotEligible: true,
     name: 'Bench',
     starter: false,
@@ -109,7 +126,7 @@ export const MLB_LINEUP_MAP: Record<number, Lineup> = {
     parentId: 23,
     abbrev: 'IL',
     bench: false,
-    eligiblePositions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    eligiblePositions: [1, MLB_POSITION.C, MLB_POSITION['1B'], 4, 5, 6, 7, 8, 9, 10, 11],
     lineupSlotEligible: true,
     name: 'Injured List',
     starter: false,
@@ -127,7 +144,7 @@ export const MLB_LINEUP_MAP: Record<number, Lineup> = {
     parentId: 12,
     abbrev: 'IF',
     bench: false,
-    eligiblePositions: [3, 4, 5, 6],
+    eligiblePositions: [MLB_POSITION['1B'], 4, 5, 6],
     lineupSlotEligible: true,
     name: 'Infielder',
     starter: true,
@@ -136,7 +153,7 @@ export const MLB_LINEUP_MAP: Record<number, Lineup> = {
     parentId: 21,
     abbrev: 'B',
     bench: false,
-    eligiblePositions: [2, 3, 4, 5, 6, 7, 8, 9, 10],
+    eligiblePositions: [MLB_POSITION.C, MLB_POSITION['1B'], 4, 5, 6, 7, 8, 9, 10],
     lineupSlotEligible: false,
     name: 'Batters',
     starter: false,
@@ -154,6 +171,7 @@ export const MLB_LINEUP_MAP: Record<number, Lineup> = {
 };
 
 export const MLB_LINEUP_LIST = Object.values(MLB_LINEUP_MAP);
-
 export const MLB_LINEUP_STARTERS = MLB_LINEUP_LIST.filter(p => p.starter);
 export const MLB_LINEUP_BENCH = MLB_LINEUP_LIST.filter(p => p.bench);
+
+export const PitcherIdSet: Set<MLB_LINEUP> = new Set([MLB_LINEUP.P, MLB_LINEUP.SP, MLB_LINEUP.RP, MLB_LINEUP.P2]);

@@ -1,5 +1,5 @@
 import { cellDataAccessor } from '@app/@shared/helpers/utils';
-import { PlayerTableRow } from '@app/dfs/models/player.model';
+import { PlayerTableData } from '@app/dfs/models/player.model';
 import { Selector } from '@ngxs/store';
 import { NFLTableColumn } from '../models/nfl-table.model';
 
@@ -66,7 +66,7 @@ export class NFLTableSelectors {
   static playerTableList(playerCols: Partial<TableColumn>[]) {
     return playerCols.map(col => ({
       columnDef: col.data,
-      cellData: (data: PlayerTableRow) => cellDataAccessor(data, col.data),
+      cellData: (data: PlayerTableData) => cellDataAccessor(data, col.data),
       headerLabel: col.headerLabel,
       thresholdType: col.thresholdType,
       thresholdMin: col.thresholdMin,

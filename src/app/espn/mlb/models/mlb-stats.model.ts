@@ -1,13 +1,20 @@
+export enum PeriodId {
+  Season,
+  Last7,
+  Last15,
+  Last30,
+}
+
 export enum StatCategory {
   Batting = 1,
   Pitching,
 }
 
 export enum StatTypePeriodId {
-  RegularSeason,
-  Last7Days,
-  Last15Days,
-  Last30Days,
+  Season,
+  Last7,
+  Last15,
+  Last30,
   //currentYear = 4,?
   Live = 5,
   Unavail = 6,
@@ -17,8 +24,16 @@ export enum StatTypePeriodId {
 // 01 -- l7<year>
 // 02 -- l15<year>
 // 03 -- l30<year>
+// 05<gameId> (05401354459)
 // 002021 -- regularSeason<?><year>
 // 102022 -- proj<?><year>
+
+export const PlayerRatingPeriodIdMap: { [key in PeriodId]: string } = {
+  0: 'Season',
+  1: 'Last 7',
+  2: 'Last 15',
+  3: 'Last 30',
+};
 
 export const StatTypePeriodIdMap: { [key in StatTypePeriodId]: string } = {
   0: 'Season',
@@ -196,4 +211,5 @@ export enum Stat {
   wOBA,
   wRAA,
   BABIP,
+  ISO,
 }

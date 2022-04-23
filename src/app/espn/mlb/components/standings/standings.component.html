@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content>
     <app-scrollable-table>
-      <table class="ui-w-100" mat-table [dataSource]="dataSource" matSortDirection="asc" matSort matSortDisableClear>
+      <table mat-table [dataSource]="dataSource" matSortDirection="asc" matSort matSortDisableClear>
         <ng-container *ngFor="let col of dataColumns">
           <ng-container [matColumnDef]="col?.columnDef">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ col?.headerLabel }}</th>

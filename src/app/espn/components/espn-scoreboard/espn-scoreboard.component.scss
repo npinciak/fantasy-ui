@@ -5,7 +5,10 @@ mat-form-field {
 .scoreboard-container {
   max-width: 100%;
   display: flex;
-  overflow: auto;
+  overflow-x: auto;
+  scrollbar-color: #fff #f5f6f6;
+  scrollbar-width: thin;
+  padding: 10px;
 }
 
 mat-card.league-separator {
