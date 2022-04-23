@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
-import { EspnFastcastEventFacade } from '@app/espn/facade/espn-fastcast-event.facade';
-import { EspnFastcastLeagueFacade } from '@app/espn/facade/espn-fastcast-league.facade';
-import { EspnFastcastFacade } from '@app/espn/facade/espn-fastcast.facade';
+import { EspnFastcastEventFacade } from '@app/espn-fastcast/facade/espn-fastcast-event.facade';
+import { EspnFastcastLeagueFacade } from '@app/espn-fastcast/facade/espn-fastcast-league.facade';
+import { EspnFastcastFacade } from '@app/espn-fastcast/facade/espn-fastcast.facade';
 
 @Component({
   selector: 'app-espn-scoreboard',

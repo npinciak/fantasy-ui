@@ -3,8 +3,8 @@ import { ApiService } from '@app/@shared/services/api.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { FASTCAST_WS_HOST } from '../espn.const';
-import { EspnWebSocket, SocketRes } from '../models/espn-fastcast-socket.model';
+import { EspnWebSocket, SocketRes } from '../../espn-fastcast/models/espn-fastcast-socket.model';
+import { FASTCAST_WS_HOST } from '../../espn/espn.const';
 
 @Injectable({
   providedIn: 'root',

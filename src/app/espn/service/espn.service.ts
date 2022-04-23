@@ -4,6 +4,16 @@ import { flatten } from '@app/@shared/helpers/utils';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from 'src/app/@shared/services/api.service';
+import {
+  CompetitorsEntity as CompetitorsImport,
+  EspnClientFastcast as FastCastImport,
+  EventsEntity as EventsImport,
+  LeaguesEntity as LeaguesImport,
+  Situation as SituationImport,
+  SportsEntity as SportsImport,
+} from '../../espn-fastcast/models/espn-fastcast.model';
+import { FastcastEvent } from '../../espn-fastcast/models/fastcast-event.model';
+import { FastcastEventTeamMap } from '../../espn-fastcast/models/fastcast-team.model';
 import { EspnClientFreeAgent, EspnClientLeague, GameStatusId } from '../espn-client.model';
 import { includeSports, transformDownDistancePositionText, transformUidToId } from '../espn-helpers';
 import { NO_LOGO } from '../espn.const';
@@ -14,17 +24,7 @@ import {
   espnViewParamFragmentList,
   FantasySports,
 } from '../models/espn-endpoint-builder.model';
-import {
-  CompetitorsEntity as CompetitorsImport,
-  EspnClientFastcast as FastCastImport,
-  EventsEntity as EventsImport,
-  LeaguesEntity as LeaguesImport,
-  Situation as SituationImport,
-  SportsEntity as SportsImport,
-} from '../models/espn-fastcast.model';
 import { EspnClientOneFeed, FeedArticle as FeedArticleImport } from '../models/espn-onefeed.model';
-import { FastcastEvent } from '../models/fastcast-event.model';
-import { FastcastEventTeamMap } from '../models/fastcast-team.model';
 import { FeedArticle } from '../models/feed.model';
 import { League } from '../models/league.model';
 

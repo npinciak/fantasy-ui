@@ -32,6 +32,14 @@ export const MOCK_ESPN_CLIENT_FASTCAST_SITUATION: Situation = {
   homeTimeouts: 0,
   awayTimeouts: 0,
   possession: '',
+  balls: 0,
+  strikes: 0,
+  outs: 0,
+  onFirst: false,
+  onSecond: false,
+  onThird: false,
+  batter: undefined,
+  pitcher: undefined,
 };
 
 export const MOCK_ESPN_CLIENT_FASTCAST_EVENT: EventsEntity = {

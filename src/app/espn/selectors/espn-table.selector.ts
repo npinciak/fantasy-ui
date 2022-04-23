@@ -113,6 +113,12 @@ export class EspnTableSelectors {
         dataType: TableColumnDataType.Number,
       },
       {
+        columnDef: `stats.${Stat.AVG}`,
+        headerCell: `stats.${Stat.AVG}`,
+        headerLabel: MLB_STATS_MAP[Stat.AVG].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
         columnDef: `stats.${Stat.ISO}`,
         headerCell: `stats.${Stat.ISO}`,
         headerLabel: MLB_STATS_MAP[Stat.ISO].abbrev,

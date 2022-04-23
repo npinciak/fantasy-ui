@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
 import { LeagueIdMap } from '@app/espn/espn-helpers';
-import { FastcastEvent } from '@app/espn/models/fastcast-event.model';
 
 @Component({
   selector: 'app-espn-scoreboard-card',

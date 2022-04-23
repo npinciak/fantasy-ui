@@ -1,5 +1,4 @@
 import { FilterOptions } from '@app/@shared/models/filter.model';
-import { EspnFastcastEventSelectors } from '@app/espn/selectors/espn-fastcast-event.selectors';
 import { Selector } from '@ngxs/store';
 import { AdvStats } from '../class/advStats.class';
 import { MLB_LINEUP, MLB_LINEUP_MAP } from '../consts/lineup.const';
@@ -81,15 +80,10 @@ export class FantasyBaseballTeamsSelector {
     return (id: string) => selectTeamBatters(id).filter(p => !p.isInjured && MLB_LINEUP_MAP[p.lineupSlotId].bench);
   }
 
-  @Selector([
-    FantasyBaseballTeamsSelector.selectTeamBatters,
-    FantasyBaseballLeagueState.seasonId,
-    EspnFastcastEventSelectors.selectEventIdList,
-  ])
+  @Selector([FantasyBaseballTeamsSelector.selectTeamBatters, FantasyBaseballLeagueState.seasonId])
   static selectTeamBatterStats(
     selectTeamBatters: (id: string) => BaseballPlayer[],
-    seasonId: string,
-    eventIdList: string[]
+    seasonId: string
   ): (id: string, statPeriod: string) => BaseballPlayerBatterStatsRow[] {
     return (id: string, statPeriod: string) => {
       const players = selectTeamBatters(id);
@@ -124,15 +118,10 @@ export class FantasyBaseballTeamsSelector {
     };
   }
 
-  @Selector([
-    FantasyBaseballTeamsSelector.selectTeamPitchers,
-    FantasyBaseballLeagueState.seasonId,
-    EspnFastcastEventSelectors.selectEventIdList,
-  ])
+  @Selector([FantasyBaseballTeamsSelector.selectTeamPitchers, FantasyBaseballLeagueState.seasonId])
   static selectTeamPitcherStats(
     selectTeamPitchers: (id: string) => BaseballPlayer[],
-    seasonId: string,
-    eventIdList: string[]
+    seasonId: string
   ): (id: string, statPeriod: string) => BaseballPlayerBatterStatsRow[] {
     return (id: string, statPeriod: string) => {
       const players = selectTeamPitchers(id);
