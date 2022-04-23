@@ -1,29 +1,14 @@
-<div
-  gdAreas.xs="sidebar | content | footer"
-  gdGap="1em"
-  gdColumns.xs="none"
-  gdAreas.sm="sidebar content | footer footer"
-  gdColumns.sm=""
-  gdAreas.gt-sm="sidebar content  | footer footer "
-  gdColumns.gt-sm="30% auto"
-  gdGap.gt-sm="20px"
-  [ngStyle]="{ 'max-width': 'auto' }"
->
-  <div gdArea="sidebar">
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
+  <div fxFlex="30%" fxFlex.sm="100%">
     <app-league-scoreboard [teams]="fantasyBaseballLeagueFacade.standings$ | async"></app-league-scoreboard>
   </div>
-  <div gdArea="content">
+  <div fxFlex="70%" fxFlex.sm="100%">
     <a mat-flat-button color="primary" [routerLink]="['./free-agents']">Free Agents</a>
-
     <div style="margin: 10px 0"></div>
-
     <app-standings
       [dataColumns]="espnTableFacade.standingsTableRow$ | async"
       [headers]="espnTableFacade.standingsTableHeaders$ | async"
       [teams]="fantasyBaseballTeamFacade.teamList$ | async"
     ></app-standings>
   </div>
-  <div gdArea="footer"></div>
 </div>
-
-<ng-template #loading>Loading...</ng-template>

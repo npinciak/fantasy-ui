@@ -1,21 +1,13 @@
-<div
-  gdAreas.xs="sidebar | content | footer"
-  gdGap="1em"
-  gdColumns.xs="none"
-  gdAreas.sm="sidebar content | footer footer"
-  gdColumns.sm="30%!"
-  gdAreas.gt-sm="sidebar content  | footer footer "
-  gdColumns.gt-sm="30% auto"
-  gdGap.gt-sm="20px"
-  [ngStyle]="{ 'max-width': 'auto' }"
->
-  <div gdArea="sidebar">
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
+  <div fxFlex="30%" fxFlex.sm="100%">
     <app-lineup-card
       [lineup]="(fantasyBaseballTeamFacade.startingBatters$ | async)!(teamId)"
       (fetchPlayerDetails)="fantasyBaseballPlayerFacade.getPlayerNews($event.id)"
     ></app-lineup-card>
   </div>
-  <div gdArea="content">
+  <div fxFlex="70%" fxFlex.sm="100%">
+    <a mat-flat-button color="primary" [routerLink]="['./free-agents']">Free Agents</a>
+    <div style="margin: 10px 0"></div>
     <app-dropdown-filter title="Stat Period" [filterItems]="STAT_PERIOD_FILTER_OPTIONS" (filterUpdate)="scoringPeriodIdChange($event)"></app-dropdown-filter>
     <app-dropdown-filter title="Stats" [filterItems]="fantasyBaseballTeamFacade.statListFilters$ | async" (filterUpdate)="statFilterChange($event)"></app-dropdown-filter>
     <app-data-vis
@@ -41,5 +33,4 @@
     >
     </app-roster>
   </div>
-  <div gdArea="footer"></div>
 </div>
