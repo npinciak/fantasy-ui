@@ -7,7 +7,6 @@ import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
-import { NgxsWebsocketPluginModule } from '@ngxs/websocket-plugin';
 import { environment } from 'src/environments/environment';
 import { httpInterceptorProviders } from './@core/interceptors';
 import { ShellModule } from './@core/shell/shell.module';
@@ -16,20 +15,18 @@ import { LocalStorageState } from './@core/store/local-storage/local-storage.sta
 import { SharedModule } from './@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EspnFastcastEventState } from './espn/state/espn-fastcast-event.state';
-import { EspnFastcastLeagueState } from './espn/state/espn-fastcast-league.state';
-import { EspnFastcastState } from './espn/state/espn-fastcast.state';
+import { EspnFastcastModule } from './espn-fastcast/espn-fastcast.module';
 
-const states = [EspnFastcastState, EspnFastcastEventState, EspnFastcastLeagueState, ShellState, LocalStorageState];
+const states = [ShellState, LocalStorageState];
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    EspnFastcastModule,
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
     NgxsSelectSnapshotModule.forRoot(),
-    NgxsWebsocketPluginModule.forRoot(),
     NgxsStoragePluginModule.forRoot({
       key: LocalStorageState,
       // beforeSerialize: (obj, key) => console.log('beforeSerialize ====>', obj, key),
@@ -45,6 +42,7 @@ const states = [EspnFastcastState, EspnFastcastEventState, EspnFastcastLeagueSta
     }),
     SharedModule,
     ShellModule,
+
     AppRoutingModule,
   ],
   providers: [httpInterceptorProviders],

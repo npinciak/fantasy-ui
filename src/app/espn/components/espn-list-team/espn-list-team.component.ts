@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FastcastEventTeam } from '@app/espn/models/fastcast-team.model';
+import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
 
 enum HomeAwayTeam {
   Home,

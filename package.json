@@ -35,7 +35,6 @@
     "@ngxs/schematics": "0.0.1-alpha.5",
     "@ngxs/storage-plugin": "^3.7.3",
     "@ngxs/store": "^3.7.1",
-    "@ngxs/websocket-plugin": "^3.7.3",
     "d3": "^7.3.0",
     "lodash": "^4.17.21",
     "material-design-icons-iconfont": "^6.1.0",

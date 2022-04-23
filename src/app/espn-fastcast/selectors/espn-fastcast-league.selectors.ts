@@ -1,6 +1,6 @@
+import { League } from '@app/espn/models/league.model';
 import { Selector } from '@ngxs/store';
 import { FastcastLeague, FastcastLeagueMap } from '../models/fastcast-league.model';
-import { League } from '../models/league.model';
 import { EspnFastcastLeagueState } from '../state/espn-fastcast-league.state';
 
 export class EspnFastcastLeagueSelectors {

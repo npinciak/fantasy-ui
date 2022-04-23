@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { Subscription } from 'rxjs';
-import { startWith, tap } from 'rxjs/operators';
 import {
   ConnectWebSocket,
   DisconnectWebSocket,
   FetchFastcast,
   HandleWebSocketMessage,
   SendWebSocketMessage,
-} from '../actions/espn-fastcast.actions';
-import { FASTCAST_BASE } from '../espn.const';
+} from '@app/espn-fastcast/actions/espn-fastcast.actions';
+import { FASTCAST_BASE } from '@app/espn/espn.const';
+import { EspnService } from '@app/espn/service/espn.service';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Subscription } from 'rxjs';
+import { startWith, tap } from 'rxjs/operators';
 import { FastcastEventType, OperationCode, WebSocketBuilder } from '../models/espn-fastcast-socket.model';
 import { EspnFastcastService } from '../service/espn-fastcast.service';
-import { EspnService } from '../service/espn.service';
 import { PatchFastcastEvents } from './espn-fastcast-event.state';
 import { PatchFastcastLeague } from './espn-fastcast-league.state';
 
