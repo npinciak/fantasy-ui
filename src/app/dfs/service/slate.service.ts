@@ -2,16 +2,15 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { currentDate } from '@app/@shared/helpers/date';
 import { objectIsEmpty, transformPercToNumber } from '@app/@shared/helpers/utils';
-import { CamelCasedProperties } from '@app/@shared/models/camel-case.model';
 import { ApiService } from '@app/@shared/services/api.service';
 import { camelCase } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DailyFantasyEndpointBuilder } from '../daily-fantasy-url-builder';
 import { dfsSiteToDfsSiteTypeMap } from '../dfs.const';
+import { MLBClientTeamAttributes } from '../mlb/models/mlb-client.model';
 import {
   ClientSlateAttributes,
-  ClientSlatePlayerAttributes,
   ClientSlatePlayerAttributesMap,
   ClientSlateStatGroups,
   ClientSlateTeamAttributes,
@@ -20,14 +19,7 @@ import {
 import { SlateMasterMap, Vegas } from '../models/daily-fantasy-client.model';
 import { PlayerSlateAttr } from '../models/player-slate-attr.model';
 import { Team } from '../models/team.model';
-import { NBAClientPlayerAttributes, NBAClientSlateAttrTeam, RestEntity } from '../nba/models/nba-client.model';
-import {
-  NFLClientOutsidersProperties,
-  NFLClientPlayerAttributes,
-  NFLClientSafptsProperties,
-  NFLClientSlateAttrTeam,
-  NFLClientStatGroup,
-} from '../nfl/models/nfl-client.model';
+import { RestEntity } from '../nba/models/nba-client.model';
 import { PlayerProfilerSeason, PlayerProfilerSeasonMap } from '../nfl/models/nfl-profiler.model';
 import { OutsidersProps, ScheduleAdjFptsProps } from '../nfl/models/nfl-slate-attr.model';
 
@@ -37,77 +29,103 @@ import { OutsidersProps, ScheduleAdjFptsProps } from '../nfl/models/nfl-slate-at
 export class SlateService {
   constructor(private apiService: ApiService) {}
 
-  static isNFL(team: ClientSlateTeamAttributes): team is NFLClientSlateAttrTeam {
-    return 'safpts' in team;
-  }
-
-  static isNFLStatGroup(statGroup: ClientSlateStatGroups): statGroup is NFLClientStatGroup {
-    return 'qb' in statGroup;
-  }
-
-  static isNFLPlayer(player: ClientSlatePlayerAttributes): player is NFLClientPlayerAttributes {
-    return 'ecr' in player;
-  }
-
-  static isNBA(team: ClientSlateTeamAttributes): team is NBAClientSlateAttrTeam {
-    return 'rest' in team;
-  }
-
-  static isNBAPlayer(player: ClientSlatePlayerAttributes): player is NBAClientPlayerAttributes {
-    return 'dvp' in player;
-  }
-
   // TODO: Update return type here
-  static transform(teamAttributes: ClientSlateTeamAttributes):
-    | {
-        safpts: CamelCasedProperties<NFLClientSafptsProperties>;
-        outsiders: CamelCasedProperties<NFLClientOutsidersProperties>;
-        rest?: undefined;
-      }
-    | {
-        safpts?: undefined;
-        outsiders?: undefined;
-        rest: RestEntity;
-      } {
-    if (SlateService.isNFL(teamAttributes)) {
-      const safpts = {} as ScheduleAdjFptsProps;
-      for (const prop in teamAttributes.safpts) {
-        if (teamAttributes.safpts.hasOwnProperty(prop)) {
-          safpts[camelCase(prop)] = teamAttributes.safpts[prop];
-        }
-      }
+  // static transform(teamAttributes: ClientSlateTeamAttributes):
+  //   | {
+  //       safpts: CamelCasedProperties<NFLClientSafptsProperties>;
+  //       outsiders: CamelCasedProperties<NFLClientOutsidersProperties>;
+  //       rest?: undefined;
+  //     }
+  //   | {
+  //       safpts?: undefined;
+  //       outsiders?: undefined;
+  //       rest: RestEntity;
+  //     } {
+  //   if (SlateService.isNFL(teamAttributes)) {
+  //     const safpts = {} as ScheduleAdjFptsProps;
+  //     for (const prop in teamAttributes.safpts) {
+  //       if (teamAttributes.safpts.hasOwnProperty(prop)) {
+  //         safpts[camelCase(prop)] = teamAttributes.safpts[prop];
+  //       }
+  //     }
 
-      const outsiders = {} as OutsidersProps;
-      for (const prop in teamAttributes.outsiders) {
-        if (teamAttributes.outsiders.hasOwnProperty(prop)) {
-          outsiders[camelCase(prop)] = teamAttributes.outsiders[prop];
-        }
-      }
+  //     const outsiders = {} as OutsidersProps;
+  //     for (const prop in teamAttributes.outsiders) {
+  //       if (teamAttributes.outsiders.hasOwnProperty(prop)) {
+  //         outsiders[camelCase(prop)] = teamAttributes.outsiders[prop];
+  //       }
+  //     }
 
-      return {
-        safpts,
-        outsiders,
-      };
-    }
+  //     return {
+  //       safpts,
+  //       outsiders,
+  //     };
+  //   } else if (SlateService.isNBA(teamAttributes)) {
+  //     return {
+  //       rest: teamAttributes.rest,
+  //     };
+  //   } else {
+  //     return {
+  //       teamAttibutes,
+  //     };
+  //   }
+  // }
 
-    if (SlateService.isNBA(teamAttributes)) {
-      return {
-        rest: teamAttributes.rest,
-      };
-    }
+  static transformNbaSlateTeamAttributes(teamAttributes: ClientSlateTeamAttributes) {
+    console.log(teamAttributes);
+
+    return null;
   }
 
-  static transformTeamSlateAttributes(teams: ClientSlateTeamAttributesMap): SlateTeam[] | null {
+  static transformNflSlateTeamAttributes(teamAttributes: ClientSlateTeamAttributes) {
+    console.log(teamAttributes);
+
+    return null;
+  }
+
+  static transformMlbSlateTeamAttributes(teamAttributes: ClientSlateTeamAttributes, site: string): MLBClientTeamAttributes {
+    const obj = {} as MLBClientTeamAttributes;
+
+    for (const prop in teamAttributes) {
+      switch (prop) {
+        case 'pitcher':
+        case 'vegas':
+          obj[prop] = teamAttributes[prop];
+          break;
+        default:
+          obj[prop] = transformPercToNumber(teamAttributes[prop][site]);
+          break;
+      }
+    }
+
+    return obj;
+  }
+
+  static transformTeamSlateAttributes(teams: ClientSlateTeamAttributesMap, sport: string, site: string) {
     if (objectIsEmpty(teams)) {
       return [];
     }
-    return Object.entries(teams).map(([id, team]) => ({
-      id,
-      vegas: team.vegas,
-      outsiders: SlateService.transform(team).outsiders ?? null,
-      safpts: SlateService.transform(team).safpts ?? null,
-      rest: SlateService.transform(team).rest ?? null,
-    }));
+
+    return Object.entries(teams).map(([id, team]) => {
+      const obj = {};
+      Object.assign(obj, { id });
+      switch (sport) {
+        case 'mlb':
+          Object.assign(obj, { ...SlateService.transformMlbSlateTeamAttributes(team, site) });
+          break;
+        case 'nba':
+          Object.assign(obj, { rest: SlateService.transformNbaSlateTeamAttributes(team).rest ?? null });
+          break;
+        case 'nfl':
+          Object.assign(obj, { outsiders: SlateService.transformNbaSlateTeamAttributes(team).outsiders ?? null });
+          Object.assign(obj, { safpts: SlateService.transformNflSlateTeamAttributes(team).safpts ?? null });
+          break;
+        default:
+          break;
+      }
+
+      return obj;
+    });
   }
 
   static transformStatGroupsToProfiler(statGroup: ClientSlateStatGroups): PlayerProfilerSeasonMap | null | undefined {
@@ -173,8 +191,8 @@ export class SlateService {
       ownership: transformPercToNumber(player.ownership?.[siteMap]) ?? null,
       value: transformPercToNumber(player.value_pct?.[siteMap]) ?? null,
       smash: transformPercToNumber(player.smash_pct?.[siteMap]) ?? null,
-      expertRanking: SlateService.isNFLPlayer(player) ? player.ecr : null,
-      defenseVsPos: SlateService.isNBAPlayer(player) ? player.dvp : null,
+      expertRanking: null, // SlateService.isNFLPlayer(player) ? player.ecr : null,
+      defenseVsPos: null, //SlateService.isNBAPlayer(player) ? player.dvp : null,
     }));
   }
 
@@ -192,7 +210,7 @@ export class SlateService {
     params = params.append('slate_id', request.slateId);
     return this.apiService.get<ClientSlateAttributes>(endpoint.slateAttr, { params }).pipe(
       map(res => ({
-        teams: SlateService.transformTeamSlateAttributes(res.teams),
+        teams: SlateService.transformTeamSlateAttributes(res.teams, request.sport, request.site),
         statGroups: SlateService.transformStatGroupsToProfiler(res?.stat_groups),
         players: SlateService.transformPlayerSlateAttributes(res.players, request.site),
       }))
@@ -209,7 +227,7 @@ export type SlateTeam = Pick<Team, 'id'> & { vegas: Vegas } & Partial<{
 export type SlateTeamMap = Record<string, SlateTeam>;
 
 type SlateAttributes = {
-  teams: SlateTeam[] | null;
+  teams: any; //SlateTeam[] | null;
   players: PlayerSlateAttr[] | null;
   statGroups: PlayerProfilerSeasonMap | null | undefined;
 };

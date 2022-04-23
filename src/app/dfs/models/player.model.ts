@@ -21,11 +21,11 @@ export type SlatePlayerMap = Record<string, Omit<Player, 'img' | 'team'>>;
 /**
  * Base player-table-row.model
  */
-interface PlayerTableRowProperties {
+interface PlayerTableDataProperties {
   salary: number | null;
   siteId: string | null;
 }
 
-export type PlayerTableRow = PlayerTableRowProperties & PlayerProperties;
+export type PlayerTableData = PlayerTableDataProperties & PlayerProperties;
 
 export type PlayersBySlate = { players: SlatePlayer[]; schedule: Schedule[]; teams: Team[] };
