@@ -1,3 +1,5 @@
+import { enumAsList } from '@app/@shared/helpers/enum-as-list';
+
 export enum PeriodId {
   Season,
   Last7,
@@ -125,11 +127,11 @@ export enum Stat {
   AB,
   H,
   AVG,
-  '2B',
-  '3B',
+  DOUBLE,
+  TRIPLE,
   HR,
   XBH,
-  '1B',
+  SINGLE,
   TB,
   SLG,
   BB,
@@ -171,17 +173,17 @@ export enum Stat {
   HRA,
   ERA,
   K,
-  'K/9',
+  K_9,
   WP,
   B,
   PKO,
   W,
   L,
-  'WIN%',
+  WIN_PERC,
   SOP,
   SV,
   BS,
-  'SV%',
+  SV_PERC,
   HD,
   IRS,
   CG,
@@ -204,7 +206,7 @@ export enum Stat {
   SHA,
   CIA,
   GP,
-  'K/BB',
+  K_BB,
   SVHD,
   PBS,
   fip = 100,
@@ -213,3 +215,5 @@ export enum Stat {
   BABIP,
   ISO,
 }
+
+export const StatList = enumAsList(Stat);

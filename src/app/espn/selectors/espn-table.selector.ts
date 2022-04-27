@@ -174,15 +174,15 @@ export class EspnTableSelectors {
         dataType: TableColumnDataType.Number,
       },
       {
-        columnDef: `stats.${Stat['K/9']}`,
-        headerCell: `stats.${Stat['K/9']}`,
-        headerLabel: MLB_STATS_MAP[Stat['K/9']].abbrev,
+        columnDef: `stats.${Stat.K_9}`,
+        headerCell: `stats.${Stat.K_9}`,
+        headerLabel: MLB_STATS_MAP[Stat.K_9].abbrev,
         dataType: TableColumnDataType.Number,
       },
       {
-        columnDef: `stats.${Stat['K/BB']}`,
-        headerCell: `stats.${Stat['K/BB']}`,
-        headerLabel: MLB_STATS_MAP[Stat['K/BB']].abbrev,
+        columnDef: `stats.${Stat.K_BB}`,
+        headerCell: `stats.${Stat.K_BB}`,
+        headerLabel: MLB_STATS_MAP[Stat.K_BB].abbrev,
         dataType: TableColumnDataType.Number,
       },
       {
