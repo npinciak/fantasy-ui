@@ -16,7 +16,7 @@ import {
   providedIn: 'root',
 })
 export class EspnFastcastEventFacade {
-  @Select(EspnFastcastEventSelectors.selectFastcastEventsByLeagueId) eventsByLeagueId$: Observable<(id: string) => FastcastEvent[]>;
+  @Select(EspnFastcastEventSelectors.getFastcastEventsByLeagueId) eventsByLeagueId$: Observable<(id: string) => FastcastEvent[]>;
   @Select(EspnFastcastEventToggleState.isIdToggled) isEventToggled$: Observable<(id: string) => boolean>;
 
   fastcastFilteredEventsSidebar$ = new Subject<FastcastEvent[]>();
@@ -55,6 +55,6 @@ export class EspnFastcastEventFacade {
    * @deprecated use EspnFastcastEventFacade.eventsByLeagueId$
    */
   fastcastEventsByLeagueId(id: string): FastcastEvent[] {
-    return this.store.selectSnapshot(EspnFastcastEventSelectors.selectFastcastEventsByLeagueId)(id);
+    return this.store.selectSnapshot(EspnFastcastEventSelectors.getFastcastEventsByLeagueId)(id);
   }
 }

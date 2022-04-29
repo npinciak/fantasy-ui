@@ -10,8 +10,8 @@ describe('EspnFastcastEventSelectors', () => {
     },
   };
 
-  const selectFastcastEventsByLeagueId = EspnFastcastEventSelectors.selectFastcastEventsByLeagueId(MOCK_FASTCAST_EVENT_LIST);
-  const selectEventById = EspnFastcastEventSelectors.selectEventById(state.map);
+  const selectFastcastEventsByLeagueId = EspnFastcastEventSelectors.getFastcastEventsByLeagueId(MOCK_FASTCAST_EVENT_LIST);
+  const selectEventById = EspnFastcastEventSelectors.getEventById(state.map);
 
   describe('selectEventById', () => {
     it('should return event by id', () => {
@@ -25,7 +25,7 @@ describe('EspnFastcastEventSelectors', () => {
   describe('selectEventList', () => {
     it('should return event list sorted', () => {
       const expected = [MOCK_FASTCAST_EVENT_2, MOCK_FASTCAST_EVENT_1];
-      const actual = EspnFastcastEventSelectors.selectEventList(state.map);
+      const actual = EspnFastcastEventSelectors.getEventList(state.map);
 
       expect(actual).toEqual(expected);
     });
