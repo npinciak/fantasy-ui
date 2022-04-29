@@ -1,8 +1,9 @@
-import { FilterOptions } from '@app/@shared/models/filter.model';
+import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
+import { EspnFastcastTeamSelectors } from '@app/espn-fastcast/selectors/espn-fastcast-team.selectors';
 import { Selector } from '@ngxs/store';
 import { AdvStats } from '../class/advStats.class';
 import { MLB_LINEUP, MLB_LINEUP_MAP } from '../consts/lineup.const';
-import { MLB_STATS_KEYS, MLB_STATS_MAP, MLB_WEIGHTED_STATS } from '../consts/stats.const';
+import { MLB_WEIGHTED_STATS } from '../consts/stats.const';
 import { BaseballPlayer, BaseballPlayerBatterStatsRow } from '../models/baseball-player.model';
 import { BaseballTeamLive, BaseballTeamMap, BaseballTeamTableRow } from '../models/baseball-team.model';
 import { Stat } from '../models/mlb-stats.model';
@@ -21,16 +22,6 @@ export class FantasyBaseballTeamsSelector {
     return Object.values(teams).map(t => {
       const liveTeam = liveTeams(t.id);
       return { ...t, liveTeam };
-    });
-  }
-
-  @Selector()
-  static selectStatListFilters(): FilterOptions[] {
-    return MLB_STATS_KEYS.map(k => {
-      return {
-        label: MLB_STATS_MAP[k].description,
-        value: k,
-      };
     });
   }
 
@@ -104,6 +95,35 @@ export class FantasyBaseballTeamsSelector {
         adv[Stat.BABIP] = advancedStats.wRAA;
         adv[Stat.ISO] = advancedStats.iso;
         const stats = { ...statsEntity, ...adv };
+
+        return {
+          name: p?.name,
+          img: p.img,
+          team: p.team,
+          position: p.position,
+          playerOwnershipChange: p.playerOwnershipChange,
+          playerOwnershipPercentOwned: p.playerOwnershipPercentOwned,
+          stats,
+        };
+      });
+    };
+  }
+
+  @Selector([FantasyBaseballTeamsLiveState.selectEntityById, EspnFastcastTeamSelectors.getTeamById])
+  static selectLiveTeamBatterStats(
+    selectLiveTeam: (id: string) => BaseballTeamLive,
+    selectFastcastTeamById: (id: string) => FastcastEventTeam | null
+  ) {
+    return (id: string) => {
+      const roster = selectLiveTeam(id).roster;
+      return roster.map(p => {
+        const eventUid = selectFastcastTeamById(p?.teamUid)?.eventUid;
+
+        let stats = null;
+        if (eventUid) {
+          const event = `05${eventUid.split('~')[3].replace('c:', '')}`;
+          stats = p.stats[event];
+        }
 
         return {
           name: p?.name,

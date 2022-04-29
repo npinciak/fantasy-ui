@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { BaseballPlayer } from '../models/baseball-player.model';
@@ -13,9 +12,8 @@ import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.sta
 export class FantasyBaseballTeamFacade {
   @Select(FantasyBaseballTeamsSelector.selectTeamList) public teamList$: Observable<BaseballTeamTableRow[]>;
   @Select(FantasyBaseballTeamsSelector.selectTeamListLive) public liveScore$: Observable<BaseballTeam[]>;
-  @Select(FantasyBaseballTeamsSelector.selectStatListFilters) public statListFilters$: Observable<FilterOptions[]>;
-
   @Select(FantasyBaseballTeamsSelector.selectTeamStartingBatters) public startingBatters$: Observable<(id: string) => BaseballPlayer[]>;
+  @Select(FantasyBaseballTeamsSelector.selectLiveTeamBatterStats) public liveBattingStats$: Observable<(id: string) => any[]>;
   @Select(FantasyBaseballTeamsSelector.selectTeamBatterStats) public battingStats$: Observable<(id: string, statPeriod: string) => any[]>;
   @Select(FantasyBaseballTeamsSelector.selectTeamPitchers) public pitchers$: Observable<(id: string) => BaseballPlayer[]>;
   @Select(FantasyBaseballTeamsSelector.selectTeamPitcherStats) public pitcherStats$: Observable<(id: string, statPeriod: string) => any[]>;

@@ -2,9 +2,17 @@ import { cellDataAccessor } from '@app/@shared/helpers/utils';
 import { Selector } from '@ngxs/store';
 import { MLB_STATS_MAP } from '../mlb/consts/stats.const';
 import { Stat } from '../mlb/models/mlb-stats.model';
-import { TableColumn, TableColumnDataType } from '../models/table.model';
+import { BaseTableRow, TableColumn, TableColumnDataType } from '../models/table.model';
 
 export class EspnTableSelectors {
+  static transformColumnsToRows(cols: Partial<TableColumn>[]): BaseTableRow[] {
+    return cols.map(col => ({
+      columnDef: col.columnDef,
+      cellData: data => cellDataAccessor(data, col.columnDef),
+      headerLabel: col.headerLabel,
+    }));
+  }
+
   @Selector()
   static selectStandingsColumns(): TableColumn[] {
     return [
@@ -218,35 +226,76 @@ export class EspnTableSelectors {
     ];
   }
 
+  @Selector()
+  static getLiveBatterTableColumns(): TableColumn[] {
+    return [
+      { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String },
+      {
+        columnDef: `stats.${Stat.H}`,
+        headerCell: `stats.${Stat.H}`,
+        headerLabel: MLB_STATS_MAP[Stat.H].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.PA}`,
+        headerCell: `stats.${Stat.PA}`,
+        headerLabel: MLB_STATS_MAP[Stat.PA].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.R}`,
+        headerCell: `stats.${Stat.R}`,
+        headerLabel: MLB_STATS_MAP[Stat.R].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.HR}`,
+        headerCell: `stats.${Stat.HR}`,
+        headerLabel: MLB_STATS_MAP[Stat.HR].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.RBI}`,
+        headerCell: `stats.${Stat.RBI}`,
+        headerLabel: MLB_STATS_MAP[Stat.RBI].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.SB}`,
+        headerCell: `stats.${Stat.SB}`,
+        headerLabel: MLB_STATS_MAP[Stat.SB].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+    ];
+  }
+
   @Selector([EspnTableSelectors.selectStandingsColumns])
-  static selectStandingsTableRow(playerCols: Partial<TableColumn>[]) {
-    return playerCols.map(col => ({
-      columnDef: col.columnDef,
-      cellData: data => cellDataAccessor(data, col.columnDef),
-      headerLabel: col.headerLabel,
-    }));
+  static selectStandingsTableRow(playerCols: Partial<TableColumn>[]): BaseTableRow[] {
+    return EspnTableSelectors.transformColumnsToRows(playerCols);
   }
 
   @Selector([EspnTableSelectors.selectBatterColumns])
-  static selectBatterTableRow(playerCols: Partial<TableColumn>[]) {
-    return playerCols.map(col => ({
-      columnDef: col.columnDef,
-      cellData: data => cellDataAccessor(data, col.columnDef),
-      headerLabel: col.headerLabel,
-    }));
+  static selectBatterTableRow(playerCols: Partial<TableColumn>[]): BaseTableRow[] {
+    return EspnTableSelectors.transformColumnsToRows(playerCols);
+  }
+
+  @Selector([EspnTableSelectors.getLiveBatterTableColumns])
+  static getLiveBatterTableRow(playerCols: Partial<TableColumn>[]): BaseTableRow[] {
+    return EspnTableSelectors.transformColumnsToRows(playerCols);
   }
 
   @Selector([EspnTableSelectors.selectPitcherColumns])
-  static selectPitcherTableRow(playerCols: Partial<TableColumn>[]) {
-    return playerCols.map(col => ({
-      columnDef: col.columnDef,
-      cellData: data => cellDataAccessor(data, col.columnDef),
-      headerLabel: col.headerLabel,
-    }));
+  static selectPitcherTableRow(playerCols: Partial<TableColumn>[]): BaseTableRow[] {
+    return EspnTableSelectors.transformColumnsToRows(playerCols);
   }
 
   @Selector([EspnTableSelectors.selectBatterTableRow])
   static selectBatterTableHeaders(tableColumns: TableColumn[]): string[] {
+    return tableColumns.map(col => col.columnDef);
+  }
+
+  @Selector([EspnTableSelectors.getLiveBatterTableRow])
+  static getLiveBatterTableHeaders(tableColumns: TableColumn[]): string[] {
     return tableColumns.map(col => col.columnDef);
   }
 
