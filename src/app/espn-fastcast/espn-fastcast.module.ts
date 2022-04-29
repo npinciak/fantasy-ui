@@ -10,10 +10,11 @@ import { EspnScoreboardCardComponent } from './components/espn-scoreboard-card/e
 import { EspnScoreboardComponent } from './components/espn-scoreboard/espn-scoreboard.component';
 import { EspnFastcastEventState } from './state/espn-fastcast-event.state';
 import { EspnFastcastLeagueState } from './state/espn-fastcast-league.state';
+import { EspnFastcastTeamState } from './state/espn-fastcast-team.state';
 import { EspnFastcastState } from './state/espn-fastcast.state';
 
 const components = [EspnScoreboardComponent, EspnScoreboardCardComponent, EspnScoreboardCardTeamComponent, EspnFastcastEventMlbComponent];
-const states = [EspnFastcastState, EspnFastcastEventState, EspnFastcastLeagueState];
+const states = [EspnFastcastState, EspnFastcastEventState, EspnFastcastLeagueState, EspnFastcastTeamState];
 @NgModule({
   declarations: components,
   exports: components,
