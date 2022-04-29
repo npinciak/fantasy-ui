@@ -12,7 +12,7 @@ export interface EspnFastcastEventStateModel {
 }
 
 @State<EspnFastcastEventStateModel>({
-  name: 'espnFastcastEvent',
+  name: 'espnFastcastEvents',
   defaults: {
     map: {},
   },

@@ -1,11 +1,11 @@
 import { HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { MOCK_FASTCAST_EVENT_1 } from '@app/espn-fastcast/models/fastcast-event.model.mock';
+import { MOCK_FASTCAST_LEAGUE_1 } from '@app/espn-fastcast/models/fastcast-league.model.mock';
 import { NgxsModule, Store } from '@ngxs/store';
 import { includeSports, transformDownDistancePositionText, transformUidToId } from '../espn-helpers';
 import { EspnEndpointBuilder, EspnViewParamFragment, FantasySports } from '../models/espn-endpoint-builder.model';
-import { MOCK_FASTCAST_EVENT_1 } from '../models/fastcast-event.model.mock';
-import { MOCK_FASTCAST_LEAGUE_1 } from '../models/fastcast-league.model.mock';
 import { EspnService } from './espn.service';
 
 describe('EspnService', () => {

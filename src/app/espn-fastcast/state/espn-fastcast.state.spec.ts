@@ -1,9 +1,9 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
+import { EspnService } from '@app/espn/service/espn.service';
+import { EspnServiceMock } from '@app/espn/service/espn.service.mock';
 import { NgxsModule, Store } from '@ngxs/store';
 import { EspnFastcastService } from '../service/espn-fastcast.service';
 import { EspnFastcastServiceMock } from '../service/espn-fastcast.service.mock';
-import { EspnService } from '../service/espn.service';
-import { EspnServiceMock } from '../service/espn.service.mock';
 import { EspnFastcastState } from './espn-fastcast.state';
 
 describe('[espnFastcast] Store', () => {
