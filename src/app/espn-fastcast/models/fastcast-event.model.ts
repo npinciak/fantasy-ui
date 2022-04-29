@@ -1,4 +1,4 @@
-import { EventsEntity, MlbSituationAthlete, Situation, Type } from './espn-fastcast.model';
+import { EventsEntity, Situation, Type } from './espn-fastcast.model';
 import { FastcastEventTeam } from './fastcast-team.model';
 
 export interface FastcastEventProperties {
@@ -13,22 +13,14 @@ export interface FastcastEventProperties {
   clock: string | null;
   summary: string | null;
   period: number | null;
-  teams: Record<string, FastcastEventTeam>;
+  teams?: Record<string, FastcastEventTeam>; // TODO: remove
   isHalftime: boolean;
-  downDistancePositionText: string | null;
-  mlbSituation: MlbSituation;
+  mlbSituation: MlbSituation | null;
+  footballSituation: FootballSituation | null;
 }
 
-export type FastcastEvent = FastcastEventProperties & Partial<Situation> & Pick<EventsEntity, 'note'> & Pick<Type, 'completed'>;
+export type FastcastEvent = FastcastEventProperties & Partial<Situation> & Pick<EventsEntity, 'uid' | 'note'> & Pick<Type, 'completed'>;
 export type FastcastEventMap = Record<string, FastcastEvent>;
 
-export type MlbSituation = {
-  balls: number;
-  strikes: number;
-  outs: number;
-  onFirst: boolean;
-  onSecond: boolean;
-  onThird: boolean;
-  batter: MlbSituationAthlete;
-  pitcher: MlbSituationAthlete;
-};
+export type MlbSituation = Pick<Situation, 'balls' | 'strikes' | 'outs' | 'onFirst' | 'onSecond' | 'onThird' | 'batter' | 'pitcher'>;
+export type FootballSituation = Pick<Situation, 'isRedZone' | 'possession' | 'shortDownDistanceText' | 'possessionText'>;

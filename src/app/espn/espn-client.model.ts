@@ -119,7 +119,7 @@ export type EspnClientFreeAgent = EspnClientFreeAgentEntry;
 
 export type EspnClientFreeAgentEntry = {
   id: number;
-  player: Omit<EspnClientPlayerInfo, 'playerId' | 'lastNewsDate' | 'starterStatusByProGame'>;
+  player: EspnClientPlayerInfo;
   ratings: EspnClientPlayerRatings;
 };
 

@@ -7,8 +7,8 @@ interface LeagueProperties {
   name: string | null;
   abbreviation: string | null;
   shortName: string | null;
-  sport: string | null;
   isTournament: boolean;
+  sport?: string | null;
 }
 
 export type League = LeagueProperties;
