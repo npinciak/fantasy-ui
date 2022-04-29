@@ -5,7 +5,6 @@ import {
   EspnClientPlayer,
   EspnClientPlayerStatsEntityMap,
   EspnClientPlayerStatsYear,
-  EspnClientScheduleProperties,
   EspnClientScheduleTeam,
   EspnClientTeam,
 } from '@app/espn/espn-client.model';
@@ -63,6 +62,7 @@ export class MlbService {
       id: player.playerId.toString(),
       name: player.playerPoolEntry?.player.fullName,
       img: playerImgBuilder(player.playerId, 'mlb'),
+      teamUid: `s:1~l:10~t:${player.playerPoolEntry?.player.proTeamId}`,
       team: MLB_TEAM_MAP[player.playerPoolEntry?.player.proTeamId],
       position: MLB_POSITION_MAP[player.playerPoolEntry?.player.defaultPositionId].abbrev,
       isInjured: player.playerPoolEntry?.player.injured,
@@ -92,6 +92,7 @@ export class MlbService {
       id: player.id.toString(),
       name: player.player.fullName,
       img: playerImgBuilder(player.id, 'mlb'),
+      teamUid: `s:1~l:10~t:${player.player.proTeamId}`,
       team: MLB_TEAM_MAP[player.player.proTeamId],
       position: MLB_POSITION_MAP[player.player.defaultPositionId].abbrev,
       isInjured: player.player.injured,
