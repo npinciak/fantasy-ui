@@ -4,6 +4,7 @@ import { NgxsModule, Store } from '@ngxs/store';
 import { FetchBaseballLeague } from '../actions/mlb.actions';
 import { MlbService } from '../services/mlb.service';
 import { MlbServiceMock } from '../services/mlb.service.mock';
+import { ESPN_BASEBALL_TEAM_LIVE_MOCK } from '../services/team.mock';
 import { FantasyBaseballLeagueState } from './fantasy-baseball-league.state';
 
 describe('[fantasyBaseballLeague] Store', () => {
@@ -11,13 +12,14 @@ describe('[fantasyBaseballLeague] Store', () => {
   let service: MlbService;
 
   const leagueId = 1;
-  const scoringPeriodId = 1;
-  const seasonId = '2';
+  const scoringPeriodId = '1';
+  const seasonId = '2022';
 
   const MOCK_LEAGUE_STATE = {
     scoringPeriodId,
     seasonId,
     isLoading: true,
+    schedule: { [ESPN_BASEBALL_TEAM_LIVE_MOCK.teamId]: ESPN_BASEBALL_TEAM_LIVE_MOCK },
   };
 
   beforeEach(

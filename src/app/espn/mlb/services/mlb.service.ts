@@ -120,7 +120,6 @@ export class MlbService {
     teamsLive: BaseballTeamLive[];
     teams: BaseballTeam[];
     freeAgents: BaseballPlayer[];
-    schedule: EspnClientScheduleProperties;
   }> {
     return this.espnClient.espnFantasyLeagueBySport(FantasySports.baseball, leagueId).pipe(
       map(res => {
@@ -131,7 +130,6 @@ export class MlbService {
         return {
           seasonId,
           scoringPeriodId,
-          schedule,
           teamsLive: MlbService.transformEspnClientScheduleTeamListToTeamList(schedule.teams),
           teams: MlbService.transformEspnClientTeamListToTeamList(teams),
           freeAgents: MlbService.transformEspnClientFreeAgentToBaseballPlayer(res.players),

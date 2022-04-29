@@ -56,11 +56,10 @@ export class FantasyBaseballLeagueState {
       return;
     }
 
-    const { scoringPeriodId, seasonId, teams, schedule, teamsLive } = await this.mlbService.baseballLeague(leagueId).toPromise();
+    const { scoringPeriodId, seasonId, teams, teamsLive } = await this.mlbService.baseballLeague(leagueId).toPromise();
 
     dispatch([
       new SetEspnFantasyLeagueTeamsLive({ teams: teamsLive }),
-      new PatchLiveSchedule({ schedule }),
       new PatchSeasonId({ seasonId }),
       new PatchScoringPeriodId({ scoringPeriodId }),
       new PatchFantasyBaseballTeams({ teams }),

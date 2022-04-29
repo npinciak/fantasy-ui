@@ -1,7 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { EspnClientFreeAgent } from '@app/espn/espn-client.model';
+import { EspnClientFreeAgent, EspnClientLeague } from '@app/espn/espn-client.model';
 import { EspnEndpointBuilder, EspnViewParamFragment, FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
 import { NgxsModule, Store } from '@ngxs/store';
 import { MOCK_BASEBALL_FREEAGENT_1 } from '../models/baseball-player.model.mock';
@@ -19,10 +19,16 @@ describe('MlbService', () => {
   const sport = FantasySports.baseball;
   const scoringPeriodId = 1;
 
-  const mockLeagueResponse = {
+  const mockLeagueResponse: EspnClientLeague = {
     scoringPeriodId,
     teams: [ESPN_BASEBALL_TEAM_MOCK],
     players: [ESPN_BASEBALL_FREEAGENT_1],
+    schedule: [],
+    seasonId: 2022,
+    id: 1,
+    settings: {
+      name: '',
+    },
   };
 
   beforeEach(() => {
@@ -102,10 +108,9 @@ describe('MlbService', () => {
 
   describe('transformEspnClientTeamListToTeamList', () => {
     const teams = mockLeagueResponse.teams;
-    const schedule = {}; // mockLeagueResponse
 
     it('should transform data', () => {
-      const actual = MlbService.transformEspnClientTeamListToTeamList(teams, schedule);
+      const actual = MlbService.transformEspnClientTeamListToTeamList(teams);
       const expected = [MOCK_BASEBALL_TEAM_1];
 
       expect(actual).toEqual(expected);
