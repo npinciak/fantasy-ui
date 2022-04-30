@@ -4,15 +4,15 @@ import { SeasonConst } from '../models/adv-stats.model';
 import { StatCategory, StatsMap, StatType, StatTypePeriodId } from '../models/mlb-stats.model';
 
 export const STAT_PERIOD_FILTER_OPTIONS: FilterOptions[] = [
-  { value: YearToStatTypePeriod(StatTypePeriodId.Season, 2021), label: '2021 Season' },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Projected, 2022), label: '2022 Projected' },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Season, 2022), label: '2022 Season' },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Last7, 2022), label: 'Last 7' },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Last15, 2022), label: 'Last 15' },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Last30, 2022), label: 'Last 30' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Season, '2021'), label: '2021 Season' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Projected, '2022'), label: '2022 Projected' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Season, '2022'), label: '2022 Season' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Last7, '2022'), label: 'Last 7' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Last15, '2022'), label: 'Last 15' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Last30, '2022'), label: 'Last 30' },
 ];
 
-export function YearToStatTypePeriod(periodType: StatTypePeriodId, year: number) {
+export function YearToStatTypePeriod(periodType: StatTypePeriodId, year: string) {
   if (periodType === StatTypePeriodId.Projected) return `${periodType}${year}`;
   else return `0${periodType}${year}`;
 }
