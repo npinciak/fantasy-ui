@@ -10,6 +10,7 @@ import { BaseballPlayer } from './baseball-player.model';
 
 export const MOCK_BASEBALL_PLAYER_1: BaseballPlayer = {
   id: ESPN_BASEBALL_PLAYER_MOCK_1.playerId.toString(),
+  teamUid:'',
   name: ESPN_BASEBALL_PLAYER_MOCK_1.playerPoolEntry.player.fullName,
   img: `https://a.espncdn.com/combiner/i?img=/i/headshots/mlb/players/full/${ESPN_BASEBALL_PLAYER_MOCK_1.playerId}.png&w=96&h=70&cb=1`,
   team: MLB_TEAM_MAP[ESPN_BASEBALL_PLAYER_MOCK_1.playerPoolEntry.player.proTeamId],
@@ -41,7 +42,7 @@ export const MOCK_BASEBALL_FREEAGENT_1: BaseballPlayer = {
   playerOwnershipChange: ESPN_BASEBALL_FREEAGENT_1.player.ownership.percentChange,
   playerOwnershipPercentOwned: ESPN_BASEBALL_FREEAGENT_1.player.ownership.percentOwned,
   isPitcher: false,
-  lineupSlotId: null,
+  lineupSlotId: ESPN_BASEBALL_FREEAGENT_1.player.defaultPositionId,
   isStarting: false,
   startingStatus: null,
   lineupSlot: null,

@@ -113,7 +113,7 @@ export class EspnService {
     return {
       id: event?.id,
       uid: event?.uid,
-      leagueId: transformUidToId(event.uid) ?? null,
+      leagueId: transformUidToId(event.uid) ?? '',
       timestamp: new Date(event?.date).getTime(),
       state: event?.fullStatus.type.state,
       completed: event?.fullStatus.type.completed,

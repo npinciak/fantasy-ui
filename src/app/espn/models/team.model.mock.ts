@@ -13,5 +13,3 @@ export const MOCK_TEAM_2: Team = {
   logo: '',
   record: '0-2',
 };
-
-

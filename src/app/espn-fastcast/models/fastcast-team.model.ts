@@ -11,8 +11,6 @@ export interface FastcastEventTeamProperties {
   rank: number | null;
   eventUid: string;
   winPct: number | null;
-  hasPossession?: boolean; // TODO: remove me, moved to FastcastEvent.footballSitutation
-  inRedzone?: boolean; // TODO: remove me, moved to FastcastEvent.footballSitutation
 }
 
 export type FastcastEventTeam = FastcastEventTeamProperties & Team & Pick<CompetitorsEntity, 'uid'> & Pick<EventsEntity, 'id'>;

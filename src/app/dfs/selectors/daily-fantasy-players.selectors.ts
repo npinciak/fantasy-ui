@@ -29,7 +29,7 @@ export class DailyFantasyPlayersSelectors {
       .filter(p => p.rgTeamId)
       .map(p => ({
         ...p,
-        team: exists(p.rgTeamId) ? selectTeamById(p.rgTeamId).shortName : null,
+        team: exists(p.rgTeamId) ? selectTeamById(p.rgTeamId).shortName : '',
       }));
   }
 

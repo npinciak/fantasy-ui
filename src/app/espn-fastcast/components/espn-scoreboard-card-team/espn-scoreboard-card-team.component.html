@@ -9,9 +9,9 @@
           <td style="width: 165px">
             <span class="ui-font-weight-bold">
               <small *ngIf="team?.rank">{{ team?.rank }}&nbsp;</small>{{ team?.name }}&nbsp;
-              <span style="font-size: 10px; vertical-align: middle" *ngIf="team?.hasPossession">🏈</span>
+              <!-- <span style="font-size: 10px; vertical-align: middle" *ngIf="team?.hasPossession">🏈</span> -->
               <mat-icon *ngIf="team?.isWinner">arrow_left</mat-icon>
-              <small *ngIf="team?.inRedzone" style="color: red">RZ</small>
+              <!-- <small *ngIf="team?.inRedzone" style="color: red">RZ</small> -->
             </span>
           </td>
         </tr>

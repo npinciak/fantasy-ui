@@ -17,16 +17,6 @@ interface WebSocketResponseProperties {
   msg: string;
 }
 
-interface websocketFE {
-  sessionId: string; // sid
-  messageId: string; // mid
-  payload: string; // pl
-  responseCode: StatusCode; // rc
-  timestamp: number; // ts
-  operationCode: OperationCode; // op
-  useCDN: boolean;
-}
-
 export interface EspnWebSocket {
   ip: string;
   token: string;

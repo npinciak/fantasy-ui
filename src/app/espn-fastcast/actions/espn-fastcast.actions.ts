@@ -1,22 +1,22 @@
 export class ConnectWebSocket {
-  static readonly type = `[fastcast] ConnectWebSocket`;
+  static readonly type = `[espnFastcast] ConnectWebSocket`;
 }
 
 export class DisconnectWebSocket {
-  static readonly type = `[fastcast] DisconnectWebSocket`;
+  static readonly type = `[espnFastcast] DisconnectWebSocket`;
 }
 
 export class FetchFastcast {
-  static readonly type = `[fastcast] FetchFastcast`;
+  static readonly type = `[espnFastcast] FetchFastcast`;
   constructor(public payload: { uri: string }) {}
 }
 
 export class HandleWebSocketMessage {
-  static readonly type = `[fastcast] HandleWebSocketMessage`;
+  static readonly type = `[espnFastcast] HandleWebSocketMessage`;
   constructor(public payload: { message: any }) {}
 }
 
 export class SendWebSocketMessage {
-  static readonly type = `[fastcast] SendWebSocketMessage`;
+  static readonly type = `[espnFastcast] SendWebSocketMessage`;
   constructor(public payload: { message: any }) {}
 }
