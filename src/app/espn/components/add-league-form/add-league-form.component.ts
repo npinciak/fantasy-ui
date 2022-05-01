@@ -44,7 +44,8 @@ export class AddLeagueFormComponent implements OnInit {
     this.leagueIdElement.nativeElement.value = null;
   }
 
+  // TODO: Refactor me
   resetSportSelection(): void {
-    this.sportOption = null;
+    this.sportOption = '';
   }
 }

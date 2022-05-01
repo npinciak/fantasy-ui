@@ -5,7 +5,7 @@ import { Stat } from '../mlb/models/mlb-stats.model';
 import { BaseTableRow, TableColumn, TableColumnDataType } from '../models/table.model';
 
 export class EspnTableSelectors {
-  static transformColumnsToRows(cols: Partial<TableColumn>[]): BaseTableRow[] {
+  static transformColumnsToRows(cols: TableColumn[]): BaseTableRow[] {
     return cols.map(col => ({
       columnDef: col.columnDef,
       cellData: data => cellDataAccessor(data, col.columnDef),
@@ -237,9 +237,9 @@ export class EspnTableSelectors {
         dataType: TableColumnDataType.Number,
       },
       {
-        columnDef: `stats.${Stat.PA}`,
-        headerCell: `stats.${Stat.PA}`,
-        headerLabel: MLB_STATS_MAP[Stat.PA].abbrev,
+        columnDef: `stats.${Stat.AB}`,
+        headerCell: `stats.${Stat.AB}`,
+        headerLabel: MLB_STATS_MAP[Stat.AB].abbrev,
         dataType: TableColumnDataType.Number,
       },
       {
@@ -270,22 +270,22 @@ export class EspnTableSelectors {
   }
 
   @Selector([EspnTableSelectors.selectStandingsColumns])
-  static selectStandingsTableRow(playerCols: Partial<TableColumn>[]): BaseTableRow[] {
+  static selectStandingsTableRow(playerCols: TableColumn[]): BaseTableRow[] {
     return EspnTableSelectors.transformColumnsToRows(playerCols);
   }
 
   @Selector([EspnTableSelectors.selectBatterColumns])
-  static selectBatterTableRow(playerCols: Partial<TableColumn>[]): BaseTableRow[] {
+  static selectBatterTableRow(playerCols: TableColumn[]): BaseTableRow[] {
     return EspnTableSelectors.transformColumnsToRows(playerCols);
   }
 
   @Selector([EspnTableSelectors.getLiveBatterTableColumns])
-  static getLiveBatterTableRow(playerCols: Partial<TableColumn>[]): BaseTableRow[] {
+  static getLiveBatterTableRow(playerCols: TableColumn[]): BaseTableRow[] {
     return EspnTableSelectors.transformColumnsToRows(playerCols);
   }
 
   @Selector([EspnTableSelectors.selectPitcherColumns])
-  static selectPitcherTableRow(playerCols: Partial<TableColumn>[]): BaseTableRow[] {
+  static selectPitcherTableRow(playerCols: TableColumn[]): BaseTableRow[] {
     return EspnTableSelectors.transformColumnsToRows(playerCols);
   }
 

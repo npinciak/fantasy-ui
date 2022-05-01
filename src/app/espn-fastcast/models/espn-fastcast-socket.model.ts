@@ -14,6 +14,7 @@ interface WebSocketResponseProperties {
   mid?: string; //message ID ?
   oat: unknown;
   tp: unknown;
+  msg: string;
 }
 
 interface websocketFE {

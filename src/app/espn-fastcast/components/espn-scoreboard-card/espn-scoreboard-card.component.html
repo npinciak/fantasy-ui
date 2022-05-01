@@ -5,11 +5,13 @@
     <app-espn-scoreboard-card-team [isTournament]="isTournament" [team]="event?.teams?.home"></app-espn-scoreboard-card-team>
   </mat-card-content>
   <mat-card-actions>
-    <!-- <div>{{ event?.downDistancePositionText }}</div>
+    <div [ngSwitch]="event?.leagueId">
+      <ng-template [ngSwitchCase]="LeagueIdMap.MLB">
+        <!-- <div>{{ event?.downDistancePositionText }}</div>
       <ng-container *ngIf="!event.completed || (event.completed && !isTournament)">{{ event?.summary }}</ng-container>
       <ng-container *ngIf="event.completed && isTournament">{{ event?.note }}</ng-container>
       <div>{{ event?.lastPlay?.text }}</div> -->
-    <div [ngSwitch]="event?.leagueId">
+      </ng-template>
       <ng-template [ngSwitchCase]="LeagueIdMap.MLB">
         <ng-container *ngIf="eventInProgress(event); else eventSummaryDefault">
           <mat-accordion [multi]="true">

@@ -5,7 +5,7 @@ export interface FastcastEventTeamProperties {
   score: string | null;
   abbrev: string | null;
   isWinner: boolean;
-  isHome: string | null;
+  isHome: string;
   color: string | null;
   altColor: string | null;
   rank: number | null;

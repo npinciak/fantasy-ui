@@ -7,7 +7,6 @@ import { EspnFastcastFacade } from '@app/espn-fastcast/facade/espn-fastcast.faca
 import { FantasyBaseballLeagueFacade } from '@app/espn/mlb/facade/fantasy-baseball-league.facade';
 import { FantasyBaseballLeagueSelectors } from '@app/espn/mlb/selectors/fantasy-baseball-league.selectors';
 import { HomeAwayTeam } from '@app/espn/models/espn-home-away.model';
-import { EspnService } from '@app/espn/service/espn.service';
 import { Store } from '@ngxs/store';
 
 @Component({
@@ -24,13 +23,13 @@ export class EspnHomeComponent implements OnInit {
     readonly fastcastEventFacade: EspnFastcastEventFacade,
     readonly fantasyLeagueFacade: FantasyBaseballLeagueFacade,
     private localStorageFacade: LocalStorageFacade,
-    private store: Store,
-    private espnService: EspnService
+    private store: Store
   ) {}
 
   ngOnInit(): void {}
 
-  onAddLeague(event: Record<string, { sport: string }>) {
+  // TODO: Refactor me
+  onAddLeague(event: Record<string, { sport: string }>): void {
     const key = Object.keys(event)[0];
 
     const notEmpty = this.localStorageFacade.getLocalStorageValue(LocalStorageKeys.UserLeagues);
@@ -60,20 +59,16 @@ export class EspnHomeComponent implements OnInit {
     }
   }
 
-  onRemoveLeague(leagueId) {
-    console.log(leagueId);
-    const original: Record<string, { sport: string }> = JSON.parse(
-      this.localStorageFacade.getLocalStorageValue(LocalStorageKeys.UserLeagues)
-    );
+  // TODO: Refactor me
+  onRemoveLeague(leagueId): void {
+    const league = this.localStorageFacade.getLocalStorageValue(LocalStorageKeys.UserLeagues);
 
-    console.log(original[leagueId]);
+    const original = league !== null ? JSON.parse(league) : null;
 
     delete original[leagueId];
-    console.log(original);
 
     const map = { ...original };
 
-    console.log(map);
     this.localStorageFacade.setLocalStorageValue(LocalStorageKeys.UserLeagues, JSON.stringify(map));
   }
 }

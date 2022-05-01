@@ -13,7 +13,7 @@ export class EspnFastcastSelectors {
   }
 
   @Selector([EspnFastcastState.selectConnected, EspnFastcastState.selectLastRefresh])
-  static selectLastRefresh(lastconnected: number | null, lastRefresh: number | null): number {
+  static selectLastRefresh(lastconnected: number | null, lastRefresh: number | null): number | null {
     return lastRefresh ?? lastconnected;
   }
 }

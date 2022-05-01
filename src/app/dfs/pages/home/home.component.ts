@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { exists } from '@app/@shared/helpers/utils';
 import { UrlQueryParams } from '@app/@shared/url-builder';
 import { DailyFantasyPlayersFacade } from '@app/dfs/facade/daily-fantasy-players.facade';
 import { DailyFantasySlateAttrFacade } from '@app/dfs/facade/daily-fantasy-slate-attr.facade';
@@ -27,11 +28,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.dailyFantasySlateFacade.fetchSlates(this.LEAGUE, this.SITE);
+    if (exists(this.LEAGUE) && exists(this.SITE)) this.dailyFantasySlateFacade.fetchSlates(this.LEAGUE, this.SITE);
   }
 
   onSelectSlate(event: SiteSlateEntity) {
     this.dailyFantasyPlayersFacade.fetchPlayers(event.slate_path);
-    this.dailyFantasySlateAttrFacade.fetchSlateAttr(this.LEAGUE, this.SITE, event.importId);
+    if (exists(this.LEAGUE) && exists(this.SITE)) this.dailyFantasySlateAttrFacade.fetchSlateAttr(this.LEAGUE, this.SITE, event.importId);
   }
 }

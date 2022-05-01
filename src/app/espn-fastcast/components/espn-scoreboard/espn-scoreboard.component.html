@@ -4,7 +4,7 @@
       Updated at: <span style="font-weight: bold; color: #777878">{{ fastcastFacade.selectLastRefresh$ | async | date: 'short' }}</span>
     </p>
     <mat-form-field>
-      <mat-select aria-label="" aria-labelledby="" [(value)]="selectedLeagueId" (selectionChange)="onLeaderboardFilterChange($event)">
+      <mat-select [(value)]="selectedLeagueId" (selectionChange)="onLeaderboardFilterChange($event)">
         <mat-option *ngFor="let league of fastcastLeagueFacade.prettyLeagueList$ | async" [value]="league.id">{{ league.shortName }} </mat-option>
       </mat-select>
     </mat-form-field>

@@ -7,7 +7,7 @@ export class DailyFantasyEndpointBuilder {
 
   private static awsBase = environment.awsBase;
 
-  private _sport: string;
+  private _sport: string | undefined;
 
   constructor(sport?: string) {
     this._sport = sport;

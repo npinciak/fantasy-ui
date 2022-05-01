@@ -37,7 +37,7 @@ export class DailyFantasySlateState {
   }
 
   @Selector()
-  static site(state: DailyFantasySlateStateModel): string {
+  static site(state: DailyFantasySlateStateModel): string | null {
     return state.site;
   }
 

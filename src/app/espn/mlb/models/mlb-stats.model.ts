@@ -60,7 +60,7 @@ type StatsProperties = {
   statTypeId: StatType;
 };
 
-export type StatsMap = Record<string, Partial<StatsProperties>>;
+export type StatsMap = Record<string, StatsProperties>;
 
 type Stats =
   | 'ab'

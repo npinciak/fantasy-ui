@@ -3,12 +3,12 @@
  */
 interface LeagueProperties {
   id: string;
-  uid: string | null;
-  name: string | null;
-  abbreviation: string | null;
-  shortName: string | null;
+  uid: string;
+  name: string;
+  abbreviation: string;
+  shortName: string;
   isTournament: boolean;
-  sport?: string | null;
+  sport?: string;
 }
 
 export type League = LeagueProperties;

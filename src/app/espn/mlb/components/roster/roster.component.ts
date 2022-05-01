@@ -15,6 +15,7 @@ export class RosterComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() data: BaseballPlayer[];
   @Input() dataColumns: any[];
   @Input() headers: any[];
+  @Input() ariaLabel: string | null = null;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;

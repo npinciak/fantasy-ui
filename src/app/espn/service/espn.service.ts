@@ -1,6 +1,6 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { flatten } from '@app/@shared/helpers/utils';
+import { exists, flatten } from '@app/@shared/helpers/utils';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from 'src/app/@shared/services/api.service';
@@ -31,17 +31,14 @@ import { League } from '../models/league.model';
 export class EspnService {
   constructor(private api: ApiService) {}
 
-  static transformLeagueImportToLeague(l: LeaguesImport | null): League | null {
-    if (!l) {
-      return null;
-    }
+  static transformLeagueImportToLeague(l: LeaguesImport): League {
     return {
       id: l.id,
       uid: l.uid,
       name: l.name,
       abbreviation: l.abbreviation ?? l.name,
       shortName: l.shortName ?? l.name,
-      isTournament: l?.isTournament ?? false,
+      isTournament: l.isTournament ?? false,
     };
   }
 
@@ -60,42 +57,42 @@ export class EspnService {
       isWinner: data.winner,
       name: data.name ?? data.abbreviation,
       color: data.color,
-      altColor: data.alternateColor,
+      altColor: data.alternateColor ?? null,
       record: Array.isArray(data.record) ? null : data.record,
       rank: data.rank ?? null,
       winPct: null,
     };
   }
 
-  static transformEventImportToFastcastEvent(event: EventsImport): FastcastEvent {
+  static transformEventImportToFastcastEvent(event: EventsImport): FastcastEvent | null {
     if (!event) {
       return null;
     }
 
     let mlbSituation = {} as MlbSituation | null;
-    if (
-      event?.situation?.batter == null ||
-      event?.situation?.pitcher == null ||
-      event?.situation?.balls == null ||
-      event?.situation?.strikes == null ||
-      event?.situation?.outs == null ||
-      event?.situation?.onFirst == null ||
-      event?.situation?.onSecond == null ||
-      event?.situation?.onThird == null
-    ) {
-      mlbSituation = null;
-    } else {
-      Object.assign(mlbSituation, {
-        batter: event?.situation?.batter,
-        pitcher: event?.situation?.pitcher,
-        balls: event?.situation?.balls,
-        strikes: event?.situation?.strikes,
-        outs: event?.situation?.outs,
-        onFirst: event?.situation?.onFirst,
-        onSecond: event?.situation?.onSecond,
-        onThird: event?.situation?.onThird,
-      });
-    }
+    // if (
+    //   event?.situation?.batter == null ||
+    //   event?.situation?.pitcher == null ||
+    //   event?.situation?.balls == null ||
+    //   event?.situation?.strikes == null ||
+    //   event?.situation?.outs == null ||
+    //   event?.situation?.onFirst == null ||
+    //   event?.situation?.onSecond == null ||
+    //   event?.situation?.onThird == null
+    // ) {
+    //   mlbSituation = null;
+    // } else {
+    Object.assign(mlbSituation, {
+      batter: event?.situation?.batter,
+      pitcher: event?.situation?.pitcher,
+      balls: event?.situation?.balls,
+      strikes: event?.situation?.strikes,
+      outs: event?.situation?.outs,
+      onFirst: event?.situation?.onFirst,
+      onSecond: event?.situation?.onSecond,
+      onThird: event?.situation?.onThird,
+    });
+    // }
 
     let footballSituation = {} as FootballSituation | null;
     if (
@@ -116,7 +113,7 @@ export class EspnService {
     return {
       id: event?.id,
       uid: event?.uid,
-      leagueId: transformUidToId(event?.uid),
+      leagueId: transformUidToId(event.uid) ?? null,
       timestamp: new Date(event?.date).getTime(),
       state: event?.fullStatus.type.state,
       completed: event?.fullStatus.type.completed,
@@ -221,18 +218,29 @@ export class EspnService {
     return this.api.get<FastCastImport>(url).pipe(
       map(res => {
         const final = {} as FastcastTransform;
+
         const leaguesImport = res.sports.filter(s => includeSports(s.id)).map(i => i.leagues);
-
         const flattenLeaguesImport = flatten(leaguesImport);
-        const leagues: League[] = flattenLeaguesImport.map(l => EspnService.transformLeagueImportToLeague(l)).filter(l => l != null);
 
-        const flattenEventsImport = flatten(flattenLeaguesImport.map(l => l.events));
-        const events: FastcastEvent[] = flattenEventsImport
-          .map(e => EspnService.transformEventImportToFastcastEvent(e))
-          .filter(l => l != null);
+        const leagues = exists(flattenLeaguesImport) ? flattenLeaguesImport.map(l => EspnService.transformLeagueImportToLeague(l)) : [];
+        const flatLeaguesEvents = exists(flattenLeaguesImport)
+          ? flattenLeaguesImport.map(l => {
+              exists(l.events) ? l.events : [];
+              return l.events;
+            })
+          : [];
 
-        const teamsImport = flattenEventsImport.map(e => e?.competitors.map(c => EspnService.transformCompetitorToFastcastTeam(e.uid, c)));
-        const teams: FastcastEventTeam[] = flatten(teamsImport);
+        const flattenEventsImport = flatten(flatLeaguesEvents);
+        const events = exists(flattenEventsImport)
+          ? flattenEventsImport.map(e => EspnService.transformEventImportToFastcastEvent(e)).filter(l => l != null)
+          : [];
+
+        const teamsImport = exists(flattenEventsImport)
+          ? flattenEventsImport.map(e =>
+              exists(e.competitors) ? e?.competitors.map(c => EspnService.transformCompetitorToFastcastTeam(e.uid, c)) : []
+            )
+          : [];
+        const teams = exists(teamsImport) ? flatten(teamsImport) : [];
 
         Object.assign(final, {
           leagues,
@@ -261,15 +269,15 @@ export class EspnService {
 
     return this.api.get<EspnClientOneFeed>(endpoint.oneFeed + `/leagues/${league}`, { params }).pipe(
       map(res => {
-        const feeds: FeedArticleImport[][] = [];
+        // const feeds: FeedArticleImport[][] = [];
 
-        res.feed.map(f => {
-          feeds.push(f.data.now);
-        });
+        // res.feed.map(f => {
+        //   feeds.push(f.data.now);
+        // });
 
-        const feedOverviews: FeedArticleImport[] = flatten(feeds);
+        // const feedOverviews = exists(feeds) ? flatten(feeds) : [];
 
-        return feedOverviews.map(i => EspnService.transformFeedArticleImportToFeedArticle(i));
+        return []; //exists(feedOverviews) ? feedOverviews.map(i => EspnService.transformFeedArticleImportToFeedArticle(i)) : [];
       })
     );
   }

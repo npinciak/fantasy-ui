@@ -36,12 +36,12 @@ export class FantasyBaseballLeagueState {
   }
 
   @Selector([FantasyBaseballLeagueState.getState])
-  static scoringPeriod(state: FantasyBaseballLeagueStateModel): string {
+  static scoringPeriod(state: FantasyBaseballLeagueStateModel): string | null {
     return state.scoringPeriodId;
   }
 
   @Selector([FantasyBaseballLeagueState.getState])
-  static seasonId(state: FantasyBaseballLeagueStateModel): string {
+  static seasonId(state: FantasyBaseballLeagueStateModel): string | null {
     return state.seasonId;
   }
 

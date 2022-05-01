@@ -1,15 +1,12 @@
 ﻿export interface EspnClientFastcast {
-  sports?: SportsEntity[] | null;
+  sports: SportsEntity[];
 }
 export interface SportsEntity {
   id: string;
   uid: string;
   name: string;
   slug: string;
-  leagues?: LeaguesEntity[] | null;
-  $ref?: string | null;
-  guid?: string | null;
-  logos?: LogosEntity[] | null;
+  leagues: LeaguesEntity[];
 }
 export interface LeaguesEntity {
   id: string;
@@ -19,9 +16,7 @@ export interface LeaguesEntity {
   shortName: string;
   slug: string;
   isTournament: boolean;
-  events?: EventsEntity[] | null;
-  smartdates?: (string | SmartdatesEntity)[] | null;
-  tag?: string | null;
+  events?: EventsEntity[];
 }
 export interface EventsEntity {
   gamecastAvailable: boolean;

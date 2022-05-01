@@ -1,6 +1,7 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { exists } from '@app/@shared/helpers/utils';
 import { FANTASY_BASE_V3 } from '@app/espn/espn.const';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -14,7 +15,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   }
 
   private errorHandler(response: HttpErrorResponse): Observable<HttpEvent<any>> {
-    const isEspnFantasy = response.url.includes(FANTASY_BASE_V3);
+    const isEspnFantasy = exists(response.url) ? response.url.includes(FANTASY_BASE_V3) : false;
 
     const code = response.status || 0;
 
@@ -31,6 +32,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
 export enum StatusCode {
   Ok = 200,
+  NoContent = 204,
   BadRequest = 400,
 }
 

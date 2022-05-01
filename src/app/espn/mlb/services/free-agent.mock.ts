@@ -1,54 +1,28 @@
-export const ESPN_BASEBALL_FREEAGENT_1 = {
-  draftAuctionValue: 0,
+import { EspnClientFreeAgent } from '@app/espn/espn-client.model';
+
+export const ESPN_BASEBALL_FREEAGENT_1: EspnClientFreeAgent = {
   id: 31870,
-  keeperValue: 0,
-  keeperValueFuture: 0,
-  lineupLocked: false,
-  onTeamId: 0,
   player: {
-    active: true,
     defaultPositionId: 9,
-    draftRanksByRankType: {
-      STANDARD: {
-        auctionValue: 3,
-        published: false,
-        rank: 171,
-        rankSourceId: 0,
-        rankType: 'STANDARD',
-        slotId: 0,
-      },
-    },
-    droppable: true,
     eligibleSlots: [9, 10, 5, 12, 16, 17],
-    firstName: 'Max',
     fullName: 'Max Kepler',
-    id: 31870,
     injured: false,
     injuryStatus: 'ACTIVE',
-    jersey: '26',
-    lastName: 'Kepler',
-    lastNewsDate: 1633206556000,
     ownership: {
-      activityLevel: null,
-      auctionValueAverage: 1.15,
-      auctionValueAverageChange: -0.055128205128205154,
       averageDraftPosition: 193.95776614310645,
-      averageDraftPositionPercentChange: -1.243595127450078,
-      date: 1645711221627,
-      leagueType: 0,
       percentChange: 0.5673015833743733,
       percentOwned: 85.45634702190907,
       percentStarted: 80.31487394032808,
     },
     proTeamId: 9,
+    starterStatusByProGame: { 401227055: 'NOTSTARTING' },
+    lastNewsDate: 401227055,
+    playerId: 31870,
     stats: [
       {
-        externalId: '401229476',
         id: '05401229476',
-        proTeamId: 9,
         scoringPeriodId: 186,
         seasonId: 2021,
-        statSourceId: 0,
         statSplitTypeId: 5,
         stats: {
           '0': 4,
@@ -105,7 +79,4 @@ export const ESPN_BASEBALL_FREEAGENT_1 = {
       totalRating: 2.3369513,
     },
   },
-  rosterLocked: false,
-  status: 'FREEAGENT',
-  tradeLocked: false,
 };

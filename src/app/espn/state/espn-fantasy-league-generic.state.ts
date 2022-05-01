@@ -39,12 +39,12 @@ export function EspnFantasyLeagueGenericState({ name }: { name: string }): EspnF
     }
 
     @Selector([EspnFantasyLeagueGenericStateBase.getState])
-    static scoringPeriod(state: EspnFantasyLeagueGenericStateModel): string {
+    static scoringPeriod(state: EspnFantasyLeagueGenericStateModel): string | null {
       return state.scoringPeriodId;
     }
 
     @Selector([EspnFantasyLeagueGenericStateBase.getState])
-    static selectedYear(state: EspnFantasyLeagueGenericStateModel): string {
+    static selectedYear(state: EspnFantasyLeagueGenericStateModel): string | null {
       return state.seasonId;
     }
 
@@ -61,7 +61,7 @@ export function EspnFantasyLeagueGenericState({ name }: { name: string }): EspnF
         return;
       }
 
-      const { scoringPeriodId, teams, seasonId, schedule } = await this.mlbService.baseballLeague(leagueId).toPromise();
+      const { scoringPeriodId, teams, seasonId } = await this.mlbService.baseballLeague(leagueId).toPromise();
 
       dispatch([
         new PatchSeasonId({ seasonId }),

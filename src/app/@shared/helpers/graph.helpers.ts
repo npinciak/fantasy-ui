@@ -1,13 +1,4 @@
-export function pickAxisDataOLD<T>(data: T[], getter: (t: T) => number | string | undefined): number[] {
-  return data.map(d => {
-    if (getter(d) !== undefined) {
-      return Number(getter(d));
-    }
-    return null;
-  });
-}
-
-export function pickAxisData<T, U>(data: T[], getter: (t: T) => U): U[] | null {
+export function pickAxisData<T>(data: T[], getter: (t: T) => any): T[] | null {
   return data.map(d => {
     if (getter(d) !== undefined) {
       return getter(d);

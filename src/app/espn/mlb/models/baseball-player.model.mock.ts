@@ -25,6 +25,9 @@ export const MOCK_BASEBALL_PLAYER_1: BaseballPlayer = {
   startingStatus: null,
   playerRatings: ESPN_BASEBALL_PLAYER_MOCK_1.playerPoolEntry.ratings,
   stats: { '022021': ESPN_BASEBALL_PLAYER_MOCK_1.playerPoolEntry.player.stats[0].stats },
+  starterStatusByProGame: {
+    401227055: 'STARTING',
+  },
 };
 
 export const MOCK_BASEBALL_FREEAGENT_1: BaseballPlayer = {
@@ -44,6 +47,7 @@ export const MOCK_BASEBALL_FREEAGENT_1: BaseballPlayer = {
   lineupSlot: null,
   playerRatings: ESPN_BASEBALL_FREEAGENT_1.ratings,
   stats: { '05401229476': ESPN_BASEBALL_FREEAGENT_1.player.stats[0].stats },
+  starterStatusByProGame: { 401227055: 'NOTSTARTING' },
 };
 
 export const MOCK_BASEBALL_PLAYER_2: BaseballPlayer = {
@@ -59,6 +63,7 @@ export const MOCK_BASEBALL_PLAYER_2: BaseballPlayer = {
   lineupSlot: MLB_LINEUP_MAP[1].abbrev,
   isStarting: true,
   startingStatus: PlayingStatus.Probable,
+  starterStatusByProGame: { 401227055: 'NOTSTARTING' },
   playerRatings: { 0: { positionalRanking: 12, totalRanking: 56, totalRating: 44.809 } },
   stats: {
     2: {

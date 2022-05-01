@@ -15,7 +15,7 @@ export enum LocalStorageKeys {
 }
 
 export type LocalStorageStateModel = {
-  [key in LocalStorageKeys]?: string;
+  [key in LocalStorageKeys]?: string | null;
 };
 
 @State<LocalStorageStateModel>({
