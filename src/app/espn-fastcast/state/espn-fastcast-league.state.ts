@@ -14,7 +14,7 @@ export interface EspnFastcastLeagueStateModel {
 }
 
 @State<EspnFastcastLeagueStateModel>({
-  name: 'espnFastcastLeague',
+  name: 'espnFastcastLeagues',
   defaults: {
     map: {},
   },

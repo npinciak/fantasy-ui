@@ -9,8 +9,8 @@ type SeasonConstantsProperties =
   | 'wHR'
   | 'runSB'
   | 'runCS'
-  | 'r/PA'
-  | 'r/W'
+  | 'R/PA'
+  | 'R/W'
   | 'cFIP';
 
 export type SeasonConst = { [p in SeasonConstantsProperties]: number };

@@ -1,10 +1,11 @@
-import { MLB_WEIGHTED_STATS_2021 } from '../consts/stats.const';
+import { MLB_WEIGHTED_STATS } from '../consts/stats.const';
 import { MOCK_BASEBALL_PLAYER_1, MOCK_BASEBALL_PLAYER_2 } from '../models/baseball-player.model.mock';
 import { Stat } from '../models/mlb-stats.model';
 import { AdvStats } from './advStats.class';
 
 describe('Advanced Stats', () => {
-  const seasonConst = MLB_WEIGHTED_STATS_2021;
+  const year = 2021;
+  const seasonConst = MLB_WEIGHTED_STATS[year];
 
   const statsEntity = MOCK_BASEBALL_PLAYER_1.stats['022021'];
   const advancedStatsBatter = new AdvStats({ seasonConst, statsEntity });
@@ -13,7 +14,7 @@ describe('Advanced Stats', () => {
   const advancedStatsPitcher = new AdvStats({ seasonConst, statsEntity: pitcherStatsMock });
 
   const additionalStats = {};
-  additionalStats[Stat['3B']] = 2;
+  additionalStats[Stat.TRIPLE] = 2;
   additionalStats[Stat.IBB] = 6;
   additionalStats[Stat.K] = 8;
 
@@ -51,6 +52,7 @@ describe('Advanced Stats', () => {
     it('should return wRAA', () => {
       const expected = -0.4689826302729524;
       const actual = advancedStatsBatterWithMissing.wRAA;
+
       expect(actual).toEqual(expected);
     });
 
@@ -144,7 +146,7 @@ describe('Advanced Stats', () => {
     it('should return gracefully', () => {
       const expected = 0;
       const statsEntity = null;
-      const actual = new AdvStats({ seasonConst: MLB_WEIGHTED_STATS_2021, statsEntity }).babip;
+      const actual = new AdvStats({ seasonConst, statsEntity }).babip;
 
       expect(actual).toEqual(expected);
     });

@@ -14,7 +14,7 @@ export class FantasyBaseballLeagueSelectors {
         const liveTeam = selectEntityById(t.id);
         return {
           ...t,
-          liveScore: liveTeam?.liveScore,
+          liveScore: liveTeam.liveScore,
         };
       })
       .sort((a, b) => b.liveScore - a.liveScore);

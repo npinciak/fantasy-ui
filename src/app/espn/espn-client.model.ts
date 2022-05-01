@@ -112,14 +112,14 @@ export interface EspnClientRoster {
 export interface EspnClientPlayer {
   playerId: number;
   lineupSlotId: number;
-  playerPoolEntry: EspnClientPlayerEntry;
+  playerPoolEntry?: EspnClientPlayerEntry;
 }
 
 export type EspnClientFreeAgent = EspnClientFreeAgentEntry;
 
 export type EspnClientFreeAgentEntry = {
   id: number;
-  player: Omit<EspnClientPlayerInfo, 'playerId' | 'lastNewsDate' | 'starterStatusByProGame'>;
+  player: EspnClientPlayerInfo;
   ratings: EspnClientPlayerRatings;
 };
 
@@ -130,8 +130,8 @@ export interface EspnClientPlayerEntry {
 }
 
 export interface EspnClientPlayerInfo {
-  fullName: string | null;
-  playerId: number | null;
+  fullName: string;
+  playerId: number;
   lastNewsDate: number;
   defaultPositionId: number;
   proTeamId: number;

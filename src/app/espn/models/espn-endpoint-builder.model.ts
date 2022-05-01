@@ -7,8 +7,8 @@ export class EspnEndpointBuilder {
   private static oneFeedBase = ONE_FEED_BASE;
   private static commonV3 = COMMON_V3;
 
-  private _leagueId: number;
-  private _sport: FantasySports;
+  private _leagueId: number | undefined;
+  private _sport: FantasySports | undefined;
   private _year: number;
 
   constructor(sport?: FantasySports, leagueId?: number, year = new Date().getFullYear()) {
@@ -17,35 +17,35 @@ export class EspnEndpointBuilder {
     this._year = year;
   }
 
-  get fantasyPlayerNews() {
+  get fantasyPlayerNews(): string {
     return `${this.fantasyBaseV2WithFragments}/news/players`;
   }
 
-  get espnEvents() {
+  get espnEvents(): string {
     return `${this.fantasyBaseV2WithFragments}/games`;
   }
 
-  get fantasyPlayerTransaction() {
+  get fantasyPlayerTransaction(): string {
     return `${this.fantasyLeague}/transactions`;
   }
 
-  get fantasyLeague() {
+  get fantasyLeague(): string {
     return `${this.fantasyBaseV3WithFragments}/segments/0/leagues/${this._leagueId}`;
   }
 
-  get positions() {
+  get positions(): string {
     return `${EspnEndpointBuilder.commonV3}/${this._sport}/mlb/positions`;
   }
 
-  get oneFeed() {
+  get oneFeed(): string {
     return `${EspnEndpointBuilder.oneFeedBase}/oneFeed`;
   }
 
-  private get fantasyBaseV3WithFragments() {
+  private get fantasyBaseV3WithFragments(): string {
     return `${EspnEndpointBuilder.fantasyBaseV3}/games/${this._sport}/seasons/${this._year}`;
   }
 
-  private get fantasyBaseV2WithFragments() {
+  private get fantasyBaseV2WithFragments(): string {
     return `${EspnEndpointBuilder.fantasyBaseV2}/games/${this._sport}`;
   }
 }

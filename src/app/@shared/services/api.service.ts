@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +15,8 @@ export class ApiService {
    * @param options Request headers, query params, etc.
    * @param mock Substitute mock data for real http
    */
-  public get<T>(endpoint: string, options?: unknown): Observable<T> {
-    return this.http.get<T>(endpoint, options);
+  public get<T>(endpoint: string, options?: any) {
+    return this.http.get<T>(endpoint, options).pipe(map((res: any) => res as T));
   }
 
   /**
@@ -26,12 +26,8 @@ export class ApiService {
    * @param data Request payload
    * @param options Request headers, query params, etc.
    */
-  public post<T>(
-    endpoint: string,
-    postData: unknown,
-    options?: unknown
-  ): Observable<T> {
-    return this.http.post<T>(endpoint, postData, options);
+  public post<T>(endpoint: string, postData: any, options?: any) {
+    return this.http.post<T>(endpoint, postData, options).pipe(map((res: any) => res as T));
   }
 
   /**
@@ -41,11 +37,7 @@ export class ApiService {
    * @param data Request payload
    * @param options Request headers, query params, etc.
    */
-  public put<T>(
-    endpoint: string,
-    putData: unknown,
-    options?: unknown
-  ): Observable<T> {
-    return this.http.put<T>(endpoint, putData, options);
+  public put<T>(endpoint: string, putData: any, options?: any) {
+    return this.http.put<T>(endpoint, putData, options).pipe(map((res: any) => res as T));
   }
 }

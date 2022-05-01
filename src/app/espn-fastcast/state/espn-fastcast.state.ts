@@ -16,11 +16,12 @@ import { FastcastEventType, OperationCode, WebSocketBuilder } from '../models/es
 import { EspnFastcastService } from '../service/espn-fastcast.service';
 import { PatchFastcastEvents } from './espn-fastcast-event.state';
 import { PatchFastcastLeague } from './espn-fastcast-league.state';
+import { PatchFastcastTeams } from './espn-fastcast-team.state';
 
 export interface EspnFastcastStateModel {
-  disconnect: number;
-  connect: number;
-  lastRefresh: number;
+  disconnect: number | null;
+  connect: number | null;
+  lastRefresh: number | null;
 }
 
 @State<EspnFastcastStateModel>({
@@ -36,17 +37,17 @@ export class EspnFastcastState {
   constructor(private fastcastService: EspnFastcastService, private espnService: EspnService) {}
 
   @Selector()
-  static selectLastRefresh(state: EspnFastcastStateModel): number {
+  static selectLastRefresh(state: EspnFastcastStateModel): number | null {
     return state.lastRefresh;
   }
 
   @Selector()
-  static selectLastDisconnect(state: EspnFastcastStateModel): number {
+  static selectLastDisconnect(state: EspnFastcastStateModel): number | null {
     return state.disconnect;
   }
 
   @Selector()
-  static selectConnected(state: EspnFastcastStateModel): number {
+  static selectConnected(state: EspnFastcastStateModel): number | null {
     return state.connect;
   }
 
@@ -83,9 +84,7 @@ export class EspnFastcastState {
         break;
       case OperationCode.I:
         const uri = `${FASTCAST_BASE}/${message.mid}/checkpoint`;
-        const lastRefresh = new Date().getTime();
         dispatch(new FetchFastcast({ uri }));
-        patchState({ ...getState(), lastRefresh });
         break;
       case OperationCode.Error:
         dispatch(new DisconnectWebSocket());
@@ -93,6 +92,8 @@ export class EspnFastcastState {
       default:
         break;
     }
+    const lastRefresh = new Date().getTime();
+    patchState({ ...getState(), lastRefresh });
   }
 
   @Action(SendWebSocketMessage)
@@ -112,10 +113,14 @@ export class EspnFastcastState {
   @Action(FetchFastcast)
   fetchFastcast({ dispatch }: StateContext<EspnFastcastStateModel>, { payload: { uri } }: FetchFastcast): Subscription {
     return this.espnService.espnFastcast(uri).subscribe(data => {
-      const leagues = entityMap(data.transformLeaguesImportToLeagues, l => l.id);
-      const events = entityMap(data.transformEventImportToFastcastEvent, e => e.id);
-
-      dispatch([new PatchFastcastLeague({ map: leagues }), new PatchFastcastEvents({ map: events })]);
+      const leagues = entityMap(data.leagues, l => l?.uid);
+      const events = entityMap(data.events, e => e?.uid);
+      const teams = entityMap(data.teams, t => t?.uid);
+      dispatch([
+        new PatchFastcastLeague({ map: leagues }),
+        new PatchFastcastEvents({ map: events }),
+        new PatchFastcastTeams({ map: teams }),
+      ]);
     });
   }
 }

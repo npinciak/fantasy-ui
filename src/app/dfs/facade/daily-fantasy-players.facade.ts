@@ -12,15 +12,6 @@ export class DailyFantasyPlayersFacade {
   @Select(DailyFantasyPlayersSelectors.selectPositionsList) positionList$: Observable<string[]>;
   @Select(DailyFantasyPlayersSelectors.selectTeamList) teamList$: Observable<string[]>;
 
-  /**
-   * move to DailyFantasySlateAttrFacade
-   */
-  @Select(DailyFantasyPlayersSelectors.nbaScatterChartData) nbaScatterChartData$: Observable<any>;
-  /**
-   * move to DailyFantasySlateAttrFacade
-   */
-  @Select(DailyFantasyPlayersSelectors.filterableNbaAttributes) filterableNbaAttributes$: Observable<string[]>;
-
   @Select(DailyFantasyPlayersSelectors.selectNbaPlayerTableRows) selectNbaPlayerTableRows$: Observable<PlayerTableData[]>;
   @Select(DailyFantasyPlayersSelectors.selectNflPlayerTableRows) selectNflPlayerTableRows$: Observable<unknown[]>;
 

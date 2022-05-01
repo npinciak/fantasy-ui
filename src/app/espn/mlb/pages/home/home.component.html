@@ -3,7 +3,7 @@
     <app-league-scoreboard [teams]="fantasyBaseballLeagueFacade.standings$ | async"></app-league-scoreboard>
   </div>
   <div fxFlex="70%" fxFlex.sm="100%">
-    <a mat-flat-button color="primary" [routerLink]="['./free-agents']">Free Agents</a>
+    <a mat-flat-button color="primary" [routerLink]="freeAgentsRoute">Free Agents</a>
     <div style="margin: 10px 0"></div>
     <app-standings
       [dataColumns]="espnTableFacade.standingsTableRow$ | async"

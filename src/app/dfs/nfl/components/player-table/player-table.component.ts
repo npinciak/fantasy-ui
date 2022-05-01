@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { colorScaleTable } from '@app/@shared/helpers/color-blender';
-import { cellDataAccessor } from '@app/@shared/helpers/utils';
+import { cellDataAccessor, exists } from '@app/@shared/helpers/utils';
 import { DailyFantasyPlayersFacade } from '@app/dfs/facade/daily-fantasy-players.facade';
 import { TableColumn } from '@app/espn/models/table.model';
 import { NFLDfsLineupFacade } from '../../facade/nfl-dfs-lineup.facade';
@@ -131,7 +131,7 @@ export class PlayerTableComponent implements OnInit, AfterViewInit, OnChanges {
   selectRow(rowData) {
     this.selection.toggle(rowData);
 
-    this.sum = this.selection.selected.reduce((a, b) => a + b.salary, 0);
+    this.sum = this.selection.selected.reduce((a, b) => a + (exists(b.salary) ? b.salary : 0), 0);
 
     this.lineupFacade.addPlayer(rowData);
   }

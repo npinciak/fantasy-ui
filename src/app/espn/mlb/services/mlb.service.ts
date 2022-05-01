@@ -1,11 +1,11 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { exists } from '@app/@shared/helpers/utils';
 import {
   EspnClientFreeAgent,
   EspnClientPlayer,
   EspnClientPlayerStatsEntityMap,
   EspnClientPlayerStatsYear,
-  EspnClientScheduleProperties,
   EspnClientScheduleTeam,
   EspnClientTeam,
 } from '@app/espn/espn-client.model';
@@ -33,6 +33,7 @@ export class MlbService {
       }
       return false;
     }
+    return false;
   }
 
   static transformEspnClientTeamListToTeamList(teams: EspnClientTeam[]): BaseballTeam[] {
@@ -43,7 +44,7 @@ export class MlbService {
       logo: team.logo,
       roster: MlbService.transformEspnClientTeamPlayerToBaseballPlayer(team.roster?.entries),
       totalPoints: team.points,
-      liveScore: null,
+      liveScore: 0,
       currentRank: team.playoffSeed,
       rotoStats: team.valuesByStat,
     }));
@@ -58,14 +59,18 @@ export class MlbService {
     }));
   }
 
-  static transformEspnClientTeamPlayerToBaseballPlayer(players: EspnClientPlayer[]): BaseballPlayer[] {
-    return players.map(player => ({
+  static NEWtransformEspnClientTeamPlayerToBaseballPlayer(player: EspnClientPlayer): BaseballPlayer {
+    if (!exists(player.playerPoolEntry)) {
+      throw new Error('player.playerPoolEntry must be defined');
+    }
+    return {
       id: player.playerId.toString(),
-      name: player.playerPoolEntry?.player.fullName,
+      name: player.playerPoolEntry?.player?.fullName,
       img: playerImgBuilder(player.playerId, 'mlb'),
-      team: MLB_TEAM_MAP[player.playerPoolEntry?.player.proTeamId],
+      teamUid: `s:1~l:10~t:${player.playerPoolEntry?.player.proTeamId}`,
+      team: MLB_TEAM_MAP[player.playerPoolEntry?.player?.proTeamId],
       position: MLB_POSITION_MAP[player.playerPoolEntry?.player.defaultPositionId].abbrev,
-      isInjured: player.playerPoolEntry?.player.injured,
+      isInjured: exists(player.playerPoolEntry) ?? player.playerPoolEntry?.player.injured,
       injuryStatus: player.playerPoolEntry?.player.injuryStatus,
       playerRatings: player.playerPoolEntry?.ratings,
       playerOwnershipChange: player.playerPoolEntry?.player.ownership?.percentChange,
@@ -77,7 +82,35 @@ export class MlbService {
       startingStatus: null,
       lineupSlot: MLB_LINEUP_MAP[player.lineupSlotId].abbrev,
       starterStatusByProGame: player.playerPoolEntry?.player.starterStatusByProGame,
-    }));
+    };
+  }
+
+  static transformEspnClientTeamPlayerToBaseballPlayer(players: EspnClientPlayer[]): BaseballPlayer[] {
+    return players.map(player => {
+      if (!exists(player.playerPoolEntry)) {
+        throw new Error('player.playerPoolEntry must be defined');
+      }
+      return {
+        id: player.playerId.toString(),
+        name: player.playerPoolEntry?.player.fullName,
+        img: playerImgBuilder(player.playerId, 'mlb'),
+        teamUid: `s:1~l:10~t:${player.playerPoolEntry?.player.proTeamId}`,
+        team: MLB_TEAM_MAP[player.playerPoolEntry?.player.proTeamId],
+        position: MLB_POSITION_MAP[player.playerPoolEntry?.player.defaultPositionId].abbrev,
+        isInjured: player.playerPoolEntry?.player.injured,
+        injuryStatus: player.playerPoolEntry?.player.injuryStatus,
+        playerRatings: player.playerPoolEntry?.ratings,
+        playerOwnershipChange: player.playerPoolEntry?.player.ownership?.percentChange,
+        playerOwnershipPercentOwned: player.playerPoolEntry?.player.ownership?.percentOwned,
+        isPitcher: MlbService.isPitcher(player.playerPoolEntry?.player.eligibleSlots),
+        stats: MlbService.flattenPlayerStats(player.playerPoolEntry?.player.stats),
+        lineupSlotId: player.lineupSlotId,
+        isStarting: false,
+        startingStatus: null,
+        lineupSlot: MLB_LINEUP_MAP[player.lineupSlotId].abbrev,
+        starterStatusByProGame: player.playerPoolEntry?.player.starterStatusByProGame,
+      };
+    });
   }
 
   static flattenPlayerStats(stats: EspnClientPlayerStatsYear[]): EspnClientPlayerStatsEntityMap {
@@ -88,25 +121,31 @@ export class MlbService {
   }
 
   static transformEspnClientFreeAgentToBaseballPlayer(players: EspnClientFreeAgent[]): BaseballPlayer[] {
-    return players.map(player => ({
-      id: player.id.toString(),
-      name: player.player.fullName,
-      img: playerImgBuilder(player.id, 'mlb'),
-      team: MLB_TEAM_MAP[player.player.proTeamId],
-      position: MLB_POSITION_MAP[player.player.defaultPositionId].abbrev,
-      isInjured: player.player.injured,
-      injuryStatus: player.player.injuryStatus,
-      playerRatings: player.ratings,
-      playerOwnershipChange: player.player.ownership?.percentChange,
-      playerOwnershipPercentOwned: player.player.ownership?.percentOwned,
-      isPitcher: MlbService.isPitcher(player.player.eligibleSlots),
-      stats: MlbService.flattenPlayerStats(player.player.stats),
-      lineupSlotId: null,
-      isStarting: false,
-      startingStatus: null,
-      lineupSlot: null,
-      starterStatusByProGame: null,
-    }));
+    return players.map(player => {
+      if (!exists(player.player)) {
+        throw new Error('player.player must be defined');
+      }
+      return {
+        id: player.id.toString(),
+        name: player.player.fullName,
+        img: playerImgBuilder(player.id, 'mlb'),
+        teamUid: `s:1~l:10~t:${player.player.proTeamId}`,
+        team: MLB_TEAM_MAP[player.player.proTeamId],
+        position: MLB_POSITION_MAP[player.player.defaultPositionId].abbrev,
+        isInjured: player.player.injured,
+        injuryStatus: player.player.injuryStatus,
+        playerRatings: player.ratings,
+        playerOwnershipChange: player.player.ownership?.percentChange,
+        playerOwnershipPercentOwned: player.player.ownership?.percentOwned,
+        isPitcher: MlbService.isPitcher(player.player.eligibleSlots),
+        stats: MlbService.flattenPlayerStats(player.player.stats),
+        lineupSlotId: 0,
+        isStarting: false,
+        startingStatus: null,
+        lineupSlot: '',
+        starterStatusByProGame: {},
+      };
+    });
   }
 
   /**
@@ -120,7 +159,6 @@ export class MlbService {
     teamsLive: BaseballTeamLive[];
     teams: BaseballTeam[];
     freeAgents: BaseballPlayer[];
-    schedule: EspnClientScheduleProperties;
   }> {
     return this.espnClient.espnFantasyLeagueBySport(FantasySports.baseball, leagueId).pipe(
       map(res => {
@@ -131,8 +169,7 @@ export class MlbService {
         return {
           seasonId,
           scoringPeriodId,
-          schedule,
-          teamsLive: MlbService.transformEspnClientScheduleTeamListToTeamList(schedule.teams),
+          teamsLive: exists(schedule.teams) ? MlbService.transformEspnClientScheduleTeamListToTeamList(schedule.teams) : [],
           teams: MlbService.transformEspnClientTeamListToTeamList(teams),
           freeAgents: MlbService.transformEspnClientFreeAgentToBaseballPlayer(res.players),
         };

@@ -31,6 +31,10 @@ export class UrlBuilder {
     return `${UrlBuilder.espnMlbBase}/${leagueId}`;
   }
 
+  public static espnMlbLeagueFreeAgents(leagueId: string) {
+    return `${UrlBuilder.espnMlbBase}/${leagueId}/${UrlFragments.FreeAgents}`;
+  }
+
   public static espnMlbLeagueTeam(leagueId: string, teamId: string) {
     return `${UrlBuilder.espnMlbBase}/${leagueId}/${UrlFragments.Team}/${teamId}`;
   }

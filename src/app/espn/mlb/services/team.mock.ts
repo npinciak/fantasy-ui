@@ -1,4 +1,4 @@
-import { EspnClientTeam } from '@app/espn/espn-client.model';
+import { EspnClientScheduleTeam, EspnClientTeam } from '@app/espn/espn-client.model';
 import { ESPN_BASEBALL_PLAYER_MOCK_1 } from './roster.mock';
 
 export const ESPN_BASEBALL_TEAM_MOCK: EspnClientTeam = {
@@ -53,5 +53,14 @@ export const ESPN_BASEBALL_TEAM_MOCK: EspnClientTeam = {
     '48': 393,
     '53': 23,
     '57': 5,
+  },
+};
+
+export const ESPN_BASEBALL_TEAM_LIVE_MOCK: EspnClientScheduleTeam = {
+  teamId: ESPN_BASEBALL_TEAM_MOCK.id,
+  totalPoints: ESPN_BASEBALL_TEAM_MOCK.points,
+  totalPointsLive: 65,
+  rosterForCurrentScoringPeriod: {
+    entries: [ESPN_BASEBALL_PLAYER_MOCK_1],
   },
 };

@@ -21,12 +21,8 @@ export function getNestedValue<T>(obj: T, keys): T {
   return keys.reduce((o, k) => (o || {})[k], obj);
 }
 
-export function flatten<T>(array2D: T[][]): T[] {
-  return [].concat(...array2D);
-}
-
 export function objectIsEmpty<T>(obj: T): boolean {
-  if (Object.keys(obj).length === 0 && obj.constructor === Object) {
+  if (Object.keys(obj).length === 0 && (obj as Object).constructor === Object) {
     return true;
   }
   return false;
@@ -41,11 +37,13 @@ export function transformToCamelCase<T>(obj: T): CamelCasedProperties<T> {
   return map;
 }
 
-export function transformPercToNumber(str: string): number {
-  if (str !== undefined) {
-    return Number(str.split('%')[0]);
-  }
-  return null;
+export function transformPercToNumber(str: string): number;
+export function transformPercToNumber(str: string | undefined): number | null;
+export function transformPercToNumber(str: string | null): number | null;
+export function transformPercToNumber(str: string | undefined | null): number | null {
+  if (str === undefined) return null;
+  if (str === null) return null;
+  return Number(str.split('%')[0]);
 }
 
 export function transformNestedToCamelCase<T>(obj: T): {} {
@@ -62,3 +60,11 @@ export function transformNestedToCamelCase<T>(obj: T): {} {
   }
   return myFunction(obj);
 }
+
+function flatten<T>(arr: (T[] | undefined)[]): T[] | undefined;
+function flatten<T>(arr: T[][]): T[] {
+  if (arr === undefined) return [];
+  return ([] as T[]).concat(...arr);
+}
+
+export { flatten };

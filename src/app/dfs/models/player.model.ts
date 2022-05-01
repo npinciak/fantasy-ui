@@ -5,11 +5,11 @@ import { Team } from './team.model';
  * Base player model
  */
 interface PlayerProperties {
-  id: string | null;
-  name: string | null;
-  img: string | null;
+  id: string;
+  name: string;
+  img: string;
   team: string | null;
-  position: string | null;
+  position: string;
 }
 
 export type Player = PlayerProperties & { rgId: string | null; teamId: string | null; rgTeamId: string | null; gameId: string | null };

@@ -53,9 +53,9 @@ export class AdvStats {
     return (
       this._seasonConst.wBB * this.unintentionalBB +
       this._seasonConst.wHBP * this._stats[Stat.HBP] +
-      this._seasonConst.w1B * this._stats[Stat['1B']] +
-      this._seasonConst.w2B * this._stats[Stat['2B']] +
-      this._seasonConst.w3B * this._stats[Stat['3B']] +
+      this._seasonConst.w1B * this._stats[Stat.SINGLE] +
+      this._seasonConst.w2B * this._stats[Stat.DOUBLE] +
+      this._seasonConst.w3B * this._stats[Stat.TRIPLE] +
       this._seasonConst.wHR * this._stats[Stat.HR]
     );
   }
@@ -110,9 +110,9 @@ export class AdvStats {
   private get weightedHitsValid(): boolean {
     return (
       this._stats.hasOwnProperty(Stat.HBP) &&
-      this._stats.hasOwnProperty(Stat['1B']) &&
-      this._stats.hasOwnProperty(Stat['2B']) &&
-      this._stats.hasOwnProperty(Stat['3B']) &&
+      this._stats.hasOwnProperty(Stat.SINGLE) &&
+      this._stats.hasOwnProperty(Stat.DOUBLE) &&
+      this._stats.hasOwnProperty(Stat.TRIPLE) &&
       this._stats.hasOwnProperty(Stat.HR)
     );
   }

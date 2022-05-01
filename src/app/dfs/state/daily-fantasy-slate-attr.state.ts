@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { entityMap } from '@app/@shared/operators';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { FetchGridIronPlayers } from '../nfl/state/nfl-dfs-player-gridiron.state';
-import { PatchProfiler } from '../nfl/state/nfl-dfs-profiler.state';
 import { SlateService, SlateTeamMap } from '../service/slate.service';
 
 export class FetchSlateAttr {
@@ -43,7 +41,7 @@ export class DailyFantasySlateAttrState {
   }
 
   @Selector()
-  static slate(state: DailyFantasySlateAttrStateModel): string {
+  static slate(state: DailyFantasySlateAttrStateModel): string | null {
     return state.slate;
   }
 
@@ -54,11 +52,11 @@ export class DailyFantasySlateAttrState {
   ): Promise<void> {
     const { statGroups, teams, players } = await this.slateService.getGameAttrBySlateId({ sport, site, slateId }).toPromise();
 
-    dispatch(new PatchProfiler({ profiler: statGroups }));
+    // dispatch(new PatchProfiler({ profiler: statGroups }));
 
-    if (sport === 'nfl') {
-      dispatch([new FetchGridIronPlayers({ site })]);
-    }
+    // if (sport === 'nfl') {
+    //   dispatch([new FetchGridIronPlayers({ site })]);
+    // }
 
     // if (sport === 'nba') {
     //   dispatch([new PatchNbaTeamSlateAttr({ teams: res.teams })]);

@@ -4,15 +4,15 @@ import { SeasonConst } from '../models/adv-stats.model';
 import { StatCategory, StatsMap, StatType, StatTypePeriodId } from '../models/mlb-stats.model';
 
 export const STAT_PERIOD_FILTER_OPTIONS: FilterOptions[] = [
-  { value: YearToStatTypePeriod(StatTypePeriodId.Season, 2021), label: '2021 Season' },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Projected, 2022), label: '2022 Projected' },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Season, 2022), label: '2022 Season' },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Last7, 2022), label: 'Last 7' },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Last15, 2022), label: 'Last 15' },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Last30, 2022), label: 'Last 30' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Season, '2021'), label: '2021 Season' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Projected, '2022'), label: '2022 Projected' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Season, '2022'), label: '2022 Season' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Last7, '2022'), label: 'Last 7' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Last15, '2022'), label: 'Last 15' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Last30, '2022'), label: 'Last 30' },
 ];
 
-export function YearToStatTypePeriod(periodType: StatTypePeriodId, year: number) {
+export function YearToStatTypePeriod(periodType: StatTypePeriodId, year: string) {
   if (periodType === StatTypePeriodId.Projected) return `${periodType}${year}`;
   else return `0${periodType}${year}`;
 }
@@ -33,8 +33,8 @@ export const MLB_WEIGHTED_STATS: Record<string, SeasonConst> = {
     w2B: 1.238,
     w3B: 1.558,
     wHR: 1.979,
-    'r/PA': 0,
-    'r/W': 0,
+    'R/PA': 0,
+    'R/W': 0,
     cFIP: 0,
   },
   '2021': {
@@ -49,23 +49,23 @@ export const MLB_WEIGHTED_STATS: Record<string, SeasonConst> = {
     w3B: 1.6,
     wHR: 2.035,
     cFIP: 3.17,
-    'r/PA': 0.121,
-    'r/W': 9.973,
+    'R/PA': 0.121,
+    'R/W': 9.973,
   },
   '2022': {
     wOBA: 0.305,
-    wOBAScale: 1.34,
-    runSB: 0.2,
-    runCS: -0.374,
-    wBB: 0.694,
-    wHBP: 0.727,
+    wOBAScale: 1.327,
+    wBB: 0.695,
+    wHBP: 0.728,
     w1B: 0.901,
-    w2B: 1.303,
-    w3B: 1.665,
-    wHR: 2.182,
-    cFIP: 3.038,
-    'r/PA': 0.107,
-    'r/W': 9.062,
+    w2B: 1.299,
+    w3B: 1.657,
+    wHR: 2.164,
+    runSB: 0.2,
+    runCS: -0.382,
+    'R/PA': 0.11,
+    'R/W': 9.214,
+    cFIP: 3.076,
   },
 };
 

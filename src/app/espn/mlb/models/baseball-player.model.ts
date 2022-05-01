@@ -3,14 +3,14 @@ import { Player } from '@app/espn/models/player.model';
 
 export interface BaseballPlayerProperties {
   isInjured: boolean;
-  injuryStatus: string;
+  injuryStatus: string | null;
   lineupSlotId: number;
   isStarting: boolean;
-  startingStatus: string;
-  playerRatings: EspnClientPlayerRatings;
-  stats: EspnClientPlayerStatsEntityMap;
-  playerOwnershipChange: number;
-  playerOwnershipPercentOwned: number;
+  startingStatus: string | null;
+  playerRatings: EspnClientPlayerRatings | undefined;
+  stats: EspnClientPlayerStatsEntityMap | undefined;
+  playerOwnershipChange: number | null;
+  playerOwnershipPercentOwned: number | null;
   isPitcher: boolean;
   lineupSlot: string;
 }
@@ -19,11 +19,11 @@ export type BaseballPlayer = Player & BaseballPlayerProperties & Pick<EspnClient
 export type BaseballPlayerMap = Record<string, BaseballPlayer>;
 
 export interface BaseballPlayerBatterStatsRow {
-  name: string;
-  img: string;
-  team: string;
-  position: string;
-  playerOwnershipChange: number;
-  playerOwnershipPercentOwned: number;
+  name: string | null;
+  img: string | null;
+  team: string | null;
+  position: string | null;
+  playerOwnershipChange: number | null;
+  playerOwnershipPercentOwned: number | null;
   stats: {};
 }
