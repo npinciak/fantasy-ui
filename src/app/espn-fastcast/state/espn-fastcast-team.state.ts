@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { PatchFastcastTeams } from '../actions/espn-fastcast-team.actions';
 import { FastcastEventTeam } from '../models/fastcast-team.model';
-
-export class PatchFastcastTeams {
-  static readonly type = `[espnFastcastTeam] PatchFastcastTeams`;
-  constructor(public payload: { map: Record<string, FastcastEventTeam> }) {}
-}
 
 export interface EspnFastcastTeamStateModel {
   map: Record<string, FastcastEventTeam>;

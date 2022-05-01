@@ -1,26 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateOperator } from '@ngxs/store';
 import { patch } from '@ngxs/store/operators';
-
-export class ToggleOnFastcastEvent {
-  static readonly type = `[espnFastcastEventToggle] ToggleOnFastcastEvent`;
-  constructor(public payload: { ids: string[] }) {}
-}
-
-export class SelectFastcastEvent {
-  static readonly type = `[espnFastcastEventToggle] SelectFastcastEvent`;
-  constructor(public payload: { ids: string[] }) {}
-}
-
-export class DeselectFastcastEvent {
-  static readonly type = `[espnFastcastEventToggle] DeselectFastcastEvent`;
-  constructor(public payload: { ids: string[] }) {}
-}
-
-export class ToggleOffFastcastEvent {
-  static readonly type = `[espnFastcastEventToggle] ToggleOffFastcastEvent`;
-  constructor(public payload: { ids: string[] }) {}
-}
+import {
+  DeselectFastcastEvent,
+  SelectFastcastEvent,
+  ToggleOffFastcastEvent,
+  ToggleOnFastcastEvent,
+} from '../actions/espn-fastcast-event-toggle.actions';
 
 export interface EspnFastcastEventToggleStateModel {
   ids: { [id: string]: boolean };
