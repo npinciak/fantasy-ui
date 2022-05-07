@@ -89,6 +89,46 @@ export const wOBAThreshold: { [key in StatThreshold]: number } = {
   [StatThreshold.awful]: 0.29,
 };
 
+export const k9Threshold: { [key in StatThreshold]: number } = {
+  [StatThreshold.excellent]: 10,
+  [StatThreshold.great]: 9,
+  [StatThreshold.aboveAvg]: 8.2,
+  [StatThreshold.avg]: 7.7,
+  [StatThreshold.belowAvg]: 7.0,
+  [StatThreshold.poor]: 6.0,
+  [StatThreshold.awful]: 5.0,
+};
+
+export const kPercThreshold: { [key in StatThreshold]: number } = {
+  [StatThreshold.excellent]: 27,
+  [StatThreshold.great]: 24,
+  [StatThreshold.aboveAvg]: 22,
+  [StatThreshold.avg]: 20,
+  [StatThreshold.belowAvg]: 17,
+  [StatThreshold.poor]: 15,
+  [StatThreshold.awful]: 13,
+};
+
+export const bb9Threshold: { [key in StatThreshold]: number } = {
+  [StatThreshold.excellent]: 1.5,
+  [StatThreshold.great]: 1.9,
+  [StatThreshold.aboveAvg]: 2.5,
+  [StatThreshold.avg]: 2.9,
+  [StatThreshold.belowAvg]: 3.2,
+  [StatThreshold.poor]: 3.5,
+  [StatThreshold.awful]: 4.0,
+};
+
+export const bbPercThreshold: { [key in StatThreshold]: number } = {
+  [StatThreshold.excellent]: 4.5,
+  [StatThreshold.great]: 5.5,
+  [StatThreshold.aboveAvg]: 6.5,
+  [StatThreshold.avg]: 7.7,
+  [StatThreshold.belowAvg]: 8.0,
+  [StatThreshold.poor]: 8.5,
+  [StatThreshold.awful]: 9.0,
+};
+
 export const MLB_STATS_MAP: StatsMap = {
   0: { abbrev: 'AB', description: 'At Bats', statCategoryId: StatCategory.Batting, statTypeId: StatType.Batting },
   1: { abbrev: 'H', description: 'Hits', statCategoryId: StatCategory.Batting, statTypeId: StatType.Batting },
