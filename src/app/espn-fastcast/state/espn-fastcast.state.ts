@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { entityMap } from '@app/@shared/operators';
 import {
   ConnectWebSocket,
   DisconnectWebSocket,
@@ -12,11 +11,12 @@ import { EspnService } from '@app/espn/service/espn.service';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { Subscription } from 'rxjs';
 import { startWith, tap } from 'rxjs/operators';
+import { PatchFastcastEvents } from '../actions/espn-fastcast-event.actions';
+import { PatchFastcastLeague } from '../actions/espn-fastcast-league.actions';
+import { PatchFastcastSports } from '../actions/espn-fastcast-sport.actions';
+import { PatchFastcastTeams } from '../actions/espn-fastcast-team.actions';
 import { FastcastEventType, OperationCode, WebSocketBuilder } from '../models/espn-fastcast-socket.model';
 import { EspnFastcastService } from '../service/espn-fastcast.service';
-import { PatchFastcastEvents } from './espn-fastcast-event.state';
-import { PatchFastcastLeague } from './espn-fastcast-league.state';
-import { PatchFastcastTeams } from './espn-fastcast-team.state';
 
 export interface EspnFastcastStateModel {
   disconnect: number | null;
@@ -113,13 +113,11 @@ export class EspnFastcastState {
   @Action(FetchFastcast)
   fetchFastcast({ dispatch }: StateContext<EspnFastcastStateModel>, { payload: { uri } }: FetchFastcast): Subscription {
     return this.espnService.espnFastcast(uri).subscribe(data => {
-      const leagues = entityMap(data.leagues, l => l?.uid);
-      const events = entityMap(data.events, e => e?.uid);
-      const teams = entityMap(data.teams, t => t?.uid);
       dispatch([
-        new PatchFastcastLeague({ map: leagues }),
-        new PatchFastcastEvents({ map: events }),
-        new PatchFastcastTeams({ map: teams }),
+        new PatchFastcastSports(data.sports),
+        new PatchFastcastLeague(data.leagues),
+        new PatchFastcastEvents(data.events),
+        new PatchFastcastTeams(data.teams),
       ]);
     });
   }

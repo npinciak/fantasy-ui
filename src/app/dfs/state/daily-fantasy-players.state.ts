@@ -38,7 +38,7 @@ export class DailyFantasyPlayersState {
   @Action(FetchPlayers)
   async fetchPlayers({ dispatch }: StateContext<DailyFantasyPlayersStateModel>, { payload: { slatePath } }: FetchPlayers): Promise<void> {
     const { players, schedule, teams } = await this.playerService.playersBySlate({ slatePath }).toPromise();
-    dispatch([new PatchPlayers({ players }), new PatchSchedule({ schedule }), new PatchTeams({ teams })]);
+    dispatch([new PatchPlayers({ players }), new PatchSchedule({ schedule }), new PatchTeams(teams)]);
   }
 
   @Action(PatchPlayers)

@@ -24,5 +24,8 @@ export function transformIdToUid(uid: string, sport: string, league: string, tea
 }
 
 export enum LeagueIdMap {
-  MLB = '10',
+  MLB = 10,
+  NFL = 28,
+  NBA = 46,
+  NHL = 90,
 }

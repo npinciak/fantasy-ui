@@ -1,4 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { insertionSortDesc } from '@app/@shared/helpers/algos';
+import { exists } from '@app/@shared/helpers/utils';
 import { MLB_STATS_MAP } from '@app/espn/mlb/consts/stats.const';
 import { Stat } from '@app/espn/mlb/models/mlb-stats.model';
 import { FreeAgentStats } from '@app/espn/mlb/selectors/fantasy-baseball-free-agents.selector';
@@ -14,12 +16,12 @@ export class DataVisComponent implements OnInit, OnChanges {
   @Input() statFilter: Stat = Stat.AB;
   @Input() chartType = 'bar';
 
-  public graph: ChartNew<FreeAgentStats>;
+  public graph: ChartNew<number>;
   public test: any;
   readonly MLB_STAT_MAP = MLB_STATS_MAP;
 
   constructor() {
-    this.graph = new ChartNew<FreeAgentStats>({ config: this.config, layout: this.layout, type: 'bar' });
+    this.graph = new ChartNew<number>({ config: this.config, layout: this.layout, type: 'bar' });
   }
 
   ngOnInit(): void {
@@ -38,7 +40,6 @@ export class DataVisComponent implements OnInit, OnChanges {
             break;
           case 'statFilter':
             this.statFilter = changes.statFilter.currentValue;
-
             this.updateChart(this.chartData, this.statFilter);
             break;
           case 'title':
@@ -51,22 +52,25 @@ export class DataVisComponent implements OnInit, OnChanges {
     }
   }
 
-  private updateChart(data: any[], statFilter: Stat) {
-    // const labels = pickAxisData(data, p => p?.name);
-    // const chartData = pickAxisData(data, p => p?.stats[statFilter])
-    //   .filter(d => d !== 0)
-    //   .sort((a, b) => b - a);
+  private updateChart(data: FreeAgentStats[], statFilter: Stat) {
+    const labels = data.map(p => p.name);
+    const chartData = data.map(p => {
+      if (exists(p.stats)) {
+        return p.stats[statFilter];
+      }
+      return 0;
+    });
+    // .sort((a, b) => b - a);
 
-    // this.graph.labels = labels;
-    // this.graph.chartData = chartData;
-
-    // this.test = [
-    //   {
-    //     x: labels,
-    //     y: chartData,
-    //     type: 'bar',
-    //   },
-    // ];
+    this.graph.labels = labels;
+    this.graph.chartData = insertionSortDesc(chartData, d => d);
+    this.test = [
+      {
+        x: labels,
+        y: chartData,
+        type: 'bar',
+      },
+    ];
 
     switch (statFilter) {
       case Stat.wOBA:

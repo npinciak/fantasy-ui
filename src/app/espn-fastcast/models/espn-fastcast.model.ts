@@ -7,6 +7,7 @@ export type SportsEntity = { [prop in EntityBaseProperties]: string } & {
   slug: string;
   leagues: LeaguesEntity[];
 };
+
 export type LeaguesEntity = { [prop in EntityBaseProperties]: string } & {
   slug: string;
   abbreviation: string;

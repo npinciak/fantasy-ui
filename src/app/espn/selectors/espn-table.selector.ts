@@ -194,6 +194,12 @@ export class EspnTableSelectors {
         dataType: TableColumnDataType.Number,
       },
       {
+        columnDef: `stats.${Stat.LOB_PCT}`,
+        headerCell: `stats.${Stat.LOB_PCT}`,
+        headerLabel: MLB_STATS_MAP[Stat.LOB_PCT].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
         columnDef: `stats.${Stat.ERA}`,
         headerCell: `stats.${Stat.ERA}`,
         headerLabel: MLB_STATS_MAP[Stat.ERA].abbrev,
@@ -203,6 +209,12 @@ export class EspnTableSelectors {
         columnDef: `stats.${Stat.WHIP}`,
         headerCell: `stats.${Stat.WHIP}`,
         headerLabel: MLB_STATS_MAP[Stat.WHIP].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.BABIP}`,
+        headerCell: `stats.${Stat.BABIP}`,
+        headerLabel: MLB_STATS_MAP[Stat.BABIP].abbrev,
         dataType: TableColumnDataType.Number,
       },
       {

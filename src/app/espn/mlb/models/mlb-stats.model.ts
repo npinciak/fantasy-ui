@@ -179,11 +179,11 @@ export enum Stat {
   PKO,
   W,
   L,
-  WIN_PERC,
+  WIN_PCT,
   SOP,
   SV,
   BS,
-  SV_PERC,
+  SV_PCT,
   HD,
   IRS,
   CG,
@@ -214,6 +214,7 @@ export enum Stat {
   wRAA,
   BABIP,
   ISO,
+  LOB_PCT,
 }
 
 export const StatList = enumAsList(Stat);

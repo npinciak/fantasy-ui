@@ -8,7 +8,7 @@ export enum GameStatusId {
   FullTime = 28,
 }
 
-enum GameStatus {
+export enum GameStatus {
   Scheduled = 'STATUS_SCHEDULED',
   FirstHalf = 'STATUS_FIRST_HALF',
   Halftime = 'STATUS_HALFTIME',

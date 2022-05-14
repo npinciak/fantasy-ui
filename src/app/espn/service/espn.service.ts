@@ -1,14 +1,17 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { exists, flatten } from '@app/@shared/helpers/utils';
+import { FastcastLeague } from '@app/espn-fastcast/models/fastcast-league.model';
+import { FastcastSport } from '@app/espn-fastcast/models/fastcast-sport.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from 'src/app/@shared/services/api.service';
+import { exists, flatten } from '../../@shared/helpers/utils';
 import {
   CompetitorsEntity as CompetitorsImport,
   EspnClientFastcast as FastCastImport,
   EventsEntity as EventsImport,
   LeaguesEntity as LeaguesImport,
+  SportsEntity,
 } from '../../espn-fastcast/models/espn-fastcast.model';
 import { FastcastEvent, FootballSituation, MlbSituation } from '../../espn-fastcast/models/fastcast-event.model';
 import { FastcastEventTeam } from '../../espn-fastcast/models/fastcast-team.model';
@@ -30,6 +33,15 @@ import { League } from '../models/league.model';
 })
 export class EspnService {
   constructor(private api: ApiService) {}
+
+  static transformSportsEntityToSport(l: SportsEntity): FastcastSport {
+    return {
+      id: l.id,
+      uid: l.uid,
+      name: l.name,
+      slug: l.slug,
+    };
+  }
 
   static transformLeagueImportToLeague(l: LeaguesImport): League {
     return {
@@ -110,6 +122,13 @@ export class EspnService {
       });
     }
 
+    const teams = exists(event.competitors)
+      ? event.competitors.reduce((obj, val) => {
+          obj[val.homeAway] = EspnService.transformCompetitorToFastcastTeam(event.uid, val);
+          return obj;
+        }, {})
+      : null;
+
     return {
       id: event?.id,
       uid: event?.uid,
@@ -129,6 +148,7 @@ export class EspnService {
       lastPlay: event?.situation?.lastPlay ?? null,
       mlbSituation,
       footballSituation,
+      teams,
     };
   }
 
@@ -218,31 +238,23 @@ export class EspnService {
     return this.api.get<FastCastImport>(url).pipe(
       map(res => {
         const final = {} as FastcastTransform;
+        const sports = res.sports.map(s => EspnService.transformSportsEntityToSport(s));
 
         const leaguesImport = res.sports.filter(s => includeSports(s.id)).map(i => i.leagues);
         const flattenLeaguesImport = flatten(leaguesImport);
 
         const leagues = exists(flattenLeaguesImport) ? flattenLeaguesImport.map(l => EspnService.transformLeagueImportToLeague(l)) : [];
-        const flatLeaguesEvents = exists(flattenLeaguesImport)
-          ? flattenLeaguesImport.map(l => {
-              exists(l.events) ? l.events : [];
-              return l.events;
-            })
-          : [];
+        const flatLeaguesEvents = exists(flattenLeaguesImport) ? flattenLeaguesImport.map(l => (exists(l.events) ? l.events : [])) : [];
 
         const flattenEventsImport = flatten(flatLeaguesEvents);
         const events = exists(flattenEventsImport)
           ? flattenEventsImport.map(e => EspnService.transformEventImportToFastcastEvent(e)).filter(l => l != null)
           : [];
 
-        const teamsImport = exists(flattenEventsImport)
-          ? flattenEventsImport.map(e =>
-              exists(e.competitors) ? e?.competitors.map(c => EspnService.transformCompetitorToFastcastTeam(e.uid, c)) : []
-            )
-          : [];
-        const teams = exists(teamsImport) ? flatten(teamsImport) : [];
+        const teams = exists(events) ? events.map(c => (exists(c) ? c.teams : null)) : [];
 
         Object.assign(final, {
+          sports,
           leagues,
           events,
           teams,
@@ -303,8 +315,9 @@ export class EspnService {
   }
 }
 
-export type FastcastTransform = {
-  leagues: League[];
+export interface FastcastTransform {
+  sports: FastcastSport[];
+  leagues: FastcastLeague[];
   events: FastcastEvent[];
   teams: FastcastEventTeam[];
-};
+}

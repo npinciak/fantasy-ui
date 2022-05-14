@@ -53,19 +53,19 @@ export const MLB_WEIGHTED_STATS: Record<string, SeasonConst> = {
     'R/W': 9.973,
   },
   '2022': {
-    wOBA: 0.305,
-    wOBAScale: 1.327,
-    wBB: 0.695,
-    wHBP: 0.728,
-    w1B: 0.901,
-    w2B: 1.299,
-    w3B: 1.657,
-    wHR: 2.164,
+    wOBA: 0.304,
+    wOBAScale: 1.323,
+    wBB: 0.692,
+    wHBP: 0.725,
+    w1B: 0.897,
+    w2B: 1.294,
+    w3B: 1.652,
+    wHR: 2.157,
     runSB: 0.2,
-    runCS: -0.382,
+    runCS: -0.381,
     'R/PA': 0.11,
-    'R/W': 9.214,
-    cFIP: 3.076,
+    'R/W': 9.201,
+    cFIP: 3.074,
   },
 };
 
@@ -87,6 +87,56 @@ export const wOBAThreshold: { [key in StatThreshold]: number } = {
   [StatThreshold.belowAvg]: 0.31,
   [StatThreshold.poor]: 0.3,
   [StatThreshold.awful]: 0.29,
+};
+
+export const k9Threshold: { [key in StatThreshold]: number } = {
+  [StatThreshold.excellent]: 10,
+  [StatThreshold.great]: 9,
+  [StatThreshold.aboveAvg]: 8.2,
+  [StatThreshold.avg]: 7.7,
+  [StatThreshold.belowAvg]: 7.0,
+  [StatThreshold.poor]: 6.0,
+  [StatThreshold.awful]: 5.0,
+};
+
+export const kPctThreshold: { [key in StatThreshold]: number } = {
+  [StatThreshold.excellent]: 27,
+  [StatThreshold.great]: 24,
+  [StatThreshold.aboveAvg]: 22,
+  [StatThreshold.avg]: 20,
+  [StatThreshold.belowAvg]: 17,
+  [StatThreshold.poor]: 15,
+  [StatThreshold.awful]: 13,
+};
+
+export const bb9Threshold: { [key in StatThreshold]: number } = {
+  [StatThreshold.excellent]: 1.5,
+  [StatThreshold.great]: 1.9,
+  [StatThreshold.aboveAvg]: 2.5,
+  [StatThreshold.avg]: 2.9,
+  [StatThreshold.belowAvg]: 3.2,
+  [StatThreshold.poor]: 3.5,
+  [StatThreshold.awful]: 4.0,
+};
+
+export const bbPctThreshold: { [key in StatThreshold]: number } = {
+  [StatThreshold.excellent]: 4.5,
+  [StatThreshold.great]: 5.5,
+  [StatThreshold.aboveAvg]: 6.5,
+  [StatThreshold.avg]: 7.7,
+  [StatThreshold.belowAvg]: 8.0,
+  [StatThreshold.poor]: 8.5,
+  [StatThreshold.awful]: 9.0,
+};
+
+export const lobPctThreshold: { [key in StatThreshold]: number } = {
+  [StatThreshold.excellent]: 80,
+  [StatThreshold.great]: 78,
+  [StatThreshold.aboveAvg]: 75,
+  [StatThreshold.avg]: 72,
+  [StatThreshold.belowAvg]: 70,
+  [StatThreshold.poor]: 65,
+  [StatThreshold.awful]: 60,
 };
 
 export const MLB_STATS_MAP: StatsMap = {
@@ -200,7 +250,7 @@ export const MLB_STATS_MAP: StatsMap = {
   },
   103: {
     abbrev: 'BABIP',
-    description: 'Batting Average on Balls In Play',
+    description: 'Batting Average on Balls In Play (BABIP)',
     statCategoryId: StatCategory.Pitching,
     statTypeId: StatType.Pitching,
   },
@@ -209,6 +259,12 @@ export const MLB_STATS_MAP: StatsMap = {
     description: 'Isolated Power',
     statCategoryId: StatCategory.Batting,
     statTypeId: StatType.Batting,
+  },
+  105: {
+    abbrev: 'LOB%',
+    description: 'Left On Base %',
+    statCategoryId: StatCategory.Pitching,
+    statTypeId: StatType.Pitching,
   },
 };
 

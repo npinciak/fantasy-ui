@@ -1,7 +1,14 @@
 <div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
   <div fxFlex="30%" fxFlex.sm="100%">
     <app-lineup-card
+      title="Starting Lineup"
       [lineup]="(fantasyBaseballTeamFacade.startingBatters$ | async)!(teamId)"
+      (fetchPlayerDetails)="fantasyBaseballPlayerFacade.getPlayerNews($event.id)"
+    ></app-lineup-card>
+    <div style="margin: 10px 0"></div>
+    <app-lineup-card
+      title="Bench"
+      [lineup]="(fantasyBaseballTeamFacade.benchBatters$ | async)!(teamId)"
       (fetchPlayerDetails)="fantasyBaseballPlayerFacade.getPlayerNews($event.id)"
     ></app-lineup-card>
   </div>
@@ -23,12 +30,12 @@
       </mat-select>
     </mat-form-field>
 
-    <div fxLayout="row" fxLayoutGap="20px">
-      <h4>{{ MLB_STAT_MAP[selectedBatterStat].description }}</h4>
-
-      <div>
-        <app-data-vis [statFilter]="selectedBatterStat" [chartData]="(fantasyBaseballTeamFacade.battingStats$ | async)!(teamId, scoringPeriodId)"></app-data-vis>
-      </div>
+    <div>
+      <app-data-vis
+        [title]="MLB_STAT_MAP[selectedBatterStat].description"
+        [statFilter]="selectedBatterStat"
+        [chartData]="(fantasyBaseballTeamFacade.battingStats$ | async)!(teamId, scoringPeriodId)"
+      ></app-data-vis>
     </div>
     <h3>Batting</h3>
     <mat-slide-toggle (change)="onLiveScoringSelectChange($event)" color="primary"> Live Scoring </mat-slide-toggle>

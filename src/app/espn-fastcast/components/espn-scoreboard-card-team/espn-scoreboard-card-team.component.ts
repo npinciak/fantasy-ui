@@ -9,4 +9,11 @@ import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model
 export class EspnScoreboardCardTeamComponent {
   @Input() team: FastcastEventTeam;
   @Input() isTournament: boolean;
+
+  get ariaInfo() {
+    return {
+      teamName: `team-name-${this.team.uid}`,
+      
+    };
+  }
 }
