@@ -23,12 +23,12 @@ export class FantasyBaseballTeamsSelector {
       [Stat.fip]: advancedStats.fip,
       [Stat.wOBA]: advancedStats.wOBA,
       [Stat.wRAA]: advancedStats.wRAA,
-      [Stat.BABIP]: advancedStats.wRAA,
+      [Stat.BABIP]: advancedStats.babip,
       [Stat.ISO]: advancedStats.iso,
+      [Stat.LOB_PCT]: advancedStats.leftOnBasePercent,
     });
 
     const stats = { ...statsEntity, ...adv };
-
     return {
       name: p.name,
       img: p.img,

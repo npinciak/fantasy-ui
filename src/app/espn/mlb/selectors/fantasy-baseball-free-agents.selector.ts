@@ -41,8 +41,9 @@ export class FantasyBaseballFreeAgentsSelector {
         adv[Stat.fip] = advancedStats.fip;
         adv[Stat.wOBA] = advancedStats.wOBA;
         adv[Stat.wRAA] = advancedStats.wRAA;
-        adv[Stat.BABIP] = advancedStats.wRAA;
+        adv[Stat.BABIP] = advancedStats.babip;
         adv[Stat.ISO] = advancedStats.iso;
+        adv[Stat.LOB_PCT] = advancedStats.leftOnBasePercent;
 
         const stats = { ...statsEntity, ...adv };
         return {
@@ -104,5 +105,5 @@ export type FreeAgentStats = {
   position: string;
   playerOwnershipChange: number | null;
   playerOwnershipPercentOwned: number | null;
-  stats: EspnClientPlayerStatsEntity;
+  stats: EspnClientPlayerStatsEntity | undefined;
 };

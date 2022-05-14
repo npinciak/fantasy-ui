@@ -53,19 +53,19 @@ export const MLB_WEIGHTED_STATS: Record<string, SeasonConst> = {
     'R/W': 9.973,
   },
   '2022': {
-    wOBA: 0.305,
-    wOBAScale: 1.327,
-    wBB: 0.695,
-    wHBP: 0.728,
-    w1B: 0.901,
-    w2B: 1.299,
-    w3B: 1.657,
-    wHR: 2.164,
+    wOBA: 0.304,
+    wOBAScale: 1.323,
+    wBB: 0.692,
+    wHBP: 0.725,
+    w1B: 0.897,
+    w2B: 1.294,
+    w3B: 1.652,
+    wHR: 2.157,
     runSB: 0.2,
-    runCS: -0.382,
+    runCS: -0.381,
     'R/PA': 0.11,
-    'R/W': 9.214,
-    cFIP: 3.076,
+    'R/W': 9.201,
+    cFIP: 3.074,
   },
 };
 
@@ -99,7 +99,7 @@ export const k9Threshold: { [key in StatThreshold]: number } = {
   [StatThreshold.awful]: 5.0,
 };
 
-export const kPercThreshold: { [key in StatThreshold]: number } = {
+export const kPctThreshold: { [key in StatThreshold]: number } = {
   [StatThreshold.excellent]: 27,
   [StatThreshold.great]: 24,
   [StatThreshold.aboveAvg]: 22,
@@ -119,7 +119,7 @@ export const bb9Threshold: { [key in StatThreshold]: number } = {
   [StatThreshold.awful]: 4.0,
 };
 
-export const bbPercThreshold: { [key in StatThreshold]: number } = {
+export const bbPctThreshold: { [key in StatThreshold]: number } = {
   [StatThreshold.excellent]: 4.5,
   [StatThreshold.great]: 5.5,
   [StatThreshold.aboveAvg]: 6.5,
@@ -127,6 +127,16 @@ export const bbPercThreshold: { [key in StatThreshold]: number } = {
   [StatThreshold.belowAvg]: 8.0,
   [StatThreshold.poor]: 8.5,
   [StatThreshold.awful]: 9.0,
+};
+
+export const lobPctThreshold: { [key in StatThreshold]: number } = {
+  [StatThreshold.excellent]: 80,
+  [StatThreshold.great]: 78,
+  [StatThreshold.aboveAvg]: 75,
+  [StatThreshold.avg]: 72,
+  [StatThreshold.belowAvg]: 70,
+  [StatThreshold.poor]: 65,
+  [StatThreshold.awful]: 60,
 };
 
 export const MLB_STATS_MAP: StatsMap = {
@@ -240,7 +250,7 @@ export const MLB_STATS_MAP: StatsMap = {
   },
   103: {
     abbrev: 'BABIP',
-    description: 'Batting Average on Balls In Play',
+    description: 'Batting Average on Balls In Play (BABIP)',
     statCategoryId: StatCategory.Pitching,
     statTypeId: StatType.Pitching,
   },
@@ -249,6 +259,12 @@ export const MLB_STATS_MAP: StatsMap = {
     description: 'Isolated Power',
     statCategoryId: StatCategory.Batting,
     statTypeId: StatType.Batting,
+  },
+  105: {
+    abbrev: 'LOB%',
+    description: 'Left On Base %',
+    statCategoryId: StatCategory.Pitching,
+    statTypeId: StatType.Pitching,
   },
 };
 
