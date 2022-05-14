@@ -1,4 +1,4 @@
-import { cellDataAccessor } from '@app/@shared/helpers/utils';
+import { cellDataAccessor, exists } from '@app/@shared/helpers/utils';
 import { PlayerTableData } from '@app/dfs/models/player.model';
 import { Selector } from '@ngxs/store';
 import { NFLTableColumn } from '../models/nfl-table.model';
@@ -129,9 +129,9 @@ export class NFLTableSelectors {
   }
 }
 
-const tooltipHelper = (opp: string, rank: number): string => {
-  if (rank === undefined) {
-    return;
+const tooltipHelper = (opp: string, rank: number | null | undefined): string | null => {
+  if (!exists(rank)) {
+    return null;
   }
 
   if (rank === 1) {
@@ -150,5 +150,7 @@ const tooltipHelper = (opp: string, rank: number): string => {
     return `${opp} gives up the 2nd least points to this position`;
   } else if (rank === 32) {
     return `${opp} gives up the least points to this position`;
+  } else {
+    return null;
   }
 };

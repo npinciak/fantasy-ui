@@ -2,6 +2,9 @@ import { FastcastEventTeam } from './fastcast-team.model';
 
 export const MOCK_FASTCAST_TEAM_1: FastcastEventTeam = {
   id: '1',
+  uid: '',
+  eventUid: '',
+  isHome: '',
   score: '34',
   abbrev: 'NE',
   logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ne.png',
@@ -12,12 +15,13 @@ export const MOCK_FASTCAST_TEAM_1: FastcastEventTeam = {
   record: '14-2',
   rank: null,
   winPct: 0.9812,
-  hasPossession: true,
-  inRedzone: true,
 };
 
 export const MOCK_FASTCAST_TEAM_2: FastcastEventTeam = {
   id: '2',
+  uid: '',
+  eventUid: '',
+  isHome: '',
   score: '28',
   abbrev: 'ATL',
   logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/atl.png',
@@ -28,6 +32,4 @@ export const MOCK_FASTCAST_TEAM_2: FastcastEventTeam = {
   record: '11-5',
   rank: null,
   winPct: 0.0298,
-  hasPossession: false,
-  inRedzone: false,
 };

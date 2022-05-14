@@ -2,7 +2,7 @@
   <mat-card-content>
     <app-scrollable-table>
       <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons> </mat-paginator>
-      <table class="ui-w-100" mat-table [dataSource]="dataSource" matSortDirection="asc" matSort matSortDisableClear>
+      <table [attr.aria-label]="ariaLabel" class="ui-w-100" mat-table [dataSource]="dataSource" matSortDirection="asc" matSort matSortDisableClear>
         <ng-container *ngFor="let col of dataColumns">
           <ng-container [matColumnDef]="col?.columnDef">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ col?.headerLabel }}</th>

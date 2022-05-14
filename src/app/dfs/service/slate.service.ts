@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { currentDate } from '@app/@shared/helpers/date';
-import { objectIsEmpty, transformPercToNumber } from '@app/@shared/helpers/utils';
+import { exists, objectIsEmpty, transformPercToNumber } from '@app/@shared/helpers/utils';
 import { ApiService } from '@app/@shared/services/api.service';
 import { camelCase } from 'lodash';
 import { Observable } from 'rxjs';
@@ -114,11 +114,11 @@ export class SlateService {
           Object.assign(obj, { ...SlateService.transformMlbSlateTeamAttributes(team, site) });
           break;
         case 'nba':
-          Object.assign(obj, { rest: SlateService.transformNbaSlateTeamAttributes(team).rest ?? null });
+          Object.assign(obj, { rest: null });
           break;
         case 'nfl':
-          Object.assign(obj, { outsiders: SlateService.transformNbaSlateTeamAttributes(team).outsiders ?? null });
-          Object.assign(obj, { safpts: SlateService.transformNflSlateTeamAttributes(team).safpts ?? null });
+          Object.assign(obj, { outsiders: null });
+          Object.assign(obj, { safpts: null });
           break;
         default:
           break;
@@ -129,10 +129,11 @@ export class SlateService {
   }
 
   static transformStatGroupsToProfiler(statGroup: ClientSlateStatGroups): PlayerProfilerSeasonMap | null | undefined {
-    if (objectIsEmpty(statGroup)) {
-      return {};
+    if (objectIsEmpty(statGroup) || !exists(statGroup)) {
+      return null;
     }
     const qb = {} as PlayerProfilerSeason;
+
     for (const prop in statGroup.qb.profiler.season) {
       if (statGroup.qb.profiler.season.hasOwnProperty(prop)) {
         qb.season[camelCase(prop)] = Number(statGroup.qb.profiler.season[prop]);
@@ -228,6 +229,6 @@ export type SlateTeamMap = Record<string, SlateTeam>;
 
 type SlateAttributes = {
   teams: any; //SlateTeam[] | null;
-  players: PlayerSlateAttr[] | null;
+  players: PlayerSlateAttr[];
   statGroups: PlayerProfilerSeasonMap | null | undefined;
 };

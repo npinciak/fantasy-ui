@@ -38,8 +38,8 @@ export class AdvStats {
   get babip(): number {
     if (!this.babipValid) return 0;
     return (
-      (this._stats[Stat.H] - this._stats[Stat.HR]) /
-      (this._stats[Stat.AB] - this._stats[Stat.K] - this._stats[Stat.HR] + this._stats[Stat.SF])
+      (this._stats[Stat.HA] - this._stats[Stat.HRA]) /
+      (this._stats[Stat.BF] - this._stats[Stat.K] - this._stats[Stat.HRA] + this._stats[Stat.SFA])
     );
   }
 
@@ -53,11 +53,18 @@ export class AdvStats {
     return (
       this._seasonConst.wBB * this.unintentionalBB +
       this._seasonConst.wHBP * this._stats[Stat.HBP] +
-      this._seasonConst.w1B * this._stats[Stat['1B']] +
-      this._seasonConst.w2B * this._stats[Stat['2B']] +
-      this._seasonConst.w3B * this._stats[Stat['3B']] +
+      this._seasonConst.w1B * this._stats[Stat.SINGLE] +
+      this._seasonConst.w2B * this._stats[Stat.DOUBLE] +
+      this._seasonConst.w3B * this._stats[Stat.TRIPLE] +
       this._seasonConst.wHR * this._stats[Stat.HR]
     );
+  }
+
+  get leftOnBasePercent(): number {
+    if (!this.lobPercentValid) return 0;
+    const batting = this._stats[Stat.HA] + this._stats[Stat.BBI] + this._stats[Stat.HB];
+    // eslint-disable-next-line
+    return ((batting - this._stats[Stat.RA]) / (batting - 1.4 * this._stats[Stat.HRA])) * 100;
   }
 
   get nonHits(): number {
@@ -72,12 +79,11 @@ export class AdvStats {
 
   private get babipValid(): boolean {
     return (
-      this._stats.hasOwnProperty(Stat.H) &&
-      this._stats.hasOwnProperty(Stat.HR) &&
-      this._stats.hasOwnProperty(Stat.AB) &&
+      this._stats.hasOwnProperty(Stat.HA) &&
+      this._stats.hasOwnProperty(Stat.HRA) &&
+      this._stats.hasOwnProperty(Stat.BF) &&
       this._stats.hasOwnProperty(Stat.K) &&
-      this._stats.hasOwnProperty(Stat.HR) &&
-      this._stats.hasOwnProperty(Stat.SF)
+      this._stats.hasOwnProperty(Stat.SFA)
     );
   }
 
@@ -109,25 +115,23 @@ export class AdvStats {
 
   private get weightedHitsValid(): boolean {
     return (
-      this._stats.hasOwnProperty(Stat.HBP) &&
-      this._stats.hasOwnProperty(Stat['1B']) &&
-      this._stats.hasOwnProperty(Stat['2B']) &&
-      this._stats.hasOwnProperty(Stat['3B']) &&
-      this._stats.hasOwnProperty(Stat.HR)
+      Stat.HBP in this._stats &&
+      Stat.SINGLE in this._stats &&
+      Stat.DOUBLE in this._stats &&
+      Stat.TRIPLE in this._stats &&
+      Stat.HR in this._stats
     );
   }
 
   private get nonHitsValid(): boolean {
-    return (
-      this._stats.hasOwnProperty(Stat.AB) &&
-      this._stats.hasOwnProperty(Stat.BB) &&
-      this._stats.hasOwnProperty(Stat.IBB) &&
-      this._stats.hasOwnProperty(Stat.SF) &&
-      this._stats.hasOwnProperty(Stat.HBP)
-    );
+    return Stat.AB in this._stats && Stat.BB in this._stats && Stat.IBB in this._stats && Stat.SF in this._stats && Stat.HBP in this._stats;
   }
 
   private get isoValid(): boolean {
     return this._stats.hasOwnProperty(Stat.SLG) && this._stats.hasOwnProperty(Stat.AVG);
+  }
+
+  private get lobPercentValid(): boolean {
+    return Stat.HA in this._stats && Stat.BBI in this._stats && Stat.HB in this._stats && Stat.RA in this._stats && Stat.HRA in this._stats;
   }
 }

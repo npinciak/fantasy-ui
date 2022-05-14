@@ -2,20 +2,24 @@ import { Mock } from '@app/@shared/models/mock.model';
 import { Observable, of } from 'rxjs';
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { MOCK_BASEBALL_FREEAGENT_1 } from '../models/baseball-player.model.mock';
-import { BaseballTeam } from '../models/baseball-team.model';
-import { MOCK_BASEBALL_TEAM_1 } from '../models/baseball-team.model.mock';
+import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
+import { MOCK_BASEBALL_TEAM_1, MOCK_BASEBALL_TEAM_LIVE } from '../models/baseball-team.model.mock';
 import { MlbService } from './mlb.service';
 
 export class MlbServiceMock implements Mock<MlbService> {
-  baseballLeague(
-    leagueId: number
-  ): Observable<{ scoringPeriodId: number; teams: BaseballTeam[]; freeAgents: BaseballPlayer[]; seasonId: string; schedule }> {
+  baseballLeague(leagueId: number): Observable<{
+    scoringPeriodId: string;
+    teams: BaseballTeam[];
+    freeAgents: BaseballPlayer[];
+    seasonId: string;
+    teamsLive: BaseballTeamLive[];
+  }> {
     return of({
       seasonId: '2022',
-      schedule: {},
-      scoringPeriodId: 1,
+      scoringPeriodId: '1',
       teams: [MOCK_BASEBALL_TEAM_1],
       freeAgents: [MOCK_BASEBALL_FREEAGENT_1],
+      teamsLive: [MOCK_BASEBALL_TEAM_LIVE],
     });
   }
 

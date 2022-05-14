@@ -14,16 +14,7 @@ interface WebSocketResponseProperties {
   mid?: string; //message ID ?
   oat: unknown;
   tp: unknown;
-}
-
-interface websocketFE {
-  sessionId: string; // sid
-  messageId: string; // mid
-  payload: string; // pl
-  responseCode: StatusCode; // rc
-  timestamp: number; // ts
-  operationCode: OperationCode; // op
-  useCDN: boolean;
+  msg: string;
 }
 
 export interface EspnWebSocket {
@@ -53,6 +44,7 @@ export enum OperationCode {
 export enum FastcastEventType {
   TopEvents = 'event-topevents',
   Soccer = 'event-topsoccer',
+  Mlb = 'event-baseball-mlb',
 }
 
 export class WebSocketBuilder {

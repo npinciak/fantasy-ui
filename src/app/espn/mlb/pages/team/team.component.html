@@ -1,32 +1,77 @@
 <div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
   <div fxFlex="30%" fxFlex.sm="100%">
     <app-lineup-card
+      title="Starting Lineup"
       [lineup]="(fantasyBaseballTeamFacade.startingBatters$ | async)!(teamId)"
+      (fetchPlayerDetails)="fantasyBaseballPlayerFacade.getPlayerNews($event.id)"
+    ></app-lineup-card>
+    <div style="margin: 10px 0"></div>
+    <app-lineup-card
+      title="Bench"
+      [lineup]="(fantasyBaseballTeamFacade.benchBatters$ | async)!(teamId)"
       (fetchPlayerDetails)="fantasyBaseballPlayerFacade.getPlayerNews($event.id)"
     ></app-lineup-card>
   </div>
   <div fxFlex="70%" fxFlex.sm="100%">
-    <a mat-flat-button color="primary" [routerLink]="['./free-agents']">Free Agents</a>
+    <a mat-flat-button color="primary" (click)="navigateHome()">Home</a>
     <div style="margin: 10px 0"></div>
-    <app-dropdown-filter title="Stat Period" [filterItems]="STAT_PERIOD_FILTER_OPTIONS" (filterUpdate)="scoringPeriodIdChange($event)"></app-dropdown-filter>
-    <app-dropdown-filter title="Stats" [filterItems]="fantasyBaseballTeamFacade.statListFilters$ | async" (filterUpdate)="statFilterChange($event)"></app-dropdown-filter>
-    <app-data-vis
-      [xAxisFilterOptions]="fantasyBaseballTeamFacade.statListFilters$ | async"
-      [yAxisFilterOptions]="fantasyBaseballTeamFacade.statListFilters$ | async"
-      [statFilter]="statFilterOption$ | async"
-      [chartData]="(fantasyBaseballTeamFacade.battingStats$ | async)!(teamId, scoringPeriodId)"
-    ></app-data-vis>
+
+    <app-dropdown-filter
+      [selectedOption]="scoringPeriodId"
+      title="Stat Period"
+      [filterItems]="STAT_PERIOD_FILTER_OPTIONS"
+      (filterUpdate)="scoringPeriodIdChange($event.value)"
+    ></app-dropdown-filter>
+
+    <mat-form-field>
+      <mat-label>Batter Stats</mat-label>
+      <mat-select [(value)]="selectedBatterStat" (selectionChange)="batterStatChange($event.value)">
+        <mat-option *ngFor="let stat of statList" [value]="stat">{{ MLB_STAT_MAP[stat].abbrev }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div>
+      <app-data-vis
+        [title]="MLB_STAT_MAP[selectedBatterStat].description"
+        [statFilter]="selectedBatterStat"
+        [chartData]="(fantasyBaseballTeamFacade.battingStats$ | async)!(teamId, scoringPeriodId)"
+      ></app-data-vis>
+    </div>
     <h3>Batting</h3>
     <mat-slide-toggle (change)="onLiveScoringSelectChange($event)" color="primary"> Live Scoring </mat-slide-toggle>
+    <ng-container *ngIf="isLiveScore; else default">
+      <app-roster
+        [data]="(fantasyBaseballTeamFacade.liveBattingStats$ | async)!(teamId)"
+        [dataColumns]="espnTableFacade.liveBatterTableRow$ | async"
+        [headers]="espnTableFacade.liveBatterTableHeaders$ | async"
+      >
+      </app-roster>
+    </ng-container>
 
-    <app-roster
-      [data]="(fantasyBaseballTeamFacade.battingStats$ | async)!(teamId, scoringPeriodId)"
-      [dataColumns]="espnTableFacade.batterTableRow$ | async"
-      [headers]="espnTableFacade.batterTableHeaders$ | async"
-    >
-    </app-roster>
+    <ng-template #default>
+      <app-roster
+        [data]="(fantasyBaseballTeamFacade.battingStats$ | async)!(teamId, scoringPeriodId)"
+        [dataColumns]="espnTableFacade.batterTableRow$ | async"
+        [headers]="espnTableFacade.batterTableHeaders$ | async"
+      >
+      </app-roster>
+    </ng-template>
+
     <h3>Pitching</h3>
+
+    <mat-form-field>
+      <mat-label>Pitcher Stats</mat-label>
+      <mat-select [(value)]="selectedPitcherStat" (selectionChange)="pitcherStatChange($event.value)">
+        <mat-option *ngFor="let stat of statList" [value]="stat">{{ MLB_STAT_MAP[stat].abbrev }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div>
+      <h4>{{ MLB_STAT_MAP[selectedPitcherStat].description }}</h4>
+      <app-data-vis [statFilter]="selectedPitcherStat" [chartData]="(fantasyBaseballTeamFacade.pitcherStats$ | async)!(teamId, scoringPeriodId)"></app-data-vis>
+    </div>
     <app-roster
+      ariaLabel="pitching stats table"
       [data]="(fantasyBaseballTeamFacade.pitcherStats$ | async)!(teamId, scoringPeriodId)"
       [dataColumns]="espnTableFacade.pitcherTableRow$ | async"
       [headers]="espnTableFacade.pitcherTableHeaders$ | async"

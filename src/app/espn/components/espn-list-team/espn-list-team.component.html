@@ -7,8 +7,8 @@
   <div fxFlex="40">
     <div>
       <small *ngIf="team?.rank">{{ team?.rank }}&nbsp;</small>{{ team?.name }}
-      <span style="font-size: 10px; vertical-align: center" *ngIf="team?.hasPossession">🏈</span>
-      <small *ngIf="team?.inRedzone" style="color: red">RZ</small>
+      <!-- <span style="font-size: 10px; vertical-align: center" *ngIf="team?.hasPossession">🏈</span>
+      <small *ngIf="team?.inRedzone" style="color: red">RZ</small> -->
     </div>
     <div>
       {{ team?.record }}

@@ -6,7 +6,7 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",

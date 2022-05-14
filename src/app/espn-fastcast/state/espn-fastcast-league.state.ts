@@ -1,40 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { FastcastLeague } from '../models/fastcast-league.model';
+import { GenericState } from '@app/@shared/generic-state/generic.state';
+import { PatchFastcastLeague } from '../actions/espn-fastcast-league.actions';
 
-export type EspnFastcastLeagueModelMap = Record<string, FastcastLeague>;
-
-export class PatchFastcastLeague {
-  static readonly type = `[espnFastcastLeague] PatchFastcastLeague`;
-  constructor(public payload: { map: EspnFastcastLeagueModelMap }) {}
-}
-
-export interface EspnFastcastLeagueStateModel {
-  map: EspnFastcastLeagueModelMap;
-}
-
-@State<EspnFastcastLeagueStateModel>({
-  name: 'espnFastcastLeague',
-  defaults: {
-    map: {},
-  },
-})
 @Injectable()
-export class EspnFastcastLeagueState {
-  constructor() {}
-
-  @Selector()
-  static selectMap(state: EspnFastcastLeagueStateModel): EspnFastcastLeagueModelMap {
-    return state.map;
-  }
-
-  @Action(PatchFastcastLeague)
-  patchFastcastLeague(
-    { patchState, getState }: StateContext<EspnFastcastLeagueStateModel>,
-    { payload: { map } }: PatchFastcastLeague
-  ): void {
-    const state = getState();
-
-    patchState({ ...state, map });
-  }
-}
+export class EspnFastcastLeagueState extends GenericState({
+  name: 'espnFastcastLeagues',
+  idProperty: 'uid',
+  patchAction: PatchFastcastLeague,
+}) {}

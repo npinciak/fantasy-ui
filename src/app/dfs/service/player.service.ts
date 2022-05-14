@@ -66,7 +66,7 @@ export class PlayerService {
         return {
           players,
           schedule,
-          teams: [].concat(...home, ...away),
+          teams: ([] as Team[]).concat(...home, ...away),
         };
       })
     );

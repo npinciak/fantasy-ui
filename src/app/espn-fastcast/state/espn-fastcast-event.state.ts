@@ -1,36 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { FastcastEventMap } from '../models/fastcast-event.model';
+import { GenericState } from '@app/@shared/generic-state/generic.state';
+import { PatchFastcastEvents } from '../actions/espn-fastcast-event.actions';
 
-export class PatchFastcastEvents {
-  static readonly type = `[espnFastcastEvent] PatchFastcastEvents`;
-  constructor(public payload: { map: FastcastEventMap }) {}
-}
-
-export interface EspnFastcastEventStateModel {
-  map: FastcastEventMap;
-}
-
-@State<EspnFastcastEventStateModel>({
-  name: 'espnFastcastEvent',
-  defaults: {
-    map: {},
-  },
-})
 @Injectable()
-export class EspnFastcastEventState {
-  constructor() {}
-
-  @Selector()
-  static selectMap(state: EspnFastcastEventStateModel): FastcastEventMap {
-    return state.map;
-  }
-
-  @Action(PatchFastcastEvents)
-  patchFastcastEvents(
-    { patchState, getState }: StateContext<EspnFastcastEventStateModel>,
-    { payload: { map } }: PatchFastcastEvents
-  ): void {
-    patchState({ ...getState(), map });
-  }
-}
+export class EspnFastcastEventState extends GenericState({
+  name: 'espnFastcastEvents',
+  idProperty: 'uid',
+  patchAction: PatchFastcastEvents,
+}) {}

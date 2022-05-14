@@ -1,3 +1,4 @@
+import { exists } from '@app/@shared/helpers/utils';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { EspnClientPlayerStatsEntity } from '@app/espn/espn-client.model';
 import { Selector } from '@ngxs/store';
@@ -32,11 +33,7 @@ export class FantasyBaseballFreeAgentsSelector {
   static selectFreeAgentBatterStats(players: BaseballPlayer[]): (statPeriod: string, seasonId: string) => FreeAgentStats[] {
     return (statPeriod: string, seasonId: string) => {
       return players.map(p => {
-        if (p?.stats == null) {
-          return;
-        }
-
-        const statsEntity = p?.stats[statPeriod];
+        const statsEntity = exists(p.stats) ? p.stats[statPeriod] : {};
         const seasonConst = MLB_WEIGHTED_STATS[seasonId];
         const advancedStats = new AdvStats({ seasonConst, statsEntity });
 
@@ -44,17 +41,18 @@ export class FantasyBaseballFreeAgentsSelector {
         adv[Stat.fip] = advancedStats.fip;
         adv[Stat.wOBA] = advancedStats.wOBA;
         adv[Stat.wRAA] = advancedStats.wRAA;
-        adv[Stat.BABIP] = advancedStats.wRAA;
+        adv[Stat.BABIP] = advancedStats.babip;
         adv[Stat.ISO] = advancedStats.iso;
+        adv[Stat.LOB_PCT] = advancedStats.leftOnBasePercent;
 
         const stats = { ...statsEntity, ...adv };
         return {
-          name: p?.name,
-          img: p?.img,
-          team: p?.team,
-          position: p?.position,
-          playerOwnershipChange: p?.playerOwnershipChange,
-          playerOwnershipPercentOwned: p?.playerOwnershipPercentOwned,
+          name: p.name,
+          img: p.img,
+          team: p.team,
+          position: p.position,
+          playerOwnershipChange: p.playerOwnershipChange,
+          playerOwnershipPercentOwned: p.playerOwnershipPercentOwned,
           stats,
         };
       });
@@ -65,11 +63,7 @@ export class FantasyBaseballFreeAgentsSelector {
   static selectFreeAgentPitcherStats(players: BaseballPlayer[]): (statPeriod: string, seasonId: string) => FreeAgentStats[] {
     return (statPeriod: string, seasonId: string) => {
       return players.map(p => {
-        if (p.stats == null) {
-          return;
-        }
-
-        const statsEntity = p?.stats[statPeriod];
+        const statsEntity = exists(p.stats) ? p.stats[statPeriod] : {};
         const seasonConst = MLB_WEIGHTED_STATS[seasonId];
         const advancedStats = new AdvStats({ seasonConst, statsEntity });
 
@@ -81,7 +75,7 @@ export class FantasyBaseballFreeAgentsSelector {
         const stats = { ...statsEntity, ...adv };
 
         return {
-          name: p?.name,
+          name: p.name,
           img: p.img,
           team: p.team,
           position: p.position,
@@ -109,7 +103,7 @@ export type FreeAgentStats = {
   img: string;
   team: string;
   position: string;
-  playerOwnershipChange: number;
-  playerOwnershipPercentOwned: number;
-  stats: EspnClientPlayerStatsEntity;
+  playerOwnershipChange: number | null;
+  playerOwnershipPercentOwned: number | null;
+  stats: EspnClientPlayerStatsEntity | undefined;
 };

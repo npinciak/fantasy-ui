@@ -4,15 +4,15 @@ import { SeasonConst } from '../models/adv-stats.model';
 import { StatCategory, StatsMap, StatType, StatTypePeriodId } from '../models/mlb-stats.model';
 
 export const STAT_PERIOD_FILTER_OPTIONS: FilterOptions[] = [
-  { value: YearToStatTypePeriod(StatTypePeriodId.Season, 2021), label: '2021 Season' },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Projected, 2022), label: '2022 Projected' },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Season, 2022), label: '2022 Season' },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Last7, 2022), label: 'Last 7' },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Last15, 2022), label: 'Last 15' },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Last30, 2022), label: 'Last 30' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Season, '2021'), label: '2021 Season' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Projected, '2022'), label: '2022 Projected' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Season, '2022'), label: '2022 Season' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Last7, '2022'), label: 'Last 7' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Last15, '2022'), label: 'Last 15' },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Last30, '2022'), label: 'Last 30' },
 ];
 
-export function YearToStatTypePeriod(periodType: StatTypePeriodId, year: number) {
+export function YearToStatTypePeriod(periodType: StatTypePeriodId, year: string) {
   if (periodType === StatTypePeriodId.Projected) return `${periodType}${year}`;
   else return `0${periodType}${year}`;
 }
@@ -33,8 +33,8 @@ export const MLB_WEIGHTED_STATS: Record<string, SeasonConst> = {
     w2B: 1.238,
     w3B: 1.558,
     wHR: 1.979,
-    'r/PA': 0,
-    'r/W': 0,
+    'R/PA': 0,
+    'R/W': 0,
     cFIP: 0,
   },
   '2021': {
@@ -49,23 +49,23 @@ export const MLB_WEIGHTED_STATS: Record<string, SeasonConst> = {
     w3B: 1.6,
     wHR: 2.035,
     cFIP: 3.17,
-    'r/PA': 0.121,
-    'r/W': 9.973,
+    'R/PA': 0.121,
+    'R/W': 9.973,
   },
   '2022': {
-    wOBA: 0.305,
-    wOBAScale: 1.34,
+    wOBA: 0.304,
+    wOBAScale: 1.323,
+    wBB: 0.692,
+    wHBP: 0.725,
+    w1B: 0.897,
+    w2B: 1.294,
+    w3B: 1.652,
+    wHR: 2.157,
     runSB: 0.2,
-    runCS: -0.374,
-    wBB: 0.694,
-    wHBP: 0.727,
-    w1B: 0.901,
-    w2B: 1.303,
-    w3B: 1.665,
-    wHR: 2.182,
-    cFIP: 3.038,
-    'r/PA': 0.107,
-    'r/W': 9.062,
+    runCS: -0.381,
+    'R/PA': 0.11,
+    'R/W': 9.201,
+    cFIP: 3.074,
   },
 };
 
@@ -87,6 +87,56 @@ export const wOBAThreshold: { [key in StatThreshold]: number } = {
   [StatThreshold.belowAvg]: 0.31,
   [StatThreshold.poor]: 0.3,
   [StatThreshold.awful]: 0.29,
+};
+
+export const k9Threshold: { [key in StatThreshold]: number } = {
+  [StatThreshold.excellent]: 10,
+  [StatThreshold.great]: 9,
+  [StatThreshold.aboveAvg]: 8.2,
+  [StatThreshold.avg]: 7.7,
+  [StatThreshold.belowAvg]: 7.0,
+  [StatThreshold.poor]: 6.0,
+  [StatThreshold.awful]: 5.0,
+};
+
+export const kPctThreshold: { [key in StatThreshold]: number } = {
+  [StatThreshold.excellent]: 27,
+  [StatThreshold.great]: 24,
+  [StatThreshold.aboveAvg]: 22,
+  [StatThreshold.avg]: 20,
+  [StatThreshold.belowAvg]: 17,
+  [StatThreshold.poor]: 15,
+  [StatThreshold.awful]: 13,
+};
+
+export const bb9Threshold: { [key in StatThreshold]: number } = {
+  [StatThreshold.excellent]: 1.5,
+  [StatThreshold.great]: 1.9,
+  [StatThreshold.aboveAvg]: 2.5,
+  [StatThreshold.avg]: 2.9,
+  [StatThreshold.belowAvg]: 3.2,
+  [StatThreshold.poor]: 3.5,
+  [StatThreshold.awful]: 4.0,
+};
+
+export const bbPctThreshold: { [key in StatThreshold]: number } = {
+  [StatThreshold.excellent]: 4.5,
+  [StatThreshold.great]: 5.5,
+  [StatThreshold.aboveAvg]: 6.5,
+  [StatThreshold.avg]: 7.7,
+  [StatThreshold.belowAvg]: 8.0,
+  [StatThreshold.poor]: 8.5,
+  [StatThreshold.awful]: 9.0,
+};
+
+export const lobPctThreshold: { [key in StatThreshold]: number } = {
+  [StatThreshold.excellent]: 80,
+  [StatThreshold.great]: 78,
+  [StatThreshold.aboveAvg]: 75,
+  [StatThreshold.avg]: 72,
+  [StatThreshold.belowAvg]: 70,
+  [StatThreshold.poor]: 65,
+  [StatThreshold.awful]: 60,
 };
 
 export const MLB_STATS_MAP: StatsMap = {
@@ -200,7 +250,7 @@ export const MLB_STATS_MAP: StatsMap = {
   },
   103: {
     abbrev: 'BABIP',
-    description: 'Batting Average on Balls In Play',
+    description: 'Batting Average on Balls In Play (BABIP)',
     statCategoryId: StatCategory.Pitching,
     statTypeId: StatType.Pitching,
   },
@@ -209,6 +259,12 @@ export const MLB_STATS_MAP: StatsMap = {
     description: 'Isolated Power',
     statCategoryId: StatCategory.Batting,
     statTypeId: StatType.Batting,
+  },
+  105: {
+    abbrev: 'LOB%',
+    description: 'Left On Base %',
+    statCategoryId: StatCategory.Pitching,
+    statTypeId: StatType.Pitching,
   },
 };
 

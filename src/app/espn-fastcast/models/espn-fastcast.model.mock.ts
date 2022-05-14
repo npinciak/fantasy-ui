@@ -21,7 +21,6 @@ export const MOCK_ESPN_CLIENT_FASTCAST_COMPETITOR: CompetitorsEntity = {
 };
 
 export const MOCK_ESPN_CLIENT_FASTCAST_SITUATION: Situation = {
-  lastPlay: undefined,
   down: 0,
   yardLine: 0,
   distance: 0,
@@ -38,40 +37,75 @@ export const MOCK_ESPN_CLIENT_FASTCAST_SITUATION: Situation = {
   onFirst: false,
   onSecond: false,
   onThird: false,
-  batter: undefined,
-  pitcher: undefined,
+  lastPlay: null,
+  batter: {
+    playerId: 0,
+    summary: '',
+    athlete: {
+      id: '',
+      fullName: '',
+      displayName: '',
+      shortName: '',
+      headshot: '',
+      jersey: '',
+      position: {
+        abbreviation: '',
+      },
+      team: {
+        id: '',
+        abbreviation: '',
+      },
+      lastName: null,
+      active: true,
+    },
+  },
+  pitcher: {
+    playerId: 0,
+    summary: '',
+    athlete: {
+      id: '',
+      fullName: '',
+      displayName: '',
+      shortName: '',
+      headshot: '',
+      jersey: '',
+      position: {
+        abbreviation: '',
+      },
+      team: {
+        id: '',
+        abbreviation: '',
+      },
+      lastName: null,
+      active: true,
+    },
+  },
 };
 
 export const MOCK_ESPN_CLIENT_FASTCAST_EVENT: EventsEntity = {
-  gamecastAvailable: false,
-  playByPlayAvailable: false,
-  commentaryAvailable: false,
-  recent: false,
   id: '',
   competitionId: '',
   uid: '',
   date: '',
-  timeValid: false,
   name: '',
   shortName: '',
   location: '',
   season: 0,
-  seasonStartDate: '',
-  seasonEndDate: '',
   seasonType: '',
-  seasonTypeHasGroups: false,
   period: 0,
   clock: '',
   status: '',
   summary: '',
-  fullStatus: undefined,
   link: '',
+  fullStatus: {
+    type: {
+      id: '1',
+      state: 'post',
+      completed: true,
+    },
+  },
   competitors: [MOCK_ESPN_CLIENT_FASTCAST_COMPETITOR],
   situation: MOCK_ESPN_CLIENT_FASTCAST_SITUATION,
-  priority: 0,
-  group: undefined,
-  onWatch: false,
-  odds: undefined,
 };
 
 export const MOCK_ESPN_CLIENT_FASTCAST_LEAGUE: LeaguesEntity = {

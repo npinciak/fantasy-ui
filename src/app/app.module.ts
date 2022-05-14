@@ -17,7 +17,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 const states = [ShellState, LocalStorageState];
-
 @NgModule({
   declarations: [AppComponent],
   imports: [

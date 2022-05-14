@@ -1,17 +1,19 @@
-<table style="width: 100%">
+<table style="width: 100%" [attr.aria-labelledBy]="ariaInfo.teamName">
   <tr [ngStyle]="{ color: team?.color }" style="text-align: left">
     <td class="game-team-logo">
-      <img height="40px" [alt]="team.name" [src]="team?.logo" />
+      <img height="40px" [alt]="team?.name" [src]="team?.logo" />
     </td>
     <td>
       <table style="width: 100%">
         <tr>
           <td style="width: 165px">
             <span class="ui-font-weight-bold">
-              <small *ngIf="team?.rank">{{ team?.rank }}&nbsp;</small>{{ team?.name }}&nbsp;
-              <span style="font-size: 10px; vertical-align: middle" *ngIf="team?.hasPossession">🏈</span>
+              <small *ngIf="team?.rank">{{ team?.rank }}&nbsp;</small>
+              <span [id]="ariaInfo.teamName">{{ team?.name }}</span
+              >&nbsp;
+              <!-- <span style="font-size: 10px; vertical-align: middle" *ngIf="team?.hasPossession">🏈</span> -->
               <mat-icon *ngIf="team?.isWinner">arrow_left</mat-icon>
-              <small *ngIf="team?.inRedzone" style="color: red">RZ</small>
+              <!-- <small *ngIf="team?.inRedzone" style="color: red">RZ</small> -->
             </span>
           </td>
         </tr>

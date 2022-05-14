@@ -19,19 +19,23 @@ export class LeagueScoreboardComponent {
     this.router.navigate([UrlBuilder.espnMlbLeagueTeam(this.leagueId, id)]);
   }
 
-  getTooltipText(team: BaseballTeam): string {
+  getTooltipText(team: BaseballTeam): string | null {
     if (team.liveScore - team.totalPoints > 0) {
       return `Up from ${team.totalPoints}`;
     } else if (team.liveScore - team.totalPoints < 0) {
       return `Down from ${team.totalPoints}`;
+    } else {
+      return null;
     }
   }
 
-  getColor(team: BaseballTeam): string {
+  getColor(team: BaseballTeam): string | null {
     if (team.liveScore - team.totalPoints > 0) {
       return 'green';
     } else if (team.liveScore - team.totalPoints < 0) {
       return 'red';
+    } else {
+      return null;
     }
   }
 }

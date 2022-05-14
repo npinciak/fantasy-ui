@@ -2,21 +2,21 @@ import { Injectable } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subject } from 'rxjs';
-import { FastcastEvent } from '../models/fastcast-event.model';
-import { EspnFastcastEventSelectors } from '../selectors/espn-fastcast-event.selectors';
 import {
   DeselectFastcastEvent,
-  EspnFastcastEventToggleState,
   SelectFastcastEvent,
   ToggleOffFastcastEvent,
   ToggleOnFastcastEvent,
-} from '../state/espn-fastcast-event-toggle.state';
+} from '../actions/espn-fastcast-event-toggle.actions';
+import { FastcastEvent } from '../models/fastcast-event.model';
+import { EspnFastcastEventSelectors } from '../selectors/espn-fastcast-event.selectors';
+import { EspnFastcastEventToggleState } from '../state/espn-fastcast-event-toggle.state';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EspnFastcastEventFacade {
-  @Select(EspnFastcastEventSelectors.selectFastcastEventsByLeagueId) eventsByLeagueId$: Observable<(id: string) => FastcastEvent[]>;
+  @Select(EspnFastcastEventSelectors.getFastcastEventsByLeagueId) eventsByLeagueId$: Observable<(id: string) => FastcastEvent[]>;
   @Select(EspnFastcastEventToggleState.isIdToggled) isEventToggled$: Observable<(id: string) => boolean>;
 
   fastcastFilteredEventsSidebar$ = new Subject<FastcastEvent[]>();
@@ -55,6 +55,6 @@ export class EspnFastcastEventFacade {
    * @deprecated use EspnFastcastEventFacade.eventsByLeagueId$
    */
   fastcastEventsByLeagueId(id: string): FastcastEvent[] {
-    return this.store.selectSnapshot(EspnFastcastEventSelectors.selectFastcastEventsByLeagueId)(id);
+    return this.store.selectSnapshot(EspnFastcastEventSelectors.getFastcastEventsByLeagueId)(id);
   }
 }

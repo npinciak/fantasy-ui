@@ -1,30 +1,23 @@
+import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { Selector } from '@ngxs/store';
-import { FastcastEvent, FastcastEventMap } from '../models/fastcast-event.model';
+import { FastcastEvent } from '../models/fastcast-event.model';
+import { FastcastEventTeam } from '../models/fastcast-team.model';
 import { EspnFastcastEventState } from '../state/espn-fastcast-event.state';
+import { EspnFastcastTeamSelectors } from './espn-fastcast-team.selectors';
 
-export class EspnFastcastEventSelectors {
-  @Selector([EspnFastcastEventState.selectMap])
-  static selectEventById(map: FastcastEventMap): (id: string) => FastcastEvent {
-    return (id: string) => map[id];
-  }
-
-  @Selector([EspnFastcastEventState.selectMap])
-  static selectEventList(map: FastcastEventMap): FastcastEvent[] {
-    return Object.values(map);
-  }
-
-  @Selector([EspnFastcastEventState.selectMap])
-  static selectEventIdList(map: FastcastEventMap): string[] {
-    return Object.keys(map);
-  }
-
-  @Selector([EspnFastcastEventState.selectMap])
-  static selectEventIdSet(map: FastcastEventMap): Set<string> {
-    return new Set(Object.keys(map));
-  }
-
-  @Selector([EspnFastcastEventSelectors.selectEventList])
-  static selectFastcastEventsByLeagueId(selectEventList: FastcastEvent[]): (id: string) => FastcastEvent[] {
+export class EspnFastcastEventSelectors extends GenericSelector(EspnFastcastEventState) {
+  @Selector([EspnFastcastEventSelectors.getList, EspnFastcastTeamSelectors.getTeamsByEventUid])
+  static getFastcastEventsByLeagueId(
+    selectEventList: FastcastEvent[],
+    getTeamsByEventUid: (id: string) => { [id: string]: FastcastEventTeam }
+  ): (id: string) => FastcastEvent[] {
     return (id: string) => selectEventList.filter(e => e.leagueId === id).sort((a, b) => a.timestamp - b.timestamp);
+  }
+
+  @Selector([EspnFastcastTeamSelectors.getById])
+  static getFastcastTeamsByLeagueId(selectFastcastTeamById: (id: string) => FastcastEventTeam) {
+    return (id: string) => {
+      const team = selectFastcastTeamById(id);
+    };
   }
 }

@@ -3,11 +3,11 @@ import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
 import { EspnTableFacade } from '@app/espn/facade/espn-table.facade';
 import { Store } from '@ngxs/store';
-import { BehaviorSubject } from 'rxjs';
-import { STAT_PERIOD_FILTER_OPTIONS } from '../../consts/stats.const';
+import { MLB_STATS_MAP, STAT_PERIOD_FILTER_OPTIONS } from '../../consts/stats.const';
 import { FantasyBaseballFreeAgentsFacade } from '../../facade/fantasy-baseball-free-agents.facade';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
+import { Stat, StatList } from '../../models/mlb-stats.model';
 
 @Component({
   selector: `app-free-agents`,
@@ -17,6 +17,8 @@ import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.fa
 export class FreeAgentsComponent implements OnInit {
   readonly leagueId = this.activatedRoute.snapshot.params.leagueId;
   readonly STAT_PERIOD_FILTER_OPTIONS = STAT_PERIOD_FILTER_OPTIONS;
+  readonly statList = StatList;
+  readonly MLB_STAT_MAP = MLB_STATS_MAP;
 
   teamDynamicScatterChartData: any;
   freeAgentDynamicScatterChartData: any;
@@ -24,7 +26,7 @@ export class FreeAgentsComponent implements OnInit {
 
   scoringPeriodId: string = '102022';
 
-  stats$ = new BehaviorSubject<any[]>(null);
+  selectedStat = Stat.AB;
 
   constructor(
     private store: Store,
@@ -43,7 +45,7 @@ export class FreeAgentsComponent implements OnInit {
     this.scoringPeriodId = change.value;
   }
 
-  filterChange(event: { xAxis: string; yAxis: string }): void {}
-
-  filterChangeFreeAgent(event: { xAxis: string; yAxis: string }): void {}
+  statFilterChange(stat: any): void {
+    this.selectedStat = stat;
+  }
 }

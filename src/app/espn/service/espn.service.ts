@@ -1,22 +1,22 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { flatten } from '@app/@shared/helpers/utils';
+import { FastcastLeague } from '@app/espn-fastcast/models/fastcast-league.model';
+import { FastcastSport } from '@app/espn-fastcast/models/fastcast-sport.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from 'src/app/@shared/services/api.service';
+import { exists, flatten } from '../../@shared/helpers/utils';
 import {
   CompetitorsEntity as CompetitorsImport,
   EspnClientFastcast as FastCastImport,
   EventsEntity as EventsImport,
   LeaguesEntity as LeaguesImport,
-  Situation as SituationImport,
-  SportsEntity as SportsImport,
+  SportsEntity,
 } from '../../espn-fastcast/models/espn-fastcast.model';
-import { FastcastEvent } from '../../espn-fastcast/models/fastcast-event.model';
-import { FastcastEventTeamMap } from '../../espn-fastcast/models/fastcast-team.model';
+import { FastcastEvent, FootballSituation, MlbSituation } from '../../espn-fastcast/models/fastcast-event.model';
+import { FastcastEventTeam } from '../../espn-fastcast/models/fastcast-team.model';
 import { EspnClientFreeAgent, EspnClientLeague, GameStatusId } from '../espn-client.model';
-import { includeSports, transformDownDistancePositionText, transformUidToId } from '../espn-helpers';
-import { NO_LOGO } from '../espn.const';
+import { includeSports, transformUidToId } from '../espn-helpers';
 import {
   EspnEndpointBuilder,
   EspnParamFragment,
@@ -34,102 +34,121 @@ import { League } from '../models/league.model';
 export class EspnService {
   constructor(private api: ApiService) {}
 
-  static transformLeagueImportEventImport(sportsImport: SportsImport[]): {
-    transformLeaguesImportToLeagues: League[];
-    transformEventImportToFastcastEvent: FastcastEvent[];
-  } {
-    const leagues = sportsImport.filter(s => includeSports(s.id)).map(i => i.leagues);
-
-    const flattenLeaguesImport = flatten(leagues);
-
-    const transformLeaguesImportToLeagues = flattenLeaguesImport.map(league => EspnService.transformLeaguesImportToLeagues(league));
-
-    const events = flattenLeaguesImport.map(l => l.events);
-
-    const flattenEventsImport = flatten(events);
-
-    const transformEventImportToFastcastEvent = EspnService.transformEventImportToFastcastEvent(flattenEventsImport);
-
+  static transformSportsEntityToSport(l: SportsEntity): FastcastSport {
     return {
-      transformLeaguesImportToLeagues,
-      transformEventImportToFastcastEvent,
+      id: l.id,
+      uid: l.uid,
+      name: l.name,
+      slug: l.slug,
     };
   }
 
-  static transformFastcastCompetitorsToTeams(data: CompetitorsImport[], situation: SituationImport): FastcastEventTeamMap {
-    return data?.reduce((acc, val) => {
-      if (!val.homeAway) {
-        return null;
-      }
-
-      acc[val.homeAway] = {
-        id: val.id,
-        score: val.score,
-        abbrev: val.abbreviation,
-        logo: val.logo === '' ? NO_LOGO : val.logo,
-        isWinner: val.winner,
-        name: val.name ?? val.abbreviation,
-        color: val.color === 'ffffff' || val.color === 'ffff00' ? '#1a1a1a' : `#${val.color}`,
-        altColor: `#${val.alternateColor}`,
-        record: Array.isArray(val.record) ? null : val.record,
-        rank: val.rank ?? null,
-        winPct: null,
-        aggregateScore: val.aggregateScore ?? null,
-        hasPossession: situation?.possession === val.id,
-        isRedzone: (situation?.possession === val.id && situation?.isRedZone) ?? false,
-      };
-      return acc;
-    }, {});
-  }
-
-  static transformEventImportToFastcastEvent(eventsImport: EventsImport[]): FastcastEvent[] {
-    return eventsImport?.map(event => {
-      const mlbSituation = {
-        batter: event?.situation?.batter,
-        pitcher: event?.situation?.pitcher,
-        balls: event?.situation?.balls,
-        strikes: event.situation?.strikes,
-        outs: event?.situation?.outs,
-        onFirst: event?.situation?.onFirst,
-        onSecond: event?.situation?.onSecond,
-        onThird: event?.situation?.onThird,
-      };
-
-      return {
-        id: event?.id,
-        leagueId: transformUidToId(event?.uid),
-        timestamp: new Date(event?.date).getTime(),
-        state: event?.fullStatus.type.state,
-        completed: event?.fullStatus.type.completed,
-        status: event?.status,
-        name: event?.name,
-        shortname: event?.shortName,
-        location: event?.location,
-        clock: event?.clock,
-        summary: event?.summary,
-        period: event?.period,
-        note: event?.note,
-        teams: EspnService.transformFastcastCompetitorsToTeams(event?.competitors, event?.situation),
-        isHalftime: event?.fullStatus.type?.id ? Number(event?.fullStatus?.type?.id) === GameStatusId.Halftime : false,
-        downDistancePositionText: transformDownDistancePositionText(
-          event?.situation?.shortDownDistanceText,
-          event?.situation?.possessionText
-        ),
-        lastPlay: event?.situation?.lastPlay ?? null,
-        mlbSituation,
-      };
-    });
-  }
-
-  static transformLeaguesImportToLeagues(leaguesImport: LeaguesImport): League {
+  static transformLeagueImportToLeague(l: LeaguesImport): League {
     return {
-      id: leaguesImport.id,
-      uid: leaguesImport.uid,
-      name: leaguesImport.name,
-      abbreviation: leaguesImport.abbreviation ?? leaguesImport.name,
-      shortName: leaguesImport.shortName ?? leaguesImport.name,
-      isTournament: leaguesImport.isTournament,
-      sport: null,
+      id: l.id,
+      uid: l.uid,
+      name: l.name,
+      abbreviation: l.abbreviation ?? l.name,
+      shortName: l.shortName ?? l.name,
+      isTournament: l.isTournament ?? false,
+    };
+  }
+
+  static transformCompetitorToFastcastTeam(eventUid: string, data: CompetitorsImport): FastcastEventTeam | null {
+    if (!data) {
+      return null;
+    }
+    return {
+      id: data.id,
+      uid: data.uid,
+      eventUid,
+      isHome: data.homeAway,
+      score: data.score,
+      abbrev: data.abbreviation,
+      logo: data.logo,
+      isWinner: data.winner,
+      name: data.name ?? data.abbreviation,
+      color: data.color,
+      altColor: data.alternateColor ?? null,
+      record: Array.isArray(data.record) ? null : data.record,
+      rank: data.rank ?? null,
+      winPct: null,
+    };
+  }
+
+  static transformEventImportToFastcastEvent(event: EventsImport): FastcastEvent | null {
+    if (!event) {
+      return null;
+    }
+
+    let mlbSituation = {} as MlbSituation | null;
+    // if (
+    //   event?.situation?.batter == null ||
+    //   event?.situation?.pitcher == null ||
+    //   event?.situation?.balls == null ||
+    //   event?.situation?.strikes == null ||
+    //   event?.situation?.outs == null ||
+    //   event?.situation?.onFirst == null ||
+    //   event?.situation?.onSecond == null ||
+    //   event?.situation?.onThird == null
+    // ) {
+    //   mlbSituation = null;
+    // } else {
+    Object.assign(mlbSituation, {
+      batter: event?.situation?.batter,
+      pitcher: event?.situation?.pitcher,
+      balls: event?.situation?.balls,
+      strikes: event?.situation?.strikes,
+      outs: event?.situation?.outs,
+      onFirst: event?.situation?.onFirst,
+      onSecond: event?.situation?.onSecond,
+      onThird: event?.situation?.onThird,
+    });
+    // }
+
+    let footballSituation = {} as FootballSituation | null;
+    if (
+      event?.situation?.shortDownDistanceText == null ||
+      event?.situation?.possessionText == null ||
+      event?.situation?.possession == null
+    ) {
+      footballSituation = null;
+    } else {
+      Object.assign(footballSituation, {
+        shortDownDistanceText: event?.situation?.shortDownDistanceText,
+        possessionText: event?.situation?.possessionText,
+        isRedZone: null,
+        possession: event?.situation?.possession,
+      });
+    }
+
+    const teams = exists(event.competitors)
+      ? event.competitors.reduce((obj, val) => {
+          obj[val.homeAway] = EspnService.transformCompetitorToFastcastTeam(event.uid, val);
+          return obj;
+        }, {})
+      : null;
+
+    return {
+      id: event?.id,
+      uid: event?.uid,
+      leagueId: transformUidToId(event.uid) ?? '',
+      timestamp: new Date(event?.date).getTime(),
+      state: event?.fullStatus.type.state,
+      completed: event?.fullStatus.type.completed,
+      status: event?.status,
+      name: event?.name,
+      shortname: event?.shortName,
+      location: event?.location,
+      clock: event?.clock ?? null,
+      summary: event?.summary,
+      period: event?.period,
+      note: event?.note ?? null,
+      isHalftime: event?.fullStatus.type?.id ? Number(event?.fullStatus.type.id) === GameStatusId.Halftime : false,
+      lastPlay: event?.situation?.lastPlay ?? null,
+      mlbSituation,
+      footballSituation,
+      teams,
     };
   }
 
@@ -216,7 +235,34 @@ export class EspnService {
    * @returns
    */
   espnFastcast(url: string): Observable<FastcastTransform> {
-    return this.api.get<FastCastImport>(url).pipe(map(res => EspnService.transformLeagueImportEventImport(res.sports)));
+    return this.api.get<FastCastImport>(url).pipe(
+      map(res => {
+        const final = {} as FastcastTransform;
+        const sports = res.sports.map(s => EspnService.transformSportsEntityToSport(s));
+
+        const leaguesImport = res.sports.filter(s => includeSports(s.id)).map(i => i.leagues);
+        const flattenLeaguesImport = flatten(leaguesImport);
+
+        const leagues = exists(flattenLeaguesImport) ? flattenLeaguesImport.map(l => EspnService.transformLeagueImportToLeague(l)) : [];
+        const flatLeaguesEvents = exists(flattenLeaguesImport) ? flattenLeaguesImport.map(l => (exists(l.events) ? l.events : [])) : [];
+
+        const flattenEventsImport = flatten(flatLeaguesEvents);
+        const events = exists(flattenEventsImport)
+          ? flattenEventsImport.map(e => EspnService.transformEventImportToFastcastEvent(e)).filter(l => l != null)
+          : [];
+
+        const teams = exists(events) ? events.map(c => (exists(c) ? c.teams : null)) : [];
+
+        Object.assign(final, {
+          sports,
+          leagues,
+          events,
+          teams,
+        });
+
+        return final;
+      })
+    );
   }
 
   /**
@@ -235,15 +281,15 @@ export class EspnService {
 
     return this.api.get<EspnClientOneFeed>(endpoint.oneFeed + `/leagues/${league}`, { params }).pipe(
       map(res => {
-        const feeds: FeedArticleImport[][] = [];
+        // const feeds: FeedArticleImport[][] = [];
 
-        res.feed.map(f => {
-          feeds.push(f.data.now);
-        });
+        // res.feed.map(f => {
+        //   feeds.push(f.data.now);
+        // });
 
-        const feedOverviews: FeedArticleImport[] = flatten(feeds);
+        // const feedOverviews = exists(feeds) ? flatten(feeds) : [];
 
-        return feedOverviews.map(i => EspnService.transformFeedArticleImportToFeedArticle(i));
+        return []; //exists(feedOverviews) ? feedOverviews.map(i => EspnService.transformFeedArticleImportToFeedArticle(i)) : [];
       })
     );
   }
@@ -269,4 +315,9 @@ export class EspnService {
   }
 }
 
-export type FastcastTransform = { transformLeaguesImportToLeagues: League[]; transformEventImportToFastcastEvent: FastcastEvent[] };
+export interface FastcastTransform {
+  sports: FastcastSport[];
+  leagues: FastcastLeague[];
+  events: FastcastEvent[];
+  teams: FastcastEventTeam[];
+}

@@ -7,6 +7,7 @@ import { BaseballPlayer } from '../../models/baseball-player.model';
   styleUrls: ['./lineup-card.component.scss'],
 })
 export class LineupCardComponent implements OnInit {
+  @Input() title: string = 'Lineup';
   @Input() lineup: BaseballPlayer[];
   @Output() fetchPlayerDetails = new EventEmitter<BaseballPlayer>();
 

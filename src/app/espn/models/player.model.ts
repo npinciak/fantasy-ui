@@ -6,6 +6,7 @@ interface PlayerProperties {
   name: string;
   img: string;
   team: string;
+  teamUid: string;
   position: string;
 }
 

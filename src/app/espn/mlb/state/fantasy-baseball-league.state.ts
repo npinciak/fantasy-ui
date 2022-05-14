@@ -36,12 +36,12 @@ export class FantasyBaseballLeagueState {
   }
 
   @Selector([FantasyBaseballLeagueState.getState])
-  static scoringPeriod(state: FantasyBaseballLeagueStateModel): string {
+  static scoringPeriod(state: FantasyBaseballLeagueStateModel): string | null {
     return state.scoringPeriodId;
   }
 
   @Selector([FantasyBaseballLeagueState.getState])
-  static seasonId(state: FantasyBaseballLeagueStateModel): string {
+  static seasonId(state: FantasyBaseballLeagueStateModel): string | null {
     return state.seasonId;
   }
 
@@ -56,11 +56,10 @@ export class FantasyBaseballLeagueState {
       return;
     }
 
-    const { scoringPeriodId, seasonId, teams, schedule, teamsLive } = await this.mlbService.baseballLeague(leagueId).toPromise();
+    const { scoringPeriodId, seasonId, teams, teamsLive } = await this.mlbService.baseballLeague(leagueId).toPromise();
 
     dispatch([
       new SetEspnFantasyLeagueTeamsLive({ teams: teamsLive }),
-      new PatchLiveSchedule({ schedule }),
       new PatchSeasonId({ seasonId }),
       new PatchScoringPeriodId({ scoringPeriodId }),
       new PatchFantasyBaseballTeams({ teams }),
