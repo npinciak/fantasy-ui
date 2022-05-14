@@ -1,3 +1,3 @@
-import { entityMap, getKey, patchMap, setMap } from './entities.operators';
+import { getKey, map, patchMap, setMap } from './entities.operators';
 
-export { getKey, entityMap, setMap, patchMap };
+export { getKey, map as entityMap, setMap, patchMap };
