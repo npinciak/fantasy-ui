@@ -99,6 +99,7 @@ export const MOCK_ESPN_CLIENT_FASTCAST_EVENT: EventsEntity = {
   link: '',
   fullStatus: {
     type: {
+      id: '1',
       state: 'post',
       completed: true,
     },

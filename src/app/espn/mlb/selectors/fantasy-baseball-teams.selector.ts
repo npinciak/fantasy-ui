@@ -89,7 +89,7 @@ export class FantasyBaseballTeamsSelector {
   }
 
   @Selector([FantasyBaseballTeamsSelector.selectTeamBatters])
-  static selectTeamBattersBench(selectTeamBatters: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
+  static selectTeamBenchBatters(selectTeamBatters: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
     return (id: string) => FantasyBaseballTeamsSelector.benchPlayers(selectTeamBatters(id));
   }
 
@@ -119,7 +119,7 @@ export class FantasyBaseballTeamsSelector {
     };
   }
 
-  @Selector([FantasyBaseballTeamsSelector.getLiveTeamBatters, EspnFastcastTeamSelectors.getTeamById])
+  @Selector([FantasyBaseballTeamsSelector.getLiveTeamBatters, EspnFastcastTeamSelectors.getById])
   static selectLiveTeamBatterStats(
     getLiveTeamBatters: (id: string) => BaseballPlayer[],
     selectFastcastTeamById: (id: string) => FastcastEventTeam | null

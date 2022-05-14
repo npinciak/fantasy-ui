@@ -44,6 +44,7 @@ export enum OperationCode {
 export enum FastcastEventType {
   TopEvents = 'event-topevents',
   Soccer = 'event-topsoccer',
+  Mlb = 'event-baseball-mlb',
 }
 
 export class WebSocketBuilder {
