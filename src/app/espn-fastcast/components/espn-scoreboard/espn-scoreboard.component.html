@@ -9,10 +9,13 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <div fxFlex.gt-xs="90" fxFlex.xs="100" class="scoreboard-container">
+  <div fxFlex.gt-xs="90" fxFlex.xs="100" class="scoreboard-container" id="scoreboard-feed" role="feed" aria-live="polite">
     <ng-container *ngIf="(fastcastEventFacade.eventsByLeagueId$ | async)!(selectedLeagueId) as fastcastEvents">
-      <ng-container *ngFor="let event of fastcastEvents">
+      <ng-container *ngFor="let event of fastcastEvents; let i = index">
         <app-espn-scoreboard-card
+          [index]="i"
+          [ariaSetsize]="fastcastEvents.length"
+          [ariaPosinset]="i + 1"
           [isEventToggled]="(fastcastEventFacade.isEventToggled$ | async)!(event.id)"
           (toggleExpandedEvent)="onToggleExpandedEvent($event)"
           (toggleOffExpandedEvent)="onToggleOffExpandedEvent($event)"

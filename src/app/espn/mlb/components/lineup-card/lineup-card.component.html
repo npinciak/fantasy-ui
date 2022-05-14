@@ -1,8 +1,8 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Lineup</mat-card-title>
+    <mat-card-title>{{ title }}</mat-card-title>
   </mat-card-header>
-  <mat-card-content role="group" aria-label="Lineup">
+  <mat-card-content>
     <mat-nav-list>
       <a mat-list-item (click)="showPlayerDetails(player)" *ngFor="let player of lineup">
         <app-lineup-card-player [player]="player"></app-lineup-card-player>
