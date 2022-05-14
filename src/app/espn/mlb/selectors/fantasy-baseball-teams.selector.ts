@@ -28,7 +28,11 @@ export class FantasyBaseballTeamsSelector {
       [Stat.LOB_PCT]: advancedStats.leftOnBasePercent,
     });
 
-    const stats = { ...statsEntity, ...adv };
+    const stats = {
+      ...statsEntity,
+      ...adv,
+      [Stat.IP]: statsEntity[Stat.IP] * 0.333,
+    };
     return {
       name: p.name,
       img: p.img,

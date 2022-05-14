@@ -17,10 +17,11 @@ export enum StatTypePeriodId {
   Last7,
   Last15,
   Last30,
-  //currentYear = 4,?
+  Average = 4,
   Live = 5,
-  Unavail = 6,
+  RestOfSeason = 6,
   Projected = 10,
+  BatterVsPitcher = 1000,
 }
 
 // 01 -- l7<year>
@@ -42,9 +43,11 @@ export const StatTypePeriodIdMap: { [key in StatTypePeriodId]: string } = {
   1: 'Last 7',
   2: 'Last 15',
   3: 'Last 30',
+  4: 'Average',
   5: 'live',
-  6: 'NOT_MAPPED',
+  6: 'Rest Of Season',
   10: 'Projected',
+  1000: 'BVP',
 };
 
 export enum StatType {
@@ -60,7 +63,7 @@ type StatsProperties = {
   statTypeId: StatType;
 };
 
-export type StatsMap = Record<string, StatsProperties>;
+export type StatsMap = Record<number, StatsProperties>;
 
 type Stats =
   | 'ab'

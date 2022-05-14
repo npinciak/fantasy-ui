@@ -1,12 +1,10 @@
-import { exists } from '@app/@shared/helpers/utils';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { EspnClientPlayerStatsEntity } from '@app/espn/espn-client.model';
 import { Selector } from '@ngxs/store';
-import { AdvStats } from '../class/advStats.class';
-import { MLB_STATS_KEYS, MLB_STATS_MAP, MLB_WEIGHTED_STATS } from '../consts/stats.const';
-import { BaseballPlayer, BaseballPlayerMap } from '../models/baseball-player.model';
-import { Stat } from '../models/mlb-stats.model';
+import { MLB_STATS_KEYS, MLB_STATS_MAP } from '../consts/stats.const';
+import { BaseballPlayer, BaseballPlayerBatterStatsRow, BaseballPlayerMap } from '../models/baseball-player.model';
 import { FantasyBaseballFreeAgentsState } from '../state/fantasy-baseball-free-agents.state';
+import { FantasyBaseballTeamsSelector } from './fantasy-baseball-teams.selector';
 
 export class FantasyBaseballFreeAgentsSelector {
   @Selector([FantasyBaseballFreeAgentsState.map])
@@ -30,60 +28,16 @@ export class FantasyBaseballFreeAgentsSelector {
   }
 
   @Selector([FantasyBaseballFreeAgentsSelector.selectFreeAgentBatterList])
-  static selectFreeAgentBatterStats(players: BaseballPlayer[]): (statPeriod: string, seasonId: string) => FreeAgentStats[] {
+  static selectFreeAgentBatterStats(players: BaseballPlayer[]): (statPeriod: string, seasonId: string) => BaseballPlayerBatterStatsRow[] {
     return (statPeriod: string, seasonId: string) => {
-      return players.map(p => {
-        const statsEntity = exists(p.stats) ? p.stats[statPeriod] : {};
-        const seasonConst = MLB_WEIGHTED_STATS[seasonId];
-        const advancedStats = new AdvStats({ seasonConst, statsEntity });
-
-        const adv = {};
-        adv[Stat.fip] = advancedStats.fip;
-        adv[Stat.wOBA] = advancedStats.wOBA;
-        adv[Stat.wRAA] = advancedStats.wRAA;
-        adv[Stat.BABIP] = advancedStats.babip;
-        adv[Stat.ISO] = advancedStats.iso;
-        adv[Stat.LOB_PCT] = advancedStats.leftOnBasePercent;
-
-        const stats = { ...statsEntity, ...adv };
-        return {
-          name: p.name,
-          img: p.img,
-          team: p.team,
-          position: p.position,
-          playerOwnershipChange: p.playerOwnershipChange,
-          playerOwnershipPercentOwned: p.playerOwnershipPercentOwned,
-          stats,
-        };
-      });
+      return players.map(p => FantasyBaseballTeamsSelector.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId));
     };
   }
 
   @Selector([FantasyBaseballFreeAgentsSelector.selectFreeAgentPitcherList])
-  static selectFreeAgentPitcherStats(players: BaseballPlayer[]): (statPeriod: string, seasonId: string) => FreeAgentStats[] {
+  static selectFreeAgentPitcherStats(players: BaseballPlayer[]): (statPeriod: string, seasonId: string) => BaseballPlayerBatterStatsRow[] {
     return (statPeriod: string, seasonId: string) => {
-      return players.map(p => {
-        const statsEntity = exists(p.stats) ? p.stats[statPeriod] : {};
-        const seasonConst = MLB_WEIGHTED_STATS[seasonId];
-        const advancedStats = new AdvStats({ seasonConst, statsEntity });
-
-        const adv = {};
-        adv[Stat.fip] = advancedStats.fip;
-        adv[Stat.wOBA] = advancedStats.wOBA;
-        adv[Stat.wRAA] = advancedStats.wRAA;
-        adv[Stat.BABIP] = advancedStats.wRAA;
-        const stats = { ...statsEntity, ...adv };
-
-        return {
-          name: p.name,
-          img: p.img,
-          team: p.team,
-          position: p.position,
-          playerOwnershipChange: p.playerOwnershipChange,
-          playerOwnershipPercentOwned: p.playerOwnershipPercentOwned,
-          stats,
-        };
-      });
+      return players.map(p => FantasyBaseballTeamsSelector.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId));
     };
   }
 
