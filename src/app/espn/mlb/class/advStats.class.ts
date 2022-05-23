@@ -80,13 +80,7 @@ export class AdvStats {
   }
 
   private get babipValid(): boolean {
-    return (
-      this._stats.hasOwnProperty(Stat.HA) &&
-      this._stats.hasOwnProperty(Stat.HRA) &&
-      this._stats.hasOwnProperty(Stat.BF) &&
-      this._stats.hasOwnProperty(Stat.K) &&
-      this._stats.hasOwnProperty(Stat.SFA)
-    );
+    return Stat.HA in this._stats && Stat.HRA in this._stats && Stat.BF in this._stats && Stat.K in this._stats && Stat.SFA in this._stats;
   }
 
   private get wRCValid(): boolean {
@@ -94,7 +88,7 @@ export class AdvStats {
   }
 
   private get wRAAValid(): boolean {
-    return this.wOBAValid && this._stats.hasOwnProperty(Stat.PA);
+    return this.wOBAValid && Stat.PA in this._stats;
   }
 
   private get wOBAValid(): boolean {
@@ -102,17 +96,11 @@ export class AdvStats {
   }
 
   private get fipValid(): boolean {
-    return (
-      this._stats.hasOwnProperty(Stat.HRA) &&
-      this._stats.hasOwnProperty(Stat.BBI) &&
-      this._stats.hasOwnProperty(Stat.HB) &&
-      this._stats.hasOwnProperty(Stat.K) &&
-      this._stats.hasOwnProperty(Stat.IP)
-    );
+    return Stat.HRA in this._stats && Stat.BBI in this._stats && Stat.HB in this._stats && Stat.K in this._stats && Stat.IP in this._stats;
   }
 
   private get unintentionalBBValid(): boolean {
-    return this._stats.hasOwnProperty(Stat.BB) && this._stats.hasOwnProperty(Stat.IBB);
+    return Stat.BB in this._stats && Stat.IBB in this._stats;
   }
 
   private get weightedHitsValid(): boolean {
@@ -130,7 +118,7 @@ export class AdvStats {
   }
 
   private get isoValid(): boolean {
-    return this._stats.hasOwnProperty(Stat.SLG) && this._stats.hasOwnProperty(Stat.AVG);
+    return Stat.SLG in this._stats && Stat.AVG in this._stats;
   }
 
   private get lobPercentValid(): boolean {
