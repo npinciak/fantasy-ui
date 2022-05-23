@@ -91,9 +91,9 @@ export class EspnTableSelectors {
         dataType: TableColumnDataType.Number,
       },
       {
-        columnDef: `stats.${Stat.PA}`,
-        headerCell: `stats.${Stat.PA}`,
-        headerLabel: MLB_STATS_MAP[Stat.PA].abbrev,
+        columnDef: `stats.${Stat.AB}`,
+        headerCell: `stats.${Stat.AB}`,
+        headerLabel: MLB_STATS_MAP[Stat.AB].abbrev,
         dataType: TableColumnDataType.Number,
       },
       {
@@ -124,6 +124,18 @@ export class EspnTableSelectors {
         columnDef: `stats.${Stat.AVG}`,
         headerCell: `stats.${Stat.AVG}`,
         headerLabel: MLB_STATS_MAP[Stat.AVG].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.OBP}`,
+        headerCell: `stats.${Stat.OBP}`,
+        headerLabel: MLB_STATS_MAP[Stat.OBP].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.OPS}`,
+        headerCell: `stats.${Stat.OPS}`,
+        headerLabel: MLB_STATS_MAP[Stat.OPS].abbrev,
         dataType: TableColumnDataType.Number,
       },
       {
@@ -164,9 +176,9 @@ export class EspnTableSelectors {
     return [
       { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String },
       {
-        columnDef: `stats.${Stat.W}`,
-        headerCell: `stats.${Stat.W}`,
-        headerLabel: MLB_STATS_MAP[Stat.W].abbrev,
+        columnDef: `stats.${Stat.GS}`,
+        headerCell: `stats.${Stat.GS}`,
+        headerLabel: MLB_STATS_MAP[Stat.GS].abbrev,
         dataType: TableColumnDataType.Number,
       },
       {
@@ -175,6 +187,31 @@ export class EspnTableSelectors {
         headerLabel: MLB_STATS_MAP[Stat.IP].abbrev,
         dataType: TableColumnDataType.Number,
       },
+      {
+        columnDef: `stats.${Stat.W}`,
+        headerCell: `stats.${Stat.W}`,
+        headerLabel: MLB_STATS_MAP[Stat.W].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.WIN_PCT}`,
+        headerCell: `stats.${Stat.WIN_PCT}`,
+        headerLabel: MLB_STATS_MAP[Stat.WIN_PCT].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.SV}`,
+        headerCell: `stats.${Stat.SV}`,
+        headerLabel: MLB_STATS_MAP[Stat.SV].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+      {
+        columnDef: `stats.${Stat.SV_PCT}`,
+        headerCell: `stats.${Stat.SV_PCT}`,
+        headerLabel: MLB_STATS_MAP[Stat.SV_PCT].abbrev,
+        dataType: TableColumnDataType.Number,
+      },
+
       {
         columnDef: `stats.${Stat.K}`,
         headerCell: `stats.${Stat.K}`,

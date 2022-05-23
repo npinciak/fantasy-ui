@@ -1,40 +1,11 @@
 import { Injectable } from '@angular/core';
-import { entityMap } from '@app/@shared/operators';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { BaseballTeam, BaseballTeamMap } from '../models/baseball-team.model';
+import { GenericState } from '@app/@shared/generic-state/generic.state';
+import { State } from '@ngxs/store';
+import { PatchFantasyBaseballTeams } from '../actions/fantasy-baseball-team.actions';
 
-export class PatchFantasyBaseballTeams {
-  static readonly type = `[fantasyBaseballTeam] PatchFantasyBaseballTeams`;
-  constructor(public payload: { teams: BaseballTeam[] }) {}
-}
-
-interface FantasyBaseballTeamStateModel {
-  map: BaseballTeamMap;
-}
-
-@State<FantasyBaseballTeamStateModel>({
-  name: 'fantasyBaseballTeams',
-  defaults: {
-    map: {},
-  },
-})
+@State({ name: 'fantasyBaseballTeams' })
 @Injectable()
-export class FantasyBaseballTeamState {
-  constructor() {}
-
-  @Selector([FantasyBaseballTeamState])
-  static map(state: FantasyBaseballTeamStateModel): BaseballTeamMap {
-    return state.map;
-  }
-
-  @Action(PatchFantasyBaseballTeams)
-  patchTeams(
-    { patchState, getState }: StateContext<FantasyBaseballTeamStateModel>,
-    { payload: { teams } }: PatchFantasyBaseballTeams
-  ): void {
-    const state = getState();
-    const map = entityMap(teams, team => team.id);
-
-    patchState({ ...state, map });
-  }
-}
+export class FantasyBaseballTeamState extends GenericState({
+  idProperty: 'id',
+  patchAction: PatchFantasyBaseballTeams,
+}) {}

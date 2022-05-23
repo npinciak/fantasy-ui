@@ -1,19 +1,24 @@
 import { Selector } from '@ngxs/store';
-import { EspnFastcastState } from '../state/espn-fastcast.state';
+import { EspnFastcastState, EspnFastcastStateModel } from '../state/espn-fastcast.state';
 
 export class EspnFastcastSelectors {
-  @Selector([EspnFastcastState.selectConnected])
-  static selectConnected(connected: number | null): number | null {
-    return connected;
+  @Selector([EspnFastcastState])
+  static getConnected(state: EspnFastcastStateModel): number | null {
+    return state.connect;
   }
 
-  @Selector([EspnFastcastState.selectLastDisconnect])
-  static selectLastDisconnect(lastDisconnect: number | null): number | null {
-    return lastDisconnect;
+  @Selector([EspnFastcastState])
+  static getLastDisconnect(state: EspnFastcastStateModel): number | null {
+    return state.disconnect;
   }
 
-  @Selector([EspnFastcastState.selectConnected, EspnFastcastState.selectLastRefresh])
-  static selectLastRefresh(lastconnected: number | null, lastRefresh: number | null): number | null {
-    return lastRefresh ?? lastconnected;
+  @Selector([EspnFastcastState])
+  static getLastRefresh(state: EspnFastcastStateModel): number | null {
+    return state.lastRefresh;
+  }
+
+  @Selector([EspnFastcastState])
+  static getEventType(state: EspnFastcastStateModel): string | null {
+    return state.eventType;
   }
 }

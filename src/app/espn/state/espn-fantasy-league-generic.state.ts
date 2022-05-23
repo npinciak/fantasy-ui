@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { FetchFantasyBaseballFreeAgents } from '../mlb/actions/fantasy-baseball-free-agents.actions';
+import { PatchFantasyBaseballTeams } from '../mlb/actions/fantasy-baseball-team.actions';
 import { FetchBaseballLeague, PatchScoringPeriodId, PatchSeasonId } from '../mlb/actions/mlb.actions';
 import { MlbService } from '../mlb/services/mlb.service';
-import { FetchFantasyBaseballFreeAgents } from '../mlb/state/fantasy-baseball-free-agents.state';
-import { PatchFantasyBaseballTeams } from '../mlb/state/fantasy-baseball-team.state';
 
 export interface EspnFantasyLeagueGenericClass {
   new (...args: any[]): any;
@@ -66,7 +66,7 @@ export function EspnFantasyLeagueGenericState({ name }: { name: string }): EspnF
       dispatch([
         new PatchSeasonId({ seasonId }),
         new PatchScoringPeriodId({ scoringPeriodId }),
-        new PatchFantasyBaseballTeams({ teams }),
+        new PatchFantasyBaseballTeams(teams),
         new FetchFantasyBaseballFreeAgents({ leagueId, scoringPeriodId }),
       ]);
     }

@@ -265,34 +265,7 @@ export class EspnService {
     );
   }
 
-  /**
-   * OneFeed
-   *
-   * @param url
-   * @returns
-   */
-  espnOneFeed(offset: number = 0, limit: number = 20): Observable<FeedArticle[]> {
-    const endpoint = new EspnEndpointBuilder();
-    let params = new HttpParams();
-    params = params.append('offset', offset.toString());
-    params = params.append('limit', limit.toString());
 
-    const league = 'nfl';
-
-    return this.api.get<EspnClientOneFeed>(endpoint.oneFeed + `/leagues/${league}`, { params }).pipe(
-      map(res => {
-        // const feeds: FeedArticleImport[][] = [];
-
-        // res.feed.map(f => {
-        //   feeds.push(f.data.now);
-        // });
-
-        // const feedOverviews = exists(feeds) ? flatten(feeds) : [];
-
-        return []; //exists(feedOverviews) ? feedOverviews.map(i => EspnService.transformFeedArticleImportToFeedArticle(i)) : [];
-      })
-    );
-  }
 
   /**
    * @todo

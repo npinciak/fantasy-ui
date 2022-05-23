@@ -1,3 +1,4 @@
+import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { exists } from '@app/@shared/helpers/utils';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
 import { EspnFastcastTeamSelectors } from '@app/espn-fastcast/selectors/espn-fastcast-team.selectors';
@@ -5,15 +6,15 @@ import { Selector } from '@ngxs/store';
 import { AdvStats } from '../class/advStats.class';
 import { MLB_LINEUP, MLB_LINEUP_MAP } from '../consts/lineup.const';
 import { MLB_WEIGHTED_STATS, YearToStatTypePeriod } from '../consts/stats.const';
-import { BaseballPlayer, BaseballPlayerBatterStatsRow } from '../models/baseball-player.model';
+import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
 import { BaseballTeamLive, BaseballTeamMap, BaseballTeamTableRow } from '../models/baseball-team.model';
 import { Stat, StatTypePeriodId } from '../models/mlb-stats.model';
 import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.state';
 import { FantasyBaseballTeamsLiveState } from '../state/fantasy-baseball-team-live.state';
 import { FantasyBaseballTeamState } from '../state/fantasy-baseball-team.state';
 
-export class FantasyBaseballTeamsSelector {
-  static transformToBaseballPlayerBatterStatsRow(p: BaseballPlayer, statPeriod: string, seasonId: string): BaseballPlayerBatterStatsRow {
+export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBaseballTeamState) {
+  static transformToBaseballPlayerBatterStatsRow(p: BaseballPlayer, statPeriod: string, seasonId: string): BaseballPlayerStatsRow {
     const statsEntity = exists(p.stats) ? p.stats[statPeriod] : {};
     const seasonConst = MLB_WEIGHTED_STATS[seasonId];
     const advancedStats = new AdvStats({ seasonConst, statsEntity });
@@ -54,12 +55,7 @@ export class FantasyBaseballTeamsSelector {
     return players.filter(p => !p.isInjured && MLB_LINEUP_MAP[p.lineupSlotId].bench);
   }
 
-  @Selector([FantasyBaseballTeamState.map])
-  static selectTeamList(teams: BaseballTeamMap): BaseballTeamTableRow[] {
-    return Object.values(teams);
-  }
-
-  @Selector([FantasyBaseballTeamState.map, FantasyBaseballTeamsLiveState.selectEntityById])
+  @Selector([FantasyBaseballTeamsSelector.getMap, FantasyBaseballTeamsLiveState.selectEntityById])
   static selectTeamListLive(teams: BaseballTeamMap, liveTeams: (id: string) => BaseballTeamLive): Partial<BaseballTeamLive[]> {
     return Object.values(teams).map(t => {
       const liveTeam = liveTeams(t.id);
@@ -67,12 +63,7 @@ export class FantasyBaseballTeamsSelector {
     });
   }
 
-  @Selector([FantasyBaseballTeamState.map])
-  static selectTeamById(teams: BaseballTeamMap): (id: string) => BaseballTeamTableRow {
-    return (id: string) => teams[id];
-  }
-
-  @Selector([FantasyBaseballTeamsSelector.selectTeamById])
+  @Selector([FantasyBaseballTeamsSelector.getById])
   static selectRosterByTeamId(selectTeamById: (id: string) => BaseballTeamTableRow): (id: string) => BaseballPlayer[] {
     return (id: string) => selectTeamById(id).roster;
   }
@@ -116,7 +107,7 @@ export class FantasyBaseballTeamsSelector {
   static selectTeamBatterStats(
     selectTeamBatters: (id: string) => BaseballPlayer[],
     seasonId: string
-  ): (id: string, statPeriod: string) => BaseballPlayerBatterStatsRow[] {
+  ): (id: string, statPeriod: string) => BaseballPlayerStatsRow[] {
     return (id: string, statPeriod: string) => {
       const players = selectTeamBatters(id);
       return players.map(p => FantasyBaseballTeamsSelector.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId));
@@ -156,7 +147,7 @@ export class FantasyBaseballTeamsSelector {
   static selectTeamPitcherStats(
     selectTeamPitchers: (id: string) => BaseballPlayer[],
     seasonId: string
-  ): (id: string, statPeriod: string) => BaseballPlayerBatterStatsRow[] {
+  ): (id: string, statPeriod: string) => BaseballPlayerStatsRow[] {
     return (id: string, statPeriod: string) => {
       const players = selectTeamPitchers(id);
       return players.map(p => FantasyBaseballTeamsSelector.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId));

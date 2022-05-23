@@ -87,7 +87,7 @@ export interface EspnClientTeamProperties {
   rankCalculatedFinal: number;
   pointsByStat: Record<number, number>;
   valuesByStat: Record<number, number>;
-  record: EspnClientTeamRecordEntity;
+  record: string | EspnClientTeamRecordEntity;
 }
 
 export type EspnClientTeam = Omit<EspnClientTeamProperties, 'teamId' | 'totalPoints' | 'totalPointsLive' | 'rosterForCurrentScoringPeriod'>;

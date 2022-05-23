@@ -7,7 +7,7 @@ import { FantasyBaseballTeamsLiveState } from '../state/fantasy-baseball-team-li
 import { FantasyBaseballTeamsSelector } from './fantasy-baseball-teams.selector';
 
 export class FantasyBaseballLeagueSelectors {
-  @Selector([FantasyBaseballTeamsSelector.selectTeamList, FantasyBaseballTeamsLiveState.selectEntityById])
+  @Selector([FantasyBaseballTeamsSelector.getList, FantasyBaseballTeamsLiveState.selectEntityById])
   static standings(teamList: BaseballTeam[], selectEntityById: (id: string) => BaseballTeamLive): BaseballTeam[] {
     return teamList
       .map(t => {

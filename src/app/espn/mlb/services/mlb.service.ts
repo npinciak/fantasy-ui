@@ -177,6 +177,11 @@ export class MlbService {
     );
   }
 
+  /**
+   * Return baseball player latest news
+   * @param payload
+   * @returns
+   */
   baseballPlayerNews(payload: { lookbackDays: string; playerId: string }): Observable<unknown> {
     const data = {
       sport: FantasySports.baseball,
@@ -186,6 +191,11 @@ export class MlbService {
     return this.espnClient.espnFantasyPlayerNewsBySport(data).pipe(map(res => res));
   }
 
+  /**
+   * Return fantasy baseball league free agents
+   * @param payload
+   * @returns
+   */
   baseballFreeAgents(payload: { leagueId: number; scoringPeriodId: number }): Observable<BaseballPlayer[]> {
     let headers = new HttpHeaders();
     headers = headers.append('X-Fantasy-Filter', JSON.stringify(this.filterHeaders));

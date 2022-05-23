@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
 import { EspnTableFacade } from '@app/espn/facade/espn-table.facade';
-import { Store } from '@ngxs/store';
 import { MLB_STATS_MAP, STAT_PERIOD_FILTER_OPTIONS } from '../../consts/stats.const';
 import { FantasyBaseballFreeAgentsFacade } from '../../facade/fantasy-baseball-free-agents.facade';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
@@ -24,12 +23,11 @@ export class FreeAgentsComponent implements OnInit {
   freeAgentDynamicScatterChartData: any;
   freeAgentDynamicLineChartData: any;
 
-  scoringPeriodId: string = '102022';
+  scoringPeriodId: string = '002022';
 
   selectedStat = Stat.AB;
 
   constructor(
-    private store: Store,
     private activatedRoute: ActivatedRoute,
     readonly espnTableFacade: EspnTableFacade,
     readonly fantasyBaseballFreeAgentsFacade: FantasyBaseballFreeAgentsFacade,

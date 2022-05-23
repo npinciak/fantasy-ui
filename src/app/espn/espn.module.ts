@@ -4,6 +4,7 @@ import { FlexLayoutModule, GridModule } from '@angular/flex-layout';
 import { SharedModule } from '@app/@shared/shared.module';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
+import { EspnFastcastEventToggleState } from '../espn-fastcast/state/espn-fastcast-event-toggle.state';
 import { AddLeagueFormComponent } from './components/add-league-form/add-league-form.component';
 import { EspnListTeamComponent } from './components/espn-list-team/espn-list-team.component';
 import { EspnRoutingModule } from './espn-routing.module';
@@ -31,8 +32,6 @@ import { FantasyFootballLeagueState } from './nfl/state/fantasy-football-league.
 import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-schedule.state';
 import { FantasyFootballTeamsState } from './nfl/state/fantasy-football-teams.state';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
-import { EspnFastcastEventToggleState } from '../espn-fastcast/state/espn-fastcast-event-toggle.state';
-import { EspnFeedState } from './state/espn-feed.state';
 
 const declarations = [
   EspnHomeComponent,
@@ -64,7 +63,6 @@ const states = [
   FantasyBaseballTeamsLiveState,
   FantasyBaseballFreeAgentsState,
   FantasyBaseballPlayerState,
-  EspnFeedState,
   EspnFastcastEventToggleState,
 ];
 

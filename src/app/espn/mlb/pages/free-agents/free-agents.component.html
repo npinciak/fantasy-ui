@@ -1,21 +1,26 @@
 <div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
-  <!-- <div fxFlex></div> -->
-  <div fxFlex>
+  <div fxFlex="30%" fxFlex.sm="100%">
+    <div>
     <a mat-flat-button color="primary" [routerLink]="['./']">Home</a>
-
-    <app-dropdown-filter
-      [selectedOption]="scoringPeriodId"
-      title="Stat Period"
-      [filterItems]="STAT_PERIOD_FILTER_OPTIONS"
-      (filterUpdate)="scoringPeriodIdChange($event)"
-    ></app-dropdown-filter>
-    <mat-form-field>
-      <mat-label>Stats</mat-label>
-      <mat-select [(value)]="selectedStat" (selectionChange)="statFilterChange($event.value)">
-        <mat-option *ngFor="let stat of statList" [value]="stat">{{ MLB_STAT_MAP[stat].abbrev }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-
+    </div>
+    <div>
+      <app-dropdown-filter
+        [selectedOption]="scoringPeriodId"
+        title="Stat Period"
+        [filterItems]="STAT_PERIOD_FILTER_OPTIONS"
+        (filterUpdate)="scoringPeriodIdChange($event)"
+      ></app-dropdown-filter>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Stats</mat-label>
+        <mat-select [(value)]="selectedStat" (selectionChange)="statFilterChange($event.value)">
+          <mat-option *ngFor="let stat of statList" [value]="stat">{{ MLB_STAT_MAP[stat].abbrev }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxFlex>
     <div style="margin: 10px 0"></div>
     <app-data-vis [statFilter]="selectedStat" [chartData]="(fantasyBaseballFreeAgentsFacade.freeAgentBatterStats$ | async)!(scoringPeriodId, '2022')"></app-data-vis>
 

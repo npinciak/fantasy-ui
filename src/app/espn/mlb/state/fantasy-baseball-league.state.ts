@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { FetchBaseballLeague, PatchLiveSchedule, PatchScoringPeriodId, PatchSeasonId } from '../actions/mlb.actions';
+import { PatchFantasyBaseballTeams } from '../actions/fantasy-baseball-team.actions';
+import { FetchBaseballLeague, PatchScoringPeriodId, PatchSeasonId } from '../actions/mlb.actions';
 import { MlbService } from '../services/mlb.service';
 import { SetEspnFantasyLeagueTeamsLive } from './fantasy-baseball-team-live.state';
-import { PatchFantasyBaseballTeams } from './fantasy-baseball-team.state';
 
 export interface FantasyBaseballLeagueStateModel {
   isLoading: boolean;
   scoringPeriodId: string | null;
   seasonId: string | null;
-  schedule: Record<string, any>;
 }
 
 @State<FantasyBaseballLeagueStateModel>({
@@ -18,7 +17,6 @@ export interface FantasyBaseballLeagueStateModel {
     scoringPeriodId: null,
     isLoading: true,
     seasonId: null,
-    schedule: {},
   },
 })
 @Injectable()
@@ -47,7 +45,7 @@ export class FantasyBaseballLeagueState {
 
   @Action(FetchBaseballLeague)
   async baseballLeague(
-    { getState, patchState, dispatch }: StateContext<FantasyBaseballLeagueStateModel>,
+    { getState, dispatch }: StateContext<FantasyBaseballLeagueStateModel>,
     { payload: { leagueId } }: FetchBaseballLeague
   ): Promise<void> {
     const state = getState();
@@ -62,7 +60,7 @@ export class FantasyBaseballLeagueState {
       new SetEspnFantasyLeagueTeamsLive({ teams: teamsLive }),
       new PatchSeasonId({ seasonId }),
       new PatchScoringPeriodId({ scoringPeriodId }),
-      new PatchFantasyBaseballTeams({ teams }),
+      new PatchFantasyBaseballTeams(teams),
       // new FetchFantasyBaseballFreeAgents({ leagueId, scoringPeriodId }),
     ]);
   }
@@ -78,10 +76,5 @@ export class FantasyBaseballLeagueState {
     { payload: { scoringPeriodId } }: PatchScoringPeriodId
   ): void {
     patchState({ scoringPeriodId });
-  }
-
-  @Action(PatchLiveSchedule)
-  patchLiveSchedule({ patchState }: StateContext<FantasyBaseballLeagueStateModel>, { payload: { schedule } }: PatchLiveSchedule): void {
-    patchState({ schedule });
   }
 }

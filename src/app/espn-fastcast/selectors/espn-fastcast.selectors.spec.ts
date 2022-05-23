@@ -10,14 +10,14 @@ describe('FastCastSelector', () => {
 
   describe('selectConnected', () => {
     it('retrieves connected timestamp', () => {
-      const expected = EspnFastcastSelectors.selectConnected(state.connect);
+      const expected = EspnFastcastSelectors.getConnected(state.connect);
       expect(expected).toEqual(state.connect);
     });
   });
 
   describe('selectLastDisconnect', () => {
     it('retrieves disconnected timestamp', () => {
-      const expected = EspnFastcastSelectors.selectLastDisconnect(state.disconnect);
+      const expected = EspnFastcastSelectors.getLastDisconnect(state.disconnect);
       expect(expected).toEqual(state.disconnect);
     });
   });
@@ -30,12 +30,12 @@ describe('FastCastSelector', () => {
     };
 
     it('retrieves lastRefresh timestamp', () => {
-      const expected = EspnFastcastSelectors.selectLastRefresh(state.connect, state.lastRefresh);
+      const expected = EspnFastcastSelectors.getLastRefresh(state.connect, state.lastRefresh);
       expect(expected).toEqual(state.lastRefresh);
     });
 
     it('retrieves connect timestamp if no lastRefresh', () => {
-      const expected = EspnFastcastSelectors.selectLastRefresh(emptyLastRefresh.connect, emptyLastRefresh.lastRefresh);
+      const expected = EspnFastcastSelectors.getLastRefresh(emptyLastRefresh.connect, emptyLastRefresh.lastRefresh);
       expect(expected).toEqual(emptyLastRefresh.connect);
     });
   });

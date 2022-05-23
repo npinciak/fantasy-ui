@@ -1,5 +1,4 @@
 import { FastCastGameStatus } from '@app/espn/espn-client.model';
-import { FastcastEvent } from './fastcast-event.model';
 import { MOCK_FASTCAST_TEAM_1, MOCK_FASTCAST_TEAM_2 } from './fastcast-team.model.mock';
 
 const MOCK_FASTCAST_EVENT_LAST_PLAY = {
@@ -14,7 +13,7 @@ const MOCK_FASTCAST_EVENT_TEAMS = {
   away: MOCK_FASTCAST_TEAM_1,
 };
 
-export const MOCK_FASTCAST_EVENT_1: FastcastEvent = {
+export const MOCK_FASTCAST_EVENT_1 = {
   id: '400927752',
   uid: '',
   leagueId: '40',
@@ -32,7 +31,12 @@ export const MOCK_FASTCAST_EVENT_1: FastcastEvent = {
   isHalftime: false,
   lastPlay: MOCK_FASTCAST_EVENT_LAST_PLAY,
   mlbSituation: null,
-  footballSituation: null,
+  footballSituation: {
+    shortDownDistanceText: '',
+    possessionText: '',
+    isRedZone: true,
+    possession: '',
+  },
 };
 
 export const MOCK_FASTCAST_EVENT_LIST = [MOCK_FASTCAST_EVENT_1];

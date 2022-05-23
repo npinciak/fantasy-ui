@@ -18,7 +18,7 @@ export interface BaseballPlayerProperties {
 export type BaseballPlayer = Player & BaseballPlayerProperties & Pick<EspnClientPlayerInfo, 'starterStatusByProGame'>;
 export type BaseballPlayerMap = Record<string, BaseballPlayer>;
 
-export interface BaseballPlayerBatterStatsRow {
+export interface BaseballPlayerStatsRow {
   name: string | null;
   img: string | null;
   team: string | null;

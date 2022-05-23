@@ -3,7 +3,7 @@ import { ESPN_BASEBALL_PLAYER_MOCK_1 } from './roster.mock';
 
 export const ESPN_BASEBALL_TEAM_MOCK: EspnClientTeam = {
   abbrev: 'BEET',
-  record: null,
+  record: '1-0',
   currentProjectedRank: 0,
   draftDayProjectedRank: 6,
   id: 6,
