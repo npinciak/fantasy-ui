@@ -9,6 +9,8 @@ import { PlayerTableComponent } from './components/player-table/player-table.com
 import { SlateListComponent } from './components/slate-list/slate-list.component';
 import { TeamMatchupTableComponent } from './components/team-matchup-table/team-matchup-table.component';
 import { DfsRoutingModule } from './dfs-routing.module';
+import { DailyFantasyMlbPlayerSlateAttributeState } from './mlb/state/daily-fantasy-mlb-player-slate-attr.state';
+import { DailyFantasyMlbTeamSlateAttributeState } from './mlb/state/daily-fantasy-mlb-team-slate-attr.state';
 import { NbaDfsTeamSlateState } from './nba/models/state/nba-dfs-team.state';
 import { MatchupTableComponent } from './nfl/components/matchup-table/matchup-table.component';
 import { PlayerTableRankingColumnComponent } from './nfl/components/player-table-ranking-column/player-table-ranking-column.component';
@@ -30,6 +32,8 @@ const states = [
   DailyFantasySlateState,
   DailyFantasySlateAttrState,
   DailyFantasyTeamsState,
+  DailyFantasyMlbPlayerSlateAttributeState,
+  DailyFantasyMlbTeamSlateAttributeState,
   NflDfsProfilerState,
   NflDfsPlayerGridIronState,
   NflDfsTeamSlateState,

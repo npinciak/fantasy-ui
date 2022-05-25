@@ -4,19 +4,10 @@ import { Team } from './team.model';
 /**
  * Base player model
  */
-interface PlayerProperties {
-  id: string;
-  name: string;
-  img: string;
-  team: string | null;
-  position: string;
-}
+type PlayerProperties = 'id' | 'rgId' | 'name' | 'teamId' | 'gameId' | 'img' | 'position';
 
-export type Player = PlayerProperties & { rgId: string | null; teamId: string | null; rgTeamId: string | null; gameId: string | null };
-export type PlayerMap = Record<string, Player>;
-
+export type Player = { [prop in PlayerProperties]: string } & { rgTeamId: string | null; team: string | null };
 export type SlatePlayer = Omit<Player, 'img' | 'team'>;
-export type SlatePlayerMap = Record<string, Omit<Player, 'img' | 'team'>>;
 
 /**
  * Base player-table-row.model
@@ -26,6 +17,6 @@ interface PlayerTableDataProperties {
   siteId: string | null;
 }
 
-export type PlayerTableData = PlayerTableDataProperties & PlayerProperties;
+export type PlayerTableData = PlayerTableDataProperties & Player;
 
 export type PlayersBySlate = { players: SlatePlayer[]; schedule: Schedule[]; teams: Team[] };

@@ -1,31 +1,39 @@
 <div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
-  <!-- <div fxFlex></div> -->
+  <div fxFlex="30%" fxFlex.sm="100%">
+    <div>
+      <a mat-flat-button color="primary" [routerLink]="['./']">Home</a>
+    </div>
+    <div>
+      <app-dropdown-filter
+        [selectedOption]="scoringPeriodId"
+        title="Stat Period"
+        [filterItems]="STAT_PERIOD_FILTER_OPTIONS"
+        (filterUpdate)="scoringPeriodIdChange($event)"
+      ></app-dropdown-filter>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Stats</mat-label>
+        <mat-select [(value)]="selectedStat" (selectionChange)="statFilterChange($event.value)">
+          <mat-option *ngFor="let stat of statList" [value]="stat">{{ MLB_STAT_MAP[stat].abbrev }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
   <div fxFlex>
-    <a mat-flat-button color="primary" [routerLink]="['./']">Home</a>
-
-    <app-dropdown-filter
-      [selectedOption]="scoringPeriodId"
-      title="Stat Period"
-      [filterItems]="STAT_PERIOD_FILTER_OPTIONS"
-      (filterUpdate)="scoringPeriodIdChange($event)"
-    ></app-dropdown-filter>
-    <mat-form-field>
-      <mat-label>Stats</mat-label>
-      <mat-select [(value)]="selectedStat" (selectionChange)="statFilterChange($event.value)">
-        <mat-option *ngFor="let stat of statList" [value]="stat">{{ MLB_STAT_MAP[stat].abbrev }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-
     <div style="margin: 10px 0"></div>
-    <app-data-vis [statFilter]="selectedStat" [chartData]="(fantasyBaseballFreeAgentsFacade.freeAgentBatterStats$ | async)!(scoringPeriodId, '2022')"></app-data-vis>
+    <app-data-vis
+      [statFilter]="selectedStat"
+      [chartData]="(fantasyBaseballFreeAgentsFacade.freeAgentBatterChartData$ | async)!(scoringPeriodId, '2022', selectedStat)"
+    ></app-data-vis>
 
     <div style="margin: 10px 0"></div>
 
     <app-roster
       #freeAgentBatters
       [data]="(fantasyBaseballFreeAgentsFacade.freeAgentBatterStats$ | async)!(scoringPeriodId, '2022')"
-      [dataColumns]="espnTableFacade.batterTableRow$ | async"
-      [headers]="espnTableFacade.batterTableHeaders$ | async"
+      [dataColumns]="BATTER_STATS_ROWS"
+      [headers]="BATTER_STATS_HEADERS"
     ></app-roster>
 
     <div style="margin: 10px 0"></div>
@@ -33,8 +41,8 @@
     <app-roster
       #freeAgentPitchers
       [data]="(fantasyBaseballFreeAgentsFacade.freeAgentPitcherStats$ | async)!(scoringPeriodId, '2022')"
-      [dataColumns]="espnTableFacade.pitcherTableRow$ | async"
-      [headers]="espnTableFacade.pitcherTableHeaders$ | async"
+      [dataColumns]="PITCHER_STATS_ROWS"
+      [headers]="PITCHER_STATS_HEADERS"
     ></app-roster>
   </div>
 </div>

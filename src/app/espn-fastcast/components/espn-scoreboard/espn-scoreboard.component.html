@@ -5,7 +5,7 @@
     </p>
     <mat-form-field>
       <mat-select [(value)]="selectedLeagueId" (selectionChange)="onLeaderboardFilterChange($event)">
-        <mat-option *ngFor="let league of fastcastLeagueFacade.prettyLeagueList$ | async" [value]="league.id">{{ league.shortName }} </mat-option>
+        <mat-option *ngFor="let league of fastcastLeagueFacade.prettyLeagueList$ | async" [value]="league">{{ league.shortName }} </mat-option>
       </mat-select>
     </mat-form-field>
   </div>

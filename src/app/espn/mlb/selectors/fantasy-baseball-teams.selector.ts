@@ -1,3 +1,4 @@
+import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { exists } from '@app/@shared/helpers/utils';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
 import { EspnFastcastTeamSelectors } from '@app/espn-fastcast/selectors/espn-fastcast-team.selectors';
@@ -5,15 +6,16 @@ import { Selector } from '@ngxs/store';
 import { AdvStats } from '../class/advStats.class';
 import { MLB_LINEUP, MLB_LINEUP_MAP } from '../consts/lineup.const';
 import { MLB_WEIGHTED_STATS, YearToStatTypePeriod } from '../consts/stats.const';
-import { BaseballPlayer, BaseballPlayerBatterStatsRow } from '../models/baseball-player.model';
+import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
 import { BaseballTeamLive, BaseballTeamMap, BaseballTeamTableRow } from '../models/baseball-team.model';
+import { ChartData } from '../models/chart-data.model';
 import { Stat, StatTypePeriodId } from '../models/mlb-stats.model';
 import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.state';
-import { FantasyBaseballTeamsLiveState } from '../state/fantasy-baseball-team-live.state';
 import { FantasyBaseballTeamState } from '../state/fantasy-baseball-team.state';
+import { FantasyBaseballTeamsLiveSelector } from './fantasy-baseball-teams-live.selector';
 
-export class FantasyBaseballTeamsSelector {
-  static transformToBaseballPlayerBatterStatsRow(p: BaseballPlayer, statPeriod: string, seasonId: string): BaseballPlayerBatterStatsRow {
+export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBaseballTeamState) {
+  static transformToBaseballPlayerBatterStatsRow(p: BaseballPlayer, statPeriod: string, seasonId: string): BaseballPlayerStatsRow {
     const statsEntity = exists(p.stats) ? p.stats[statPeriod] : {};
     const seasonConst = MLB_WEIGHTED_STATS[seasonId];
     const advancedStats = new AdvStats({ seasonConst, statsEntity });
@@ -28,7 +30,11 @@ export class FantasyBaseballTeamsSelector {
       [Stat.LOB_PCT]: advancedStats.leftOnBasePercent,
     });
 
-    const stats = { ...statsEntity, ...adv };
+    const stats = {
+      ...statsEntity,
+      ...adv,
+      [Stat.IP]: statsEntity[Stat.IP] * 0.333,
+    };
     return {
       name: p.name,
       img: p.img,
@@ -50,77 +56,84 @@ export class FantasyBaseballTeamsSelector {
     return players.filter(p => !p.isInjured && MLB_LINEUP_MAP[p.lineupSlotId].bench);
   }
 
-  @Selector([FantasyBaseballTeamState.map])
-  static selectTeamList(teams: BaseballTeamMap): BaseballTeamTableRow[] {
-    return Object.values(teams);
-  }
-
-  @Selector([FantasyBaseballTeamState.map, FantasyBaseballTeamsLiveState.selectEntityById])
-  static selectTeamListLive(teams: BaseballTeamMap, liveTeams: (id: string) => BaseballTeamLive): Partial<BaseballTeamLive[]> {
+  @Selector([FantasyBaseballTeamsSelector.getMap, FantasyBaseballTeamsLiveSelector.getById])
+  static getTeamListLive(teams: BaseballTeamMap, liveTeams: (id: string) => BaseballTeamLive): Partial<BaseballTeamLive[]> {
     return Object.values(teams).map(t => {
       const liveTeam = liveTeams(t.id);
       return { ...t, liveTeam };
     });
   }
 
-  @Selector([FantasyBaseballTeamState.map])
-  static selectTeamById(teams: BaseballTeamMap): (id: string) => BaseballTeamTableRow {
-    return (id: string) => teams[id];
+  @Selector([FantasyBaseballTeamsSelector.getById])
+  static getRosterByTeamId(getTeamById: (id: string) => BaseballTeamTableRow): (id: string) => BaseballPlayer[] {
+    return (id: string) => getTeamById(id).roster;
   }
 
-  @Selector([FantasyBaseballTeamsSelector.selectTeamById])
-  static selectRosterByTeamId(selectTeamById: (id: string) => BaseballTeamTableRow): (id: string) => BaseballPlayer[] {
-    return (id: string) => selectTeamById(id).roster;
-  }
-
-  @Selector([FantasyBaseballTeamsSelector.selectRosterByTeamId])
-  static selectTeamBatters(selectRosterByTeamId: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
+  @Selector([FantasyBaseballTeamsSelector.getRosterByTeamId])
+  static getTeamBatters(selectRosterByTeamId: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
     return (id: string) => selectRosterByTeamId(id).filter(p => !p.isPitcher);
   }
 
-  @Selector([FantasyBaseballTeamsLiveState.selectEntityById])
-  static getLiveTeamBatters(selectLiveTeamById: (id: string) => BaseballTeamLive): (id: string) => BaseballPlayer[] {
-    return (id: string) => selectLiveTeamById(id).roster.filter(p => !p.isPitcher);
+  @Selector([FantasyBaseballTeamsLiveSelector.getById])
+  static getLiveTeamBatters(getLiveTeamById: (id: string) => BaseballTeamLive): (id: string) => BaseballPlayer[] {
+    return (id: string) => getLiveTeamById(id).roster.filter(p => !p.isPitcher);
   }
 
-  @Selector([FantasyBaseballTeamsSelector.selectTeamBatters])
-  static selectTeamStartingBatters(selectTeamBatters: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
-    return (id: string) => FantasyBaseballTeamsSelector.startingPlayers(selectTeamBatters(id));
+  @Selector([FantasyBaseballTeamsSelector.getTeamBatters])
+  static getTeamStartingBatters(getTeamBatters: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
+    return (id: string) => FantasyBaseballTeamsSelector.startingPlayers(getTeamBatters(id));
   }
 
-  @Selector([FantasyBaseballTeamsSelector.selectTeamBatters])
-  static selectTeamBenchBatters(selectTeamBatters: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
-    return (id: string) => FantasyBaseballTeamsSelector.benchPlayers(selectTeamBatters(id));
+  @Selector([FantasyBaseballTeamsSelector.getTeamBatters])
+  static getTeamBenchBatters(getTeamBatters: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
+    return (id: string) => FantasyBaseballTeamsSelector.benchPlayers(getTeamBatters(id));
   }
 
-  @Selector([FantasyBaseballTeamsSelector.selectRosterByTeamId])
-  static selectTeamPitchers(selectRosterByTeamId: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
+  @Selector([FantasyBaseballTeamsSelector.getRosterByTeamId])
+  static getTeamPitchers(selectRosterByTeamId: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
     return (id: string) => selectRosterByTeamId(id).filter(p => p.isPitcher);
   }
 
-  @Selector([FantasyBaseballTeamsSelector.selectTeamPitchers])
-  static selectTeamStartingPitchers(selectTeamPitchers: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
-    return (id: string) => FantasyBaseballTeamsSelector.startingPlayers(selectTeamPitchers(id));
+  @Selector([FantasyBaseballTeamsSelector.getTeamPitchers])
+  static getTeamStartingPitchers(getTeamPitchers: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
+    return (id: string) => FantasyBaseballTeamsSelector.startingPlayers(getTeamPitchers(id));
   }
 
-  @Selector([FantasyBaseballTeamsSelector.selectTeamPitchers])
-  static selectTeamPitchersBench(selectTeamPitchers: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
-    return (id: string) => FantasyBaseballTeamsSelector.benchPlayers(selectTeamPitchers(id));
+  @Selector([FantasyBaseballTeamsSelector.getTeamPitchers])
+  static getTeamPitchersBench(getTeamPitchers: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
+    return (id: string) => FantasyBaseballTeamsSelector.benchPlayers(getTeamPitchers(id));
   }
 
-  @Selector([FantasyBaseballTeamsSelector.selectTeamBatters, FantasyBaseballLeagueState.seasonId])
-  static selectTeamBatterStats(
-    selectTeamBatters: (id: string) => BaseballPlayer[],
+  @Selector([FantasyBaseballTeamsSelector.getTeamBatters, FantasyBaseballLeagueState.seasonId])
+  static getTeamBatterStats(
+    getTeamBatters: (teamId: string) => BaseballPlayer[],
     seasonId: string
-  ): (id: string, statPeriod: string) => BaseballPlayerBatterStatsRow[] {
+  ): (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[] {
     return (id: string, statPeriod: string) => {
-      const players = selectTeamBatters(id);
+      const players = getTeamBatters(id);
       return players.map(p => FantasyBaseballTeamsSelector.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId));
     };
   }
 
+  @Selector([FantasyBaseballTeamsSelector.getTeamBatterStats, FantasyBaseballLeagueState.seasonId])
+  static getBatterStatsChartData(
+    getTeamBatters: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[]
+  ): (teamId: string, statPeriod: string, statFilter: Stat) => ChartData[] {
+    return (teamId: string, statPeriod: string, statFilter: Stat) => {
+      const batters = getTeamBatters(teamId, statPeriod);
+      return batters
+        .map(p => {
+          return {
+            data: exists(p.stats) ? p.stats[statFilter] : 0,
+            label: p.name,
+          };
+        })
+        .sort((a, b) => b.data - a.data);
+    };
+  }
+
   @Selector([FantasyBaseballTeamsSelector.getLiveTeamBatters, EspnFastcastTeamSelectors.getById])
-  static selectLiveTeamBatterStats(
+  static getLiveTeamBatterStats(
     getLiveTeamBatters: (id: string) => BaseballPlayer[],
     selectFastcastTeamById: (id: string) => FastcastEventTeam | null
   ) {
@@ -148,14 +161,31 @@ export class FantasyBaseballTeamsSelector {
     };
   }
 
-  @Selector([FantasyBaseballTeamsSelector.selectTeamPitchers, FantasyBaseballLeagueState.seasonId])
-  static selectTeamPitcherStats(
-    selectTeamPitchers: (id: string) => BaseballPlayer[],
+  @Selector([FantasyBaseballTeamsSelector.getTeamPitchers, FantasyBaseballLeagueState.seasonId])
+  static getTeamPitcherStats(
+    getTeamPitchers: (id: string) => BaseballPlayer[],
     seasonId: string
-  ): (id: string, statPeriod: string) => BaseballPlayerBatterStatsRow[] {
+  ): (id: string, statPeriod: string) => BaseballPlayerStatsRow[] {
     return (id: string, statPeriod: string) => {
-      const players = selectTeamPitchers(id);
+      const players = getTeamPitchers(id);
       return players.map(p => FantasyBaseballTeamsSelector.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId));
+    };
+  }
+
+  @Selector([FantasyBaseballTeamsSelector.getTeamPitcherStats, FantasyBaseballLeagueState.seasonId])
+  static getPitcherStatsChartData(
+    getTeamPitchers: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[]
+  ): (teamId: string, statPeriod: string, statFilter: Stat) => ChartData[] {
+    return (teamId: string, statPeriod: string, statFilter: Stat) => {
+      const pitchers = getTeamPitchers(teamId, statPeriod);
+      return pitchers
+        .map(p => {
+          return {
+            data: exists(p.stats) ? p.stats[statFilter] : 0,
+            label: p.name,
+          };
+        })
+        .sort((a, b) => b.data - a.data);
     };
   }
 }

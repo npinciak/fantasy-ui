@@ -3,7 +3,6 @@ import { Mock } from '@app/@shared/models/mock.model';
 import { Observable } from 'rxjs';
 import { EspnClientLeague } from '../espn-client.model';
 import { FantasySports } from '../models/espn-endpoint-builder.model';
-import { FeedArticle } from '../models/feed.model';
 import { EspnService, FastcastTransform } from './espn.service';
 
 export class EspnServiceMock implements Mock<EspnService> {
@@ -28,10 +27,6 @@ export class EspnServiceMock implements Mock<EspnService> {
   }
 
   espnFantasyFreeAgentsBySport(sport: FantasySports, leagueId: number, scoringPeriod: number, headers: HttpHeaders): Observable<any> {
-    throw new Error('Method not implemented.');
-  }
-
-  espnOneFeed(offset?: number, limit?: number): Observable<FeedArticle[]> {
     throw new Error('Method not implemented.');
   }
 }

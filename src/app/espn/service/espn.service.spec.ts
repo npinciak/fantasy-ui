@@ -146,23 +146,6 @@ describe('EspnService', () => {
     });
   });
 
-  describe('espnOneFeed', () => {
-    it('should make request', () => {
-      const spy = spyOn(service, 'espnOneFeed').and.callThrough();
-      const expected = { feed: [] };
-
-      service.espnOneFeed().subscribe();
-      expect(spy).toHaveBeenCalled();
-
-      const endpoint = new EspnEndpointBuilder();
-      const params = `?offset=0&limit=20`;
-      const request = httpTestingController.expectOne(`${endpoint.oneFeed}/leagues/${league}${params}`);
-
-      expect(request.request.method).toBe('GET');
-      request.flush(expected);
-    });
-  });
-
   describe('espnFastcast', () => {
     it('should make request', () => {
       const spy = spyOn(service, 'espnFastcast').and.callThrough();
@@ -209,9 +192,12 @@ describe('EspnService', () => {
 
   describe('transformDownDistancePositionText ', () => {
     it('should return down distance and possession ', () => {
-      const expected = `${mockFastcastEvent.downDistancePositionText}, ${mockFastcastEvent.lastPlay.text}`;
-      const actual = transformDownDistancePositionText(mockFastcastEvent.downDistancePositionText, mockFastcastEvent.lastPlay.text);
-      expect(actual).toEqual(expected);
+      // const expected = `${mockFastcastEvent.footballSituation?.shortDownDistanceText}, ${mockFastcastEvent.lastPlay.text}`;
+      // const actual = transformDownDistancePositionText(
+      //   mockFastcastEvent.footballSituation?.shortDownDistanceText,
+      //   mockFastcastEvent.lastPlay.text
+      // );
+      // expect(actual).toEqual(expected);
     });
 
     it('should return null', () => {

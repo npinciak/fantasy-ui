@@ -17,6 +17,6 @@ export class DailyFantasySlateAttrFacade {
   }
 
   fetchSlateAttr(sport: string, site: string, slateId: string): void {
-    this.store.dispatch(new FetchSlateAttr({ sport, site, slateId }));
+    this.store.dispatch(new FetchSlateAttr({ sport, site, slate: slateId }));
   }
 }

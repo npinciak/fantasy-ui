@@ -29,8 +29,8 @@ export class EspnFastcastEventFacade {
     return this.fastcastFilteredEventsSidebar$.next(events);
   }
 
-  fastcastLeagueChangeLeaderboard(event: MatSelectChange): void {
-    const events = this.fastcastEventsByLeagueId(event.value);
+  fastcastLeagueChangeLeaderboard(id: string): void {
+    const events = this.fastcastEventsByLeagueId(id);
     return this.fastcastFilteredEventsLeaderboard$.next(events);
   }
 

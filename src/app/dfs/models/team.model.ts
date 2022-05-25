@@ -5,7 +5,7 @@ import { Vegas } from './daily-fantasy-client.model';
  */
 interface TeamProperties {
   id: string;
-  rgId: string | null;
+  rgId: string ;
   name: string | null;
   shortName: string | null;
 }

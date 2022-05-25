@@ -7,6 +7,9 @@ import { MOCK_BASEBALL_TEAM_1, MOCK_BASEBALL_TEAM_LIVE } from '../models/basebal
 import { MlbService } from './mlb.service';
 
 export class MlbServiceMock implements Mock<MlbService> {
+  baseballPlayerNews(payload: { lookbackDays: string; playerId: string }): Observable<unknown> {
+    throw new Error('Method not implemented.');
+  }
   baseballLeague(leagueId: number): Observable<{
     scoringPeriodId: string;
     teams: BaseballTeam[];
@@ -25,9 +28,5 @@ export class MlbServiceMock implements Mock<MlbService> {
 
   baseballFreeAgents(payload: { leagueId: number; scoringPeriodId: number }): Observable<BaseballPlayer[]> {
     return of([MOCK_BASEBALL_FREEAGENT_1]);
-  }
-
-  baseballPlayerNews(payload: { lookbackDays: string; playerId: string }): Observable<unknown> {
-    return of();
   }
 }

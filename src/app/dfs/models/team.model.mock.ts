@@ -16,7 +16,7 @@ export const MOCK_DFS_TEAM_2: Team = {
 };
 
 export const MOCK_DFS_TEAM_LIST = [MOCK_DFS_TEAM_1, MOCK_DFS_TEAM_2];
-export const MOCK_DFS_TEAM_MAP = { [MOCK_DFS_TEAM_1.rgId]: MOCK_DFS_TEAM_1, [MOCK_DFS_TEAM_2.rgId]: MOCK_DFS_TEAM_2 };
+export const MOCK_DFS_TEAM_MAP = { [MOCK_DFS_TEAM_1.id]: MOCK_DFS_TEAM_1, [MOCK_DFS_TEAM_2.id]: MOCK_DFS_TEAM_2 };
 
 export const MOCK_DFS_TEAM_1_VEGAS = {
   vegas: {

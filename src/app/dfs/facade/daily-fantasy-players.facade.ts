@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { FetchPlayers } from '../actions/daily-fantasy-players.actions';
 import { PlayerTableData } from '../models/player.model';
 import { DailyFantasyPlayersSelectors } from '../selectors/daily-fantasy-players.selectors';
-import { FetchPlayers } from '../state/daily-fantasy-players.state';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class DailyFantasyPlayersFacade {
 
   constructor(private store: Store) {}
 
-  fetchPlayers(slatePath: string): Observable<unknown> {
-    return this.store.dispatch(new FetchPlayers({ slatePath }));
+  fetchPlayers(slatePath: string): void {
+    this.store.dispatch(new FetchPlayers({ slatePath }));
   }
 }

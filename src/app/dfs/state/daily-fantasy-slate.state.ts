@@ -1,52 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { SlateMasterMap } from '../models/daily-fantasy-client.model';
+import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
+import { GenericState } from '@app/@shared/generic-state/generic.state';
+import { Action, State, StateContext } from '@ngxs/store';
+import { FetchSlates, PatchSlates } from '../actions/daily-fantasy-slates.actions';
+import { SiteSlateEntity } from '../models/daily-fantasy-client.model';
 import { SlateService } from '../service/slate.service';
 
-export class FetchSlates {
-  public static readonly type = `[dailyFantasySlate] FetchSlates`;
-  constructor(public payload: { site: string; sport: string }) {}
-}
-
-export class DailyFantasySlateStateModel {
-  map: SlateMasterMap;
-  site: string | null;
-}
-
-const defaults = {
-  map: {
-    draftkings: {},
-    fanduel: {},
-    yahoo: {},
-    superdraft: {},
-  },
-  site: null,
-};
-
-@State<DailyFantasySlateStateModel>({
-  name: 'dailyFantasySlate',
-  defaults,
-})
+@State({ name: 'dailyFantasySlates' })
 @Injectable()
-export class DailyFantasySlateState {
-  constructor(private slateService: SlateService) {}
-
-  @Selector()
-  static slateMap(state: DailyFantasySlateStateModel): SlateMasterMap {
-    return state.map;
-  }
-
-  @Selector()
-  static site(state: DailyFantasySlateStateModel): string | null {
-    return state.site;
+export class DailyFantasySlateState extends GenericState({ idProperty: 'importId', patchAction: PatchSlates }) {
+  constructor(private slateService: SlateService) {
+    super();
   }
 
   @Action(FetchSlates)
-  async fetchSlates({ patchState }: StateContext<DailyFantasySlateStateModel>, { payload: { site, sport } }: FetchSlates): Promise<void> {
+  async fetchSlates(
+    { dispatch }: StateContext<GenericStateModel<SiteSlateEntity>>,
+    { payload: { site, sport } }: FetchSlates
+  ): Promise<void> {
     const map = await this.slateService.slatesByDate({ sport }).toPromise();
 
-    // const map: SlateMasterMap = res[site];
+    const slates = Object.values(map[site]) as SiteSlateEntity[];
 
-    patchState({ map, site });
+    dispatch([new PatchSlates(slates)]);
   }
 }

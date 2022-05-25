@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { EspnFantasyBaseState } from '@app/espn/state/espn-fantasy-base.state';
+import { GenericState } from '@app/@shared/generic-state/generic.state';
+import { State } from '@ngxs/store';
 import { BaseballTeamLive } from '../models/baseball-team.model';
 
-export class SetEspnFantasyLeagueTeamsLive {
-  static readonly type = '[fantasyBaseballTeamsLive] SetEspnFantasyLeagueTeamsLive';
-  constructor(public payload: { teams: BaseballTeamLive[] }) {}
+export class PatchEspnFantasyLeagueTeamsLive {
+  static readonly type = '[fantasyBaseballTeamsLive] PatchEspnFantasyLeagueTeamsLive';
+  constructor(public payload: BaseballTeamLive[]) {}
 }
 
+@State({ name: 'fantasyBaseballTeamsLive' })
 @Injectable()
-export class FantasyBaseballTeamsLiveState extends EspnFantasyBaseState<BaseballTeamLive>({
-  name: 'fantasyBaseballTeamsLive',
-  setEntities: SetEspnFantasyLeagueTeamsLive,
-}) {}
+export class FantasyBaseballTeamsLiveState extends GenericState({ idProperty: 'id', patchAction: PatchEspnFantasyLeagueTeamsLive }) {}

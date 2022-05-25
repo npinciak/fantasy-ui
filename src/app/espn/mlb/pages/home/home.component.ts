@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UrlFragments } from '@app/@shared/url-builder';
-import { EspnTableFacade } from '@app/espn/facade/espn-table.facade';
+import { LEAGUE_STANDINGS_HEADERS, LEAGUE_STANDINGS_ROWS } from '../../consts/tables.const';
 import { FantasyBaseballFreeAgentsFacade } from '../../facade/fantasy-baseball-free-agents.facade';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
@@ -11,8 +11,10 @@ import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.fa
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
+  readonly LEAGUE_STANDINGS_ROWS = LEAGUE_STANDINGS_ROWS;
+  readonly LEAGUE_STANDINGS_HEADERS = LEAGUE_STANDINGS_HEADERS;
+
   constructor(
-    readonly espnTableFacade: EspnTableFacade,
     readonly fantasyBaseballFreeAgentsFacade: FantasyBaseballFreeAgentsFacade,
     readonly fantasyBaseballLeagueFacade: FantasyBaseballLeagueFacade,
     readonly fantasyBaseballTeamFacade: FantasyBaseballTeamFacade

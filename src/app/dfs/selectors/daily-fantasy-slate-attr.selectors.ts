@@ -1,21 +1,29 @@
 import { Selector } from '@ngxs/store';
+import { PlayerSlateAttr } from '../models/player-slate-attr.model';
 import { Team } from '../models/team.model';
 import { SlateTeam, SlateTeamMap } from '../service/slate.service';
-import { DailyFantasySlateAttrState } from '../state/daily-fantasy-slate-attr.state';
-import { DailyFantasyTeamsSelectors } from './daily-fantasy-team.selectors';
 
 export class DailyFantasySlateAttrSelectors {
-  @Selector([DailyFantasySlateAttrState.playerMap])
-  static selectPlayerById(map: Record<string, any>): (id: string) => unknown {
+  /**
+   * @deprecated
+   */
+  @Selector()
+  static selectPlayerById(map: Record<string, PlayerSlateAttr>): (id: string) => PlayerSlateAttr {
     return (id: string) => map[id];
   }
 
-  @Selector([DailyFantasySlateAttrState.teamMap])
+  /**
+   * @deprecated
+   */
+  @Selector()
   static selectTeamById(map: SlateTeamMap): (id: string) => SlateTeam {
     return (id: string) => map[id];
   }
 
-  @Selector([DailyFantasySlateAttrState.teamMap, DailyFantasyTeamsSelectors.selectTeamById])
+  /**
+   * @deprecated
+   */
+  @Selector([])
   static selectTeamList(map: SlateTeamMap, selectTeamById: (id: string) => Team): TeamList[] {
     return Object.values(map).map(t => ({
       ...t,

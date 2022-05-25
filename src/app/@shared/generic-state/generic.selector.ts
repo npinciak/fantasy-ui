@@ -1,5 +1,6 @@
 import { Selector } from '@ngxs/store';
-import { GenericStateClass, GenericStateModel } from './generic.state';
+import { GenericStateModel } from './generic.model';
+import { GenericStateClass } from './generic.state';
 
 export interface GenericSelectorClass<T> {
   new (...args: any[]): any;
