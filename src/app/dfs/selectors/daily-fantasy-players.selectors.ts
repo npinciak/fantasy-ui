@@ -1,9 +1,10 @@
+import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { unique } from '@app/@shared/helpers/unique-by';
 import { exists } from '@app/@shared/helpers/utils';
 import { Selector } from '@ngxs/store';
 import { ClientSalaryDiff } from '../models/daily-fantasy-client-slate-attr.model';
 import { PlayerSlateAttr } from '../models/player-slate-attr.model';
-import { Player, PlayerMap } from '../models/player.model';
+import { Player } from '../models/player.model';
 import { Schedule } from '../models/schedule.model';
 import { Team } from '../models/team.model';
 import { GridIronPlayer } from '../nfl/models/nfl-gridIron.model';
@@ -12,47 +13,31 @@ import { NFLDfsPlayerSelectors } from '../nfl/selectors/nfl-dfs-player.selector'
 import { SlateTeam } from '../service/slate.service';
 import { DailyFantasyPlayersState } from '../state/daily-fantasy-players.state';
 import { DailyFantasySlateAttrState } from '../state/daily-fantasy-slate-attr.state';
-import { DailyFantasySlateState } from '../state/daily-fantasy-slate.state';
 import { DailyFantasyScheduleSelectors } from './daily-fantasy-schedule.selectors';
 import { DailyFantasySlateAttrSelectors } from './daily-fantasy-slate-attr.selectors';
 import { DailyFantasyTeamsSelectors } from './daily-fantasy-team.selectors';
 
-export class DailyFantasyPlayersSelectors {
-  @Selector([DailyFantasyPlayersState.getMap])
-  static selectPlayerById(map: PlayerMap): (id: string) => Player {
-    return (id: string) => map[id];
-  }
-
-  @Selector([DailyFantasyPlayersState.getMap, DailyFantasyTeamsSelectors.selectTeamById])
-  static selectPlayerList(map: PlayerMap, selectTeamById: (id: string) => Team): Player[] {
-    return Object.values(map)
-      .filter(p => p.rgTeamId)
-      .map(p => ({
-        ...p,
-        team: exists(p.rgTeamId) ? selectTeamById(p.rgTeamId).shortName : '',
-      }));
-  }
-
-  @Selector([DailyFantasyPlayersSelectors.selectPlayerList])
+export class DailyFantasyPlayersSelectors extends GenericSelector(DailyFantasyPlayersState) {
+  @Selector([DailyFantasyPlayersSelectors.getList])
   static selectPositionsList(players: Player[]): string[] {
     const positions = players.map(p => (exists(p.position) ? p.position : ''));
     return unique(positions);
   }
 
-  @Selector([DailyFantasyPlayersSelectors.selectPlayerList])
+  @Selector([DailyFantasyPlayersSelectors.getList])
   static selectTeamList(players: Player[]): string[] {
     const teams = players.map(p => (exists(p.team) ? p.team : ''));
     return unique(teams);
   }
 
   @Selector([
-    DailyFantasySlateState.site,
+    // DailyFantasySlateState.site,
     DailyFantasySlateAttrState.slate,
-    DailyFantasyPlayersSelectors.selectPlayerList,
+    DailyFantasyPlayersSelectors.getList,
     DailyFantasySlateAttrSelectors.selectTeamById,
-    DailyFantasyTeamsSelectors.selectTeamById,
+    DailyFantasyTeamsSelectors.getById,
     DailyFantasySlateAttrSelectors.selectPlayerById,
-    DailyFantasyScheduleSelectors.selectGameById,
+    DailyFantasyScheduleSelectors.getById,
     NFLDfsPlayerSelectors.getPlayerProfilerSeasonById,
     NFLDfsPlayerSelectors.getGridIronPlayerById,
   ])
@@ -130,11 +115,7 @@ export class DailyFantasyPlayersSelectors {
     //   .sort((a, b) => b.salary - a.salary);
   }
 
-  @Selector([
-    DailyFantasyPlayersSelectors.selectPlayerList,
-    DailyFantasyScheduleSelectors.selectGameById,
-    DailyFantasySlateAttrSelectors.selectPlayerById,
-  ])
+  @Selector([DailyFantasyPlayersSelectors.getList, DailyFantasyScheduleSelectors.getById, DailyFantasySlateAttrSelectors.selectPlayerById])
   static selectNbaPlayerTableRows(
     playerList: Player[],
     selectGameById: (id: string) => Schedule,
@@ -163,7 +144,7 @@ export class DailyFantasyPlayersSelectors {
     // });
   }
 
-  @Selector([DailyFantasyPlayersSelectors.selectPlayerList])
+  @Selector([DailyFantasyPlayersSelectors.getList])
   static selectPlayersEmpty(playerList: Player[]): boolean {
     return playerList.length === 0;
   }

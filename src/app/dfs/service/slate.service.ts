@@ -107,7 +107,7 @@ export class SlateService {
     }
 
     return Object.entries(teams).map(([id, team]) => {
-      const obj = {};
+      const obj = {} as SlateTeam;
       Object.assign(obj, { id });
       switch (sport) {
         case 'mlb':
@@ -202,13 +202,13 @@ export class SlateService {
     return this.apiService.get<SlateMasterMap>(endpoint.slateMaster);
   }
 
-  getGameAttrBySlateId(request: { sport: string; site: string; slateId: string }): Observable<SlateAttributes> {
+  getGameAttrBySlateId(request: { sport: string; site: string; slate: string }): Observable<SlateAttributes> {
     const endpoint = new DailyFantasyEndpointBuilder(request.sport);
 
     let params = new HttpParams();
     params = params.append('date', currentDate('-'));
     params = params.append('site', request.site);
-    params = params.append('slate_id', request.slateId);
+    params = params.append('slate_id', request.slate);
     return this.apiService.get<ClientSlateAttributes>(endpoint.slateAttr, { params }).pipe(
       map(res => ({
         teams: SlateService.transformTeamSlateAttributes(res.teams, request.sport, request.site),
@@ -228,7 +228,7 @@ export type SlateTeam = Pick<Team, 'id'> & { vegas: Vegas } & Partial<{
 export type SlateTeamMap = Record<string, SlateTeam>;
 
 type SlateAttributes = {
-  teams: any; //SlateTeam[] | null;
+  teams: SlateTeam[];
   players: PlayerSlateAttr[];
   statGroups: PlayerProfilerSeasonMap | null | undefined;
 };

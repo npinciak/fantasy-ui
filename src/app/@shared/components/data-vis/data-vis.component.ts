@@ -1,9 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { insertionSortDesc } from '@app/@shared/helpers/algos';
-import { exists } from '@app/@shared/helpers/utils';
 import { MLB_STATS_MAP } from '@app/espn/mlb/consts/stats.const';
+import { ChartData } from '@app/espn/mlb/models/chart-data.model';
 import { Stat } from '@app/espn/mlb/models/mlb-stats.model';
-import { FreeAgentStats } from '@app/espn/mlb/selectors/fantasy-baseball-free-agents.selector';
 
 @Component({
   selector: `app-data-vis`,
@@ -12,12 +10,12 @@ import { FreeAgentStats } from '@app/espn/mlb/selectors/fantasy-baseball-free-ag
 })
 export class DataVisComponent implements OnInit, OnChanges {
   @Input() title = '';
-  @Input() chartData: any[];
+  @Input() chartData: ChartData[];
   @Input() statFilter: Stat = Stat.AB;
   @Input() chartType = 'bar';
 
   public graph: ChartNew<number>;
-  public test: any;
+  public test: { x: string[]; y: number[]; type: string }[];
   readonly MLB_STAT_MAP = MLB_STATS_MAP;
 
   constructor() {
@@ -52,33 +50,23 @@ export class DataVisComponent implements OnInit, OnChanges {
     }
   }
 
-  private updateChart(data: FreeAgentStats[], statFilter: Stat) {
-    const labels = data.map(p => p.name);
-    const chartData = data.map(p => {
-      if (exists(p.stats)) {
-        return p.stats[statFilter];
-      }
-      return 0;
-    });
-    // .sort((a, b) => b - a);
-
-    this.graph.labels = labels;
-    this.graph.chartData = insertionSortDesc(chartData, d => d);
+  private updateChart(data: ChartData[], statFilter: Stat) {
     this.test = [
       {
-        x: labels,
-        y: chartData,
+        x: data.map(d => d.label),
+        y: data.map(d => d.data),
         type: 'bar',
       },
     ];
 
     switch (statFilter) {
       case Stat.wOBA:
-        // {
-        //   x: labels,
-        //   y: new Array(chartData.length).fill(wOBAThreshold[StatThreshold.excellent]),
-        //   type: 'line',
-        // },
+        // this.test.push(
+        //   {
+        //     x: labels,
+        //     y: new Array(data.length).fill(wOBAThreshold[StatThreshold.excellent]),
+        //     type: 'line',
+        //   }
         // {
         //   x: labels,
         //   y: new Array(chartData.length).fill(wOBAThreshold[StatThreshold.aboveAvg]),
@@ -88,8 +76,8 @@ export class DataVisComponent implements OnInit, OnChanges {
         //   x: labels,
         //   y: new Array(chartData.length).fill(wOBAThreshold[StatThreshold.avg]),
         //   type: 'line',
-        // },
-
+        // }
+        // );
         break;
 
       default:

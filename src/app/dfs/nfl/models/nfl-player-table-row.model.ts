@@ -10,27 +10,42 @@ export interface NFLPlayerTableRowProperties extends PlayerTableData {
 
 export type NFLPlayerTableRow = PlayerTableData & NFLPlayerTableRowProperties;
 
-export interface PlayerTableRowPlayerAdvanced {
-  fptsPerGame: number;
-  targetShare: number;
-  rzTargetShare: number;
-  dominatorRating: number;
-  aDOT: number;
-  avgTargetDist: number;
-  catchableTargetRate: number;
-  gameScript: number;
-  goalLineCarriesGame: number;
-  epa: number;
-  epaPass: number;
-  epaRun: number;
-}
+type PlayerTableRowPlayerAdvancedProperties =
+  | 'fptsPerGame'
+  | 'targetShare'
+  | 'rzTargetShare'
+  | 'dominatorRating'
+  | 'aDOT'
+  | 'avgTargetDist'
+  | 'catchableTargetRate'
+  | 'gameScript'
+  | 'goalLineCarriesGame'
+  | 'epa'
+  | 'epaPass'
+  | 'epaRun';
 
-export interface PlayerTableRowPlayerProjection {
-  targets: number;
-  fpts: number;
-  ceil: number;
-  floor: number;
-}
+export type PlayerTableRowPlayerAdvanced = { [prop in PlayerTableRowPlayerAdvancedProperties]: number };
+
+type PlayerTableRowPlayerProjectionProperties = 'targets' | 'fpts' | 'ceil' | 'floor';
+
+export type PlayerTableRowPlayerProjection = { [prop in PlayerTableRowPlayerProjectionProperties]: number };
+
+type PlayerTableRowFptsAllowedRkProperties =
+  | 'allowedToRawQb'
+  | 'allowedToAdjQb'
+  | 'allowedToDifQb'
+  | 'allowedToRawrb'
+  | 'allowedToAdjRb'
+  | 'allowedToDifRb'
+  | 'allowedToRawWr'
+  | 'allowedToAdjWr'
+  | 'allowedToDifWr'
+  | 'allowedToRawTe'
+  | 'allowedToAdjTe'
+  | 'allowedToDifTe';
+
+export type PlayerTableRowFptsAllowedRk = { [prop in PlayerTableRowFptsAllowedRkProperties]: number };
+
 export interface PlayerTableRowOpponent {
   info: PlayerTableRowInfo;
   passDef: number;
@@ -43,18 +58,4 @@ export interface PlayerTableRowInfo {
   rg_id: string;
   name: string;
   isHome: boolean;
-}
-export interface PlayerTableRowFptsAllowedRk {
-  allowedToRawQb: number;
-  allowedToAdjQb: number;
-  allowedToDifQb: number;
-  allowedToRawrb: number;
-  allowedToAdjRb: number;
-  allowedToDifRb: number;
-  allowedToRawWr: number;
-  allowedToAdjWr: number;
-  allowedToDifWr: number;
-  allowedToRawTe: number;
-  allowedToAdjTe: number;
-  allowedToDifTe: number;
 }

@@ -4,7 +4,7 @@ import { ShellFacade } from '@app/@core/shell/facade/shell.facade';
 import { exists } from '@app/@shared/helpers/utils';
 import { UrlQueryParams } from '@app/@shared/url-builder';
 import { Store } from '@ngxs/store';
-import { FetchSlates } from '../state/daily-fantasy-slate.state';
+import { FetchSlates } from '../actions/daily-fantasy-slates.actions';
 
 @Injectable({
   providedIn: 'root',
