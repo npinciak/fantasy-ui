@@ -11,7 +11,7 @@ export interface GenericStateClass<T> {
 
 export type PropertyOfType<T, U> = { [K in keyof T]: T[K] extends U ? K : never }[keyof T];
 
-export function GenericState<EntityType, IdProperty extends PropertyOfType<EntityType, string>>({
+export function GenericState<EntityType, IdProperty extends PropertyOfType<EntityType, string | number>>({
   idProperty,
   patchAction,
 }: {

@@ -15,11 +15,11 @@ export interface BaseballPlayerProperties {
   lineupSlot: string;
 }
 
-export type BaseballPlayer = Player & BaseballPlayerProperties & Pick<EspnClientPlayerInfo, 'starterStatusByProGame'>;
+export type BaseballPlayer = Player & BaseballPlayerProperties & Pick<EspnClientPlayerInfo, 'starterStatusByProGame' | 'lastNewsDate'>;
 export type BaseballPlayerMap = Record<string, BaseballPlayer>;
 
 export interface BaseballPlayerStatsRow {
-  name: string | null;
+  name: string;
   img: string | null;
   team: string | null;
   position: string | null;

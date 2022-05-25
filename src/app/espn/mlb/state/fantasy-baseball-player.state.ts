@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { GenericState } from '@app/@shared/generic-state/generic.state';
+import { EspnClientPlayerNewsFeedEntity } from '@app/espn/espn-client.model';
+import { Action, State, StateContext } from '@ngxs/store';
 import { MlbService } from '../services/mlb.service';
 
 export class FetchBaseballPlayerNews {
@@ -7,47 +9,29 @@ export class FetchBaseballPlayerNews {
   constructor(public payload: { lookbackDays: string; playerId: string }) {}
 }
 
+export class PatchBaseballPlayerNews {
+  static readonly type = `[fantasyBaseballPlayer] PatchBaseballPlayerNews`;
+  constructor(public payload: EspnClientPlayerNewsFeedEntity[]) {}
+}
+
 export interface FantasyBaseballPlayerStateModel {
   isLoading: boolean;
   map: Record<string, any>;
 }
 
-@State<FantasyBaseballPlayerStateModel>({
-  name: 'fantasyBaseballPlayer',
-  defaults: {
-    isLoading: true,
-    map: {},
-  },
-})
+@State({ name: 'fantasyBaseballPlayer' })
 @Injectable()
-export class FantasyBaseballPlayerState {
-  constructor(private mlbService: MlbService) {}
-
-  @Selector([FantasyBaseballPlayerState])
-  static getState(state: FantasyBaseballPlayerStateModel) {
-    return state;
-  }
-
-  @Selector([FantasyBaseballPlayerState.getState])
-  static isLoading(state: FantasyBaseballPlayerStateModel) {
-    return state.isLoading;
-  }
-
-  @Selector([FantasyBaseballPlayerState.getState])
-  static scoringPeriod(state: FantasyBaseballPlayerStateModel) {
-    return state;
+export class FantasyBaseballPlayerState extends GenericState({ idProperty: 'id', patchAction: PatchBaseballPlayerNews }) {
+  constructor(private mlbService: MlbService) {
+    super();
   }
 
   @Action(FetchBaseballPlayerNews)
   async fetchBaseballPlayerNews(
-    { getState, patchState, dispatch }: StateContext<FantasyBaseballPlayerStateModel>,
+    { dispatch }: StateContext<FantasyBaseballPlayerStateModel>,
     { payload: { lookbackDays, playerId } }: FetchBaseballPlayerNews
   ): Promise<void> {
-    const news = await this.mlbService.baseballPlayerNews({ lookbackDays, playerId }).toPromise();
-
-    console.log(news);
-    // const { scoringPeriodId, teams } = await this.mlbService.espnFantasyPlayerNewsBySport;
-    // dispatch([new PatchFantasyBaseballTeams({ teams }), new FetchFantasyBaseballFreeAgents({ PlayerId, scoringPeriodId })]);
-    // patchState({ scoringPeriodId });
+    // const news = await this.mlbService.baseballPlayerNews({ lookbackDays, playerId }).toPromise();
+    // dispatch([new PatchBaseballPlayerNews(news)]);
   }
 }

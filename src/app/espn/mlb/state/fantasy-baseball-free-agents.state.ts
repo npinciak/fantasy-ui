@@ -8,13 +8,11 @@ import { MlbService } from '../services/mlb.service';
 
 @State({ name: 'fantasyBaseballFreeAgents' })
 @Injectable()
-export class FantasyBaseballFreeAgentsState extends GenericState({
-  idProperty: 'id',
-  patchAction: PatchFantasyBaseballFreeAgents,
-}) {
+export class FantasyBaseballFreeAgentsState extends GenericState({ idProperty: 'id', patchAction: PatchFantasyBaseballFreeAgents }) {
   constructor(private mlbService: MlbService) {
     super();
   }
+
   @Action(FetchFantasyBaseballFreeAgents)
   async fetchFantasyBaseballFreeAgents(
     { dispatch }: StateContext<GenericStateModel<BaseballPlayer>>,

@@ -3,7 +3,7 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { PatchFantasyBaseballTeams } from '../actions/fantasy-baseball-team.actions';
 import { FetchBaseballLeague, PatchScoringPeriodId, PatchSeasonId } from '../actions/mlb.actions';
 import { MlbService } from '../services/mlb.service';
-import { SetEspnFantasyLeagueTeamsLive } from './fantasy-baseball-team-live.state';
+import { PatchEspnFantasyLeagueTeamsLive } from './fantasy-baseball-team-live.state';
 
 export interface FantasyBaseballLeagueStateModel {
   isLoading: boolean;
@@ -57,7 +57,7 @@ export class FantasyBaseballLeagueState {
     const { scoringPeriodId, seasonId, teams, teamsLive } = await this.mlbService.baseballLeague(leagueId).toPromise();
 
     dispatch([
-      new SetEspnFantasyLeagueTeamsLive({ teams: teamsLive }),
+      new PatchEspnFantasyLeagueTeamsLive(teamsLive),
       new PatchSeasonId({ seasonId }),
       new PatchScoringPeriodId({ scoringPeriodId }),
       new PatchFantasyBaseballTeams(teams),

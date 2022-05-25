@@ -5,7 +5,4 @@ import { PatchFantasyBaseballTeams } from '../actions/fantasy-baseball-team.acti
 
 @State({ name: 'fantasyBaseballTeams' })
 @Injectable()
-export class FantasyBaseballTeamState extends GenericState({
-  idProperty: 'id',
-  patchAction: PatchFantasyBaseballTeams,
-}) {}
+export class FantasyBaseballTeamState extends GenericState({ idProperty: 'id', patchAction: PatchFantasyBaseballTeams }) {}

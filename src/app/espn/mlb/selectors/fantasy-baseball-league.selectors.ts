@@ -3,15 +3,15 @@ import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@ngxs/store';
 import { LeagueStorageEntity } from '../models/baseball-league-storage.model';
 import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
-import { FantasyBaseballTeamsLiveState } from '../state/fantasy-baseball-team-live.state';
+import { FantasyBaseballTeamsLiveSelector } from './fantasy-baseball-teams-live.selector';
 import { FantasyBaseballTeamsSelector } from './fantasy-baseball-teams.selector';
 
 export class FantasyBaseballLeagueSelectors {
-  @Selector([FantasyBaseballTeamsSelector.getList, FantasyBaseballTeamsLiveState.selectEntityById])
-  static standings(teamList: BaseballTeam[], selectEntityById: (id: string) => BaseballTeamLive): BaseballTeam[] {
+  @Selector([FantasyBaseballTeamsSelector.getList, FantasyBaseballTeamsLiveSelector.getById])
+  static standings(teamList: BaseballTeam[], getById: (id: string) => BaseballTeamLive): BaseballTeam[] {
     return teamList
       .map(t => {
-        const liveTeam = selectEntityById(t.id);
+        const liveTeam = getById(t.id);
         return {
           ...t,
           liveScore: liveTeam.liveScore,
