@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
-import { EspnTableFacade } from '@app/espn/facade/espn-table.facade';
 import { MLB_STATS_MAP, STAT_PERIOD_FILTER_OPTIONS } from '../../consts/stats.const';
+import { BATTER_STATS_HEADERS, BATTER_STATS_ROWS, PITCHER_STATS_HEADERS, PITCHER_STATS_ROWS } from '../../consts/tables.const';
 import { FantasyBaseballFreeAgentsFacade } from '../../facade/fantasy-baseball-free-agents.facade';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
@@ -19,6 +19,11 @@ export class FreeAgentsComponent implements OnInit {
   readonly statList = StatList;
   readonly MLB_STAT_MAP = MLB_STATS_MAP;
 
+  readonly BATTER_STATS_ROWS = BATTER_STATS_ROWS;
+  readonly BATTER_STATS_HEADERS = BATTER_STATS_HEADERS;
+  readonly PITCHER_STATS_ROWS = PITCHER_STATS_ROWS;
+  readonly PITCHER_STATS_HEADERS = PITCHER_STATS_HEADERS;
+
   teamDynamicScatterChartData: any;
   freeAgentDynamicScatterChartData: any;
   freeAgentDynamicLineChartData: any;
@@ -29,7 +34,6 @@ export class FreeAgentsComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    readonly espnTableFacade: EspnTableFacade,
     readonly fantasyBaseballFreeAgentsFacade: FantasyBaseballFreeAgentsFacade,
     readonly fantasyBaseballLeagueFacade: FantasyBaseballLeagueFacade,
     readonly fantasyBaseballTeamFacade: FantasyBaseballTeamFacade

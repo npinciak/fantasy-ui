@@ -5,10 +5,6 @@
   <div fxFlex="70%" fxFlex.sm="100%">
     <a mat-flat-button color="primary" [routerLink]="freeAgentsRoute">Free Agents</a>
     <div style="margin: 10px 0"></div>
-    <app-standings
-      [dataColumns]="espnTableFacade.standingsTableRow$ | async"
-      [headers]="espnTableFacade.standingsTableHeaders$ | async"
-      [teams]="fantasyBaseballTeamFacade.teamList$ | async"
-    ></app-standings>
+    <app-standings [data]="fantasyBaseballTeamFacade.teamList$ | async" [rows]="LEAGUE_STANDINGS_ROWS" [headers]="LEAGUE_STANDINGS_HEADERS"></app-standings>
   </div>
 </div>
