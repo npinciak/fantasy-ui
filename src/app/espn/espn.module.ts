@@ -4,6 +4,7 @@ import { FlexLayoutModule, GridModule } from '@angular/flex-layout';
 import { SharedModule } from '@app/@shared/shared.module';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
+import { EspnFastcastEventToggleState } from '../espn-fastcast/state/espn-fastcast-event-toggle.state';
 import { AddLeagueFormComponent } from './components/add-league-form/add-league-form.component';
 import { EspnListTeamComponent } from './components/espn-list-team/espn-list-team.component';
 import { EspnRoutingModule } from './espn-routing.module';
@@ -15,7 +16,6 @@ import { PlayerInfoColComponent } from './mlb/components/roster/player-info-col/
 import { PlayerRatingColComponent } from './mlb/components/roster/player-rating-col/player-rating-col.component';
 import { PlayerTrendingColComponent } from './mlb/components/roster/player-trending-col/player-trending-col.component';
 import { RosterComponent } from './mlb/components/roster/roster.component';
-import { RankingColComponent } from './mlb/components/standings/ranking-col/ranking-col.component';
 import { StandingsComponent } from './mlb/components/standings/standings.component';
 import { TeamInfoColComponent } from './mlb/components/standings/team-info-col/team-info-col.component';
 import { FreeAgentsComponent } from './mlb/pages/free-agents/free-agents.component';
@@ -31,8 +31,6 @@ import { FantasyFootballLeagueState } from './nfl/state/fantasy-football-league.
 import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-schedule.state';
 import { FantasyFootballTeamsState } from './nfl/state/fantasy-football-teams.state';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
-import { EspnFastcastEventToggleState } from '../espn-fastcast/state/espn-fastcast-event-toggle.state';
-import { EspnFeedState } from './state/espn-feed.state';
 
 const declarations = [
   EspnHomeComponent,
@@ -46,7 +44,6 @@ const declarations = [
   PlayerTrendingColComponent,
   PlayerRatingColComponent,
   TeamInfoColComponent,
-  RankingColComponent,
   LeagueScoreboardComponent,
   LineupCardComponent,
   LineupCardPlayerComponent,
@@ -64,7 +61,6 @@ const states = [
   FantasyBaseballTeamsLiveState,
   FantasyBaseballFreeAgentsState,
   FantasyBaseballPlayerState,
-  EspnFeedState,
   EspnFastcastEventToggleState,
 ];
 

@@ -2,12 +2,14 @@
   <mat-card-content>
     <app-scrollable-table>
       <table mat-table [dataSource]="dataSource" matSortDirection="asc" matSort matSortDisableClear>
-        <ng-container *ngFor="let col of dataColumns">
+        <ng-container *ngFor="let col of rows">
           <ng-container [matColumnDef]="col?.columnDef">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ col?.headerLabel }}</th>
             <td mat-cell *matCellDef="let data">
               <ng-container [ngSwitch]="col.columnDef">
-                <ng-template [ngSwitchCase]="'name'"> {{ col?.cellData(data) }} </ng-template>
+                <ng-template [ngSwitchCase]="'name'">
+                  <app-team-info-col [team]="data"></app-team-info-col>
+                </ng-template>
                 <ng-template [ngSwitchDefault]>
                   {{ col.dataType === TableColumnDataType.number ? (col?.cellData(data) | mlbStat: 'number' | number: '1.0-3') : col?.cellData(data) }}
                 </ng-template>

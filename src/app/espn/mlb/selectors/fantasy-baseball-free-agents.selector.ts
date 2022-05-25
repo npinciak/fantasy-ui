@@ -1,100 +1,58 @@
+import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { exists } from '@app/@shared/helpers/utils';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { EspnClientPlayerStatsEntity } from '@app/espn/espn-client.model';
 import { Selector } from '@ngxs/store';
-import { AdvStats } from '../class/advStats.class';
-import { MLB_STATS_KEYS, MLB_STATS_MAP, MLB_WEIGHTED_STATS } from '../consts/stats.const';
-import { BaseballPlayer, BaseballPlayerMap } from '../models/baseball-player.model';
+import { MLB_STATS_KEYS, MLB_STATS_MAP } from '../consts/stats.const';
+import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
+import { ChartData } from '../models/chart-data.model';
 import { Stat } from '../models/mlb-stats.model';
 import { FantasyBaseballFreeAgentsState } from '../state/fantasy-baseball-free-agents.state';
+import { FantasyBaseballTeamsSelector } from './fantasy-baseball-teams.selector';
 
-export class FantasyBaseballFreeAgentsSelector {
-  @Selector([FantasyBaseballFreeAgentsState.map])
-  static selectPlayerList(players: BaseballPlayerMap): BaseballPlayer[] {
-    return Object.values(players);
+export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBaseballFreeAgentsState) {
+  @Selector([FantasyBaseballFreeAgentsSelector.getList])
+  static getFreeAgentBatterList(players: BaseballPlayer[]): BaseballPlayer[] {
+    return players.filter(p => !p.isPitcher);
   }
 
-  @Selector([FantasyBaseballFreeAgentsState.map])
-  static selectPlayerById(players: BaseballPlayerMap): (id: string) => BaseballPlayer {
-    return (id: string) => players[id];
+  @Selector([FantasyBaseballFreeAgentsSelector.getList])
+  static getFreeAgentPitcherList(players: BaseballPlayer[]): BaseballPlayer[] {
+    return players.filter(p => p.isPitcher);
   }
 
-  @Selector([FantasyBaseballFreeAgentsSelector.selectPlayerList])
-  static selectFreeAgentBatterList(players: BaseballPlayer[]): BaseballPlayer[] {
-    return Object.values(players).filter(p => !p.isPitcher);
-  }
-
-  @Selector([FantasyBaseballFreeAgentsSelector.selectPlayerList])
-  static selectFreeAgentPitcherList(players: BaseballPlayer[]): BaseballPlayer[] {
-    return Object.values(players).filter(p => p.isPitcher);
-  }
-
-  @Selector([FantasyBaseballFreeAgentsSelector.selectFreeAgentBatterList])
-  static selectFreeAgentBatterStats(players: BaseballPlayer[]): (statPeriod: string, seasonId: string) => FreeAgentStats[] {
+  @Selector([FantasyBaseballFreeAgentsSelector.getFreeAgentBatterList])
+  static getFreeAgentBatterStats(players: BaseballPlayer[]): (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[] {
     return (statPeriod: string, seasonId: string) => {
-      return players.map(p => {
-        const statsEntity = exists(p.stats) ? p.stats[statPeriod] : {};
-        const seasonConst = MLB_WEIGHTED_STATS[seasonId];
-        const advancedStats = new AdvStats({ seasonConst, statsEntity });
-
-        const adv = {};
-        adv[Stat.fip] = advancedStats.fip;
-        adv[Stat.wOBA] = advancedStats.wOBA;
-        adv[Stat.wRAA] = advancedStats.wRAA;
-        adv[Stat.BABIP] = advancedStats.babip;
-        adv[Stat.ISO] = advancedStats.iso;
-        adv[Stat.LOB_PCT] = advancedStats.leftOnBasePercent;
-
-        const stats = { ...statsEntity, ...adv };
-        return {
-          name: p.name,
-          img: p.img,
-          team: p.team,
-          position: p.position,
-          playerOwnershipChange: p.playerOwnershipChange,
-          playerOwnershipPercentOwned: p.playerOwnershipPercentOwned,
-          stats,
-        };
-      });
+      return players.map(p => FantasyBaseballTeamsSelector.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId));
     };
   }
 
-  @Selector([FantasyBaseballFreeAgentsSelector.selectFreeAgentPitcherList])
-  static selectFreeAgentPitcherStats(players: BaseballPlayer[]): (statPeriod: string, seasonId: string) => FreeAgentStats[] {
+  @Selector([FantasyBaseballFreeAgentsSelector.getFreeAgentPitcherList])
+  static getFreeAgentPitcherStats(players: BaseballPlayer[]): (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[] {
     return (statPeriod: string, seasonId: string) => {
-      return players.map(p => {
-        const statsEntity = exists(p.stats) ? p.stats[statPeriod] : {};
-        const seasonConst = MLB_WEIGHTED_STATS[seasonId];
-        const advancedStats = new AdvStats({ seasonConst, statsEntity });
-
-        const adv = {};
-        adv[Stat.fip] = advancedStats.fip;
-        adv[Stat.wOBA] = advancedStats.wOBA;
-        adv[Stat.wRAA] = advancedStats.wRAA;
-        adv[Stat.BABIP] = advancedStats.wRAA;
-        const stats = { ...statsEntity, ...adv };
-
-        return {
-          name: p.name,
-          img: p.img,
-          team: p.team,
-          position: p.position,
-          playerOwnershipChange: p.playerOwnershipChange,
-          playerOwnershipPercentOwned: p.playerOwnershipPercentOwned,
-          stats,
-        };
-      });
+      return players.map(p => FantasyBaseballTeamsSelector.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId));
     };
   }
 
   @Selector()
   static selectStatListFilters(): FilterOptions[] {
-    return MLB_STATS_KEYS.map(k => {
-      return {
-        label: MLB_STATS_MAP[k].description,
-        value: k,
-      };
-    });
+    return MLB_STATS_KEYS.map(k => ({ label: MLB_STATS_MAP[k].description, value: k }));
+  }
+
+  @Selector([FantasyBaseballFreeAgentsSelector.getFreeAgentBatterStats])
+  static getFreeAgentBatterChartData(
+    getFreeAgentBatterStats: (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[]
+  ): (statPeriod: string, seasonId: string, statFilter: Stat) => ChartData[] {
+    return (statPeriod: string, seasonId: string, statFilter: Stat) =>
+      getFreeAgentBatterStats(statPeriod, seasonId)
+        .map(p => {
+          return {
+            data: exists(p.stats) ? p.stats[statFilter] : 0,
+            label: p.name,
+          };
+        })
+        .sort((a, b) => b.data - a.data);
   }
 }
 

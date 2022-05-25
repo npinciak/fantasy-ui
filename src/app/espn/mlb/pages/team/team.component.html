@@ -20,12 +20,12 @@
       [selectedOption]="scoringPeriodId"
       title="Stat Period"
       [filterItems]="STAT_PERIOD_FILTER_OPTIONS"
-      (filterUpdate)="scoringPeriodIdChange($event.value)"
+      (filterUpdate)="onScoringPeriodIdChange($event.value)"
     ></app-dropdown-filter>
 
     <mat-form-field>
       <mat-label>Batter Stats</mat-label>
-      <mat-select [(value)]="selectedBatterStat" (selectionChange)="batterStatChange($event.value)">
+      <mat-select [(value)]="selectedBatterStat" (selectionChange)="onBatterStatChange($event.value)">
         <mat-option *ngFor="let stat of statList" [value]="stat">{{ MLB_STAT_MAP[stat].abbrev }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -34,26 +34,18 @@
       <app-data-vis
         [title]="MLB_STAT_MAP[selectedBatterStat].description"
         [statFilter]="selectedBatterStat"
-        [chartData]="(fantasyBaseballTeamFacade.battingStats$ | async)!(teamId, scoringPeriodId)"
+        [chartData]="(fantasyBaseballTeamFacade.batterChartData$ | async)!(teamId, scoringPeriodId, selectedBatterStat)"
       ></app-data-vis>
     </div>
     <h3>Batting</h3>
     <mat-slide-toggle (change)="onLiveScoringSelectChange($event)" color="primary"> Live Scoring </mat-slide-toggle>
     <ng-container *ngIf="isLiveScore; else default">
-      <app-roster
-        [data]="(fantasyBaseballTeamFacade.liveBattingStats$ | async)!(teamId)"
-        [dataColumns]="espnTableFacade.liveBatterTableRow$ | async"
-        [headers]="espnTableFacade.liveBatterTableHeaders$ | async"
-      >
+      <app-roster [data]="(fantasyBaseballTeamFacade.liveBattingStats$ | async)!(teamId)" [dataColumns]="BATTER_STATS_LIVE_ROWS" [headers]="BATTER_STATS_LIVE_HEADERS">
       </app-roster>
     </ng-container>
 
     <ng-template #default>
-      <app-roster
-        [data]="(fantasyBaseballTeamFacade.battingStats$ | async)!(teamId, scoringPeriodId)"
-        [dataColumns]="espnTableFacade.batterTableRow$ | async"
-        [headers]="espnTableFacade.batterTableHeaders$ | async"
-      >
+      <app-roster [data]="(fantasyBaseballTeamFacade.battingStats$ | async)!(teamId, scoringPeriodId)" [dataColumns]="BATTER_STATS_ROWS" [headers]="BATTER_STATS_HEADERS">
       </app-roster>
     </ng-template>
 
@@ -61,7 +53,7 @@
 
     <mat-form-field>
       <mat-label>Pitcher Stats</mat-label>
-      <mat-select [(value)]="selectedPitcherStat" (selectionChange)="pitcherStatChange($event.value)">
+      <mat-select [(value)]="selectedPitcherStat" (selectionChange)="onPitcherStatChange($event.value)">
         <mat-option *ngFor="let stat of statList" [value]="stat">{{ MLB_STAT_MAP[stat].abbrev }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -70,12 +62,7 @@
       <h4>{{ MLB_STAT_MAP[selectedPitcherStat].description }}</h4>
       <app-data-vis [statFilter]="selectedPitcherStat" [chartData]="(fantasyBaseballTeamFacade.pitcherStats$ | async)!(teamId, scoringPeriodId)"></app-data-vis>
     </div>
-    <app-roster
-      ariaLabel="pitching stats table"
-      [data]="(fantasyBaseballTeamFacade.pitcherStats$ | async)!(teamId, scoringPeriodId)"
-      [dataColumns]="espnTableFacade.pitcherTableRow$ | async"
-      [headers]="espnTableFacade.pitcherTableHeaders$ | async"
-    >
+    <app-roster [data]="(fantasyBaseballTeamFacade.pitcherStats$ | async)!(teamId, scoringPeriodId)" [dataColumns]="PITCHER_STATS_ROWS" [headers]="PITCHER_STATS_HEADERS">
     </app-roster>
   </div>
 </div>

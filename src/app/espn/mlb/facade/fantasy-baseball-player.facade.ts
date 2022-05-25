@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
+import { select } from '@app/@shared/models/typed-select';
+import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.state';
 import { FetchBaseballPlayerNews } from '../state/fantasy-baseball-player.state';
@@ -8,7 +9,7 @@ import { FetchBaseballPlayerNews } from '../state/fantasy-baseball-player.state'
   providedIn: 'root',
 })
 export class FantasyBaseballPlayerFacade {
-  @Select(FantasyBaseballLeagueState.isLoading) public isLoading$: Observable<boolean>;
+  isLoading$ = select(FantasyBaseballLeagueState.isLoading);
 
   constructor(private store: Store) {}
 

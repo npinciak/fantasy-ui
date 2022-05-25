@@ -4,6 +4,7 @@ import { exists } from '@app/@shared/helpers/utils';
 import {
   EspnClientFreeAgent,
   EspnClientPlayer,
+  EspnClientPlayerNewsFeedEntity,
   EspnClientPlayerStatsEntityMap,
   EspnClientPlayerStatsYear,
   EspnClientScheduleTeam,
@@ -82,6 +83,7 @@ export class MlbService {
       startingStatus: null,
       lineupSlot: MLB_LINEUP_MAP[player.lineupSlotId].abbrev,
       starterStatusByProGame: player.playerPoolEntry?.player.starterStatusByProGame,
+      lastNewsDate: player.playerPoolEntry.player.lastNewsDate,
     };
   }
 
@@ -109,6 +111,7 @@ export class MlbService {
         startingStatus: null,
         lineupSlot: MLB_LINEUP_MAP[player.lineupSlotId].abbrev,
         starterStatusByProGame: player.playerPoolEntry?.player.starterStatusByProGame,
+        lastNewsDate: player.playerPoolEntry.player.lastNewsDate,
       };
     });
   }
@@ -144,6 +147,7 @@ export class MlbService {
         startingStatus: null,
         lineupSlot: '',
         starterStatusByProGame: {},
+        lastNewsDate: player.player.lastNewsDate,
       };
     });
   }
@@ -177,15 +181,25 @@ export class MlbService {
     );
   }
 
-  baseballPlayerNews(payload: { lookbackDays: string; playerId: string }): Observable<unknown> {
+  /**
+   * Return baseball player latest news
+   * @param payload
+   * @returns
+   */
+  baseballPlayerNews(payload: { lookbackDays: string; playerId: string }): Observable<EspnClientPlayerNewsFeedEntity[]> {
     const data = {
       sport: FantasySports.baseball,
       lookbackDays: payload.lookbackDays,
       playerId: payload.playerId,
     };
-    return this.espnClient.espnFantasyPlayerNewsBySport(data).pipe(map(res => res));
+    return this.espnClient.espnFantasyPlayerNewsBySport(data).pipe(map(res => res.feed));
   }
 
+  /**
+   * Return fantasy baseball league free agents
+   * @param payload
+   * @returns
+   */
   baseballFreeAgents(payload: { leagueId: number; scoringPeriodId: number }): Observable<BaseballPlayer[]> {
     let headers = new HttpHeaders();
     headers = headers.append('X-Fantasy-Filter', JSON.stringify(this.filterHeaders));

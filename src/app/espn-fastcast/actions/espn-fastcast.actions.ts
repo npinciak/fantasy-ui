@@ -20,3 +20,8 @@ export class SendWebSocketMessage {
   static readonly type = `[espnFastcast] SendWebSocketMessage`;
   constructor(public payload: { message: any }) {}
 }
+
+export class SetSelectedEventType {
+  static readonly type = `[espnFastcast] SetSelectedEventType`;
+  constructor(public payload: { eventType: string | null }) {}
+}
