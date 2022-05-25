@@ -1,51 +1,26 @@
 import { Injectable } from '@angular/core';
-import { entityMap } from '@app/@shared/operators';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { SlatePlayer, SlatePlayerMap } from '../models/player.model';
+import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
+import { GenericState } from '@app/@shared/generic-state/generic.state';
+import { Action, State, StateContext } from '@ngxs/store';
+import { FetchPlayers, PatchPlayers } from '../actions/daily-fantasy-players.actions';
+import { PatchSchedule } from '../actions/daily-fantasy-schedule.actions';
+import { PatchTeams } from '../actions/daily-fantasy-teams.actions';
+import { SlatePlayer } from '../models/player.model';
 import { PlayerService } from '../service/player.service';
-import { PatchSchedule } from './daily-fantasy-schedule.state';
-import { PatchTeams } from './daily-fantasy-team.state';
 
-export class FetchPlayers {
-  static readonly type = `[dailyFantasyPlayers] FetchPlayers`;
-  constructor(public payload: { slatePath: string }) {}
-}
-
-export class PatchPlayers {
-  static readonly type = `[dailyFantasyPlayers] PatchPlayers`;
-  constructor(public payload: { players: SlatePlayer[] }) {}
-}
-
-export class DailyFantasyPlayersStateModel {
-  map: SlatePlayerMap;
-}
-
-@State<DailyFantasyPlayersStateModel>({
-  name: 'dailyFantasyPlayers',
-  defaults: {
-    map: {},
-  },
-})
+@State({ name: 'dailyFantasyPlayers' })
 @Injectable()
-export class DailyFantasyPlayersState {
-  constructor(private playerService: PlayerService) {}
-
-  @Selector([DailyFantasyPlayersState])
-  static getMap(state: DailyFantasyPlayersStateModel): SlatePlayerMap {
-    return state.map;
+export class DailyFantasyPlayersState extends GenericState({
+  idProperty: 'id',
+  patchAction: PatchPlayers,
+}) {
+  constructor(private playerService: PlayerService) {
+    super();
   }
 
   @Action(FetchPlayers)
-  async fetchPlayers({ dispatch }: StateContext<DailyFantasyPlayersStateModel>, { payload: { slatePath } }: FetchPlayers): Promise<void> {
+  async fetchPlayers({ dispatch }: StateContext<GenericStateModel<SlatePlayer>>, { payload: { slatePath } }: FetchPlayers): Promise<void> {
     const { players, schedule, teams } = await this.playerService.playersBySlate({ slatePath }).toPromise();
-    dispatch([new PatchPlayers({ players }), new PatchSchedule({ schedule }), new PatchTeams(teams)]);
-  }
-
-  @Action(PatchPlayers)
-  patchPlayers({ getState, patchState }: StateContext<DailyFantasyPlayersStateModel>, { payload: { players } }: PatchPlayers) {
-    const state = getState();
-    const map = entityMap(players);
-
-    patchState({ ...state, map });
+    dispatch([new PatchPlayers(players), new PatchSchedule(schedule), new PatchTeams(teams)]);
   }
 }

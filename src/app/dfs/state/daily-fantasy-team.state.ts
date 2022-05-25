@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
-import { Team } from '../models/team.model';
+import { State } from '@ngxs/store';
+import { PatchTeams } from '../actions/daily-fantasy-teams.actions';
 
-export class PatchTeams {
-  static readonly type = `[dailyFantasyTeams] PatchTeams`;
-  constructor(public payload: Team[]) {}
-}
-
+@State({ name: 'dailyFantasyTeams' })
 @Injectable()
 export class DailyFantasyTeamsState extends GenericState({
-  name: 'dailyFantasyTeams',
-  idProperty: 'id', //rgId
+  idProperty: 'rgId',
   patchAction: PatchTeams,
 }) {}

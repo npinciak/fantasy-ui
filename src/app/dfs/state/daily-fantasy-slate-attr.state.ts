@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
-import { entityMap } from '@app/@shared/operators';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { PatchMlbPlayerSlateAttributes } from '../mlb/actions/daily-fantasy-mlb-player-slate-attr.actions';
+import { PatchMlbTeamSlateAttributes } from '../mlb/actions/daily-fantasy-mlb-team-slate-attr.actions';
+import { PlayerSlateAttr } from '../models/player-slate-attr.model';
 import { SlateService, SlateTeamMap } from '../service/slate.service';
 
 export class FetchSlateAttr {
   public static readonly type = `[dailyFantasySlateAttr] FetchSlateAttr`;
-  constructor(public payload: { sport: string; site: string; slateId: string }) {}
+  constructor(public payload: { sport: string; site: string; slate: string }) {}
 }
 
 export class DailyFantasySlateAttrStateModel {
   teams: SlateTeamMap;
-  players: Record<string, any>;
+  players: Record<string, PlayerSlateAttr>;
   slate: string | null;
   site: number | string | null;
 }
@@ -30,15 +32,6 @@ const defaults = {
 export class DailyFantasySlateAttrState {
   constructor(private slateService: SlateService) {}
 
-  @Selector()
-  static teamMap(state: DailyFantasySlateAttrStateModel): SlateTeamMap {
-    return state.teams;
-  }
-
-  @Selector()
-  static playerMap(state: DailyFantasySlateAttrStateModel): Record<string, any> {
-    return state.players;
-  }
 
   @Selector()
   static slate(state: DailyFantasySlateAttrStateModel): string | null {
@@ -48,10 +41,11 @@ export class DailyFantasySlateAttrState {
   @Action(FetchSlateAttr)
   async FetchSlateAttr(
     { patchState, dispatch }: StateContext<DailyFantasySlateAttrStateModel>,
-    { payload: { sport, site, slateId } }: FetchSlateAttr
+    { payload: { sport, site, slate } }: FetchSlateAttr
   ): Promise<void> {
-    const { statGroups, teams, players } = await this.slateService.getGameAttrBySlateId({ sport, site, slateId }).toPromise();
+    const { statGroups, teams, players } = await this.slateService.getGameAttrBySlateId({ sport, site, slate }).toPromise();
 
+    dispatch([new PatchMlbPlayerSlateAttributes(players), new PatchMlbTeamSlateAttributes(teams)]);
     // dispatch(new PatchProfiler({ profiler: statGroups }));
 
     // if (sport === 'nfl') {
@@ -62,6 +56,6 @@ export class DailyFantasySlateAttrState {
     //   dispatch([new PatchNbaTeamSlateAttr({ teams: res.teams })]);
     // }
 
-    patchState({ teams: entityMap(teams), slate: slateId, players: entityMap(players) });
+    patchState({ slate });
   }
 }

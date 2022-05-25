@@ -2,13 +2,14 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { exists } from '@app/@shared/helpers/utils';
-import { FANTASY_BASE_V3 } from '@app/espn/espn.const';
+import { FANTASY_BASE_V3, FASTCAST_BASE } from '@app/espn/espn.const';
+import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private snackBar: MatSnackBar, private store: Store) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(catchError((error: HttpErrorResponse) => this.errorHandler(error)));
@@ -16,6 +17,11 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
   private errorHandler(response: HttpErrorResponse): Observable<HttpEvent<any>> {
     const isEspnFantasy = exists(response.url) ? response.url.includes(FANTASY_BASE_V3) : false;
+    const isEspnFastcast = exists(response.url) ? response.url.includes(FASTCAST_BASE) : false;
+
+    if (isEspnFastcast) {
+      // this.store.dispatch(DisconnectWebSocket);
+    }
 
     const code = response.status || 0;
 
