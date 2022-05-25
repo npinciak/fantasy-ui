@@ -1,6 +1,6 @@
-<table [id]="'team-' + team?.id">
+<table [id]="teamTableLabel">
   <tr>
-    <td rowspan="2" [attr.aria-label]="team?.name" [attr.aria-labelledby]="'team-' + team.id">
+    <td rowspan="2" [attr.aria-label]="team?.name" [attr.aria-labelledby]="teamTableLabel">
       <img width="48" height="35" [alt]="team?.name" [src]="team?.logo" [alt]="team?.name" />
     </td>
   </tr>

@@ -15,7 +15,7 @@ import {
 } from '../../espn-fastcast/models/espn-fastcast.model';
 import { FastcastEvent, FootballSituation, MlbSituation } from '../../espn-fastcast/models/fastcast-event.model';
 import { FastcastEventTeam } from '../../espn-fastcast/models/fastcast-team.model';
-import { EspnClientFreeAgent, EspnClientLeague, GameStatusId } from '../espn-client.model';
+import { EspnClientFreeAgent, EspnClientLeague, EspnClientPlayerNews, GameStatusId } from '../espn-client.model';
 import { includeSports, transformUidToId } from '../espn-helpers';
 import {
   EspnEndpointBuilder,
@@ -24,7 +24,7 @@ import {
   espnViewParamFragmentList,
   FantasySports,
 } from '../models/espn-endpoint-builder.model';
-import { EspnClientOneFeed, FeedArticle as FeedArticleImport } from '../models/espn-onefeed.model';
+import { FeedArticle as FeedArticleImport } from '../models/espn-onefeed.model';
 import { FeedArticle } from '../models/feed.model';
 import { League } from '../models/league.model';
 
@@ -199,10 +199,10 @@ export class EspnService {
    * @param sport
    * @returns Player news
    */
-  espnFantasyPlayerNewsBySport(data: { sport: FantasySports; lookbackDays: string; playerId: string }): Observable<unknown> {
+  espnFantasyPlayerNewsBySport(data: { sport: FantasySports; lookbackDays: string; playerId: string }): Observable<EspnClientPlayerNews> {
     const endpoint = new EspnEndpointBuilder(data.sport);
     const params = new HttpParams().set(EspnParamFragment.Days, data.lookbackDays).set(EspnParamFragment.PlayerId, data.playerId);
-    return this.api.get(endpoint.fantasyPlayerNews, { params });
+    return this.api.get<EspnClientPlayerNews>(endpoint.fantasyPlayerNews, { params });
   }
 
   /**
@@ -264,8 +264,6 @@ export class EspnService {
       })
     );
   }
-
-
 
   /**
    * @todo

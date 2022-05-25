@@ -9,4 +9,8 @@ export class TeamInfoColComponent {
   @Input() team: BaseballTeam;
   @Input() isLeader: boolean;
   constructor() {}
+
+  get teamTableLabel() {
+    return `team-${this.team?.id}`;
+  }
 }

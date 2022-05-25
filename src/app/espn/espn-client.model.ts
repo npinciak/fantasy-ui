@@ -170,10 +170,11 @@ export interface EspnClientPlayerNews {
   status: string;
   resultsLimit: number;
   resultsCount: number;
-  feed: EspnClientPlayerNewsFeedEntity[] | null;
+  feed: EspnClientPlayerNewsFeedEntity[];
 }
 
 export interface EspnClientPlayerNewsFeedEntity {
+  id: number;
   lastModified: string;
   headline: string;
   story: string;

@@ -16,7 +16,6 @@ import { PlayerInfoColComponent } from './mlb/components/roster/player-info-col/
 import { PlayerRatingColComponent } from './mlb/components/roster/player-rating-col/player-rating-col.component';
 import { PlayerTrendingColComponent } from './mlb/components/roster/player-trending-col/player-trending-col.component';
 import { RosterComponent } from './mlb/components/roster/roster.component';
-import { RankingColComponent } from './mlb/components/standings/ranking-col/ranking-col.component';
 import { StandingsComponent } from './mlb/components/standings/standings.component';
 import { TeamInfoColComponent } from './mlb/components/standings/team-info-col/team-info-col.component';
 import { FreeAgentsComponent } from './mlb/pages/free-agents/free-agents.component';
@@ -45,7 +44,6 @@ const declarations = [
   PlayerTrendingColComponent,
   PlayerRatingColComponent,
   TeamInfoColComponent,
-  RankingColComponent,
   LeagueScoreboardComponent,
   LineupCardComponent,
   LineupCardPlayerComponent,

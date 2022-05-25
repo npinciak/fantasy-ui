@@ -18,6 +18,7 @@ import { PatchFastcastTeams } from '../actions/espn-fastcast-team.actions';
 import { FastcastEventType, OperationCode, WebSocketBuilder } from '../models/espn-fastcast-socket.model';
 import { EspnFastcastLeagueSelectors } from '../selectors/espn-fastcast-league.selectors';
 import { EspnFastcastSportSelectors } from '../selectors/espn-fastcast-sport.selectors';
+import { EspnFastcastSelectors } from '../selectors/espn-fastcast.selectors';
 import { EspnFastcastService } from '../service/espn-fastcast.service';
 
 export interface EspnFastcastStateModel {
@@ -61,36 +62,44 @@ export class EspnFastcastState {
 
   @Action(HandleWebSocketMessage)
   handleWebSocketMessage(
-    { getState, patchState, dispatch }: StateContext<EspnFastcastStateModel>,
+    { patchState, dispatch }: StateContext<EspnFastcastStateModel>,
     { payload: { message } }: HandleWebSocketMessage
   ): void {
-    const eventType = getState().eventType;
+    const eventType = this.store.selectSnapshot(EspnFastcastSelectors.getEventType);
 
     switch (message.op) {
+      case OperationCode.B:
+        break;
       case OperationCode.C:
-        if (eventType == null) {
-          const outgoing = { op: OperationCode.S, sid: message.sid, tc: FastcastEventType.TopEvents };
-          dispatch(new SendWebSocketMessage({ message: outgoing }));
-        } else {
-          const outgoing = { op: OperationCode.S, sid: message.sid, tc: eventType };
-          dispatch(new SendWebSocketMessage({ message: outgoing }));
-        }
+        // if (eventType == null) {
+        const outgoing = { op: OperationCode.S, sid: message.sid, tc: FastcastEventType.TopEvents };
+        dispatch(new SendWebSocketMessage({ message: outgoing }));
+        // } else {
+        // const outgoing = { op: OperationCode.S, sid: message.sid, tc: eventType };
+        // dispatch(new SendWebSocketMessage({ message: outgoing }));
+        // }
 
         break;
       case OperationCode.P:
+        // const outgoing = { op: OperationCode.P, sid: message.sid, pl: message.pl, tc: eventType, mid: message.mid };
+        // dispatch(new SendWebSocketMessage({ message: outgoing }));
+
+        // op(pin): "P"
+        // pl(pin): "{"ts":1653334802929,"~c":1,"pl":"eJyLrlbKL1CyUipKLchJTE5V0lEqSCzJAAoUW5kZGNTlWFkYG5jUpVqZGZsaWJrVJUMZ+sk5+cnZQNVliTmlqUDlpobqSrU6ZBqWVpqTE1ySWFJajG6usZ6Bmau2MTVMTsksBuqtdKaRw0sqC1L1U1JLEjNzaGV6cUZ+UYkLVa0oLs3NTSyqRDcuFgDWXKEg"}"
+        // tc(pin): "event-topevents"
+        // mid(pin): 15059226
         break;
       case OperationCode.H:
         dispatch(new FetchFastcast({ uri: message.pl }));
         break;
       case OperationCode.I:
-        if (eventType == null) {
-          const uri = `${FASTCAST_BASE}/${FastcastEventType.TopEvents}/message/${message.mid}/checkpoint`;
-          dispatch(new FetchFastcast({ uri }));
-        } else {
-          const uri = `${FASTCAST_BASE}/${eventType}/message/${message.mid}/checkpoint`;
-
-          dispatch(new FetchFastcast({ uri }));
-        }
+        // if (eventType == null) {
+        const uri = `${FASTCAST_BASE}/${FastcastEventType.TopEvents}/message/${message.mid}/checkpoint`;
+        dispatch(new FetchFastcast({ uri }));
+        // } else {
+        //   const uri = `${FASTCAST_BASE}/${eventType}/message/${message.mid}/checkpoint`;
+        //   dispatch(new FetchFastcast({ uri }));
+        // }
 
         break;
       case OperationCode.Error:
