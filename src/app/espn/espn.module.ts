@@ -31,6 +31,7 @@ import { FantasyFootballLeagueState } from './nfl/state/fantasy-football-league.
 import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-schedule.state';
 import { FantasyFootballTeamsState } from './nfl/state/fantasy-football-teams.state';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
+import { EspnAddLeagueFormState } from './state/espn-add-league-form.state';
 
 const declarations = [
   EspnHomeComponent,
@@ -62,6 +63,7 @@ const states = [
   FantasyBaseballFreeAgentsState,
   FantasyBaseballPlayerState,
   EspnFastcastEventToggleState,
+  EspnAddLeagueFormState,
 ];
 
 const imports = [
