@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { PatchFantasyBaseballEvents } from '../actions/fantasy-baseball-events.actions';
 import { PatchFantasyBaseballTeams } from '../actions/fantasy-baseball-team.actions';
 import { FetchBaseballLeague, PatchScoringPeriodId, PatchSeasonId } from '../actions/mlb.actions';
 import { MlbService } from '../services/mlb.service';
@@ -55,12 +56,14 @@ export class FantasyBaseballLeagueState {
     }
 
     const { scoringPeriodId, seasonId, teams, teamsLive } = await this.mlbService.baseballLeague(leagueId).toPromise();
+    const events = await this.mlbService.baseballEvents().toPromise();
 
     dispatch([
       new PatchEspnFantasyLeagueTeamsLive(teamsLive),
       new PatchSeasonId({ seasonId }),
       new PatchScoringPeriodId({ scoringPeriodId }),
       new PatchFantasyBaseballTeams(teams),
+      new PatchFantasyBaseballEvents(events),
       // new FetchFantasyBaseballFreeAgents({ leagueId, scoringPeriodId }),
     ]);
   }
