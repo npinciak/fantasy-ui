@@ -5,13 +5,6 @@ export enum TeamColumn {
   liveScore = 'liveScore',
 }
 
-export enum PlayingStatus {
-  Probable = 'PROBABLE',
-  NotStarting = 'NOTSTARTING',
-  Starting = 'STARTING',
-  Active = 'ACTIVE',
-}
-
 export enum RotoColumn {
   run = 'rotoStats.r',
   homeRun = 'rotoStats.hr',

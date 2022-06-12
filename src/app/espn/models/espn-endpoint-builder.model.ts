@@ -74,6 +74,7 @@ export enum EspnParamFragment {
   Dates = 'dates',
   Days = 'days',
   PlayerId = 'playerId',
+  PbpOnly = 'pbpOnly',
 }
 
 export enum EspnViewParamFragment {
