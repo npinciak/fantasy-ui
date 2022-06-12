@@ -28,19 +28,19 @@ export class UrlBuilder {
   }
 
   public static espnMlbLeague(leagueId: string) {
-    return `${UrlBuilder.espnMlbBase}/${leagueId}`;
+    return [UrlBuilder.espnMlbBase, leagueId];
   }
 
   public static espnMlbLeagueFreeAgents(leagueId: string) {
-    return `${UrlBuilder.espnMlbBase}/${leagueId}/${UrlFragments.FreeAgents}`;
+    return [UrlBuilder.espnMlbBase, leagueId, UrlFragments.FreeAgents];
   }
 
   public static espnMlbLeagueTeam(leagueId: string, teamId: string) {
-    return `${UrlBuilder.espnMlbBase}/${leagueId}/${UrlFragments.Team}/${teamId}`;
+    return [UrlBuilder.espnMlbBase, leagueId, UrlFragments.Team, teamId];
   }
 
   public static espnNflLeague(leagueId: string) {
-    return `${UrlBuilder.espnNflBase}/${leagueId}`;
+    return [UrlBuilder.espnNflBase, leagueId];
   }
 }
 
