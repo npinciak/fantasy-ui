@@ -1,4 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { UrlBuilder } from '@app/@shared/url-builder';
+import { EspnAddLeagueFormFacade } from '@app/espn/facades/espn-add-league-form.facade';
 import { LeagueStorageMap } from '@app/espn/mlb/models/baseball-league-storage.model';
 
 @Component({
@@ -16,8 +18,9 @@ export class AddLeagueFormComponent implements OnInit {
   @Output() removeLeague = new EventEmitter<string>();
 
   sportOption: string = 'Baseball';
+  readonly UrlBuilder = UrlBuilder;
 
-  constructor() {}
+  constructor(readonly espnAddLeagueFormFacade: EspnAddLeagueFormFacade) {}
 
   ngOnInit(): void {}
 
@@ -28,24 +31,19 @@ export class AddLeagueFormComponent implements OnInit {
     const map = { [leagueId]: { leagueId, sport } };
 
     this.addLeague.emit(map);
-    this.resetLeagueIdInput();
-    this.resetSportSelection();
+
+    this.espnAddLeagueFormFacade.reset();
   }
 
-  onRemoveLeague(leagueId) {
+  onRemoveLeague(leagueId): void {
     this.removeLeague.emit(leagueId);
   }
 
-  fantasySportChange(event: string) {
-    this.sportOption = event;
+  fantasySportChange(val: string): void {
+    this.espnAddLeagueFormFacade.setSport(val);
   }
 
-  resetLeagueIdInput(): void {
-    this.leagueIdElement.nativeElement.value = null;
-  }
-
-  // TODO: Refactor me
-  resetSportSelection(): void {
-    this.sportOption = '';
+  leagueIdInputChange(val: string): void {
+    this.espnAddLeagueFormFacade.setLeagueId(val);
   }
 }
