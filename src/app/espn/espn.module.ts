@@ -21,6 +21,7 @@ import { FreeAgentsComponent } from './mlb/pages/free-agents/free-agents.compone
 import { HomeComponent as FantasyBaseballHomeComponent } from './mlb/pages/home/home.component';
 import { TeamComponent } from './mlb/pages/team/team.component';
 import { FantasyBaseballEventsState } from './mlb/state/fantasy-baseball-events.state';
+import { FantasyBaseballFreeAgentsFilterState } from './mlb/state/fantasy-baseball-free-agents-filter.state';
 import { FantasyBaseballFreeAgentsState } from './mlb/state/fantasy-baseball-free-agents.state';
 import { FantasyBaseballLeagueState } from './mlb/state/fantasy-baseball-league.state';
 import { FantasyBaseballPlayerState } from './mlb/state/fantasy-baseball-player.state';
@@ -60,6 +61,7 @@ const states = [
   FantasyBaseballTeamState,
   FantasyBaseballTeamsLiveState,
   FantasyBaseballFreeAgentsState,
+  FantasyBaseballFreeAgentsFilterState,
   FantasyBaseballPlayerState,
   FantasyBaseballEventsState,
   EspnFastcastEventToggleState,
