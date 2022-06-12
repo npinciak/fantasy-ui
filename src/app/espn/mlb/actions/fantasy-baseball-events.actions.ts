@@ -1,6 +1,6 @@
 import { BaseballEvent } from '../models/baseball-event.model';
 
-export class PatchFantasyBaseballEvents {
-  static readonly type = `[fantasyBaseballEvents] PatchFantasyBaseballEvents`;
+export class SetFantasyBaseballEvents {
+  static readonly type = `[fantasyBaseballEvents] SetFantasyBaseballEvents`;
   constructor(public payload: BaseballEvent[]) {}
 }
