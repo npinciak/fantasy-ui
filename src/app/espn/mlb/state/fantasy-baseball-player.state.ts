@@ -9,8 +9,8 @@ export class FetchBaseballPlayerNews {
   constructor(public payload: { lookbackDays: string; playerId: string }) {}
 }
 
-export class PatchBaseballPlayerNews {
-  static readonly type = `[fantasyBaseballPlayer] PatchBaseballPlayerNews`;
+export class SetBaseballPlayerNews {
+  static readonly type = `[fantasyBaseballPlayer] SetBaseballPlayerNews`;
   constructor(public payload: EspnClientPlayerNewsFeedEntity[]) {}
 }
 
@@ -21,7 +21,7 @@ export interface FantasyBaseballPlayerStateModel {
 
 @State({ name: 'fantasyBaseballPlayer' })
 @Injectable()
-export class FantasyBaseballPlayerState extends GenericState({ idProperty: 'id', patchAction: PatchBaseballPlayerNews }) {
+export class FantasyBaseballPlayerState extends GenericState({ idProperty: 'id', addOrUpdate: SetBaseballPlayerNews }) {
   constructor(private mlbService: MlbService) {
     super();
   }

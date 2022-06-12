@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { PatchFantasyBaseballEvents } from '../actions/fantasy-baseball-events.actions';
-import { PatchFantasyBaseballTeams } from '../actions/fantasy-baseball-team.actions';
-import { FetchBaseballLeague, PatchScoringPeriodId, PatchSeasonId } from '../actions/mlb.actions';
+import { SetFantasyBaseballEvents } from '../actions/fantasy-baseball-events.actions';
+import { SetFantasyBaseballTeams } from '../actions/fantasy-baseball-team.actions';
+import { FetchBaseballLeague, SetScoringPeriodId, SetSeasonId } from '../actions/mlb.actions';
 import { MlbService } from '../services/mlb.service';
-import { PatchEspnFantasyLeagueTeamsLive } from './fantasy-baseball-team-live.state';
+import { SetEspnFantasyLeagueTeamsLive } from './fantasy-baseball-team-live.state';
 
 export interface FantasyBaseballLeagueStateModel {
   isLoading: boolean;
@@ -59,24 +59,24 @@ export class FantasyBaseballLeagueState {
     const events = await this.mlbService.baseballEvents().toPromise();
 
     dispatch([
-      new PatchEspnFantasyLeagueTeamsLive(teamsLive),
-      new PatchSeasonId({ seasonId }),
-      new PatchScoringPeriodId({ scoringPeriodId }),
-      new PatchFantasyBaseballTeams(teams),
-      new PatchFantasyBaseballEvents(events),
+      new SetEspnFantasyLeagueTeamsLive(teamsLive),
+      new SetSeasonId({ seasonId }),
+      new SetScoringPeriodId({ scoringPeriodId }),
+      new SetFantasyBaseballTeams(teams),
+      new SetFantasyBaseballEvents(events),
       // new FetchFantasyBaseballFreeAgents({ leagueId, scoringPeriodId }),
     ]);
   }
 
-  @Action(PatchSeasonId)
-  patchSeasonId({ patchState }: StateContext<FantasyBaseballLeagueStateModel>, { payload: { seasonId } }: PatchSeasonId): void {
+  @Action(SetSeasonId)
+  patchSeasonId({ patchState }: StateContext<FantasyBaseballLeagueStateModel>, { payload: { seasonId } }: SetSeasonId): void {
     patchState({ seasonId });
   }
 
-  @Action(PatchScoringPeriodId)
+  @Action(SetScoringPeriodId)
   patchScoringPeriodId(
     { patchState }: StateContext<FantasyBaseballLeagueStateModel>,
-    { payload: { scoringPeriodId } }: PatchScoringPeriodId
+    { payload: { scoringPeriodId } }: SetScoringPeriodId
   ): void {
     patchState({ scoringPeriodId });
   }

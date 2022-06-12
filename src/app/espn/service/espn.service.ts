@@ -194,7 +194,6 @@ export class EspnService {
     return this.api.get<EspnClientEventList>(endpoint.espnEvents, { params, headers });
   }
 
-  //?useMap=true&dates=20220527&pbpOnly=true
 
   /**
    * Fetch player news
@@ -230,6 +229,7 @@ export class EspnService {
     const params = new HttpParams()
       .set(EspnParamFragment.ScoringPeriod, scoringPeriod.toString())
       .set(EspnParamFragment.View, EspnViewParamFragment.PlayerInfo);
+    
     return this.api.get<{ players: EspnClientFreeAgent[] }>(endpoint.fantasyLeague, { params, headers });
   }
 
