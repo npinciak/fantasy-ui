@@ -1,30 +1,23 @@
-<table class="ui-w-100">
+<table class="ui-w-100" [title]="playerLabel">
   <tr>
-    <td rowspan="4" style="width: 60px">
+    <td class="player-col" rowspan="4">
       {{ player?.lineupSlot }}
     </td>
   </tr>
   <tr>
-    <td rowspan="4" style="width: 60px">
+    <td class="player-col" rowspan="4">
       <img role="presentation" width="48" height="35" [src]="player?.img" [alt]="player?.name" />
     </td>
   </tr>
   <tr>
-    <td syle="width:228px">
+    <td class="player-info-col">
       {{ player?.name }}
-      <span class="injury" *ngIf="player.injuryStatus === InjuryStatusType.DTD">DTD</span>
-      <mat-icon class="injury" [matTooltip]="player?.injuryStatus" *ngIf="player?.isInjured">medical_services </mat-icon>
+      <mat-icon *ngIf="player?.startingStatus" [ngStyle]="{ color: colorByPlayingStatus[player?.startingStatus] }" [title]="player?.startingStatus">{{
+        matIconByPlayingStatus[player?.startingStatus]
+      }}</mat-icon>
+      <span class="injury-status_dtd" [title]="player?.injuryStatus" *ngIf="isPlayerDayToDay">DTD</span>
+      <mat-icon class="injury-status" [matTooltip]="player?.injuryStatus" *ngIf="player?.isInjured">medical_services</mat-icon>
     </td>
-    <!-- <td
-      rowspan="4"
-      style="width: 70px"
-      [ngStyle]="{
-        color: player.playerRatings[1]?.totalRating <= 0 ? '#cd2026' : '#2e8540'
-      }"
-    >
-      {{ player.playerRatings[1]?.totalRating | number }}
-      <mat-icon>{{ player.playerRatings[1]?.totalRating <= 0 ? '' : 'trending_up' }}</mat-icon>
-    </td> -->
   </tr>
   <tr>
     <td>{{ player?.team }}, {{ player?.position }}</td>

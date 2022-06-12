@@ -1,5 +1,28 @@
-.injury {
-  color: #cd2026;
+.mat-icon {
+  height: 15px;
+  width: 15px;
+}
+
+.material-icons {
+  font-size: 15px;
+}
+
+.injury-status {
+  font-size: 15px;
+  color: #cb0123;
   font-weight: bold;
-  font-size: 10px;
+
+  &_dtd {
+    font-size: 10px;
+    color: #cb0123;
+    font-weight: bold;
+  }
+}
+
+.player-col {
+  width: 60px;
+}
+
+.player-info-col {
+  width: 228px;
 }
