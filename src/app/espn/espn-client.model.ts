@@ -186,6 +186,7 @@ export interface EspnClientEventList {
 
 export interface EspnClientEvent {
   id: string;
+  uid: string;
   date: string;
   summary: string;
   percentComplete: number;

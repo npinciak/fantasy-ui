@@ -3,11 +3,11 @@ import { GenericState } from '@app/@shared/generic-state/generic.state';
 import { State } from '@ngxs/store';
 import { BaseballTeamLive } from '../models/baseball-team.model';
 
-export class PatchEspnFantasyLeagueTeamsLive {
-  static readonly type = '[fantasyBaseballTeamsLive] PatchEspnFantasyLeagueTeamsLive';
+export class SetEspnFantasyLeagueTeamsLive {
+  static readonly type = '[fantasyBaseballTeamsLive] SetEspnFantasyLeagueTeamsLive';
   constructor(public payload: BaseballTeamLive[]) {}
 }
 
 @State({ name: 'fantasyBaseballTeamsLive' })
 @Injectable()
-export class FantasyBaseballTeamsLiveState extends GenericState({ idProperty: 'id', patchAction: PatchEspnFantasyLeagueTeamsLive }) {}
+export class FantasyBaseballTeamsLiveState extends GenericState({ idProperty: 'id', addOrUpdate: SetEspnFantasyLeagueTeamsLive }) {}

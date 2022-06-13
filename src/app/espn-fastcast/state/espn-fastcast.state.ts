@@ -11,10 +11,10 @@ import { FASTCAST_BASE } from '@app/espn/espn.const';
 import { EspnService } from '@app/espn/service/espn.service';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { startWith, tap } from 'rxjs/operators';
-import { PatchFastcastEvents } from '../actions/espn-fastcast-event.actions';
-import { PatchFastcastLeague } from '../actions/espn-fastcast-league.actions';
-import { PatchFastcastSports } from '../actions/espn-fastcast-sport.actions';
-import { PatchFastcastTeams } from '../actions/espn-fastcast-team.actions';
+import { SetFastcastEvents } from '../actions/espn-fastcast-event.actions';
+import { SetFastcastLeague } from '../actions/espn-fastcast-league.actions';
+import { SetFastcastSports } from '../actions/espn-fastcast-sport.actions';
+import { SetFastcastTeams } from '../actions/espn-fastcast-team.actions';
 import { FastcastEventType, OperationCode, WebSocketBuilder } from '../models/espn-fastcast-socket.model';
 import { EspnFastcastLeagueSelectors } from '../selectors/espn-fastcast-league.selectors';
 import { EspnFastcastSportSelectors } from '../selectors/espn-fastcast-sport.selectors';
@@ -129,12 +129,7 @@ export class EspnFastcastState {
   async fetchFastcast({ dispatch }: StateContext<EspnFastcastStateModel>, { payload: { uri } }: FetchFastcast): Promise<void> {
     const { sports, leagues, events, teams } = await this.espnService.espnFastcast(uri).toPromise();
 
-    dispatch([
-      new PatchFastcastSports(sports),
-      new PatchFastcastLeague(leagues),
-      new PatchFastcastEvents(events),
-      new PatchFastcastTeams(teams),
-    ]);
+    dispatch([new SetFastcastSports(sports), new SetFastcastLeague(leagues), new SetFastcastEvents(events), new SetFastcastTeams(teams)]);
   }
 
   @Action(SetSelectedEventType)

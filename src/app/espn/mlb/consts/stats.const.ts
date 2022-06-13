@@ -1,6 +1,4 @@
 import { FilterOptions } from '@app/@shared/models/filter.model';
-import { StatThreshold } from '@app/@shared/models/stat-threshold.model';
-import { SeasonConst } from '../models/adv-stats.model';
 import { StatCategory, StatsMap, StatType, StatTypePeriodId } from '../models/mlb-stats.model';
 
 export const STAT_PERIOD_FILTER_OPTIONS: FilterOptions[] = [
@@ -20,124 +18,6 @@ export function YearToStatTypePeriod(periodType: StatTypePeriodId, year: string)
 export function StatTypePeriodToYear(statTypePeriod: string): string {
   return statTypePeriod.split('').splice(2, 6).join('');
 }
-
-export const MLB_WEIGHTED_STATS: Record<string, SeasonConst> = {
-  '2020': {
-    wOBA: 0,
-    wOBAScale: 0,
-    runSB: 0,
-    runCS: 0,
-    wBB: 0.699,
-    wHBP: 0.728,
-    w1B: 0.883,
-    w2B: 1.238,
-    w3B: 1.558,
-    wHR: 1.979,
-    'R/PA': 0,
-    'R/W': 0,
-    cFIP: 0,
-  },
-  '2021': {
-    wOBA: 0.314,
-    wOBAScale: 1.209,
-    runSB: 0.2,
-    runCS: -0.419,
-    wBB: 0.711,
-    wHBP: 0.742,
-    w1B: 0.901,
-    w2B: 1.269,
-    w3B: 1.6,
-    wHR: 2.035,
-    cFIP: 3.17,
-    'R/PA': 0.121,
-    'R/W': 9.973,
-  },
-  '2022': {
-    wOBA: 0.306,
-    wOBAScale: 1.306,
-    wBB: 0.694,
-    wHBP: 0.727,
-    w1B: 0.897,
-    w2B: 1.288,
-    w3B: 1.641,
-    wHR: 2.134,
-    runSB: 0.2,
-    runCS: -0.389,
-    'R/PA': 0.112,
-    'R/W': 9.362,
-    cFIP: 3.134,
-  },
-};
-
-export const wRAAThreshold: { [key in StatThreshold]: number } = {
-  [StatThreshold.excellent]: 40,
-  [StatThreshold.great]: 20,
-  [StatThreshold.aboveAvg]: 10,
-  [StatThreshold.avg]: 0,
-  [StatThreshold.belowAvg]: -5,
-  [StatThreshold.poor]: -10,
-  [StatThreshold.awful]: -20,
-};
-
-export const wOBAThreshold: { [key in StatThreshold]: number } = {
-  [StatThreshold.excellent]: 0.4,
-  [StatThreshold.great]: 0.37,
-  [StatThreshold.aboveAvg]: 0.34,
-  [StatThreshold.avg]: 0.32,
-  [StatThreshold.belowAvg]: 0.31,
-  [StatThreshold.poor]: 0.3,
-  [StatThreshold.awful]: 0.29,
-};
-
-export const k9Threshold: { [key in StatThreshold]: number } = {
-  [StatThreshold.excellent]: 10,
-  [StatThreshold.great]: 9,
-  [StatThreshold.aboveAvg]: 8.2,
-  [StatThreshold.avg]: 7.7,
-  [StatThreshold.belowAvg]: 7.0,
-  [StatThreshold.poor]: 6.0,
-  [StatThreshold.awful]: 5.0,
-};
-
-export const kPctThreshold: { [key in StatThreshold]: number } = {
-  [StatThreshold.excellent]: 27,
-  [StatThreshold.great]: 24,
-  [StatThreshold.aboveAvg]: 22,
-  [StatThreshold.avg]: 20,
-  [StatThreshold.belowAvg]: 17,
-  [StatThreshold.poor]: 15,
-  [StatThreshold.awful]: 13,
-};
-
-export const bb9Threshold: { [key in StatThreshold]: number } = {
-  [StatThreshold.excellent]: 1.5,
-  [StatThreshold.great]: 1.9,
-  [StatThreshold.aboveAvg]: 2.5,
-  [StatThreshold.avg]: 2.9,
-  [StatThreshold.belowAvg]: 3.2,
-  [StatThreshold.poor]: 3.5,
-  [StatThreshold.awful]: 4.0,
-};
-
-export const bbPctThreshold: { [key in StatThreshold]: number } = {
-  [StatThreshold.excellent]: 4.5,
-  [StatThreshold.great]: 5.5,
-  [StatThreshold.aboveAvg]: 6.5,
-  [StatThreshold.avg]: 7.7,
-  [StatThreshold.belowAvg]: 8.0,
-  [StatThreshold.poor]: 8.5,
-  [StatThreshold.awful]: 9.0,
-};
-
-export const lobPctThreshold: { [key in StatThreshold]: number } = {
-  [StatThreshold.excellent]: 80,
-  [StatThreshold.great]: 78,
-  [StatThreshold.aboveAvg]: 75,
-  [StatThreshold.avg]: 72,
-  [StatThreshold.belowAvg]: 70,
-  [StatThreshold.poor]: 65,
-  [StatThreshold.awful]: 60,
-};
 
 export const MLB_STATS_MAP: StatsMap = {
   0: { abbrev: 'AB', description: 'At Bats', statCategoryId: StatCategory.Batting, statTypeId: StatType.Batting },
@@ -268,7 +148,12 @@ export const MLB_STATS_MAP: StatsMap = {
   },
 };
 
-export const MLB_STATS_LIST = Object.values(MLB_STATS_MAP);
+export const MLB_STATS_LIST = Object.entries(MLB_STATS_MAP).map(([key, stat]) => {
+  return {
+    ...stat,
+    id: key,
+  };
+});
 export const MLB_STATS_KEYS = Object.keys(MLB_STATS_MAP);
 
 export const BATTER_STATS_LIST = MLB_STATS_LIST.filter(s => s.statTypeId === StatType.Batting);

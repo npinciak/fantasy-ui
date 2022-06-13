@@ -1,9 +1,9 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { cellDataAccessor } from '@app/@shared/helpers/utils';
-import { TableColumnDataType } from '@app/espn/models/table.model';
+import { TableColumn, TableColumnDataType } from '@app/espn/models/table.model';
 import { BaseballPlayer } from '../../models/baseball-player.model';
 import { StatTypePeriodId } from '../../models/mlb-stats.model';
 
@@ -11,10 +11,10 @@ import { StatTypePeriodId } from '../../models/mlb-stats.model';
   selector: 'app-roster',
   templateUrl: './roster.component.html',
 })
-export class RosterComponent implements OnInit, AfterViewInit, OnChanges {
+export class RosterComponent implements AfterViewInit, OnChanges {
   @Input() data: BaseballPlayer[];
-  @Input() dataColumns: any[];
-  @Input() headers: any[];
+  @Input() dataColumns: TableColumn[];
+  @Input() headers: string[];
   @Input() ariaLabel: string | null = null;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -25,13 +25,11 @@ export class RosterComponent implements OnInit, AfterViewInit, OnChanges {
 
   dataSource: MatTableDataSource<BaseballPlayer>;
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor() {
     this.dataSource = new MatTableDataSource<BaseballPlayer>();
   }
 
-  ngOnInit(): void {}
-
-  public ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes.data) {
       this.dataSource.data = changes.data.currentValue;
     }

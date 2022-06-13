@@ -17,19 +17,12 @@ export enum StatTypePeriodId {
   Last7,
   Last15,
   Last30,
-  Average = 4,
-  Live = 5,
-  RestOfSeason = 6,
+  Average,
+  Live,
+  RestOfSeason,
   Projected = 10,
   BatterVsPitcher = 1000,
 }
-
-// 01 -- l7<year>
-// 02 -- l15<year>
-// 03 -- l30<year>
-// 05<gameId> (05401354459)
-// 002021 -- regularSeason<?><year>
-// 102022 -- proj<?><year>
 
 export const PlayerRatingPeriodIdMap: { [key in PeriodId]: string } = {
   0: 'Season',
@@ -56,7 +49,7 @@ export enum StatType {
   Defense,
 }
 
-type StatsProperties = {
+export type StatsProperties = {
   abbrev: string;
   description: string;
   statCategoryId: StatCategory;
@@ -121,10 +114,6 @@ type Stats =
   | 'bbi'
   | 'k'
   | 'hb';
-
-export type StatAbbrev = {
-  [P in Stats]: number;
-};
 
 export enum Stat {
   AB,

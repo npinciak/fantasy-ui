@@ -1,60 +1,10 @@
-<div
-  gdAreas.xs="content | footer"
-  gdGap="1em"
-  gdColumns.xs="none"
-  gdAreas.sm="sidebar content | footer footer"
-  gdAreas.gt-sm="sidebar content  | footer footer "
-  gdColumns.gt-sm="30% auto"
-  gdGap.gt-sm="20px"
-  [ngStyle]="{ 'max-width': 'auto' }"
->
-  <div gdArea="sidebar">
-    <!-- <mat-form-field>
-      <mat-select aria-label="" aria-labelledby="" (selectionChange)="fastcastEventFacade.fastcastLeagueChangeSidebar($event)">
-        <mat-option *ngFor="let league of fastcastLeagueFacade.prettyLeagueList$ | async" [value]="league.id">{{ league.shortName }} </mat-option>
-      </mat-select>
-    </mat-form-field> -->
-    <!-- <ng-container *ngIf="!(fastcastEventFacade.fastcastFilteredEventsLeaderboard$ | async); else filteredEvents"> -->
-
-    <!-- <ng-container *ngFor="let event of fastcastEventFacade.fastcastFilteredEventsSidebar$ | async"> -->
-    <!-- <ng-container *ngFor="let league of fastcastLeagueFacade.prettyLeagueList$ | async">
-      <ng-container *ngFor="let event of fastcastEventFacade.fastcastEventsByLeagueId(league.id)">
-        <div fxLayout="col" fxLayoutGap="10px">
-          <div fxFlex.gt-md="100" fxFlex.lt-md="100" fxFlex.lt-sm="100">
-            <mat-card style="margin: 10px 0">
-              <mat-card-content>
-                <div>
-                  <app-espn-list-team [team]="event?.teams?.away" [homeAway]="HomeAwayTeam.Away"></app-espn-list-team>
-                </div>
-                <div>
-                  <app-espn-list-team [team]="event?.teams?.home" [homeAway]="HomeAwayTeam.Home"></app-espn-list-team>
-                </div>
-              </mat-card-content>
-              <mat-card-actions fxLayout="col" align="end" style="text-align: right">
-                <div>
-                  <ng-container *ngIf="!event?.isHalftime; else halftime">
-                    <div style="margin-bottom: 5px">{{ event?.summary }}</div>
-                  </ng-container>
-                  <div style="margin-bottom: 5px">{{ event?.downDistancePositionText }}</div>
-                  <div style="font-size: 14px">{{ event?.lastPlay?.text }}</div>
-                </div>
-              </mat-card-actions>
-            </mat-card>
-          </div>
-        </div>
-        <ng-template #halftime>
-          {{ event?.isHalftime ? 'Halftime' : null }}
-        </ng-template>
-      </ng-container>
-    </ng-container> -->
-    <!-- </ng-container> -->
-  </div>
-  <div gdArea="content">
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
+  <div fxFlex="30%" fxFlex.sm="100%">
     <app-add-league-form
       [leagues]="fantasyLeagueFacade.localStorageLeagueList$ | async"
       (addLeague)="onAddLeague($event)"
       (removeLeague)="onRemoveLeague($event)"
     ></app-add-league-form>
   </div>
-  <div gdArea="footer"></div>
+  <div fxFlex="70%" fxFlex.sm="100%"></div>
 </div>

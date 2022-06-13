@@ -18,7 +18,11 @@ export enum StatThresholdClass {
   awful = 'awful',
 }
 
-export const StatThresholdMap: { [key in StatThreshold]: StatThresholdClass } = {
+export type StatByThreshold = {
+  [key in StatThreshold]: number;
+};
+
+export const StatThresholdByClassMap: { [key in StatThreshold]: StatThresholdClass } = {
   [StatThreshold.excellent]: StatThresholdClass.excellent,
   [StatThreshold.great]: StatThresholdClass.great,
   [StatThreshold.aboveAvg]: StatThresholdClass.aboveAvg,
