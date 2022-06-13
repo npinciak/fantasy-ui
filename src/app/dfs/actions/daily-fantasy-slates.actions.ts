@@ -5,7 +5,7 @@ export class FetchSlates {
   constructor(public payload: { site: string; sport: string }) {}
 }
 
-export class PatchSlates {
-  static readonly type = `[dailyFantasySlates] PatchSlates`;
+export class SetSlates {
+  static readonly type = `[dailyFantasySlates] SetSlates`;
   constructor(public payload: SiteSlateEntity[]) {}
 }

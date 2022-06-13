@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { PatchMlbPlayerSlateAttributes } from '../mlb/actions/daily-fantasy-mlb-player-slate-attr.actions';
-import { PatchMlbTeamSlateAttributes } from '../mlb/actions/daily-fantasy-mlb-team-slate-attr.actions';
+import { SetMlbPlayerSlateAttributes } from '../mlb/actions/daily-fantasy-mlb-player-slate-attr.actions';
+import { SetMlbTeamSlateAttributes } from '../mlb/actions/daily-fantasy-mlb-team-slate-attr.actions';
 import { PlayerSlateAttr } from '../models/player-slate-attr.model';
 import { SlateService, SlateTeamMap } from '../service/slate.service';
 
@@ -32,7 +32,6 @@ const defaults = {
 export class DailyFantasySlateAttrState {
   constructor(private slateService: SlateService) {}
 
-
   @Selector()
   static slate(state: DailyFantasySlateAttrStateModel): string | null {
     return state.slate;
@@ -45,7 +44,7 @@ export class DailyFantasySlateAttrState {
   ): Promise<void> {
     const { statGroups, teams, players } = await this.slateService.getGameAttrBySlateId({ sport, site, slate }).toPromise();
 
-    dispatch([new PatchMlbPlayerSlateAttributes(players), new PatchMlbTeamSlateAttributes(teams)]);
+    dispatch([new SetMlbPlayerSlateAttributes(players), new SetMlbTeamSlateAttributes(teams)]);
     // dispatch(new PatchProfiler({ profiler: statGroups }));
 
     // if (sport === 'nfl') {
