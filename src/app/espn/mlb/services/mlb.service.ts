@@ -2,6 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { exists } from '@app/@shared/helpers/utils';
 import {
+  EspnClientEvent,
   EspnClientFreeAgent,
   EspnClientPlayer,
   EspnClientPlayerNewsFeedEntity,
@@ -15,9 +16,10 @@ import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
 import { EspnService } from '@app/espn/service/espn.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MLB_LINEUP_MAP, PitcherIdSet } from '../consts/lineup.const';
+import { BATTING_LINEUP_SLOTS, MLB_LINEUP_MAP, PitcherIdSet } from '../consts/lineup.const';
 import { MLB_POSITION_MAP } from '../consts/position.const';
 import { MLB_TEAM_MAP } from '../consts/team.const';
+import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
 
@@ -35,6 +37,21 @@ export class MlbService {
       return false;
     }
     return false;
+  }
+
+  static transformEspnClientEventToBaseballEvent(event: EspnClientEvent): BaseballEvent {
+    return {
+      id: event.id,
+      uid: event.uid,
+      competitors: event.competitors.reduce((acc, val) => {
+        acc[val.id] = {
+          id: val.id,
+          homeAway: val.homeAway,
+          abbreviation: val.abbreviation,
+        };
+        return acc;
+      }, {}),
+    };
   }
 
   static transformEspnClientTeamListToTeamList(teams: EspnClientTeam[]): BaseballTeam[] {
@@ -68,8 +85,9 @@ export class MlbService {
       id: player.playerId.toString(),
       name: player.playerPoolEntry?.player?.fullName,
       img: playerImgBuilder(player.playerId, 'mlb'),
-      teamUid: `s:1~l:10~t:${player.playerPoolEntry?.player.proTeamId}`,
       team: MLB_TEAM_MAP[player.playerPoolEntry?.player?.proTeamId],
+      teamId: player.playerPoolEntry?.player.proTeamId.toString(),
+      teamUid: `s:1~l:10~t:${player.playerPoolEntry?.player.proTeamId}`,
       position: MLB_POSITION_MAP[player.playerPoolEntry?.player.defaultPositionId].abbrev,
       isInjured: exists(player.playerPoolEntry) ?? player.playerPoolEntry?.player.injured,
       injuryStatus: player.playerPoolEntry?.player.injuryStatus,
@@ -97,6 +115,7 @@ export class MlbService {
         name: player.playerPoolEntry?.player.fullName,
         img: playerImgBuilder(player.playerId, 'mlb'),
         teamUid: `s:1~l:10~t:${player.playerPoolEntry?.player.proTeamId}`,
+        teamId: player.playerPoolEntry?.player.proTeamId.toString(),
         team: MLB_TEAM_MAP[player.playerPoolEntry?.player.proTeamId],
         position: MLB_POSITION_MAP[player.playerPoolEntry?.player.defaultPositionId].abbrev,
         isInjured: player.playerPoolEntry?.player.injured,
@@ -132,6 +151,7 @@ export class MlbService {
         id: player.id.toString(),
         name: player.player.fullName,
         img: playerImgBuilder(player.id, 'mlb'),
+        teamId: player.player.proTeamId.toString(),
         teamUid: `s:1~l:10~t:${player.player.proTeamId}`,
         team: MLB_TEAM_MAP[player.player.proTeamId],
         position: MLB_POSITION_MAP[player.player.defaultPositionId].abbrev,
@@ -181,6 +201,12 @@ export class MlbService {
     );
   }
 
+  baseballEvents(): Observable<BaseballEvent[]> {
+    return this.espnClient
+      .espnFantasyLeagueEvents(FantasySports.baseball)
+      .pipe(map(res => res.events.map(e => MlbService.transformEspnClientEventToBaseballEvent(e))));
+  }
+
   /**
    * Return baseball player latest news
    * @param payload
@@ -200,9 +226,9 @@ export class MlbService {
    * @param payload
    * @returns
    */
-  baseballFreeAgents(payload: { leagueId: number; scoringPeriodId: number }): Observable<BaseballPlayer[]> {
+  baseballFreeAgents(payload: { leagueId: number; scoringPeriodId: number; filter: PaginatedFilter }): Observable<BaseballPlayer[]> {
     let headers = new HttpHeaders();
-    headers = headers.append('X-Fantasy-Filter', JSON.stringify(this.filterHeaders));
+    headers = headers.append('X-Fantasy-Filter', JSON.stringify(payload.filter));
     return this.espnClient
       .espnFantasyFreeAgentsBySport(FantasySports.baseball, payload.leagueId, payload.scoringPeriodId, headers)
       .pipe(map(res => MlbService.transformEspnClientFreeAgentToBaseballPlayer(res.players)));
@@ -212,7 +238,7 @@ export class MlbService {
     return {
       players: {
         filterStatus: { value: ['FREEAGENT', 'WAIVERS'] },
-        filterSlotIds: { value: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 19] },
+        filterSlotIds: { value: BATTING_LINEUP_SLOTS },
         filterRanksForScoringPeriodIds: { value: [1] },
         sortPercOwned: { sortPriority: 2, sortAsc: false },
         sortDraftRanks: { sortPriority: 100, sortAsc: true, value: 'STANDARD' },
@@ -224,4 +250,38 @@ export class MlbService {
       },
     };
   }
+
+  // PITCHING_LINEUP_SLOTS
+}
+
+export interface PaginatedFilter {
+  players: PlayerFilterEntity;
+}
+
+export interface PlayerFilterEntity {
+  filterStatus: FilterValueString;
+  filterSlotIds: FilterValueNumber;
+  // filterRanksForScoringPeriodIds: FilterValueNumber;
+  // sortPercOwned: SortMetaData;
+  sortDraftRanks: SortMetaData;
+  limit: number;
+}
+
+export interface SortMetaData {
+  sortPriority: number;
+  sortAsc: boolean;
+  value: string | null;
+}
+
+export interface FilterValueString {
+  value: string[];
+}
+
+export interface FilterValueNumber {
+  value: number[];
+}
+
+export interface FilterStatsForTopScoringPeriodIds {
+  value: number;
+  additionalValue: number[];
 }

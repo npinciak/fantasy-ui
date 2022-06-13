@@ -1,5 +1,6 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { currentDate } from '@app/@shared/helpers/date';
 import { FastcastLeague } from '@app/espn-fastcast/models/fastcast-league.model';
 import { FastcastSport } from '@app/espn-fastcast/models/fastcast-sport.model';
 import { Observable } from 'rxjs';
@@ -15,7 +16,7 @@ import {
 } from '../../espn-fastcast/models/espn-fastcast.model';
 import { FastcastEvent, FootballSituation, MlbSituation } from '../../espn-fastcast/models/fastcast-event.model';
 import { FastcastEventTeam } from '../../espn-fastcast/models/fastcast-team.model';
-import { EspnClientFreeAgent, EspnClientLeague, EspnClientPlayerNews, GameStatusId } from '../espn-client.model';
+import { EspnClientEventList, EspnClientFreeAgent, EspnClientLeague, EspnClientPlayerNews, GameStatusId } from '../espn-client.model';
 import { includeSports, transformUidToId } from '../espn-helpers';
 import {
   EspnEndpointBuilder,
@@ -24,8 +25,6 @@ import {
   espnViewParamFragmentList,
   FantasySports,
 } from '../models/espn-endpoint-builder.model';
-import { FeedArticle as FeedArticleImport } from '../models/espn-onefeed.model';
-import { FeedArticle } from '../models/feed.model';
 import { League } from '../models/league.model';
 
 @Injectable({
@@ -152,18 +151,6 @@ export class EspnService {
     };
   }
 
-  static transformFeedArticleImportToFeedArticle(articleImport: FeedArticleImport): FeedArticle {
-    return {
-      id: articleImport.id.toString(),
-      headline: articleImport.headline,
-      description: articleImport.description,
-      image: articleImport?.images[0]?.url ?? null,
-      link: articleImport.links.web.href,
-      published: articleImport.published,
-      author: '',
-    };
-  }
-
   /**
    * Update Espn Fantasy Team
    *
@@ -190,6 +177,23 @@ export class EspnService {
     const endpoint = new EspnEndpointBuilder(sport, leagueId, 2022);
     return this.api.get<EspnClientLeague>(endpoint.fantasyLeague, { params: this.params, headers });
   }
+
+  /**
+   * Retrieve Espn Fantasy League
+   *
+   * @param leagueId
+   * @param sport
+   * @returns EspnClientLeague
+   */
+  espnFantasyLeagueEvents(sport: FantasySports, headers?: HttpHeaders): Observable<EspnClientEventList> {
+    const endpoint = new EspnEndpointBuilder(sport);
+    const params = new HttpParams()
+      .set(EspnParamFragment.UseMap, true)
+      .set(EspnParamFragment.Dates, currentDate(''))
+      .set(EspnParamFragment.PbpOnly, true);
+    return this.api.get<EspnClientEventList>(endpoint.espnEvents, { params, headers });
+  }
+
 
   /**
    * Fetch player news
@@ -225,6 +229,7 @@ export class EspnService {
     const params = new HttpParams()
       .set(EspnParamFragment.ScoringPeriod, scoringPeriod.toString())
       .set(EspnParamFragment.View, EspnViewParamFragment.PlayerInfo);
+    
     return this.api.get<{ players: EspnClientFreeAgent[] }>(endpoint.fantasyLeague, { params, headers });
   }
 
@@ -247,11 +252,13 @@ export class EspnService {
         const flatLeaguesEvents = exists(flattenLeaguesImport) ? flattenLeaguesImport.map(l => (exists(l.events) ? l.events : [])) : [];
 
         const flattenEventsImport = flatten(flatLeaguesEvents);
+
         const events = exists(flattenEventsImport)
           ? flattenEventsImport.map(e => EspnService.transformEventImportToFastcastEvent(e)).filter(l => l != null)
           : [];
 
-        const teams = exists(events) ? events.map(c => (exists(c) ? c.teams : null)) : [];
+        const teamsTetst = exists(events) ? events.map(c => c?.teams) : [];
+        const teams = [];
 
         Object.assign(final, {
           sports,

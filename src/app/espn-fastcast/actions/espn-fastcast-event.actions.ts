@@ -1,6 +1,6 @@
 import { FastcastEvent } from '../models/fastcast-event.model';
 
-export class PatchFastcastEvents {
-  static readonly type = `[espnFastcastEvent] PatchFastcastEvents`;
+export class SetFastcastEvents {
+  static readonly type = `[espnFastcastEvent] SetFastcastEvents`;
   constructor(public payload: FastcastEvent[]) {}
 }

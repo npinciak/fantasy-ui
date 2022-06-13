@@ -6,7 +6,6 @@ import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
 import { EspnFastcastEventToggleState } from '../espn-fastcast/state/espn-fastcast-event-toggle.state';
 import { AddLeagueFormComponent } from './components/add-league-form/add-league-form.component';
-import { EspnListTeamComponent } from './components/espn-list-team/espn-list-team.component';
 import { EspnRoutingModule } from './espn-routing.module';
 import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
 import { LineupCardPlayerComponent } from './mlb/components/lineup-card-player/lineup-card-player.component';
@@ -21,6 +20,8 @@ import { TeamInfoColComponent } from './mlb/components/standings/team-info-col/t
 import { FreeAgentsComponent } from './mlb/pages/free-agents/free-agents.component';
 import { HomeComponent as FantasyBaseballHomeComponent } from './mlb/pages/home/home.component';
 import { TeamComponent } from './mlb/pages/team/team.component';
+import { FantasyBaseballEventsState } from './mlb/state/fantasy-baseball-events.state';
+import { FantasyBaseballFreeAgentsFilterState } from './mlb/state/fantasy-baseball-free-agents-filter.state';
 import { FantasyBaseballFreeAgentsState } from './mlb/state/fantasy-baseball-free-agents.state';
 import { FantasyBaseballLeagueState } from './mlb/state/fantasy-baseball-league.state';
 import { FantasyBaseballPlayerState } from './mlb/state/fantasy-baseball-player.state';
@@ -31,6 +32,7 @@ import { FantasyFootballLeagueState } from './nfl/state/fantasy-football-league.
 import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-schedule.state';
 import { FantasyFootballTeamsState } from './nfl/state/fantasy-football-teams.state';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
+import { EspnAddLeagueFormState } from './state/espn-add-league-form.state';
 
 const declarations = [
   EspnHomeComponent,
@@ -48,7 +50,6 @@ const declarations = [
   LineupCardComponent,
   LineupCardPlayerComponent,
   FantasyFootballHomeComponent,
-  EspnListTeamComponent,
   AddLeagueFormComponent,
 ];
 
@@ -60,8 +61,11 @@ const states = [
   FantasyBaseballTeamState,
   FantasyBaseballTeamsLiveState,
   FantasyBaseballFreeAgentsState,
+  FantasyBaseballFreeAgentsFilterState,
   FantasyBaseballPlayerState,
+  FantasyBaseballEventsState,
   EspnFastcastEventToggleState,
+  EspnAddLeagueFormState,
 ];
 
 const imports = [

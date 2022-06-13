@@ -3,8 +3,14 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UrlBuilder } from '@app/@shared/url-builder';
 import { Store } from '@ngxs/store';
-import { PatchSeasonId } from '../../actions/mlb.actions';
-import { MLB_STATS_MAP, StatTypePeriodToYear, STAT_PERIOD_FILTER_OPTIONS } from '../../consts/stats.const';
+import { SetSeasonId } from '../../actions/mlb.actions';
+import {
+  BATTER_STATS_LIST,
+  MLB_STATS_MAP,
+  PITCHER_STATS_LIST,
+  StatTypePeriodToYear,
+  STAT_PERIOD_FILTER_OPTIONS,
+} from '../../consts/stats.const';
 import {
   BATTER_STATS_HEADERS,
   BATTER_STATS_LIVE_HEADERS,
@@ -17,7 +23,7 @@ import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-leagu
 import { FantasyBaseballPlayerFacade } from '../../facade/fantasy-baseball-player.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
 import { BaseballPlayer } from '../../models/baseball-player.model';
-import { Stat, StatList } from '../../models/mlb-stats.model';
+import { Stat } from '../../models/mlb-stats.model';
 
 @Component({
   selector: 'app-team',
@@ -30,7 +36,10 @@ export class TeamComponent implements OnInit {
   readonly STAT_PERIOD_FILTER_OPTIONS = STAT_PERIOD_FILTER_OPTIONS;
   readonly teamId = this.activatedRoute.snapshot.params.teamId;
   readonly leagueId = this.activatedRoute.snapshot.params.leagueId;
-  readonly statList = StatList;
+
+  readonly BATTER_STATS_LIST = BATTER_STATS_LIST;
+  readonly PITCHER_STATS_LIST = PITCHER_STATS_LIST;
+
   readonly MLB_STAT_MAP = MLB_STATS_MAP;
 
   readonly BATTER_STATS_ROWS = BATTER_STATS_ROWS;
@@ -40,8 +49,8 @@ export class TeamComponent implements OnInit {
   readonly BATTER_STATS_LIVE_ROWS = BATTER_STATS_LIVE_ROWS;
   readonly BATTER_STATS_LIVE_HEADERS = BATTER_STATS_LIVE_HEADERS;
 
-  selectedPitcherStat = Stat.W;
-  selectedBatterStat = Stat.AB;
+  selectedPitcherStat = Stat.fip;
+  selectedBatterStat = Stat.wOBA;
   scoringPeriodId = '002022';
 
   isLiveScore: boolean;
@@ -68,14 +77,14 @@ export class TeamComponent implements OnInit {
   onScoringPeriodIdChange(val: string): void {
     this.scoringPeriodId = val;
     const seasonId = StatTypePeriodToYear(this.scoringPeriodId);
-    this.store.dispatch(new PatchSeasonId({ seasonId }));
+    this.store.dispatch(new SetSeasonId({ seasonId }));
   }
 
-  onBatterStatChange(val: Stat): void {
+  onBatterStatChange(val: any): void {
     this.selectedBatterStat = val;
   }
 
-  onPitcherStatChange(val: Stat): void {
+  onPitcherStatChange(val: any): void {
     this.selectedPitcherStat = val;
   }
 
@@ -84,6 +93,6 @@ export class TeamComponent implements OnInit {
   }
 
   get homeRoute(): string[] {
-    return [`${UrlBuilder.espnMlbBase}`, `${this.leagueId}`];
+    return [UrlBuilder.espnMlbBase, `${this.leagueId}`];
   }
 }

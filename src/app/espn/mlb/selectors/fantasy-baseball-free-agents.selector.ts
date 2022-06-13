@@ -1,7 +1,6 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { exists } from '@app/@shared/helpers/utils';
 import { FilterOptions } from '@app/@shared/models/filter.model';
-import { EspnClientPlayerStatsEntity } from '@app/espn/espn-client.model';
 import { Selector } from '@ngxs/store';
 import { MLB_STATS_KEYS, MLB_STATS_MAP } from '../consts/stats.const';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
@@ -54,14 +53,19 @@ export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBa
         })
         .sort((a, b) => b.data - a.data);
   }
-}
 
-export type FreeAgentStats = {
-  name: string;
-  img: string;
-  team: string;
-  position: string;
-  playerOwnershipChange: number | null;
-  playerOwnershipPercentOwned: number | null;
-  stats: EspnClientPlayerStatsEntity | undefined;
-};
+  @Selector([FantasyBaseballFreeAgentsSelector.getFreeAgentPitcherStats])
+  static getFreeAgentPitcherChartData(
+    getFreeAgentPitcherStats: (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[]
+  ): (statPeriod: string, seasonId: string, statFilter: Stat) => ChartData[] {
+    return (statPeriod: string, seasonId: string, statFilter: Stat) =>
+      getFreeAgentPitcherStats(statPeriod, seasonId)
+        .map(p => {
+          return {
+            data: exists(p.stats) ? p.stats[statFilter] : 0,
+            label: p.name,
+          };
+        })
+        .sort((a, b) => b.data - a.data);
+  }
+}

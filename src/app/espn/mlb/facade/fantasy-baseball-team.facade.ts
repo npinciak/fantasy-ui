@@ -16,7 +16,8 @@ export class FantasyBaseballTeamFacade extends GenericFacade(FantasyBaseballTeam
   liveBattingStats$ = select(FantasyBaseballTeamsSelector.getLiveTeamBatterStats);
   battingStats$ = select(FantasyBaseballTeamsSelector.getTeamBatterStats);
   pitchers$ = select(FantasyBaseballTeamsSelector.getTeamPitchers);
+  startingPitchers$ = select(FantasyBaseballTeamsSelector.getTeamStartingPitchers);
   pitcherStats$ = select(FantasyBaseballTeamsSelector.getTeamPitcherStats);
-  pitcherStatsChartData = select(FantasyBaseballTeamsSelector.getPitcherStatsChartData);
+  pitcherStatsChartData$ = select(FantasyBaseballTeamsSelector.getPitcherStatsChartData);
   isLoading$ = select(FantasyBaseballLeagueState.isLoading);
 }

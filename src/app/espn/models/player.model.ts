@@ -1,13 +1,6 @@
 /**
  * Base player model
  */
-interface PlayerProperties {
-  id: string;
-  name: string;
-  img: string;
-  team: string;
-  teamUid: string;
-  position: string;
-}
+type PlayerProperties = 'id' | 'name' | 'img' | 'team' | 'teamId' | 'teamUid' | 'position';
 
-export type Player = PlayerProperties;
+export type Player = { [prop in PlayerProperties]: string };

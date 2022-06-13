@@ -1,4 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { StatThreshold } from '@app/@shared/models/stat-threshold.model';
+import { THRESHOLD_MAP } from '@app/espn/mlb/consts/stats-threshold.conts';
 import { MLB_STATS_MAP } from '@app/espn/mlb/consts/stats.const';
 import { ChartData } from '@app/espn/mlb/models/chart-data.model';
 import { Stat } from '@app/espn/mlb/models/mlb-stats.model';
@@ -6,7 +8,6 @@ import { Stat } from '@app/espn/mlb/models/mlb-stats.model';
 @Component({
   selector: `app-data-vis`,
   templateUrl: './data-vis.component.html',
-  styleUrls: ['./data-vis.component.scss'],
 })
 export class DataVisComponent implements OnInit, OnChanges {
   @Input() title = '';
@@ -15,7 +16,7 @@ export class DataVisComponent implements OnInit, OnChanges {
   @Input() chartType = 'bar';
 
   public graph: ChartNew<number>;
-  public test: { x: string[]; y: number[]; type: string }[];
+  public test: any[]; //{ x: string[]; y: number[]; type: string; name?: string; showlegend?: boolean }[];
   readonly MLB_STAT_MAP = MLB_STATS_MAP;
 
   constructor() {
@@ -51,37 +52,64 @@ export class DataVisComponent implements OnInit, OnChanges {
   }
 
   private updateChart(data: ChartData[], statFilter: Stat) {
-    this.test = [
-      {
-        x: data.map(d => d.label),
-        y: data.map(d => d.data),
-        type: 'bar',
-      },
-    ];
+    const labels = data.map(d => d.label);
+    const baseData = data.map(d => d.data);
 
-    switch (statFilter) {
-      case Stat.wOBA:
-        // this.test.push(
-        //   {
-        //     x: labels,
-        //     y: new Array(data.length).fill(wOBAThreshold[StatThreshold.excellent]),
-        //     type: 'line',
-        //   }
-        // {
-        //   x: labels,
-        //   y: new Array(chartData.length).fill(wOBAThreshold[StatThreshold.aboveAvg]),
-        //   type: 'line',
-        // },
-        // {
-        //   x: labels,
-        //   y: new Array(chartData.length).fill(wOBAThreshold[StatThreshold.avg]),
-        //   type: 'line',
-        // }
-        // );
-        break;
+    const chartData = {
+      x: labels,
+      y: baseData,
+      type: 'bar',
+      showlegend: false,
+    };
 
-      default:
-        break;
+    this.test = [chartData];
+
+    const thresholdByStat = THRESHOLD_MAP[statFilter];
+
+    if (statFilter in THRESHOLD_MAP) {
+      const excellent = new Array(data.length).fill(thresholdByStat[StatThreshold.excellent]);
+      const great = new Array(data.length).fill(thresholdByStat[StatThreshold.great]);
+      const aboveAvg = new Array(data.length).fill(thresholdByStat[StatThreshold.aboveAvg]);
+      const avg = new Array(data.length).fill(thresholdByStat[StatThreshold.avg]);
+      const belowAvg = new Array(data.length).fill(thresholdByStat[StatThreshold.belowAvg]);
+      const poor = new Array(data.length).fill(thresholdByStat[StatThreshold.poor]);
+      const awful = new Array(data.length).fill(thresholdByStat[StatThreshold.awful]);
+
+      this.test.push(
+        {
+          x: labels,
+          y: great,
+          type: 'lines',
+          name: 'great',
+          line: {
+            color: 'black',
+            width: 2,
+            dash: 'dash',
+          },
+        },
+        {
+          x: labels,
+          y: avg,
+          type: 'lines',
+          name: 'Avg',
+          line: {
+            color: 'black',
+            width: 2,
+            dash: 'dash',
+          },
+        },
+        {
+          x: labels,
+          y: poor,
+          type: 'lines',
+          name: 'poor',
+          line: {
+            color: 'black',
+            width: 2,
+            dash: 'dash',
+          },
+        }
+      );
     }
   }
 

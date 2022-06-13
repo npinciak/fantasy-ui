@@ -4,9 +4,9 @@ export enum MLB_POSITION {
   POS0,
   SP,
   C,
-  '1B',
-  '2B',
-  '3B',
+  First,
+  Second,
+  Third,
   SS,
   LF,
   CF,
@@ -78,5 +78,5 @@ export const MLB_POSITION_MAP: Record<number, { abbrev: string; name: string }> 
   },
 };
 
-export const pitchingPositions = [MLB_POSITION];
+export const pitchingPositions = [];
 export const fieldingPositions = [];

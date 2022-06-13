@@ -5,17 +5,17 @@ export class FetchBaseballLeague {
   constructor(public payload: { leagueId: number }) {}
 }
 
-export class PatchSeasonId {
-  public static readonly type = `[fantasyBaseballLeague] PatchSeasonId`;
+export class SetSeasonId {
+  public static readonly type = `[fantasyBaseballLeague] SetSeasonId`;
   constructor(public payload: { seasonId: string }) {}
 }
 
-export class PatchScoringPeriodId {
-  public static readonly type = `[fantasyBaseballLeague] PatchScoringPeriodId`;
+export class SetScoringPeriodId {
+  public static readonly type = `[fantasyBaseballLeague] SetScoringPeriodId`;
   constructor(public payload: { scoringPeriodId: string }) {}
 }
 
-export class PatchLiveSchedule {
-  public static readonly type = `[fantasyBaseballLeague] PatchLiveSchedule`;
+export class SetLiveSchedule {
+  public static readonly type = `[fantasyBaseballLeague] SetLiveSchedule`;
   constructor(public payload: { schedule: EspnClientScheduleProperties }) {}
 }

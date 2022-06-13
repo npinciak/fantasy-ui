@@ -1,6 +1,6 @@
 import { FastcastSport } from '../models/fastcast-sport.model';
 
-export class PatchFastcastSports {
-  static readonly type = `[espnFastcastSport] PatchFastcastSports`;
+export class SetFastcastSports {
+  static readonly type = `[espnFastcastSport] SetFastcastSports`;
   constructor(public payload: FastcastSport[]) {}
 }

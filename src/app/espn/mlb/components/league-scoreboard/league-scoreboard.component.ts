@@ -16,7 +16,7 @@ export class LeagueScoreboardComponent {
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   viewTeam(id: string): void {
-    this.router.navigate([UrlBuilder.espnMlbLeagueTeam(this.leagueId, id)]);
+    this.router.navigate(UrlBuilder.espnMlbLeagueTeam(this.leagueId, id));
   }
 
   getTooltipText(team: BaseballTeam): string | null {

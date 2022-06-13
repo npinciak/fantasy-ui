@@ -5,13 +5,16 @@ import { EspnFastcastTeamSelectors } from '@app/espn-fastcast/selectors/espn-fas
 import { Selector } from '@ngxs/store';
 import { AdvStats } from '../class/advStats.class';
 import { MLB_LINEUP, MLB_LINEUP_MAP } from '../consts/lineup.const';
-import { MLB_WEIGHTED_STATS, YearToStatTypePeriod } from '../consts/stats.const';
+import { YearToStatTypePeriod } from '../consts/stats.const';
+import { MLB_WEIGHTED_STATS } from '../consts/weighted-stats.const';
+import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
 import { BaseballTeamLive, BaseballTeamMap, BaseballTeamTableRow } from '../models/baseball-team.model';
 import { ChartData } from '../models/chart-data.model';
 import { Stat, StatTypePeriodId } from '../models/mlb-stats.model';
 import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.state';
 import { FantasyBaseballTeamState } from '../state/fantasy-baseball-team.state';
+import { FantasyBaseballEventsSelector } from './fantasy-baseball-events.selector';
 import { FantasyBaseballTeamsLiveSelector } from './fantasy-baseball-teams-live.selector';
 
 export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBaseballTeamState) {
@@ -46,13 +49,13 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
     };
   }
 
-  static startingPlayers(players: BaseballPlayer[]): BaseballPlayer[] {
+  static startingPlayersFilter(players: BaseballPlayer[]): BaseballPlayer[] {
     return players
       .filter(p => !p.isInjured && !MLB_LINEUP_MAP[p.lineupSlotId].bench && p.lineupSlotId !== MLB_LINEUP.IL)
       .sort((a, b) => a.lineupSlotId - b.lineupSlotId);
   }
 
-  static benchPlayers(players: BaseballPlayer[]): BaseballPlayer[] {
+  static benchPlayersFilter(players: BaseballPlayer[]): BaseballPlayer[] {
     return players.filter(p => !p.isInjured && MLB_LINEUP_MAP[p.lineupSlotId].bench);
   }
 
@@ -64,9 +67,29 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
     });
   }
 
-  @Selector([FantasyBaseballTeamsSelector.getById])
-  static getRosterByTeamId(getTeamById: (id: string) => BaseballTeamTableRow): (id: string) => BaseballPlayer[] {
-    return (id: string) => getTeamById(id).roster;
+  @Selector([FantasyBaseballTeamsSelector.getById, FantasyBaseballEventsSelector.getById, FantasyBaseballEventsSelector.getIdSet])
+  static getRosterByTeamId(
+    getTeamById: (id: string) => BaseballTeamTableRow,
+    getEventById: (id: string) => BaseballEvent,
+    gameIdSet: Set<string>
+  ): (id: string) => BaseballPlayer[] {
+    return (id: string) =>
+      getTeamById(id).roster.map(p => {
+        const playerGames = p.starterStatusByProGame;
+
+        const playerObj = {} as any;
+
+        Object.entries(playerGames).map(([k, g]) => {
+          if (gameIdSet.has(k)) {
+            Object.assign(playerObj, {
+              startingStatus: g,
+              opponent: getEventById(k).competitors,
+            });
+          }
+        });
+
+        return { ...p, ...playerObj };
+      });
   }
 
   @Selector([FantasyBaseballTeamsSelector.getRosterByTeamId])
@@ -80,13 +103,13 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
   }
 
   @Selector([FantasyBaseballTeamsSelector.getTeamBatters])
-  static getTeamStartingBatters(getTeamBatters: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
-    return (id: string) => FantasyBaseballTeamsSelector.startingPlayers(getTeamBatters(id));
+  static getTeamStartingBatters(getTeamBatters: (id: string) => BaseballPlayer[]): (id: string) => any[] {
+    return (id: string) => FantasyBaseballTeamsSelector.startingPlayersFilter(getTeamBatters(id));
   }
 
   @Selector([FantasyBaseballTeamsSelector.getTeamBatters])
   static getTeamBenchBatters(getTeamBatters: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
-    return (id: string) => FantasyBaseballTeamsSelector.benchPlayers(getTeamBatters(id));
+    return (id: string) => FantasyBaseballTeamsSelector.benchPlayersFilter(getTeamBatters(id));
   }
 
   @Selector([FantasyBaseballTeamsSelector.getRosterByTeamId])
@@ -96,12 +119,12 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
 
   @Selector([FantasyBaseballTeamsSelector.getTeamPitchers])
   static getTeamStartingPitchers(getTeamPitchers: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
-    return (id: string) => FantasyBaseballTeamsSelector.startingPlayers(getTeamPitchers(id));
+    return (id: string) => FantasyBaseballTeamsSelector.startingPlayersFilter(getTeamPitchers(id));
   }
 
   @Selector([FantasyBaseballTeamsSelector.getTeamPitchers])
   static getTeamPitchersBench(getTeamPitchers: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
-    return (id: string) => FantasyBaseballTeamsSelector.benchPlayers(getTeamPitchers(id));
+    return (id: string) => FantasyBaseballTeamsSelector.benchPlayersFilter(getTeamPitchers(id));
   }
 
   @Selector([FantasyBaseballTeamsSelector.getTeamBatters, FantasyBaseballLeagueState.seasonId])
@@ -109,10 +132,8 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
     getTeamBatters: (teamId: string) => BaseballPlayer[],
     seasonId: string
   ): (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[] {
-    return (id: string, statPeriod: string) => {
-      const players = getTeamBatters(id);
-      return players.map(p => FantasyBaseballTeamsSelector.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId));
-    };
+    return (id: string, statPeriod: string) =>
+      getTeamBatters(id).map(p => FantasyBaseballTeamsSelector.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId));
   }
 
   @Selector([FantasyBaseballTeamsSelector.getTeamBatterStats, FantasyBaseballLeagueState.seasonId])
@@ -128,6 +149,7 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
             label: p.name,
           };
         })
+        .filter(d => d.data !== 0)
         .sort((a, b) => b.data - a.data);
     };
   }
@@ -138,7 +160,7 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
     selectFastcastTeamById: (id: string) => FastcastEventTeam | null
   ) {
     return (id: string) => {
-      const batters = FantasyBaseballTeamsSelector.startingPlayers(getLiveTeamBatters(id));
+      const batters = FantasyBaseballTeamsSelector.startingPlayersFilter(getLiveTeamBatters(id));
       return batters.map(p => {
         const eventUid = selectFastcastTeamById(p?.teamUid)?.eventUid;
 
@@ -166,10 +188,8 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
     getTeamPitchers: (id: string) => BaseballPlayer[],
     seasonId: string
   ): (id: string, statPeriod: string) => BaseballPlayerStatsRow[] {
-    return (id: string, statPeriod: string) => {
-      const players = getTeamPitchers(id);
-      return players.map(p => FantasyBaseballTeamsSelector.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId));
-    };
+    return (id: string, statPeriod: string) =>
+      getTeamPitchers(id).map(p => FantasyBaseballTeamsSelector.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId));
   }
 
   @Selector([FantasyBaseballTeamsSelector.getTeamPitcherStats, FantasyBaseballLeagueState.seasonId])
@@ -185,6 +205,7 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
             label: p.name,
           };
         })
+        .filter(d => d.data !== 0)
         .sort((a, b) => b.data - a.data);
     };
   }
