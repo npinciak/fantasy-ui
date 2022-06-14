@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UrlBuilder, UrlFragments, UrlQueryParams } from '@app/@shared/url-builder';
 import { EspnFastcastFacade } from '@app/espn-fastcast/facade/espn-fastcast.facade';
-import { ShellFacade } from './facade/shell.facade';
 
 @Component({
   selector: 'app-shell',
@@ -16,8 +15,8 @@ export class ShellComponent implements OnInit {
   readonly URL_QUERY_PARAMS = UrlQueryParams;
   readonly UrlBuilder = UrlBuilder;
 
-  constructor(readonly shellFacade: ShellFacade, private fastcastFacade: EspnFastcastFacade, private router: Router) {
-    this.router.navigate([])
+  constructor(private fastcastFacade: EspnFastcastFacade, private router: Router) {
+    this.router.navigate([]);
   }
 
   ngOnInit(): void {

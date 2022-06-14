@@ -10,13 +10,12 @@ import { NgxsModule } from '@ngxs/store';
 import { environment } from 'src/environments/environment';
 import { httpInterceptorProviders } from './@core/interceptors';
 import { ShellModule } from './@core/shell/shell.module';
-import { ShellState } from './@core/shell/state/shell.state';
 import { LocalStorageState } from './@core/store/local-storage/local-storage.state';
 import { SharedModule } from './@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-const states = [ShellState, LocalStorageState];
+const states = [LocalStorageState];
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -39,7 +38,6 @@ const states = [ShellState, LocalStorageState];
     }),
     SharedModule,
     ShellModule,
-
     AppRoutingModule,
   ],
   providers: [httpInterceptorProviders],
