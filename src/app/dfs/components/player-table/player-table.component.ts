@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -18,7 +18,7 @@ enum FilterType {
   templateUrl: './player-table.component.html',
   styleUrls: ['./player-table.component.scss'],
 })
-export class PlayerTableComponent implements OnInit, OnChanges {
+export class PlayerTableComponent implements OnChanges {
   @Input() data: unknown[];
   @Input() dataColumns: any[];
   @Input() headers: any[];
@@ -36,8 +36,6 @@ export class PlayerTableComponent implements OnInit, OnChanges {
   constructor() {
     this.dataSource = new MatTableDataSource<unknown>();
   }
-
-  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.data) {

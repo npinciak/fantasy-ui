@@ -1,6 +1,6 @@
 import { Team } from '../models/team.model';
 
-export class PatchTeams {
-  static readonly type = `[dailyFantasyTeams] PatchTeams`;
+export class SetTeams {
+  static readonly type = `[dailyFantasyTeams] SetTeams`;
   constructor(public payload: Team[]) {}
 }

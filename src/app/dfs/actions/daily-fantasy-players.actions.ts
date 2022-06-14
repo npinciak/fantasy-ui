@@ -5,7 +5,7 @@ export class FetchPlayers {
   constructor(public payload: { slatePath: string }) {}
 }
 
-export class PatchPlayers {
-  static readonly type = `[dailyFantasyPlayers] PatchPlayers`;
+export class SetPlayers {
+  static readonly type = `[dailyFantasyPlayers] SetPlayers`;
   constructor(public payload: SlatePlayer[]) {}
 }
