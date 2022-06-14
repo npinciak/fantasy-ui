@@ -5,7 +5,4 @@ import { SetTeams } from '../actions/daily-fantasy-teams.actions';
 
 @State({ name: 'dailyFantasyTeams' })
 @Injectable()
-export class DailyFantasyTeamsState extends GenericState({
-  idProperty: 'rgId',
-  addOrUpdate: SetTeams,
-}) {}
+export class DailyFantasyTeamsState extends GenericState({ idProperty: 'rgId', addOrUpdate: SetTeams }) {}

@@ -34,14 +34,20 @@ export class TableSelectors {
   static getBatterColumns(): TableColumn[] {
     return [
       { columnDef: 'name', headerCell: 'name', headerLabel: 'Name', dataType: TableColumnDataType.String },
+      {
+        columnDef: 'position',
+        headerCell: 'position',
+        headerLabel: 'pos',
+        dataType: TableColumnDataType.String,
+      },
       { columnDef: 'opp', headerCell: 'opp', headerLabel: 'Opp', dataType: TableColumnDataType.String },
       { columnDef: 'salary', headerCell: 'salary', headerLabel: 'salary', dataType: TableColumnDataType.Number },
-      { columnDef: 'smash_pct', headerCell: 'smash_pct', headerLabel: 'smash_pct', dataType: TableColumnDataType.Number },
-      { columnDef: 'stack_diff', headerCell: 'stack_diff', headerLabel: 'stack_diff', dataType: TableColumnDataType.Number },
-      { columnDef: 'stack_field', headerCell: 'stack_field', headerLabel: 'salastack_field', dataType: TableColumnDataType.Number },
-      { columnDef: 'stack_leverage', headerCell: 'stack_leverage', headerLabel: 'stack_leverage', dataType: TableColumnDataType.Number },
+      { columnDef: 'smash_pct', headerCell: 'smash_pct', headerLabel: 'Smash Pct', dataType: TableColumnDataType.Number },
+      { columnDef: 'stack_diff', headerCell: 'stack_diff', headerLabel: 'Stack Diff', dataType: TableColumnDataType.Number },
+      { columnDef: 'stack_field', headerCell: 'stack_field', headerLabel: 'Stack Field', dataType: TableColumnDataType.Number },
+      { columnDef: 'stack_leverage', headerCell: 'stack_leverage', headerLabel: 'Stack Lev.', dataType: TableColumnDataType.Number },
 
-      // { columnDef: 'ownership.dk', headerCell: 'ownership.dk', headerLabel: 'ownership', dataType: TableColumnDataType.Number },
+      { columnDef: 'salaryDiff.rank', headerCell: 'salaryDiff.rank', headerLabel: 'sallary rnk', dataType: TableColumnDataType.Number },
       // { columnDef: 'plateIq.factors.positiveCt', headerCell: '', headerLabel: '', dataType: TableColumnDataType.Number },
       // { columnDef: 'plateIq.factors.negativeCt', headerCell: '', headerLabel: '', dataType: TableColumnDataType.Number },
       // { columnDef: 'plateIq.score.overall', headerCell: '', headerLabel: '', dataType: TableColumnDataType.Number },

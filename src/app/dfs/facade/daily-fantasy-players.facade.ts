@@ -19,7 +19,7 @@ export class DailyFantasyPlayersFacade {
 
   constructor(private store: Store) {}
 
-  fetchPlayers(slatePath: string): void {
-    this.store.dispatch(new FetchPlayers({ slatePath }));
+  fetchPlayers(slatePath: string): Observable<void> {
+    return this.store.dispatch(new FetchPlayers({ slatePath }));
   }
 }
