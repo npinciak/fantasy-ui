@@ -1,6 +1,6 @@
 import { Schedule } from '../models/schedule.model';
 
-export class PatchSchedule {
-  static readonly type = `[dailyFantasySchedule] PatchSchedule`;
+export class SetSchedule {
+  static readonly type = `[dailyFantasySchedule] SetSchedule`;
   constructor(public payload: Schedule[]) {}
 }
