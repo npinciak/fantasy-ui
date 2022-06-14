@@ -16,7 +16,7 @@ export class DailyFantasySlateAttrFacade {
     return this.store.selectSnapshot(DailyFantasySlateAttrSelectors.selectTeamList);
   }
 
-  fetchSlateAttr(sport: string, site: string, slateId: string): void {
-    this.store.dispatch(new FetchSlateAttr({ sport, site, slate: slateId }));
+  fetchSlateAttr(sport: string, site: string, slateId: string): Observable<void> {
+    return this.store.dispatch(new FetchSlateAttr({ sport, site, slate: slateId }));
   }
 }
