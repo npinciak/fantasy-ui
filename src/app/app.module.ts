@@ -5,24 +5,25 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { environment } from 'src/environments/environment';
 import { httpInterceptorProviders } from './@core/interceptors';
 import { ShellModule } from './@core/shell/shell.module';
-import { ShellState } from './@core/shell/state/shell.state';
 import { LocalStorageState } from './@core/store/local-storage/local-storage.state';
 import { SharedModule } from './@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-const states = [ShellState, LocalStorageState];
+const states = [LocalStorageState];
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
+    NgxsRouterPluginModule.forRoot(),
     NgxsSelectSnapshotModule.forRoot(),
     NgxsStoragePluginModule.forRoot({
       key: LocalStorageState,
@@ -39,7 +40,6 @@ const states = [ShellState, LocalStorageState];
     }),
     SharedModule,
     ShellModule,
-
     AppRoutingModule,
   ],
   providers: [httpInterceptorProviders],

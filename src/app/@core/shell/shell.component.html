@@ -44,9 +44,7 @@
   </mat-drawer>
   <mat-drawer-content>
     <div class="shell-container">
-      <ng-container *ngIf="shellFacade.showFastcastScoreboard$ | async">
-        <app-espn-scoreboard></app-espn-scoreboard>
-      </ng-container>
+      <app-espn-scoreboard></app-espn-scoreboard>
       <router-outlet></router-outlet>
     </div>
   </mat-drawer-content>

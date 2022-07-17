@@ -7,7 +7,6 @@ import { TeamComponent as MlbTeamComponent } from './mlb/pages/team/team.compone
 import { FantasyBaseballResolver } from './mlb/resolvers/mlb.resolver';
 import { HomeComponent as NflHomeComponent } from './nfl/pages/home/home.component';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
-import { EspnResolver } from './resolvers/espn.resolver';
 
 const nflRoutes = {
   path: UrlFragments.NFL,
@@ -87,7 +86,6 @@ export const routes: Routes = [
   {
     path: UrlFragments.Empty,
     component: EspnHomeComponent,
-    resolve: [EspnResolver],
   },
   nflRoutes,
   mlbRoutes,
