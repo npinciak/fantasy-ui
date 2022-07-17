@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { environment } from 'src/environments/environment';
@@ -22,6 +23,7 @@ const states = [LocalStorageState];
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
+    NgxsRouterPluginModule.forRoot(),
     NgxsSelectSnapshotModule.forRoot(),
     NgxsStoragePluginModule.forRoot({
       key: LocalStorageState,
