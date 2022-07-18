@@ -9,15 +9,24 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class NflService {
+ // static transformTeamImportToFantasyTeam(teamImport: EspnClientTeam): FantasyTeam {
+  //   return {
+  //     id: teamImport.id.toString(),
+  //     name: `${teamImport.location} ${teamImport.nickname}`,
+  //     logo: teamImport.logo,
+  //     record: `${teamImport.record.overall.wins}-${teamImport.record.overall.ties}-${teamImport.record.overall.losses}`,
+  //   };
+  // }
+
   constructor(private espnClient: EspnService) {}
 
   static transformEspnClientLeagueToFootballLeague(espnLeague: EspnClientLeague) {
     return espnLeague;
   }
 
-  footballLeague(leagueId: number): Observable<EspnClientLeague> {
+  footballLeague(leagueId: string, year: string): Observable<EspnClientLeague> {
     return this.espnClient
-      .espnFantasyLeagueBySport(FantasySports.football, leagueId)
+      .espnFantasyLeagueBySport({ sport: FantasySports.football, leagueId, year })
       .pipe(map(res => NflService.transformEspnClientLeagueToFootballLeague(res)));
   }
 }

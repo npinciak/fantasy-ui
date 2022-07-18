@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
-import { EspnService } from '@app/espn/service/espn.service';
-import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
-import { FetchFootballLeague } from '../actions/nfl.actions';
+import { Action, State, StateContext, Store } from '@ngxs/store';
+import { FetchFootballLeague } from '../actions/fantasy-football-league.actions';
+import { SetFantasyFootballTeams } from '../actions/fantasy-football-teams.actions';
 import { NflService } from '../services/nfl.service';
 import { PatchFantasyFootballSchedule } from './fantasy-football-schedule.state';
-import { PatchFantasyFootballTeams } from './fantasy-football-teams.state';
 
-interface FantasyFootballLeagueStateModel {
+export interface FantasyFootballLeagueStateModel {
   seasonId: number | null;
   scoringPeriodId: number | null;
-  isLoading: boolean;
 }
 
 @State<FantasyFootballLeagueStateModel>({
@@ -17,33 +15,29 @@ interface FantasyFootballLeagueStateModel {
   defaults: {
     seasonId: null,
     scoringPeriodId: null,
-    isLoading: true,
   },
 })
 @Injectable()
 export class FantasyFootballLeagueState {
-  constructor(private espnService: EspnService, private nflService: NflService, private store: Store) {}
-
-  @Selector()
-  static scoringPeriod(state: FantasyFootballLeagueStateModel) {
-    return state.scoringPeriodId;
-  }
+  constructor(private nflService: NflService, private store: Store) {}
 
   @Action(FetchFootballLeague)
   async footballLeague(
     { getState, patchState, dispatch }: StateContext<FantasyFootballLeagueStateModel>,
-    { leagueId }: FetchFootballLeague
+    { payload: { leagueId } }: FetchFootballLeague
   ) {
     const state = getState();
 
-    const league = await this.nflService.footballLeague(Number(leagueId)).toPromise();
+    const year = '2021'; //new Date().getFullYear().toString();
+
+    const league = await this.nflService.footballLeague(leagueId, year).toPromise();
 
     const scoringPeriodId = league.scoringPeriodId;
     const seasonId = league.seasonId;
     const schedule = league.schedule;
     const teams = league.teams;
 
-    dispatch([new PatchFantasyFootballSchedule({ schedule }), new PatchFantasyFootballTeams({ teams })]);
+    dispatch([new PatchFantasyFootballSchedule({ schedule }), new SetFantasyFootballTeams(teams)]);
     patchState({ ...state, scoringPeriodId, seasonId });
   }
 }

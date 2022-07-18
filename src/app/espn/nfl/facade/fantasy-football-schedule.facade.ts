@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
-import { FetchFootballLeague } from '../actions/nfl.actions';
 import { FantasyMatchup } from '../models/fantasy-schedule.model';
 import { FantasyFootballScheduleSelectors } from '../selectors/fantasy-football-schedule.selectors';
 
@@ -24,9 +23,5 @@ export class FantasyFootballScheduleFacade {
 
   selectMatchupById(id: number) {
     return this.store.selectSnapshot(FantasyFootballScheduleSelectors.selectMatchupById)(id);
-  }
-
-  getLeague(leagueId: string) {
-    return this.store.dispatch(new FetchFootballLeague(leagueId));
   }
 }

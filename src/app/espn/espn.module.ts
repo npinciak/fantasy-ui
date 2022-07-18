@@ -30,7 +30,7 @@ import { FantasyBaseballTeamState } from './mlb/state/fantasy-baseball-team.stat
 import { HomeComponent as FantasyFootballHomeComponent } from './nfl/pages/home/home.component';
 import { FantasyFootballLeagueState } from './nfl/state/fantasy-football-league.state';
 import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-schedule.state';
-import { FantasyFootballTeamsState } from './nfl/state/fantasy-football-teams.state';
+import { FantasyFootballTeamState } from './nfl/state/fantasy-football-teams.state';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 import { EspnAddLeagueFormState } from './state/espn-add-league-form.state';
 
@@ -56,7 +56,7 @@ const declarations = [
 const states = [
   FantasyFootballLeagueState,
   FantasyFootballScheduleState,
-  FantasyFootballTeamsState,
+  FantasyFootballTeamState,
   FantasyBaseballLeagueState,
   FantasyBaseballTeamState,
   FantasyBaseballTeamsLiveState,
