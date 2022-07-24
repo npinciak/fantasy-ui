@@ -13,7 +13,6 @@ export class DataVisComponent implements OnInit, OnChanges {
   @Input() title = '';
   @Input() chartData: ChartData[];
   @Input() statFilter: Stat = Stat.AB;
-  @Input() chartType = 'bar';
 
   public graph: ChartNew<number>;
   public test: any[]; //{ x: string[]; y: number[]; type: string; name?: string; showlegend?: boolean }[];
