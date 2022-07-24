@@ -1,28 +1,35 @@
 <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="margin-bottom: 20px">
   <div fxFlex.gt-xs="10" fxFlex.xs="100">
-    <p style="font-size: 12px" *ngIf="fastcastFacade.selectLastRefresh$ | async">
-      Updated at: <span style="font-weight: bold; color: #777878">{{ fastcastFacade.selectLastRefresh$ | async | date: 'short' }}</span>
+    <p style="font-size: 12px" *ngIf="fastcastFacade.lastRefresh$ | async">
+      Updated at: <span style="font-weight: bold; color: #777878">{{ fastcastFacade.lastRefresh$ | async | date: 'medium' }}</span>
     </p>
     <mat-form-field>
-      <mat-select [(value)]="selectedLeagueId" (selectionChange)="onLeaderboardFilterChange($event)">
-        <mat-option *ngFor="let league of fastcastLeagueFacade.prettyLeagueList$ | async" [value]="league">{{ league.shortName }} </mat-option>
+      <mat-select [(value)]="selectedLeagueId" (selectionChange)="onLeaderboardFilterChange($event.value)">
+        <mat-option *ngFor="let league of fastcastLeagueFacade.leagueList$ | async" [value]="league.id">
+          {{ league.shortName }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
   <div fxFlex.gt-xs="90" fxFlex.xs="100" class="scoreboard-container" id="scoreboard-feed" role="feed" aria-live="polite">
     <ng-container *ngIf="(fastcastEventFacade.eventsByLeagueId$ | async)!(selectedLeagueId) as fastcastEvents">
-      <ng-container *ngFor="let event of fastcastEvents; let i = index">
+      <ng-container *ngIf="!(fastcastFacade.isFeedValid$ | async); else feed">
+        <mat-progress-bar mode="buffer" [value]="fastcastFacade.feedLoadingValue$ | async"></mat-progress-bar>
+      </ng-container>
+      <ng-template #feed>
         <app-espn-scoreboard-card
+          *ngFor="let event of fastcastEvents; let i = index"
           [index]="i"
           [ariaSetsize]="fastcastEvents.length"
           [ariaPosinset]="i + 1"
-          [isEventToggled]="(fastcastEventFacade.isEventToggled$ | async)!(event.id)"
+          [isEventToggled]="(fastcastEventToggleFacade.isIdToggled$ | async)!(event.id)"
           (toggleExpandedEvent)="onToggleExpandedEvent($event)"
           (toggleOffExpandedEvent)="onToggleOffExpandedEvent($event)"
+          (cardClick)="onEventCardClick($event)"
           [isTournament]="event.isTournament"
           [event]="event"
         ></app-espn-scoreboard-card>
-      </ng-container>
+      </ng-template>
     </ng-container>
   </div>
 </div>

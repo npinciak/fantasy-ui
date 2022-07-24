@@ -5,7 +5,7 @@ import { SetFastcastEvents } from '../actions/espn-fastcast-event.actions';
 
 @State({ name: 'espnFastcastEvents' })
 @Injectable()
-export class EspnFastcastEventState extends GenericState({
+export class EspnFastcastEventsState extends GenericState({
   idProperty: 'uid',
   addOrUpdate: SetFastcastEvents,
 }) {}

@@ -45,6 +45,49 @@ export enum FastcastEventType {
   TopEvents = 'event-topevents',
   Soccer = 'event-topsoccer',
   Mlb = 'event-baseball-mlb',
+  LiveGame = 'gp',
+  Event = 'event',
+}
+
+/**
+ *
+ * Transform fastcast event slug to live game
+ * @param payload  ```typescript
+ *
+ * {
+ *    sport: string;
+ *    league: string;
+ *    gameId: string
+ * }
+ *
+ * ```
+ * @returns ```typescript
+ * Ex: gp-baseball-mlb-401355468
+ * ```
+ *
+ */
+export function transformEventToLiveFastcastEventType(payload: { sport: string; league: string; gameId: string }) {
+  return `${FastcastEventType.LiveGame}-${payload.sport}-${payload.sport}-${payload.gameId}`;
+}
+
+/**
+ *
+ * Transform fastcast sport
+ * @param payload  ```typescript
+ *
+ * {
+ *    sport: string;
+ *    league: string;
+ * }
+ *
+ * ```
+ * @returns ```typescript
+ * Ex: event-baseball-mlb
+ * ```
+ *
+ */
+export function transformSportToFastcastEventType(payload: { sport: string; league: string }): string {
+  return `${FastcastEventType.Event}-${payload.sport}-${payload.sport}`;
 }
 
 export class WebSocketBuilder {

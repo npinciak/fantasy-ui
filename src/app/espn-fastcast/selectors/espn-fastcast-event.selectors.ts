@@ -1,23 +1,21 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { Selector } from '@ngxs/store';
+import { Selector } from '@app/@shared/models/typed-selector';
 import { FastcastEvent } from '../models/fastcast-event.model';
-import { FastcastEventTeam } from '../models/fastcast-team.model';
-import { EspnFastcastEventState } from '../state/espn-fastcast-event.state';
-import { EspnFastcastTeamSelectors } from './espn-fastcast-team.selectors';
+import { EspnFastcastEventsState } from '../state/espn-fastcast-events.state';
 
-export class EspnFastcastEventSelectors extends GenericSelector(EspnFastcastEventState) {
-  @Selector([EspnFastcastEventSelectors.getList, EspnFastcastTeamSelectors.getTeamsByEventUid])
-  static getFastcastEventsByLeagueId(
-    selectEventList: FastcastEvent[],
-    getTeamsByEventUid: (id: string) => { [id: string]: FastcastEventTeam }
-  ): (id: string) => FastcastEvent[] {
-    return (id: string) => selectEventList.filter(e => e.leagueId === id).sort((a, b) => a.timestamp - b.timestamp);
+export class EspnFastcastEventSelectors extends GenericSelector(EspnFastcastEventsState) {
+  @Selector([EspnFastcastEventSelectors.getIdSet])
+  static getEventIdSetValid(eventIdSet: Set<string>) {
+    return eventIdSet.size > 0;
   }
 
-  @Selector([EspnFastcastTeamSelectors.getById])
-  static getFastcastTeamsByLeagueId(selectFastcastTeamById: (id: string) => FastcastEventTeam) {
-    return (id: string) => {
-      const team = selectFastcastTeamById(id);
-    };
+  @Selector([EspnFastcastEventSelectors.getEventIdSetValid])
+  static getFeedLoadingValue(eventIdSetValid: boolean) {
+    return eventIdSetValid ? 33 : 0;
+  }
+
+  @Selector([EspnFastcastEventSelectors.getList])
+  static getFastcastEventsByLeagueId(selectEventList: FastcastEvent[]): (id: string) => FastcastEvent[] {
+    return (id: string) => selectEventList.filter(e => e.leagueId === id).sort((a, b) => a.timestamp - b.timestamp);
   }
 }
