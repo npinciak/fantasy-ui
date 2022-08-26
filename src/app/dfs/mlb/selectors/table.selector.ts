@@ -1,5 +1,5 @@
 import { cellDataAccessor } from '@app/@shared/helpers/utils';
-import { TableColumn, TableColumnDataType } from '@app/espn/models/table.model';
+import { TableColumn, TableColumnDataType } from '@app/@shared/models/table-columns.model';
 import { Selector } from '@ngxs/store';
 
 export class TableSelectors {

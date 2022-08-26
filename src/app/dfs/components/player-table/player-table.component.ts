@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { cellDataAccessor } from '@app/@shared/helpers/utils';
-import { TableColumnDataType } from '@app/espn/models/table.model';
+import { TableColumnDataType } from '@app/@shared/models/table-columns.model';
 
 enum FilterType {
   team,

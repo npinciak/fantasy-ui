@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TableColumn } from '@app/espn/models/table.model';
+import { TableColumn } from '@app/@shared/models/table-columns.model';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { DailyFantasyMlbPlayerSelectors } from '../selectors/daily-fantasy-mlb-players.selectors';

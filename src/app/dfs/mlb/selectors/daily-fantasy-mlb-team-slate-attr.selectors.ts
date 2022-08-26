@@ -1,9 +1,9 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
+import { TableColumn, TableColumnDataType } from '@app/@shared/models/table-columns.model';
 import { Team } from '@app/dfs/models/team.model';
 import { TeamList } from '@app/dfs/selectors/daily-fantasy-slate-attr.selectors';
 import { DailyFantasyTeamsSelectors } from '@app/dfs/selectors/daily-fantasy-team.selectors';
 import { SlateTeam } from '@app/dfs/service/slate.service';
-import { TableColumn, TableColumnDataType } from '@app/espn/models/table.model';
 import { Selector } from '@ngxs/store';
 import { DailyFantasyMlbTeamSlateAttributeState } from '../state/daily-fantasy-mlb-team-slate-attr.state';
 
