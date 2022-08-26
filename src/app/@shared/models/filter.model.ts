@@ -1,4 +1,4 @@
-export type FilterOptions = {
-  value: string;
+export type FilterOptions<T> = {
+  value: T;
   label: string;
 };

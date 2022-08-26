@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
+import { FreeAgentAvailabilityStatus } from '@client/espn-client.model';
 import { Action, State, StateContext, StateOperator } from '@ngxs/store';
+import { BaseballLineupSlot } from '../consts/lineup.const';
 
 export class PatchPlayerAvailabilityStatus {
   static readonly type = '[fantasyBaseballFreeAgentsFilter] PatchPlayerAvailabilityStatus';
-  constructor(public payload: string) {}
+  constructor(public payload: FreeAgentAvailabilityStatus) {}
+}
+
+export class SetPagination {
+  static readonly type = '[fantasyBaseballFreeAgentsFilter] SetPagination';
+  constructor(public payload: { sortStatId: string; sortDirection: string; currentPageSize: number; currentPageIndex: number }) {}
 }
 
 export class ToggleScoringPeriodIds {
@@ -11,9 +18,14 @@ export class ToggleScoringPeriodIds {
   constructor(public payload: { scoringPeriodIds: string[] }) {}
 }
 
+export class ToggleStatIds {
+  static readonly type = '[fantasyBaseballFreeAgentsFilter] ToggleStatIds';
+  constructor(public payload: { statIds: string[] }) {}
+}
+
 export class ToggleLineupSlotIds {
   static readonly type = '[fantasyBaseballFreeAgentsFilter] ToggleLineupSlotIds';
-  constructor(public payload: { lineupSlotIds: number[] }) {}
+  constructor(public payload: { lineupSlotIds: BaseballLineupSlot[] }) {}
 }
 
 export class RemovePlayerAvailabilityStatus {
@@ -28,31 +40,55 @@ export class RemoveScoringPeriodIds {
 
 export class RemoveLineupSlotIds {
   static readonly type = '[fantasyBaseballFreeAgentsFilter] RemoveLineupSlotIds';
-  constructor(public payload: { lineupSlotIds: number[] }) {}
+  constructor(public payload: { lineupSlotIds: BaseballLineupSlot[] }) {}
 }
 
 export interface FantasyBaseballFreeAgentsFilterStateModel {
-  availabilityStatus: { [id: string]: boolean };
-  lineupSlotIds: { [id: number]: boolean };
-  scoringPeriodIds: { [id: string]: boolean };
-  metaData: any;
+  availabilityStatus: { [key in FreeAgentAvailabilityStatus]: boolean };
+  lineupSlotIds: { [key in BaseballLineupSlot]: boolean };
+  topScoringPeriodIds: { [id: string]: boolean };
+  sortStatId: { [id: string]: boolean };
+  sortDirection: string;
+  metaData: {
+    sortStatId: string;
+    sortDirection: string;
+    currentPageSize: number;
+    currentPageIndex: number;
+  };
 }
 
 @State({
   name: 'fantasyBaseballFreeAgentsFilter',
   defaults: {
     availabilityStatus: {
-      FREEAGENT: true,
-      WAIVERS: true,
+      [FreeAgentAvailabilityStatus.FreeAgent]: true,
+      [FreeAgentAvailabilityStatus.Waivers]: true,
     },
-    lineupSlotIds: {}, //[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 19],
-    scoringPeriodIds: {},
-    metaData: {},
+    lineupSlotIds: {},
+    topScoringPeriodIds: {},
+    metaData: {
+      sortDirection: 'desc',
+      currentPageSize: 100,
+      currentPageIndex: 0,
+    },
   },
 })
 @Injectable()
 export class FantasyBaseballFreeAgentsFilterState {
   constructor() {}
+
+  @Action(ToggleStatIds)
+  toggleStatId({ setState }: StateContext<FantasyBaseballFreeAgentsFilterStateModel>, { payload: { statIds } }: ToggleStatIds) {
+    setState(toggle('sortStatId', statIds));
+  }
+
+  @Action(SetPagination)
+  setSortDirection(
+    { patchState }: StateContext<FantasyBaseballFreeAgentsFilterStateModel>,
+    { payload: { sortStatId, sortDirection, currentPageSize, currentPageIndex } }: SetPagination
+  ) {
+    patchState({ metaData: { sortStatId, sortDirection, currentPageSize, currentPageIndex } });
+  }
 
   @Action(ToggleLineupSlotIds)
   toggleLineupSlotIds(
@@ -87,8 +123,11 @@ export class FantasyBaseballFreeAgentsFilterState {
   }
 
   @Action(ToggleScoringPeriodIds)
-  patchScoringPeriodIds({ setState }: StateContext<FantasyBaseballFreeAgentsFilterStateModel>, { payload }: ToggleScoringPeriodIds) {
-    // setState(patch({ filterScoringPeriodIds: append([payload]) }));
+  patchScoringPeriodIds(
+    { setState }: StateContext<FantasyBaseballFreeAgentsFilterStateModel>,
+    { payload: { scoringPeriodIds } }: ToggleScoringPeriodIds
+  ) {
+    // setState(toggleOff('filterScoringPeriodIds', scoringPeriodIds));
   }
 
   @Action(RemoveScoringPeriodIds)
@@ -116,7 +155,7 @@ export function toggle(property: string, idsToToggle: (string | number)[]): Stat
 
 export function toggleOff(property: string, idsToToggleOff: (string | number)[]): StateOperator<FantasyBaseballFreeAgentsFilterStateModel> {
   return (state: Readonly<FantasyBaseballFreeAgentsFilterStateModel>) => {
-    const { availabilityStatus, lineupSlotIds, scoringPeriodIds, metaData } = state;
+    const { availabilityStatus, lineupSlotIds, topScoringPeriodIds: scoringPeriodIds, metaData } = state;
 
     const existingToToggleOff = idsToToggleOff.filter(id => id in [property]);
 

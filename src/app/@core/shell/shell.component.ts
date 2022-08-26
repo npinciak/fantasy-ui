@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { UrlBuilder, UrlFragments, UrlQueryParams } from '@app/@shared/url-builder';
 import { EspnFastcastFacade } from '@app/espn-fastcast/facade/espn-fastcast.facade';
+import { Navigate } from '@ngxs/router-plugin';
+import { Store } from '@ngxs/store';
+import { RouterFacade } from '../store/router/router.facade';
 
 @Component({
   selector: 'app-shell',
@@ -15,9 +17,10 @@ export class ShellComponent implements OnInit {
   readonly URL_QUERY_PARAMS = UrlQueryParams;
   readonly UrlBuilder = UrlBuilder;
 
-  constructor(private fastcastFacade: EspnFastcastFacade, private router: Router) {
-    this.router.navigate([]);
-  }
+  leagueId = this.routerFacade.leagueId;
+  teamId = this.routerFacade.teamId;
+
+  constructor(private fastcastFacade: EspnFastcastFacade, readonly routerFacade: RouterFacade, private store: Store) {}
 
   ngOnInit(): void {
     this.fastcastFacade.connect();
@@ -36,18 +39,27 @@ export class ShellComponent implements OnInit {
       },
     ];
   }
+
+  navigate() {
+    this.store.dispatch(
+      new Navigate(['daily-fantasy'], {
+        sport: 'mlb',
+        site: 'draftkings',
+      })
+    );
+  }
 }
 
 export const menu: Menu[] = [
   { label: 'Espn', route: UrlBuilder.espnBaseUrl, children: null },
-  {
-    label: 'DFS',
-    route: '',
-    children: [
-      { label: 'MLB', route: UrlBuilder.dfsBase, children: null },
-      { label: 'NFL', route: UrlBuilder.dfsBase, children: null },
-    ],
-  },
+  // {
+  //   label: 'DFS',
+  //   route: '',
+  //   children: [
+  //     { label: 'MLB', route: UrlBuilder.dfsBase, children: null },
+  //     { label: 'NFL', route: UrlBuilder.dfsBase, children: null },
+  //   ],
+  // },
 ];
 
 interface Menu {

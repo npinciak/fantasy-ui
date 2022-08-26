@@ -11,6 +11,11 @@ export class EspnFastcastSelectors {
   }
 
   @Selector([EspnFastcastState])
+  static getPaused(state: EspnFastcastStateModel) {
+    return state.pause;
+  }
+
+  @Selector([EspnFastcastState])
   static getLastDisconnect(state: EspnFastcastStateModel) {
     return state.disconnect;
   }
@@ -41,5 +46,10 @@ export class EspnFastcastSelectors {
   ])
   static getFeedLoadingValue(sportIdLoadingValue: number, leagueIdLoadingValue: number, eventIdLoadingValue: number) {
     return sportIdLoadingValue + leagueIdLoadingValue + eventIdLoadingValue;
+  }
+
+  @Selector([EspnFastcastSelectors.getPaused, EspnFastcastEventSelectors.getEventIdSetValid])
+  static getShowFeed(paused: boolean, eventsValid: boolean) {
+    return (paused && eventsValid) || eventsValid;
   }
 }

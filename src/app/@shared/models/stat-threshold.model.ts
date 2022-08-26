@@ -8,6 +8,16 @@ export enum StatThreshold {
   awful,
 }
 
+export enum StatThresholdColor {
+  excellent = '#00876c',
+  great = '#71a879',
+  aboveAvg = '#b6c794',
+  avg = '#f4e8bc',
+  belowAvg = '#eab780',
+  poor = '#e2805b',
+  awful = '#d43d51',
+}
+
 export enum StatThresholdClass {
   excellent = 'excellent',
   great = 'great',
@@ -30,4 +40,14 @@ export const StatThresholdByClassMap: { [key in StatThreshold]: StatThresholdCla
   [StatThreshold.belowAvg]: StatThresholdClass.belowAvg,
   [StatThreshold.poor]: StatThresholdClass.poor,
   [StatThreshold.awful]: StatThresholdClass.awful,
+};
+
+export const StatThresholdByColorMap: { [key in StatThreshold]: StatThresholdColor } = {
+  [StatThreshold.excellent]: StatThresholdColor.excellent,
+  [StatThreshold.great]: StatThresholdColor.great,
+  [StatThreshold.aboveAvg]: StatThresholdColor.aboveAvg,
+  [StatThreshold.avg]: StatThresholdColor.avg,
+  [StatThreshold.belowAvg]: StatThresholdColor.belowAvg,
+  [StatThreshold.poor]: StatThresholdColor.poor,
+  [StatThreshold.awful]: StatThresholdColor.awful,
 };

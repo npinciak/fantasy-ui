@@ -34,6 +34,10 @@ export class EspnScoreboardComponent {
     this.fastcastEventToggleFacade.deselectExpandedEvent(val);
   }
 
+  onStartFeed() {
+    this.fastcastFacade.setPauseState();
+  }
+
   onEventCardClick(event: FastcastEvent) {
     // this.store.dispatch(
     //   new Navigate([UrlFragments.Espn, UrlFragments.Game], {

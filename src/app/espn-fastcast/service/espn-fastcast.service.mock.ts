@@ -6,7 +6,7 @@ import { EspnClientFastcast } from '../models/espn-fastcast.model';
 import { EspnFastcastService } from './espn-fastcast.service';
 
 export class EspnFastcastServiceMock implements Mock<EspnFastcastService> {
-  webSocketSubject$: WebSocketSubject<SocketRes>;
+  webSocket$: WebSocketSubject<SocketRes>;
 
   fastCastWebsocket(): Observable<EspnWebSocket> {
     return of({
@@ -18,10 +18,10 @@ export class EspnFastcastServiceMock implements Mock<EspnFastcastService> {
   }
 
   connect(url: string) {
-    if (!this.webSocketSubject$ || this.webSocketSubject$.closed) {
-      this.webSocketSubject$ = webSocket(url);
+    if (!this.webSocket$ || this.webSocket$.closed) {
+      this.webSocket$ = webSocket(url);
     }
-    return this.webSocketSubject$;
+    return this.webSocket$;
   }
 
   dataUpdates$(): Observable<EspnClientFastcast> {

@@ -11,7 +11,7 @@ import { FASTCAST_WS_HOST } from '../../espn/espn.const';
 export class EspnFastcastService {
   static readonly WS_HOST = FASTCAST_WS_HOST;
 
-  public webSocketSubject$: WebSocketSubject<SocketRes>;
+  public webSocket$: WebSocketSubject<SocketRes> | null;
 
   constructor(private api: ApiService) {}
 
@@ -20,17 +20,24 @@ export class EspnFastcastService {
   }
 
   connect(uri: string): WebSocketSubject<SocketRes> {
-    if (!this.webSocketSubject$ || this.webSocketSubject$.closed) {
-      this.webSocketSubject$ = webSocket(uri);
+    if (!this.webSocket$ || this.webSocket$.closed) {
+      this.webSocket$ = webSocket(uri);
     }
-    return this.webSocketSubject$;
+    return this.webSocket$;
   }
 
   sendMessage(msg: any): void {
-    return this.webSocketSubject$.next(msg);
+    if (!this.webSocket$) {
+      return;
+    }
+    this.webSocket$.next(msg);
   }
 
   disconnect(): void {
-    return this.webSocketSubject$.complete();
+    if (this.webSocket$ != null) {
+      this.webSocket$.complete();
+      this.webSocket$ = null;
+    }
+    console.log('disconnect ===> ', this.webSocket$);
   }
 }

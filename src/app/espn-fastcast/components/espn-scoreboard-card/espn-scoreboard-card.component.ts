@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
 import { LeagueIdMap } from '@app/espn/espn-helpers';
+import { FastCastGameStatus } from '@client/espn-client.model';
 
 @Component({
   selector: 'app-espn-scoreboard-card',
@@ -25,7 +26,7 @@ export class EspnScoreboardCardComponent implements OnChanges {
     this.isEventToggled = changes.isEventToggled.currentValue;
   }
 
-  readonly LeagueIdMap = LeagueIdMap;
+  readonly league = LeagueIdMap;
 
   toggleExpansionPanel(eventId: string): void {
     this.toggleExpandedEvent.emit(eventId);
@@ -35,8 +36,8 @@ export class EspnScoreboardCardComponent implements OnChanges {
     this.toggleOffExpandedEvent.emit(eventId);
   }
 
-  eventInProgress(event: FastcastEvent): boolean {
-    return !event.completed && event.status !== 'pre' && event.status !== 'post';
+  get eventInProgress(): boolean {
+    return this.event.status === FastCastGameStatus.InProgress;
   }
 
   onCardClick(event: FastcastEvent) {

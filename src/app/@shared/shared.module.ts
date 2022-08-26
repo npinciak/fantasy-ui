@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '@app/material.module';
 import { PlotlyModule } from 'angular-plotly.js';
 import * as PlotlyJS from 'plotly.js-dist-min';
+import { DataVisScatterComponent } from './components/data-vis-scatter/data-vis-scatter.component';
 import { DataVisComponent } from './components/data-vis/data-vis.component';
 import { DropdownFilterComponent } from './components/dropdown-filter/dropdown-filter.component';
 import { NoDataComponent } from './components/no-data/no-data.component';
@@ -21,9 +22,18 @@ PlotlyModule.plotlyjs = PlotlyJS;
     StickyTableCellComponent,
     DropdownFilterComponent,
     DataVisComponent,
+    DataVisScatterComponent,
     MlbStatPipe,
   ],
   imports: [PlotlyModule, RouterModule, MaterialModule, FlexLayoutModule, CommonModule],
-  exports: [MlbStatPipe, DataVisComponent, NoDataComponent, ScrollableTableComponent, StickyTableCellComponent, DropdownFilterComponent],
+  exports: [
+    MlbStatPipe,
+    DataVisComponent,
+    NoDataComponent,
+    ScrollableTableComponent,
+    StickyTableCellComponent,
+    DropdownFilterComponent,
+    DataVisScatterComponent,
+  ],
 })
 export class SharedModule {}

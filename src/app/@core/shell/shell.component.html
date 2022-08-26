@@ -2,7 +2,7 @@
   <button mat-icon-button (click)="drawer.toggle()" aria-label="main menu">
     <mat-icon>more_vert</mat-icon>
   </button>
-
+  <!-- 
   <mat-menu #menu="matMenu">
     <button mat-menu-item [routerLink]="UrlBuilder.espnBaseUrl">ESPN</button>
     <button mat-menu-item [matMenuTriggerFor]="dfs">DFS</button>
@@ -25,21 +25,24 @@
   </mat-menu>
 
   <mat-menu #dfsMlbSite="matMenu">
-    <button mat-menu-item [routerLink]="UrlBuilder.dfsBase" [queryParams]="{ sport: 'mlb', site: 'draftkings' }">DK</button>
     <button mat-menu-item [routerLink]="UrlBuilder.dfsBase" [queryParams]="{ sport: 'mlb', site: 'fanduel' }">FD</button>
   </mat-menu>
 
   <mat-menu #dfsNbaSite="matMenu">
     <button mat-menu-item [routerLink]="UrlBuilder.dfsBase" [queryParams]="{ sport: 'nba', site: 'draftkings' }">DK</button>
     <button mat-menu-item [routerLink]="UrlBuilder.dfsBase" [queryParams]="{ sport: 'nba', site: 'fanduel' }">FD</button>
-  </mat-menu>
-  <span>{{ pageTitle }}</span>
+  </mat-menu> -->
+  <span>{{ pageTitle }} </span>
   <span class="shell-spacer"></span>
 </mat-toolbar>
 <mat-drawer-container style="height: 100%">
   <mat-drawer #drawer style="width: 300px">
     <mat-nav-list>
-      <a mat-list-item [routerLink]="UrlBuilder.espnBaseUrl">ESPN</a>
+      <a mat-list-item (click)="routerFacade.navigateToEspnHome()">ESPN</a>
+      <a mat-list-item (click)="routerFacade.navigateToEspnBaseballLeagueHome(leagueId)">League Home</a>
+      <a mat-list-item (click)="routerFacade.navigateToEspnBaseballTeam(leagueId, teamId)">Team</a>
+      <a mat-list-item (click)="routerFacade.navigateToEspnBaseballFreeAgents(leagueId)">Free Agents</a>
+      <a mat-list-item (click)="navigate()">DK</a>
     </mat-nav-list>
   </mat-drawer>
   <mat-drawer-content>

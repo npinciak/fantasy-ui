@@ -1,4 +1,6 @@
-﻿export type EntityBaseProperties = 'id' | 'uid' | 'name';
+﻿import { FastCastGameStatus } from '@app/espn/espn-client.model';
+
+export type EntityBaseProperties = 'id' | 'uid' | 'name';
 
 export interface EspnClientFastcast {
   sports: SportsEntity[];
@@ -25,7 +27,7 @@ export type EventsEntity = { [prop in EntityBaseProperties]: string } & {
   seasonType: string;
   period: number;
   clock: string;
-  status: string;
+  status: FastCastGameStatus;
   summary: string;
   fullStatus: FullStatus;
   link: string;

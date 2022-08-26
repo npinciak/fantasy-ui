@@ -14,7 +14,6 @@ export class ApiService {
    *
    * @param endpoint Request endpoint
    * @param options Request headers, query params, etc.
-   * @param mock Substitute mock data for real http
    */
   public get<T>(endpoint: string, options?: any): Observable<T> {
     return this.http.get<T>(endpoint, options).pipe(map((res: any) => res as T));
@@ -38,7 +37,17 @@ export class ApiService {
    * @param data Request payload
    * @param options Request headers, query params, etc.
    */
-  public put<T>(endpoint: string, putData: any, options?: any): Observable<T> {
+  public put<T, U>(endpoint: string, putData: U, options?: any): Observable<T> {
     return this.http.put<T>(endpoint, putData, options).pipe(map((res: any) => res as T));
+  }
+
+  /**
+   * DELETE request
+   *
+   * @param endpoint Request endpoint
+   * @param data Request payload
+   */
+  public delete<T>(endpoint: string): Observable<T> {
+    return this.http.delete<T>(endpoint).pipe(map((res: any) => res as T));
   }
 }

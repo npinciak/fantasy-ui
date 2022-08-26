@@ -18,7 +18,7 @@
           </ng-container>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="headers"></tr>
-        <tr mat-row *matRowDef="let team; columns: headers"></tr>
+        <tr mat-row *matRowDef="let team; columns: headers" (click)="onNavigateToTeam(team.id)"></tr>
       </table>
     </app-scrollable-table>
   </mat-card-content>

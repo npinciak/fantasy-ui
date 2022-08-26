@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { exists } from '@app/@shared/helpers/utils';
 import { FANTASY_BASE_V3, FASTCAST_BASE } from '@app/espn/espn.const';
-import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { RouterFacade } from '../store/router/router.facade';
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
-  constructor(private snackBar: MatSnackBar, private store: Store) {}
+  constructor(private snackBar: MatSnackBar, readonly routerFacade: RouterFacade) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(catchError((error: HttpErrorResponse) => this.errorHandler(error)));
@@ -26,6 +26,10 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     const code = response.status || 0;
 
     const message = isEspnFantasy ? statusCodeToEspnMessage[code] : statusCodeToMessage[code];
+
+    if (isEspnFantasy && code === ErrorStatusCode.NotFound) {
+      this.routerFacade.navigateToEspnHome();
+    }
 
     this.snackBar.open(`${code}: ${message}`, 'x', {
       panelClass: ['mat-toolbar', 'mat-warn'],

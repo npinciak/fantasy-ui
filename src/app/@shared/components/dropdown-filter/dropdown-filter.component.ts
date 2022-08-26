@@ -10,6 +10,6 @@ import { FilterOptions } from '@app/@shared/models/filter.model';
 export class DropdownFilterComponent {
   @Input() title: string;
   @Input() selectedOption: string;
-  @Input() filterItems: FilterOptions[];
+  @Input() filterItems: FilterOptions<number | string>[];
   @Output() filterUpdate = new EventEmitter<MatSelectChange>();
 }

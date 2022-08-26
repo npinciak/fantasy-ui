@@ -1,4 +1,4 @@
-import { FastCastGameStatus } from '@app/espn/espn-client.model';
+import { FastCastGameStatus } from '@client/espn-client.model';
 import { MOCK_FASTCAST_TEAM_1, MOCK_FASTCAST_TEAM_2 } from './fastcast-team.model.mock';
 
 const MOCK_FASTCAST_EVENT_LAST_PLAY = {

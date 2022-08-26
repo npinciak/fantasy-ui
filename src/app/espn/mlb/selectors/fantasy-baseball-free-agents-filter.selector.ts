@@ -31,12 +31,17 @@ export class FantasyBaseballFreeAgentsFilterSelector {
   }
 
   @Selector([FantasyBaseballFreeAgentsFilterSelector.getState])
-  static getScoringPeriodIds(state: FantasyBaseballFreeAgentsFilterStateModel) {
-    return state.scoringPeriodIds;
+  static getTopScoringPeriodIds(state: FantasyBaseballFreeAgentsFilterStateModel) {
+    return state.topScoringPeriodIds;
   }
 
-  @Selector([FantasyBaseballFreeAgentsFilterSelector.getScoringPeriodIds])
-  static getSelectedScoringPeriodIds(ids: { [id: string]: boolean }): string[] {
+  @Selector([FantasyBaseballFreeAgentsFilterSelector.getTopScoringPeriodIds])
+  static getSelectedTopScoringPeriodIds(ids: { [id: string]: boolean }): string[] {
     return Object.keys(ids).filter(id => ids[id]);
+  }
+
+  @Selector([FantasyBaseballFreeAgentsFilterSelector.getState])
+  static getPagination(state: FantasyBaseballFreeAgentsFilterStateModel) {
+    return state.metaData;
   }
 }
