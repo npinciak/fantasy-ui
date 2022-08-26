@@ -1,25 +1,42 @@
 import { Injectable } from '@angular/core';
+import { Selector } from '@app/@shared/models/typed-selector';
 import { Action, State, StateContext, Store } from '@ngxs/store';
-import { FetchFootballLeague } from '../actions/fantasy-football-league.actions';
+import { FetchFantasyFootballFreeAgents } from '../actions/fantasy-football-free-agents.actions';
+import { FetchFootballLeague, SetCurrentScoringPeriodId } from '../actions/fantasy-football-league.actions';
+import { SetFantasyFootballSchedule } from '../actions/fantasy-football-schedule.actions';
 import { SetFantasyFootballTeams } from '../actions/fantasy-football-teams.actions';
-import { NflService } from '../services/nfl.service';
-import { PatchFantasyFootballSchedule } from './fantasy-football-schedule.state';
+import { FantasyFootballService } from '../services/fantasy-football.service';
 
 export interface FantasyFootballLeagueStateModel {
   seasonId: number | null;
-  scoringPeriodId: number | null;
+  currentScoringPeriodId: number | null;
+  firstScoringPeriodId: number | null;
+  finalScoringPeriodId: number | null;
+  matchupPeriodCount: number | null;
+  leagueId: string | null;
+  settings: any; // EspnClientLeagueSettings | null;
 }
 
 @State<FantasyFootballLeagueStateModel>({
   name: 'fantasyFootballLeague',
   defaults: {
     seasonId: null,
-    scoringPeriodId: null,
+    currentScoringPeriodId: 1,
+    firstScoringPeriodId: 1,
+    finalScoringPeriodId: null,
+    matchupPeriodCount: null,
+    leagueId: null,
+    settings: {},
   },
 })
 @Injectable()
 export class FantasyFootballLeagueState {
-  constructor(private nflService: NflService, private store: Store) {}
+  @Selector([FantasyFootballLeagueState])
+  static getState(state: FantasyFootballLeagueStateModel) {
+    return state;
+  }
+
+  constructor(private nflService: FantasyFootballService, private store: Store) {}
 
   @Action(FetchFootballLeague)
   async footballLeague(
@@ -28,16 +45,38 @@ export class FantasyFootballLeagueState {
   ) {
     const state = getState();
 
-    const year = '2021'; //new Date().getFullYear().toString();
+    const year = new Date().getFullYear().toString(); //'2021'; //new Date().getFullYear().toString();
 
-    const league = await this.nflService.footballLeague(leagueId, year).toPromise();
+    const {
+      currentScoringPeriodId,
+      firstScoringPeriodId,
+      finalScoringPeriodId,
+      teams,
+      matchupPeriodCount,
+      schedule,
+      settings,
+      freeAgents,
+    } = await this.nflService.footballLeague(leagueId, year).toPromise();
 
-    const scoringPeriodId = league.scoringPeriodId;
-    const seasonId = league.seasonId;
-    const schedule = league.schedule;
-    const teams = league.teams;
+    // const scoringPeriodId = league.scoringPeriodId;
+    // const seasonId = league.seasonId;
+    // const schedule = league.schedule;
 
-    dispatch([new PatchFantasyFootballSchedule({ schedule }), new SetFantasyFootballTeams(teams)]);
-    patchState({ ...state, scoringPeriodId, seasonId });
+    await dispatch([
+      new SetFantasyFootballTeams(teams),
+      new SetFantasyFootballSchedule(schedule),
+      new SetCurrentScoringPeriodId({ currentScoringPeriodId }),
+    ]).toPromise();
+    patchState({ firstScoringPeriodId, finalScoringPeriodId, matchupPeriodCount, settings, leagueId });
+
+    dispatch(new FetchFantasyFootballFreeAgents());
+  }
+
+  @Action(SetCurrentScoringPeriodId)
+  setCurrentScoringPeriodId(
+    { patchState }: StateContext<FantasyFootballLeagueStateModel>,
+    { payload: { currentScoringPeriodId } }: SetCurrentScoringPeriodId
+  ) {
+    patchState({ currentScoringPeriodId });
   }
 }

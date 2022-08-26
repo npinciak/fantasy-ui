@@ -1,4 +1,4 @@
-export const NFL_TEAMS = {
+export const NFL_TEAM_MAP = {
   [-1]: 'Bye',
   1: 'ATL',
   2: 'BUF',

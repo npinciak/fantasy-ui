@@ -1,8 +1,8 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { currentDate } from '@app/@shared/helpers/date';
-import { FastcastLeague } from '@app/espn-fastcast/models/fastcast-league.model';
 import { FastcastSport } from '@app/espn-fastcast/models/fastcast-sport.model';
+import { FastcastTransform } from '@app/espn-fastcast/models/fastcast-transform.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from 'src/app/@shared/services/api.service';
@@ -16,8 +16,9 @@ import {
 } from '../../espn-fastcast/models/espn-fastcast.model';
 import { FastcastEvent, FootballSituation, MlbSituation } from '../../espn-fastcast/models/fastcast-event.model';
 import { FastcastEventTeam } from '../../espn-fastcast/models/fastcast-team.model';
-import { EspnClientEventList, EspnClientFreeAgent, EspnClientLeague, EspnClientPlayerNews, GameStatusId } from '../espn-client.model';
+import { EspnClientEventList, EspnClientFreeAgent, EspnClientPlayerNews, GameStatusId } from '../espn-client.model';
 import { includeSports, transformUidToId } from '../espn-helpers';
+import { NO_LOGO } from '../espn.const';
 import {
   EspnEndpointBuilder,
   EspnParamFragment,
@@ -64,7 +65,7 @@ export class EspnService {
       isHome: data.homeAway,
       score: data.score,
       abbrev: data.abbreviation,
-      logo: data.logo,
+      logo: data.logo.length > 0 ? data.logo : NO_LOGO,
       isWinner: data.winner,
       name: data.name ?? data.abbreviation,
       color: data.color,
@@ -80,7 +81,7 @@ export class EspnService {
       return null;
     }
 
-    let mlbSituation = {} as MlbSituation | null;
+    let mlbSituation = {} as MlbSituation;
     // if (
     //   event?.situation?.batter == null ||
     //   event?.situation?.pitcher == null ||
@@ -105,21 +106,21 @@ export class EspnService {
     });
     // }
 
-    let footballSituation = {} as FootballSituation | null;
-    if (
-      event?.situation?.shortDownDistanceText == null ||
-      event?.situation?.possessionText == null ||
-      event?.situation?.possession == null
-    ) {
-      footballSituation = null;
-    } else {
-      Object.assign(footballSituation, {
-        shortDownDistanceText: event?.situation?.shortDownDistanceText,
-        possessionText: event?.situation?.possessionText,
-        isRedZone: null,
-        possession: event?.situation?.possession,
-      });
-    }
+    let footballSituation = {} as FootballSituation;
+    // if (
+    //   event?.situation?.shortDownDistanceText == null ||
+    //   event?.situation?.possessionText == null ||
+    //   event?.situation?.possession == null
+    // ) {
+    //   footballSituation = null;
+    // } else {
+    Object.assign(footballSituation, {
+      shortDownDistanceText: event?.situation?.shortDownDistanceText,
+      possessionText: event?.situation?.possessionText,
+      isRedZone: null,
+      possession: event?.situation?.possession,
+    });
+    // }
 
     const teams = exists(event.competitors)
       ? event.competitors.reduce((obj, val) => {
@@ -137,9 +138,10 @@ export class EspnService {
       completed: event?.fullStatus.type.completed,
       status: event?.status,
       name: event?.name,
-      shortname: event?.shortName,
+      shortName: event?.shortName,
       location: event?.location,
       clock: event?.clock ?? null,
+      seriesSummary: event?.seriesSummary ?? null,
       summary: event?.summary,
       period: event?.period,
       note: event?.note ?? null,
@@ -158,7 +160,7 @@ export class EspnService {
    * @param leagueId
    * @returns
    */
-  espnUpdateFantasyTeam(payload: unknown, sport: FantasySports, leagueId: number): Observable<unknown> {
+  espnUpdateFantasyTeam(payload: unknown, sport: FantasySports, leagueId: string): Observable<unknown> {
     const endpoint = new EspnEndpointBuilder(sport, leagueId);
     return this.api.post(endpoint.fantasyPlayerTransaction, payload, {
       withCredentials: true,
@@ -173,9 +175,9 @@ export class EspnService {
    * @param sport
    * @returns EspnClientLeague
    */
-  espnFantasyLeagueBySport(sport: FantasySports, leagueId: number, headers?: HttpHeaders): Observable<EspnClientLeague> {
-    const endpoint = new EspnEndpointBuilder(sport, leagueId, 2022);
-    return this.api.get<EspnClientLeague>(endpoint.fantasyLeague, { params: this.params, headers });
+  espnFantasyLeagueBySport<T>(data: { sport: FantasySports; leagueId: string; year: string; headers?: HttpHeaders }): Observable<T> {
+    const endpoint = new EspnEndpointBuilder(data.sport, data.leagueId, data.year);
+    return this.api.get<T>(endpoint.fantasyLeague, { params: this.params, headers: data.headers });
   }
 
   /**
@@ -193,7 +195,6 @@ export class EspnService {
       .set(EspnParamFragment.PbpOnly, true);
     return this.api.get<EspnClientEventList>(endpoint.espnEvents, { params, headers });
   }
-
 
   /**
    * Fetch player news
@@ -221,7 +222,7 @@ export class EspnService {
    */
   espnFantasyFreeAgentsBySport(
     sport: FantasySports,
-    leagueId: number,
+    leagueId: string,
     scoringPeriod: number,
     headers: HttpHeaders
   ): Observable<{ players: EspnClientFreeAgent[] }> {
@@ -229,7 +230,7 @@ export class EspnService {
     const params = new HttpParams()
       .set(EspnParamFragment.ScoringPeriod, scoringPeriod.toString())
       .set(EspnParamFragment.View, EspnViewParamFragment.PlayerInfo);
-    
+
     return this.api.get<{ players: EspnClientFreeAgent[] }>(endpoint.fantasyLeague, { params, headers });
   }
 
@@ -291,11 +292,4 @@ export class EspnService {
     });
     return params;
   }
-}
-
-export interface FastcastTransform {
-  sports: FastcastSport[];
-  leagues: FastcastLeague[];
-  events: FastcastEvent[];
-  teams: FastcastEventTeam[];
 }

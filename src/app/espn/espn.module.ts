@@ -28,6 +28,8 @@ import { FantasyBaseballPlayerState } from './mlb/state/fantasy-baseball-player.
 import { FantasyBaseballTeamsLiveState } from './mlb/state/fantasy-baseball-team-live.state';
 import { FantasyBaseballTeamState } from './mlb/state/fantasy-baseball-team.state';
 import { HomeComponent as FantasyFootballHomeComponent } from './nfl/pages/home/home.component';
+import { FantasyFootballFreeAgentsFilterState } from './nfl/state/fantast-football-free-agents-filter.state';
+import { FantasyFootballFreeAgentsState } from './nfl/state/fantasy-football-free-agents.state';
 import { FantasyFootballLeagueState } from './nfl/state/fantasy-football-league.state';
 import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-schedule.state';
 import { FantasyFootballTeamState } from './nfl/state/fantasy-football-teams.state';
@@ -58,6 +60,8 @@ const states = [
   FantasyFootballLeagueState,
   FantasyFootballScheduleState,
   FantasyFootballTeamState,
+  FantasyFootballFreeAgentsState,
+  FantasyFootballFreeAgentsFilterState,
   FantasyBaseballLeagueState,
   FantasyBaseballTeamState,
   FantasyBaseballTeamsLiveState,

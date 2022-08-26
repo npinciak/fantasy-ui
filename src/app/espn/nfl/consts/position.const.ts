@@ -1,4 +1,6 @@
-export const NFL_POSITIONS = {
+import { PositionMap } from '@app/espn/models/position.model';
+
+export const NFL_POSITION_MAP: PositionMap = {
   0: {
     abbrev: 'POS0',
     name: 'POS0',

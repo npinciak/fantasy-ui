@@ -1,27 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { GenericFacade } from '@app/@shared/generic-state/generic.facade';
+import { select } from '@app/@shared/models/typed-select';
+import { Store } from '@ngxs/store';
 
-import { FantasyMatchup } from '../models/fantasy-schedule.model';
 import { FantasyFootballScheduleSelectors } from '../selectors/fantasy-football-schedule.selectors';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FantasyFootballScheduleFacade {
-  @Select(FantasyFootballScheduleSelectors.selectMatchupListWithFantasyTeams) selectMatchupListWithFantasyTeams$: Observable<
-    FantasyMatchup[]
-  >;
+export class FantasyFootballScheduleFacade extends GenericFacade(FantasyFootballScheduleSelectors) {
+  matchupListWithFantasyTeams$ = select(FantasyFootballScheduleSelectors.getMatchupListWithFantasyTeams);
+  matchupPeriodIds$ = select(FantasyFootballScheduleSelectors.getMatchupPeriodIds);
+  matchupPeriodIdFilterOptions$ = select(FantasyFootballScheduleSelectors.getMatchupPeriodIdFilterOptions);
+  matchupListWithFantasyTeamsByMatchupPeriodId$ = select(FantasyFootballScheduleSelectors.getMatchupListByMatchupPeriodId);
 
-  @Select(FantasyFootballScheduleSelectors.selectMatchupPeriodIds) selectMatchupPeriodIds$: Observable<number[]>;
-
-  constructor(private store: Store) {}
-
-  selectMatchupListWithFantasyTeamsByMatchupPeriodId(id: number) {
-    return this.store.selectSnapshot(FantasyFootballScheduleSelectors.selectMatchupListByMatchupPeriodId)(id);
-  }
-
-  selectMatchupById(id: number) {
-    return this.store.selectSnapshot(FantasyFootballScheduleSelectors.selectMatchupById)(id);
+  constructor(private store: Store) {
+    super();
   }
 }
