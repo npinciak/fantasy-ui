@@ -11,9 +11,9 @@
               <small *ngIf="team?.rank">{{ team?.rank }}&nbsp;</small>
               <span [id]="ariaInfo.teamName">{{ team?.name }}</span
               >&nbsp;
-              <!-- <span style="font-size: 10px; vertical-align: middle" *ngIf="team?.hasPossession">🏈</span> -->
+              <!-- <span style="font-size: 10px; vertical-align: middle" *ngIf="team?.footballSituation?.hasPossession">🏈</span> -->
               <mat-icon *ngIf="team?.isWinner">arrow_left</mat-icon>
-              <!-- <small *ngIf="team?.inRedzone" style="color: red">RZ</small> -->
+              <!-- <small *ngIf="team?.footballSituation?.inRedzone" style="color: red">RZ</small> -->
             </span>
           </td>
         </tr>

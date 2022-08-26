@@ -1,3 +1,4 @@
+import { FastCastGameStatus } from '@app/espn/espn-client.model';
 import { EventsEntity, FullStatusType, Situation } from './espn-fastcast.model';
 import { FastcastEventTeam } from './fastcast-team.model';
 
@@ -6,9 +7,9 @@ export interface FastcastEventProperties {
   leagueId: string;
   timestamp: number;
   state: string | null;
-  status: string | null;
+  status: FastCastGameStatus | null;
   name: string | null;
-  shortname: string | null;
+  shortName: string | null;
   location: string | null;
   clock: string | null;
   summary: string | null;

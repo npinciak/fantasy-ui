@@ -7,11 +7,11 @@ export class EspnEndpointBuilder {
   private static oneFeedBase = ONE_FEED_BASE;
   private static commonV3 = COMMON_V3;
 
-  private _leagueId: number | undefined;
+  private _leagueId: string | undefined;
   private _sport: FantasySports | undefined;
-  private _year: number;
+  private _year: string;
 
-  constructor(sport?: FantasySports, leagueId?: number, year = new Date().getFullYear()) {
+  constructor(sport?: FantasySports, leagueId?: string, year = new Date().getFullYear().toString()) {
     this._leagueId = leagueId;
     this._sport = sport;
     this._year = year;
@@ -50,6 +50,13 @@ export class EspnEndpointBuilder {
   }
 }
 
+export enum SportLeague {
+  MLB = 'mlb',
+  NFL = 'nfl',
+  NHL = 'nhl',
+  NBA = 'nba',
+}
+
 export enum Sports {
   baseball = 'baseball',
   tennis = 'tennis',
@@ -61,10 +68,10 @@ export enum Sports {
 }
 
 export enum FantasySports {
-  baseball = 'flb',
-  football = 'ffl',
-  basketball = 'fba',
-  hockey = 'fhl',
+  Baseball = 'flb',
+  Football = 'ffl',
+  Basketball = 'fba',
+  Hockey = 'fhl',
 }
 
 export enum EspnParamFragment {
@@ -78,12 +85,37 @@ export enum EspnParamFragment {
 }
 
 export enum EspnViewParamFragment {
+  Settings = 'mSettings',
   PlayerInfo = 'kona_player_info',
   LiveScoring = 'mLiveScoring',
   MatchupScore = 'mMatchupScore',
   Roster = 'mRoster',
   Scoreboard = 'mScoreboard',
   Team = 'mTeam',
+  PendingTransactions = 'mPendingTransactions',
 }
 
 export const espnViewParamFragmentList = enumAsList(EspnViewParamFragment);
+
+// type AllPropsString<T> = { [key in T]: string };
+
+export const FantasySportToLabelMap: { [key in FantasySports]: string } = {
+  [FantasySports.Baseball]: 'Baseball',
+  [FantasySports.Football]: 'Football',
+  [FantasySports.Hockey]: 'Hockey',
+  [FantasySports.Basketball]: 'Basketball',
+};
+
+export const FantasySportToSportLeagueMap: { [key in FantasySports]: SportLeague } = {
+  [FantasySports.Baseball]: SportLeague.MLB,
+  [FantasySports.Football]: SportLeague.NFL,
+  [FantasySports.Hockey]: SportLeague.NHL,
+  [FantasySports.Basketball]: SportLeague.NBA,
+};
+
+export const LeagueSportToImageLocationMap: { [key in FantasySports]: string } = {
+  [FantasySports.Baseball]: '-4px -272px',
+  [FantasySports.Basketball]: '-4px -239px',
+  [FantasySports.Football]: '-4px -206px',
+  [FantasySports.Hockey]: '-4px -304px',
+};

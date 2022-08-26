@@ -9,7 +9,9 @@
 >
   <span [id]="ariaInfo.eventName" style="display: none">{{ event.name }}</span>
   <span [id]="ariaInfo.eventLocation" style="display: none">{{ event.location }}</span>
-  <mat-card-subtitle [id]="ariaInfo.eventSummary" class="event-summary">{{ event?.summary }}</mat-card-subtitle>
+  <mat-card-subtitle [id]="ariaInfo.eventSummary" class="event-summary">{{
+    eventInProgress || event.completed ? event.summary : (event?.timestamp | date: 'short')
+  }}</mat-card-subtitle>
   <mat-card-content>
     <app-espn-scoreboard-card-team [isTournament]="isTournament" [team]="event?.teams?.away"></app-espn-scoreboard-card-team>
     <div></div>
@@ -17,10 +19,10 @@
   </mat-card-content>
 
   <mat-card-actions>
-    <span class="event-summary" *ngIf="!eventInProgress(event)"> {{ event?.seriesSummary }}</span>
-    <ng-container *ngIf="eventInProgress(event)">
+    <span class="event-summary" *ngIf="!eventInProgress && isTournament"> {{ event?.seriesSummary }}</span>
+    <ng-container *ngIf="eventInProgress">
       <div [ngSwitch]="event?.leagueId">
-        <ng-template [ngSwitchCase]="LeagueIdMap.MLB">
+        <ng-template [ngSwitchCase]="league.MLB">
           <ng-container>
             <!-- <div
             style="overflow: hidden"

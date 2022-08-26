@@ -25,3 +25,7 @@ export class SetSelectedEventType {
   static readonly type = `[espnFastcast] SetSelectedEventType`;
   constructor(public payload: { eventType: string | null }) {}
 }
+
+export class SetFastcastPause {
+  static readonly type = `[espnFastcast] SetFastcastPause`;
+}
