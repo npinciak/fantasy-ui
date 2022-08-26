@@ -1,4 +1,4 @@
-import { EspnClientFreeAgent } from '@app/espn/espn-client.model';
+import { EspnClientFreeAgent } from '@client/espn-client.model';
 
 export const ESPN_BASEBALL_FREEAGENT_1: EspnClientFreeAgent = {
   id: 31870,

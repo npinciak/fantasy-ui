@@ -4,7 +4,6 @@ import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { FetchFantasyBaseballFreeAgents } from '../actions/fantasy-baseball-free-agents.actions';
 import { FantasyBaseballFreeAgentsSelector } from '../selectors/fantasy-baseball-free-agents.selector';
-import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.state';
 
 @Injectable({
   providedIn: 'root',
@@ -13,15 +12,18 @@ export class FantasyBaseballFreeAgentsFacade {
   playerList$ = select(FantasyBaseballFreeAgentsSelector.getIdList);
   freeAgentBatterStats$ = select(FantasyBaseballFreeAgentsSelector.getFreeAgentBatterStats);
   freeAgentBatterChartData$ = select(FantasyBaseballFreeAgentsSelector.getFreeAgentBatterChartData);
+  freeAgentBatterScatterChartData$ = select(FantasyBaseballFreeAgentsSelector.getFreeAgentBatterScatterChartData);
+
   freeAgentPitcherStats$ = select(FantasyBaseballFreeAgentsSelector.getFreeAgentPitcherStats);
   freeAgentPitcherChartData$ = select(FantasyBaseballFreeAgentsSelector.getFreeAgentPitcherChartData);
 
   selectStatListFilters$ = select(FantasyBaseballFreeAgentsSelector.selectStatListFilters);
-  isLoading$ = select(FantasyBaseballLeagueState.isLoading);
+  compareTeamAndFreeAgentBatterList$ = select(FantasyBaseballFreeAgentsSelector.getCompareTeamAndFreeAgentBatterList);
+  compareTeamAndFreeAgentPitcherList$ = select(FantasyBaseballFreeAgentsSelector.getCompareTeamAndFreeAgentPitcherList);
 
   constructor(private store: Store) {}
 
-  fetchFreeAgents(leagueId: string, scoringPeriodId: string): Observable<void> {
-    return this.store.dispatch(new FetchFantasyBaseballFreeAgents({ leagueId, scoringPeriodId }));
+  fetchFreeAgents(): Observable<void> {
+    return this.store.dispatch(new FetchFantasyBaseballFreeAgents());
   }
 }

@@ -1,4 +1,4 @@
-import { TableColumnDataType, transformTableColumnsToTableRows } from '@app/espn/models/table.model';
+import { TableColumnDataType, transformTableColumnsToTableRows } from '@app/@shared/models/table-columns.model';
 import { Stat } from '../models/mlb-stats.model';
 import { MLB_STATS_MAP } from './stats.const';
 
@@ -75,9 +75,21 @@ export const BATTER_STATS_COLUMNS = [
     dataType: TableColumnDataType.Number,
   },
   {
-    columnDef: `stats.${Stat.AB}`,
-    headerCell: `stats.${Stat.AB}`,
-    headerLabel: MLB_STATS_MAP[Stat.AB].abbrev,
+    columnDef: `stats.${Stat.PA}`,
+    headerCell: `stats.${Stat.PA}`,
+    headerLabel: MLB_STATS_MAP[Stat.PA].abbrev,
+    dataType: TableColumnDataType.Number,
+  },
+  {
+    columnDef: `stats.${Stat.GP}`,
+    headerCell: `stats.${Stat.GP}`,
+    headerLabel: MLB_STATS_MAP[Stat.GP].abbrev,
+    dataType: TableColumnDataType.Number,
+  },
+  {
+    columnDef: `stats.${Stat.KO}`,
+    headerCell: `stats.${Stat.KO}`,
+    headerLabel: MLB_STATS_MAP[Stat.KO].abbrev,
     dataType: TableColumnDataType.Number,
   },
   {
@@ -108,6 +120,12 @@ export const BATTER_STATS_COLUMNS = [
     columnDef: `stats.${Stat.AVG}`,
     headerCell: `stats.${Stat.AVG}`,
     headerLabel: MLB_STATS_MAP[Stat.AVG].abbrev,
+    dataType: TableColumnDataType.Number,
+  },
+  {
+    columnDef: `break`,
+    headerCell: `break`,
+    headerLabel: '',
     dataType: TableColumnDataType.Number,
   },
   {

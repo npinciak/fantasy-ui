@@ -1,7 +1,9 @@
 import { FilterOptions } from '@app/@shared/models/filter.model';
-import { StatCategory, StatsMap, StatType, StatTypePeriodId } from '../models/mlb-stats.model';
+import { YearToStatTypePeriod } from '@app/espn/espn-helpers';
+import { StatTypePeriodId } from '@app/espn/models/espn-stats.model';
+import { StatCategory, StatsMap, StatType } from '../models/mlb-stats.model';
 
-export const STAT_PERIOD_FILTER_OPTIONS: FilterOptions[] = [
+export const BASEBALL_STAT_PERIOD_FILTER_OPTIONS: FilterOptions<string>[] = [
   { value: YearToStatTypePeriod(StatTypePeriodId.Season, '2021'), label: '2021 Season' },
   { value: YearToStatTypePeriod(StatTypePeriodId.Projected, '2022'), label: '2022 Projected' },
   { value: YearToStatTypePeriod(StatTypePeriodId.Season, '2022'), label: '2022 Season' },
@@ -9,15 +11,6 @@ export const STAT_PERIOD_FILTER_OPTIONS: FilterOptions[] = [
   { value: YearToStatTypePeriod(StatTypePeriodId.Last15, '2022'), label: 'Last 15' },
   { value: YearToStatTypePeriod(StatTypePeriodId.Last30, '2022'), label: 'Last 30' },
 ];
-
-export function YearToStatTypePeriod(periodType: StatTypePeriodId, year: string) {
-  if (periodType === StatTypePeriodId.Projected) return `${periodType}${year}`;
-  else return `0${periodType}${year}`;
-}
-
-export function StatTypePeriodToYear(statTypePeriod: string): string {
-  return statTypePeriod.split('').splice(2, 6).join('');
-}
 
 export const MLB_STATS_MAP: StatsMap = {
   0: { abbrev: 'AB', description: 'At Bats', statCategoryId: StatCategory.Batting, statTypeId: StatType.Batting },

@@ -1,4 +1,4 @@
-import { EspnClientScheduleTeam, EspnClientTeam } from '@app/espn/espn-client.model';
+import { EspnClientScheduleTeam, EspnClientTeam } from '@client/espn-client.model';
 import { ESPN_BASEBALL_PLAYER_MOCK_1 } from './roster.mock';
 
 export const ESPN_BASEBALL_TEAM_MOCK: EspnClientTeam = {

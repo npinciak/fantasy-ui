@@ -19,4 +19,4 @@ export type BaseballTeamLive = Pick<BaseballTeam, 'id' | 'totalPoints' | 'liveSc
 export type BaseballTeamLiveMap = Record<string, BaseballTeamLive>;
 
 type StatsMapProperties = 'rotoStatsMap';
-export type BaseballTeamTableRow = BaseballTeam | BaseballTeamLive; //& { [p in StatsMapProperties]: Partial<StatAbbrev> };
+export type BaseballTeamTableRow = BaseballTeam | BaseballTeamLive;

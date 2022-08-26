@@ -84,6 +84,7 @@ export const lobPctThreshold: StatByThreshold = {
 export const THRESHOLD_MAP: {
   [x: number]: StatByThreshold;
 } = {
+  [Stat.wRAA]: wraaThreshold,
   [Stat.wOBA]: wobaThreshold,
   [Stat.OPS]: opsThreshold,
   [Stat.K_9]: k9Threshold,

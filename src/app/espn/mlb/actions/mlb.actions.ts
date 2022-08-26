@@ -1,8 +1,8 @@
-import { EspnClientScheduleProperties } from '@app/espn/espn-client.model';
+import { EspnClientScheduleEntity } from '@client/espn-client.model';
 
 export class FetchBaseballLeague {
   public static readonly type = `[fantasyBaseballLeague] FetchBaseballLeague`;
-  constructor(public payload: { leagueId: number }) {}
+  constructor(public payload: { leagueId: string | null }) {}
 }
 
 export class SetSeasonId {
@@ -10,12 +10,17 @@ export class SetSeasonId {
   constructor(public payload: { seasonId: string }) {}
 }
 
-export class SetScoringPeriodId {
-  public static readonly type = `[fantasyBaseballLeague] SetScoringPeriodId`;
-  constructor(public payload: { scoringPeriodId: string }) {}
+export class SetLeagueId {
+  public static readonly type = `[fantasyBaseballLeague] SetLeagueId`;
+  constructor(public payload: { leagueId: string | null }) {}
+}
+
+export class SetCurrentScoringPeriodId {
+  public static readonly type = `[fantasyBaseballLeague] SetCurrentScoringPeriodId`;
+  constructor(public payload: { currentScoringPeriodId: number | null }) {}
 }
 
 export class SetLiveSchedule {
   public static readonly type = `[fantasyBaseballLeague] SetLiveSchedule`;
-  constructor(public payload: { schedule: EspnClientScheduleProperties }) {}
+  constructor(public payload: { schedule: EspnClientScheduleEntity }) {}
 }
