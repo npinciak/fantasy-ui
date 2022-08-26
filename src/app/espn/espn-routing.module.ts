@@ -5,7 +5,10 @@ import { BaseballFreeAgentsComponent } from './mlb/pages/baseball-free-agents/ba
 import { BaseballHomeComponent } from './mlb/pages/baseball-home/baseball-home.component';
 import { BaseballTeamComponent } from './mlb/pages/baseball-team/baseball-team.component';
 import { FantasyBaseballResolver } from './mlb/resolvers/mlb.resolver';
-import { HomeComponent as NflHomeComponent } from './nfl/pages/home/home.component';
+import { FootballFreeAgentsComponent } from './nfl/pages/football-free-agents/football-free-agents.component';
+import { FootballHomeComponent } from './nfl/pages/football-home/football-home.component';
+import { FootballTeamComponent } from './nfl/pages/football-team/football-team.component';
+import { FantasyFootballLeagueResolver } from './nfl/resolvers/fantasy-football-league.resolver';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 
 const nflRoutes = {
@@ -13,25 +16,35 @@ const nflRoutes = {
   children: [
     {
       path: UrlFragments.Empty,
-      component: NflHomeComponent,
+      component: FootballHomeComponent,
     },
     {
       path: UrlParams.LeagueId,
+      resolve: [FantasyFootballLeagueResolver],
       children: [
         {
           path: UrlFragments.Empty,
-          component: NflHomeComponent,
+          component: FootballHomeComponent,
+        },
+        {
+          path: UrlFragments.FreeAgents,
+          children: [
+            {
+              path: UrlFragments.Empty,
+              component: FootballFreeAgentsComponent,
+            },
+          ],
         },
         {
           path: UrlFragments.Team,
           children: [
             {
               path: UrlFragments.Empty,
-              component: NflHomeComponent,
+              component: FootballHomeComponent,
             },
             {
               path: UrlParams.TeamId,
-              component: NflHomeComponent,
+              component: FootballTeamComponent,
             },
           ],
         },
