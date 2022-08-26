@@ -15,7 +15,9 @@ export const FASTCAST_WS_HOST: string = environment.espnWebsocketHost;
 
 export const ONE_FEED_BASE: string = environment.espnOneFeed;
 
-export const NO_LOGO: string = `${CDN}combiner/i?img=/i/teamlogos/soccer/500/default-team-logo-500.png&h=100&scale=crop&w=100&location=origin`;
+export const ICON_PATH = `${CDN}/redesign/assets/img/sprites/transitional-secondary-navigation-icons-v4.png`;
+
+export const NO_LOGO: string = `${CDN}combiner/i?img=/i/teamlogos/default-team-logo-500.png&h=100&scale=crop&w=100&location=origin`;
 
 export function logoImgBuilder(abbrev: string, league: 'mlb' | 'nfl'): string {
   return `${CDN}combiner/i?img=/i/teamlogos/${league}/500/${abbrev.toLowerCase()}.png&h=100&w=100`;

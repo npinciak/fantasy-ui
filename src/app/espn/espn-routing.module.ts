@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UrlFragments, UrlParams } from '@app/@shared/url-builder';
-import { FreeAgentsComponent } from './mlb/pages/free-agents/free-agents.component';
-import { HomeComponent as MlbHomeComponent } from './mlb/pages/home/home.component';
-import { TeamComponent as MlbTeamComponent } from './mlb/pages/team/team.component';
+import { BaseballFreeAgentsComponent } from './mlb/pages/baseball-free-agents/baseball-free-agents.component';
+import { BaseballHomeComponent } from './mlb/pages/baseball-home/baseball-home.component';
+import { BaseballTeamComponent } from './mlb/pages/baseball-team/baseball-team.component';
 import { FantasyBaseballResolver } from './mlb/resolvers/mlb.resolver';
 import { HomeComponent as NflHomeComponent } from './nfl/pages/home/home.component';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
@@ -45,7 +45,7 @@ const mlbRoutes = {
   children: [
     {
       path: UrlFragments.Empty,
-      component: MlbHomeComponent,
+      component: BaseballHomeComponent,
     },
     {
       path: UrlParams.LeagueId,
@@ -53,14 +53,14 @@ const mlbRoutes = {
       children: [
         {
           path: UrlFragments.Empty,
-          component: MlbHomeComponent,
+          component: BaseballHomeComponent,
         },
         {
           path: UrlFragments.FreeAgents,
           children: [
             {
               path: UrlFragments.Empty,
-              component: FreeAgentsComponent,
+              component: BaseballFreeAgentsComponent,
             },
           ],
         },
@@ -69,11 +69,11 @@ const mlbRoutes = {
           children: [
             {
               path: UrlFragments.Empty,
-              component: MlbTeamComponent,
+              component: BaseballTeamComponent,
             },
             {
               path: UrlParams.TeamId,
-              component: MlbTeamComponent,
+              component: BaseballTeamComponent,
             },
           ],
         },

@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { UrlBuilder } from '@app/@shared/url-builder';
+import { StatTypePeriodToYear } from '@app/espn/espn-helpers';
 import { Store } from '@ngxs/store';
 import { SetSeasonId } from '../../actions/mlb.actions';
-import {
-  BATTER_STATS_LIST,
-  MLB_STATS_MAP,
-  PITCHER_STATS_LIST,
-  StatTypePeriodToYear,
-  STAT_PERIOD_FILTER_OPTIONS,
-} from '../../consts/stats.const';
+import { BASEBALL_STAT_PERIOD_FILTER_OPTIONS, BATTER_STATS_LIST, MLB_STATS_MAP, PITCHER_STATS_LIST } from '../../consts/stats.const';
 import {
   BATTER_STATS_HEADERS,
   BATTER_STATS_LIVE_HEADERS,
@@ -26,16 +22,16 @@ import { BaseballPlayer } from '../../models/baseball-player.model';
 import { Stat } from '../../models/mlb-stats.model';
 
 @Component({
-  selector: 'app-team',
-  templateUrl: './team.component.html',
-  styleUrls: ['./team.component.scss'],
+  selector: 'app-baseball-team',
+  templateUrl: './baseball-team.component.html',
+  styleUrls: ['./baseball-team.component.scss'],
 })
-export class TeamComponent implements OnInit {
+export class BaseballTeamComponent implements OnInit {
   teamLineup: BaseballPlayer[];
 
-  readonly STAT_PERIOD_FILTER_OPTIONS = STAT_PERIOD_FILTER_OPTIONS;
-  readonly teamId = this.activatedRoute.snapshot.params.teamId;
-  readonly leagueId = this.activatedRoute.snapshot.params.leagueId;
+  readonly STAT_PERIOD_FILTER_OPTIONS = BASEBALL_STAT_PERIOD_FILTER_OPTIONS;
+  readonly teamId = this.routerFacade.teamId;
+  readonly leagueId = this.routerFacade.leagueId;
 
   readonly BATTER_STATS_LIST = BATTER_STATS_LIST;
   readonly PITCHER_STATS_LIST = PITCHER_STATS_LIST;
@@ -50,13 +46,23 @@ export class TeamComponent implements OnInit {
   readonly BATTER_STATS_LIVE_HEADERS = BATTER_STATS_LIVE_HEADERS;
 
   selectedPitcherStat = Stat.fip;
-  selectedBatterStat = Stat.wOBA;
+  selectedBatterStatXAxis = Stat.wOBA;
+  selectedBatterStatYAxis = Stat.AB;
+
+  selectedPitcherStatXAxis = Stat.SO;
+  selectedPitcherStatYAxis = Stat.APP;
+
   scoringPeriodId = '002022';
 
   isLiveScore: boolean;
+  isBatterScatterChart: boolean;
+  isPitcherScatterChart: boolean;
+
+  isLoading$ = this.fantasyBaseballLeagueFacade.isLoading$;
 
   constructor(
     private store: Store,
+    readonly routerFacade: RouterFacade,
     readonly fantasyBaseballTeamFacade: FantasyBaseballTeamFacade,
     readonly fantasyBaseballLeagueFacade: FantasyBaseballLeagueFacade,
     readonly fantasyBaseballPlayerFacade: FantasyBaseballPlayerFacade,
@@ -66,12 +72,16 @@ export class TeamComponent implements OnInit {
 
   ngOnInit() {}
 
-  get graphTitle() {
-    return `${this.selectedBatterStat}`;
-  }
-
   onLiveScoringSelectChange(event: MatSlideToggleChange) {
     this.isLiveScore = event.checked;
+  }
+
+  onBatterGraphSelectChange(event: MatSlideToggleChange) {
+    this.isBatterScatterChart = event.checked;
+  }
+
+  onPitcherGraphSelectChange(event: MatSlideToggleChange) {
+    this.isPitcherScatterChart = event.checked;
   }
 
   onScoringPeriodIdChange(val: string): void {
@@ -80,12 +90,20 @@ export class TeamComponent implements OnInit {
     this.store.dispatch(new SetSeasonId({ seasonId }));
   }
 
-  onBatterStatChange(val: any): void {
-    this.selectedBatterStat = val;
+  onBatterStatXAxisChange(val: any): void {
+    this.selectedBatterStatXAxis = val;
   }
 
-  onPitcherStatChange(val: any): void {
-    this.selectedPitcherStat = val;
+  onBatterStatYAxisChange(val: any): void {
+    this.selectedBatterStatYAxis = val;
+  }
+
+  onPitcherStatXAxisChange(val: any): void {
+    this.selectedPitcherStatXAxis = val;
+  }
+
+  onPitcherStatYAxisChange(val: any): void {
+    this.selectedPitcherStatYAxis = val;
   }
 
   navigateHome(): void {
@@ -94,5 +112,21 @@ export class TeamComponent implements OnInit {
 
   get homeRoute(): string[] {
     return [UrlBuilder.espnMlbBase, `${this.leagueId}`];
+  }
+
+  get batterScatterChartTitle(): string {
+    return `${this.MLB_STAT_MAP[this.selectedBatterStatXAxis].description} vs ${
+      this.MLB_STAT_MAP[this.selectedBatterStatYAxis].description
+    }`;
+  }
+
+  get pitcherScatterChartTitle(): string {
+    return `${this.MLB_STAT_MAP[this.selectedPitcherStatXAxis].description} vs ${
+      this.MLB_STAT_MAP[this.selectedPitcherStatYAxis].description
+    }`;
+  }
+
+  get barChartTitle(): string {
+    return this.MLB_STAT_MAP[this.selectedBatterStatXAxis].description;
   }
 }

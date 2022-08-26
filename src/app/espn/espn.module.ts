@@ -17,9 +17,9 @@ import { PlayerTrendingColComponent } from './mlb/components/roster/player-trend
 import { RosterComponent } from './mlb/components/roster/roster.component';
 import { StandingsComponent } from './mlb/components/standings/standings.component';
 import { TeamInfoColComponent } from './mlb/components/standings/team-info-col/team-info-col.component';
-import { FreeAgentsComponent } from './mlb/pages/free-agents/free-agents.component';
-import { HomeComponent as FantasyBaseballHomeComponent } from './mlb/pages/home/home.component';
-import { TeamComponent } from './mlb/pages/team/team.component';
+import { BaseballFreeAgentsComponent } from './mlb/pages/baseball-free-agents/baseball-free-agents.component';
+import { BaseballHomeComponent } from './mlb/pages/baseball-home/baseball-home.component';
+import { BaseballTeamComponent } from './mlb/pages/baseball-team/baseball-team.component';
 import { FantasyBaseballEventsState } from './mlb/state/fantasy-baseball-events.state';
 import { FantasyBaseballFreeAgentsFilterState } from './mlb/state/fantasy-baseball-free-agents-filter.state';
 import { FantasyBaseballFreeAgentsState } from './mlb/state/fantasy-baseball-free-agents.state';
@@ -36,8 +36,9 @@ import { EspnAddLeagueFormState } from './state/espn-add-league-form.state';
 
 const declarations = [
   EspnHomeComponent,
-  FantasyBaseballHomeComponent,
-  FreeAgentsComponent,
+  BaseballHomeComponent,
+  BaseballFreeAgentsComponent,
+  BaseballTeamComponent,
   StandingsComponent,
   TeamComponent,
   RosterComponent,

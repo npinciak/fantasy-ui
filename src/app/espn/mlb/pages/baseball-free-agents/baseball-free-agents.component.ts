@@ -1,9 +1,12 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSelectChange } from '@angular/material/select';
+import { Sort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
+import { UrlBuilder } from '@app/@shared/url-builder';
 import { BATTING_LINEUP_SLOTS, MLB_LINEUP_MAP, PITCHING_LINEUP_SLOTS } from '../../consts/lineup.const';
-import { BATTER_STATS_LIST, MLB_STATS_MAP, PITCHER_STATS_LIST, STAT_PERIOD_FILTER_OPTIONS } from '../../consts/stats.const';
+import { BASEBALL_STAT_PERIOD_FILTER_OPTIONS, BATTER_STATS_LIST, MLB_STATS_MAP, PITCHER_STATS_LIST } from '../../consts/stats.const';
 import { BATTER_STATS_HEADERS, BATTER_STATS_ROWS, PITCHER_STATS_HEADERS, PITCHER_STATS_ROWS } from '../../consts/tables.const';
 import { FantasyBaseballFreeAgentsFilterFacade } from '../../facade/fantasy-baseball-free-agents-filter.facade';
 import { FantasyBaseballFreeAgentsFacade } from '../../facade/fantasy-baseball-free-agents.facade';
@@ -17,13 +20,13 @@ enum PositionTabGroup {
 }
 
 @Component({
-  selector: `app-free-agents`,
-  templateUrl: './free-agents.component.html',
-  styleUrls: ['./free-agents.component.scss'],
+  selector: `app-baseball-free-agents`,
+  templateUrl: './baseball-free-agents.component.html',
+  styleUrls: ['./baseball-free-agents.component.scss'],
 })
-export class FreeAgentsComponent implements OnInit {
+export class BaseballFreeAgentsComponent implements OnInit {
   readonly leagueId = this.activatedRoute.snapshot.params.leagueId;
-  readonly STAT_PERIOD_FILTER_OPTIONS = STAT_PERIOD_FILTER_OPTIONS;
+  readonly BASEBALL_STAT_PERIOD_FILTER_OPTIONS = BASEBALL_STAT_PERIOD_FILTER_OPTIONS;
 
   readonly BATTER_STATS_LIST = BATTER_STATS_LIST;
   readonly PITCHER_STATS_LIST = PITCHER_STATS_LIST;
@@ -49,8 +52,15 @@ export class FreeAgentsComponent implements OnInit {
   selectedPitcherStat = Stat.ERA;
   selectedBatterStat = Stat.AVG;
 
+  selectedLeagueTeam = '1';
+
   selectedPlayerAvailabilityStatus: SelectionModel<string>;
   tabGroup = PositionTabGroup.Batters;
+
+  sortedStatId: any;
+  sortDirection: any;
+  pageSize: any;
+  pageIndex: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -63,40 +73,62 @@ export class FreeAgentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fantasyBaseballFreeAgentsFacade.fetchFreeAgents(this.leagueId, this.scoringPeriodId);
+    this.fantasyBaseballFreeAgentsFacade.fetchFreeAgents();
+  }
+
+  onSelectedLeagueTeamChange(val: string): void {
+    this.selectedLeagueTeam = val;
   }
 
   scoringPeriodIdChange(change: MatSelectChange): void {
     this.scoringPeriodId = change.value;
   }
 
-  onBatterStatChange(val: any): void {
+  onBatterStatChange(val: Stat): void {
     this.selectedBatterStat = val;
   }
 
-  onPitcherStatChange(val: any): void {
+  onPitcherStatChange(val: Stat): void {
     this.selectedPitcherStat = val;
   }
 
-  onTabChange(val: number) {
+  onTabChange(val: number): void {
     this.tabGroup = val;
   }
 
-  onPlayerAvailabilityStatusChange(event: MatSelectChange) {}
+  onPlayerAvailabilityStatusChange(event: MatSelectChange): void {}
 
-  onLineupFilterSlotIdChange(val: number[]) {
-    this.fantasyBaseballFreeAgentsFilterFacade.toggleFilterSlotIds(val, this.leagueId, this.scoringPeriodId);
+  onLineupFilterSlotIdChange(val: number[]): void {
+    this.fantasyBaseballFreeAgentsFilterFacade.toggleFilterSlotIds(val);
   }
 
-  get viewingBatters() {
+  onSortChanged(event: Sort): void {
+    this.sortDirection = event.direction;
+    this.sortedStatId = event.active;
+
+    this.fantasyBaseballFreeAgentsFilterFacade.setPagination(this.paginationMeta);
+  }
+
+  onPaginatorChanged(event: PageEvent): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.fantasyBaseballFreeAgentsFilterFacade.setPagination(this.paginationMeta);
+  }
+
+  get viewingBatters(): boolean {
     return this.tabGroup === PositionTabGroup.Batters;
   }
 
-  get playerAvailabilityOptions() {
-    return [
-      { id: 1, value: 'FREEAGENTS,WAIVERS', label: 'Available' },
-      { id: 2, value: 'FREEAGENTS', label: 'Free Agents' },
-      { id: 3, value: 'WAIVERS', label: 'Waivers' },
-    ];
+  get homeRoute(): string[] {
+    return [UrlBuilder.espnMlbBase, `${this.leagueId}`];
+  }
+
+  private get paginationMeta() {
+    return {
+      sortStatId: this.sortedStatId,
+      sortDirection: this.sortDirection,
+      currentPageSize: this.pageSize,
+      currentPageIndex: this.pageIndex,
+    };
   }
 }

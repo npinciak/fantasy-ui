@@ -1,18 +1,30 @@
 <div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
   <div fxFlex="30%" fxFlex.sm="100%">
     <div>
-      <a mat-flat-button color="primary" [routerLink]="['./']">Home</a>
+      <ng-container *ngIf="fantasyBaseballLeagueFacade.isLoading$ | async; else refreshBtn">
+        <mat-spinner diameter="20"></mat-spinner>
+      </ng-container>
+      <ng-template #refreshBtn>
+        <mat-icon class="cursor-pointer" (click)="fantasyBaseballLeagueFacade.getLeague(leagueId)">refresh</mat-icon>
+      </ng-template>
     </div>
-    <div style="margin: 10px 0"></div>
     <mat-card>
       <mat-card-content>
         <div>
           <app-dropdown-filter
             [selectedOption]="scoringPeriodId"
             title="Stat Period"
-            [filterItems]="STAT_PERIOD_FILTER_OPTIONS"
+            [filterItems]="BASEBALL_STAT_PERIOD_FILTER_OPTIONS"
             (filterUpdate)="scoringPeriodIdChange($event)"
           ></app-dropdown-filter>
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-label>League Rosters</mat-label>
+            <mat-select [(value)]="selectedLeagueTeam" (selectionChange)="onSelectedLeagueTeamChange($event.value)">
+              <mat-option *ngFor="let team of fantasyBaseballTeamFacade.teamList$ | async" [value]="team.id">{{ team.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
         <div>
           <mat-form-field *ngIf="viewingBatters; else pitchingStats">
@@ -53,6 +65,13 @@
         <h4>{{ MLB_STAT_MAP[selectedBatterStat].description }}</h4>
 
         <div style="margin: 10px 0"></div>
+        <!-- 
+        <app-data-vis-scatter
+        [title]=""
+        [xAxisFilterTitle]="MLB_STAT_MAP[selectedBatterStatXAxis].description"
+        [yAxisFilterTitle]="MLB_STAT_MAP[selectedBatterStatYAxis].description"
+        [chartData]="(fantasyBaseballTeamFacade.batterStatsScatterChartData$ | async)!(teamId, scoringPeriodId, selectedBatterStatXAxis, selectedBatterStatYAxis)"
+      ></app-data-vis-scatter> -->
         <app-data-vis
           [statFilter]="selectedBatterStat"
           [chartData]="(fantasyBaseballFreeAgentsFacade.freeAgentBatterChartData$ | async)!(scoringPeriodId, '2022', selectedBatterStat)"
@@ -62,9 +81,11 @@
 
         <app-roster
           #freeAgentBatters
-          [data]="(fantasyBaseballFreeAgentsFacade.freeAgentBatterStats$ | async)!(scoringPeriodId, '2022')"
+          [data]="(fantasyBaseballFreeAgentsFacade.compareTeamAndFreeAgentBatterList$ | async)!(selectedLeagueTeam, scoringPeriodId, '2022')"
           [dataColumns]="BATTER_STATS_ROWS"
           [headers]="BATTER_STATS_HEADERS"
+          (sortChanged)="onSortChanged($event)"
+          (paginatorChanged)="onPaginatorChanged($event)"
         ></app-roster
       ></mat-tab>
       <mat-tab label="Pitchers">
@@ -79,7 +100,7 @@
 
         <app-roster
           #freeAgentPitchers
-          [data]="(fantasyBaseballFreeAgentsFacade.freeAgentPitcherStats$ | async)!(scoringPeriodId, '2022')"
+          [data]="(fantasyBaseballFreeAgentsFacade.compareTeamAndFreeAgentPitcherList$ | async)!(selectedLeagueTeam, scoringPeriodId, '2022')"
           [dataColumns]="PITCHER_STATS_ROWS"
           [headers]="PITCHER_STATS_HEADERS"
         ></app-roster
