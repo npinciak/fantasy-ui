@@ -1,0 +1,63 @@
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
+  <div fxFlex="30%" fxFlex.sm="100%">
+    <app-football-lineup-card
+      title="Starters"
+      [lineup]="(footballTeamFacade.starters$ | async)!(teamId)"
+      [points]="(footballTeamFacade.startersPoints$ | async)!(teamId)"
+      [week]="footballLeagueFacade.currentScoringPeriodId$ | async"
+    ></app-football-lineup-card>
+    <div style="margin: 10px 0"></div>
+    <app-football-lineup-card
+      title="Bench"
+      [lineup]="(footballTeamFacade.bench$ | async)!(teamId)"
+      [points]="(footballTeamFacade.benchPoints$ | async)!(teamId)"
+      [week]="footballLeagueFacade.currentScoringPeriodId$ | async"
+    ></app-football-lineup-card>
+  </div>
+  <div fxFlex="70%" fxFlex.sm="100%">
+    <div>
+      {{ (footballTeamFacade.teamPositions$ | async)!(teamId) | json }}
+    </div>
+    <div>
+      <!-- <ng-container *ngFor="let p of footballLeagueFacade.positionLimits$ | async">
+        {{ p.label }} - {{ p.val }}
+        <br />
+      </ng-container> -->
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>pos</mat-label>
+        <mat-select [(value)]="selectedPosition" (selectionChange)="onSelectedPositionChange($event.value)">
+          <mat-option *ngFor="let pos of FOOTBALL_POSITION_LIST" [value]="pos">{{ NFL_POSITION_MAP[pos].abbrev }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <app-dropdown-filter
+      [selectedOption]="scoringPeriodId"
+      title="Stat Period"
+      [filterItems]="FOOTBALL_STAT_PERIOD_FILTER_OPTIONS"
+      (filterUpdate)="scoringPeriodIdChange($event.value)"
+    ></app-dropdown-filter>
+    <app-espn-stats-table
+      [data]="(footballTeamFacade.teamStatsByPositionId$ | async)!(teamId, scoringPeriodId, selectedPosition)"
+      [dataColumns]="FOOTBALL_ROSTER_ROWS"
+      [headers]="FOOTBALL_ROSTER_HEADERS"
+      [statsMap]="FOOTBALL_STATS_MAP"
+    >
+    </app-espn-stats-table>
+    <!-- <app-roster
+      #WR
+      [data]="(footballTeamFacade.teamStatsByPositionId$ | async)!(teamId, '102021', FootballPosition.RB)"
+      [dataColumns]="FOOTBALL_ROSTER_ROWS"
+      [headers]="FOOTBALL_ROSTER_HEADERS"
+    >
+    </app-roster> -->
+    <!-- <app-roster
+      [data]="(footballTeamFacade.teamStatsByPositionId$ | async)!(teamId, '102021', FootballPosition.WR)"
+      [dataColumns]="FOOTBALL_ROSTER_ROWS"
+      [headers]="FOOTBALL_ROSTER_HEADERS"
+    >
+    </app-roster> -->
+  </div>
+</div>

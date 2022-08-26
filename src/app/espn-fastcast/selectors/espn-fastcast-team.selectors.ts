@@ -1,5 +1,5 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { Selector } from '@ngxs/store';
+import { Selector } from '@app/@shared/models/typed-selector';
 import { FastcastEventTeam } from '../models/fastcast-team.model';
 import { EspnFastcastTeamState } from '../state/espn-fastcast-team.state';
 

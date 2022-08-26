@@ -2,7 +2,7 @@
  * Helper function to add delimeters
  * @returns Date in format yyyymmdd
  */
-export function currentDate<T>(delim?: T): string {
+export function currentDate(delim?: string): string {
   const today = new Date();
 
   const day = today.getDate();

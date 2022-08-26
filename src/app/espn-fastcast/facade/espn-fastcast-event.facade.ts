@@ -1,60 +1,10 @@
 import { Injectable } from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
-import { Select, Store } from '@ngxs/store';
-import { Observable, Subject } from 'rxjs';
-import {
-  DeselectFastcastEvent,
-  SelectFastcastEvent,
-  ToggleOffFastcastEvent,
-  ToggleOnFastcastEvent,
-} from '../actions/espn-fastcast-event-toggle.actions';
-import { FastcastEvent } from '../models/fastcast-event.model';
+import { select } from '@app/@shared/models/typed-select';
 import { EspnFastcastEventSelectors } from '../selectors/espn-fastcast-event.selectors';
-import { EspnFastcastEventToggleState } from '../state/espn-fastcast-event-toggle.state';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EspnFastcastEventFacade {
-  @Select(EspnFastcastEventSelectors.getFastcastEventsByLeagueId) eventsByLeagueId$: Observable<(id: string) => FastcastEvent[]>;
-  @Select(EspnFastcastEventToggleState.isIdToggled) isEventToggled$: Observable<(id: string) => boolean>;
-
-  fastcastFilteredEventsSidebar$ = new Subject<FastcastEvent[]>();
-  fastcastFilteredEventsLeaderboard$ = new Subject<FastcastEvent[]>();
-
-  constructor(private store: Store) {}
-
-  fastcastLeagueChangeSidebar(event: MatSelectChange): void {
-    const events = this.fastcastEventsByLeagueId(event.value);
-    return this.fastcastFilteredEventsSidebar$.next(events);
-  }
-
-  fastcastLeagueChangeLeaderboard(id: string): void {
-    const events = this.fastcastEventsByLeagueId(id);
-    return this.fastcastFilteredEventsLeaderboard$.next(events);
-  }
-
-  toggleExpandedEvent(id: string): void {
-    this.store.dispatch(new ToggleOnFastcastEvent({ ids: [id] }));
-  }
-
-  toggleOffExpandedEvent(id: string): void {
-    this.store.dispatch(new ToggleOffFastcastEvent({ ids: [id] }));
-  }
-
-  selectExpandedEvent(id: string): void {
-    this.store.dispatch(new SelectFastcastEvent({ ids: [id] }));
-  }
-
-  deselectExpandedEvent(id: string): void {
-    this.store.dispatch(new DeselectFastcastEvent({ ids: [id] }));
-  }
-
-  /**
-   *
-   * @deprecated use EspnFastcastEventFacade.eventsByLeagueId$
-   */
-  fastcastEventsByLeagueId(id: string): FastcastEvent[] {
-    return this.store.selectSnapshot(EspnFastcastEventSelectors.getFastcastEventsByLeagueId)(id);
-  }
+  eventsByLeagueId$ = select(EspnFastcastEventSelectors.getFastcastEventsByLeagueId);
 }

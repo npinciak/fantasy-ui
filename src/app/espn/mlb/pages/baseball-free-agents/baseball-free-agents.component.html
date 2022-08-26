@@ -1,0 +1,128 @@
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
+  <div fxFlex="30%" fxFlex.sm="100%">
+    <div>
+      <ng-container *ngIf="fantasyBaseballLeagueFacade.isLoading$ | async; else refreshBtn">
+        <mat-spinner diameter="20"></mat-spinner>
+      </ng-container>
+      <ng-template #refreshBtn>
+        <mat-icon class="cursor-pointer" (click)="fantasyBaseballLeagueFacade.getLeague(leagueId)">refresh</mat-icon>
+      </ng-template>
+    </div>
+    <mat-card>
+      <mat-card-content>
+        <div>
+          <app-dropdown-filter
+            [selectedOption]="scoringPeriodId"
+            title="Stat Period"
+            [filterItems]="BASEBALL_STAT_PERIOD_FILTER_OPTIONS"
+            (filterUpdate)="scoringPeriodIdChange($event)"
+          ></app-dropdown-filter>
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-label>League Rosters</mat-label>
+            <mat-select [(value)]="selectedLeagueTeam" (selectionChange)="onSelectedLeagueTeamChange($event.value)">
+              <mat-option *ngFor="let team of fantasyBaseballTeamFacade.teamList$ | async" [value]="team.id">{{ team.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field *ngIf="viewingBatters; else pitchingStats">
+            <mat-label>Batter Stats</mat-label>
+            <mat-select [(value)]="selectedBatterStat" (selectionChange)="onBatterStatChange($event.value)">
+              <mat-option *ngFor="let stat of BATTER_STATS_LIST" [value]="stat.id">{{ stat.abbrev }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <div style="margin: 10px 0"></div>
+    <mat-card>
+      <mat-card-content>
+        <div>
+          <mat-form-field>
+            <mat-label>Player Availability</mat-label>
+            <mat-select (selectionChange)="onPlayerAvailabilityStatusChange($event)">
+              <mat-option value="FREEAGENT">Free Agents </mat-option>
+              <mat-option value="WAIVERS">On Waivers </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field *ngIf="viewingBatters; else pitchingSlots">
+            <mat-label>Batting Slots</mat-label>
+            <mat-select (selectionChange)="onLineupFilterSlotIdChange($event.value)" multiple>
+              <mat-option *ngFor="let slot of BATTING_LINEUP_SLOTS" [value]="slot"> {{ MLB_LINEUP_MAP[slot].name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex>
+    <mat-tab-group mat-align-tabs="start" (selectedTabChange)="onTabChange($event.index)">
+      <mat-tab label="Batters">
+        <h4>{{ MLB_STAT_MAP[selectedBatterStat].description }}</h4>
+
+        <div style="margin: 10px 0"></div>
+        <!-- 
+        <app-data-vis-scatter
+        [title]=""
+        [xAxisFilterTitle]="MLB_STAT_MAP[selectedBatterStatXAxis].description"
+        [yAxisFilterTitle]="MLB_STAT_MAP[selectedBatterStatYAxis].description"
+        [chartData]="(fantasyBaseballTeamFacade.batterStatsScatterChartData$ | async)!(teamId, scoringPeriodId, selectedBatterStatXAxis, selectedBatterStatYAxis)"
+      ></app-data-vis-scatter> -->
+        <app-data-vis
+          [statFilter]="selectedBatterStat"
+          [chartData]="(fantasyBaseballFreeAgentsFacade.freeAgentBatterChartData$ | async)!(scoringPeriodId, '2022', selectedBatterStat)"
+        ></app-data-vis>
+
+        <div style="margin: 10px 0"></div>
+
+        <app-roster
+          #freeAgentBatters
+          [data]="(fantasyBaseballFreeAgentsFacade.compareTeamAndFreeAgentBatterList$ | async)!(selectedLeagueTeam, scoringPeriodId, '2022')"
+          [dataColumns]="BATTER_STATS_ROWS"
+          [headers]="BATTER_STATS_HEADERS"
+          (sortChanged)="onSortChanged($event)"
+          (paginatorChanged)="onPaginatorChanged($event)"
+        ></app-roster
+      ></mat-tab>
+      <mat-tab label="Pitchers">
+        <h4>{{ MLB_STAT_MAP[selectedPitcherStat].description }}</h4>
+        <div style="margin: 10px 0"></div>
+
+        <app-data-vis
+          [statFilter]="selectedPitcherStat"
+          [chartData]="(fantasyBaseballFreeAgentsFacade.freeAgentPitcherChartData$ | async)!(scoringPeriodId, '2022', selectedPitcherStat)"
+        ></app-data-vis>
+        <div style="margin: 10px 0"></div>
+
+        <app-roster
+          #freeAgentPitchers
+          [data]="(fantasyBaseballFreeAgentsFacade.compareTeamAndFreeAgentPitcherList$ | async)!(selectedLeagueTeam, scoringPeriodId, '2022')"
+          [dataColumns]="PITCHER_STATS_ROWS"
+          [headers]="PITCHER_STATS_HEADERS"
+        ></app-roster
+      ></mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
+
+<ng-template #pitchingSlots>
+  <mat-form-field>
+    <mat-label>Pitching Slots</mat-label>
+    <mat-select (selectionChange)="onLineupFilterSlotIdChange($event.value)" multiple>
+      <mat-option *ngFor="let slot of PITCHING_LINEUP_SLOTS" [value]="slot"> {{ MLB_LINEUP_MAP[slot].name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-template>
+
+<ng-template #pitchingStats>
+  <mat-form-field>
+    <mat-label>Pitcher Stats</mat-label>
+    <mat-select [(value)]="selectedPitcherStat" (selectionChange)="onPitcherStatChange($event.value)">
+      <mat-option *ngFor="let stat of PITCHER_STATS_LIST" [value]="stat.id">{{ stat.abbrev }}</mat-option>
+    </mat-select>
+  </mat-form-field></ng-template
+>

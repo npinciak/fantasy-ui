@@ -5,46 +5,59 @@
   [attr.aria-describedby]="ariaInfo.eventDescription"
   [attr.aria-setsize]="ariaSetsize"
   [attr.aria-posinset]="ariaPosinset"
+  (click)="onCardClick(event)"
 >
   <span [id]="ariaInfo.eventName" style="display: none">{{ event.name }}</span>
   <span [id]="ariaInfo.eventLocation" style="display: none">{{ event.location }}</span>
-
   <mat-card-subtitle [id]="ariaInfo.eventSummary" class="event-summary">{{ event?.summary }}</mat-card-subtitle>
   <mat-card-content>
     <app-espn-scoreboard-card-team [isTournament]="isTournament" [team]="event?.teams?.away"></app-espn-scoreboard-card-team>
     <div></div>
     <app-espn-scoreboard-card-team [isTournament]="isTournament" [team]="event?.teams?.home"></app-espn-scoreboard-card-team>
   </mat-card-content>
-  <mat-card-actions *ngIf="eventInProgress(event)">
-    <div [ngSwitch]="event?.leagueId">
-      <ng-template [ngSwitchCase]="LeagueIdMap.MLB">
-        <ng-container>
-          <mat-accordion [multi]="true">
-            <mat-expansion-panel
-              [expanded]="isEventToggled"
-              class="mat-elevation-z0"
-              (opened)="toggleExpansionPanel(event.id)"
-              (closed)="toggleOffExpansionPanel(event.id)"
-            >
-              <mat-expansion-panel-header>
-                <mat-panel-description>
-                  <span [id]="ariaInfo.eventLastPlay" class="event-summary" *ngIf="!event.completed || (event.completed && !isTournament)">
-                    {{ event?.lastPlay?.text }}
-                  </span>
-                </mat-panel-description>
-              </mat-expansion-panel-header>
-              <app-espn-fastcast-event-mlb [event]="event"></app-espn-fastcast-event-mlb>
-            </mat-expansion-panel>
-          </mat-accordion>
-        </ng-container>
-      </ng-template>
-      <ng-template [ngSwitchDefault]>
-        <ng-container *ngIf="!event.completed || (event.completed && !isTournament)">
-          <span [id]="ariaInfo.eventLastPlay" class="event-summary">
-            {{ event?.lastPlay?.text }}
-          </span>
-        </ng-container>
-      </ng-template>
-    </div>
+
+  <mat-card-actions>
+    <span class="event-summary" *ngIf="!eventInProgress(event)"> {{ event?.seriesSummary }}</span>
+    <ng-container *ngIf="eventInProgress(event)">
+      <div [ngSwitch]="event?.leagueId">
+        <ng-template [ngSwitchCase]="LeagueIdMap.MLB">
+          <ng-container>
+            <!-- <div
+            style="overflow: hidden"
+            (click)="toggleExpansionPanel(event.id)"
+            [ngStyle]="{ 'background-color': isEventToggled ? 'green' : 'red', height: isEventToggled ? '200px' : '52px' }"
+          >
+            {{ isEventToggled }}
+            TestTestTestTestTestTestTestTestTestTest
+          </div> -->
+
+            <mat-accordion [multi]="true">
+              <mat-expansion-panel
+                [expanded]="isEventToggled"
+                class="mat-elevation-z0"
+                (opened)="toggleExpansionPanel(event.id)"
+                (closed)="toggleOffExpansionPanel(event.id)"
+              >
+                <mat-expansion-panel-header>
+                  <mat-panel-description>
+                    <span [id]="ariaInfo.eventLastPlay" class="event-summary" *ngIf="!event.completed || (event.completed && !isTournament)">
+                      {{ event?.lastPlay?.text }}
+                    </span>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <app-espn-fastcast-event-mlb [event]="event"></app-espn-fastcast-event-mlb>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </ng-container>
+        </ng-template>
+        <ng-template [ngSwitchDefault]>
+          <ng-container *ngIf="!event.completed || (event.completed && !isTournament)">
+            <span [id]="ariaInfo.eventLastPlay" class="event-summary">
+              {{ event?.lastPlay?.text }}
+            </span>
+          </ng-container>
+        </ng-template>
+      </div>
+    </ng-container>
   </mat-card-actions>
 </mat-card>

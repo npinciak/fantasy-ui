@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
-
-import { NFLFacade } from '../facade/nfl.facade';
+import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { FantasyFootballLeagueFacade } from '../facade/fantasy-football-league.facade';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FantasyFootballLeagueResolver implements Resolve<void> {
-  constructor(readonly nflFacade: NFLFacade) {}
+  constructor(readonly fantasyFootballFacade: FantasyFootballLeagueFacade) {}
 
   async resolve(route: ActivatedRouteSnapshot): Promise<void> {
     const leagueId = route.paramMap.get('leagueId');
-    await this.nflFacade.getLeague(leagueId).toPromise();
+    if (leagueId) {
+      await this.fantasyFootballFacade.getLeague(leagueId).toPromise();
+    }
   }
 }

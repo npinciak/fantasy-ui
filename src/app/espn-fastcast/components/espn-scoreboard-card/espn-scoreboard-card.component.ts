@@ -17,6 +17,7 @@ export class EspnScoreboardCardComponent implements OnChanges {
 
   @Output() toggleExpandedEvent = new EventEmitter<string>();
   @Output() toggleOffExpandedEvent = new EventEmitter<string>();
+  @Output() cardClick = new EventEmitter<FastcastEvent>();
 
   constructor() {}
 
@@ -36,6 +37,10 @@ export class EspnScoreboardCardComponent implements OnChanges {
 
   eventInProgress(event: FastcastEvent): boolean {
     return !event.completed && event.status !== 'pre' && event.status !== 'post';
+  }
+
+  onCardClick(event: FastcastEvent) {
+    this.cardClick.emit(event);
   }
 
   get ariaInfo() {

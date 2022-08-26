@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
+import { select } from '@app/@shared/models/typed-select';
+import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { ConnectWebSocket, DisconnectWebSocket, SetSelectedEventType } from '../actions/espn-fastcast.actions';
 import { EspnFastcastSelectors } from '../selectors/espn-fastcast.selectors';
@@ -8,10 +9,12 @@ import { EspnFastcastSelectors } from '../selectors/espn-fastcast.selectors';
   providedIn: 'root',
 })
 export class EspnFastcastFacade {
-  @Select(EspnFastcastSelectors.getEventType) eventType$: Observable<string | null>;
-  @Select(EspnFastcastSelectors.getConnected) connected$: Observable<number | null>;
-  @Select(EspnFastcastSelectors.getLastRefresh) selectLastRefresh$: Observable<number | null>;
-  @Select(EspnFastcastSelectors.getLastDisconnect) selectLastDisconnect$: Observable<number | null>;
+  connected$ = select(EspnFastcastSelectors.getConnected);
+  eventType$ = select(EspnFastcastSelectors.getEventType);
+  lastDisconnect$ = select(EspnFastcastSelectors.getLastDisconnect);
+  lastRefresh$ = select(EspnFastcastSelectors.getLastRefresh);
+  isFeedValid$ = select(EspnFastcastSelectors.getIsFeedValid);
+  feedLoadingValue$ = select(EspnFastcastSelectors.getFeedLoadingValue);
 
   constructor(private store: Store) {}
 
