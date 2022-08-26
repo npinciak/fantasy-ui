@@ -1,9 +1,10 @@
 <div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
   <div fxFlex="30%" fxFlex.sm="100%">
     <app-add-league-form
-      [leagues]="fantasyLeagueFacade.localStorageLeagueList$ | async"
+      [leagues]="espnLeaguesFacade.allLeagues$ | async"
       (addLeague)="onAddLeague($event)"
       (removeLeague)="onRemoveLeague($event)"
+      (navigateLeague)="onNavigateLeague($event)"
     ></app-add-league-form>
   </div>
   <div fxFlex="70%" fxFlex.sm="100%"></div>

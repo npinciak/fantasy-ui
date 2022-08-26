@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
+import { ApiService } from '@app/@shared/services/api.service';
 import { Action, State, StateContext } from '@ngxs/store';
+import { FetchEspnLeagues, VerifyEspnLeagues } from '../actions/espn-leagues.actions';
+import { FantasySports } from '../models/espn-endpoint-builder.model';
+import { SportsUiClientLeague } from '../models/league.model';
 
-export class SetSportValue {
-  static readonly type = '[espnAddLeagueForm] SetSportValue';
-  constructor(public payload: { sport: string }) {}
+export class SetLeagueSportValue {
+  static readonly type = '[espnAddLeagueForm] SetLeagueSportValue';
+  constructor(public payload: { leagueSport: FantasySports }) {}
 }
 
 export class SetLeagueIdValue {
@@ -11,27 +15,42 @@ export class SetLeagueIdValue {
   constructor(public payload: { leagueId: string }) {}
 }
 
+export class SetLeagueNameValue {
+  static readonly type = '[espnAddLeagueForm] SetLeagueNameValue';
+  constructor(public payload: { leagueName: string }) {}
+}
+
 export class Reset {
   static readonly type = '[espnAddLeagueForm] Reset';
 }
 
+export class Submit {
+  static readonly type = '[espnAddLeagueForm] Submit';
+}
+
 export interface EspnAddLeagueFormStateModel {
-  sport: string | null;
+  leagueSport: FantasySports | null;
   leagueId: string | null;
+  leagueName: string | null;
+  verified: boolean;
 }
 
 @State<EspnAddLeagueFormStateModel>({
   name: 'espnAddLeagueForm',
   defaults: {
-    sport: null,
+    leagueSport: FantasySports.Baseball,
     leagueId: null,
+    leagueName: null,
+    verified: false,
   },
 })
 @Injectable()
 export class EspnAddLeagueFormState {
-  @Action(SetSportValue)
-  setSportValue({ patchState }: StateContext<EspnAddLeagueFormStateModel>, { payload: { sport } }: SetSportValue): void {
-    patchState({ sport });
+  constructor(private api: ApiService) {}
+
+  @Action(SetLeagueSportValue)
+  setSportValue({ patchState }: StateContext<EspnAddLeagueFormStateModel>, { payload: { leagueSport } }: SetLeagueSportValue): void {
+    patchState({ leagueSport });
   }
 
   @Action(SetLeagueIdValue)
@@ -40,7 +59,44 @@ export class EspnAddLeagueFormState {
   }
 
   @Action(Reset)
-  reset({ patchState }: StateContext<EspnAddLeagueFormStateModel>): void {
-    patchState({ leagueId: null, sport: null });
+  reset({ setState }: StateContext<EspnAddLeagueFormStateModel>): void {
+    setState({ leagueId: null, leagueSport: null, leagueName: null, verified: false });
+  }
+
+  @Action(Submit)
+  async submit({ getState, dispatch }: StateContext<EspnAddLeagueFormStateModel>) {
+    const { leagueId, leagueSport, leagueName } = getState();
+    const year = new Date().getFullYear().toString();
+
+    await dispatch(new VerifyEspnLeagues({ leagueSport, year, leagueId })).toPromise();
+
+    dispatch([new FetchEspnLeagues(), new Reset()]);
+  }
+
+  @Action(VerifyEspnLeagues)
+  async verify({ getState }: StateContext<EspnAddLeagueFormStateModel>, { payload: { leagueSport, year, leagueId } }: VerifyEspnLeagues) {
+    try {
+      const data = await this.api
+        .post<{ leagueName: string }>('http://localhost:8080/leagues/verify', {
+          leagueId,
+          leagueSport,
+          year,
+        })
+        .toPromise();
+      const leagueName = data.leagueName;
+
+      await this.api
+        .post<SportsUiClientLeague[]>('http://localhost:8080/leagues', {
+          leagueId,
+          leagueSport,
+          leagueName,
+        })
+        .toPromise();
+    } catch (er) {
+      console.error('error');
+    }
   }
 }
+// const fantasySport = req.body.fantasySport;
+// const year = req.body.year;
+// const leagueId = req.body.leagueId;
