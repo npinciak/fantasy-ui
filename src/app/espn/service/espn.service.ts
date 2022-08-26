@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { currentDate } from '@app/@shared/helpers/date';
 import { FastcastSport } from '@app/espn-fastcast/models/fastcast-sport.model';
 import { FastcastTransform } from '@app/espn-fastcast/models/fastcast-transform.model';
+import { EspnClientEventList, EspnClientFreeAgent, EspnClientPlayerNews, GameStatusId } from '@client/espn-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from 'src/app/@shared/services/api.service';
@@ -16,7 +17,6 @@ import {
 } from '../../espn-fastcast/models/espn-fastcast.model';
 import { FastcastEvent, FootballSituation, MlbSituation } from '../../espn-fastcast/models/fastcast-event.model';
 import { FastcastEventTeam } from '../../espn-fastcast/models/fastcast-team.model';
-import { EspnClientEventList, EspnClientFreeAgent, EspnClientPlayerNews, GameStatusId } from '../espn-client.model';
 import { includeSports, transformUidToId } from '../espn-helpers';
 import { NO_LOGO } from '../espn.const';
 import {
