@@ -1,6 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { exists } from '@app/@shared/helpers/utils';
+import { EspnClientPaginatedFilter } from '@app/espn/espn-client.model copy';
 import { headshotImgBuilder } from '@app/espn/espn.const';
 import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
 import { EspnService } from '@app/espn/service/espn.service';
@@ -242,7 +243,11 @@ export class MlbService {
    * @param payload
    * @returns
    */
-  baseballFreeAgents(payload: { leagueId: string; scoringPeriodId: number; filter: PaginatedFilter }): Observable<BaseballPlayer[]> {
+  baseballFreeAgents(payload: {
+    leagueId: string;
+    scoringPeriodId: number;
+    filter: EspnClientPaginatedFilter;
+  }): Observable<BaseballPlayer[]> {
     let headers = new HttpHeaders();
     headers = headers.append('X-Fantasy-Filter', JSON.stringify(payload.filter));
     headers = headers.append('X-Fantasy-Platform', 'kona-PROD-c4559dd8257df5bff411b011384d90d4d60fbafa');
@@ -262,46 +267,4 @@ function flattenPlayerStats(stats: EspnClientPlayerStatsYear[]): EspnClientPlaye
     obj[val.id] = val.stats;
     return obj;
   }, {} as EspnClientPlayerStatsEntityMap);
-}
-
-export interface PaginatedFilter {
-  players: PlayerFilterEntity;
-}
-
-export interface PlayerFilterEntity {
-  filterStatus: FilterValueString;
-  filterSlotIds?: FilterValueNumber;
-  filterStatsForTopScoringPeriodIds?: FilterStatsForTopScoringPeriodIds;
-  filterRanksForScoringPeriodIds?: FilterValueNumber;
-  // sortPercOwned: SortMetaData;
-  sortStatId?: SortMetaData & { additionalValue: string };
-  sortDraftRanks?: SortMetaData;
-  limit: number;
-  offset: number;
-}
-
-// "sortStatId": {
-//   "additionalValue": "002022",
-//   "sortAsc": false,
-//   "sortPriority": 1,
-//   "value": 20
-// },
-
-export interface SortMetaData {
-  sortPriority: number;
-  sortAsc: boolean;
-  value: string | number | null;
-}
-
-export interface FilterValueString {
-  value: string[];
-}
-
-export interface FilterValueNumber {
-  value: number[];
-}
-
-export interface FilterStatsForTopScoringPeriodIds {
-  value: number;
-  additionalValue: string[];
 }

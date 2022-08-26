@@ -92,13 +92,13 @@ export interface EspnClientScheduleProperties {
   teams?: EspnClientScheduleTeam[];
 }
 
-export interface EspnClientBaseballLeague extends EspnClientLeague {
+export type EspnClientBaseballLeague = Omit<EspnClientLeague, 'teams'> & {
   teams: EspnClientBaseballTeam[];
-}
+};
 
-export type EspnClientFootballLeague = EspnClientLeague& {
+export type EspnClientFootballLeague = Omit<EspnClientLeague, 'teams'> & {
   teams: EspnClientFootballTeam[];
-}
+};
 
 export type EspnClientScheduleEntity = EspnClientScheduleProperties;
 

@@ -1,9 +1,9 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { exists } from '@app/@shared/helpers/utils';
+import { EspnClientPaginatedFilter } from '@app/espn/espn-client.model copy';
 import { flattenPlayerStats } from '@app/espn/espn-helpers';
 import { headshotImgBuilder, logoImgBuilder } from '@app/espn/espn.const';
-import { PaginatedFilter } from '@app/espn/mlb/services/mlb.service';
 import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
 import { EspnService } from '@app/espn/service/espn.service';
 import {
@@ -159,7 +159,7 @@ export class FantasyFootballService {
   footballLeague(leagueId: string, year: string): Observable<FantasyFootballLeague> {
     return this.espnClient.espnFantasyLeagueBySport<EspnClientFootballLeague>({ sport: FantasySports.Football, leagueId, year }).pipe(
       map(res => {
-        const teams = []; // res.teams.map(t => FantasyFootballService.transformEspnClientTeamListToTeamList(t));
+        const teams = res.teams.map(t => FantasyFootballService.transformEspnClientTeamListToTeamList(t));
         const schedule = res.schedule;
         const seasonId = res.seasonId.toString();
 
@@ -193,7 +193,7 @@ export class FantasyFootballService {
    * @param payload
    * @returns
    */
-  footballFreeAgents(payload: { leagueId: string; scoringPeriodId: number; filter: PaginatedFilter | null }) {
+  footballFreeAgents(payload: { leagueId: string; scoringPeriodId: number; filter: EspnClientPaginatedFilter | null }) {
     let headers = new HttpHeaders();
     headers = headers.append('X-Fantasy-Filter', JSON.stringify(payload.filter));
     headers = headers.append('X-Fantasy-Platform', 'kona-PROD-c4559dd8257df5bff411b011384d90d4d60fbafa');
