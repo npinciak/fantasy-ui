@@ -17,11 +17,12 @@
     "lib": ["es2018", "dom"],
     "paths": {
       "@app/*": ["src/app/*"],
+      "@client/*": ["src/espn-client-models/*"],
       "@espn/*": ["src/app/espn/*"],
       "@mlb/*": ["src/app/espn/mlb/*"],
       "@dfsNfl/*": ["src/app/dfs/nfl/*"]
     },
-    "typeRoots": ["./node_modules/@types"]
+    "typeRoots": ["./node_modules/@types", "src/espn-client-models/*"]
   },
   "exclude": ["schematics"]
 }

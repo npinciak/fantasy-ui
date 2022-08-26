@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { StatThreshold } from '@app/@shared/models/stat-threshold.model';
+import { StatThreshold, StatThresholdColor } from '@app/@shared/models/stat-threshold.model';
 import { THRESHOLD_MAP } from '@app/espn/mlb/consts/stats-threshold.conts';
 import { MLB_STATS_MAP } from '@app/espn/mlb/consts/stats.const';
 import { ChartData } from '@app/espn/mlb/models/chart-data.model';
@@ -59,6 +59,9 @@ export class DataVisComponent implements OnInit, OnChanges {
       y: baseData,
       type: 'bar',
       showlegend: false,
+      marker: {
+        color: '#01579b',
+      },
     };
 
     this.test = [chartData];
@@ -81,9 +84,9 @@ export class DataVisComponent implements OnInit, OnChanges {
           type: 'lines',
           name: 'great',
           line: {
-            color: 'black',
+            color: StatThresholdColor.great,
             width: 2,
-            dash: 'dash',
+            dash: 'solid',
           },
         },
         {
@@ -92,9 +95,9 @@ export class DataVisComponent implements OnInit, OnChanges {
           type: 'lines',
           name: 'Avg',
           line: {
-            color: 'black',
+            color: StatThresholdColor.avg,
             width: 2,
-            dash: 'dash',
+            dash: 'solid',
           },
         },
         {
@@ -103,9 +106,9 @@ export class DataVisComponent implements OnInit, OnChanges {
           type: 'lines',
           name: 'poor',
           line: {
-            color: 'black',
+            color: StatThresholdColor.poor,
             width: 2,
-            dash: 'dash',
+            dash: 'solid',
           },
         }
       );
