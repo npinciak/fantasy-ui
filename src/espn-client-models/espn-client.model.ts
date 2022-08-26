@@ -96,7 +96,7 @@ export interface EspnClientBaseballLeague extends EspnClientLeague {
   teams: EspnClientBaseballTeam[];
 }
 
-export interface EspnClientFootballLeague extends EspnClientLeague {
+export type EspnClientFootballLeague = EspnClientLeague& {
   teams: EspnClientFootballTeam[];
 }
 
@@ -120,12 +120,12 @@ export interface EspnClientTeamProperties {
   rankCalculatedFinal: number;
   pointsByStat: Record<number, number>;
   valuesByStat: Record<number, number>;
-  record: string | EspnClientTeamRecordEntity;
+  record: string;
 }
 
 export type EspnClientTeam = Omit<EspnClientTeamProperties, 'teamId' | 'totalPoints' | 'totalPointsLive' | 'rosterForCurrentScoringPeriod'>;
 export type EspnClientBaseballTeam = EspnClientTeam;
-export type EspnClientFootballTeam = EspnClientTeam;
+export type EspnClientFootballTeam = Omit<EspnClientTeam, 'record'> & { record: EspnClientTeamRecordEntity };
 
 export type EspnClientScheduleTeam = Pick<
   EspnClientTeamProperties,

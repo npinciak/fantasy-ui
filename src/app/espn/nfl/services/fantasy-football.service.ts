@@ -6,13 +6,7 @@ import { headshotImgBuilder, logoImgBuilder } from '@app/espn/espn.const';
 import { PaginatedFilter } from '@app/espn/mlb/services/mlb.service';
 import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
 import { EspnService } from '@app/espn/service/espn.service';
-import {
-  EspnClientFootballLeague,
-  EspnClientFootballTeam,
-  EspnClientFreeAgentEntry,
-  EspnClientLeague,
-  EspnClientPlayer,
-} from '@client/espn-client.model';
+import { EspnClientFootballLeague, EspnClientFootballTeam, EspnClientLeague, EspnClientPlayer } from '@client/espn-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NFL_LINEUP_MAP } from '../consts/lineup.const';
@@ -106,7 +100,7 @@ export class FantasyFootballService {
     };
   }
 
-  static transformEspnClientFreeAgentToFootballPlayer(data: EspnClientFreeAgentEntry[]): FootballPlayerFreeAgent[] {
+  static transformEspnClientFreeAgentToFootballPlayer(data: any[]): FootballPlayerFreeAgent[] {
     return data.map(p => {
       if (!exists(p)) {
         throw new Error('player must be defined');
