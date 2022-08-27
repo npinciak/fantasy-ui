@@ -1,7 +1,7 @@
+import { StatEntity } from '@app/@shared/base-models/base-stats.model';
 import { enumAsList } from '@app/@shared/helpers/enum-as-list';
-import { BaseStatsProperties } from '@app/espn/models/espn-stats.model';
 
-export type FootballStatsProperties = BaseStatsProperties & { id: string };
+export type FootballStatsProperties = StatEntity & { id: string };
 export type FootballStatsMap = Record<string, FootballStatsProperties>;
 
 export enum FootballStat {

@@ -1,6 +1,6 @@
-import { SeasonConst } from '../models/adv-stats.model';
+import { SeasonStatConst } from '../models/adv-stats.model';
 
-export const MLB_WEIGHTED_STATS: Record<string, SeasonConst> = {
+export const MLB_WEIGHTED_STATS: Record<string, SeasonStatConst> = {
   '2020': {
     wOBA: 0,
     wOBAScale: 0,

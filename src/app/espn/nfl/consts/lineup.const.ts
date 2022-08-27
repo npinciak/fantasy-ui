@@ -1,6 +1,6 @@
-import { LineupMap } from '@app/espn/mlb/models/lineup.model';
+import { EspnClientLineupEntityMap } from '@client/espn-client.model';
 
-export const NFL_LINEUP_MAP: LineupMap = {
+export const NFL_LINEUP_MAP: EspnClientLineupEntityMap = {
   0: {
     abbrev: 'QB',
     active: true,

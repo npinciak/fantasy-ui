@@ -3,7 +3,7 @@ import { StatThreshold, StatThresholdColor } from '@app/@shared/models/stat-thre
 import { THRESHOLD_MAP } from '@app/espn/mlb/consts/stats-threshold.conts';
 import { MLB_STATS_MAP } from '@app/espn/mlb/consts/stats.const';
 import { ChartData } from '@app/espn/mlb/models/chart-data.model';
-import { Stat } from '@app/espn/mlb/models/mlb-stats.model';
+import { EspnBaseballStat } from '@app/espn/mlb/models/mlb-stats.model';
 
 @Component({
   selector: `app-data-vis`,
@@ -12,7 +12,7 @@ import { Stat } from '@app/espn/mlb/models/mlb-stats.model';
 export class DataVisComponent implements OnInit, OnChanges {
   @Input() title = '';
   @Input() chartData: ChartData[];
-  @Input() statFilter: Stat = Stat.AB;
+  @Input() statFilter: EspnBaseballStat = EspnBaseballStat.AB;
 
   public graph: ChartNew<number>;
   public test: any[]; //{ x: string[]; y: number[]; type: string; name?: string; showlegend?: boolean }[];
@@ -50,7 +50,7 @@ export class DataVisComponent implements OnInit, OnChanges {
     }
   }
 
-  private updateChart(data: ChartData[], statFilter: Stat) {
+  private updateChart(data: ChartData[], statFilter: EspnBaseballStat) {
     const labels = data.map(d => d.label);
     const baseData = data.map(d => d.data);
 

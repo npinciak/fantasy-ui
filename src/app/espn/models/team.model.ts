@@ -1,4 +1,4 @@
-import { RecordEntity } from '../espn-client.model';
+import { RecordEntity } from '@client/espn-client.model';
 
 /**
  * Base team model

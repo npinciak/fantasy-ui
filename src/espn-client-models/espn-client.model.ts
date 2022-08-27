@@ -1,18 +1,15 @@
-type NumberProps<T> = {
-  [P in keyof T]: number;
-};
-
-export enum GameStatusId {
-  Scheduled = 1,
-  '2nd' = 2,
-  Cancelled = 5,
-  EndOfPeriod = 22,
-  FirstHalf = 25,
-  Halftime = 23,
-  FullTime = 28,
+export enum EspnGameStatusTypeId {
+  Scheduled = '1',
+  Second = '2',
+  Cancelled = '5',
+  Delayed = '7',
+  EndOfPeriod = '22',
+  FirstHalf = '25',
+  Halftime = '23',
+  FullTime = '28',
 }
 
-export enum GameStatus {
+export enum EspmGameStatusName {
   Scheduled = 'STATUS_SCHEDULED',
   FirstHalf = 'STATUS_FIRST_HALF',
   Halftime = 'STATUS_HALFTIME',
@@ -52,11 +49,27 @@ export enum EspnSport {
   Hockey = '70',
 }
 
-export enum FreeAgentAvailabilityStatus {
+export enum EspnFreeAgentAvailabilityStatus {
   FreeAgent = 'FREEAGENT',
   Waivers = 'WAIVERS',
   OnTeam = 'ONTEAM',
 }
+
+interface EspnClientLineupProps {
+  parentId: number;
+  id: number;
+  abbrev: string;
+  bench: boolean;
+  eligiblePositions: number[];
+  lineupSlotEligible: boolean;
+  name: string;
+  starter: boolean;
+  displayOrder: number;
+  active: boolean;
+}
+
+export type EspnClientLineupEntity = EspnClientLineupProps;
+export type EspnClientLineupEntityMap = Record<number, EspnClientLineupEntity>;
 
 export interface EspnClientLeague {
   id: number;
@@ -83,7 +96,7 @@ export type EspnClientScheduleSettings = { matchupPeriodCount: number };
 type RosterSettingsProps = 'positionLimits' | 'lineupSlotCounts';
 export type EspnClientLeagueRosterSettings = { [key in RosterSettingsProps]: Record<string, number> };
 
-export interface EspnClientScheduleProperties {
+export interface EspnClientScheduleProps {
   id: number;
   matchupPeriodId: number;
   home: EspnClientScheduleTeam;
@@ -100,9 +113,9 @@ export type EspnClientFootballLeague = Omit<EspnClientLeague, 'teams'> & {
   teams: EspnClientFootballTeam[];
 };
 
-export type EspnClientScheduleEntity = EspnClientScheduleProperties;
+export type EspnClientScheduleEntity = EspnClientScheduleProps;
 
-export interface EspnClientTeamProperties {
+export interface EspnClientTeamProps {
   id: number;
   teamId: number;
   totalPoints: number;
@@ -123,12 +136,12 @@ export interface EspnClientTeamProperties {
   record: string;
 }
 
-export type EspnClientTeam = Omit<EspnClientTeamProperties, 'teamId' | 'totalPoints' | 'totalPointsLive' | 'rosterForCurrentScoringPeriod'>;
+export type EspnClientTeam = Omit<EspnClientTeamProps, 'teamId' | 'totalPoints' | 'totalPointsLive' | 'rosterForCurrentScoringPeriod'>;
 export type EspnClientBaseballTeam = EspnClientTeam;
 export type EspnClientFootballTeam = Omit<EspnClientTeam, 'record'> & { record: EspnClientTeamRecordEntity };
 
 export type EspnClientScheduleTeam = Pick<
-  EspnClientTeamProperties,
+  EspnClientTeamProps,
   'teamId' | 'totalPoints' | 'totalPointsLive' | 'rosterForCurrentScoringPeriod'
 > & {
   cumulativeScore: EspnClientTeamCumulativeScore;
@@ -281,4 +294,39 @@ export interface EspnClientErrorDetails {
   resolution?: null;
   type: string;
   metaData?: null;
+}
+
+export interface EspnClientPaginatedFilter {
+  players: PlayerFilterEntity;
+}
+
+export interface PlayerFilterEntity {
+  filterStatus: FilterValueString;
+  filterSlotIds?: FilterValueNumber;
+  filterStatsForTopScoringPeriodIds?: FilterStatsForTopScoringPeriodIds;
+  filterRanksForScoringPeriodIds?: FilterValueNumber;
+  sortPercOwned: SortMetaData;
+  sortStatId?: SortMetaData & { additionalValue: string };
+  sortDraftRanks?: SortMetaData;
+  limit: number;
+  offset: number;
+}
+
+export interface SortMetaData {
+  sortPriority: number;
+  sortAsc: boolean;
+  value: string | number | null;
+}
+
+export interface FilterValueString {
+  value: string[];
+}
+
+export interface FilterValueNumber {
+  value: number[];
+}
+
+export interface FilterStatsForTopScoringPeriodIds {
+  value: number;
+  additionalValue: string[];
 }

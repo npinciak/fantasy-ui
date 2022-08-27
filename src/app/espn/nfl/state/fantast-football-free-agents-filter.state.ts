@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FreeAgentAvailabilityStatus } from '@client/espn-client.model';
+import { EspnFreeAgentAvailabilityStatus } from '@client/espn-client.model';
 import { Action, State, StateContext, StateOperator } from '@ngxs/store';
 import { FootballLineupSlot } from '../models/football-lineup.model';
 
@@ -44,7 +44,7 @@ export class RemoveLineupSlotIds {
 }
 
 export interface FantasyFootballFreeAgentsFilterStateModel {
-  availabilityStatus: { [key in FreeAgentAvailabilityStatus]: boolean };
+  availabilityStatus: { [key in EspnFreeAgentAvailabilityStatus]: boolean };
   lineupSlotIds: { [key in FootballLineupSlot]: boolean };
   topScoringPeriodIds: { [id: string]: boolean };
   sortStatId: { [id: string]: boolean };
@@ -61,8 +61,8 @@ export interface FantasyFootballFreeAgentsFilterStateModel {
   name: 'fantasyFootballFreeAgentsFilter',
   defaults: {
     availabilityStatus: {
-      [FreeAgentAvailabilityStatus.FreeAgent]: true,
-      [FreeAgentAvailabilityStatus.Waivers]: true,
+      [EspnFreeAgentAvailabilityStatus.FreeAgent]: true,
+      [EspnFreeAgentAvailabilityStatus.Waivers]: true,
     },
     lineupSlotIds: {},
     topScoringPeriodIds: {},

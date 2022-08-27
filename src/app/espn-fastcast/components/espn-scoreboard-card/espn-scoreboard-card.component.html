@@ -21,45 +21,27 @@
   <mat-card-actions>
     <span class="event-summary" *ngIf="!eventInProgress && isTournament"> {{ event?.seriesSummary }}</span>
     <ng-container *ngIf="eventInProgress">
-      <div [ngSwitch]="event?.leagueId">
-        <ng-template [ngSwitchCase]="league.MLB">
-          <ng-container>
-            <!-- <div
-            style="overflow: hidden"
-            (click)="toggleExpansionPanel(event.id)"
-            [ngStyle]="{ 'background-color': isEventToggled ? 'green' : 'red', height: isEventToggled ? '200px' : '52px' }"
-          >
-            {{ isEventToggled }}
-            TestTestTestTestTestTestTestTestTestTest
-          </div> -->
-
-            <mat-accordion [multi]="true">
-              <mat-expansion-panel
-                [expanded]="isEventToggled"
-                class="mat-elevation-z0"
-                (opened)="toggleExpansionPanel(event.id)"
-                (closed)="toggleOffExpansionPanel(event.id)"
-              >
-                <mat-expansion-panel-header>
-                  <mat-panel-description>
-                    <span [id]="ariaInfo.eventLastPlay" class="event-summary" *ngIf="!event.completed || (event.completed && !isTournament)">
-                      {{ event?.lastPlay?.text }}
-                    </span>
-                  </mat-panel-description>
-                </mat-expansion-panel-header>
+      <mat-accordion [multi]="true">
+        <mat-expansion-panel [expanded]="isEventToggled" class="mat-elevation-z0" (opened)="toggleExpansionPanel(event.id)" (closed)="toggleOffExpansionPanel(event.id)">
+          <mat-expansion-panel-header>
+            <mat-panel-description>Deets</mat-panel-description>
+          </mat-expansion-panel-header>
+          <div [ngSwitch]="event?.leagueId">
+            <ng-template [ngSwitchCase]="league.MLB">
+              <ng-container>
                 <app-espn-fastcast-event-mlb [event]="event"></app-espn-fastcast-event-mlb>
-              </mat-expansion-panel>
-            </mat-accordion>
-          </ng-container>
-        </ng-template>
-        <ng-template [ngSwitchDefault]>
-          <ng-container *ngIf="!event.completed || (event.completed && !isTournament)">
-            <span [id]="ariaInfo.eventLastPlay" class="event-summary">
-              {{ event?.lastPlay?.text }}
-            </span>
-          </ng-container>
-        </ng-template>
-      </div>
+              </ng-container>
+            </ng-template>
+            <ng-template [ngSwitchDefault]>
+              <ng-container *ngIf="!event.completed || !event.isHalftime || (event.completed && !isTournament)">
+                <span [id]="ariaInfo.eventLastPlay" class="event-summary" *ngIf="!event.completed || (event.completed && !isTournament)">
+                  {{ event?.lastPlay?.text }}
+                </span>
+              </ng-container>
+            </ng-template>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
     </ng-container>
   </mat-card-actions>
 </mat-card>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FreeAgentAvailabilityStatus } from '@client/espn-client.model';
+import { EspnFreeAgentAvailabilityStatus } from '@client/espn-client.model';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { FetchFantasyBaseballFreeAgents } from '../actions/fantasy-baseball-free-agents.actions';
@@ -32,7 +32,7 @@ export class FantasyBaseballFreeAgentsFilterFacade {
     return this.store.dispatch([new ToggleLineupSlotIds({ lineupSlotIds }), new FetchFantasyBaseballFreeAgents()]);
   }
 
-  togglePlayerAvailabilityStatus(status: FreeAgentAvailabilityStatus): Observable<void> {
+  togglePlayerAvailabilityStatus(status: EspnFreeAgentAvailabilityStatus): Observable<void> {
     return this.store.dispatch(new PatchPlayerAvailabilityStatus(status));
   }
 

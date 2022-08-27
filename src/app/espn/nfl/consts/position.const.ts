@@ -1,6 +1,6 @@
-import { PositionMap } from '@app/espn/models/position.model';
+import { PositionEntityMap } from '@app/@shared/base-models/base-position.model';
 
-export const NFL_POSITION_MAP: PositionMap = {
+export const NFL_POSITION_MAP: PositionEntityMap = {
   0: {
     abbrev: 'POS0',
     name: 'POS0',

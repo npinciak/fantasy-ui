@@ -1,13 +1,13 @@
 import { exists } from '@app/@shared/helpers/utils';
 import { EspnClientPlayerStatsEntity } from '@client/espn-client.model';
-import { SeasonConst } from '../models/adv-stats.model';
-import { Stat } from '../models/mlb-stats.model';
+import { SeasonStatConst } from '../models/adv-stats.model';
+import { EspnBaseballStat } from '../models/mlb-stats.model';
 
 export class AdvStats {
   private _stats: EspnClientPlayerStatsEntity;
-  private _seasonConst: SeasonConst;
+  private _seasonConst: SeasonStatConst;
 
-  constructor(configs: { seasonConst: SeasonConst; statsEntity: EspnClientPlayerStatsEntity }) {
+  constructor(configs: { seasonConst: SeasonStatConst; statsEntity: EspnClientPlayerStatsEntity }) {
     this._stats = exists(configs.statsEntity) ? configs.statsEntity : [];
     this._seasonConst = configs.seasonConst;
   }
@@ -19,19 +19,21 @@ export class AdvStats {
 
   get wRAA(): number {
     if (!this.wRAAValid) return 0;
-    return ((this.wOBA - this._seasonConst.wOBA) / this._seasonConst.wOBAScale) * this._stats[Stat.PA];
+    return ((this.wOBA - this._seasonConst.wOBA) / this._seasonConst.wOBAScale) * this._stats[EspnBaseballStat.PA];
   }
 
   get wRC(): number {
     if (!this.wRCValid) return 0;
-    return ((this.wOBA - this._seasonConst.wOBA) / this._seasonConst.wOBAScale + this._seasonConst['r/PA']) * this._stats[Stat.PA];
+    return (
+      ((this.wOBA - this._seasonConst.wOBA) / this._seasonConst.wOBAScale + this._seasonConst['r/PA']) * this._stats[EspnBaseballStat.PA]
+    );
   }
 
   get fip(): number {
     if (!this.fipValid) return 0;
     // prettier-ignore
     return (
-      (13 * this._stats[Stat.HRA] + 3 * (this._stats[Stat.BBI] + this._stats[Stat.HB]) - 2 * this._stats[Stat.K]) / (this._stats[Stat.IP]* 0.333) +
+      (13 * this._stats[EspnBaseballStat.HRA] + 3 * (this._stats[EspnBaseballStat.BBI] + this._stats[EspnBaseballStat.HB]) - 2 * this._stats[EspnBaseballStat.K]) / (this._stats[EspnBaseballStat.IP]* 0.333) +
       this._seasonConst.cFIP
     );
   }
@@ -40,47 +42,57 @@ export class AdvStats {
     if (!this.babipValid) return 0;
     // prettier-ignore
     return (
-      (this._stats[Stat.HA] - this._stats[Stat.HRA]) /
-      (this._stats[Stat.BF] - this._stats[Stat.K] - this._stats[Stat.HRA] + this._stats[Stat.SFA])
+      (this._stats[EspnBaseballStat.HA] - this._stats[EspnBaseballStat.HRA]) /
+      (this._stats[EspnBaseballStat.BF] - this._stats[EspnBaseballStat.K] - this._stats[EspnBaseballStat.HRA] + this._stats[EspnBaseballStat.SFA])
     );
   }
 
   get iso(): number {
     if (!this.isoValid) return 0;
-    return this._stats[Stat.SLG] - this._stats[Stat.AVG];
+    return this._stats[EspnBaseballStat.SLG] - this._stats[EspnBaseballStat.AVG];
   }
 
   get weightedHits(): number {
     if (!this.weightedHitsValid) return 0;
     return (
       this._seasonConst.wBB * this.unintentionalBB +
-      this._seasonConst.wHBP * this._stats[Stat.HBP] +
-      this._seasonConst.w1B * this._stats[Stat.SINGLE] +
-      this._seasonConst.w2B * this._stats[Stat.DOUBLE] +
-      this._seasonConst.w3B * this._stats[Stat.TRIPLE] +
-      this._seasonConst.wHR * this._stats[Stat.HR]
+      this._seasonConst.wHBP * this._stats[EspnBaseballStat.HBP] +
+      this._seasonConst.w1B * this._stats[EspnBaseballStat.SINGLE] +
+      this._seasonConst.w2B * this._stats[EspnBaseballStat.DOUBLE] +
+      this._seasonConst.w3B * this._stats[EspnBaseballStat.TRIPLE] +
+      this._seasonConst.wHR * this._stats[EspnBaseballStat.HR]
     );
   }
 
   get leftOnBasePercent(): number {
     if (!this.lobPercentValid) return 0;
-    const batting = this._stats[Stat.HA] + this._stats[Stat.BBI] + this._stats[Stat.HB];
+    const batting = this._stats[EspnBaseballStat.HA] + this._stats[EspnBaseballStat.BBI] + this._stats[EspnBaseballStat.HB];
     // prettier-ignore
-    return ((batting - this._stats[Stat.RA]) / (batting - 1.4 * this._stats[Stat.HRA])) * 100;
+    return ((batting - this._stats[EspnBaseballStat.RA]) / (batting - 1.4 * this._stats[EspnBaseballStat.HRA])) * 100;
   }
 
   get nonHits(): number {
     if (!this.nonHitsValid) return 0;
-    return this._stats[Stat.AB] + this._stats[Stat.BB] - (this._stats[Stat.IBB] + this._stats[Stat.SF] + this._stats[Stat.HBP]);
+    return (
+      this._stats[EspnBaseballStat.AB] +
+      this._stats[EspnBaseballStat.BB] -
+      (this._stats[EspnBaseballStat.IBB] + this._stats[EspnBaseballStat.SF] + this._stats[EspnBaseballStat.HBP])
+    );
   }
 
   get unintentionalBB(): number {
     if (!this.unintentionalBBValid) return 0;
-    return this._stats[Stat.BB] - this._stats[Stat.IBB];
+    return this._stats[EspnBaseballStat.BB] - this._stats[EspnBaseballStat.IBB];
   }
 
   private get babipValid(): boolean {
-    return Stat.HA in this._stats && Stat.HRA in this._stats && Stat.BF in this._stats && Stat.K in this._stats && Stat.SFA in this._stats;
+    return (
+      EspnBaseballStat.HA in this._stats &&
+      EspnBaseballStat.HRA in this._stats &&
+      EspnBaseballStat.BF in this._stats &&
+      EspnBaseballStat.K in this._stats &&
+      EspnBaseballStat.SFA in this._stats
+    );
   }
 
   private get wRCValid(): boolean {
@@ -88,7 +100,7 @@ export class AdvStats {
   }
 
   private get wRAAValid(): boolean {
-    return this.wOBAValid && Stat.PA in this._stats;
+    return this.wOBAValid && EspnBaseballStat.PA in this._stats;
   }
 
   private get wOBAValid(): boolean {
@@ -96,32 +108,50 @@ export class AdvStats {
   }
 
   private get fipValid(): boolean {
-    return Stat.HRA in this._stats && Stat.BBI in this._stats && Stat.HB in this._stats && Stat.K in this._stats && Stat.IP in this._stats;
+    return (
+      EspnBaseballStat.HRA in this._stats &&
+      EspnBaseballStat.BBI in this._stats &&
+      EspnBaseballStat.HB in this._stats &&
+      EspnBaseballStat.K in this._stats &&
+      EspnBaseballStat.IP in this._stats
+    );
   }
 
   private get unintentionalBBValid(): boolean {
-    return Stat.BB in this._stats && Stat.IBB in this._stats;
+    return EspnBaseballStat.BB in this._stats && EspnBaseballStat.IBB in this._stats;
   }
 
   private get weightedHitsValid(): boolean {
     return (
-      Stat.HBP in this._stats &&
-      Stat.SINGLE in this._stats &&
-      Stat.DOUBLE in this._stats &&
-      Stat.TRIPLE in this._stats &&
-      Stat.HR in this._stats
+      EspnBaseballStat.HBP in this._stats &&
+      EspnBaseballStat.SINGLE in this._stats &&
+      EspnBaseballStat.DOUBLE in this._stats &&
+      EspnBaseballStat.TRIPLE in this._stats &&
+      EspnBaseballStat.HR in this._stats
     );
   }
 
   private get nonHitsValid(): boolean {
-    return Stat.AB in this._stats && Stat.BB in this._stats && Stat.IBB in this._stats && Stat.SF in this._stats && Stat.HBP in this._stats;
+    return (
+      EspnBaseballStat.AB in this._stats &&
+      EspnBaseballStat.BB in this._stats &&
+      EspnBaseballStat.IBB in this._stats &&
+      EspnBaseballStat.SF in this._stats &&
+      EspnBaseballStat.HBP in this._stats
+    );
   }
 
   private get isoValid(): boolean {
-    return Stat.SLG in this._stats && Stat.AVG in this._stats;
+    return EspnBaseballStat.SLG in this._stats && EspnBaseballStat.AVG in this._stats;
   }
 
   private get lobPercentValid(): boolean {
-    return Stat.HA in this._stats && Stat.BBI in this._stats && Stat.HB in this._stats && Stat.RA in this._stats && Stat.HRA in this._stats;
+    return (
+      EspnBaseballStat.HA in this._stats &&
+      EspnBaseballStat.BBI in this._stats &&
+      EspnBaseballStat.HB in this._stats &&
+      EspnBaseballStat.RA in this._stats &&
+      EspnBaseballStat.HRA in this._stats
+    );
   }
 }

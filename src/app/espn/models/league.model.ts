@@ -1,7 +1,8 @@
 /**
  * Base league model
  */
-interface LeagueProperties {
+
+interface LeagueProps {
   id: string;
   uid: string;
   name: string;
@@ -11,7 +12,7 @@ interface LeagueProperties {
   sport?: string;
 }
 
-export type League = LeagueProperties;
+export type League = LeagueProps;
 
 export interface SportsUiClientLeague {
   id: number;
@@ -21,3 +22,19 @@ export interface SportsUiClientLeague {
   createdAt: string;
   updatedAt: string;
 }
+
+export enum EspnLeagueId {
+  MLB = 10,
+  NCAAF = 23,
+  NFL = 28,
+  NBA = 46,
+  NHL = 90,
+}
+
+export const LeagueNameByEspnLeagueId: { [key in EspnLeagueId]: string } = {
+  [EspnLeagueId.MLB]: 'MLB',
+  [EspnLeagueId.NCAAF]: 'NCAAF',
+  [EspnLeagueId.NFL]: 'NFL',
+  [EspnLeagueId.NBA]: 'NBA',
+  [EspnLeagueId.NHL]: 'NHL',
+};

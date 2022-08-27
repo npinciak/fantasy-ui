@@ -41,8 +41,7 @@ export function transformPercToNumber(str: string): number;
 export function transformPercToNumber(str: string | undefined): number | null;
 export function transformPercToNumber(str: string | null): number | null;
 export function transformPercToNumber(str: string | undefined | null): number | null {
-  if (str === undefined) return null;
-  if (str === null) return null;
+  if (str == undefined || str == null) return null;
   return Number(str.split('%')[0]);
 }
 
@@ -63,7 +62,7 @@ export function transformNestedToCamelCase<T>(obj: T): {} {
 
 function flatten<T>(arr: (T[] | undefined)[]): T[] | undefined;
 function flatten<T>(arr: T[][]): T[] {
-  if (arr === undefined) return [];
+  if (arr == undefined) return [];
   return ([] as T[]).concat(...arr);
 }
 

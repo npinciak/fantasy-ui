@@ -1,4 +1,4 @@
-export enum InjuryStatusType {
+export enum PlayerStatusType {
   Active = 'ACTIVE',
   Probable = 'PROBABLE',
   Ques = 'QUESTIONABLE',
@@ -15,13 +15,30 @@ export enum InjuryStatusType {
   SUS = 'SUSPENSION',
 }
 
-export const isInjured = [
-  InjuryStatusType.O,
-  InjuryStatusType.IR,
-  InjuryStatusType.DL7,
-  InjuryStatusType.DL10,
-  InjuryStatusType.DL15,
-  InjuryStatusType.DL60,
-  InjuryStatusType.Brv,
-  InjuryStatusType.Pat,
-];
+export const InjuryStatus = new Set([
+  PlayerStatusType.O,
+  PlayerStatusType.IR,
+  PlayerStatusType.DL7,
+  PlayerStatusType.DL10,
+  PlayerStatusType.DL15,
+  PlayerStatusType.DL60,
+  PlayerStatusType.Brv,
+  PlayerStatusType.Pat,
+]);
+
+export const PlayerStatusAbbrevByInjuryStatusType: { [key in PlayerStatusType]: string } = {
+  [PlayerStatusType.Active]: 'Active',
+  [PlayerStatusType.Probable]: 'Probable',
+  [PlayerStatusType.Ques]: 'Questionable',
+  [PlayerStatusType.D]: 'Doubtful',
+  [PlayerStatusType.O]: 'Out',
+  [PlayerStatusType.IR]: 'Injury Reserve',
+  [PlayerStatusType.DTD]: 'Day to Day',
+  [PlayerStatusType.DL7]: '7 Day DL',
+  [PlayerStatusType.DL10]: '10 Day DL',
+  [PlayerStatusType.DL15]: '15 Day DL',
+  [PlayerStatusType.DL60]: '60 Day DL',
+  [PlayerStatusType.Brv]: 'Bereavement',
+  [PlayerStatusType.Pat]: 'Paternity',
+  [PlayerStatusType.SUS]: 'Suspension',
+};

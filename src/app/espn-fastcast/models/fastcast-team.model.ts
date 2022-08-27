@@ -1,17 +1,18 @@
-import { Team } from '@app/espn/models/team.model';
-import { CompetitorsEntity, EventsEntity } from './espn-fastcast.model';
+import { TeamEntity } from '@app/@shared/base-models/base-team.model';
+import { RecordEntity } from '@client/espn-client.model';
 
-export interface FastcastEventTeamProperties {
-  score: string | null;
-  abbrev: string | null;
+type FastcastEventTeamProps = 'score' | 'abbreviation' | 'color' | 'altColor';
+
+type FastcastEventTeamPropsStringNullable = { [key in FastcastEventTeamProps]: string | null };
+type FastcastEventTeamProperties = FastcastEventTeamPropsStringNullable & {
+  uid: string;
+  eventUid: string;
   isWinner: boolean;
   isHome: string;
-  color: string | null;
-  altColor: string | null;
   rank: number | null;
-  eventUid: string;
   winPct: number | null;
-}
+  record: string | RecordEntity[];
+};
 
-export type FastcastEventTeam = FastcastEventTeamProperties & Team & Pick<CompetitorsEntity, 'uid'> & Pick<EventsEntity, 'id'>;
+export type FastcastEventTeam = FastcastEventTeamProperties & TeamEntity;
 export type FastcastEventTeamMap = Record<string, FastcastEventTeam>;

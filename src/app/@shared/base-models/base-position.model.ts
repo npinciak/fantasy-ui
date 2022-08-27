@@ -4,7 +4,7 @@
  * Any position related models should extend this model
  *
  */
-type BasePositionProps = 'abbrev' | 'name';
+type BasePositionEntityProps = 'abbrev' | 'name';
 
-export type Position = { [key in BasePositionProps]: string };
-export type PositionMap = Record<number, Position>;
+export type PositionEntity = Required<{ [key in BasePositionEntityProps]: string }>;
+export type PositionEntityMap = Record<number, PositionEntity>;

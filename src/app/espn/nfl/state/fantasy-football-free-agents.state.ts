@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
-import { FreeAgentAvailabilityStatus } from '@client/espn-client.model';
+import { EspnFreeAgentAvailabilityStatus } from '@client/espn-client.model';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { FetchFantasyFootballFreeAgents, SetFantasyFootballFreeAgents } from '../actions/fantasy-football-free-agents.actions';
 import { FootballPlayer } from '../models/football-player.model';
@@ -29,7 +29,7 @@ export class FantasyFootballFreeAgentsState extends GenericState({ idProperty: '
 
     //   const filterRanksForScoringPeriodIds = { value: [scoringPeriodId] };
     //   const filterSlotIds = { value: lineupSlotIds };
-    const filterStatus = { value: [FreeAgentAvailabilityStatus.FreeAgent] }; // { value: availabilityStatus };
+    const filterStatus = { value: [EspnFreeAgentAvailabilityStatus.FreeAgent] }; // { value: availabilityStatus };
     //   const filterStatsForTopScoringPeriodIds = {
     //     value: 5,
     //     additionalValue: ['002022', '102022', '002021', '012022', '022022', '032022', '042022', '062022', '010002022'],

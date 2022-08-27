@@ -1,5 +1,5 @@
 import { StatByThreshold, StatThreshold } from '@app/@shared/models/stat-threshold.model';
-import { Stat } from '../models/mlb-stats.model';
+import { EspnBaseballStat } from '../models/mlb-stats.model';
 
 export const opsThreshold: StatByThreshold = {
   [StatThreshold.excellent]: 1.0,
@@ -84,9 +84,9 @@ export const lobPctThreshold: StatByThreshold = {
 export const THRESHOLD_MAP: {
   [x: number]: StatByThreshold;
 } = {
-  [Stat.wRAA]: wraaThreshold,
-  [Stat.wOBA]: wobaThreshold,
-  [Stat.OPS]: opsThreshold,
-  [Stat.K_9]: k9Threshold,
-  [Stat.LOB_PCT]: lobPctThreshold,
+  [EspnBaseballStat.wRAA]: wraaThreshold,
+  [EspnBaseballStat.wOBA]: wobaThreshold,
+  [EspnBaseballStat.OPS]: opsThreshold,
+  [EspnBaseballStat.K_9]: k9Threshold,
+  [EspnBaseballStat.LOB_PCT]: lobPctThreshold,
 };

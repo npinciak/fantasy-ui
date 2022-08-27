@@ -1,6 +1,6 @@
 import { StatusCode } from '@app/@core/interceptors/error-handler.interceptor';
 
-interface WebSocketResponseProperties {
+interface WebSocketResponseProps {
   hbi: number;
   op: OperationCode; // operationcode
   rc: StatusCode; //response code
@@ -24,10 +24,10 @@ export interface EspnWebSocket {
   securePort: number;
 }
 
-export type SocketRes = Partial<WebSocketResponseProperties>;
-export type SocketResSuccess = Pick<WebSocketResponseProperties, 'mid' | 'op' | 'pl' | 'tc' | 'useCDN'>;
-export type SocketMsg = Pick<WebSocketResponseProperties, 'sid' | 'tc'> & { op: OperationCode.S };
-export type OpCodePRes = Pick<WebSocketResponseProperties, 'ts' | '~c' | 'pl'>;
+export type SocketRes = Partial<WebSocketResponseProps>;
+export type SocketResSuccess = Pick<WebSocketResponseProps, 'mid' | 'op' | 'pl' | 'tc' | 'useCDN'>;
+export type SocketMsg = Pick<WebSocketResponseProps, 'sid' | 'tc'> & { op: OperationCode.S };
+export type OpCodePRes = Pick<WebSocketResponseProps, 'ts' | '~c' | 'pl'>;
 
 export enum OperationCode {
   B = 'B',

@@ -1,5 +1,5 @@
+import { PositionEntityMap } from '@app/@shared/base-models/base-position.model';
 import { enumAsList } from '@app/@shared/helpers/enum-as-list';
-import { PositionMap } from '@app/espn/models/position.model';
 
 export enum MLB_POSITION {
   POS0,
@@ -20,7 +20,7 @@ export enum MLB_POSITION {
 
 export const mlbPositionList = enumAsList(MLB_POSITION);
 
-export const MLB_POSITION_MAP: PositionMap = {
+export const MLB_POSITION_MAP: PositionEntityMap = {
   0: {
     abbrev: 'POS0',
     name: 'POS0',

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { InjuryStatusType } from '@app/espn/models/injury.model';
+import { PlayerStatusType } from '@app/espn/models/injury.model';
 import { colorByPlayingStatus, matIconByPlayingStatus } from '@app/espn/models/playing-status.model';
 import { FootballPlayer } from '../../models/football-player.model';
 
@@ -16,7 +16,7 @@ export class FootballLineupCardComponent {
 
   readonly matIconByPlayingStatus = matIconByPlayingStatus;
   readonly colorByPlayingStatus = colorByPlayingStatus;
-  readonly InjuryStatusType = InjuryStatusType;
+  readonly InjuryStatusType = PlayerStatusType;
 
   constructor() {}
 

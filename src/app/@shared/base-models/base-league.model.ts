@@ -3,6 +3,6 @@
  *
  * Any league related models should extend this model
  */
-type LeagueProps = 'id' | 'name' | 'abbreviation';
+type BaseLeagueEntityProps = 'id' | 'name' | 'abbreviation';
 
-export type League = { [key in LeagueProps]: string };
+export type LeagueEntity = Required<{ [key in BaseLeagueEntityProps]: string }>;

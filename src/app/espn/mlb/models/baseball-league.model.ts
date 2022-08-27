@@ -1,8 +1,8 @@
 import { BaseballTeam } from './baseball-team.model';
 
-export interface BaseballLeagueProperties {
+export type BaseballLeagueProps = {
   teams: BaseballTeam[];
-}
+};
 
 // TODO: Create new FE model
-export type BaseballLeague = BaseballLeagueProperties;
+export type BaseballLeague = BaseballLeagueProps;

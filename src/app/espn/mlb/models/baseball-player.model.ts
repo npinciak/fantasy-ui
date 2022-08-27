@@ -1,7 +1,7 @@
-import { Player } from '@app/espn/models/player.model';
+import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
 import { EspnClientPlayer, EspnClientPlayerInfo, EspnClientPlayerRatings, EspnClientPlayerStatsEntityMap } from '@client/espn-client.model';
 
-export interface BaseballPlayerProperties {
+export interface BaseballPlayerProps {
   isInjured: boolean;
   injuryStatus: string | null;
   isStarting: boolean;
@@ -14,14 +14,14 @@ export interface BaseballPlayerProperties {
   lineupSlot: string;
 }
 
-export type BaseballPlayer = Player &
-  BaseballPlayerProperties &
+export type BaseballPlayer = PlayerEntity &
+  BaseballPlayerProps &
   Pick<EspnClientPlayerInfo, 'starterStatusByProGame' | 'lastNewsDate'> &
   Pick<EspnClientPlayer, 'lineupSlotId'>;
 
 export type BaseballPlayerMap = Record<string, BaseballPlayer>;
 
-export type BaseballPlayerStatsRow = Pick<BaseballPlayerProperties, 'isInjured' | 'injuryStatus'> &
+export type BaseballPlayerStatsRow = Pick<BaseballPlayerProps, 'isInjured' | 'injuryStatus'> &
   Pick<EspnClientPlayer, 'lineupSlotId'> & {
     name: string;
     img: string | null;

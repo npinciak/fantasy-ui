@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { currentDate } from '@app/@shared/helpers/date';
 import { FastcastSport } from '@app/espn-fastcast/models/fastcast-sport.model';
 import { FastcastTransform } from '@app/espn-fastcast/models/fastcast-transform.model';
-import { EspnClientEventList, EspnClientFreeAgent, EspnClientPlayerNews, GameStatusId } from '@client/espn-client.model';
+import { EspnClientEventList, EspnClientFreeAgent, EspnClientPlayerNews, EspnGameStatusTypeId } from '@client/espn-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from 'src/app/@shared/services/api.service';
@@ -64,13 +64,13 @@ export class EspnService {
       eventUid,
       isHome: data.homeAway,
       score: data.score,
-      abbrev: data.abbreviation,
+      abbreviation: data.abbreviation,
       logo: data.logo.length > 0 ? data.logo : NO_LOGO,
       isWinner: data.winner,
       name: data.name ?? data.abbreviation,
-      color: data.color,
-      altColor: data.alternateColor ?? null,
-      record: Array.isArray(data.record) ? null : data.record,
+      color: data.color === 'ffffff' || data.color === 'ffff00' ? `#${data.alternateColor}` : `#${data.color}`,
+      altColor: `#${data.alternateColor}` ?? null,
+      record: data.record,
       rank: data.rank ?? null,
       winPct: null,
     };
@@ -137,6 +137,7 @@ export class EspnService {
       state: event?.fullStatus.type.state,
       completed: event?.fullStatus.type.completed,
       status: event?.status,
+      statusId: event.fullStatus.type.id,
       name: event?.name,
       shortName: event?.shortName,
       location: event?.location,
@@ -145,7 +146,7 @@ export class EspnService {
       summary: event?.summary,
       period: event?.period,
       note: event?.note ?? null,
-      isHalftime: event?.fullStatus.type?.id ? Number(event?.fullStatus.type.id) === GameStatusId.Halftime : false,
+      isHalftime: event?.fullStatus.type?.id ? event?.fullStatus.type.id === EspnGameStatusTypeId.Halftime : false,
       lastPlay: event?.situation?.lastPlay ?? null,
       mlbSituation,
       footballSituation,
@@ -258,7 +259,6 @@ export class EspnService {
           ? flattenEventsImport.map(e => EspnService.transformEventImportToFastcastEvent(e)).filter(l => l != null)
           : [];
 
-        const teamsTetst = exists(events) ? events.map(c => c?.teams) : [];
         const teams = [];
 
         Object.assign(final, {
@@ -274,7 +274,7 @@ export class EspnService {
   }
 
   /**
-   * @todo
+   * Send espn server cookie in headers for POST
    */
   private get postHeaders(): HttpHeaders {
     let headers = new HttpHeaders();
@@ -283,7 +283,7 @@ export class EspnService {
   }
 
   /**
-   * @todo
+   * Append all query params to http request
    */
   private get params(): HttpParams {
     let params = new HttpParams();

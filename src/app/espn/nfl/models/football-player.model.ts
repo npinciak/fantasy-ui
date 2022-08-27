@@ -1,4 +1,4 @@
-import { Player } from '@app/espn/models/player.model';
+import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
 import { EspnClientPlayer, EspnClientPlayerInfo, EspnClientPlayerStatsByYearMap } from '@client/espn-client.model';
 
 export interface FootballPlayerProperties {
@@ -9,7 +9,7 @@ export interface FootballPlayerProperties {
   stats: EspnClientPlayerStatsByYearMap | null;
 }
 
-export type FootballPlayer = Player &
+export type FootballPlayer = PlayerEntity &
   FootballPlayerProperties &
   Pick<EspnClientPlayer, 'lineupSlotId'> &
   Pick<EspnClientPlayerInfo, 'defaultPositionId'>;

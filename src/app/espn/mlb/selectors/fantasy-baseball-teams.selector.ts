@@ -13,7 +13,7 @@ import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
 import { BaseballTeamLive, BaseballTeamMap, BaseballTeamTableRow } from '../models/baseball-team.model';
 import { ChartData } from '../models/chart-data.model';
-import { Stat } from '../models/mlb-stats.model';
+import { EspnBaseballStat } from '../models/mlb-stats.model';
 import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.state';
 import { FantasyBaseballTeamState } from '../state/fantasy-baseball-team.state';
 import { FantasyBaseballEventsSelector } from './fantasy-baseball-events.selector';
@@ -27,18 +27,18 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
 
     const adv = {};
     Object.assign(adv, {
-      [Stat.fip]: advancedStats.fip,
-      [Stat.wOBA]: advancedStats.wOBA,
-      [Stat.wRAA]: advancedStats.wRAA,
-      [Stat.BABIP]: advancedStats.babip,
-      [Stat.ISO]: advancedStats.iso,
-      [Stat.LOB_PCT]: advancedStats.leftOnBasePercent,
+      [EspnBaseballStat.fip]: advancedStats.fip,
+      [EspnBaseballStat.wOBA]: advancedStats.wOBA,
+      [EspnBaseballStat.wRAA]: advancedStats.wRAA,
+      [EspnBaseballStat.BABIP]: advancedStats.babip,
+      [EspnBaseballStat.ISO]: advancedStats.iso,
+      [EspnBaseballStat.LOB_PCT]: advancedStats.leftOnBasePercent,
     });
 
     const stats = {
       ...statsEntity,
       ...adv,
-      [Stat.IP]: statsEntity[Stat.IP] * 0.333,
+      [EspnBaseballStat.IP]: statsEntity[EspnBaseballStat.IP] * 0.333,
     };
 
     return {
@@ -137,8 +137,8 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
   @Selector([FantasyBaseballTeamsSelector.getTeamBatterStats, FantasyBaseballLeagueState.getSeasonId])
   static getBatterStatsChartData(
     getTeamBatters: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[]
-  ): (teamId: string, statPeriod: string, statFilter: Stat) => ChartData[] {
-    return (teamId: string, statPeriod: string, statFilter: Stat) => {
+  ): (teamId: string, statPeriod: string, statFilter: EspnBaseballStat) => ChartData[] {
+    return (teamId: string, statPeriod: string, statFilter: EspnBaseballStat) => {
       const batters = getTeamBatters(teamId, statPeriod);
       return batters
         .map(p => {
@@ -155,8 +155,8 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
   @Selector([FantasyBaseballTeamsSelector.getTeamBatterStats, FantasyBaseballLeagueState.getSeasonId])
   static getBatterStatsScatterChartData(
     getTeamBatters: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[]
-  ): (teamId: string, statPeriod: string, xAxisFilter: Stat, yAxisFilter: Stat) => any {
-    return (teamId: string, statPeriod: string, xAxisFilter: Stat, yAxisFilter: Stat) => {
+  ): (teamId: string, statPeriod: string, xAxisFilter: EspnBaseballStat, yAxisFilter: EspnBaseballStat) => any {
+    return (teamId: string, statPeriod: string, xAxisFilter: EspnBaseballStat, yAxisFilter: EspnBaseballStat) => {
       const batters = getTeamBatters(teamId, statPeriod);
 
       const x = batters
@@ -270,8 +270,8 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
   @Selector([FantasyBaseballTeamsSelector.getTeamPitcherStats, FantasyBaseballLeagueState.getSeasonId])
   static getPitcherStatsChartData(
     getTeamPitchers: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[]
-  ): (teamId: string, statPeriod: string, statFilter: Stat) => ChartData[] {
-    return (teamId: string, statPeriod: string, statFilter: Stat) => {
+  ): (teamId: string, statPeriod: string, statFilter: EspnBaseballStat) => ChartData[] {
+    return (teamId: string, statPeriod: string, statFilter: EspnBaseballStat) => {
       const pitchers = getTeamPitchers(teamId, statPeriod);
       return pitchers
         .map(p => {
@@ -288,8 +288,8 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
   @Selector([FantasyBaseballTeamsSelector.getTeamPitcherStats, FantasyBaseballLeagueState.getSeasonId])
   static getPitcherStatsScatterChartData(
     getTeamPitchers: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[]
-  ): (teamId: string, statPeriod: string, xAxisFilter: Stat, yAxisFilter: Stat) => any {
-    return (teamId: string, statPeriod: string, xAxisFilter: Stat, yAxisFilter: Stat) => {
+  ): (teamId: string, statPeriod: string, xAxisFilter: EspnBaseballStat, yAxisFilter: EspnBaseballStat) => any {
+    return (teamId: string, statPeriod: string, xAxisFilter: EspnBaseballStat, yAxisFilter: EspnBaseballStat) => {
       const pitchers = getTeamPitchers(teamId, statPeriod);
 
       const x = pitchers

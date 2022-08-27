@@ -1,5 +1,5 @@
+import { StatEntity } from '@app/@shared/base-models/base-stats.model';
 import { enumAsList } from '@app/@shared/helpers/enum-as-list';
-import { BaseStatsProperties } from '@app/espn/models/espn-stats.model';
 
 export enum PeriodId {
   Season,
@@ -26,14 +26,14 @@ export enum StatType {
   Defense,
 }
 
-export type StatsProperties = BaseStatsProperties & {
+export type EspnStatsEntityProps = StatEntity & {
   statCategoryId: StatCategory;
   statTypeId: StatType;
 };
 
-export type StatsMap = Record<number, StatsProperties>;
+export type StatsMap = Record<number, EspnStatsEntityProps>;
 
-type Stats =
+type EspnBaseballStats =
   | 'ab'
   | 'h'
   | 'ha'
@@ -90,7 +90,7 @@ type Stats =
   | 'k'
   | 'hb';
 
-export enum Stat {
+export enum EspnBaseballStat {
   AB,
   H,
   AVG,
@@ -184,4 +184,4 @@ export enum Stat {
   LOB_PCT,
 }
 
-export const StatList = enumAsList(Stat);
+export const BaseballStatList = enumAsList(EspnBaseballStat);

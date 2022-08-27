@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { InjuryStatusType } from '@app/espn/models/injury.model';
+import { PlayerStatusType } from '@app/espn/models/injury.model';
 import { colorByPlayingStatus, matIconByPlayingStatus } from '@app/espn/models/playing-status.model';
 import { BaseballPlayer } from '../../models/baseball-player.model';
 
@@ -13,7 +13,7 @@ export class LineupCardPlayerComponent {
 
   readonly matIconByPlayingStatus = matIconByPlayingStatus;
   readonly colorByPlayingStatus = colorByPlayingStatus;
-  readonly InjuryStatusType = InjuryStatusType;
+  readonly InjuryStatusType = PlayerStatusType;
 
   constructor() {}
 
@@ -22,6 +22,6 @@ export class LineupCardPlayerComponent {
   }
 
   get isPlayerDayToDay() {
-    return this.player?.injuryStatus === InjuryStatusType.DTD;
+    return this.player?.injuryStatus === PlayerStatusType.DTD;
   }
 }

@@ -1,7 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { exists } from '@app/@shared/helpers/utils';
-import { EspnClientPaginatedFilter } from '@app/espn/espn-client.model copy';
 import { flattenPlayerStats } from '@app/espn/espn-helpers';
 import { headshotImgBuilder, logoImgBuilder } from '@app/espn/espn.const';
 import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
@@ -11,6 +10,7 @@ import {
   EspnClientFootballTeam,
   EspnClientFreeAgentEntry,
   EspnClientLeague,
+  EspnClientPaginatedFilter,
   EspnClientPlayer,
 } from '@client/espn-client.model';
 import { Observable } from 'rxjs';

@@ -2,10 +2,11 @@ import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, Simpl
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { StatEntity } from '@app/@shared/base-models/base-stats.model';
 import { cellDataAccessor } from '@app/@shared/helpers/utils';
 import { TableColumnDataType } from '@app/@shared/models/table-columns.model';
 import { BaseballPlayer } from '@app/espn/mlb/models/baseball-player.model';
-import { BaseStatsProperties, StatTypePeriodId } from '@app/espn/models/espn-stats.model';
+import { StatTypePeriodId } from '@app/espn/models/espn-stats.model';
 
 @Component({
   selector: 'app-espn-stats-table',
@@ -17,7 +18,7 @@ export class EspnStatsTableComponent implements OnChanges, AfterViewInit {
   @Input() dataColumns: any[];
   @Input() headers: string[];
   @Input() ariaLabel: string | null = null;
-  @Input() statsMap: Record<string, BaseStatsProperties>;
+  @Input() statsMap: Record<string, StatEntity>;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;

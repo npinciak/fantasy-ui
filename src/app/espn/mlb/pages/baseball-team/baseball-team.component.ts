@@ -19,7 +19,7 @@ import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-leagu
 import { FantasyBaseballPlayerFacade } from '../../facade/fantasy-baseball-player.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
 import { BaseballPlayer } from '../../models/baseball-player.model';
-import { Stat } from '../../models/mlb-stats.model';
+import { EspnBaseballStat } from '../../models/mlb-stats.model';
 
 @Component({
   selector: 'app-baseball-team',
@@ -45,12 +45,12 @@ export class BaseballTeamComponent implements OnInit {
   readonly BATTER_STATS_LIVE_ROWS = BATTER_STATS_LIVE_ROWS;
   readonly BATTER_STATS_LIVE_HEADERS = BATTER_STATS_LIVE_HEADERS;
 
-  selectedPitcherStat = Stat.fip;
-  selectedBatterStatXAxis = Stat.wOBA;
-  selectedBatterStatYAxis = Stat.AB;
+  selectedPitcherStat = EspnBaseballStat.fip;
+  selectedBatterStatXAxis = EspnBaseballStat.wOBA;
+  selectedBatterStatYAxis = EspnBaseballStat.AB;
 
-  selectedPitcherStatXAxis = Stat.SO;
-  selectedPitcherStatYAxis = Stat.APP;
+  selectedPitcherStatXAxis = EspnBaseballStat.SO;
+  selectedPitcherStatYAxis = EspnBaseballStat.APP;
 
   scoringPeriodId = '002022';
 

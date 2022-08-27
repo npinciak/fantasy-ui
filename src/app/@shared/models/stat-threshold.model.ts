@@ -28,11 +28,12 @@ export enum StatThresholdClass {
   awful = 'awful',
 }
 
-export type StatByThreshold = {
-  [key in StatThreshold]: number;
-};
+export type StatByThreshold = { [key in StatThreshold]: number };
+export type StatThresholdByStat = { [key in StatThreshold]: StatByThreshold };
+export type StatThresholdClassByStatThreshold = { [key in StatThreshold]: StatThresholdClass };
+export type StatThresholdColorByStatThreshold = { [key in StatThreshold]: StatThresholdColor };
 
-export const StatThresholdByClassMap: { [key in StatThreshold]: StatThresholdClass } = {
+export const StatThresholdByClassMap: StatThresholdClassByStatThreshold = {
   [StatThreshold.excellent]: StatThresholdClass.excellent,
   [StatThreshold.great]: StatThresholdClass.great,
   [StatThreshold.aboveAvg]: StatThresholdClass.aboveAvg,
@@ -42,7 +43,7 @@ export const StatThresholdByClassMap: { [key in StatThreshold]: StatThresholdCla
   [StatThreshold.awful]: StatThresholdClass.awful,
 };
 
-export const StatThresholdByColorMap: { [key in StatThreshold]: StatThresholdColor } = {
+export const StatThresholdByColorMap: StatThresholdColorByStatThreshold = {
   [StatThreshold.excellent]: StatThresholdColor.excellent,
   [StatThreshold.great]: StatThresholdColor.great,
   [StatThreshold.aboveAvg]: StatThresholdColor.aboveAvg,

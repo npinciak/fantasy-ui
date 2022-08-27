@@ -45,7 +45,7 @@ export interface EspnFastcastStateModel {
     lastRefresh: null,
     eventType: FastcastEventType.TopEvents,
     connectionClosed: true,
-    pause: true,
+    pause: false,
   },
 })
 @Injectable()

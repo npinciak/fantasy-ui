@@ -1,12 +1,19 @@
 import { exists } from '@app/@shared/helpers/utils';
-import { EspnClientPlayerStatsByYearMap, EspnClientPlayerStatsYear } from '@client/espn-client.model';
+import { EspnClientLineupEntityMap, EspnClientPlayerStatsByYearMap, EspnClientPlayerStatsYear } from '@client/espn-client.model';
 import { BaseballPlayer } from './mlb/models/baseball-player.model';
-import { LineupMap } from './mlb/models/lineup.model';
 import { StatTypePeriodId } from './models/espn-stats.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
 
 export function includeSports(id: string): boolean {
   return new Set(['1', '20', '40', '70', '600']).has(id);
+}
+
+export function teamColorHandler(val: undefined): null;
+export function teamColorHandler(val: null): null;
+export function teamColorHandler(val: string): string;
+export function teamColorHandler(val: string | undefined | null): string | null {
+  const negativeColors = new Set(['ffffff', 'ffff00']);
+  return null;
 }
 
 export function transformDownDistancePositionText(downDistanceText: null, possessionText: null): null;
@@ -32,13 +39,6 @@ export function transformIdToUid(sport: string | null, league: string | null, te
   return `s:${sport}~l:${league}~t:${team}`;
 }
 
-export enum LeagueIdMap {
-  MLB = 10,
-  NFL = 28,
-  NBA = 46,
-  NHL = 90,
-}
-
 export function YearToStatTypePeriod(periodType: StatTypePeriodId, year: string) {
   if (periodType === StatTypePeriodId.Projected) return `${periodType}${year}`;
   else return `0${periodType}${year}`;
@@ -61,21 +61,21 @@ export function flattenPlayerStats(stats: EspnClientPlayerStatsYear[] | null | u
   }, {} as EspnClientPlayerStatsByYearMap);
 }
 
-export function startingBaseballPlayersFilter(players: BaseballPlayer[], lineupMap: LineupMap): BaseballPlayer[] {
+export function startingBaseballPlayersFilter(players: BaseballPlayer[], lineupMap: EspnClientLineupEntityMap): BaseballPlayer[] {
   return players
     .filter(p => lineupMap[p.lineupSlotId].starter)
     .sort((a, b) => lineupMap[a.lineupSlotId].displayOrder - lineupMap[b.lineupSlotId].displayOrder);
 }
 
-export function benchPlayersFilter(players: BaseballPlayer[], lineupMap: LineupMap): BaseballPlayer[] {
+export function benchPlayersFilter(players: BaseballPlayer[], lineupMap: EspnClientLineupEntityMap): BaseballPlayer[] {
   return players.filter(p => lineupMap[p.lineupSlotId].bench);
 }
 
-export function startingPlayersFilter(players: BaseballPlayer[], lineupMap: LineupMap): BaseballPlayer[];
-export function startingPlayersFilter(players: FootballPlayer[], lineupMap: LineupMap): FootballPlayer[];
+export function startingPlayersFilter(players: BaseballPlayer[], lineupMap: EspnClientLineupEntityMap): BaseballPlayer[];
+export function startingPlayersFilter(players: FootballPlayer[], lineupMap: EspnClientLineupEntityMap): FootballPlayer[];
 export function startingPlayersFilter(
   players: BaseballPlayer[] | FootballPlayer[],
-  lineupMap: LineupMap
+  lineupMap: EspnClientLineupEntityMap
 ): BaseballPlayer[] | FootballPlayer[] {
   return (
     players

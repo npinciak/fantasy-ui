@@ -1,4 +1,4 @@
-interface Lineup {
+interface EspnClientLineupProps {
   parentId: number;
   id: number;
   abbrev: string;
@@ -11,4 +11,4 @@ interface Lineup {
   active: boolean;
 }
 
-export type LineupMap = Record<number, Lineup>;
+export type EspnClientLineupEntityMap = Record<number, EspnClientLineupProps>;

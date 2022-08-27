@@ -1,13 +1,15 @@
-import { FastCastGameStatus } from '@app/espn/espn-client.model';
+import { EspnGameStatusTypeId, FastCastGameStatus } from '@client/espn-client.model';
 import { EventsEntity, FullStatusType, Situation } from './espn-fastcast.model';
 import { FastcastEventTeam } from './fastcast-team.model';
 
-export interface FastcastEventProperties {
+interface FastcastEventProps {
   id: string;
+  uid: string;
   leagueId: string;
   timestamp: number;
   state: string | null;
   status: FastCastGameStatus | null;
+  statusId: EspnGameStatusTypeId;
   name: string | null;
   shortName: string | null;
   location: string | null;
@@ -20,9 +22,9 @@ export interface FastcastEventProperties {
   footballSituation: FootballSituation | null;
 }
 
-export type FastcastEvent = FastcastEventProperties &
+export type FastcastEvent = FastcastEventProps &
   Partial<Situation> &
-  Pick<EventsEntity, 'uid' | 'note' | 'seriesSummary'> &
+  Pick<EventsEntity, 'note' | 'seriesSummary'> &
   Pick<FullStatusType, 'completed'>;
 export type FastcastEventMap = Record<string, FastcastEvent>;
 

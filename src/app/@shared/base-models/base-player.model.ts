@@ -3,6 +3,6 @@
  *
  * Any player related models should extend this model
  */
-type PlayerProps = 'id' | 'name' | 'img' | 'team' | 'teamId' | 'teamUid' | 'position';
+type BasePlayerEntityProps = 'id' | 'name' | 'img' | 'team' | 'teamId' | 'teamUid' | 'position';
 
-export type Player = { [prop in PlayerProps]: string };
+export type PlayerEntity = Required<{ [prop in BasePlayerEntityProps]: string }>;

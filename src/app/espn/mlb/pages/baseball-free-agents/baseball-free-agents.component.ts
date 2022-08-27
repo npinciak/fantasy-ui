@@ -12,7 +12,7 @@ import { FantasyBaseballFreeAgentsFilterFacade } from '../../facade/fantasy-base
 import { FantasyBaseballFreeAgentsFacade } from '../../facade/fantasy-baseball-free-agents.facade';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
-import { Stat } from '../../models/mlb-stats.model';
+import { EspnBaseballStat } from '../../models/mlb-stats.model';
 
 enum PositionTabGroup {
   Batters,
@@ -43,14 +43,10 @@ export class BaseballFreeAgentsComponent implements OnInit {
 
   readonly MLB_LINEUP_MAP = MLB_LINEUP_MAP;
 
-  teamDynamicScatterChartData: any;
-  freeAgentDynamicScatterChartData: any;
-  freeAgentDynamicLineChartData: any;
-
   scoringPeriodId: string = '002022';
 
-  selectedPitcherStat = Stat.ERA;
-  selectedBatterStat = Stat.AVG;
+  selectedPitcherStat = EspnBaseballStat.ERA;
+  selectedBatterStat = EspnBaseballStat.AVG;
 
   selectedLeagueTeam = '1';
 
@@ -84,11 +80,11 @@ export class BaseballFreeAgentsComponent implements OnInit {
     this.scoringPeriodId = change.value;
   }
 
-  onBatterStatChange(val: Stat): void {
+  onBatterStatChange(val: EspnBaseballStat): void {
     this.selectedBatterStat = val;
   }
 
-  onPitcherStatChange(val: Stat): void {
+  onPitcherStatChange(val: EspnBaseballStat): void {
     this.selectedPitcherStat = val;
   }
 
