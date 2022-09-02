@@ -33,7 +33,7 @@ import { FootballScoreboardCardTeamComponent } from './nfl/components/football-s
 import { FootballFreeAgentsComponent } from './nfl/pages/football-free-agents/football-free-agents.component';
 import { FootballHomeComponent } from './nfl/pages/football-home/football-home.component';
 import { FootballTeamComponent } from './nfl/pages/football-team/football-team.component';
-import { FantasyFootballFreeAgentsFilterState } from './nfl/state/fantast-football-free-agents-filter.state';
+import { FantasyFootballFreeAgentsFilterState } from './nfl/state/fantasy-football-free-agents-filter.state';
 import { FantasyFootballFreeAgentsState } from './nfl/state/fantasy-football-free-agents.state';
 import { FantasyFootballLeagueState } from './nfl/state/fantasy-football-league.state';
 import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-schedule.state';
