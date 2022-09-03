@@ -9,9 +9,11 @@
 >
   <span [id]="ariaInfo.eventName" style="display: none">{{ event.name }}</span>
   <span [id]="ariaInfo.eventLocation" style="display: none">{{ event.location }}</span>
-  <mat-card-subtitle [id]="ariaInfo.eventSummary" class="event-summary">{{
-    eventInProgress || event.completed ? event.summary : (event?.timestamp | date: 'short')
-  }}</mat-card-subtitle>
+  <mat-card-subtitle [id]="ariaInfo.eventSummary" class="event-summary"
+    >{{ eventInProgress || event.completed ? event.summary : (event?.timestamp | date: 'short') }}
+
+    <a [href]="event?.link" target="_blank" style="color: #0000008a"><mat-icon class="new-tab-icon">open_in_new</mat-icon></a>
+  </mat-card-subtitle>
   <mat-card-content>
     <app-espn-scoreboard-card-team [isTournament]="isTournament" [team]="event?.teams?.away"></app-espn-scoreboard-card-team>
     <div></div>
@@ -24,7 +26,7 @@
       <mat-accordion [multi]="true">
         <mat-expansion-panel [expanded]="isEventToggled" class="mat-elevation-z0" (opened)="toggleExpansionPanel(event.id)" (closed)="toggleOffExpansionPanel(event.id)">
           <mat-expansion-panel-header>
-            <mat-panel-description>Deets</mat-panel-description>
+            <mat-panel-description>View</mat-panel-description>
           </mat-expansion-panel-header>
           <div [ngSwitch]="event?.leagueId">
             <ng-template [ngSwitchCase]="league.MLB">

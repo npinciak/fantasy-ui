@@ -148,6 +148,7 @@ export class EspnService {
       note: event?.note ?? null,
       isHalftime: event?.fullStatus.type?.id ? event?.fullStatus.type.id === EspnGameStatusTypeId.Halftime : false,
       lastPlay: event?.situation?.lastPlay ?? null,
+      link: event.link,
       mlbSituation,
       footballSituation,
       teams,

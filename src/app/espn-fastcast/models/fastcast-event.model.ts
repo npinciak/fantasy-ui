@@ -24,7 +24,7 @@ interface FastcastEventProps {
 
 export type FastcastEvent = FastcastEventProps &
   Partial<Situation> &
-  Pick<EventsEntity, 'note' | 'seriesSummary'> &
+  Pick<EventsEntity, 'note' | 'seriesSummary' | 'link'> &
   Pick<FullStatusType, 'completed'>;
 export type FastcastEventMap = Record<string, FastcastEvent>;
 
