@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GenericFacade } from '@app/@shared/generic-state/generic.facade';
 import { select } from '@app/@shared/models/typed-select';
-import { Store } from '@ngxs/store';
 
 import { FantasyFootballScheduleSelectors } from '../selectors/fantasy-football-schedule.selectors';
 
@@ -13,8 +12,4 @@ export class FantasyFootballScheduleFacade extends GenericFacade(FantasyFootball
   matchupPeriodIds$ = select(FantasyFootballScheduleSelectors.getMatchupPeriodIds);
   matchupPeriodIdFilterOptions$ = select(FantasyFootballScheduleSelectors.getMatchupPeriodIdFilterOptions);
   matchupListWithFantasyTeamsByMatchupPeriodId$ = select(FantasyFootballScheduleSelectors.getMatchupListByMatchupPeriodId);
-
-  constructor(private store: Store) {
-    super();
-  }
 }

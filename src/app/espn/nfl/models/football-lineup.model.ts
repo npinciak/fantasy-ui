@@ -1,3 +1,5 @@
+import { enumAsList } from '@app/@shared/helpers/enum-as-list';
+
 export enum FootballLineupSlot {
   QB,
   TQB,
@@ -26,3 +28,5 @@ export enum FootballLineupSlot {
   EDR,
   ALL,
 }
+
+export const FootballLineupSlotList = enumAsList(FootballLineupSlot);

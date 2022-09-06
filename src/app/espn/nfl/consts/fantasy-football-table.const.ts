@@ -69,10 +69,9 @@ export const ROSTER_COLUMNS = [
   {
     columnDef: `stats.stats.${FootballStat.CPCT}`,
     headerCell: `stats.stats.${FootballStat.CPCT}`,
-    headerLabel: FOOTBALL_STATS_MAP[FootballStat.PTD].abbrev,
+    headerLabel: FOOTBALL_STATS_MAP[FootballStat.CPCT].abbrev,
     dataType: TableColumnDataType.Number,
   },
-
   {
     columnDef: `stats.stats.${FootballStat.PYPG}`,
     headerCell: `stats.stats.${FootballStat.PYPG}`,
@@ -84,6 +83,18 @@ export const ROSTER_COLUMNS = [
     columnDef: `stats.stats.${FootballStat.RET}`,
     headerCell: `stats.stats.${FootballStat.RET}`,
     headerLabel: 'Targets',
+    dataType: TableColumnDataType.Number,
+  },
+  {
+    columnDef: `percentChange`,
+    headerCell: `percentChange`,
+    headerLabel: 'percentChange',
+    dataType: TableColumnDataType.Number,
+  },
+  {
+    columnDef: `percentOwned`,
+    headerCell: `percentOwned`,
+    headerLabel: 'percentOwned',
     dataType: TableColumnDataType.Number,
   },
 ];
