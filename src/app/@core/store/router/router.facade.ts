@@ -9,6 +9,8 @@ import { RouterSelector } from './router.selectors';
   providedIn: 'root',
 })
 export class RouterFacade {
+  sport$ = select(RouterSelector.getSport);
+
   leagueId$ = select(RouterSelector.leagueId);
   teamId$ = select(RouterSelector.teamId);
 
@@ -22,6 +24,10 @@ export class RouterFacade {
     return this.store.selectSnapshot(RouterSelector.teamId);
   }
 
+  get sport(): UrlFragments {
+    return this.store.selectSnapshot(RouterSelector.getSport);
+  }
+
   navigateToEspnHome() {
     return this.store.dispatch(new Navigate([UrlBuilder.espnBaseUrl]));
   }
@@ -32,6 +38,14 @@ export class RouterFacade {
 
   navigateToLeagueHome(sport: UrlFragments, leagueId: string | null) {
     return this.store.dispatch(new Navigate(UrlBuilder.espnLeague(sport, leagueId)));
+  }
+
+  navigateToFreeAgents(sport: UrlFragments, leagueId: string | null) {
+    return this.store.dispatch(new Navigate(UrlBuilder.espnFreeAgents(sport, leagueId)));
+  }
+
+  navigateToTeam(sport: UrlFragments, leagueId: string | null, teamId: string | null) {
+    return this.store.dispatch(new Navigate(UrlBuilder.espnTeam(sport, leagueId, teamId)));
   }
 
   navigateToEspnBaseballFreeAgents(leagueId: string | null) {
