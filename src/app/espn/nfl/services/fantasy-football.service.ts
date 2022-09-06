@@ -15,7 +15,7 @@ import {
 } from '@client/espn-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { NFL_LINEUP_MAP } from '../consts/lineup.const';
+import { FOOTBALL_LINEUP_SLOT_MAP } from '../consts/lineup.const';
 import { NFL_POSITION_MAP } from '../consts/position.const';
 import { NFL_TEAM_MAP } from '../consts/team.const';
 import { FantasyFootballLeague } from '../models/fantasy-football-league.model';
@@ -47,8 +47,10 @@ export class FantasyFootballService {
       isInjured: player.playerPoolEntry.player.injured,
       injuryStatus: player.playerPoolEntry.player.injuryStatus,
       lineupSlotId: player.lineupSlotId,
-      lineupSlot: NFL_LINEUP_MAP[player.lineupSlotId].abbrev,
+      lineupSlot: FOOTBALL_LINEUP_SLOT_MAP[player.lineupSlotId].abbrev,
       points: player.playerPoolEntry.appliedStatTotal,
+      percentChange: player.playerPoolEntry.player.ownership.percentChange,
+      percentOwned: player.playerPoolEntry.player.ownership.percentOwned,
       stats,
     };
   }
@@ -129,7 +131,9 @@ export class FantasyFootballService {
         isInjured: p.player.injured,
         injuryStatus: p.player.injuryStatus,
         lineupSlotId: p.player.defaultPositionId,
-        lineupSlot: NFL_LINEUP_MAP[p.player.defaultPositionId].abbrev,
+        lineupSlot: FOOTBALL_LINEUP_SLOT_MAP[p.player.defaultPositionId].abbrev,
+        percentChange: p.player.ownership.percentChange,
+        percentOwned: p.player.ownership.percentOwned,
         points: 0, // p.player.appliedStatTotal,
         stats,
       };

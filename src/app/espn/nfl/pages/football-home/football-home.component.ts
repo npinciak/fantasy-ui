@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { UrlBuilder } from '@app/@shared/url-builder';
 import { Navigate } from '@ngxs/router-plugin';
 import { Store } from '@ngxs/store';
-import { BehaviorSubject } from 'rxjs';
 import { FOOTBALL_LEAGUE_STANDINGS_HEADERS, FOOTBALL_LEAGUE_STANDINGS_ROWS } from '../../consts/fantasy-football-table.const';
 import { FantasyFootballLeagueFacade } from '../../facade/fantasy-football-league.facade';
 import { FantasyFootballScheduleFacade } from '../../facade/fantasy-football-schedule.facade';
@@ -18,7 +17,10 @@ export class FootballHomeComponent implements OnInit {
 
   readonly LEAGUE_STANDINGS_ROWS = FOOTBALL_LEAGUE_STANDINGS_ROWS;
   readonly LEAGUE_STANDINGS_HEADERS = FOOTBALL_LEAGUE_STANDINGS_HEADERS;
-
+  matchupPeriodIdFilterOptions$ = this.fantasyFootballScheduleFacade.matchupPeriodIdFilterOptions$;
+  matchupListByMatchupPeriodId$ = this.fantasyFootballScheduleFacade.matchupListWithFantasyTeamsByMatchupPeriodId$;
+  currentScoringPeriod$ = this.fantasyFootballLeagueFacade.currentScoringPeriodId$;
+  standings$ = this.fantasyFootballLeagueFacade.standings$;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -32,6 +34,4 @@ export class FootballHomeComponent implements OnInit {
   onNavigateToTeamClick(id: string) {
     this.store.dispatch(new Navigate(UrlBuilder.espnNflLeagueTeam(this.leagueId, id)));
   }
-
- 
 }

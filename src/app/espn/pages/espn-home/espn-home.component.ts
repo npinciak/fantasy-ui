@@ -48,7 +48,7 @@ export class EspnHomeComponent implements OnInit {
     const notEmpty = this.localStorageFacade.getLocalStorageValue(LocalStorageKeys.UserLeagues);
   }
 
-  onRemoveLeague(leagueId: number): void {
+  onRemoveLeague(leagueId: string): void {
     this.espnLeaguesFacade.deleteLeague(leagueId);
   }
 }

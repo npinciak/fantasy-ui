@@ -1,7 +1,7 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { exists } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
-import { NFL_LINEUP_MAP } from '../consts/lineup.const';
+import { FOOTBALL_LINEUP_SLOT_MAP } from '../consts/lineup.const';
 import { FootballPlayer } from '../models/football-player.model';
 import { FootballPosition } from '../models/football-position.model';
 import { FootballTeamProperties } from '../models/football-team.model';
@@ -22,8 +22,8 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
   static getTeamStarters(getRosterByTeamId: (id: string | null) => FootballPlayer[]): (id: string | null) => FootballPlayer[] {
     return (id: string | null) =>
       getRosterByTeamId(id)
-        .filter(p => NFL_LINEUP_MAP[p.lineupSlotId].starter)
-        .sort((a, b) => NFL_LINEUP_MAP[a.lineupSlotId].displayOrder - NFL_LINEUP_MAP[b.lineupSlotId].displayOrder);
+        .filter(p => FOOTBALL_LINEUP_SLOT_MAP[p.lineupSlotId].starter)
+        .sort((a, b) => FOOTBALL_LINEUP_SLOT_MAP[a.lineupSlotId].displayOrder - FOOTBALL_LINEUP_SLOT_MAP[b.lineupSlotId].displayOrder);
   }
 
   @Selector([FantasyFootballTeamSelectors.getTeamStarters])
@@ -33,7 +33,7 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
 
   @Selector([FantasyFootballTeamSelectors.getRosterByTeamId])
   static getTeamBench(getRosterByTeamId: (id: string | null) => FootballPlayer[]): (id: string | null) => FootballPlayer[] {
-    return (id: string | null) => getRosterByTeamId(id).filter(p => NFL_LINEUP_MAP[p.lineupSlotId].bench);
+    return (id: string | null) => getRosterByTeamId(id).filter(p => FOOTBALL_LINEUP_SLOT_MAP[p.lineupSlotId].bench);
   }
 
   @Selector([FantasyFootballTeamSelectors.getTeamBench])
@@ -43,29 +43,18 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
 
   @Selector([FantasyFootballTeamSelectors.getRosterByTeamId])
   static getTeamStats(getRosterByTeamId: (id: string | null) => FootballPlayer[]) {
-    return (id: string | null, statPeriod: string) =>
+    return (id: string | null, statPeriod: string): FootballPlayer[] =>
       getRosterByTeamId(id).map(p => {
         const stats = exists(p.stats) ? p.stats[statPeriod] : {};
-
         return {
-          name: p.name,
-          isInjured: p.isInjured,
-          injuryStatus: p.injuryStatus,
-          img: p.img,
-          team: p.team,
-          lineupSlotId: p.lineupSlotId,
-          position: p.position,
-          defaultPositionId: p.defaultPositionId,
-
-          // playerOwnershipChange: p.playerOwnershipChange,
-          // playerOwnershipPercentOwned: p.playerOwnershipPercentOwned,
+          ...p,
           stats,
         };
       });
   }
 
   @Selector([FantasyFootballTeamSelectors.getTeamStats])
-  static getTeamStatsByPositionId(getTeamStats: (id: string | null, statPeriod: string) => any[]) {
+  static getTeamStatsByPositionId(getTeamStats: (id: string | null, statPeriod: string) => FootballPlayer[]) {
     return (id: string | null, statPeriod: string, positionId: FootballPosition) =>
       getTeamStats(id, statPeriod).filter(p => p.defaultPositionId === positionId);
   }
@@ -76,7 +65,7 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
       const teamPositionCount = {};
 
       getRosterByTeamId(id).map(p => {
-        const position = NFL_LINEUP_MAP[p.defaultPositionId].abbrev;
+        const position = FOOTBALL_LINEUP_SLOT_MAP[p.defaultPositionId].abbrev;
 
         if (position in teamPositionCount) {
           teamPositionCount[position]++;

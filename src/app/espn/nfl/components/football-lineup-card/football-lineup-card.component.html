@@ -4,41 +4,14 @@
       <div fxFlex>
         {{ title }}
       </div>
-      <div fxFlex>Week {{ week }}</div>
+      <!-- <div fxFlex>Week {{ week }}</div>
       <div fxFlex>
         {{ points | number: '1.0' }}
-      </div>
+      </div> -->
     </div>
     <mat-list>
       <span mat-list-item *ngFor="let player of lineup">
-        <table class="ui-w-100" [title]="playerLabel(player)">
-          <tr>
-            <td class="player-col" rowspan="4">
-              {{ player?.lineupSlot }}
-            </td>
-          </tr>
-          <tr>
-            <td class="player-col" rowspan="4">
-              <img role="presentation" width="48" height="35" [src]="player?.img" [alt]="player?.name" />
-            </td>
-          </tr>
-          <tr>
-            <td class="player-info-col">
-              {{ player?.name }}
-              <!-- <mat-icon *ngIf="player?.startingStatus" [ngStyle]="{ color: colorByPlayingStatus[player?.startingStatus] }" [title]="player?.startingStatus">{{
-                matIconByPlayingStatus[player?.startingStatus]
-              }}</mat-icon> -->
-              <!-- <span class="injury-status_dtd" [title]="player?.injuryStatus" *ngIf="isPlayerDayToDay">DTD</span> -->
-              <!-- <mat-icon class="injury-status" [matTooltip]="player?.injuryStatus" *ngIf="player?.isInjured">medical_services</mat-icon> -->
-            </td>
-            <td>
-              {{ player?.points | number: '1.0-3' }}
-            </td>
-          </tr>
-          <tr>
-            <td>{{ player?.team }}, {{ player?.position }}</td>
-          </tr>
-        </table>
+        <app-espn-player [player]="player"></app-espn-player>
       </span>
     </mat-list>
   </mat-card-content>

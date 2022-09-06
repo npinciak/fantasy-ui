@@ -16,16 +16,6 @@
   </div>
   <div fxFlex="70%" fxFlex.sm="100%">
     <div>
-      {{ (footballTeamFacade.teamPositions$ | async)!(teamId) | json }}
-    </div>
-    <div>
-      <!-- <ng-container *ngFor="let p of footballLeagueFacade.positionLimits$ | async">
-        {{ p.label }} - {{ p.val }}
-        <br />
-      </ng-container> -->
-    </div>
-
-    <div>
       <mat-form-field>
         <mat-label>pos</mat-label>
         <mat-select [(value)]="selectedPosition" (selectionChange)="onSelectedPositionChange($event.value)">

@@ -1,6 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { PlayerStatusType } from '@app/espn/models/injury.model';
-import { colorByPlayingStatus, matIconByPlayingStatus } from '@app/espn/models/playing-status.model';
+import {
+  InjurySeverityByInjuryStatus,
+  InjurySeverityColor,
+  InjurySeverityColorByInjurySeverity,
+  MatIconByEspnPlayerInjuryStatus,
+  PlayerStatusAbbrevByInjuryStatusType,
+} from '@app/espn/models/injury.model';
+import { EspnPlayerInjuryStatus } from '@client/espn-client.model';
 import { FootballPlayer } from '../../models/football-player.model';
 
 @Component({
@@ -12,11 +18,13 @@ export class FootballLineupCardComponent {
   @Input() title: string = 'Lineup';
   @Input() lineup: FootballPlayer[];
   @Input() points: number;
+  @Input() projectedPoints: number;
   @Input() week: number;
 
-  readonly matIconByPlayingStatus = matIconByPlayingStatus;
-  readonly colorByPlayingStatus = colorByPlayingStatus;
-  readonly InjuryStatusType = PlayerStatusType;
+  readonly MatIconByEspnPlayerInjuryStatus = MatIconByEspnPlayerInjuryStatus;
+  readonly InjurySeverityByInjuryStatus = InjurySeverityByInjuryStatus;
+  readonly InjurySeverityColorByInjurySeverity = InjurySeverityColorByInjurySeverity;
+  readonly PlayerStatusAbbrevByInjuryStatusType = PlayerStatusAbbrevByInjuryStatusType;
 
   constructor() {}
 
@@ -24,7 +32,7 @@ export class FootballLineupCardComponent {
     return `${player.name}, ${player.team}, ${player.lineupSlot}`;
   }
 
-  // get isPlayerDayToDay() {
-  //   return this.player?.injuryStatus === InjuryStatusType.DTD;
-  // }
+  playerInjuryStatusColor(injuryStatus: EspnPlayerInjuryStatus): InjurySeverityColor {
+    return InjurySeverityColorByInjurySeverity[InjurySeverityByInjuryStatus[injuryStatus]];
+  }
 }
