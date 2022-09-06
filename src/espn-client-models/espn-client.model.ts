@@ -1,3 +1,22 @@
+export enum EspnPlayerInjuryStatus {
+  Active = 'ACTIVE',
+  Probable = 'PROBABLE',
+  Ques = 'QUESTIONABLE',
+  NotStarting = 'NOTSTARTING',
+  Starting = 'STARTING',
+  D = 'DOUBTFUL',
+  O = 'OUT',
+  IR = 'INJURY_RESERVE',
+  DTD = 'DAY_TO_DAY',
+  DL7 = 'SEVEN_DAY_DL',
+  DL10 = 'TEN_DAY_DL',
+  DL15 = 'FIFTEEN_DAY_DL',
+  DL60 = 'SIXTY_DAY_DL',
+  Brv = 'BEREAVEMENT',
+  Pat = 'PATERNITY',
+  SUS = 'SUSPENSION',
+}
+
 export enum EspnGameStatusTypeId {
   Scheduled = '1',
   Second = '2',
@@ -9,7 +28,7 @@ export enum EspnGameStatusTypeId {
   FullTime = '28',
 }
 
-export enum EspmGameStatusName {
+export enum EspnGameStatusName {
   Scheduled = 'STATUS_SCHEDULED',
   FirstHalf = 'STATUS_FIRST_HALF',
   Halftime = 'STATUS_HALFTIME',
@@ -191,7 +210,7 @@ export interface EspnClientPlayerInfo {
   defaultPositionId: number;
   proTeamId: number;
   injured: boolean;
-  injuryStatus: string;
+  injuryStatus: EspnPlayerInjuryStatus;
   ownership: EspnClientPlayerOwnership;
   eligibleSlots: number[];
   stats?: EspnClientPlayerStatsYear[];

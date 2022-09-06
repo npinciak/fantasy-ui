@@ -39,7 +39,7 @@ export function transformIdToUid(sport: string | null, league: string | null, te
   return `s:${sport}~l:${league}~t:${team}`;
 }
 
-export function YearToStatTypePeriod(periodType: StatTypePeriodId, year: string) {
+export function YearToStatTypePeriod(periodType: StatTypePeriodId, year: string): string {
   if (periodType === StatTypePeriodId.Projected) return `${periodType}${year}`;
   else return `0${periodType}${year}`;
 }
