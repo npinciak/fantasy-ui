@@ -1,4 +1,4 @@
-import { PlayerStatusType } from '@app/espn/models/injury.model';
+import { EspnPlayerInjuryStatus } from '@app/espn/models/injury.model';
 import { MOCK_PLAYER_2 } from '@app/espn/models/player.model.mock';
 import { MLB_LINEUP_MAP } from '../consts/lineup.const';
 import { MLB_POSITION_MAP } from '../consts/position.const';
@@ -57,7 +57,7 @@ export const MOCK_BASEBALL_PLAYER_2 = {
   team: MLB_TEAM_MAP[2],
   position: 'P',
   isInjured: true,
-  injuryStatus: PlayerStatusType.O,
+  injuryStatus: EspnPlayerInjuryStatus.O,
   playerOwnershipChange: -0.107,
   playerOwnershipPercentOwned: 78.70117,
   isPitcher: true,

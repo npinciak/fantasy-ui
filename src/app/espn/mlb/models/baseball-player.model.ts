@@ -1,11 +1,17 @@
 import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
-import { EspnClientPlayer, EspnClientPlayerInfo, EspnClientPlayerRatings, EspnClientPlayerStatsEntityMap } from '@client/espn-client.model';
+import { Player } from '@app/dfs/models/player.model';
+import {
+  EspnClientPlayer,
+  EspnClientPlayerInfo,
+  EspnClientPlayerRatings,
+  EspnClientPlayerStatsEntityMap,
+  EspnPlayerInjuryStatus,
+} from '@client/espn-client.model';
 
 export interface BaseballPlayerProps {
   isInjured: boolean;
-  injuryStatus: string | null;
+  injuryStatus: EspnPlayerInjuryStatus | null;
   isStarting: boolean;
-  startingStatus: string | null;
   playerRatings: EspnClientPlayerRatings | undefined;
   stats: EspnClientPlayerStatsEntityMap | null;
   playerOwnershipChange: number | null;
@@ -21,7 +27,8 @@ export type BaseballPlayer = PlayerEntity &
 
 export type BaseballPlayerMap = Record<string, BaseballPlayer>;
 
-export type BaseballPlayerStatsRow = Pick<BaseballPlayerProps, 'isInjured' | 'injuryStatus'> &
+export type BaseballPlayerStatsRow = Pick<Player, 'id'> &
+  Pick<BaseballPlayerProps, 'isInjured' | 'injuryStatus'> &
   Pick<EspnClientPlayer, 'lineupSlotId'> & {
     name: string;
     img: string | null;
@@ -29,5 +36,6 @@ export type BaseballPlayerStatsRow = Pick<BaseballPlayerProps, 'isInjured' | 'in
     position: string | null;
     playerOwnershipChange: number | null;
     playerOwnershipPercentOwned: number | null;
+    highlightedPlayer: boolean;
     stats: {};
   };

@@ -6,6 +6,7 @@ import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
 import { EspnFastcastEventToggleState } from '../espn-fastcast/state/espn-fastcast-event-toggle.state';
 import { AddLeagueFormComponent } from './components/add-league-form/add-league-form.component';
+import { EspnPlayerComponent } from './components/espn-player/espn-player.component';
 import { EspnStatsTableComponent } from './components/espn-stats-table/espn-stats-table.component';
 import { EspnRoutingModule } from './espn-routing.module';
 import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
@@ -53,6 +54,7 @@ const declarations = [
   FootballLineupCardComponent,
   FootballScoreboardCardTeamComponent,
   EspnStatsTableComponent,
+  EspnPlayerComponent,
   StandingsComponent,
   RosterComponent,
   PlayerComponent,

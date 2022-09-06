@@ -1,0 +1,29 @@
+<table class="ui-w-100" [title]="playerLabel">
+  <tr>
+    <td class="player-col" rowspan="4">
+      {{ player?.lineupSlot }}
+    </td>
+  </tr>
+  <tr>
+    <td class="player-col" rowspan="4">
+      <img role="presentation" width="48" height="35" [src]="player?.img" [alt]="player?.name" />
+    </td>
+  </tr>
+  <tr>
+    <td class="player-info-col">
+      {{ player?.name }}
+      <mat-icon
+        *ngIf="player?.injuryStatus"
+        [ngStyle]="{ color: playerInjuryStatusColor(player.injuryStatus) }"
+        [title]="PlayerStatusAbbrevByInjuryStatusType[player?.injuryStatus]"
+        >{{ MatIconByEspnPlayerInjuryStatus[player?.injuryStatus] }}</mat-icon
+      >
+    </td>
+    <td>
+      <!-- {{ player?.points | number: '1.0-3' }} -->
+    </td>
+  </tr>
+  <tr>
+    <td>{{ player?.team }}, {{ player?.position }}</td>
+  </tr>
+</table>

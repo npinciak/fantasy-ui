@@ -100,7 +100,6 @@ export class MlbService {
       stats: flattenPlayerStats(player.playerPoolEntry?.player.stats),
       lineupSlotId: player.lineupSlotId,
       isStarting: false,
-      startingStatus: null,
       lineupSlot: MLB_LINEUP_MAP[player.lineupSlotId].abbrev,
       starterStatusByProGame: player.playerPoolEntry?.player.starterStatusByProGame,
       lastNewsDate: player.playerPoolEntry.player.lastNewsDate,

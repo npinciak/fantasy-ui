@@ -78,7 +78,7 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
         Object.entries(playerGames).map(([k, g]) => {
           if (gameIdSet.has(k)) {
             Object.assign(playerObj, {
-              startingStatus: g,
+              injuryStatus: g,
               opponent: getEventById(k).competitors,
             });
           }
