@@ -10,7 +10,6 @@ import { EspnPlayerComponent } from './components/espn-player/espn-player.compon
 import { EspnStatsTableComponent } from './components/espn-stats-table/espn-stats-table.component';
 import { EspnRoutingModule } from './espn-routing.module';
 import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
-import { LineupCardPlayerComponent } from './mlb/components/lineup-card-player/lineup-card-player.component';
 import { LineupCardComponent } from './mlb/components/lineup-card/lineup-card.component';
 import { PlayerComponent } from './mlb/components/player/player.component';
 import { PlayerInfoColComponent } from './mlb/components/roster/player-info-col/player-info-col.component';
@@ -64,7 +63,6 @@ const declarations = [
   TeamInfoColComponent,
   LeagueScoreboardComponent,
   LineupCardComponent,
-  LineupCardPlayerComponent,
   AddLeagueFormComponent,
 ];
 
