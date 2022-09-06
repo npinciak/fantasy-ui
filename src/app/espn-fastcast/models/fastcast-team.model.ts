@@ -1,9 +1,9 @@
 import { TeamEntity } from '@app/@shared/base-models/base-team.model';
 import { RecordEntity } from '@client/espn-client.model';
 
-type FastcastEventTeamProps = 'score' | 'abbreviation' | 'color' | 'altColor';
+type FastcastEventTeamAttr = 'score' | 'abbreviation' | 'color' | 'altColor';
 
-type FastcastEventTeamPropsStringNullable = { [key in FastcastEventTeamProps]: string | null };
+type FastcastEventTeamPropsStringNullable = { [key in FastcastEventTeamAttr]: string | null };
 type FastcastEventTeamProperties = FastcastEventTeamPropsStringNullable & {
   uid: string;
   eventUid: string;

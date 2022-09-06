@@ -1,17 +1,17 @@
 ﻿import { EspnGameStatusTypeId, FastCastGameStatus } from '@client/espn-client.model';
 
-export type EntityBaseProperties = 'id' | 'uid' | 'name';
+export type EntityBaseAttributes = 'id' | 'uid' | 'name';
 
 export interface EspnClientFastcast {
   sports: SportsEntity[];
 }
 
-export type SportsEntity = { [prop in EntityBaseProperties]: string } & {
+export type SportsEntity = { [prop in EntityBaseAttributes]: string } & {
   slug: string;
   leagues: LeaguesEntity[];
 };
 
-export type LeaguesEntity = { [prop in EntityBaseProperties]: string } & {
+export type LeaguesEntity = { [prop in EntityBaseAttributes]: string } & {
   slug: string;
   abbreviation: string;
   shortName: string;
@@ -19,7 +19,7 @@ export type LeaguesEntity = { [prop in EntityBaseProperties]: string } & {
   events?: EventsEntity[];
 };
 
-export type EventsEntity = { [prop in EntityBaseProperties]: string } & {
+export type EventsEntity = { [prop in EntityBaseAttributes]: string } & {
   competitionId: string;
   date: string;
   shortName: string;

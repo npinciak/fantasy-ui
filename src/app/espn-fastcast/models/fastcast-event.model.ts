@@ -2,7 +2,7 @@ import { EspnGameStatusTypeId, FastCastGameStatus } from '@client/espn-client.mo
 import { EventsEntity, FullStatusType, Situation } from './espn-fastcast.model';
 import { FastcastEventTeam } from './fastcast-team.model';
 
-interface FastcastEventProps {
+interface FastcastEventAttributes {
   id: string;
   uid: string;
   leagueId: string;
@@ -22,7 +22,7 @@ interface FastcastEventProps {
   footballSituation: FootballSituation | null;
 }
 
-export type FastcastEvent = FastcastEventProps &
+export type FastcastEvent = FastcastEventAttributes &
   Partial<Situation> &
   Pick<EventsEntity, 'note' | 'seriesSummary' | 'link'> &
   Pick<FullStatusType, 'completed'>;

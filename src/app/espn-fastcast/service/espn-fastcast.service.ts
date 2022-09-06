@@ -38,6 +38,5 @@ export class EspnFastcastService {
       this.webSocket$.complete();
       this.webSocket$ = null;
     }
-    console.log('disconnect ===> ', this.webSocket$);
   }
 }
