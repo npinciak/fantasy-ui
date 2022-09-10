@@ -46,7 +46,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.2.15",
     "@angular-devkit/schematics": "^12.2.15",
-    "@angular-devkit/schematics-cli": "^0.1102.14",
+    "@angular-devkit/schematics-cli": "^0.1102.19",
     "@angular-eslint/builder": "1.2.0",
     "@angular-eslint/eslint-plugin": "1.2.0",
     "@angular-eslint/eslint-plugin-template": "1.2.0",
