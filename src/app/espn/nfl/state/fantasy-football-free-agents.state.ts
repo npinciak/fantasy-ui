@@ -1,25 +1,37 @@
 import { Injectable } from '@angular/core';
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
-import { EspnFreeAgentAvailabilityStatus } from '@client/espn-client.model';
+import { EspnFreeAgentAvailabilityStatus } from '@espnClient/espn-client.model';
 import { Action, State, StateContext, Store } from '@ngxs/store';
-import { FetchFantasyFootballFreeAgents, SetFantasyFootballFreeAgents } from '../actions/fantasy-football-free-agents.actions';
+import {
+  ClearAndAddFantasyFootballFreeAgents,
+  FetchFantasyFootballFreeAgents,
+  SetFantasyFootballFreeAgents,
+} from '../actions/fantasy-football-free-agents.actions';
 import { FootballPlayer } from '../models/football-player.model';
 import { FantasyFootballLeagueSelectors } from '../selectors/fantasy-football-league.selectors';
 import { FantasyFootballService } from '../services/fantasy-football.service';
+import { FantasyFootballFreeAgentsFilterState } from './fantasy-football-free-agents-filter.state';
 
 @State({ name: 'fantasyFootballFreeAgents' })
 @Injectable()
-export class FantasyFootballFreeAgentsState extends GenericState({ idProperty: 'id', addOrUpdate: SetFantasyFootballFreeAgents }) {
+export class FantasyFootballFreeAgentsState extends GenericState({
+  idProperty: 'id',
+  addOrUpdate: SetFantasyFootballFreeAgents,
+  clearAndAdd: ClearAndAddFantasyFootballFreeAgents,
+}) {
   constructor(private service: FantasyFootballService, private store: Store) {
     super();
   }
+
   @Action(FetchFantasyFootballFreeAgents)
-  async fetchFantasyFootballFreeAgents({ dispatch }: StateContext<GenericStateModel<FootballPlayer>>): Promise<void> {
+  async fetchFantasyFootballFreeAgents({ setState }: StateContext<GenericStateModel<FootballPlayer>>): Promise<void> {
+    setState({ map: {} });
+
     const leagueId = this.store.selectSnapshot(FantasyFootballLeagueSelectors.getLeagueId) ?? '';
     const scoringPeriodId = Number(this.store.selectSnapshot(FantasyFootballLeagueSelectors.getCurrentScoringPeriodId)) ?? 0;
 
-    //   const lineupSlotIds = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedLineupSlotIds).map(id => Number(id));
+    const lineupSlotIds = this.store.selectSnapshot(FantasyFootballFreeAgentsFilterState.getSelectedLineupdSlotIdsList);
     // const availabilityStatus = this.store.selectSnapshot(FantasyFootballFreeAgentsFilterSelector.getSelectedAvailabilityStatus);
     //   const topScoringPeriodIds = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedTopScoringPeriodIds);
 
@@ -28,7 +40,7 @@ export class FantasyFootballFreeAgentsState extends GenericState({ idProperty: '
     //   const scoringPeriodId = Number(this.store.selectSnapshot(FantasyBaseballLeagueState.getCurrentScoringPeriodId)) ?? 0;
 
     //   const filterRanksForScoringPeriodIds = { value: [scoringPeriodId] };
-    //   const filterSlotIds = { value: lineupSlotIds };
+    const filterSlotIds = { value: lineupSlotIds };
     const filterStatus = { value: [EspnFreeAgentAvailabilityStatus.FreeAgent] }; // { value: availabilityStatus };
     //   const filterStatsForTopScoringPeriodIds = {
     //     value: 5,
@@ -48,7 +60,7 @@ export class FantasyFootballFreeAgentsState extends GenericState({ idProperty: '
         //   ...players,
         // sortStatId,
         filterStatus,
-        // filterSlotIds,
+        filterSlotIds,
         // filterStatsForTopScoringPeriodIds,
         // filterRanksForScoringPeriodIds,
         limit: 100, //pagination.currentPageSize,
@@ -58,6 +70,7 @@ export class FantasyFootballFreeAgentsState extends GenericState({ idProperty: '
       },
     };
     const freeAgents = await this.service.footballFreeAgents({ leagueId, scoringPeriodId, filter }).toPromise();
-    dispatch([new SetFantasyFootballFreeAgents(freeAgents)]);
+
+    this.store.dispatch([new SetFantasyFootballFreeAgents(freeAgents)]);
   }
 }

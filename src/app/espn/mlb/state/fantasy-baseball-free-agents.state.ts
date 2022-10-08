@@ -18,6 +18,7 @@ import { FantasyBaseballLeagueState } from './fantasy-baseball-league.state';
 export class FantasyBaseballFreeAgentsState extends GenericState({
   idProperty: 'id',
   addOrUpdate: SetFantasyBaseballFreeAgents,
+  clearAndAdd: ClearAndAddFantasyBaseballFreeAgents,
 }) {
   constructor(private mlbService: MlbService, private store: Store) {
     super();

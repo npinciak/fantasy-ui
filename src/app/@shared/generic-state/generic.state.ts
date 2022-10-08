@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
-import { patchMap } from '../operators';
+import { patchMap, setMap } from '../operators';
 import { GenericPayloadActionClass } from './generic.actions';
 import { GenericStateModel } from './generic.model';
 
 export interface GenericStateClass<T> {
   new (...args: any[]): any;
   addOrUpdate: GenericPayloadActionClass<T>;
-<<<<<<< Updated upstream
-  // clearAndAdd: GenericPayloadActionClass<T>;
+  clearAndAdd: GenericPayloadActionClass<T>;
   // clear: GenericPayloadActionClass<T>;
 =======
   clearAndAdd: GenericPayloadActionClass<T>;
@@ -21,10 +20,13 @@ export function GenericState<EntityType, IdProperty extends PropertyOfType<Entit
   idProperty,
   addOrUpdate,
   clearAndAdd,
-}: {
+}: // clearAndAdd,
+// clear,
+{
   idProperty: IdProperty;
   addOrUpdate: GenericPayloadActionClass<EntityType>;
   clearAndAdd: GenericPayloadActionClass<EntityType>;
+  // clear: GenericPayloadActionClass<EntityType>;
 }): GenericStateClass<EntityType> {
   @State<GenericStateModel<EntityType>>({
     name: 'genericStateBase',
@@ -35,7 +37,7 @@ export function GenericState<EntityType, IdProperty extends PropertyOfType<Entit
   @Injectable()
   class GenericStateBase {
     static addOrUpdate = addOrUpdate;
-    // static clearAndAdd = clearAndAdd;
+    static clearAndAdd = clearAndAdd;
     // static clear = clear;
 
     private static getId = (t: EntityType) => t[idProperty] as unknown as string;
@@ -47,10 +49,10 @@ export function GenericState<EntityType, IdProperty extends PropertyOfType<Entit
       setState(patchMap(payload, GenericStateBase.getId));
     }
 
-    // @Action(clearAndAdd)
-    // clearAndAdd({ setState }: StateContext<GenericStateModel<EntityType>>, { payload }: { payload: EntityType[] }): void {
-    //   setState(setMap(payload, GenericStateBase.getId));
-    // }
+    @Action(clearAndAdd)
+    clearAndAdd({ setState }: StateContext<GenericStateModel<EntityType>>, { payload }: { payload: EntityType[] }): void {
+      setState(setMap(payload, GenericStateBase.getId));
+    }
 
     // @Action(clear)
     // clear({ setState }: StateContext<GenericStateModel<EntityType>>): void {

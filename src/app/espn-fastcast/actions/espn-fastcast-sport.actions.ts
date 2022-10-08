@@ -4,3 +4,8 @@ export class SetFastcastSports {
   static readonly type = `[espnFastcastSport] SetFastcastSports`;
   constructor(public payload: FastcastSport[]) {}
 }
+
+export class ClearAndAddFastcastSports {
+  static readonly type = `[espnFastcastSport] ClearAndAddFastcastSports`;
+  constructor(public payload: FastcastSport[]) {}
+}

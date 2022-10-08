@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { SetMlbPlayerSlateAttributes } from '../actions/daily-fantasy-mlb-player-slate-attr.actions';
-import { SetMlbTeamSlateAttributes } from '../actions/daily-fantasy-mlb-team-slate-attr.actions';
+import { ClearAndAddMlbPlayerSlateAttributes } from '../actions/daily-fantasy-mlb-player-slate-attr.actions';
 import { MlbSlateService } from '../service/mlb-slate.service';
 
 export class FetchSlateAttr {
@@ -39,7 +38,7 @@ export class DailyFantasyMlbSlateAttrState {
   ): Promise<void> {
     const { teams, players } = await this.slateService.getGameAttrBySlateId({ sport, site, slate }).toPromise();
 
-    dispatch([new SetMlbPlayerSlateAttributes(players), new SetMlbTeamSlateAttributes(teams)]);
+    dispatch([new ClearAndAddMlbPlayerSlateAttributes(players)]);
 
     setState({ slate, site });
   }

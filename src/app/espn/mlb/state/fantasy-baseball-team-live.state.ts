@@ -8,6 +8,15 @@ export class SetEspnFantasyLeagueTeamsLive {
   constructor(public payload: BaseballTeamLive[]) {}
 }
 
+export class ClearAndAddEspnFantasyLeagueTeamsLive {
+  static readonly type = '[fantasyBaseballTeamsLive] ClearAndAddEspnFantasyLeagueTeamsLive';
+  constructor(public payload: BaseballTeamLive[]) {}
+}
+
 @State({ name: 'fantasyBaseballTeamsLive' })
 @Injectable()
-export class FantasyBaseballTeamsLiveState extends GenericState({ idProperty: 'id', addOrUpdate: SetEspnFantasyLeagueTeamsLive }) {}
+export class FantasyBaseballTeamsLiveState extends GenericState({
+  idProperty: 'id',
+  addOrUpdate: SetEspnFantasyLeagueTeamsLive,
+  clearAndAdd: ClearAndAddEspnFantasyLeagueTeamsLive,
+}) {}

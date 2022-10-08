@@ -45,7 +45,7 @@ export interface EspnFastcastStateModel {
     lastRefresh: null,
     eventType: FastcastEventType.TopEvents,
     connectionClosed: true,
-    pause: false,
+    pause: true,
   },
 })
 @Injectable()
@@ -72,7 +72,7 @@ export class EspnFastcastState {
       )
       .toPromise();
 
-    patchState({ connect });
+    patchState({ connect, connectionClosed: false });
   }
 
   @Action(HandleWebSocketMessage)

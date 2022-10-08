@@ -1,29 +1,35 @@
 import { Injectable } from '@angular/core';
 import { GenericState, GenericStateClass } from '@app/@shared/generic-state/generic.state';
-import { ApiService } from '@app/@shared/services/api.service';
+import { SchemeHeaderExpertService } from '@app/scheme-header-expert.service';
 import { Action, State, StateContext } from '@ngxs/store';
-import { DeleteEspnLeague, FetchEspnLeagues, SetEspnLeagues } from '../actions/espn-leagues.actions';
+import { ClearAndAddEspnLeagues, DeleteEspnLeague, FetchEspnLeagues, SetEspnLeagues } from '../actions/espn-leagues.actions';
 import { SportsUiClientLeague } from '../models/league.model';
 
 @State({ name: 'espnLeagues' })
 @Injectable()
-export class EspnLeaguesState extends GenericState({ idProperty: 'leagueId', addOrUpdate: SetEspnLeagues }) {
-  constructor(private apiService: ApiService) {
+export class EspnLeaguesState extends GenericState({
+  idProperty: 'leagueId',
+  addOrUpdate: SetEspnLeagues,
+  clearAndAdd: ClearAndAddEspnLeagues,
+}) {
+  constructor(private apiService: SchemeHeaderExpertService) {
     super();
   }
 
   @Action(FetchEspnLeagues)
   async fetchEspnLeagues({ dispatch }: StateContext<GenericStateClass<SportsUiClientLeague>>): Promise<void> {
-    const leagues = await this.apiService.get<SportsUiClientLeague[]>('http://localhost:8080/leagues').toPromise();
-    dispatch([new SetEspnLeagues(leagues)]);
+    const leagues = await this.apiService.getLeagues().toPromise();
+    dispatch([new ClearAndAddEspnLeagues(leagues)]);
   }
 
   @Action(DeleteEspnLeague)
   async deleteEspnLeague(
     { dispatch }: StateContext<GenericStateClass<SportsUiClientLeague>>,
-    { payload: { id } }: DeleteEspnLeague
+    { payload: { leagueId } }: DeleteEspnLeague
   ): Promise<void> {
-    await this.apiService.delete<SportsUiClientLeague[]>('http://localhost:8080/leagues/' + id).toPromise();
+    try {
+      await this.apiService.deleteLeague({ leagueId }).toPromise();
+    } catch (error) {}
     dispatch([new FetchEspnLeagues()]);
   }
 }
