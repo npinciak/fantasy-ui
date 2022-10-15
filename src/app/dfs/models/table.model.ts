@@ -3,7 +3,7 @@ export enum PlayerTableDataAccessor {
 }
 
 /**
- * Base table model
+ * @deprecated
  */
 interface TableProperties {
   columnLabel: string | null;
@@ -11,5 +11,7 @@ interface TableProperties {
   cellDataAccessor: <T>(data: T[]) => PlayerTableDataAccessor | null;
   tooltip: string | null;
 }
-
+/**
+ * @deprecated
+ */
 export type TableColumn = TableProperties;
