@@ -4,15 +4,27 @@ import { environment } from 'src/environments/environment';
 export class DailyFantasyEndpointBuilder {
   private static dailyFantasyJsonBase = environment.dailyFantasyJsonBase;
   private static dailyFantasyBase = environment.dailyFantasyBase;
-
   private static awsBase = environment.awsBase;
 
-  private _sport: string | undefined;
-  private _gameId: string | undefined;
+  private _sport: string;
+  private _gameId: string;
 
-  constructor(sport?: string, gameId?: string) {
-    this._sport = sport;
-    this._gameId = gameId;
+  constructor() {}
+
+  get sport() {
+    return this._sport;
+  }
+
+  set sport(val: string) {
+    this._sport = val;
+  }
+
+  get gameId() {
+    return this._gameId;
+  }
+
+  set gameId(val: string) {
+    this._gameId = val;
   }
 
   get slateAttr() {
@@ -24,7 +36,10 @@ export class DailyFantasyEndpointBuilder {
   }
 
   get plateIq() {
-    return `${this.awsJson}/plateiq/${currentDate('-')}/${this._gameId}.json?timestamp=${new Date().getTime()}`;
+    const date = currentDate('-');
+    let url = `${this.awsJson}/plateiq/${date}/${this._gameId}.json`;
+    url += `?timestamp=${new Date().getTime()}`;
+    return url;
   }
 
   get gridIron() {
@@ -32,7 +47,8 @@ export class DailyFantasyEndpointBuilder {
   }
 
   get slateMaster() {
-    return `${this.awsJson}/v2.00/${currentDate('/')}/slates/${this._sport}-master.json`;
+    const date = currentDate('/');
+    return `${this.awsJson}/v2.00/${date}/slates/${this._sport}-master.json`;
   }
 
   get slateNonHttps() {
