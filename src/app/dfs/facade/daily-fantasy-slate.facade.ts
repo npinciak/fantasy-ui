@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
+import { select } from '@app/@shared/models/typed-select';
+import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { FetchSlates } from '../actions/daily-fantasy-slates.actions';
-import { DailyFantasySlateSelectors, SlateTypeMap } from '../selectors/daily-fantasy-slate.selectors';
+import { DailyFantasySlateSelectors } from '../selectors/daily-fantasy-slate.selectors';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DailyFantasySlateFacade {
-  @Select(DailyFantasySlateSelectors.getSlatesEmpty) slatesEmpty$: boolean;
-  @Select(DailyFantasySlateSelectors.getSlateByType) selectSlateByType$: SlateTypeMap;
+  slatesEmpty$ = select(DailyFantasySlateSelectors.getSlatesEmpty);
+  selectSlateByType$ = select(DailyFantasySlateSelectors.getSlateByType);
 
   constructor(private store: Store) {}
 

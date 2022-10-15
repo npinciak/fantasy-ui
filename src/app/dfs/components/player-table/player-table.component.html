@@ -3,26 +3,29 @@
     <app-scrollable-table>
       <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons> </mat-paginator>
       <table class="ui-w-100" mat-table [dataSource]="dataSource" matSortDirection="asc" matSort matSortDisableClear>
-        <ng-container *ngFor="let col of dataColumns">
+        <ng-container *ngFor="let col of dataRows">
           <ng-container [matColumnDef]="col?.columnDef">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ col?.headerLabel }}</th>
             <td mat-cell *matCellDef="let data">
               <ng-container [ngSwitch]="col.columnDef">
                 <ng-template [ngSwitchCase]="'name'">
                   {{ col?.cellData(data) }}
+
+                  {{ teamMap[data.teamId] }}
                 </ng-template>
                 <ng-template [ngSwitchCase]="'opp'">
                   {{ col?.cellData(data) }}
                 </ng-template>
                 <ng-template [ngSwitchDefault]>
-                  {{ col.dataType === TableColumnDataType.number ? (col?.cellData(data) | mlbStat: 'number' | number: '1.0-3') : col?.cellData(data) }}
+                  {{ col?.cellData(data) }}
+                  <!-- {{ col.dataType === TableColumnDataType.number ? (col?.cellData(data) | mlbStat: 'number' | number: '1.0-3') : col?.cellData(data) }} -->
                 </ng-template>
               </ng-container>
             </td>
           </ng-container>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="headers"></tr>
-        <tr mat-row *matRowDef="let team; columns: headers"></tr>
+        <tr mat-header-row *matHeaderRowDef="dataHeaders"></tr>
+        <tr mat-row *matRowDef="let team; columns: dataHeaders"></tr>
       </table>
     </app-scrollable-table>
   </mat-card-content>

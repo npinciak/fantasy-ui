@@ -3,22 +3,21 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { cellDataAccessor } from '@app/@shared/helpers/utils';
-import { Matchup } from '@app/dfs/models/matchup.model';
 
 @Component({
   selector: 'app-team-matchup-table',
   templateUrl: './team-matchup-table.component.html',
   styleUrls: ['./team-matchup-table.component.scss'],
 })
-export class TeamMatchupTableComponent implements OnInit, AfterViewInit, OnChanges {
-  @Input() dfsMatchup: Matchup[];
+export class DfsTeamMatchupTableComponent implements OnInit, AfterViewInit, OnChanges {
+  @Input() dfsMatchup: any[];
   @Input() tableColumns: string;
   @Input() sport = 'mlb';
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
-  dataSource = new MatTableDataSource<Matchup>();
+  dataSource = new MatTableDataSource<any>();
 
   // readonly tableColumns: string[] = [
   //   'team',
