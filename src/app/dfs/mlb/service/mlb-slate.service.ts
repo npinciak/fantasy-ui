@@ -4,20 +4,20 @@ import { currentDate } from '@app/@shared/helpers/date';
 import { objectIsEmpty, transformPercToNumber } from '@app/@shared/helpers/utils';
 import { ApiService } from '@app/@shared/services/api.service';
 import { DailyFantasyEndpointBuilder } from '@app/dfs/daily-fantasy-endpoint-builder';
-import { dfsSiteToDfsSiteTypeMap } from '@app/dfs/dfs.const';
+import { DfsSiteToDfsSiteTypeMap } from '@app/dfs/dfs.const';
+import { PlayerSlateAttr } from '@app/dfs/models/player-slate-attr.model';
+import { SlateService } from '@app/dfs/service/slate.service';
 import {
-  ClientPlayerAttributes,
   ClientSlateAttributes,
   ClientSlatePlayerAttributesMap,
   ClientSlateTeamAttributes,
   ClientSlateTeamAttributesMap,
-} from '@app/dfs/models/daily-fantasy-client-slate-attr.model';
-import { PlayerSlateAttr } from '@app/dfs/models/player-slate-attr.model';
-import { SlateService } from '@app/dfs/service/slate.service';
+  DfsClientPlayerAttributes,
+} from '@dfsClient/daily-fantasy-client-slate-attr.model';
+import { ClientVegas } from '@dfsClient/daily-fantasy-client.model';
+import { MLBClientTeamAttributes } from '@dfsClient/mlb-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Vegas } from '../../models/daily-fantasy-client.model';
-import { MLBClientTeamAttributes } from '../models/mlb-client.model';
 
 @Injectable({
   providedIn: 'root',
@@ -64,7 +64,7 @@ export class MlbSlateService {
       return [];
     }
 
-    const siteMap = dfsSiteToDfsSiteTypeMap[site];
+    const siteMap = DfsSiteToDfsSiteTypeMap[site];
 
     return Object.entries(players).map(([id, player]) => ({
       id,
@@ -108,4 +108,4 @@ type SlateAttributes = {
   players: PlayerSlateAttr[];
 };
 
-export type MlbSlateTeam = { id: string; vegas: Vegas } & ClientPlayerAttributes;
+export type MlbSlateTeam = { id: string; vegas: ClientVegas } & DfsClientPlayerAttributes;
