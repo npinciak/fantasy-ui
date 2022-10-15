@@ -1,4 +1,4 @@
-import { Selector } from '@ngxs/store';
+import { Selector } from '../models/typed-selector';
 import { GenericStateModel } from './generic.model';
 import { GenericStateClass } from './generic.state';
 

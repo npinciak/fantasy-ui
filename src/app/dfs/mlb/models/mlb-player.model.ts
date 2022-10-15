@@ -1,4 +1,3 @@
-import { SlatePlayerAttr } from '@app/dfs/models/daily-fantasy-client.model';
 import { Player } from '@app/dfs/models/player.model';
 
 interface MlbDfsPlayerProperties {
@@ -16,4 +15,4 @@ interface MlbDfsPlayerProperties {
   };
 }
 
-export type MlbDfsPlayer = MlbDfsPlayerProperties & Player & Pick<SlatePlayerAttr, 'plateiq'>;
+export type MlbDfsPlayer = MlbDfsPlayerProperties & Player;

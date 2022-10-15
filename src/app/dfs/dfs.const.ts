@@ -15,7 +15,7 @@ export enum DfsSiteType {
   Yahoo = 50,
 }
 
-export const dfsSiteToDfsSiteTypeMap: { [key in DfsSite]: DfsSiteType } = {
+export const DfsSiteToDfsSiteTypeMap: { [key in DfsSite]: DfsSiteType } = {
   [DfsSite.FanDuel]: DfsSiteType.FanDuel,
   [DfsSite.DraftKings]: DfsSiteType.DraftKings,
   [DfsSite.Yahoo]: DfsSiteType.Yahoo,
@@ -54,12 +54,6 @@ export enum RotogrindMLBTeam {
   Wsh,
 }
 
-export const siteMap = {
-  fanduel: 2,
-  draftkings: 20,
-  yahoo: 50,
-};
-
 export enum DfsSport {
   afl = 'afl',
   bball = 'bball',
@@ -85,7 +79,7 @@ export enum DfsSport {
   wnba = 'wnba',
 }
 
-export const dfsSportEnumList: DfsSport[] = enumAsList(DfsSport);
+export const DfsSportEnumList: DfsSport[] = enumAsList(DfsSport);
 
 export const DFS_MLB_TEAM_MAP: { [key in RotogrindMLBTeam]: string } = {
   [RotogrindMLBTeam.Bal]: 'Bal',

@@ -7,8 +7,13 @@ import { DailyFantasySlateAttrFacade } from '@app/dfs/facade/daily-fantasy-slate
 import { DailyFantasySlateFacade } from '@app/dfs/facade/daily-fantasy-slate.facade';
 import { DailyFantasyMlbPlayerSlateAttrFacade } from '@app/dfs/mlb/facade/daily-fantasy-mlb-player-slate-attr.facade.';
 import { DailyFantasyMlbTeamSlateAttrFacade } from '@app/dfs/mlb/facade/daily-fantasy-mlb-team-slate-attr.facade';
-import { DailyFantasyMlbTableFacade } from '@app/dfs/mlb/facade/table.facade';
-import { SiteSlateEntity } from '@app/dfs/models/daily-fantasy-client.model';
+import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '@app/dfs/nfl/consts/nfl.const';
+import { STATS_HEADERS, STATS_ROWS } from '@app/dfs/nfl/consts/table.const';
+import { DailyFantasyNflPlayerFacade } from '@app/dfs/nfl/facade/daily-fantasy-nfl-players.facade';
+import { DailyFantasyNflTeamSlateAttrFacade } from '@app/dfs/nfl/facade/daily-fantasy-nfl-team-slate-attr.facade';
+import { NFL_STAT_GROUP_MAP } from '@app/dfs/nfl/models/stat-group.model';
+import { SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -18,10 +23,32 @@ export class HomeComponent implements OnInit {
   readonly LEAGUE = this.activatedRoute.snapshot.queryParamMap.get(UrlQueryParams.Sport);
   readonly SITE = this.activatedRoute.snapshot.queryParamMap.get(UrlQueryParams.Site);
 
+  readonly STATS_ROWS = STATS_ROWS;
+  readonly STATS_HEADERS = STATS_HEADERS;
+
+  readonly NFL_STAT_GROUP_MAP = NFL_STAT_GROUP_MAP;
+  readonly NFL_RG_TEAM_ID_MAP = NFL_RG_TEAM_ID_MAP;
+  readonly NFL_TEAM_ID_MAP = NFL_TEAM_ID_MAP;
+
+  nflPositionList$ = this.nflPlayerFacade.positionList$;
+  nflPlayerList$ = this.nflPlayerFacade.playerList$;
+  nflTeamList$ = this.nflPlayerFacade.teamList$;
+  nflMatchupGraphData$ = this.nflTeamSlateAttrFacade.matchupGraphData$;
+
+  statGroup: string;
+  teamId: number | null = null;
+  position: string | null = null;
+  teamFilter$ = new BehaviorSubject<string | null>(null);
+  statGroupFilter$ = new BehaviorSubject<string | null>(null);
+  positionFilter$ = new BehaviorSubject<string | null>(null);
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    readonly mlbTableFacade: DailyFantasyMlbTableFacade,
+    readonly nflPlayerFacade: DailyFantasyNflPlayerFacade,
+
+    readonly nflTeamSlateAttrFacade: DailyFantasyNflTeamSlateAttrFacade,
+
     readonly mlbDailyFantasySlateAttrFacade: DailyFantasyMlbPlayerSlateAttrFacade,
     readonly dailyFantasyPlayersFacade: DailyFantasyPlayersFacade,
     readonly dailyFantasySlateFacade: DailyFantasySlateFacade,
@@ -32,6 +59,18 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     if (exists(this.LEAGUE) && exists(this.SITE)) this.dailyFantasySlateFacade.fetchSlates(this.LEAGUE, this.SITE);
+  }
+
+  statGroupFilter(val: string) {
+    this.statGroupFilter$.next(val);
+  }
+
+  positionFilterChange(val: string) {
+    this.positionFilter$.next(val);
+  }
+
+  teamFilterChange(val: number) {
+    this.teamFilter$.next(val.toString());
   }
 
   onSelectSlate(event: SiteSlateEntity) {

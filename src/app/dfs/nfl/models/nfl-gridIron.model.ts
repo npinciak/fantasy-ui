@@ -1,6 +1,13 @@
 import { CamelCasedProperties } from '@app/@shared/models/camel-case.model';
-import { NumberProps } from '@app/@shared/models/number-props.model';
-import { NFLClientGridIronPlayer } from './nfl-client.model';
+import { NFLClientGridIronPlayer } from '../../../../dfs-client-models/nfl-client.model';
 
-export type GridIronPlayer = NumberProps<CamelCasedProperties<NFLClientGridIronPlayer>>;
+type NormalizedGridIronPlayerAttributes = CamelCasedProperties<NFLClientGridIronPlayer>;
+
+type GridIronPlayerAttributes = Omit<NormalizedGridIronPlayerAttributes, 'playerid' | 'partnerid' | 'fpts$'> & {
+  partnerId: string | null;
+  fptsPerK: string | null;
+};
+
+export type GridIronPlayer = Required<{ [key in keyof GridIronPlayerAttributes]: number | null } & { playerId: string }>;
+
 export type GridIronPlayerMap = Record<string, GridIronPlayer>;
