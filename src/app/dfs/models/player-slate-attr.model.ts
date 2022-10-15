@@ -1,8 +1,9 @@
-import { ClientSalaryDiff } from './daily-fantasy-client-slate-attr.model';
+import { ClientSalaryDiff } from '@dfsClient/daily-fantasy-client-slate-attr.model';
 import { Player } from './player.model';
 
 /**
  * Base player slate attr model
+ * @deprecated
  */
 interface PlayerSlateAttrProperties {
   statGroup: string | null;
@@ -12,5 +13,7 @@ interface PlayerSlateAttrProperties {
   value: number | null;
   smash: number | null;
 }
-
+/**
+ * @deprecated
+ */
 export type PlayerSlateAttr = Pick<Player, 'id'> & PlayerSlateAttrProperties;

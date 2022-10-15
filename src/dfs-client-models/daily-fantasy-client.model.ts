@@ -1,4 +1,4 @@
-import { BattingAttributes } from '../mlb/models/mlb-client.model';
+import { BattingAttributes } from './mlb-client.model';
 
 export enum ClientSite {
   Draftkings = 'draftkings',
@@ -41,13 +41,8 @@ export type Multiplier = Record<number, number>;
 
 export type Slot = { posName: string; posOpts: Record<number, string> };
 
-export interface Vegas {
-  'o/u': number;
-  opp_total: number;
-  total: number;
-  line: number;
-  movement: number;
-}
+type VegasAttributes = 'o/u' | 'opp_total' | 'total' | 'line' | 'movement';
+export type ClientVegas = { [key in VegasAttributes]: number };
 
 export type ClientSiteSlateEntity = Record<string, SiteSlateEntity>;
 
@@ -68,23 +63,12 @@ export interface SiteSlateEntity {
   hidden: boolean;
 }
 
-export interface SiteSlateGameEntity {
-  date: string;
-  time: string;
-  scheduleId: string;
+type SiteSlateGameAtrributes = 'date' | 'time' | 'scheduleId' | 'teamAwayId' | 'teamHomeId' | 'teamAwayHashtag' | 'teamHomeHashtag';
+export type SiteSlateGameEntity = { [key in SiteSlateGameAtrributes]: string } & {
   rgScheduleId: string | null;
-  teamAwayId: string;
   rgTeamAwayId: string | null;
-  teamHomeId: string;
   rgTeamHomeId: string | null;
-  teamAwayHashtag: string;
-  teamHomeHashtag: string;
-}
-
-/**
- * @deprecated use SiteSlateGameEntity
- */
-export type DfsSlateGamesEntity = SiteSlateGameEntity;
+};
 
 export interface DfsSlatePlayer {
   attributes: BattingAttributes;
@@ -95,34 +79,21 @@ export interface DfsSlatePlayer {
   status: null;
 }
 
-export interface SlatePlayerEntity {
-  id: string;
-  rg_id: string;
-  first_name: string;
-  last_name: string;
-  position: string;
-  sport_id: string;
-  team_id: string;
+type SlatePlayerAttributes = 'id' | 'rg_id' | 'first_name' | 'last_name' | 'position' | 'sport_id' | 'team_id';
+export type SlatePlayerEntity = { [key in SlatePlayerAttributes]: string } & {
   rg_team_id: string | null;
   xml_id: string | null;
-}
+};
 
-export interface Schedule {
-  date: string;
-  id: string;
-  rg_id: string;
-  sport_id: string;
+type ScheduleAttributes = 'id' | 'rg_id' | 'sport_id' | 'date';
+export type Schedule = { [key in ScheduleAttributes]: string } & {
   team_away: ScheduleTeamEntity;
   team_home: ScheduleTeamEntity;
   salaries: SalariesEntity[] | null;
-}
+};
 
-export interface ScheduleTeamEntity {
-  hashtag: string;
-  id: string;
-  rg_id: string;
-  name: string;
-}
+type ScheduleTeamAttributes = 'id' | 'rg_id' | 'hashtag' | 'name';
+export type ScheduleTeamEntity = { [key in ScheduleTeamAttributes]: string };
 
 export interface SalariesEntity {
   position: string;

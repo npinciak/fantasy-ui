@@ -1,13 +1,7 @@
-import { Matchup } from '@app/dfs/models/matchup.model';
-
-interface MlbDfsMatchupProperties {
-  teamTotal: number | null;
+type MatchupAttributes = 'teamTotal' | 'stackValue' | 'topValue' | 'smashVal' | 'stackLeverage' | 'stackDiff';
+type MlbDfsMatchupProperties = { [key in MatchupAttributes]: number | null } & {
   team: string | null;
-  stackValue: number | null;
-  topValue: number | null;
-  smashVal: number | null;
-  stackLeverage: number | null;
-  stackDiff: number | null;
-}
+  teamId: string;
+};
 
-export type MLBDfsMatchup = MlbDfsMatchupProperties & Matchup;
+export type MLBDfsMatchup = MlbDfsMatchupProperties;

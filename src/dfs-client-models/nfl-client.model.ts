@@ -1,8 +1,8 @@
 import { DfsSiteType } from '@app/dfs/dfs.const';
-import { ClientPlayerAttributes } from '@app/dfs/models/daily-fantasy-client-slate-attr.model';
 import { SlateAttrTeamProperties } from '@app/dfs/models/team.model';
+import { ClientSalaryDiff, DfsClientPlayerAttributes } from '@dfsClient/daily-fantasy-client-slate-attr.model';
 
-type SafptsProperties =
+type SafptsAttributes =
   | 'RawQB'
   | 'AdjQB'
   | 'DifQB'
@@ -16,7 +16,7 @@ type SafptsProperties =
   | 'AdjTE'
   | 'DifTE';
 
-type OutsidersProperties =
+type OutsidersAttributes =
   | 'D Power'
   | 'D Power Rk'
   | 'D Stuffed'
@@ -38,26 +38,24 @@ type OutsidersProperties =
   | 'RuOff'
   | 'RuOff Rk';
 
-export interface NFLSlateAttrTeamProperties {
+export interface NFLSlateAttrTeamAttributes {
   safpts: NFLClientSafptsProperties;
   outsiders: NFLClientOutsidersProperties;
 }
 
-export type NFLClientSlateAttrTeam = SlateAttrTeamProperties & NFLSlateAttrTeamProperties;
-export type NFLClientSlateAttrTeamMap = Record<string, SlateAttrTeamProperties & NFLSlateAttrTeamProperties>;
+export type NFLClientSlateAttrTeam = SlateAttrTeamProperties & NFLSlateAttrTeamAttributes;
+export type NFLClientSlateAttrTeamMap = Record<string, SlateAttrTeamProperties & NFLSlateAttrTeamAttributes>;
 
-export type NFLClientStatGroupProps = 'qb' | 'rb' | 'te' | 'wr';
-export type NFLClientStatGroup = { [prop in NFLClientStatGroupProps]: NFLClientProfiler };
+export type NFLClientStatGroupAttributes = 'qb' | 'rb' | 'te' | 'wr';
+export type NFLClientStatGroup = { [attr in NFLClientStatGroupAttributes]: NFLClientProfiler };
 
-export type NFLClientProfiler = {
-  profiler: NFLClientProfilerEntity;
-};
+export type NFLClientProfiler = { profiler: NFLClientProfilerEntity };
 
-export type ProfilerTimeFrameProps = 'season' | 'last-season' | 'combined';
+export type ProfilerTimeFrameAttributes = 'season' | 'last-season' | 'combined';
 
-export type NFLClientProfilerEntity = { [prop in ProfilerTimeFrameProps]: NFLClientProfilerTimeFrameEntity };
+export type NFLClientProfilerEntity = { [attr in ProfilerTimeFrameAttributes]: NFLClientProfilerTimeFrameEntity };
 
-type ProfilerQBProperties =
+type ProfilerQBAttributes =
   | 'profilerId'
   | 'Expected Points Added'
   | 'Pass EPA'
@@ -90,7 +88,7 @@ type ProfilerQBProperties =
   | 'Under Pressure Attempts Per Game'
   | 'Weekly Volatility';
 
-type ProfilerRBProperties =
+type ProfilerRBAttributes =
   | 'profilerId'
   | 'Expected Points Added'
   | 'Rush EPA'
@@ -119,7 +117,7 @@ type ProfilerRBProperties =
   | 'Weighted Opportunities Per Game'
   | 'Yards Created Per Touch';
 
-type ProfilerReceiverProperties =
+type ProfilerReceiverAttributes =
   | 'profilerId'
   | 'Expected Points Added'
   | 'EPA Per Target'
@@ -146,16 +144,10 @@ type ProfilerReceiverProperties =
   | 'Likely CB'
   | 'Matchup Rtg';
 
-export interface NFLClientSalaryDiff {
-  diff: number;
-  position: string;
-  rank: number;
-  rank_diff: number;
-  salary: string;
-}
+export type NFLClientSalaryDiff = ClientSalaryDiff;
 
-type EcrProps = 'rank | avg';
-export type NFLClientEcr = { [prop in EcrProps]: string };
+type EcrAttributes = 'rank | avg';
+export type NFLClientEcr = { [attr in EcrAttributes]: string };
 
 export interface NFLClientPlayerAttributesEntity {
   team: string;
@@ -166,45 +158,49 @@ export interface NFLClientPlayerAttributesEntity {
 export interface NFLClientGridIronPlayer {
   PLAYERID: string;
   PLAYER: string;
-  SALARY?: string | null;
+  SALARY: string;
   OPP?: string | null;
   POS?: string | null;
   TEAM?: string | null;
   SCHEDULE_ID?: string | null;
-  ATT: string;
-  CMP: string;
+  PAATT: string;
+  COMP: string;
   PAYDS: string;
   PATD: string;
   INT: string;
   RUATT: string;
   RUYDS: string;
+  RUTD: string;
   TAR: string;
   REC: string;
   REYDS: string;
-  'RUYDS+RECYDS': string;
-  TD: string;
-  PARTNERID: string;
+  RETD: string;
   FPTS: string;
-  'FPTS/$': number;
-  CEIL: string;
+  'FPTS/$': string;
   FLOOR: string;
+  CEIL: string;
+  SMASH?: string | null;
+  VALUE?: string | null;
+  POWN: string;
+  PARTNERID: string;
+  OWNERSHIP: Record<string, string>;
+  RGID: string;
 }
 
 export type NFLClientGridIronPlayerMap = Record<string, NFLClientGridIronPlayer>;
-export type NFLClientPlayerAttributes = NFLClientPlayerAttributesEntity & ClientPlayerAttributes;
+export type NFLClientPlayerAttributes = NFLClientPlayerAttributesEntity & DfsClientPlayerAttributes;
 
 export type NFLClientPlayerAttributesMap = Record<string, NFLClientPlayerAttributes>;
 
-export type NFLClientSafptsProperties = { [prop in SafptsProperties]: string };
-export type NFLClientOutsidersProperties = { [prop in OutsidersProperties]: string };
+export type NFLClientSafptsProperties = { [attr in SafptsAttributes]: string };
+export type NFLClientOutsidersProperties = { [attr in OutsidersAttributes]: string };
 
-export type NFLClientProfilerQBProperties = { [prop in ProfilerQBProperties]: string };
-export type NFLClientProfilerRBProperties = { [prop in ProfilerRBProperties]: string };
-export type NFLClientProfilerReceiverProperties = { [prop in ProfilerReceiverProperties]: string };
+export type NFLClientProfilerQBProperties = { [attr in ProfilerQBAttributes]: string };
+export type NFLClientProfilerRBProperties = { [attr in ProfilerRBAttributes]: string };
+export type NFLClientProfilerReceiverProperties = { [attr in ProfilerReceiverAttributes]: string };
 
-export type NFLClientProfilerTimeFrameEntity = Record<
-  number,
-  NFLClientProfilerQBProperties | NFLClientProfilerRBProperties | NFLClientProfilerReceiverProperties
->;
+export type NFLClientProfilerTimeFrameEntity = {
+  [playerId: number]: NFLClientProfilerQBProperties | NFLClientProfilerRBProperties | NFLClientProfilerReceiverProperties;
+};
 
 export type PlayerEcrByDfsSiteType = Record<DfsSiteType, NFLClientEcr>;

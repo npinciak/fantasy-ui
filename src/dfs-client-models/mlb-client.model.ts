@@ -1,6 +1,6 @@
-import { ClientPlayerAttributes } from '@app/dfs/models/daily-fantasy-client-slate-attr.model';
 import { SlateAttrTeamProperties } from '@app/dfs/models/team.model';
-import { PlayerEcrByDfsSiteType } from '@app/dfs/nfl/models/nfl-client.model';
+import { DfsClientPlayerAttributes } from '@dfsClient/daily-fantasy-client-slate-attr.model';
+import { PlayerEcrByDfsSiteType } from 'src/dfs-client-models/nfl-client.model';
 
 export type ValueProperties = {
   stack_value: string;
@@ -19,7 +19,7 @@ export interface MLBClientPitcherAttr {
 }
 
 export type MLBClientTeamAttrProperties = Omit<
-  ClientPlayerAttributes,
+  DfsClientPlayerAttributes,
   'stat_group' | 'salary_diff' | 'slate_ownership' | 'ownership' | 'value_pct'
 > & {
   pitcher: MLBClientPitcherAttr;
@@ -112,5 +112,5 @@ export interface FactorEntity {
 
 export type MLBClientSlateAttrTeam = SlateAttrTeamProperties & MLBClientTeamAttrProperties;
 export type MLBClientPlayerAttributes = MLBClientPlayerAttributeProperties &
-  Omit<ClientPlayerAttributes, 'stat_group' | 'salary_diff' | 'slate_ownership' | 'ownership' | 'value_pct'>;
+  Omit<DfsClientPlayerAttributes, 'stat_group' | 'salary_diff' | 'slate_ownership' | 'ownership' | 'value_pct'>;
 export type MLBClientTeamAttributes = MLBClientTeamAttrProperties & ValueProperties;
