@@ -7,6 +7,7 @@ import { GenericStateModel } from './generic.model';
 export interface GenericStateClass<T> {
   new (...args: any[]): any;
   addOrUpdate: GenericPayloadActionClass<T>;
+<<<<<<< Updated upstream
   clearAndAdd: GenericPayloadActionClass<T>;
   // clear: GenericPayloadActionClass<T>;
 =======
@@ -20,9 +21,7 @@ export function GenericState<EntityType, IdProperty extends PropertyOfType<Entit
   idProperty,
   addOrUpdate,
   clearAndAdd,
-}: // clearAndAdd,
-// clear,
-{
+}: {
   idProperty: IdProperty;
   addOrUpdate: GenericPayloadActionClass<EntityType>;
   clearAndAdd: GenericPayloadActionClass<EntityType>;
