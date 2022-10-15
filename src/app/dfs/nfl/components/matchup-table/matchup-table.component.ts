@@ -5,6 +5,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { blendColors } from '@app/@shared/helpers/color-blender';
 import { TableColumn } from '@app/@shared/models/table-columns.model';
 
+/**
+ * @deprecated
+ */
 @Component({
   selector: 'app-matchup-table',
   templateUrl: './matchup-table.component.html',

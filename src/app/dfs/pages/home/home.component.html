@@ -15,23 +15,63 @@
     </ng-container>
   </div>
   <div class="blocks four" gdArea="content">
+    <app-data-vis-scatter
+      title="hey there"
+      xAxisFilterTitle="hi there"
+      yAxisFilterTitle="ho there"
+      [chartData]="(nflMatchupGraphData$ | async)!('', '')"
+    ></app-data-vis-scatter>
+
     <ng-container *ngIf="(dailyFantasySlateFacade.slatesEmpty$ | async) === false; else noSlates">
       <ng-container *ngIf="(dailyFantasyPlayersFacade.playersEmpty$ | async) === false">
+        <div>
+          <!-- <mat-form-field>
+            <mat-label>Position</mat-label>
+            <mat-select (selectionChange)="filterChange($event)">
+              <mat-option value="">All</mat-option>
+              <mat-option *ngFor="let pos of []" [value]="pos">{{ pos }}</mat-option>
+            </mat-select>
+          </mat-form-field> -->
+
+          <mat-form-field>
+            <mat-label>Team</mat-label>
+
+            <mat-select (selectionChange)="teamFilterChange($event.value)">
+              <mat-option value="">All</mat-option>
+              <mat-select-trigger>
+                <!-- {{ teamId ? NFL_TEAM_ID_MAP[teamId] : null }} -->
+              </mat-select-trigger>
+              <mat-option *ngFor="let team of nflTeamList$ | async" [value]="team">{{ NFL_TEAM_ID_MAP[team] }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Position</mat-label>
+            <mat-select (selectionChange)="positionFilterChange($event.value)">
+              <mat-option value="">All</mat-option>
+              <mat-option *ngFor="let pos of nflPositionList$ | async" [value]="pos">{{ pos }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Position Group</mat-label>
+            <mat-select (selectionChange)="statGroupFilterChange($event)" disabled>
+              <mat-option value="">All</mat-option>
+              <mat-option *ngFor="let pos of [1, 2, 3]" [value]="pos">{{ NFL_STAT_GROUP_MAP[pos] ? NFL_STAT_GROUP_MAP[pos] : 'UNMAPPED_POS' }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
         <app-player-table
-          [data]="mlbTableFacade.getPlayerTableData$ | async"
-          [dataColumns]="mlbTableFacade.getBatterTableColumns$ | async"
-          [headers]="mlbTableFacade.batterTableHeaders$ | async"
+          [teamFilter]="teamFilter$ | async"
+          [statGroupFilter]="statGroupFilter$ | async"
+          [positionFilter]="positionFilter$ | async"
+          [teamMap]="NFL_TEAM_ID_MAP"
+          [data]="nflPlayerList$ | async"
+          [dataRows]="STATS_ROWS"
+          [dataHeaders]="STATS_HEADERS"
         ></app-player-table>
-        <!-- <ul>
-          <li *ngFor="let p of mlbTableFacade.batterColumns$ | async">
-            {{ p | json }}
-          </li>
-        </ul> -->
-        <!-- <app-nfl-player-table
-          [dfsPlayers]="dailyFantasyPlayersFacade.playerTableRows$ | async"
-          [dataColumns]="tableFacade.playerTableList$ | async"
-          [displayColumns]="tableFacade.playerDisplayColumns$ | async"
-        ></app-nfl-player-table> -->
+        <!-- <app-nfl-player-table [dfsPlayers]="nflPlayerFacade.playerList$ | async" [dataRows]="STATS_ROWS" [dataHeaders]="STATS_HEADERS"></app-nfl-player-table> -->
       </ng-container>
     </ng-container>
   </div>
