@@ -11,14 +11,14 @@ import { TeamMatchupTableComponent } from './components/team-matchup-table/team-
 import { DfsRoutingModule } from './dfs-routing.module';
 import { DailyFantasyMlbPlayerSlateAttributeState } from './mlb/state/daily-fantasy-mlb-player-slate-attr.state';
 import { DailyFantasyMlbTeamSlateAttributeState } from './mlb/state/daily-fantasy-mlb-team-slate-attr.state';
-import { NbaDfsTeamSlateState } from './nba/models/state/nba-dfs-team.state';
-import { MatchupTableComponent } from './nfl/components/matchup-table/matchup-table.component';
 import { PlayerTableRankingColumnComponent } from './nfl/components/player-table-ranking-column/player-table-ranking-column.component';
-import { PlayerTableComponent as NFLPlayerTableHomeComponent } from './nfl/components/player-table/player-table.component';
-import { NflDfsLineupState } from './nfl/state/nfl-dfs-lineup.state';
-import { NflDfsPlayerGridIronState } from './nfl/state/nfl-dfs-player-gridiron.state';
-import { NflDfsProfilerState } from './nfl/state/nfl-dfs-profiler.state';
-import { NflDfsTeamSlateState } from './nfl/state/nfl-dfs-team-slate.state';
+import { DailyFantasyNflGridIronState } from './nfl/state/daily-fantasy-nfl-grid-iron.state';
+import { DailyFantasyNflPlayersSlateAttributeState } from './nfl/state/daily-fantasy-nfl-players-slate-attr.state';
+import { DailyFantasyNflProfilerQBState } from './nfl/state/daily-fantasy-nfl-profiler-qb.state';
+import { DailyFantasyNflProfilerRBState } from './nfl/state/daily-fantasy-nfl-profiler-rb.state';
+import { DailyFantasyNflProfilerTEState } from './nfl/state/daily-fantasy-nfl-profiler-te.state';
+import { DailyFantasyNflProfilerWRState } from './nfl/state/daily-fantasy-nfl-profiler-wr.state';
+import { DailyFantasyNflTeamSlateAttributeState } from './nfl/state/daily-fantasy-nfl-team-slate-attr.state';
 import { HomeComponent as DfsHomeComponent } from './pages/home/home.component';
 import { DailyFantasyPlayersState } from './state/daily-fantasy-players.state';
 import { DailyFantasyScheduleState } from './state/daily-fantasy-schedule.state';
@@ -34,11 +34,14 @@ const states = [
   DailyFantasyTeamsState,
   DailyFantasyMlbPlayerSlateAttributeState,
   DailyFantasyMlbTeamSlateAttributeState,
-  NflDfsProfilerState,
-  NflDfsPlayerGridIronState,
-  NflDfsTeamSlateState,
-  NflDfsLineupState,
-  NbaDfsTeamSlateState,
+  DailyFantasyNflProfilerQBState,
+  DailyFantasyNflProfilerRBState,
+  DailyFantasyNflProfilerWRState,
+  DailyFantasyNflProfilerTEState,
+  DailyFantasyNflPlayersSlateAttributeState,
+  DailyFantasyNflTeamSlateAttributeState,
+  DailyFantasyNflProfilerQBState,
+  DailyFantasyNflGridIronState,
 ];
 
 const declarations = [
