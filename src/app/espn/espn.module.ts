@@ -38,6 +38,7 @@ import { FantasyFootballFreeAgentsState } from './nfl/state/fantasy-football-fre
 import { FantasyFootballLeagueState } from './nfl/state/fantasy-football-league.state';
 import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-schedule.state';
 import { FantasyFootballTeamState } from './nfl/state/fantasy-football-teams.state';
+import { FantasyFootballTransactionState } from './nfl/state/fantasy-football-transaction.state';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 import { EspnAddLeagueFormState } from './state/espn-add-league-form.state';
 import { EspnLeaguesState } from './state/espn-leagues.state';
@@ -72,6 +73,7 @@ const states = [
   FantasyFootballTeamState,
   FantasyFootballFreeAgentsState,
   FantasyFootballFreeAgentsFilterState,
+  FantasyFootballTransactionState,
   FantasyBaseballLeagueState,
   FantasyBaseballTeamState,
   FantasyBaseballTeamsLiveState,
