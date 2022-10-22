@@ -1,36 +1,74 @@
-<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="margin-bottom: 20px">
-  <div fxFlex.gt-xs="10" fxFlex.xs="100">
-    <mat-icon class="cursor-pointer" (click)="onStartFeed()">{{ (fastcastFacade.paused$ | async) ? 'play_arrow' : 'pause' }}</mat-icon>
-    <p style="font-size: 12px" *ngIf="fastcastFacade.lastRefresh$ | async">
-      Updated at: <span style="font-weight: bold; color: #777878">{{ fastcastFacade.lastRefresh$ | async | date: 'medium' }}</span>
-    </p>
-    <mat-form-field>
-      <mat-select [(value)]="selectedLeagueId" (selectionChange)="onLeaderboardFilterChange($event.value)">
-        <mat-option *ngFor="let league of fastcastLeagueFacade.leagueList$ | async" [value]="league.id">
-          {{ league.shortName }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" style="margin-bottom: 20px">
+  <div fxFlex.gt-sm="8" fxFlex.xs="100">
+    <mat-card>
+      <mat-card-subtitle>
+        <span class="scoreboard refresh timestamp">{{ lastRefreshAsTickerDate$ | async }}</span>
+      </mat-card-subtitle>
+      <mat-card-content>
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+          <div>
+            <button mat-icon-button aria-label="Button to start and pause feed" (click)="onStartFeed()">
+              <mat-icon>{{ (paused$ | async) ? 'play_arrow_outline' : 'pause_circle_outline' }}</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div>
+          <mat-form-field fxShow fxHide.xs>
+            <mat-select
+              [disabled]="(showFeed$ | async) === false"
+              style="text-align: center"
+              [value]="selectedLeagueId$ | async"
+              (selectionChange)="onLeagueSelectChange($event.value)"
+            >
+              <mat-option *ngFor="let league of leagueList$ | async" [value]="league.id">
+                {{ league.shortName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field fxHide fxShow.xs>
+            <select
+              #nativeLeagueSelect
+              matNativeControl
+              [disabled]="(showFeed$ | async) === false"
+              style="text-align: center"
+              [value]="selectedLeagueId$ | async"
+              (change)="onLeagueSelectChange($event.target.value)"
+            >
+              <option *ngFor="let league of leagueList$ | async" [value]="league.id">
+                {{ league.shortName }}
+              </option>
+            </select>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
-  <div fxFlex.gt-xs="90" fxFlex.xs="100" class="scoreboard-container" id="scoreboard-feed" role="feed" aria-live="polite">
-    <ng-container *ngIf="(fastcastEventFacade.eventsByLeagueId$ | async)!(selectedLeagueId) as fastcastEvents">
-      <ng-container *ngIf="!(fastcastFacade.isFeedValid$ | async); else feed">
-        <mat-progress-bar mode="buffer" [value]="fastcastFacade.feedLoadingValue$ | async"></mat-progress-bar>
-      </ng-container>
-      <ng-template #feed>
-        <app-espn-scoreboard-card
-          *ngFor="let event of fastcastEvents; let i = index"
-          [index]="i"
-          [ariaSetsize]="fastcastEvents.length"
-          [ariaPosinset]="i + 1"
-          [isEventToggled]="(fastcastEventToggleFacade.isIdToggled$ | async)!(event.id)"
-          (toggleExpandedEvent)="onToggleExpandedEvent($event)"
-          (toggleOffExpandedEvent)="onToggleOffExpandedEvent($event)"
-          (cardClick)="onEventCardClick($event)"
-          [isTournament]="event.isTournament"
-          [event]="event"
-        ></app-espn-scoreboard-card>
-      </ng-template>
-    </ng-container>
+
+  <div fxFlex.gt-sm fxFlex.xs="100" class="scoreboard container" id="scoreboard-feed" role="feed" aria-live="polite">
+    <ng-container *ngIf="showLoader$ | async; then progressBar"> </ng-container>
+    <ng-container *ngIf="showFeed$ | async; then feed; else noEventsMessage"> </ng-container>
   </div>
 </div>
+
+<ng-template #feed>
+  <app-espn-scoreboard-card
+    *ngFor="let event of (eventsByLeagueId$ | async)!(selectedLeagueId$ | async); let i = index"
+    [index]="i"
+    [ariaSetsize]="(eventsByLeagueId$ | async)!(selectedLeagueId$ | async).length"
+    [ariaPosinset]="i + 1"
+    [isEventToggled]="(isIdToggled$ | async)!(event.id)"
+    (toggleExpandedEvent)="onToggleExpandedEvent($event)"
+    (toggleOffExpandedEvent)="onToggleOffExpandedEvent($event)"
+    (cardClick)="onEventCardClick($event)"
+    [isTournament]="event.isTournament"
+    [event]="event"
+  ></app-espn-scoreboard-card>
+</ng-template>
+
+<ng-template #progressBar>
+  <mat-progress-bar mode="buffer" [value]="feedLoadingValue$ | async"></mat-progress-bar>
+</ng-template>
+
+<ng-template #noEventsMessage>
+  <app-no-data title="Feed Paused"></app-no-data>
+</ng-template>

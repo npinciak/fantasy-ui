@@ -9,7 +9,8 @@ import {
   SetFastcastPause,
   SetSelectedEventType,
 } from '@app/espn-fastcast/actions/espn-fastcast.actions';
-import { FASTCAST_BASE } from '@app/espn/espn.const';
+import { OperationCode, transformSportToFastcastEventType, WebSocketBuilder } from '@app/espn-fastcast/models/espn-fastcast-socket.model';
+import { fastcastURIBuilder } from '@app/espn/espn.const';
 import { EspnService } from '@app/espn/service/espn.service';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { startWith, tap } from 'rxjs/operators';
@@ -17,28 +18,15 @@ import { SetFastcastEvents } from '../actions/espn-fastcast-event.actions';
 import { SetFastcastLeague } from '../actions/espn-fastcast-league.actions';
 import { SetFastcastSports } from '../actions/espn-fastcast-sport.actions';
 import { SetFastcastTeams } from '../actions/espn-fastcast-team.actions';
-import {
-  FastcastEventType,
-  OperationCode,
-  transformSportToFastcastEventType,
-  WebSocketBuilder,
-} from '../models/espn-fastcast-socket.model';
+import { EspnFastcastStateModel, INITIAL_STATE } from '../models/fastcast-state.model';
 import { EspnFastcastLeagueSelectors } from '../selectors/espn-fastcast-league.selectors';
 import { EspnFastcastSportSelectors } from '../selectors/espn-fastcast-sport.selectors';
 import { EspnFastcastSelectors } from '../selectors/espn-fastcast.selectors';
 import { EspnFastcastService } from '../service/espn-fastcast.service';
 
-export interface EspnFastcastStateModel {
-  disconnect: number | null;
-  connect: number | null;
-  lastRefresh: number | null;
-  pause: boolean;
-  eventType: string;
-  connectionClosed: boolean;
-}
-
 @State<EspnFastcastStateModel>({
   name: 'espnFastcast',
+<<<<<<< Updated upstream
   defaults: {
     disconnect: null,
     connect: null,
@@ -47,6 +35,9 @@ export interface EspnFastcastStateModel {
     connectionClosed: true,
     pause: true,
   },
+=======
+  defaults: INITIAL_STATE,
+>>>>>>> Stashed changes
 })
 @Injectable()
 export class EspnFastcastState {
@@ -77,7 +68,7 @@ export class EspnFastcastState {
 
   @Action(HandleWebSocketMessage)
   handleWebSocketMessage(
-    { getState, patchState, dispatch }: StateContext<EspnFastcastStateModel>,
+    { getState, patchState }: StateContext<EspnFastcastStateModel>,
     { payload: { message } }: HandleWebSocketMessage
   ): void {
     const eventType = this.store.selectSnapshot(EspnFastcastSelectors.getEventType);
@@ -85,7 +76,7 @@ export class EspnFastcastState {
     const pause = getState().pause;
 
     if (pause) {
-      dispatch(new DisconnectWebSocket());
+      this.store.dispatch(new DisconnectWebSocket());
       return;
     }
 
@@ -94,7 +85,7 @@ export class EspnFastcastState {
         break;
       case OperationCode.C:
         const outgoing = { op: OperationCode.S, sid: message.sid, tc: eventType };
-        dispatch(new SendWebSocketMessage({ message: outgoing }));
+        this.store.dispatch(new SendWebSocketMessage({ message: outgoing }));
 
         break;
       case OperationCode.P:
@@ -102,14 +93,15 @@ export class EspnFastcastState {
         // dispatch(new SendWebSocketMessage({ message: outgoing }));
         break;
       case OperationCode.H:
-        dispatch(new FetchFastcast({ uri: message.pl }));
+        const uriOpH = message.pl;
+        this.store.dispatch(new FetchFastcast({ uri: uriOpH }));
         break;
       case OperationCode.I:
-        const uri = `${FASTCAST_BASE}/${eventType}/message/${message.mid}/checkpoint`;
-        dispatch(new FetchFastcast({ uri }));
+        const uri = fastcastURIBuilder(eventType, message.mid);
+        this.store.dispatch(new FetchFastcast({ uri }));
         break;
       case OperationCode.Error:
-        dispatch(new DisconnectWebSocket());
+        this.store.dispatch(new DisconnectWebSocket());
         break;
       default:
         break;
@@ -148,7 +140,7 @@ export class EspnFastcastState {
     const sportId = exists(eventType) ? eventType.split('~')[0] : null;
 
     const sport = this.store.selectSnapshot(EspnFastcastSportSelectors.getById)(sportId)?.slug;
-    const league = this.store.selectSnapshot(EspnFastcastLeagueSelectors.getById)(eventType)?.abbreviation.toLowerCase();
+    const league = this.store.selectSnapshot(EspnFastcastLeagueSelectors.getById)(eventType)?.abbrev.toLowerCase();
 
     if (sport != undefined && league != undefined) {
       const eventType = transformSportToFastcastEventType({ sport, league });

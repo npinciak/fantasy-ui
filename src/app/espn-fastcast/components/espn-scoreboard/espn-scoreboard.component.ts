@@ -5,6 +5,7 @@ import { EspnFastcastLeagueFacade } from '@app/espn-fastcast/facade/espn-fastcas
 import { EspnFastcastFacade } from '@app/espn-fastcast/facade/espn-fastcast.facade';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
 import { Store } from '@ngxs/store';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-espn-scoreboard',
@@ -12,7 +13,20 @@ import { Store } from '@ngxs/store';
   styleUrls: ['./espn-scoreboard.component.scss'],
 })
 export class EspnScoreboardComponent {
-  selectedLeagueId: string = '10';
+  selectedLeagueId$: BehaviorSubject<string>;
+
+  showNoEventsMessage$ = this.fastcastFacade.showNoEventsMessage$;
+  feedLoadingValue$ = this.fastcastFacade.feedLoadingValue$;
+  showFeed$ = this.fastcastFacade.showFeed$;
+  showLoader$ = this.fastcastFacade.showLoader$;
+  lastRefreshAsTickerDate$ = this.fastcastFacade.lastRefreshAsTickerDate$;
+  paused$ = this.fastcastFacade.paused$;
+
+  leagueList$ = this.fastcastLeagueFacade.leagueList$;
+
+  eventsByLeagueId$ = this.fastcastEventFacade.eventsByLeagueId$;
+
+  isIdToggled$ = this.fastcastEventToggleFacade.isIdToggled$;
 
   constructor(
     readonly fastcastEventToggleFacade: EspnFastcastEventToggleFacade,
@@ -20,10 +34,12 @@ export class EspnScoreboardComponent {
     readonly fastcastEventFacade: EspnFastcastEventFacade,
     readonly fastcastLeagueFacade: EspnFastcastLeagueFacade,
     readonly store: Store
-  ) {}
+  ) {
+    this.selectedLeagueId$ = new BehaviorSubject('10');
+  }
 
-  onLeaderboardFilterChange(val: string) {
-    this.selectedLeagueId = val;
+  onLeagueSelectChange(val: string) {
+    this.selectedLeagueId$.next(val);
   }
 
   onToggleExpandedEvent(val: string) {

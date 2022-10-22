@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '@app/@shared/services/api.service';
+import { EspnWebSocket, SocketRes } from '@app/espn-fastcast/models/espn-fastcast-socket.model';
 import { Observable } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { EspnWebSocket, SocketRes } from '../../espn-fastcast/models/espn-fastcast-socket.model';
 import { FASTCAST_WS_HOST } from '../../espn/espn.const';
 
 @Injectable({
