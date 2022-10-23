@@ -14,7 +14,7 @@ export class DailyFantasySlateFacade {
 
   constructor(private store: Store) {}
 
-  fetchSlates(sport: string, site: string): Observable<void> {
-    return this.store.dispatch(new FetchSlates({ sport, site }));
+  fetchSlates(): Observable<void> {
+    return this.store.dispatch(new FetchSlates());
   }
 }

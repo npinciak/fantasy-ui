@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { FantasySports } from '../models/espn-endpoint-builder.model';
-import { EspnAddLeagueFormSelectors } from '../selectors/espn-add-league-form.selectors';
-import { Reset, SetLeagueIdValue, SetLeagueSportValue, Submit } from '../state/espn-add-league-form.state';
+import { FantasySports } from '../../espn/models/espn-endpoint-builder.model';
+import { SportsUiLeagueFormSelectors } from '../selectors/sports-ui-league-form.selectors';
+import { Reset, SetLeagueIdValue, SetLeagueSportValue, Submit } from '../state/sports-ui-league-form.state';
 
 @Injectable({
   providedIn: 'root',
 })
-export class EspnAddLeagueFormFacade {
-  leagueId$ = select(EspnAddLeagueFormSelectors.getLeagueId);
-  leagueIdValid$ = select(EspnAddLeagueFormSelectors.getLeagueIdValid);
-  leagueSport$ = select(EspnAddLeagueFormSelectors.getSport);
-  leagueSportValid$ = select(EspnAddLeagueFormSelectors.getSportValid);
-  isDirty$ = select(EspnAddLeagueFormSelectors.getIsDirty);
+export class SportsUiLeagueFormFacade {
+  leagueId$ = select(SportsUiLeagueFormSelectors.getLeagueId);
+  leagueIdValid$ = select(SportsUiLeagueFormSelectors.getLeagueIdValid);
+  leagueSport$ = select(SportsUiLeagueFormSelectors.getSport);
+  leagueSportValid$ = select(SportsUiLeagueFormSelectors.getSportValid);
+  isDirty$ = select(SportsUiLeagueFormSelectors.getIsDirty);
 
   constructor(private store: Store) {}
 

@@ -12,7 +12,7 @@ export class DailyFantasyMlbPlayerSlateAttrFacade extends GenericFacade(DailyFan
     super();
   }
 
-  fetchSlateAttr(sport: string, site: string, slateId: string): void {
-    this.store.dispatch(new FetchSlateAttr({ sport, site, slate: slateId }));
+  fetchSlateAttr(slate: string): void {
+    this.store.dispatch(new FetchSlateAttr({ slate }));
   }
 }

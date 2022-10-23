@@ -1,16 +1,17 @@
 import { SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
 
+export const name = 'dailyFantasySlate';
+
 export class FetchSlates {
-  public static readonly type = `[dailyFantasySlate] FetchSlates`;
-  constructor(public payload: { site: string; sport: string }) {}
+  public static readonly type = `[${name}] FetchSlates`;
 }
 
 export class SetSlates {
-  static readonly type = `[dailyFantasySlates] SetSlates`;
+  static readonly type = `[${name}] SetSlates`;
   constructor(public payload: SiteSlateEntity[]) {}
 }
 
 export class ClearAndAddSlates {
-  static readonly type = `[dailyFantasySlates] ClearAndAddSlates`;
+  static readonly type = `[${name}] ClearAndAddSlates`;
   constructor(public payload: SiteSlateEntity[]) {}
 }
