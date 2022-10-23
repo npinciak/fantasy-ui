@@ -12,4 +12,5 @@ export class ClearAndAddFantasyFootballFreeAgents {
 
 export class FetchFantasyFootballFreeAgents {
   static readonly type = `[fantasyFootballFreeAgents] FetchFantasyFootballFreeAgents`;
+  constructor(public payload: { leagueId: string }) {}
 }

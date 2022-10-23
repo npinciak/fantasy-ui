@@ -6,7 +6,7 @@
           [selectedOption]="scoringPeriodId$ | async"
           title="Stat Period"
           [filterItems]="FOOTBALL_STAT_PERIOD_FILTER_OPTIONS"
-          (filterUpdate)="scoringPeriodIdChange($event.value)"
+          (filterUpdate)="scoringPeriodIdChange($event)"
         ></app-dropdown-filter>
       </mat-card-content>
     </mat-card>
@@ -14,12 +14,18 @@
 
     <mat-card>
       <mat-card-content>
-        <mat-form-field>
-          <mat-label> Slots</mat-label>
-          <mat-select (selectionChange)="onLineupFilterSlotIdChange($event.value)" multiple>
-            <mat-option *ngFor="let slot of LINEUP_SLOTS" [value]="slot"> {{ FOOTBALL_LINEUP_SLOT_MAP[slot].name }}</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <label id="lineup-slot-label">Lineup Slot</label>
+
+        <mat-radio-group fxLayout="column" aria-labelledby="lineup-slot-label">
+          <mat-radio-button
+            (change)="onLineupFilterSlotIdChange($event.value)"
+            *ngFor="let slot of LINEUP_SLOTS"
+            [aria-label]="FOOTBALL_LINEUP_SLOT_MAP[slot].name"
+            [value]="slot"
+          >
+            {{ FOOTBALL_LINEUP_SLOT_MAP[slot].name }}
+          </mat-radio-button>
+        </mat-radio-group>
       </mat-card-content>
     </mat-card>
 
@@ -86,8 +92,8 @@
   <div fxFlex="70%" fxFlex.sm="100%">
     <app-espn-stats-table
       [data]="(players$ | async)!(scoringPeriodId$ | async, seasonId)"
-      [dataColumns]="FOOTBALL_ROSTER_ROWS"
-      [headers]="FOOTBALL_ROSTER_HEADERS"
+      [dataColumns]="tableRows()!(selectedLineupSlotId$ | async)"
+      [headers]="tableHeaders()!(selectedLineupSlotId$ | async)"
       [statsMap]="FOOTBALL_STATS_MAP"
     >
     </app-espn-stats-table>

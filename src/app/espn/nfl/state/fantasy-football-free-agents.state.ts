@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
 import { EspnFreeAgentAvailabilityStatus } from '@espnClient/espn-client.model';
-import { Action, State, StateContext, Store } from '@ngxs/store';
+import { State, StateContext, Store } from '@ngxs/store';
 import {
   ClearAndAddFantasyFootballFreeAgents,
   FetchFantasyFootballFreeAgents,
@@ -24,24 +24,20 @@ export class FantasyFootballFreeAgentsState extends GenericState({
     super();
   }
 
-  @Action(FetchFantasyFootballFreeAgents)
-  async fetchFantasyFootballFreeAgents({ setState }: StateContext<GenericStateModel<FootballPlayer>>): Promise<void> {
+  async fetchFantasyFootballFreeAgents(
+    { setState }: StateContext<GenericStateModel<FootballPlayer>>,
+    { payload: { leagueId } }: FetchFantasyFootballFreeAgents
+  ): Promise<void> {
     setState({ map: {} });
 
-    const leagueId = this.store.selectSnapshot(FantasyFootballLeagueSelectors.getLeagueId) ?? '';
+    // const leagueId = this.store.selectSnapshot(RouterSelector) ?? '';
     const scoringPeriodId = Number(this.store.selectSnapshot(FantasyFootballLeagueSelectors.getCurrentScoringPeriodId)) ?? 0;
 
-    const lineupSlotIds = this.store.selectSnapshot(FantasyFootballFreeAgentsFilterState.getSelectedLineupdSlotIdsList);
-    // const availabilityStatus = this.store.selectSnapshot(FantasyFootballFreeAgentsFilterSelector.getSelectedAvailabilityStatus);
-    //   const topScoringPeriodIds = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedTopScoringPeriodIds);
+    const lineupSlotId = this.store.selectSnapshot(FantasyFootballFreeAgentsFilterState.getSelectedLineupSlotId);
 
-    //   const pagination = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getPagination);
-
-    //   const scoringPeriodId = Number(this.store.selectSnapshot(FantasyBaseballLeagueState.getCurrentScoringPeriodId)) ?? 0;
-
-    //   const filterRanksForScoringPeriodIds = { value: [scoringPeriodId] };
-    const filterSlotIds = { value: lineupSlotIds };
-    const filterStatus = { value: [EspnFreeAgentAvailabilityStatus.FreeAgent] }; // { value: availabilityStatus };
+    const filterSlotIds = { value: [lineupSlotId] };
+    const filterStatus = { value: [EspnFreeAgentAvailabilityStatus.FreeAgent, EspnFreeAgentAvailabilityStatus.Waivers] }; // { value: availabilityStatus };
+    //   const filterSlotIds = { value: lineupSlotIds };
     //   const filterStatsForTopScoringPeriodIds = {
     //     value: 5,
     //     additionalValue: ['002022', '102022', '002021', '012022', '022022', '032022', '042022', '062022', '010002022'],

@@ -11,15 +11,23 @@ export class FantasyFootballFreeAgentsSelectors extends GenericSelector(FantasyF
   }
 
   @Selector([FantasyFootballFreeAgentsSelectors.getFreeAgents])
-  static getFreeAgentsStats(players: FootballPlayerFreeAgent[]): (statPeriod: string, seasonId: string) => any[] {
-    return (statPeriod: string, seasonId: string) => {
-      return players.map(p => {
-        const stats = exists(p.stats) ? p.stats[statPeriod] : {};
-        return {
-          ...p,
-          stats,
-        };
-      });
+  static getFreeAgentsStats(players: FootballPlayerFreeAgent[]): (statPeriod: string) => any[] {
+    return (statPeriod: string) => {
+      return players
+        .map(p => {
+          const stats = exists(p.stats) ? (exists(p.stats[statPeriod]) ? p.stats[statPeriod] : null) : null;
+
+          return {
+            ...p,
+            stats,
+          };
+        })
+        .sort((a, b) => {
+          const statsB = exists(b.stats) ? (exists(b.stats.appliedTotal) ? b.stats.appliedTotal : 0) : 0;
+
+          const statsA = exists(a.stats) ? (exists(a.stats.appliedTotal) ? a.stats.appliedTotal : 0) : 0;
+          return statsB - statsA;
+        });
     };
   }
 }
