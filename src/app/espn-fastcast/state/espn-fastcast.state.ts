@@ -26,18 +26,7 @@ import { EspnFastcastService } from '../service/espn-fastcast.service';
 
 @State<EspnFastcastStateModel>({
   name: 'espnFastcast',
-<<<<<<< Updated upstream
-  defaults: {
-    disconnect: null,
-    connect: null,
-    lastRefresh: null,
-    eventType: FastcastEventType.TopEvents,
-    connectionClosed: true,
-    pause: true,
-  },
-=======
   defaults: INITIAL_STATE,
->>>>>>> Stashed changes
 })
 @Injectable()
 export class EspnFastcastState {

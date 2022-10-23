@@ -1,20 +1,23 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { exists } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
+import { EspnClientPlayerStatsByYearMap } from '@espnClient/espn-client.model';
 import { FOOTBALL_LINEUP_SLOT_MAP } from '../consts/lineup.const';
 import { FootballPlayer } from '../models/football-player.model';
 import { FootballPosition } from '../models/football-position.model';
-import { FootballTeamProperties } from '../models/football-team.model';
+import { FootballStat } from '../models/football-stats.model';
+import { FootballTeam } from '../models/football-team.model';
 import { FantasyFootballLeagueState, FantasyFootballLeagueStateModel } from '../state/fantasy-football-league.state';
 
 import { FantasyFootballTeamState } from '../state/fantasy-football-teams.state';
 
 export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootballTeamState) {
   @Selector([FantasyFootballTeamSelectors.getById])
-  static getRosterByTeamId(getById: (id: string | null) => FootballTeamProperties): (id: string | null) => FootballPlayer[] {
+  static getRosterByTeamId(getById: (id: string | null) => FootballTeam | null): (id: string | null) => FootballPlayer[] {
     return (id: string | null) => {
       if (!exists(id)) return [];
-      return getById(id).roster;
+      const team = getById(id);
+      return team ? team.roster : [];
     };
   }
 
@@ -43,12 +46,28 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
 
   @Selector([FantasyFootballTeamSelectors.getRosterByTeamId])
   static getTeamStats(getRosterByTeamId: (id: string | null) => FootballPlayer[]) {
-    return (id: string | null, statPeriod: string): FootballPlayer[] =>
+    return (id: string | null, statPeriodId: string): FootballPlayer[] =>
       getRosterByTeamId(id).map(p => {
-        const stats = exists(p.stats) ? p.stats[statPeriod] : {};
+        const statsEntity = exists(p.stats) ? p.stats[statPeriodId] : {};
+
+        let stats: EspnClientPlayerStatsByYearMap = {
+          ...statsEntity,
+        };
+
+        // if (stats.stats[FootballStat.RET] && stats.stats[FootballStat.GP]) {
+        //   stats.stats[FootballStat.TargetsPerGame] = stats.stats[FootballStat.RET] / stats.stats[FootballStat.GP];
+        // }
+        console.log(stats.stats[FootballStat.RRETD]);
+        const extendedStats = {};
+
+        if (stats.stats[FootballStat.RET] && stats.stats[FootballStat.GP]) {
+          Object.assign(extendedStats, { [FootballStat.TargetsPerGame]: stats.stats[FootballStat.RET] / stats.stats[FootballStat.GP] });
+        }
+
         return {
           ...p,
           stats,
+          extendedStats,
         };
       });
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UrlBuilder } from '@app/@shared/url-builder';
+import { UrlBuilder } from '@app/@core/store/router/url-builder';
 import { Navigate } from '@ngxs/router-plugin';
 import { Store } from '@ngxs/store';
 import { FOOTBALL_LEAGUE_STANDINGS_HEADERS, FOOTBALL_LEAGUE_STANDINGS_ROWS } from '../../consts/fantasy-football-table.const';
@@ -26,7 +26,6 @@ export class FootballHomeComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private store: Store,
     readonly fantasyFootballLeagueFacade: FantasyFootballLeagueFacade,
-    readonly fantasyFootballScheduleFacade: FantasyFootballScheduleFacade
   ) {}
 
   ngOnInit(): void {}

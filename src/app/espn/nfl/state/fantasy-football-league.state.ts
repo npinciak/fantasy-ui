@@ -41,14 +41,10 @@ export class FantasyFootballLeagueState {
   constructor(private nflService: FantasyFootballService, private store: Store) {}
 
   @Action(FetchFootballLeague)
-  async footballLeague(
-    { getState, patchState, dispatch }: StateContext<FantasyFootballLeagueStateModel>,
-    { payload: { leagueId } }: FetchFootballLeague
-  ) {
+  async footballLeague({ patchState }: StateContext<FantasyFootballLeagueStateModel>, { payload: { leagueId } }: FetchFootballLeague) {
     patchState({ isLoading: true });
-    const state = getState();
 
-    const year = new Date().getFullYear().toString(); //'2021'; //new Date().getFullYear().toString();
+    const year = new Date().getFullYear().toString();
 
     const {
       currentScoringPeriodId,
@@ -62,21 +58,15 @@ export class FantasyFootballLeagueState {
       transactions,
     } = await this.nflService.footballLeague(leagueId, year).toPromise();
 
-    console.log(transactions);
-
-    // const scoringPeriodId = league.scoringPeriodId;
-    // const seasonId = league.seasonId;
-    // const schedule = league.schedule;
-
-    await dispatch([
-      new SetFantasyFootballTeams(teams),
-      new SetFantasyFootballSchedule(schedule),
-      new SetCurrentScoringPeriodId({ currentScoringPeriodId }),
-      new SetFantasyFootballTransactions(transactions),
-    ]).toPromise();
+    await this.store
+      .dispatch([
+        new SetFantasyFootballTeams(teams),
+        new SetFantasyFootballSchedule(schedule),
+        new SetCurrentScoringPeriodId({ currentScoringPeriodId }),
+        new SetFantasyFootballTransactions(transactions),
+      ])
+      .toPromise();
     patchState({ firstScoringPeriodId, finalScoringPeriodId, matchupPeriodCount, settings, leagueId, isLoading: false });
-
-    // dispatch(new FetchFantasyFootballFreeAgents());
   }
 
   @Action(SetCurrentScoringPeriodId)

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
 import {
   InjurySeverityByInjuryStatus,
   InjurySeverityColor,
@@ -6,16 +7,16 @@ import {
   MatIconByEspnPlayerInjuryStatus,
   PlayerStatusAbbrevByInjuryStatusType,
 } from '@app/espn/models/injury.model';
-import { Player } from '@app/espn/models/player.model';
-import { EspnPlayerInjuryStatus } from '@client/espn-client.model';
+import { EspnPlayerInjuryStatus } from '@espnClient/espn-client.model';
 
 @Component({
   selector: 'app-espn-player',
   templateUrl: './espn-player.component.html',
   styleUrls: ['./espn-player.component.scss'],
 })
-export class EspnPlayerComponent<T extends Player> {
+export class EspnPlayerComponent<T extends PlayerEntity> {
   @Input() player: T;
+  @Input() hideLineupSlot: false;
 
   readonly MatIconByEspnPlayerInjuryStatus = MatIconByEspnPlayerInjuryStatus;
   readonly InjurySeverityByInjuryStatus = InjurySeverityByInjuryStatus;

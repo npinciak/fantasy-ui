@@ -2,17 +2,7 @@ import { EspnGameStatusTypeId, FastCastGameStatus } from '@espnClient/espn-clien
 import { EspnClientOddsEntity, EventsEntity, FullStatusType, Situation } from '@espnClient/espn-fastcast.model';
 import { FastcastEventTeam } from './fastcast-team.model';
 
-<<<<<<< Updated upstream
 interface FastcastEventAttributes {
-=======
-<<<<<<< Updated upstream
-interface FastcastEventProps {
->>>>>>> Stashed changes
-  id: string;
-  uid: string;
-=======
-interface FastcastEventAttributes {
->>>>>>> Stashed changes
   leagueId: string;
   timestamp: number;
   state: string | null;

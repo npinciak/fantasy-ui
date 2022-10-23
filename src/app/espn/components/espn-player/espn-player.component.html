@@ -1,29 +1,25 @@
-<table class="ui-w-100" [title]="playerLabel">
-  <tr>
-    <td class="player-col" rowspan="4">
-      {{ player?.lineupSlot }}
-    </td>
-  </tr>
-  <tr>
-    <td class="player-col" rowspan="4">
-      <img role="presentation" width="48" height="35" [src]="player?.img" [alt]="player?.name" />
-    </td>
-  </tr>
-  <tr>
-    <td class="player-info-col">
-      {{ player?.name }}
+<div fxLayout="row">
+  <div fxFlex="75%">
+    <div fxLayout="row" fxLayoutGap="5px">
+      <div>
+        <img role="presentation" width="48" height="35" [src]="player?.img" [alt]="player?.name" />
+      </div>
+      <div fxLayout="column" fxLayoutGap="5px">
+        <div class="player name">
+          {{ player?.name }}
+        </div>
+        <div class="player team-pos">{{ player?.team }}, {{ player?.position }}</div>
+      </div>
+    </div>
+  </div>
+  <div fxFlex>
+    <div fxLayout="column" fxLayoutGap="5px">
       <mat-icon
         *ngIf="player?.injuryStatus"
         [ngStyle]="{ color: playerInjuryStatusColor(player.injuryStatus) }"
         [title]="PlayerStatusAbbrevByInjuryStatusType[player?.injuryStatus]"
         >{{ MatIconByEspnPlayerInjuryStatus[player?.injuryStatus] }}</mat-icon
       >
-    </td>
-    <td>
-      <!-- {{ player?.points | number: '1.0-3' }} -->
-    </td>
-  </tr>
-  <tr>
-    <td>{{ player?.team }}, {{ player?.position }}</td>
-  </tr>
-</table>
+    </div>
+  </div>
+</div>

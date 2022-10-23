@@ -1,4 +1,3 @@
-import { exists } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { FootballTeam } from '../models/football-team.model';
 import { FantasyFootballLeagueState, FantasyFootballLeagueStateModel } from '../state/fantasy-football-league.state';
@@ -8,6 +7,11 @@ export class FantasyFootballLeagueSelectors {
   @Selector([FantasyFootballLeagueState])
   static getState(state: FantasyFootballLeagueStateModel) {
     return state;
+  }
+
+  @Selector([FantasyFootballLeagueState])
+  static isLoading(state: FantasyFootballLeagueStateModel) {
+    return state.isLoading;
   }
 
   @Selector([FantasyFootballLeagueState])
@@ -42,14 +46,6 @@ export class FantasyFootballLeagueSelectors {
 
   @Selector([FantasyFootballLeagueSelectors.getMatchupPeriodCount, FantasyFootballTeamSelectors.getList])
   static standings(matchupPeriodCount: number, teamList: FootballTeam[]): FootballTeam[] {
-    return teamList
-      .map(t => {
-        return {
-          ...t,
-          predictedWins: exists(t.predictedWinPct) ? t.predictedWinPct * matchupPeriodCount : 0,
-        };
-      })
-      .sort((a, b) => b.wins - a.wins);
+    return teamList.sort((a, b) => b.wins - a.wins);
   }
 }
-// 162(1.0625)21+(1.0625)2=85.9
