@@ -1,35 +1,35 @@
 import { Injectable } from '@angular/core';
 import { GenericState, GenericStateClass } from '@app/@shared/generic-state/generic.state';
-import { SchemeHeaderExpertService } from '@app/scheme-header-expert.service';
+import { SchemeHeaderExpertService } from '@app/sports-ui/service/scheme-header-expert.service';
 import { Action, State, StateContext } from '@ngxs/store';
-import { ClearAndAddEspnLeagues, DeleteEspnLeague, FetchEspnLeagues, SetEspnLeagues } from '../actions/espn-leagues.actions';
+import { SportsUiLeagues } from '../../sports-ui/actions/sports-ui-leagues.actions';
 import { SportsUiClientLeague } from '../models/league.model';
 
-@State({ name: 'espnLeagues' })
+@State({ name: SportsUiLeagues.name })
 @Injectable()
-export class EspnLeaguesState extends GenericState({
+export class SportsUiLeaguesState extends GenericState({
   idProperty: 'leagueId',
-  addOrUpdate: SetEspnLeagues,
-  clearAndAdd: ClearAndAddEspnLeagues,
+  addOrUpdate: SportsUiLeagues.SetLeagues,
+  clearAndAdd: SportsUiLeagues.ClearAndAddLeagues,
 }) {
   constructor(private apiService: SchemeHeaderExpertService) {
     super();
   }
 
-  @Action(FetchEspnLeagues)
+  @Action(SportsUiLeagues.FetchLeagues)
   async fetchEspnLeagues({ dispatch }: StateContext<GenericStateClass<SportsUiClientLeague>>): Promise<void> {
     const leagues = await this.apiService.getLeagues().toPromise();
-    dispatch([new ClearAndAddEspnLeagues(leagues)]);
+    dispatch([new SportsUiLeagues.ClearAndAddLeagues(leagues)]);
   }
 
-  @Action(DeleteEspnLeague)
+  @Action(SportsUiLeagues.DeleteLeague)
   async deleteEspnLeague(
     { dispatch }: StateContext<GenericStateClass<SportsUiClientLeague>>,
-    { payload: { leagueId } }: DeleteEspnLeague
+    { payload: { leagueId } }: SportsUiLeagues.DeleteLeague
   ): Promise<void> {
     try {
       await this.apiService.deleteLeague({ leagueId }).toPromise();
     } catch (error) {}
-    dispatch([new FetchEspnLeagues()]);
+    dispatch([new SportsUiLeagues.FetchLeagues()]);
   }
 }
