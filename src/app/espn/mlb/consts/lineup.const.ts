@@ -1,5 +1,5 @@
 import { enumAsList } from '@app/@shared/helpers/enum-as-list';
-import { EspnClientLineupEntityMap } from '@client/espn-client.model';
+import { EspnClientLineupEntityMap } from '@espnClient/espn-client.model';
 
 export enum BaseballLineupSlot {
   C,

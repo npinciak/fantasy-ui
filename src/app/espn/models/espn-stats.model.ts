@@ -1,8 +1,3 @@
-export type BaseStatsProperties = {
-  abbrev: string;
-  description: string;
-};
-
 export enum StatTypePeriodId {
   Season,
   Last7,

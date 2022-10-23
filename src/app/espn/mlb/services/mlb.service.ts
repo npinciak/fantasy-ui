@@ -14,8 +14,8 @@ import {
   EspnClientPlayerStatsEntityMap,
   EspnClientPlayerStatsYear,
   EspnClientScheduleTeam,
-  EspnClientTeam,
-} from '@client/espn-client.model';
+  EspnClientTeam
+} from '@espnClient/espn-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MLB_LINEUP_MAP, PitcherIdSet } from '../consts/lineup.const';
@@ -74,7 +74,7 @@ export class MlbService {
     return teams.map(team => ({
       id: team.teamId.toString(),
       totalPoints: team.totalPoints,
-      liveScore: team.totalPointsLive,
+      liveScore: exists(team.totalPointsLive) ? team.totalPointsLive : 0,
       roster: MlbService.transformEspnClientTeamPlayerToBaseballPlayer(team.rosterForCurrentScoringPeriod.entries),
     }));
   }

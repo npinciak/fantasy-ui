@@ -1,4 +1,4 @@
-import { EspnClientCompetitor, EspnClientEvent } from '@client/espn-client.model';
+import { EspnClientCompetitor, EspnClientEvent } from '@espnClient/espn-client.model';
 
 type CompetitorsProps = Pick<EspnClientCompetitor, 'id' | 'abbreviation' | 'homeAway'>;
 

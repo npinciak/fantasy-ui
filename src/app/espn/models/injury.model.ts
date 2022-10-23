@@ -1,4 +1,4 @@
-import { EspnPlayerInjuryStatus } from '@client/espn-client.model';
+import { EspnPlayerInjuryStatus } from '@espnClient/espn-client.model';
 
 export enum InjurySeverityColor {
   Serious = '#cb0123',

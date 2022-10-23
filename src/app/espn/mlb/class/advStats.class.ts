@@ -1,5 +1,5 @@
 import { exists } from '@app/@shared/helpers/utils';
-import { EspnClientPlayerStatsEntity } from '@client/espn-client.model';
+import { EspnClientPlayerStatsEntity } from '@espnClient/espn-client.model';
 import { SeasonStatConst } from '../models/adv-stats.model';
 import { EspnBaseballStat } from '../models/mlb-stats.model';
 

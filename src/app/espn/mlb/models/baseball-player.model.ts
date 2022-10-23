@@ -1,12 +1,11 @@
 import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
-import { Player } from '@app/dfs/models/player.model';
 import {
   EspnClientPlayer,
   EspnClientPlayerInfo,
   EspnClientPlayerRatings,
   EspnClientPlayerStatsEntityMap,
   EspnPlayerInjuryStatus,
-} from '@client/espn-client.model';
+} from '@espnClient/espn-client.model';
 
 export interface BaseballPlayerProps {
   isInjured: boolean;
@@ -27,7 +26,7 @@ export type BaseballPlayer = PlayerEntity &
 
 export type BaseballPlayerMap = Record<string, BaseballPlayer>;
 
-export type BaseballPlayerStatsRow = Pick<Player, 'id'> &
+export type BaseballPlayerStatsRow = Pick<PlayerEntity, 'id'> &
   Pick<BaseballPlayerProps, 'isInjured' | 'injuryStatus'> &
   Pick<EspnClientPlayer, 'lineupSlotId'> & {
     name: string;
