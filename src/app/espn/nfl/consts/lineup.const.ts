@@ -1,4 +1,4 @@
-import { EspnClientLineupEntityMap } from '@client/espn-client.model';
+import { EspnClientLineupEntityMap } from '@espnClient/espn-client.model';
 
 export const FOOTBALL_LINEUP_SLOT_MAP: EspnClientLineupEntityMap = {
   0: {

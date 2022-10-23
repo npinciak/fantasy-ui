@@ -5,18 +5,20 @@ import {
   EspnClientPlayerOwnership,
   EspnClientPlayerStatsByYearMap,
   EspnPlayerInjuryStatus,
-} from '@client/espn-client.model';
+} from '@espnClient/espn-client.model';
+import { ExtendedFootballStatsMap } from './football-extended-stats.model';
 
-export interface FootballPlayerProperties {
+export interface FootballPlayerAttributes {
   isInjured: boolean;
   injuryStatus: EspnPlayerInjuryStatus | null;
   lineupSlot: string | null;
   points: number;
   stats: EspnClientPlayerStatsByYearMap | null;
+  extendedStats: ExtendedFootballStatsMap | null;
 }
 
 export type FootballPlayer = PlayerEntity &
-  FootballPlayerProperties &
+  FootballPlayerAttributes &
   Pick<EspnClientPlayer, 'lineupSlotId'> &
   Pick<EspnClientPlayerInfo, 'defaultPositionId'> &
   Pick<EspnClientPlayerOwnership, 'percentChange' | 'percentOwned'>;

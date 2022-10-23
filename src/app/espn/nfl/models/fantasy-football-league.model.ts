@@ -1,4 +1,4 @@
-import { EspnClientLeagueSettings, EspnClientScheduleEntity } from '@client/espn-client.model';
+import { EspnClientLeagueSettings, EspnClientLeagueTransaction, EspnClientScheduleEntity } from '@espnClient/espn-client.model';
 import { FootballPlayerFreeAgent } from './football-player.model';
 import { FootballTeam } from './football-team.model';
 
@@ -13,4 +13,5 @@ export interface FantasyFootballLeague {
   freeAgents: FootballPlayerFreeAgent[];
   schedule: EspnClientScheduleEntity[];
   settings: EspnClientLeagueSettings;
+  transactions: EspnClientLeagueTransaction[];
 }

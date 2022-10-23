@@ -30,3 +30,11 @@ export enum FootballLineupSlot {
 }
 
 export const FootballLineupSlotList = enumAsList(FootballLineupSlot);
+export const BasicFootballLineupSlotList: FootballLineupSlot[] = [
+  FootballLineupSlot.QB,
+  FootballLineupSlot.RB,
+  FootballLineupSlot.WR,
+  FootballLineupSlot.FLEX,
+  FootballLineupSlot.K,
+  FootballLineupSlot.DST,
+];
