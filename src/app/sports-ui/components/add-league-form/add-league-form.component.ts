@@ -1,6 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ICON_PATH } from '@app/espn/espn.const';
-import { EspnAddLeagueFormFacade } from '@app/espn/facades/espn-add-league-form.facade';
 import { LeagueStorageMap } from '@app/espn/mlb/models/baseball-league-storage.model';
 import {
   FantasySports,
@@ -9,6 +8,7 @@ import {
   LeagueSportToImageLocationMap,
   SportLeague,
 } from '@app/espn/models/espn-endpoint-builder.model';
+import { SportsUiLeagueFormFacade } from '@app/sports-ui/facades/sports-ui-league-form.facade';
 
 @Component({
   selector: 'app-add-league-form',
@@ -25,7 +25,7 @@ export class AddLeagueFormComponent implements OnInit {
   @Output() removeLeague = new EventEmitter<string>();
   @Output() navigateLeague = new EventEmitter<{ sport: SportLeague; leagueId: string }>();
 
-  sportOption$ = this.espnAddLeagueFormFacade.leagueSport$;
+  sportOption$ = this.leagueFormFacade.leagueSport$;
   fantasySportOptionList = [
     { value: FantasySports.Baseball, label: FantasySportToLabelMap[FantasySports.Baseball] },
     { value: FantasySports.Football, label: FantasySportToLabelMap[FantasySports.Football] },
@@ -36,12 +36,12 @@ export class AddLeagueFormComponent implements OnInit {
   readonly FantasySportToLabelMap = FantasySportToLabelMap;
   readonly LeagueSportToImageLocationMap = LeagueSportToImageLocationMap;
 
-  constructor(readonly espnAddLeagueFormFacade: EspnAddLeagueFormFacade) {}
+  constructor(readonly leagueFormFacade: SportsUiLeagueFormFacade) {}
 
   ngOnInit(): void {}
 
   onAddLeague() {
-    this.espnAddLeagueFormFacade.submit();
+    this.leagueFormFacade.submit();
   }
 
   onRemoveLeague(leagueId): void {
@@ -49,11 +49,11 @@ export class AddLeagueFormComponent implements OnInit {
   }
 
   fantasySportChange(val: FantasySports): void {
-    this.espnAddLeagueFormFacade.setSport(val);
+    this.leagueFormFacade.setSport(val);
   }
 
   leagueIdInputChange(val: string): void {
-    this.espnAddLeagueFormFacade.setLeagueId(val);
+    this.leagueFormFacade.setLeagueId(val);
   }
 
   onNavigate(fantasySport: FantasySports, leagueId: string): void {

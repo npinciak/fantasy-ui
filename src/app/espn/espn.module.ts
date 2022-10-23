@@ -5,7 +5,7 @@ import { SharedModule } from '@app/@shared/shared.module';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
 import { EspnFastcastEventToggleState } from '../espn-fastcast/state/espn-fastcast-event-toggle.state';
-import { AddLeagueFormComponent } from './components/add-league-form/add-league-form.component';
+import { AddLeagueFormComponent } from '../sports-ui/components/add-league-form/add-league-form.component';
 import { EspnPlayerComponent } from './components/espn-player/espn-player.component';
 import { EspnStatsTableComponent } from './components/espn-stats-table/espn-stats-table.component';
 import { EspnRoutingModule } from './espn-routing.module';
@@ -40,8 +40,6 @@ import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-sched
 import { FantasyFootballTeamState } from './nfl/state/fantasy-football-teams.state';
 import { FantasyFootballTransactionState } from './nfl/state/fantasy-football-transaction.state';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
-import { EspnAddLeagueFormState } from './state/espn-add-league-form.state';
-import { EspnLeaguesState } from './state/espn-leagues.state';
 
 const declarations = [
   EspnHomeComponent,
@@ -82,8 +80,6 @@ const states = [
   FantasyBaseballPlayerState,
   FantasyBaseballEventsState,
   EspnFastcastEventToggleState,
-  EspnAddLeagueFormState,
-  EspnLeaguesState,
 ];
 
 const imports = [
