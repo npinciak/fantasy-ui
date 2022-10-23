@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { RouterSelector } from '@app/@core/store/router/router.selectors';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { SetMlbPlayerSlateAttributes } from '../mlb/actions/daily-fantasy-mlb-player-slate-attr.actions';
 import { SetMlbTeamSlateAttributes } from '../mlb/actions/daily-fantasy-mlb-team-slate-attr.actions';
 import { PlayerSlateAttr } from '../models/player-slate-attr.model';
@@ -15,7 +16,7 @@ import { SlateService, SlateTeamMap } from '../service/slate.service';
 
 export class FetchSlateAttr {
   public static readonly type = `[dailyFantasySlateAttr] FetchSlateAttr`;
-  constructor(public payload: { sport: string; site: string; slate: string }) {}
+  constructor(public payload: { slate: string }) {}
 }
 
 export class DailyFantasySlateAttrStateModel {
@@ -38,7 +39,7 @@ const defaults = {
 })
 @Injectable()
 export class DailyFantasySlateAttrState {
-  constructor(private slateService: SlateService) {}
+  constructor(private store: Store, private slateService: SlateService) {}
 
   @Selector()
   static slate(state: DailyFantasySlateAttrStateModel): string | null {
@@ -48,8 +49,13 @@ export class DailyFantasySlateAttrState {
   @Action(FetchSlateAttr)
   async FetchSlateAttr(
     { patchState, dispatch }: StateContext<DailyFantasySlateAttrStateModel>,
-    { payload: { sport, site, slate } }: FetchSlateAttr
+    { payload: { slate } }: FetchSlateAttr
   ): Promise<void> {
+    const queryParams = this.store.selectSnapshot(RouterSelector.getRouterQueryParams);
+
+    const sport = queryParams?.sport;
+    const site = queryParams?.site;
+
     const { statGroups, teams, players } = await this.slateService.getGameAttrBySlateId({ sport, site, slate }).toPromise();
     // const { qb, rb, wr, te } = statGroups;
     // console.log({ statGroups });
