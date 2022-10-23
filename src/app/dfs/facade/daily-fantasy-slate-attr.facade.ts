@@ -9,7 +9,7 @@ import { FetchSlateAttr } from '../state/daily-fantasy-slate-attr.state';
 export class DailyFantasySlateAttrFacade {
   constructor(private store: Store) {}
 
-  fetchSlateAttr(sport: string, site: string, slateId: string): Observable<void> {
-    return this.store.dispatch(new FetchSlateAttr({ sport, site, slate: slateId }));
+  fetchSlateAttr(slate: string): Observable<void> {
+    return this.store.dispatch(new FetchSlateAttr({ slate }));
   }
 }

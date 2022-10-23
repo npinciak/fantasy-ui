@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UrlQueryParams } from '@app/@core/store/router/url-builder';
 import { exists } from '@app/@shared/helpers/utils';
-import { UrlQueryParams } from '@app/@shared/url-builder';
 import { DailyFantasyPlayersFacade } from '@app/dfs/facade/daily-fantasy-players.facade';
 import { DailyFantasySlateAttrFacade } from '@app/dfs/facade/daily-fantasy-slate-attr.facade';
 import { DailyFantasySlateFacade } from '@app/dfs/facade/daily-fantasy-slate.facade';
@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    if (exists(this.LEAGUE) && exists(this.SITE)) this.dailyFantasySlateFacade.fetchSlates(this.LEAGUE, this.SITE);
+    if (exists(this.LEAGUE) && exists(this.SITE)) this.dailyFantasySlateFacade.fetchSlates();
   }
 
   statGroupFilter(val: string) {
@@ -78,11 +78,11 @@ export class HomeComponent implements OnInit {
     if (exists(this.LEAGUE) && exists(this.SITE)) {
       switch (this.LEAGUE) {
         case 'mlb':
-          this.mlbDailyFantasySlateAttrFacade.fetchSlateAttr(this.LEAGUE, this.SITE, event.importId);
+          this.mlbDailyFantasySlateAttrFacade.fetchSlateAttr(event.importId);
           break;
 
         default:
-          this.dailyFantasySlateAttrFacade.fetchSlateAttr(this.LEAGUE, this.SITE, event.importId);
+          this.dailyFantasySlateAttrFacade.fetchSlateAttr(event.importId);
 
           break;
       }
