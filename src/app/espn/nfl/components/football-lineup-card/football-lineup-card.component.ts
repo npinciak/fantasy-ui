@@ -6,7 +6,7 @@ import {
   MatIconByEspnPlayerInjuryStatus,
   PlayerStatusAbbrevByInjuryStatusType,
 } from '@app/espn/models/injury.model';
-import { EspnPlayerInjuryStatus } from '@client/espn-client.model';
+import { EspnPlayerInjuryStatus } from '@espnClient/espn-client.model';
 import { FootballPlayer } from '../../models/football-player.model';
 
 @Component({
