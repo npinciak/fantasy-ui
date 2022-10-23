@@ -7,12 +7,7 @@ import { GenericStateModel } from './generic.model';
 export interface GenericStateClass<T> {
   new (...args: any[]): any;
   addOrUpdate: GenericPayloadActionClass<T>;
-<<<<<<< Updated upstream
   clearAndAdd: GenericPayloadActionClass<T>;
-  // clear: GenericPayloadActionClass<T>;
-=======
-  clearAndAdd: GenericPayloadActionClass<T>;
->>>>>>> Stashed changes
 }
 
 export type PropertyOfType<T, U> = { [K in keyof T]: T[K] extends U ? K : never }[keyof T];
@@ -25,7 +20,6 @@ export function GenericState<EntityType, IdProperty extends PropertyOfType<Entit
   idProperty: IdProperty;
   addOrUpdate: GenericPayloadActionClass<EntityType>;
   clearAndAdd: GenericPayloadActionClass<EntityType>;
-  // clear: GenericPayloadActionClass<EntityType>;
 }): GenericStateClass<EntityType> {
   @State<GenericStateModel<EntityType>>({
     name: 'genericStateBase',
