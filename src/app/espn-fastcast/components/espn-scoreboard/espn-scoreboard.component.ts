@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
+import { EspnFastcastEventToggleFacade } from '@app/espn-fastcast/facade/espn-fastcast-event-toggle.facade';
 import { EspnFastcastEventFacade } from '@app/espn-fastcast/facade/espn-fastcast-event.facade';
 import { EspnFastcastLeagueFacade } from '@app/espn-fastcast/facade/espn-fastcast-league.facade';
 import { EspnFastcastFacade } from '@app/espn-fastcast/facade/espn-fastcast.facade';
-import { FastcastLeague } from '@app/espn-fastcast/models/fastcast-league.model';
+import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
+import { Store } from '@ngxs/store';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-espn-scoreboard',
@@ -11,28 +13,52 @@ import { FastcastLeague } from '@app/espn-fastcast/models/fastcast-league.model'
   styleUrls: ['./espn-scoreboard.component.scss'],
 })
 export class EspnScoreboardComponent {
-  selectedLeagueId: string = '10';
+  selectedLeagueId$: BehaviorSubject<string>;
+
+  showNoEventsMessage$ = this.fastcastFacade.showNoEventsMessage$;
+  feedLoadingValue$ = this.fastcastFacade.feedLoadingValue$;
+  showFeed$ = this.fastcastFacade.showFeed$;
+  showLoader$ = this.fastcastFacade.showLoader$;
+  lastRefreshAsTickerDate$ = this.fastcastFacade.lastRefreshAsTickerDate$;
+  paused$ = this.fastcastFacade.paused$;
+
+  leagueList$ = this.fastcastLeagueFacade.leagueList$;
+
+  eventsByLeagueId$ = this.fastcastEventFacade.eventsByLeagueId$;
+
+  isIdToggled$ = this.fastcastEventToggleFacade.isIdToggled$;
 
   constructor(
+    readonly fastcastEventToggleFacade: EspnFastcastEventToggleFacade,
     readonly fastcastFacade: EspnFastcastFacade,
     readonly fastcastEventFacade: EspnFastcastEventFacade,
-    readonly fastcastLeagueFacade: EspnFastcastLeagueFacade
-  ) {}
+    readonly fastcastLeagueFacade: EspnFastcastLeagueFacade,
+    readonly store: Store
+  ) {
+    this.selectedLeagueId$ = new BehaviorSubject('10');
+  }
 
-  onLeaderboardFilterChange(event: MatSelectChange) {
-    const league: FastcastLeague = event.value;
-
-    this.selectedLeagueId = league.id;
-
-    this.fastcastEventFacade.fastcastLeagueChangeLeaderboard(this.selectedLeagueId);
-    this.fastcastFacade.setEventType(league.uid);
+  onLeagueSelectChange(val: string) {
+    this.selectedLeagueId$.next(val);
   }
 
   onToggleExpandedEvent(val: string) {
-    this.fastcastEventFacade.selectExpandedEvent(val);
+    this.fastcastEventToggleFacade.selectExpandedEvent(val);
   }
 
   onToggleOffExpandedEvent(val: string) {
-    this.fastcastEventFacade.deselectExpandedEvent(val);
+    this.fastcastEventToggleFacade.deselectExpandedEvent(val);
+  }
+
+  onStartFeed() {
+    this.fastcastFacade.setPauseState();
+  }
+
+  onEventCardClick(event: FastcastEvent) {
+    // this.store.dispatch(
+    //   new Navigate([UrlFragments.Espn, UrlFragments.Game], {
+    //     gameId: event.id,
+    //   })
+    // );
   }
 }

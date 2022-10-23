@@ -1,4 +1,4 @@
-type SeasonConstantsProperties =
+type SeasonStatConstantsProps =
   | 'wOBA'
   | 'wOBAScale'
   | 'wBB'
@@ -13,4 +13,4 @@ type SeasonConstantsProperties =
   | 'R/W'
   | 'cFIP';
 
-export type SeasonConst = { [p in SeasonConstantsProperties]: number };
+export type SeasonStatConst = { [key in SeasonStatConstantsProps]: number };

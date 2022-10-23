@@ -1,8 +1,8 @@
 <div fxLayout="row" fxLayoutGap="20px">
   <div>
     <app-dropdown-filter
-      [selectedOption]="sportOption"
-      [filterItems]="[{ value: 'mlb', label: 'Baseball' }]"
+      [selectedOption]="sportOption$ | async"
+      [filterItems]="fantasySportOptionList"
       (filterUpdate)="fantasySportChange($event.value)"
     ></app-dropdown-filter>
   </div>
@@ -21,31 +21,22 @@
   <div fxFlex *ngFor="let league of leagues">
     <mat-card style="display: flex">
       <mat-card-header>
-        <div
-          style="
-            background-image: url('https://a.espncdn.com/redesign/assets/img/sprites/transitional-secondary-navigation-icons-v4.png');
-            background-repeat: no-repeat;
-            background-position: -4px -273px;
-            width: 32px;
-            height: 32px;
-            position: absolute;
-          "
-        ></div>
+        <div class="fantasy-sport-logo" [ngStyle]="{ 'background-position': LeagueSportToImageLocationMap[league.leagueSport] }"></div>
       </mat-card-header>
       <mat-card-content style="width: 100%; display: flex; align-items: center">
         <div style="width: 100%">
-          <mat-card-title>{{ league.sport }}</mat-card-title>
-          <mat-card-subtitle>{{ league.leagueId }}</mat-card-subtitle>
+          <mat-card-title>{{ FantasySportToLabelMap[league.leagueSport] }}</mat-card-title>
+          <mat-card-subtitle>{{ league.leagueName }}</mat-card-subtitle>
         </div>
         <div>
           <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="League menu">
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item [routerLink]="['/espn/mlb/', league.leagueId]">
+            <button mat-menu-item (click)="onNavigate(league.leagueSport, league.leagueId)">
               <span>View</span>
             </button>
-            <button mat-menu-item (click)="onRemoveLeague(league.leagueId)">
+            <button mat-menu-item (click)="onRemoveLeague(league.id)">
               <span>Remove</span>
             </button>
           </mat-menu>

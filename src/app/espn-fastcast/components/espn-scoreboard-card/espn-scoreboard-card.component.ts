@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { tickerDate } from '@app/@shared/helpers/date';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
-import { LeagueIdMap } from '@app/espn/espn-helpers';
+import { FASTCAST_DATE_SHORT } from '@app/espn/espn.const';
+import { EspnLeagueId, FastCastGameStatus, FastCastSeasonType } from '@espnClient/espn-client.model';
 
 @Component({
   selector: 'app-espn-scoreboard-card',
@@ -17,6 +19,9 @@ export class EspnScoreboardCardComponent implements OnChanges {
 
   @Output() toggleExpandedEvent = new EventEmitter<string>();
   @Output() toggleOffExpandedEvent = new EventEmitter<string>();
+  @Output() cardClick = new EventEmitter<FastcastEvent>();
+
+  readonly FASTCAST_DATE_SHORT = FASTCAST_DATE_SHORT;
 
   constructor() {}
 
@@ -24,7 +29,7 @@ export class EspnScoreboardCardComponent implements OnChanges {
     this.isEventToggled = changes.isEventToggled.currentValue;
   }
 
-  readonly LeagueIdMap = LeagueIdMap;
+  readonly league = EspnLeagueId;
 
   toggleExpansionPanel(eventId: string): void {
     this.toggleExpandedEvent.emit(eventId);
@@ -34,8 +39,36 @@ export class EspnScoreboardCardComponent implements OnChanges {
     this.toggleOffExpandedEvent.emit(eventId);
   }
 
-  eventInProgress(event: FastcastEvent): boolean {
-    return !event.completed && event.status !== 'pre' && event.status !== 'post';
+  get eventInProgress(): boolean {
+    return this.event.status === FastCastGameStatus.InProgress;
+  }
+
+  get isPostseason() {
+    return this.event.seasonType === FastCastSeasonType.Post;
+  }
+
+  onCardClick(event: FastcastEvent) {
+    this.cardClick.emit(event);
+  }
+
+  get eventSummary() {
+    if (this.eventInProgress) {
+      return this.event.summary;
+    }
+
+    if (!this.eventInProgress && this.isPostseason) {
+      return `${this.event.note} | ${this.tickerDate}`;
+    }
+
+    if (this.event.completed && this.isPostseason) {
+      return `${this.event.note}`;
+    }
+
+    return this.tickerDate;
+  }
+
+  get tickerDate() {
+    return tickerDate(this.event.timestamp);
   }
 
   get ariaInfo() {

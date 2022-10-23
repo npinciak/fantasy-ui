@@ -19,7 +19,7 @@ export class EspnAddLeagueFormSelectors {
 
   @Selector([EspnAddLeagueFormSelectors.getEspnAddLeagueFormState])
   static getSport(state: EspnAddLeagueFormStateModel): string | null {
-    return state.sport;
+    return state.leagueSport;
   }
 
   @Selector([EspnAddLeagueFormSelectors.getSport])

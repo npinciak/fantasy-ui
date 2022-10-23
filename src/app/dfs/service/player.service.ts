@@ -1,12 +1,15 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { uniqueBy } from '@app/@shared/helpers/unique-by';
+import { exists } from '@app/@shared/helpers/utils';
 import { ApiService } from '@app/@shared/services/api.service';
+import { DfsSlatePlayer, Schedule as ScheduleImport, ScheduleTeamEntity } from '@dfsClient/daily-fantasy-client.model';
+import { NFLClientGridIronPlayer } from '@dfsClient/nfl-client.model';
+import { camelCase } from 'lodash';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
-import { DailyFantasyEndpointBuilder } from '../daily-fantasy-url-builder';
-import { DfsSlatePlayer, Schedule as ScheduleImport, ScheduleTeamEntity } from '../models/daily-fantasy-client.model';
-import { Player, PlayersBySlate } from '../models/player.model';
+import { DailyFantasyEndpointBuilder } from '../daily-fantasy-endpoint-builder';
+import { PlayersBySlate, SlatePlayer } from '../models/player.model';
 import { Schedule } from '../models/schedule.model';
 import { Team } from '../models/team.model';
 import { GridIronPlayer } from '../nfl/models/nfl-gridIron.model';
@@ -15,44 +18,93 @@ import { GridIronPlayer } from '../nfl/models/nfl-gridIron.model';
   providedIn: 'root',
 })
 export class PlayerService {
-  constructor(private apiService: ApiService) {}
+  private endpoint: DailyFantasyEndpointBuilder;
 
-  static transformDfsClientPlayerToPlayer(dfsClientPlayer: DfsSlatePlayer): Omit<Player, 'img' | 'team'> {
+  constructor(private apiService: ApiService) {
+    this.endpoint = new DailyFantasyEndpointBuilder();
+  }
+
+  static normalizeNFLClientGridIronPlayer(gridIronPlayer: NFLClientGridIronPlayer): GridIronPlayer {
+    if (!exists(gridIronPlayer.PLAYERID)) {
+      throw new Error('gridIronPlayer.PLAYERID must exist');
+    }
+
+    const map = {} as GridIronPlayer;
+
+    Object.keys(gridIronPlayer).forEach(k => {
+      switch (k) {
+        case 'OWNERSHIP':
+          map[camelCase(k)] = {};
+          break;
+        case 'PLAYER':
+        case 'TEAM':
+        case 'POS':
+        case 'OPP':
+          map[camelCase(k)] = gridIronPlayer[k];
+          break;
+        case 'PLAYERID':
+          map['playerId'] = exists(gridIronPlayer.PLAYERID) ? gridIronPlayer.PLAYERID : '';
+          break;
+        case 'PARTNERID':
+          map['partnerId'] = exists(gridIronPlayer.PARTNERID) ? Number(gridIronPlayer.PARTNERID) : null;
+          break;
+        case 'FPTS/$':
+          map['fptsPerK'] = exists(gridIronPlayer['FPTS/$']) ? Number(gridIronPlayer['FPTS/$']) : null;
+          break;
+        default:
+          map[camelCase(k)] = exists(gridIronPlayer[k]) ? Number(gridIronPlayer[k]) : null;
+          break;
+      }
+    });
+
+    return map;
+  }
+
+  static transformDfsClientPlayerToPlayer(dfsClientPlayer: DfsSlatePlayer): SlatePlayer {
+    const name =
+      dfsClientPlayer.player.last_name.length <= 0
+        ? dfsClientPlayer.player.first_name
+        : `${dfsClientPlayer.player.first_name} ${dfsClientPlayer.player.last_name}`;
+
     return {
       id: dfsClientPlayer.player.id,
       rgId: dfsClientPlayer.player.rg_id,
-      name: `${dfsClientPlayer.player.first_name} ${dfsClientPlayer.player.last_name}`,
+      name,
       position: dfsClientPlayer.player.position,
       teamId: dfsClientPlayer.player.team_id,
       rgTeamId: dfsClientPlayer.player.rg_team_id,
       gameId: dfsClientPlayer.schedule.id,
+      salaries: dfsClientPlayer.schedule.salaries,
     };
   }
 
   static transformDfsClientScheduleToSchedule(dfsClientSchedule: ScheduleImport): Schedule {
     const awayTeam = PlayerService.transformScheduleTeamEntityToTeam(dfsClientSchedule.team_away);
     const homeTeam = PlayerService.transformScheduleTeamEntityToTeam(dfsClientSchedule.team_home);
+    const { id, date } = dfsClientSchedule;
+
     return {
-      id: dfsClientSchedule.id,
+      id,
+      date,
       rgId: dfsClientSchedule.rg_id,
-      date: dfsClientSchedule.date,
       awayTeam,
       homeTeam,
     };
   }
 
   static transformScheduleTeamEntityToTeam(scheduleTeamEntity: ScheduleTeamEntity): Team {
+    const { id, name } = scheduleTeamEntity;
+
     return {
-      id: scheduleTeamEntity.id,
+      id,
+      name,
       rgId: scheduleTeamEntity.rg_id,
-      name: scheduleTeamEntity.name,
       shortName: scheduleTeamEntity.hashtag,
     };
   }
 
   playersBySlate(request: { slatePath: string }): Observable<PlayersBySlate> {
-    const endpointBuilder = new DailyFantasyEndpointBuilder();
-    const endpoint = request.slatePath.replace(endpointBuilder.slateNonHttps, endpointBuilder.slateHttps);
+    const endpoint = request.slatePath.replace(this.endpoint.slateNonHttps, this.endpoint.slateHttps);
     return this.apiService.get<DfsSlatePlayer[]>(endpoint).pipe(
       map(res => {
         const players = res.map(p => PlayerService.transformDfsClientPlayerToPlayer(p));
@@ -75,8 +127,8 @@ export class PlayerService {
   getGridIronPlayers(request: { site: string }): Observable<GridIronPlayer[]> {
     let params = new HttpParams();
     params = params.append('site', request.site ?? 'draftkings');
-    // TODO: Add get<returnType>
-    const endpointBuilder = new DailyFantasyEndpointBuilder();
-    return this.apiService.get(endpointBuilder.gridIron, { params });
+    return this.apiService
+      .get<NFLClientGridIronPlayer[]>(this.endpoint.gridIron, { params })
+      .pipe(map(res => res.map(p => PlayerService.normalizeNFLClientGridIronPlayer(p))));
   }
 }

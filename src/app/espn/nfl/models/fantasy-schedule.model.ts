@@ -1,10 +1,15 @@
-import { EspnClientScheduleEntity, EspnClientScheduleTeam } from '@app/espn/espn-client.model';
-import { FantasyTeam } from './fantasy-team.model';
+import { EspnClientScheduleEntity, EspnClientScheduleTeam } from '@espnClient/espn-client.model';
+import { FootballTeam } from './football-team.model';
 
-export interface FantasyMatchupProperties {
-  homeTeam: FantasyMatchupTeam;
-  awayTeam: FantasyMatchupTeam;
-}
+export type FantasyMatchup = Pick<EspnClientScheduleEntity, 'id' | 'matchupPeriodId'> & {
+  homeTeam: FantasyMatchupTeam | null;
+  awayTeam: FantasyMatchupTeam | null;
+};
 
-export type FantasyMatchup = FantasyMatchupProperties & Pick<EspnClientScheduleEntity, 'id' | 'matchupPeriodId'>;
-export type FantasyMatchupTeam = FantasyTeam & Pick<EspnClientScheduleTeam, 'totalPoints'> & { isWinner: boolean | null };
+export type FantasyMatchupTeam = FootballTeam &
+  Pick<EspnClientScheduleTeam, 'totalPoints' | 'totalProjectedPointsLive' | 'cumulativeScore'> & {
+    currentPredictedWinPct: number;
+    currentRank: number;
+    isWinner: boolean | null;
+  };
+export type FantasyMatchupMap = Record<number, FantasyMatchup[]>;

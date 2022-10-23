@@ -1,7 +1,14 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { UrlBuilder } from '@app/@shared/url-builder';
+import { ICON_PATH } from '@app/espn/espn.const';
 import { EspnAddLeagueFormFacade } from '@app/espn/facades/espn-add-league-form.facade';
 import { LeagueStorageMap } from '@app/espn/mlb/models/baseball-league-storage.model';
+import {
+  FantasySports,
+  FantasySportToLabelMap,
+  FantasySportToSportLeagueMap,
+  LeagueSportToImageLocationMap,
+  SportLeague,
+} from '@app/espn/models/espn-endpoint-builder.model';
 
 @Component({
   selector: 'app-add-league-form',
@@ -16,34 +23,41 @@ export class AddLeagueFormComponent implements OnInit {
   @Output() sportChange = new EventEmitter<string>();
   @Output() addLeague = new EventEmitter<LeagueStorageMap>();
   @Output() removeLeague = new EventEmitter<string>();
+  @Output() navigateLeague = new EventEmitter<{ sport: SportLeague; leagueId: string }>();
 
-  sportOption: string = 'Baseball';
-  readonly UrlBuilder = UrlBuilder;
+  sportOption$ = this.espnAddLeagueFormFacade.leagueSport$;
+  fantasySportOptionList = [
+    { value: FantasySports.Baseball, label: FantasySportToLabelMap[FantasySports.Baseball] },
+    { value: FantasySports.Football, label: FantasySportToLabelMap[FantasySports.Football] },
+  ];
+
+  readonly FantasySports = FantasySports;
+  readonly ICON_PATH = ICON_PATH;
+  readonly FantasySportToLabelMap = FantasySportToLabelMap;
+  readonly LeagueSportToImageLocationMap = LeagueSportToImageLocationMap;
 
   constructor(readonly espnAddLeagueFormFacade: EspnAddLeagueFormFacade) {}
 
   ngOnInit(): void {}
 
   onAddLeague() {
-    const sport = this.sportOption;
-    const leagueId = this.leagueIdElement.nativeElement.value;
-
-    const map = { [leagueId]: { leagueId, sport } };
-
-    this.addLeague.emit(map);
-
-    this.espnAddLeagueFormFacade.reset();
+    this.espnAddLeagueFormFacade.submit();
   }
 
   onRemoveLeague(leagueId): void {
     this.removeLeague.emit(leagueId);
   }
 
-  fantasySportChange(val: string): void {
+  fantasySportChange(val: FantasySports): void {
     this.espnAddLeagueFormFacade.setSport(val);
   }
 
   leagueIdInputChange(val: string): void {
     this.espnAddLeagueFormFacade.setLeagueId(val);
+  }
+
+  onNavigate(fantasySport: FantasySports, leagueId: string): void {
+    const sport = FantasySportToSportLeagueMap[fantasySport];
+    this.navigateLeague.emit({ sport, leagueId });
   }
 }

@@ -1,7 +1,17 @@
+@import '../../../../theme/theme-variables.scss';
+
 mat-form-field {
   margin-right: 10px;
 }
 
 button.btn-action {
   margin-right: 10px;
+}
+
+.fantasy-sport-logo {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  background-repeat: no-repeat;
+  background-image: url($icon-path);
 }

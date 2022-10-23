@@ -1,0 +1,33 @@
+<div fxLayout="row" [ngStyle]="{ opacity: opacity }">
+  <div fxFlex>
+    <div fxLayout="row" fxLayoutGap="5px">
+      <div>
+        <img class="game-team-logo" height="40px" [alt]="team?.name" [src]="team?.logo" />
+      </div>
+      <div fxLayout="column" fxLayoutGap="5px">
+        <div class="ui-font-weight-bold">
+          <small style="margin-right: 5px">{{ team?.currentRank }}</small
+          >{{ team?.name }}
+        </div>
+        <div>
+          <small>{{ team?.wins ?? 0 }}-{{ team?.losses ?? 0 }}-{{ team?.ties ?? 0 }}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxFlex fxLayoutAlign="end center" style="text-align: right">
+    <div fxLayout="column" fxLayoutGap="5px">
+      <div class="game-score-item">
+        {{ team?.totalPoints }}
+      </div>
+      <div *ngIf="team?.totalProjectedPointsLive">
+        <small>Proj: {{ team?.totalProjectedPointsLive | number }}</small>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="5%" fxLayoutAlign="center center">
+    <div>
+      <mat-icon>{{ team?.isWinner ? 'arrow_left' : '' }}</mat-icon>
+    </div>
+  </div>
+</div>

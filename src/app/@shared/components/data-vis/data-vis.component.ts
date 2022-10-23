@@ -1,9 +1,9 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { StatThreshold } from '@app/@shared/models/stat-threshold.model';
+import { StatThreshold, StatThresholdColor } from '@app/@shared/models/stat-threshold.model';
 import { THRESHOLD_MAP } from '@app/espn/mlb/consts/stats-threshold.conts';
 import { MLB_STATS_MAP } from '@app/espn/mlb/consts/stats.const';
 import { ChartData } from '@app/espn/mlb/models/chart-data.model';
-import { Stat } from '@app/espn/mlb/models/mlb-stats.model';
+import { EspnBaseballStat } from '@app/espn/mlb/models/mlb-stats.model';
 
 @Component({
   selector: `app-data-vis`,
@@ -12,8 +12,7 @@ import { Stat } from '@app/espn/mlb/models/mlb-stats.model';
 export class DataVisComponent implements OnInit, OnChanges {
   @Input() title = '';
   @Input() chartData: ChartData[];
-  @Input() statFilter: Stat = Stat.AB;
-  @Input() chartType = 'bar';
+  @Input() statFilter: EspnBaseballStat = EspnBaseballStat.AB;
 
   public graph: ChartNew<number>;
   public test: any[]; //{ x: string[]; y: number[]; type: string; name?: string; showlegend?: boolean }[];
@@ -51,7 +50,7 @@ export class DataVisComponent implements OnInit, OnChanges {
     }
   }
 
-  private updateChart(data: ChartData[], statFilter: Stat) {
+  private updateChart(data: ChartData[], statFilter: EspnBaseballStat) {
     const labels = data.map(d => d.label);
     const baseData = data.map(d => d.data);
 
@@ -60,6 +59,9 @@ export class DataVisComponent implements OnInit, OnChanges {
       y: baseData,
       type: 'bar',
       showlegend: false,
+      marker: {
+        color: '#01579b',
+      },
     };
 
     this.test = [chartData];
@@ -82,9 +84,9 @@ export class DataVisComponent implements OnInit, OnChanges {
           type: 'lines',
           name: 'great',
           line: {
-            color: 'black',
+            color: StatThresholdColor.great,
             width: 2,
-            dash: 'dash',
+            dash: 'solid',
           },
         },
         {
@@ -93,9 +95,9 @@ export class DataVisComponent implements OnInit, OnChanges {
           type: 'lines',
           name: 'Avg',
           line: {
-            color: 'black',
+            color: StatThresholdColor.avg,
             width: 2,
-            dash: 'dash',
+            dash: 'solid',
           },
         },
         {
@@ -104,9 +106,9 @@ export class DataVisComponent implements OnInit, OnChanges {
           type: 'lines',
           name: 'poor',
           line: {
-            color: 'black',
+            color: StatThresholdColor.poor,
             width: 2,
-            dash: 'dash',
+            dash: 'solid',
           },
         }
       );

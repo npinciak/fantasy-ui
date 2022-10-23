@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Action, State, StateContext } from '@ngxs/store';
 
 export class SetLocalStorageValue {
   static readonly type = '[sportsUiLocalStorage] SetLocalStorageValue';
@@ -24,11 +24,6 @@ export type LocalStorageStateModel = {
 })
 @Injectable()
 export class LocalStorageState {
-  @Selector([LocalStorageState])
-  static getLocalStorageValue(state: LocalStorageStateModel): (id: LocalStorageKeys) => string | null {
-    return (key: LocalStorageKeys) => state[key] ?? null;
-  }
-
   constructor() {}
 
   @Action(SetLocalStorageValue)
@@ -46,6 +41,7 @@ export class LocalStorageState {
     { payload: { key, value } }: RemoveLocalStorageValue
   ): void {
     const state = getState();
+
     patchState({ ...state, [key]: null });
   }
 }

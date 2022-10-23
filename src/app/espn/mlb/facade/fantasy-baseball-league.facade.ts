@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { FetchBaseballLeague } from '../actions/mlb.actions';
+import { FetchBaseballLeague, SetCurrentScoringPeriodId } from '../actions/mlb.actions';
 import { FantasyBaseballLeagueSelectors } from '../selectors/fantasy-baseball-league.selectors';
 import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.state';
 
@@ -10,15 +10,18 @@ import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.sta
   providedIn: 'root',
 })
 export class FantasyBaseballLeagueFacade {
-  isLoading$ = select(FantasyBaseballLeagueState.isLoading);
-  scoringPeriod$ = select(FantasyBaseballLeagueState.scoringPeriod);
+  isLoading$ = select(FantasyBaseballLeagueState.getIsLoading);
+  scoringPeriod$ = select(FantasyBaseballLeagueState.getCurrentScoringPeriodId);
   standings$ = select(FantasyBaseballLeagueSelectors.standings);
   localStorageLeagueList$ = select(FantasyBaseballLeagueSelectors.getLocalStorageLeagues);
-  statsGroup$ = select(FantasyBaseballLeagueSelectors.statsGroup);
 
   constructor(private store: Store) {}
 
-  getLeague(leagueId: number): Observable<void> {
+  getLeague(leagueId: string | null): Observable<void> {
     return this.store.dispatch(new FetchBaseballLeague({ leagueId }));
+  }
+
+  setScoringPeriodId(currentScoringPeriodId: number | null): Observable<void> {
+    return this.store.dispatch(new SetCurrentScoringPeriodId({ currentScoringPeriodId }));
   }
 }

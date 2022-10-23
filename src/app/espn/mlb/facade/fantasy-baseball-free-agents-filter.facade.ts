@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { EspnFreeAgentAvailabilityStatus } from '@espnClient/espn-client.model';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { FetchFantasyBaseballFreeAgents } from '../actions/fantasy-baseball-free-agents.actions';
@@ -7,8 +8,9 @@ import {
   RemoveLineupSlotIds,
   RemovePlayerAvailabilityStatus,
   RemoveScoringPeriodIds,
+  SetPagination,
   ToggleLineupSlotIds,
-  ToggleScoringPeriodIds,
+  ToggleScoringPeriodIds
 } from '../state/fantasy-baseball-free-agents-filter.state';
 
 @Injectable({
@@ -17,14 +19,20 @@ import {
 export class FantasyBaseballFreeAgentsFilterFacade {
   constructor(private store: Store) {}
 
-  toggleFilterSlotIds(lineupSlotIds: number[], leagueId: number, scoringPeriodId: string): Observable<void> {
-    return this.store.dispatch([
-      new ToggleLineupSlotIds({ lineupSlotIds }),
-      new FetchFantasyBaseballFreeAgents({ leagueId, scoringPeriodId }),
-    ]);
+  setPagination(paginationMeta: {
+    sortStatId: string;
+    sortDirection: string;
+    currentPageSize: number;
+    currentPageIndex: number;
+  }): Observable<void> {
+    return this.store.dispatch([new SetPagination(paginationMeta)]);
   }
 
-  togglePlayerAvailabilityStatus(status: string): Observable<void> {
+  toggleFilterSlotIds(lineupSlotIds: number[]): Observable<void> {
+    return this.store.dispatch([new ToggleLineupSlotIds({ lineupSlotIds }), new FetchFantasyBaseballFreeAgents()]);
+  }
+
+  togglePlayerAvailabilityStatus(status: EspnFreeAgentAvailabilityStatus): Observable<void> {
     return this.store.dispatch(new PatchPlayerAvailabilityStatus(status));
   }
 

@@ -1,0 +1,25 @@
+<div fxLayout="row">
+  <div fxFlex="75%">
+    <div fxLayout="row" fxLayoutGap="5px">
+      <div>
+        <img role="presentation" width="48" height="35" [src]="player?.img" [alt]="player?.name" />
+      </div>
+      <div fxLayout="column" fxLayoutGap="5px">
+        <div class="player name">
+          {{ player?.name }}
+        </div>
+        <div class="player team-pos">{{ player?.team }}, {{ player?.position }}</div>
+      </div>
+    </div>
+  </div>
+  <div fxFlex>
+    <div fxLayout="column" fxLayoutGap="5px">
+      <mat-icon
+        *ngIf="player?.injuryStatus"
+        [ngStyle]="{ color: playerInjuryStatusColor(player.injuryStatus) }"
+        [title]="PlayerStatusAbbrevByInjuryStatusType[player?.injuryStatus]"
+        >{{ MatIconByEspnPlayerInjuryStatus[player?.injuryStatus] }}</mat-icon
+      >
+    </div>
+  </div>
+</div>

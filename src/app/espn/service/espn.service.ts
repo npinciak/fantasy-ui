@@ -3,21 +3,23 @@ import { Injectable } from '@angular/core';
 import { currentDate } from '@app/@shared/helpers/date';
 import { FastcastLeague } from '@app/espn-fastcast/models/fastcast-league.model';
 import { FastcastSport } from '@app/espn-fastcast/models/fastcast-sport.model';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { ApiService } from 'src/app/@shared/services/api.service';
-import { exists, flatten } from '../../@shared/helpers/utils';
+import { FastcastTransform } from '@app/espn-fastcast/models/fastcast-transform.model';
+import { EspnClientEventList, EspnClientFreeAgent, EspnClientPlayerNews, EspnGameStatusTypeId } from '@espnClient/espn-client.model';
 import {
   CompetitorsEntity as CompetitorsImport,
   EspnClientFastcast as FastCastImport,
   EventsEntity as EventsImport,
   LeaguesEntity as LeaguesImport,
   SportsEntity,
-} from '../../espn-fastcast/models/espn-fastcast.model';
+} from '@espnClient/espn-fastcast.model';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ApiService } from 'src/app/@shared/services/api.service';
+import { exists, flatten } from '../../@shared/helpers/utils';
 import { FastcastEvent, FootballSituation, MlbSituation } from '../../espn-fastcast/models/fastcast-event.model';
 import { FastcastEventTeam } from '../../espn-fastcast/models/fastcast-team.model';
-import { EspnClientEventList, EspnClientFreeAgent, EspnClientLeague, EspnClientPlayerNews, GameStatusId } from '../espn-client.model';
 import { includeSports, transformUidToId } from '../espn-helpers';
+import { NO_LOGO } from '../espn.const';
 import {
   EspnEndpointBuilder,
   EspnParamFragment,
@@ -25,7 +27,6 @@ import {
   espnViewParamFragmentList,
   FantasySports,
 } from '../models/espn-endpoint-builder.model';
-import { League } from '../models/league.model';
 
 @Injectable({
   providedIn: 'root',
@@ -33,23 +34,27 @@ import { League } from '../models/league.model';
 export class EspnService {
   constructor(private api: ApiService) {}
 
-  static transformSportsEntityToSport(l: SportsEntity): FastcastSport {
+  static transformSportsEntityToSport(sportsEntity: SportsEntity): FastcastSport {
+    const { id, uid, name, slug } = sportsEntity;
+
     return {
-      id: l.id,
-      uid: l.uid,
-      name: l.name,
-      slug: l.slug,
+      id,
+      uid,
+      name,
+      slug,
     };
   }
 
-  static transformLeagueImportToLeague(l: LeaguesImport): League {
+  static transformLeagueImportToFastcastLeague(leagueImport: LeaguesImport): FastcastLeague {
+    const { id, uid, name, isTournament, slug } = leagueImport;
     return {
-      id: l.id,
-      uid: l.uid,
-      name: l.name,
-      abbreviation: l.abbreviation ?? l.name,
-      shortName: l.shortName ?? l.name,
-      isTournament: l.isTournament ?? false,
+      id,
+      uid,
+      name,
+      abbrev: leagueImport.abbreviation ?? leagueImport.name,
+      shortName: leagueImport.shortName ?? leagueImport.name,
+      isTournament,
+      slug,
     };
   }
 
@@ -61,15 +66,15 @@ export class EspnService {
       id: data.id,
       uid: data.uid,
       eventUid,
+      abbrev: data.abbreviation,
       isHome: data.homeAway,
       score: data.score,
-      abbrev: data.abbreviation,
-      logo: data.logo,
+      logo: data.logo.length > 0 ? data.logo : NO_LOGO,
       isWinner: data.winner,
       name: data.name ?? data.abbreviation,
-      color: data.color,
-      altColor: data.alternateColor ?? null,
-      record: Array.isArray(data.record) ? null : data.record,
+      color: data.color === 'ffffff' || data.color === 'ffff00' ? `#${data.alternateColor}` : `#${data.color}`,
+      altColor: `#${data.alternateColor}` ?? null,
+      record: data.record,
       rank: data.rank ?? null,
       winPct: null,
     };
@@ -80,7 +85,7 @@ export class EspnService {
       return null;
     }
 
-    let mlbSituation = {} as MlbSituation | null;
+    let mlbSituation = {} as MlbSituation;
     // if (
     //   event?.situation?.batter == null ||
     //   event?.situation?.pitcher == null ||
@@ -105,21 +110,21 @@ export class EspnService {
     });
     // }
 
-    let footballSituation = {} as FootballSituation | null;
-    if (
-      event?.situation?.shortDownDistanceText == null ||
-      event?.situation?.possessionText == null ||
-      event?.situation?.possession == null
-    ) {
-      footballSituation = null;
-    } else {
-      Object.assign(footballSituation, {
-        shortDownDistanceText: event?.situation?.shortDownDistanceText,
-        possessionText: event?.situation?.possessionText,
-        isRedZone: null,
-        possession: event?.situation?.possession,
-      });
-    }
+    let footballSituation = {} as FootballSituation;
+    // if (
+    //   event?.situation?.shortDownDistanceText == null ||
+    //   event?.situation?.possessionText == null ||
+    //   event?.situation?.possession == null
+    // ) {
+    //   footballSituation = null;
+    // } else {
+    Object.assign(footballSituation, {
+      shortDownDistanceText: event?.situation?.shortDownDistanceText,
+      possessionText: event?.situation?.possessionText,
+      isRedZone: null,
+      possession: event?.situation?.possession,
+    });
+    // }
 
     const teams = exists(event.competitors)
       ? event.competitors.reduce((obj, val) => {
@@ -136,15 +141,20 @@ export class EspnService {
       state: event?.fullStatus.type.state,
       completed: event?.fullStatus.type.completed,
       status: event?.status,
-      name: event?.name,
-      shortname: event?.shortName,
-      location: event?.location,
+      statusId: event.fullStatus.type.id,
+      name: event.name,
+      seasonType: event.seasonType,
+      shortName: event.shortName,
+      location: event.location,
       clock: event?.clock ?? null,
+      seriesSummary: event?.seriesSummary ?? null,
       summary: event?.summary,
       period: event?.period,
       note: event?.note ?? null,
-      isHalftime: event?.fullStatus.type?.id ? Number(event?.fullStatus.type.id) === GameStatusId.Halftime : false,
+      isHalftime: event?.fullStatus.type?.id ? event?.fullStatus.type.id === EspnGameStatusTypeId.Halftime : false,
       lastPlay: event?.situation?.lastPlay ?? null,
+      link: event.link,
+      odds: event.odds ? event.odds : null,
       mlbSituation,
       footballSituation,
       teams,
@@ -158,7 +168,7 @@ export class EspnService {
    * @param leagueId
    * @returns
    */
-  espnUpdateFantasyTeam(payload: unknown, sport: FantasySports, leagueId: number): Observable<unknown> {
+  espnUpdateFantasyTeam(payload: unknown, sport: FantasySports, leagueId: string): Observable<unknown> {
     const endpoint = new EspnEndpointBuilder(sport, leagueId);
     return this.api.post(endpoint.fantasyPlayerTransaction, payload, {
       withCredentials: true,
@@ -173,9 +183,9 @@ export class EspnService {
    * @param sport
    * @returns EspnClientLeague
    */
-  espnFantasyLeagueBySport(sport: FantasySports, leagueId: number, headers?: HttpHeaders): Observable<EspnClientLeague> {
-    const endpoint = new EspnEndpointBuilder(sport, leagueId, 2022);
-    return this.api.get<EspnClientLeague>(endpoint.fantasyLeague, { params: this.params, headers });
+  espnFantasyLeagueBySport<T>(data: { sport: FantasySports; leagueId: string; year: string; headers?: HttpHeaders }): Observable<T> {
+    const endpoint = new EspnEndpointBuilder(data.sport, data.leagueId, data.year);
+    return this.api.get<T>(endpoint.fantasyLeague, { params: this.params, headers: data.headers });
   }
 
   /**
@@ -193,7 +203,6 @@ export class EspnService {
       .set(EspnParamFragment.PbpOnly, true);
     return this.api.get<EspnClientEventList>(endpoint.espnEvents, { params, headers });
   }
-
 
   /**
    * Fetch player news
@@ -221,7 +230,7 @@ export class EspnService {
    */
   espnFantasyFreeAgentsBySport(
     sport: FantasySports,
-    leagueId: number,
+    leagueId: string,
     scoringPeriod: number,
     headers: HttpHeaders
   ): Observable<{ players: EspnClientFreeAgent[] }> {
@@ -229,7 +238,7 @@ export class EspnService {
     const params = new HttpParams()
       .set(EspnParamFragment.ScoringPeriod, scoringPeriod.toString())
       .set(EspnParamFragment.View, EspnViewParamFragment.PlayerInfo);
-    
+
     return this.api.get<{ players: EspnClientFreeAgent[] }>(endpoint.fantasyLeague, { params, headers });
   }
 
@@ -248,7 +257,9 @@ export class EspnService {
         const leaguesImport = res.sports.filter(s => includeSports(s.id)).map(i => i.leagues);
         const flattenLeaguesImport = flatten(leaguesImport);
 
-        const leagues = exists(flattenLeaguesImport) ? flattenLeaguesImport.map(l => EspnService.transformLeagueImportToLeague(l)) : [];
+        const leagues = exists(flattenLeaguesImport)
+          ? flattenLeaguesImport.map(l => EspnService.transformLeagueImportToFastcastLeague(l))
+          : [];
         const flatLeaguesEvents = exists(flattenLeaguesImport) ? flattenLeaguesImport.map(l => (exists(l.events) ? l.events : [])) : [];
 
         const flattenEventsImport = flatten(flatLeaguesEvents);
@@ -257,7 +268,6 @@ export class EspnService {
           ? flattenEventsImport.map(e => EspnService.transformEventImportToFastcastEvent(e)).filter(l => l != null)
           : [];
 
-        const teamsTetst = exists(events) ? events.map(c => c?.teams) : [];
         const teams = [];
 
         Object.assign(final, {
@@ -273,7 +283,7 @@ export class EspnService {
   }
 
   /**
-   * @todo
+   * Send espn server cookie in headers for POST
    */
   private get postHeaders(): HttpHeaders {
     let headers = new HttpHeaders();
@@ -282,20 +292,15 @@ export class EspnService {
   }
 
   /**
-   * @todo
+   * Append all query params to http request
    */
   private get params(): HttpParams {
     let params = new HttpParams();
     espnViewParamFragmentList.map(fragment => {
+      // if (fragment !== EspnViewParamFragment.Comms && fragment !== EspnViewParamFragment.PendingTransactions) {
       params = params.append(EspnParamFragment.View, fragment);
+      // }
     });
     return params;
   }
-}
-
-export interface FastcastTransform {
-  sports: FastcastSport[];
-  leagues: FastcastLeague[];
-  events: FastcastEvent[];
-  teams: FastcastEventTeam[];
 }

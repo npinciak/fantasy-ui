@@ -1,9 +1,7 @@
-import { League } from '@app/espn/models/league.model';
-import { FastcastEvent } from './fastcast-event.model';
+import { LeagueEntity } from '@app/@shared/base-models/base-league.model';
+import { LeaguesEntity } from '@espnClient/espn-fastcast.model';
 
-export interface FastcastLeagueProperties {
-  events: FastcastEvent[];
-}
+type FastcastLeagueAttributes = Pick<LeaguesEntity, 'uid' | 'shortName' | 'isTournament' | 'slug'> & { sport?: string };
 
-export type FastcastLeague = FastcastLeagueProperties & League;
+export type FastcastLeague = LeagueEntity & FastcastLeagueAttributes;
 export type FastcastLeagueMap = Record<string, FastcastLeague>;

@@ -10,8 +10,6 @@
 
 html,
 body {
-  display: flex;
-  flex-direction: column;
   margin: 0;
   height: 100%;
   background-color: #f5f6f6;
@@ -35,4 +33,41 @@ body {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.status-indicator {
+  font-weight: bold;
+  &.excellent {
+    background-color: #00876c;
+    color: whitesmoke;
+  }
+
+  &.great {
+    background-color: #71a879;
+    color: whitesmoke;
+  }
+
+  &.above-avg {
+    background-color: #b6c794;
+    color: whitesmoke;
+  }
+  &.avg {
+    background-color: #f4e8bc;
+    color: whitesmoke;
+  }
+
+  &.below-avg {
+    background-color: #eab780;
+    color: whitesmoke;
+  }
+
+  &.poor {
+    background-color: #e2805b;
+    color: whitesmoke;
+  }
+
+  &.awful {
+    background-color: #d43d51;
+    color: whitesmoke;
+  }
 }

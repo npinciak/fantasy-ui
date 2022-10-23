@@ -1,6 +1,6 @@
-import { SeasonConst } from '../models/adv-stats.model';
+import { SeasonStatConst } from '../models/adv-stats.model';
 
-export const MLB_WEIGHTED_STATS: Record<string, SeasonConst> = {
+export const MLB_WEIGHTED_STATS: Record<string, SeasonStatConst> = {
   '2020': {
     wOBA: 0,
     wOBAScale: 0,
@@ -33,17 +33,17 @@ export const MLB_WEIGHTED_STATS: Record<string, SeasonConst> = {
   },
   '2022': {
     wOBA: 0.31,
-    wOBAScale: 1.264,
-    wBB: 0.692,
-    wHBP: 0.724,
-    w1B: 0.888,
-    w2B: 1.267,
-    w3B: 1.608,
-    wHR: 2.079,
+    wOBAScale: 1.258,
+    wBB: 0.69,
+    wHBP: 0.721,
+    w1B: 0.885,
+    w2B: 1.262,
+    w3B: 1.602,
+    wHR: 2.071,
     runSB: 0.2,
-    runCS: -0.4,
+    runCS: -0.398,
     'R/PA': 0.115,
-    'R/W': 9.59,
-    cFIP: 3.139,
+    'R/W': 9.547,
+    cFIP: 3.119,
   },
 };

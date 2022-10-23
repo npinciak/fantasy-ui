@@ -1,9 +1,10 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { cellDataAccessor } from '@app/@shared/helpers/utils';
-import { TableColumnDataType } from '@app/espn/models/table.model';
+import { TableColumnDataType } from '@app/@shared/models/table-columns.model';
+import { NflDfsPlayerTableData } from '@app/dfs/nfl/models/nfl-player.model';
 
 enum FilterType {
   team,
@@ -18,10 +19,15 @@ enum FilterType {
   templateUrl: './player-table.component.html',
   styleUrls: ['./player-table.component.scss'],
 })
-export class PlayerTableComponent implements OnChanges {
-  @Input() data: unknown[];
-  @Input() dataColumns: any[];
-  @Input() headers: any[];
+export class PlayerTableComponent implements AfterViewInit, OnChanges {
+  @Input() data: NflDfsPlayerTableData[];
+  @Input() dataRows: any[];
+  @Input() dataHeaders: any[];
+
+  @Input() teamMap: any;
+  @Input() teamFilter: string;
+  @Input() positionFilter: string;
+  @Input() statGroupFilter: string;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -41,6 +47,21 @@ export class PlayerTableComponent implements OnChanges {
     if (changes.data) {
       this.dataSource.data = changes.data.currentValue;
     }
+
+    if (changes.teamFilter) {
+      this.dataSource.filter = changes.teamFilter.currentValue;
+      this.filterTypeSelected = FilterType.team;
+    }
+
+    if (changes.positionFilter) {
+      this.dataSource.filter = changes.positionFilter.currentValue;
+      this.filterTypeSelected = FilterType.pos;
+    }
+
+    if (changes.statGroupFilter) {
+      this.dataSource.filter = changes.statGroupFilter.currentValue;
+      this.filterTypeSelected = FilterType.statGroup;
+    }
   }
 
   ngAfterViewInit(): void {
@@ -52,20 +73,21 @@ export class PlayerTableComponent implements OnChanges {
     this.dataSource.paginator = this.paginator;
     this.dataSource.data = this.data;
     this.dataSource.sortingDataAccessor = (player, stat) => cellDataAccessor(player, stat);
+    this.dataSource.filterPredicate = this.dataSourceFilter();
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+  // applyFilter(event: Event) {
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  // }
 
-  filterChange(change: { value: string }, filterType: FilterType) {
-    this.filter = change.value;
-    this.filterTypeSelected = filterType;
-    this.dataSource.filter = change.value;
-  }
+  // filterChange(change: { value: string }, filterType: FilterType) {
+  //   this.filter = change.value;
+  //   this.filterTypeSelected = filterType;
+  //   this.dataSource.filter = change.value;
+  // }
 
-  dataSourceFilter(): (data: any, filterVal: string) => boolean {
+  dataSourceFilter(): (data: NflDfsPlayerTableData, filterVal: string) => boolean {
     return (data, filterVal): boolean => {
       if (filterVal === '') {
         return true;
@@ -81,8 +103,8 @@ export class PlayerTableComponent implements OnChanges {
             }
             break;
           case FilterType.team:
-            if (data.team) {
-              textMatches = data.team.includes(filterVal);
+            if (data.teamId) {
+              textMatches = data.teamId.includes(filterVal);
             }
             break;
           case FilterType.pos:
@@ -91,9 +113,9 @@ export class PlayerTableComponent implements OnChanges {
             }
             break;
           case FilterType.statGroup:
-            if (data.position) {
-              textMatches = data.statGroup.includes(filterVal);
-            }
+            // if (data.statGroupFilter) {
+            //   textMatches = data.statGroup.includes(filterVal);
+            // }
             break;
           default:
             break;

@@ -3,8 +3,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { blendColors } from '@app/@shared/helpers/color-blender';
-import { TableColumn } from '@app/espn/models/table.model';
+import { TableColumn } from '@app/@shared/models/table-columns.model';
 
+/**
+ * @deprecated
+ */
 @Component({
   selector: 'app-matchup-table',
   templateUrl: './matchup-table.component.html',

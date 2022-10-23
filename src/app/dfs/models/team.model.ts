@@ -1,11 +1,11 @@
-import { Vegas } from './daily-fantasy-client.model';
+import { Vegas } from "./vegas.model";
 
 /**
  * Base team model
  */
 interface TeamProperties {
   id: string;
-  rgId: string ;
+  rgId: string;
   name: string | null;
   shortName: string | null;
 }
@@ -20,4 +20,4 @@ export interface SlateAttrTeamProperties {
   vegas: Vegas;
 }
 
-export type SlateAttrTeam = SlateAttrTeamProperties;
+export type SlateAttrTeam = Team & SlateAttrTeamProperties;

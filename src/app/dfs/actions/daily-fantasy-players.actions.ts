@@ -9,3 +9,8 @@ export class SetPlayers {
   static readonly type = `[dailyFantasyPlayers] SetPlayers`;
   constructor(public payload: SlatePlayer[]) {}
 }
+
+export class ClearAndAddPlayers {
+  static readonly type = `[dailyFantasyPlayers] ClearAndAddPlayers`;
+  constructor(public payload: SlatePlayer[]) {}
+}

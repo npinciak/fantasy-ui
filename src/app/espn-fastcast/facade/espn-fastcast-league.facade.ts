@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { select } from '@app/@shared/models/typed-select';
 import { EspnFastcastLeagueSelectors } from '../selectors/espn-fastcast-league.selectors';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EspnFastcastLeagueFacade {
-  @Select(EspnFastcastLeagueSelectors.getList) prettyLeagueList$: Observable<any[]>;
-
-  constructor(private store: Store) {}
+  leagueList$ = select(EspnFastcastLeagueSelectors.getValidList);
 }

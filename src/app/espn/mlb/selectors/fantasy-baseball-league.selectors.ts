@@ -1,14 +1,20 @@
-import { LocalStorageKeys, LocalStorageState } from '@app/@core/store/local-storage/local-storage.state';
-import { FilterOptions } from '@app/@shared/models/filter.model';
-import { Selector } from '@ngxs/store';
+import { LocalStorageSelectors } from '@app/@core/store/local-storage/local-storage.selectors';
+import { LocalStorageKeys } from '@app/@core/store/local-storage/local-storage.state';
+import { exists } from '@app/@shared/helpers/utils';
+import { Selector } from '@app/@shared/models/typed-selector';
 import { LeagueStorageEntity } from '../models/baseball-league-storage.model';
 import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
 import { FantasyBaseballTeamsLiveSelector } from './fantasy-baseball-teams-live.selector';
 import { FantasyBaseballTeamsSelector } from './fantasy-baseball-teams.selector';
 
+const average = (arr: number[]): number => {
+  const sum = arr.reduce((a, b) => a + b, 0);
+  return sum / arr.length;
+};
+
 export class FantasyBaseballLeagueSelectors {
   @Selector([FantasyBaseballTeamsSelector.getList, FantasyBaseballTeamsLiveSelector.getById])
-  static standings(teamList: BaseballTeam[], getById: (id: string) => BaseballTeamLive): BaseballTeam[] {
+  static standings(teamList: BaseballTeam[], getById: (id: string | null) => BaseballTeamLive): BaseballTeam[] {
     return teamList
       .map(t => {
         const liveTeam = getById(t.id);
@@ -20,29 +26,25 @@ export class FantasyBaseballLeagueSelectors {
       .sort((a, b) => b.liveScore - a.liveScore);
   }
 
-  @Selector()
-  static statsGroup(list: string[]): FilterOptions[] {
-    return [];
-  }
-
-  @Selector([LocalStorageState.getLocalStorageValue])
-  static getLeagueExists(getLocalStorageValue: (key: string) => string): (key: string) => boolean {
-    const league = getLocalStorageValue(LocalStorageKeys.UserLeagues);
-    const parsed: Record<string, { sport: string }> = JSON.parse(league);
-    return (key: string) => Object.keys(parsed).includes(key);
-  }
-
-  @Selector([LocalStorageState.getLocalStorageValue])
-  static getLeagueById(getLocalStorageValue: (key: string) => string) {
-    const league = getLocalStorageValue(LocalStorageKeys.UserLeagues);
-    const parsed: LeagueStorageEntity = JSON.parse(league);
-
-    return (key: string) => parsed[key];
-  }
-
-  @Selector([LocalStorageState.getLocalStorageValue])
-  static getLocalStorageLeagues(getLocalStorageValue: (key: string) => string): LeagueStorageEntity[] {
+  @Selector([LocalStorageSelectors.getLocalStorageValue])
+  static getLeagueExists(getLocalStorageValue: (key: LocalStorageKeys) => string | null): (key: string) => boolean {
     const leagues = getLocalStorageValue(LocalStorageKeys.UserLeagues);
-    return Object.values(JSON.parse(leagues));
+    const parsed: Record<string, { sport: string; leagueId: string }> | null = exists(leagues) ? JSON.parse(leagues) : null;
+
+    return (key: string) => (exists(parsed) ? Object.keys(parsed).includes(key) : false);
+  }
+
+  @Selector([LocalStorageSelectors.getLocalStorageValue])
+  static getLeagueById(getLocalStorageValue: (key: LocalStorageKeys) => string | null) {
+    const leagues = getLocalStorageValue(LocalStorageKeys.UserLeagues);
+    const parsed: Record<string, { sport: string; leagueId: string }> | null = exists(leagues) ? JSON.parse(leagues) : null;
+
+    return (key: string) => (exists(parsed) ? parsed[key] : null);
+  }
+
+  @Selector([LocalStorageSelectors.getLocalStorageValue])
+  static getLocalStorageLeagues(getLocalStorageValue: (key: LocalStorageKeys) => string | null): LeagueStorageEntity[] {
+    const leagues = getLocalStorageValue(LocalStorageKeys.UserLeagues);
+    return exists(leagues) ? Object.values(JSON.parse(leagues)) : [];
   }
 }

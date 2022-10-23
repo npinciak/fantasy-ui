@@ -10,7 +10,8 @@ export class FantasyBaseballResolver implements Resolve<void> {
 
   async resolve(route: ActivatedRouteSnapshot): Promise<void> {
     const leagueId = route.paramMap.get('leagueId');
-
-    await this.fantasyBaseballLeagueFacade.getLeague(Number(leagueId)).toPromise();
+    if (leagueId) {
+      await this.fantasyBaseballLeagueFacade.getLeague(leagueId).toPromise();
+    }
   }
 }

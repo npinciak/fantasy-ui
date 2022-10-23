@@ -1,5 +1,5 @@
 import { MOCK_BASEBALL_PLAYER_1, MOCK_BASEBALL_PLAYER_2 } from '../models/baseball-player.model.mock';
-import { Stat } from '../models/mlb-stats.model';
+import { EspnBaseballStat } from '../models/mlb-stats.model';
 import { AdvStats } from './advStats.class';
 
 describe('Advanced Stats', () => {
@@ -26,9 +26,9 @@ describe('Advanced Stats', () => {
   const advancedStatsPitcher = new AdvStats({ seasonConst, statsEntity: pitcherStatsMock });
 
   const additionalStats = {};
-  additionalStats[Stat.TRIPLE] = 2;
-  additionalStats[Stat.IBB] = 6;
-  additionalStats[Stat.K] = 8;
+  additionalStats[EspnBaseballStat.TRIPLE] = 2;
+  additionalStats[EspnBaseballStat.IBB] = 6;
+  additionalStats[EspnBaseballStat.K] = 8;
 
   const advancedStatsBatterWithMissing = new AdvStats({ seasonConst, statsEntity: { ...statsEntity, ...additionalStats } });
 

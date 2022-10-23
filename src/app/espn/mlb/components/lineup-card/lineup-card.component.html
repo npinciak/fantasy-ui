@@ -1,11 +1,9 @@
 <mat-card>
-  <mat-card-header>
-    <mat-card-title>{{ title }}</mat-card-title>
-  </mat-card-header>
   <mat-card-content>
+    <h3>{{ title }}</h3>
     <mat-list>
       <span mat-list-item *ngFor="let player of lineup">
-        <app-lineup-card-player [player]="player"></app-lineup-card-player>
+        <app-espn-player [player]="player"></app-espn-player>
       </span>
     </mat-list>
   </mat-card-content>

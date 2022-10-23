@@ -1,3 +1,4 @@
+import { StatEntity } from '@app/@shared/base-models/base-stats.model';
 import { enumAsList } from '@app/@shared/helpers/enum-as-list';
 
 export enum PeriodId {
@@ -12,35 +13,11 @@ export enum StatCategory {
   Pitching,
 }
 
-export enum StatTypePeriodId {
-  Season,
-  Last7,
-  Last15,
-  Last30,
-  Average,
-  Live,
-  RestOfSeason,
-  Projected = 10,
-  BatterVsPitcher = 1000,
-}
-
 export const PlayerRatingPeriodIdMap: { [key in PeriodId]: string } = {
   0: 'Season',
   1: 'Last 7',
   2: 'Last 15',
   3: 'Last 30',
-};
-
-export const StatTypePeriodIdMap: { [key in StatTypePeriodId]: string } = {
-  0: 'Season',
-  1: 'Last 7',
-  2: 'Last 15',
-  3: 'Last 30',
-  4: 'Average',
-  5: 'live',
-  6: 'Rest Of Season',
-  10: 'Projected',
-  1000: 'BVP',
 };
 
 export enum StatType {
@@ -49,16 +26,14 @@ export enum StatType {
   Defense,
 }
 
-export type StatsProperties = {
-  abbrev: string;
-  description: string;
+export type EspnStatsEntityProps = StatEntity & {
   statCategoryId: StatCategory;
   statTypeId: StatType;
 };
 
-export type StatsMap = Record<number, StatsProperties>;
+export type StatsMap = Record<number, EspnStatsEntityProps>;
 
-type Stats =
+type EspnBaseballStats =
   | 'ab'
   | 'h'
   | 'ha'
@@ -115,7 +90,7 @@ type Stats =
   | 'k'
   | 'hb';
 
-export enum Stat {
+export enum EspnBaseballStat {
   AB,
   H,
   AVG,
@@ -209,4 +184,4 @@ export enum Stat {
   LOB_PCT,
 }
 
-export const StatList = enumAsList(Stat);
+export const BaseballStatList = enumAsList(EspnBaseballStat);

@@ -1,0 +1,14 @@
+<mat-card>
+  <mat-card-content>
+    <div fxLayout="row" class="ui-w-100">
+      <div fxFlex>
+        {{ title }}
+      </div>
+    </div>
+    <mat-list>
+      <span mat-list-item *ngFor="let player of lineup">
+        <app-espn-player [player]="player"></app-espn-player>
+      </span>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

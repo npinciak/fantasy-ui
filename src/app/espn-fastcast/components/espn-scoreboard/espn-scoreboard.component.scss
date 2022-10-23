@@ -1,21 +1,37 @@
+@import '../../../../theme/theme-variables.scss';
+
 mat-form-field {
   width: 100%;
 }
 
-.scoreboard-container {
-  max-width: 100%;
-  display: flex;
-  overflow-x: auto;
-  scrollbar-color: #fff #f5f6f6;
-  scrollbar-width: thin;
-  padding: 10px;
+mat-card-subtitle {
+  text-align: center;
 }
 
-mat-card.league-separator {
-  margin: 10px;
-  width: 100px;
-  min-width: 100px;
-  height: 175px;
-  text-align: center;
-  padding: 55px 0;
+.feed-action-btn {
+  border-radius: 15px;
+  background-color: #ececec;
+}
+
+.scoreboard {
+  &.refresh {
+    &.timestamp {
+      font-weight: bold;
+      font-size: 11px;
+      color: $sub-text-color;
+    }
+
+    &.text {
+      font-size: 13px;
+      color: $text-color;
+    }
+  }
+  &.container {
+    max-width: 100%;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-color: #fff #f5f6f6;
+    scrollbar-width: thin;
+    padding: 10px;
+  }
 }

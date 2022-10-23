@@ -1,0 +1,140 @@
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
+  <div fxFlex="30%" fxFlex.sm="100%">
+    <div>
+      <ng-container *ngIf="fantasyBaseballLeagueFacade.isLoading$ | async; else refreshBtn">
+        <mat-spinner diameter="20"></mat-spinner>
+      </ng-container>
+      <ng-template #refreshBtn>
+        <mat-icon class="cursor-pointer" (click)="fantasyBaseballLeagueFacade.getLeague(leagueId)">refresh</mat-icon>
+      </ng-template>
+    </div>
+    <div style="margin: 10px 0"></div>
+
+    <app-lineup-card
+      title="Starting Lineup"
+      [lineup]="(fantasyBaseballTeamFacade.startingBatters$ | async)!(teamId)"
+      (fetchPlayerDetails)="fantasyBaseballPlayerFacade.getPlayerNews($event.id)"
+    ></app-lineup-card>
+    <div style="margin: 10px 0"></div>
+    <app-lineup-card
+      title="Bench"
+      [lineup]="(fantasyBaseballTeamFacade.benchBatters$ | async)!(teamId)"
+      (fetchPlayerDetails)="fantasyBaseballPlayerFacade.getPlayerNews($event.id)"
+    ></app-lineup-card>
+    <div style="margin: 10px 0"></div>
+
+    <app-lineup-card
+      title="Starting Lineup"
+      [lineup]="(fantasyBaseballTeamFacade.startingPitchers$ | async)!(teamId)"
+      (fetchPlayerDetails)="fantasyBaseballPlayerFacade.getPlayerNews($event.id)"
+    ></app-lineup-card>
+  </div>
+  <div fxFlex="70%" fxFlex.sm="100%">
+    <mat-slide-toggle (change)="onBatterGraphSelectChange($event)" color="primary">Scatter</mat-slide-toggle>
+
+    <div style="margin: 10px 0"></div>
+
+    <div fxLayout="row" fxLayoutGap="20px">
+      <div>
+        <app-dropdown-filter
+          [selectedOption]="scoringPeriodId"
+          title="Stat Period"
+          [filterItems]="STAT_PERIOD_FILTER_OPTIONS"
+          (filterUpdate)="onScoringPeriodIdChange($event.value)"
+        ></app-dropdown-filter>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Batter Stats X</mat-label>
+          <mat-select [(value)]="selectedBatterStatXAxis" (selectionChange)="onBatterStatXAxisChange($event.value)">
+            <mat-option *ngFor="let stat of BATTER_STATS_LIST" [value]="stat.id">{{ stat.abbrev }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div *ngIf="isBatterScatterChart">
+        <mat-form-field>
+          <mat-label>Batter Stats Y</mat-label>
+          <mat-select [(value)]="selectedBatterStatYAxis" (selectionChange)="onBatterStatYAxisChange($event.value)">
+            <mat-option *ngFor="let stat of BATTER_STATS_LIST" [value]="stat.id">{{ stat.abbrev }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <ng-container *ngIf="isBatterScatterChart; else defaultChart">
+        <app-data-vis-scatter
+          [title]="batterScatterChartTitle"
+          [xAxisFilterTitle]="MLB_STAT_MAP[selectedBatterStatXAxis].description"
+          [yAxisFilterTitle]="MLB_STAT_MAP[selectedBatterStatYAxis].description"
+          [chartData]="(fantasyBaseballTeamFacade.batterStatsScatterChartData$ | async)!(teamId, scoringPeriodId, selectedBatterStatXAxis, selectedBatterStatYAxis)"
+        ></app-data-vis-scatter>
+      </ng-container>
+      <div style="margin: 10px 0"></div>
+      <ng-template #defaultChart>
+        <app-data-vis
+          [title]="barChartTitle"
+          [statFilter]="selectedBatterStatXAxis"
+          [chartData]="(fantasyBaseballTeamFacade.batterChartData$ | async)!(teamId, scoringPeriodId, selectedBatterStatXAxis)"
+        ></app-data-vis>
+      </ng-template>
+    </div>
+    <h3>Batting</h3>
+    <mat-slide-toggle (change)="onLiveScoringSelectChange($event)" color="primary"> Live Scoring </mat-slide-toggle>
+    <ng-container *ngIf="isLiveScore; else default">
+      <app-roster [data]="(fantasyBaseballTeamFacade.liveBattingStats$ | async)!(teamId)" [dataColumns]="BATTER_STATS_LIVE_ROWS" [headers]="BATTER_STATS_LIVE_HEADERS">
+      </app-roster>
+    </ng-container>
+
+    <ng-template #default>
+      <app-roster [data]="(fantasyBaseballTeamFacade.battingStats$ | async)!(teamId, scoringPeriodId)" [dataColumns]="BATTER_STATS_ROWS" [headers]="BATTER_STATS_HEADERS">
+      </app-roster>
+    </ng-template>
+    <div style="margin: 10px 0"></div>
+
+    <h3>Pitching</h3>
+    <mat-slide-toggle (change)="onPitcherGraphSelectChange($event)" color="primary">Scatter</mat-slide-toggle>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Pitcher Stats X</mat-label>
+        <mat-select [(value)]="selectedPitcherStatXAxis" (selectionChange)="onPitcherStatXAxisChange($event.value)">
+          <mat-option *ngFor="let stat of PITCHER_STATS_LIST" [value]="stat.id">{{ stat.abbrev }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="isPitcherScatterChart">
+      <mat-form-field>
+        <mat-label>Pitcher Stats Y</mat-label>
+        <mat-select [(value)]="selectedPitcherStatYAxis" (selectionChange)="onPitcherStatYAxisChange($event.value)">
+          <mat-option *ngFor="let stat of PITCHER_STATS_LIST" [value]="stat.id">{{ stat.abbrev }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div style="margin: 10px 0"></div>
+
+    <div *ngIf="isPitcherScatterChart; else defaultPitcher">
+      <app-data-vis-scatter
+        [title]="pitcherScatterChartTitle"
+        [xAxisFilterTitle]="MLB_STAT_MAP[selectedPitcherStatXAxis].description"
+        [yAxisFilterTitle]="MLB_STAT_MAP[selectedPitcherStatYAxis].description"
+        [chartData]="(fantasyBaseballTeamFacade.pitcherStatsScatterChartData$ | async)!(teamId, scoringPeriodId, selectedPitcherStatXAxis, selectedPitcherStatYAxis)"
+      ></app-data-vis-scatter>
+    </div>
+
+    <div style="margin: 10px 0"></div>
+
+    <ng-template #defaultPitcher>
+      <div>
+        <app-data-vis
+          [title]="MLB_STAT_MAP[selectedPitcherStatXAxis].description"
+          [statFilter]="selectedPitcherStatXAxis"
+          [chartData]="(fantasyBaseballTeamFacade.pitcherStatsChartData$ | async)!(teamId, scoringPeriodId, selectedPitcherStatXAxis)"
+        ></app-data-vis>
+      </div>
+    </ng-template>
+
+    <app-roster [data]="(fantasyBaseballTeamFacade.pitcherStats$ | async)!(teamId, scoringPeriodId)" [dataColumns]="PITCHER_STATS_ROWS" [headers]="PITCHER_STATS_HEADERS">
+    </app-roster>
+  </div>
+</div>

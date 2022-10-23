@@ -1,4 +1,4 @@
-import { EspnFastcastStateModel } from '../state/espn-fastcast.state';
+import { EspnFastcastStateModel } from '../models/fastcast-state.model';
 import { EspnFastcastSelectors } from './espn-fastcast.selectors';
 
 describe('FastCastSelector', () => {
@@ -6,6 +6,10 @@ describe('FastCastSelector', () => {
     disconnect: new Date().getTime(),
     connect: new Date().getTime(),
     lastRefresh: new Date().getTime(),
+    pause: false,
+    eventType: null,
+    league: null,
+    connectionClosed: false,
   };
 
   describe('selectConnected', () => {

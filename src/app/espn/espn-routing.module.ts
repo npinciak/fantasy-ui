@@ -1,38 +1,51 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UrlFragments, UrlParams } from '@app/@shared/url-builder';
-import { FreeAgentsComponent } from './mlb/pages/free-agents/free-agents.component';
-import { HomeComponent as MlbHomeComponent } from './mlb/pages/home/home.component';
-import { TeamComponent as MlbTeamComponent } from './mlb/pages/team/team.component';
+import { UrlFragments, UrlParams } from '@app/@core/store/router/url-builder';
+import { BaseballFreeAgentsComponent } from './mlb/pages/baseball-free-agents/baseball-free-agents.component';
+import { BaseballHomeComponent } from './mlb/pages/baseball-home/baseball-home.component';
+import { BaseballTeamComponent } from './mlb/pages/baseball-team/baseball-team.component';
 import { FantasyBaseballResolver } from './mlb/resolvers/mlb.resolver';
-import { HomeComponent as NflHomeComponent } from './nfl/pages/home/home.component';
+import { FootballFreeAgentsComponent } from './nfl/pages/football-free-agents/football-free-agents.component';
+import { FootballHomeComponent } from './nfl/pages/football-home/football-home.component';
+import { FootballTeamComponent } from './nfl/pages/football-team/football-team.component';
+import { FantasyFootballLeagueResolver } from './nfl/resolvers/fantasy-football-league.resolver';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
-import { EspnResolver } from './resolvers/espn.resolver';
 
 const nflRoutes = {
   path: UrlFragments.NFL,
+  data: { sport: UrlFragments.NFL },
   children: [
     {
       path: UrlFragments.Empty,
-      component: NflHomeComponent,
+      component: FootballHomeComponent,
     },
     {
       path: UrlParams.LeagueId,
+      resolve: [FantasyFootballLeagueResolver],
       children: [
         {
           path: UrlFragments.Empty,
-          component: NflHomeComponent,
+          component: FootballHomeComponent,
+        },
+        {
+          path: UrlFragments.FreeAgents,
+          children: [
+            {
+              path: UrlFragments.Empty,
+              component: FootballFreeAgentsComponent,
+            },
+          ],
         },
         {
           path: UrlFragments.Team,
           children: [
             {
               path: UrlFragments.Empty,
-              component: NflHomeComponent,
+              component: FootballHomeComponent,
             },
             {
               path: UrlParams.TeamId,
-              component: NflHomeComponent,
+              component: FootballTeamComponent,
             },
           ],
         },
@@ -43,10 +56,11 @@ const nflRoutes = {
 
 const mlbRoutes = {
   path: UrlFragments.MLB,
+  data: { sport: UrlFragments.MLB },
   children: [
     {
       path: UrlFragments.Empty,
-      component: MlbHomeComponent,
+      component: BaseballHomeComponent,
     },
     {
       path: UrlParams.LeagueId,
@@ -54,14 +68,14 @@ const mlbRoutes = {
       children: [
         {
           path: UrlFragments.Empty,
-          component: MlbHomeComponent,
+          component: BaseballHomeComponent,
         },
         {
           path: UrlFragments.FreeAgents,
           children: [
             {
               path: UrlFragments.Empty,
-              component: FreeAgentsComponent,
+              component: BaseballFreeAgentsComponent,
             },
           ],
         },
@@ -70,11 +84,11 @@ const mlbRoutes = {
           children: [
             {
               path: UrlFragments.Empty,
-              component: MlbTeamComponent,
+              component: BaseballTeamComponent,
             },
             {
               path: UrlParams.TeamId,
-              component: MlbTeamComponent,
+              component: BaseballTeamComponent,
             },
           ],
         },
@@ -87,7 +101,6 @@ export const routes: Routes = [
   {
     path: UrlFragments.Empty,
     component: EspnHomeComponent,
-    resolve: [EspnResolver],
   },
   nflRoutes,
   mlbRoutes,

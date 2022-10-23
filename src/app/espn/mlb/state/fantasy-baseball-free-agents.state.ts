@@ -10,13 +10,15 @@ import {
 } from '../actions/fantasy-baseball-free-agents.actions';
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { FantasyBaseballFreeAgentsFilterSelector } from '../selectors/fantasy-baseball-free-agents-filter.selector';
-import { MlbService, PaginatedFilter } from '../services/mlb.service';
+import { MlbService } from '../services/mlb.service';
+import { FantasyBaseballLeagueState } from './fantasy-baseball-league.state';
 
 @State({ name: 'fantasyBaseballFreeAgents' })
 @Injectable()
 export class FantasyBaseballFreeAgentsState extends GenericState({
   idProperty: 'id',
   addOrUpdate: SetFantasyBaseballFreeAgents,
+  clearAndAdd: ClearAndAddFantasyBaseballFreeAgents,
 }) {
   constructor(private mlbService: MlbService, private store: Store) {
     super();
@@ -30,30 +32,49 @@ export class FantasyBaseballFreeAgentsState extends GenericState({
   }
 
   @Action(FetchFantasyBaseballFreeAgents)
-  async fetchFantasyBaseballFreeAgents(
-    { dispatch }: StateContext<GenericStateModel<BaseballPlayer>>,
-    { payload: { leagueId, scoringPeriodId } }: FetchFantasyBaseballFreeAgents
-  ): Promise<void> {
+  async fetchFantasyBaseballFreeAgents({ dispatch }: StateContext<GenericStateModel<BaseballPlayer>>): Promise<void> {
+    const leagueId = this.store.selectSnapshot(FantasyBaseballLeagueState.getLeagueId) ?? '';
+
     const lineupSlotIds = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedLineupSlotIds).map(id => Number(id));
     const availabilityStatus = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedAvailabilityStatus);
-    const filterScoringPeriodIds = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedScoringPeriodIds);
-    const filterRanksForScoringPeriodIds = { value: [] };
+    const topScoringPeriodIds = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedTopScoringPeriodIds);
+
+    const pagination = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getPagination);
+
+    const scoringPeriodId = Number(this.store.selectSnapshot(FantasyBaseballLeagueState.getCurrentScoringPeriodId)) ?? 0;
+
+    const filterRanksForScoringPeriodIds = { value: [scoringPeriodId] };
     const filterSlotIds = { value: lineupSlotIds };
     const filterStatus = { value: availabilityStatus };
-    const filterStatsForTopScoringPeriodIds = { value: filterScoringPeriodIds };
+    const filterStatsForTopScoringPeriodIds = {
+      value: 5,
+      additionalValue: ['002022', '102022', '002021', '012022', '022022', '032022', '042022', '062022', '010002022'],
+    };
 
-    const filter: PaginatedFilter = {
+    const sortStatId = { sortPriority: 1, sortAsc: pagination.sortDirection === 'asc' ? true : false, value: null, additionalValue: '' };
+
+    const players = {};
+
+    if (lineupSlotIds.length > 0) {
+      Object.assign(players, { filterSlotIds });
+    }
+
+    const filter = {
       players: {
+        ...players,
+        // sortStatId,
         filterStatus,
-        filterSlotIds,
+        // filterSlotIds,
         // filterStatsForTopScoringPeriodIds,
         // filterRanksForScoringPeriodIds,
-        limit: 50,
-        // sortPercOwned: { sortPriority: 2, sortAsc: false, value: null },
-        sortDraftRanks: { sortPriority: 100, sortAsc: true, value: 'STANDARD' },
+        limit: pagination.currentPageSize,
+        offset: pagination.currentPageIndex,
+        sortPercOwned: { sortPriority: 2, sortAsc: false, value: null },
+        // sortDraftRanks: { sortPriority: 100, sortAsc: pagination.sortDirection === 'asc' ? true : false, value: 'STANDARD' },
       },
     };
     const freeAgents = await this.mlbService.baseballFreeAgents({ leagueId, scoringPeriodId, filter }).toPromise();
     dispatch([new ClearAndAddFantasyBaseballFreeAgents(freeAgents)]);
   }
 }
+// :{"value":5,"additionalValue":["002022","102022","002021","012022","022022","032022","042022","062022","010002022"]}

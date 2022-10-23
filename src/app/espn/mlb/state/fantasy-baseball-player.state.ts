@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { GenericState } from '@app/@shared/generic-state/generic.state';
-import { EspnClientPlayerNewsFeedEntity } from '@app/espn/espn-client.model';
+import { GenericState, GenericStateClass } from '@app/@shared/generic-state/generic.state';
+import { EspnClientPlayerNewsFeedEntity } from '@espnClient/espn-client.model';
 import { Action, State, StateContext } from '@ngxs/store';
 import { MlbService } from '../services/mlb.service';
 
@@ -14,6 +14,11 @@ export class SetBaseballPlayerNews {
   constructor(public payload: EspnClientPlayerNewsFeedEntity[]) {}
 }
 
+export class ClearAndAddBaseballPlayerNews {
+  static readonly type = `[fantasyBaseballPlayer] ClearAndAddBaseballPlayerNews`;
+  constructor(public payload: EspnClientPlayerNewsFeedEntity[]) {}
+}
+
 export interface FantasyBaseballPlayerStateModel {
   isLoading: boolean;
   map: Record<string, any>;
@@ -21,17 +26,21 @@ export interface FantasyBaseballPlayerStateModel {
 
 @State({ name: 'fantasyBaseballPlayer' })
 @Injectable()
-export class FantasyBaseballPlayerState extends GenericState({ idProperty: 'id', addOrUpdate: SetBaseballPlayerNews }) {
+export class FantasyBaseballPlayerState extends GenericState({
+  idProperty: 'id',
+  addOrUpdate: SetBaseballPlayerNews,
+  clearAndAdd: ClearAndAddBaseballPlayerNews,
+}) {
   constructor(private mlbService: MlbService) {
     super();
   }
 
   @Action(FetchBaseballPlayerNews)
   async fetchBaseballPlayerNews(
-    { dispatch }: StateContext<FantasyBaseballPlayerStateModel>,
+    { dispatch }: StateContext<GenericStateClass<EspnClientPlayerNewsFeedEntity>>,
     { payload: { lookbackDays, playerId } }: FetchBaseballPlayerNews
   ): Promise<void> {
-    // const news = await this.mlbService.baseballPlayerNews({ lookbackDays, playerId }).toPromise();
-    // dispatch([new PatchBaseballPlayerNews(news)]);
+    const news = await this.mlbService.baseballPlayerNews({ lookbackDays, playerId }).toPromise();
+    dispatch([new SetBaseballPlayerNews(news)]);
   }
 }

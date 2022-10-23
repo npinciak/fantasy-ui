@@ -1,7 +1,7 @@
-import { EspnClientCompetitor, EspnClientEvent } from '@app/espn/espn-client.model';
+import { EspnClientCompetitor, EspnClientEvent } from '@espnClient/espn-client.model';
 
-type CompetitorsProperties = Pick<EspnClientCompetitor, 'id' | 'abbreviation' | 'homeAway'>;
+type CompetitorsProps = Pick<EspnClientCompetitor, 'id' | 'abbreviation' | 'homeAway'>;
 
 export type BaseballEvent = Pick<EspnClientEvent, 'id' | 'uid'> & {
-  competitors: Record<string, CompetitorsProperties>;
+  competitors: Record<string, CompetitorsProps>;
 };

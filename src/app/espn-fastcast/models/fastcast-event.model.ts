@@ -1,14 +1,13 @@
-import { EventsEntity, FullStatusType, Situation } from './espn-fastcast.model';
+import { EspnGameStatusTypeId, FastCastGameStatus } from '@espnClient/espn-client.model';
+import { EspnClientOddsEntity, EventsEntity, FullStatusType, Situation } from '@espnClient/espn-fastcast.model';
 import { FastcastEventTeam } from './fastcast-team.model';
 
-export interface FastcastEventProperties {
-  id: string;
+interface FastcastEventAttributes {
   leagueId: string;
   timestamp: number;
   state: string | null;
-  status: string | null;
-  name: string | null;
-  shortname: string | null;
+  status: FastCastGameStatus | null;
+  statusId: EspnGameStatusTypeId;
   location: string | null;
   clock: string | null;
   summary: string | null;
@@ -19,10 +18,10 @@ export interface FastcastEventProperties {
   footballSituation: FootballSituation | null;
 }
 
-export type FastcastEvent = FastcastEventProperties &
+export type FastcastEvent = FastcastEventAttributes &
   Partial<Situation> &
-  Pick<EventsEntity, 'uid' | 'note'> &
-  Pick<FullStatusType, 'completed'>;
+  Pick<EventsEntity, 'id' | 'uid' | 'name' | 'shortName' | 'note' | 'seriesSummary' | 'link' | 'seasonType'> &
+  Pick<FullStatusType, 'completed'> & { odds: EspnClientOddsEntity | null };
 export type FastcastEventMap = Record<string, FastcastEvent>;
 
 export type MlbSituation = Pick<Situation, 'balls' | 'strikes' | 'outs' | 'onFirst' | 'onSecond' | 'onThird' | 'batter' | 'pitcher'>;

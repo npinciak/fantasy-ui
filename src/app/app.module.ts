@@ -5,31 +5,33 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsRouterPluginModule, RouterStateSerializer } from '@ngxs/router-plugin';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { environment } from 'src/environments/environment';
 import { httpInterceptorProviders } from './@core/interceptors';
 import { ShellModule } from './@core/shell/shell.module';
-import { ShellState } from './@core/shell/state/shell.state';
 import { LocalStorageState } from './@core/store/local-storage/local-storage.state';
+import { CustomRouterStateSerializer } from './@core/store/router/router-state.serializer';
 import { SharedModule } from './@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-const states = [ShellState, LocalStorageState];
+const states = [LocalStorageState];
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
+    NgxsRouterPluginModule.forRoot(),
     NgxsSelectSnapshotModule.forRoot(),
     NgxsStoragePluginModule.forRoot({
       key: LocalStorageState,
       // beforeSerialize: (obj, key) => console.log('beforeSerialize ====>', obj, key),
       // afterDeserialize: (obj, key) => console.log('afterSerialize ====>', obj, key),
     }),
-    NgxsModule.forRoot(states, { developmentMode: !environment.production }),
+    NgxsModule.forRoot(states, { developmentMode: !environment.production, selectorOptions:{  injectContainerState: false }}),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
@@ -39,10 +41,9 @@ const states = [ShellState, LocalStorageState];
     }),
     SharedModule,
     ShellModule,
-
     AppRoutingModule,
   ],
-  providers: [httpInterceptorProviders],
+  providers: [httpInterceptorProviders, { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

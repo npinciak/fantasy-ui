@@ -6,12 +6,13 @@
   </tr>
   <tr>
     <td>
-      {{ player.name }}
-      <mat-icon [matTooltip]="player.injuryStatus" *ngIf="player.isInjured" style="color: #d9534f">medical_services</mat-icon>
+      {{ player?.name }}
+
+      <span class="injury-status_dtd" [title]="player?.injuryStatus" *ngIf="isPlayerDayToDay">DTD</span>
+      <mat-icon class="injury-status" [matTooltip]="player?.injuryStatus" *ngIf="player?.isInjured">medical_services</mat-icon>
     </td>
   </tr>
   <tr>
     <td>{{ player?.team }}, {{ player.position }}</td>
   </tr>
 </table>
-<br />
