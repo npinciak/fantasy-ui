@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
-import { UrlBuilder } from '@app/@shared/url-builder';
+import { UrlBuilder } from '@app/@core/store/router/url-builder';
 import { StatTypePeriodToYear } from '@app/espn/espn-helpers';
 import { Store } from '@ngxs/store';
 import { SetSeasonId } from '../../actions/mlb.actions';

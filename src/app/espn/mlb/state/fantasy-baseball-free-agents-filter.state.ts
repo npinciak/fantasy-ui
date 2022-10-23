@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EspnFreeAgentAvailabilityStatus } from '@client/espn-client.model';
+import { EspnFreeAgentAvailabilityStatus } from '@espnClient/espn-client.model';
 import { Action, State, StateContext, StateOperator } from '@ngxs/store';
 import { BaseballLineupSlot } from '../consts/lineup.const';
 

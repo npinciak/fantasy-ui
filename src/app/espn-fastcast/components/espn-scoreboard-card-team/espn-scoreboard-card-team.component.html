@@ -1,38 +1,35 @@
-<table style="width: 100%" [attr.aria-labelledBy]="ariaInfo.teamName">
-  <tr [ngStyle]="{ color: team?.color }" style="text-align: left">
-    <td class="game-team-logo">
-      <img height="40px" [alt]="team?.name" [src]="team?.logo" />
-    </td>
-    <td>
-      <table style="width: 100%">
-        <tr>
-          <td style="width: 165px">
-            <span class="ui-font-weight-bold">
-              <small *ngIf="team?.rank">{{ team?.rank }}&nbsp;</small>
-              <span [id]="ariaInfo.teamName">{{ team?.name }}</span
-              >&nbsp;
-              <!-- <span style="font-size: 10px; vertical-align: middle" *ngIf="team?.footballSituation?.hasPossession">🏈</span> -->
-              <mat-icon *ngIf="team?.isWinner">arrow_left</mat-icon>
-              <!-- <small *ngIf="team?.footballSituation?.inRedzone" style="color: red">RZ</small> -->
-            </span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <ng-container *ngIf="!isTournament; else tournamentAggregate">
-              <small>{{ team?.record }}</small>
-            </ng-container>
-          </td>
-        </tr>
-      </table>
-    </td>
-    <td style="text-align: left">
-      <div class="game-score-item">
-        <span [class.game-score-winner]="team?.isWinner"> {{ team?.score }}</span>
+<div fxLayout="row" [ngStyle]="{ opacity: opacity }">
+  <div fxFlex="75%">
+    <div fxLayout="row" fxLayoutGap="5px">
+      <div>
+        <img class="game-team-logo" height="40px" [alt]="team?.name" [src]="team?.logo" />
       </div>
-    </td>
-  </tr>
-</table>
+      <div fxLayout="column" fxLayoutGap="5px">
+        <div class="ui-font-weight-bold">
+          <small style="margin-right: 5px" [hidden]="noTeamRank">{{ team?.rank }}</small
+          >{{ team?.name }}
+        </div>
+        <div>
+          <ng-container *ngIf="!isTournament; else tournamentAggregate">
+            <small>{{ team?.record }}</small>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxFlex fxLayoutAlign="end center" style="text-align: right">
+    <div fxLayout="column" fxLayoutGap="5px">
+      <div class="game-score-item">
+        <span [class.game-score-winner]="team?.isWinner" [hidden]="isPregame"> {{ team?.score }}</span>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="5%" fxLayoutAlign="center center">
+    <div>
+      <mat-icon>{{ team?.isWinner ? 'arrow_left' : '' }}</mat-icon>
+    </div>
+  </div>
+</div>
 <ng-template #tournamentAggregate>
   <small>Aggregate: {{ team?.aggregateScore }}</small>
 </ng-template>

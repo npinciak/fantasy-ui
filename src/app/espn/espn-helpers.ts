@@ -1,11 +1,15 @@
 import { exists } from '@app/@shared/helpers/utils';
-import { EspnClientLineupEntityMap, EspnClientPlayerStatsByYearMap, EspnClientPlayerStatsYear } from '@client/espn-client.model';
+import { EspnClientLineupEntityMap, EspnClientPlayerStatsByYearMap, EspnClientPlayerStatsYear } from '@espnClient/espn-client.model';
 import { BaseballPlayer } from './mlb/models/baseball-player.model';
 import { StatTypePeriodId } from './models/espn-stats.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
 
 export function includeSports(id: string): boolean {
   return new Set(['1', '20', '40', '70', '600']).has(id);
+}
+
+export function includeLeagues(id: string): boolean {
+  return new Set(['10', '28', '46', '90', '775', '776', '20296']).has(id);
 }
 
 export function teamColorHandler(val: undefined): null;
@@ -39,7 +43,7 @@ export function transformIdToUid(sport: string | null, league: string | null, te
   return `s:${sport}~l:${league}~t:${team}`;
 }
 
-export function YearToStatTypePeriod(periodType: StatTypePeriodId, year: string) {
+export function YearToStatTypePeriod(periodType: StatTypePeriodId, year: string): string {
   if (periodType === StatTypePeriodId.Projected) return `${periodType}${year}`;
   else return `0${periodType}${year}`;
 }

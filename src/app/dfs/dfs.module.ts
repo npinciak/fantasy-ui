@@ -6,8 +6,8 @@ import { SharedModule } from '@app/@shared/shared.module';
 import { MaterialModule } from '@app/material.module';
 import { NgxsModule } from '@ngxs/store';
 import { PlayerTableComponent } from './components/player-table/player-table.component';
-import { SlateListComponent } from './components/slate-list/slate-list.component';
-import { TeamMatchupTableComponent } from './components/team-matchup-table/team-matchup-table.component';
+import { DfsSlateListComponent } from './components/slate-list/slate-list.component';
+import { DfsTeamMatchupTableComponent } from './components/team-matchup-table/team-matchup-table.component';
 import { DfsRoutingModule } from './dfs-routing.module';
 import { DailyFantasyMlbPlayerSlateAttributeState } from './mlb/state/daily-fantasy-mlb-player-slate-attr.state';
 import { DailyFantasyMlbTeamSlateAttributeState } from './mlb/state/daily-fantasy-mlb-team-slate-attr.state';
@@ -45,10 +45,8 @@ const states = [
 ];
 
 const declarations = [
-  TeamMatchupTableComponent,
-  SlateListComponent,
-  NFLPlayerTableHomeComponent,
-  MatchupTableComponent,
+  DfsTeamMatchupTableComponent,
+  DfsSlateListComponent,
   PlayerTableRankingColumnComponent,
   DfsHomeComponent,
   PlayerTableComponent,

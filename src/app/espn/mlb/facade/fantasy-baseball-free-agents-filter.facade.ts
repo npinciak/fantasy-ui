@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EspnFreeAgentAvailabilityStatus } from '@client/espn-client.model';
+import { EspnFreeAgentAvailabilityStatus } from '@espnClient/espn-client.model';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { FetchFantasyBaseballFreeAgents } from '../actions/fantasy-baseball-free-agents.actions';
@@ -10,7 +10,7 @@ import {
   RemoveScoringPeriodIds,
   SetPagination,
   ToggleLineupSlotIds,
-  ToggleScoringPeriodIds,
+  ToggleScoringPeriodIds
 } from '../state/fantasy-baseball-free-agents-filter.state';
 
 @Injectable({

@@ -6,10 +6,10 @@ import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
 import { EspnFastcastEventToggleState } from '../espn-fastcast/state/espn-fastcast-event-toggle.state';
 import { AddLeagueFormComponent } from './components/add-league-form/add-league-form.component';
+import { EspnPlayerComponent } from './components/espn-player/espn-player.component';
 import { EspnStatsTableComponent } from './components/espn-stats-table/espn-stats-table.component';
 import { EspnRoutingModule } from './espn-routing.module';
 import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
-import { LineupCardPlayerComponent } from './mlb/components/lineup-card-player/lineup-card-player.component';
 import { LineupCardComponent } from './mlb/components/lineup-card/lineup-card.component';
 import { PlayerComponent } from './mlb/components/player/player.component';
 import { PlayerInfoColComponent } from './mlb/components/roster/player-info-col/player-info-col.component';
@@ -38,6 +38,7 @@ import { FantasyFootballFreeAgentsState } from './nfl/state/fantasy-football-fre
 import { FantasyFootballLeagueState } from './nfl/state/fantasy-football-league.state';
 import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-schedule.state';
 import { FantasyFootballTeamState } from './nfl/state/fantasy-football-teams.state';
+import { FantasyFootballTransactionState } from './nfl/state/fantasy-football-transaction.state';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 import { EspnAddLeagueFormState } from './state/espn-add-league-form.state';
 import { EspnLeaguesState } from './state/espn-leagues.state';
@@ -53,6 +54,7 @@ const declarations = [
   FootballLineupCardComponent,
   FootballScoreboardCardTeamComponent,
   EspnStatsTableComponent,
+  EspnPlayerComponent,
   StandingsComponent,
   RosterComponent,
   PlayerComponent,
@@ -62,7 +64,6 @@ const declarations = [
   TeamInfoColComponent,
   LeagueScoreboardComponent,
   LineupCardComponent,
-  LineupCardPlayerComponent,
   AddLeagueFormComponent,
 ];
 
@@ -72,6 +73,7 @@ const states = [
   FantasyFootballTeamState,
   FantasyFootballFreeAgentsState,
   FantasyFootballFreeAgentsFilterState,
+  FantasyFootballTransactionState,
   FantasyBaseballLeagueState,
   FantasyBaseballTeamState,
   FantasyBaseballTeamsLiveState,

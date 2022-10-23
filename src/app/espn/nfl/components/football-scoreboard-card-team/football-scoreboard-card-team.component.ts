@@ -12,4 +12,14 @@ export class FootballScoreboardCardTeamComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  get opacity() {
+    if (this.isGameUndecided) return null;
+
+    return !this.team.isWinner ? '50%' : null;
+  }
+
+  get isGameUndecided() {
+    return this.team.isWinner == null;
+  }
 }

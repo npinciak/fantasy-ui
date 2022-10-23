@@ -2,7 +2,7 @@ import { StatEntity } from '@app/@shared/base-models/base-stats.model';
 import { enumAsList } from '@app/@shared/helpers/enum-as-list';
 
 export type FootballStatsProperties = StatEntity & { id: string };
-export type FootballStatsMap = Record<string, FootballStatsProperties>;
+export type FootballStatsMap = Record<FootballStat, FootballStatsProperties>;
 
 export enum FootballStat {
   PA,
@@ -216,8 +216,10 @@ export enum FootballStat {
   D1PSF,
   ONEPTSFTY,
   GP,
-  MISCTD,
-  RRETD,
+  MISCTD = 10000,
+  RRETD = 10001,
+  TargetsPerGame = 20000,
 }
 
 export const StatList = enumAsList(FootballStat);
+

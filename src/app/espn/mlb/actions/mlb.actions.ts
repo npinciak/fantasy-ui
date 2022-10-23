@@ -1,4 +1,4 @@
-import { EspnClientScheduleEntity } from '@client/espn-client.model';
+import { EspnClientScheduleEntity } from '@espnClient/espn-client.model';
 
 export class FetchBaseballLeague {
   public static readonly type = `[fantasyBaseballLeague] FetchBaseballLeague`;

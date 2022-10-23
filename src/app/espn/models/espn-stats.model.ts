@@ -1,8 +1,3 @@
-export type BaseStatsProperties = {
-  abbrev: string;
-  description: string;
-};
-
 export enum StatTypePeriodId {
   Season,
   Last7,
@@ -21,7 +16,7 @@ export const StatTypePeriodIdMap: { [key in StatTypePeriodId]: string } = {
   [StatTypePeriodId.Last15]: 'Last 15',
   [StatTypePeriodId.Last30]: 'Last 30',
   [StatTypePeriodId.Average]: 'Average',
-  [StatTypePeriodId.Live]: 'live',
+  [StatTypePeriodId.Live]: 'Live',
   [StatTypePeriodId.RestOfSeason]: 'Rest Of Season',
   [StatTypePeriodId.Projected]: 'Projected',
   [StatTypePeriodId.BatterVsPitcher]: 'BVP',

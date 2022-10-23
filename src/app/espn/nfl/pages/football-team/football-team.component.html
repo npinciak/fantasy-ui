@@ -1,5 +1,11 @@
 <div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
   <div fxFlex="30%" fxFlex.sm="100%">
+    <ng-container *ngIf="footballLeagueFacade.isLoading$ | async; else refreshBtn">
+      <mat-spinner diameter="20"></mat-spinner>
+    </ng-container>
+    <ng-template #refreshBtn>
+      <mat-icon class="cursor-pointer" (click)="footballLeagueFacade.getLeague(leagueId)">refresh</mat-icon>
+    </ng-template>
     <app-football-lineup-card
       title="Starters"
       [lineup]="(footballTeamFacade.starters$ | async)!(teamId)"
@@ -16,16 +22,6 @@
   </div>
   <div fxFlex="70%" fxFlex.sm="100%">
     <div>
-      {{ (footballTeamFacade.teamPositions$ | async)!(teamId) | json }}
-    </div>
-    <div>
-      <!-- <ng-container *ngFor="let p of footballLeagueFacade.positionLimits$ | async">
-        {{ p.label }} - {{ p.val }}
-        <br />
-      </ng-container> -->
-    </div>
-
-    <div>
       <mat-form-field>
         <mat-label>pos</mat-label>
         <mat-select [(value)]="selectedPosition" (selectionChange)="onSelectedPositionChange($event.value)">
@@ -41,8 +37,8 @@
     ></app-dropdown-filter>
     <app-espn-stats-table
       [data]="(footballTeamFacade.teamStatsByPositionId$ | async)!(teamId, scoringPeriodId, selectedPosition)"
-      [dataColumns]="FOOTBALL_ROSTER_ROWS"
-      [headers]="FOOTBALL_ROSTER_HEADERS"
+      [dataColumns]="FOOTBALL_ROSTER_ROWS_BY_POS[selectedPosition]"
+      [headers]="FOOTBALL_ROSTER_HEADERS_BY_POS[selectedPosition]"
       [statsMap]="FOOTBALL_STATS_MAP"
     >
     </app-espn-stats-table>

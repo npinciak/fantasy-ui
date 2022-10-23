@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UrlBuilder } from '@app/@shared/url-builder';
+import { UrlBuilder } from '@app/@core/store/router/url-builder';
 import { BaseballTeam } from '../../models/baseball-team.model';
 
 @Component({

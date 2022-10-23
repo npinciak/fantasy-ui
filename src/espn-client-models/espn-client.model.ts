@@ -1,3 +1,22 @@
+export enum EspnPlayerInjuryStatus {
+  Active = 'ACTIVE',
+  Probable = 'PROBABLE',
+  Ques = 'QUESTIONABLE',
+  NotStarting = 'NOTSTARTING',
+  Starting = 'STARTING',
+  D = 'DOUBTFUL',
+  O = 'OUT',
+  IR = 'INJURY_RESERVE',
+  DTD = 'DAY_TO_DAY',
+  DL7 = 'SEVEN_DAY_DL',
+  DL10 = 'TEN_DAY_DL',
+  DL15 = 'FIFTEEN_DAY_DL',
+  DL60 = 'SIXTY_DAY_DL',
+  Brv = 'BEREAVEMENT',
+  Pat = 'PATERNITY',
+  SUS = 'SUSPENSION',
+}
+
 export enum EspnGameStatusTypeId {
   Scheduled = '1',
   Second = '2',
@@ -9,7 +28,7 @@ export enum EspnGameStatusTypeId {
   FullTime = '28',
 }
 
-export enum EspmGameStatusName {
+export enum EspnGameStatusName {
   Scheduled = 'STATUS_SCHEDULED',
   FirstHalf = 'STATUS_FIRST_HALF',
   Halftime = 'STATUS_HALFTIME',
@@ -35,6 +54,12 @@ export enum EspmGameStatusName {
   Forfeit = 'STATUS_FORFEIT',
 }
 
+export enum FastCastSeasonType {
+  Pre = '1',
+  Reg = '2',
+  Post = '3',
+}
+
 export enum FastCastGameStatus {
   Post = 'post',
   Pre = 'pre',
@@ -49,13 +74,56 @@ export enum EspnSport {
   Hockey = '70',
 }
 
+export enum EspnLeagueId {
+  MLB = 10,
+  NCAAF = 23,
+  NFL = 28,
+  NBA = 46,
+  NHL = 90,
+}
+
 export enum EspnFreeAgentAvailabilityStatus {
   FreeAgent = 'FREEAGENT',
   Waivers = 'WAIVERS',
   OnTeam = 'ONTEAM',
 }
 
-interface EspnClientLineupProps {
+export enum EspnClientScheduleWinner {
+  HOME = 'HOME',
+  AWAY = 'AWAY',
+  UNDECIDED = 'UNDECIDED',
+}
+
+export enum EspnClientTransactionType {
+  Add = 'ADD',
+  Drop = 'DROP',
+  Waiver = 'WAIVER',
+  Lineup = 'LINEUP',
+  Roster = 'ROSTER',
+}
+
+export enum EspnClientFootballPosition {
+  POS0,
+  QB,
+  RB,
+  WR,
+  TE,
+  K,
+  POS6,
+  P,
+  POS8,
+  DT,
+  DE,
+  LB,
+  CB,
+  S,
+  HC,
+  TQB,
+  DST,
+  EDR,
+}
+
+interface EspnClientLineupAttributes {
   parentId: number;
   id: number;
   abbrev: string;
@@ -68,7 +136,7 @@ interface EspnClientLineupProps {
   active: boolean;
 }
 
-export type EspnClientLineupEntity = EspnClientLineupProps;
+export type EspnClientLineupEntity = EspnClientLineupAttributes;
 export type EspnClientLineupEntityMap = Record<number, EspnClientLineupEntity>;
 
 export interface EspnClientLeague {
@@ -80,10 +148,56 @@ export interface EspnClientLeague {
   settings: EspnClientLeagueSettings;
   teams: EspnClientTeam[];
   players: EspnClientFreeAgent[];
+  communication: EspnClientLeagueComm;
+  transactions: EspnClientLeagueTransaction[];
 }
 
-type StatusProps = 'firstScoringPeriod' | 'finalScoringPeriod';
-export type EspnClientLeagueStatus = { [key in StatusProps]: number };
+export type EspnClientLeagueTransaction = {
+  bidAmount: number;
+  executionType: 'PROCESS' | 'CANCEL';
+  id: string;
+  isActingAsTeamOwner: boolean;
+  isLeagueManager: boolean;
+  isPending: boolean;
+  items?: EspnClientLeagueTransactionItem[] | null;
+  memberId: string;
+  proposedDate: number;
+  rating: number;
+  scoringPeriodId: number;
+  status: 'EXECUTED' | 'CANCELED';
+  teamId: number;
+  type: EspnClientTransactionType;
+  relatedTransactionId?: string | null;
+  processDate?: number | null;
+};
+
+type TransactionItemAttributes = 'fromLineupSlotId' | 'fromTeamId' | 'overallPickNumber' | 'playerId' | 'toLineupSlotId' | 'toTeamId';
+export type EspnClientLeagueTransactionItem = { [key in TransactionItemAttributes]: number } & {
+  isKeeper: boolean;
+  type: EspnClientTransactionType;
+};
+
+export interface EspnClientLeagueComm {
+  topics: EspnClientLeagueCommTopic[];
+}
+
+export interface EspnClientLeagueCommTopic {
+  id: string;
+  date: number;
+  messages: EspnClientLeagueCommTopicMsg[];
+  type: 'ACTIVITY_TRANSACTIONS' | 'ACTIVITY_SETTINGS';
+}
+
+export interface EspnClientLeagueCommTopicMsg {
+  id: string;
+  messageTypeId: number;
+  targetId: number; // playerId
+  to: number; // to teamId
+  topicId: string;
+}
+
+type StatusAttributes = 'firstScoringPeriod' | 'finalScoringPeriod';
+export type EspnClientLeagueStatus = { [key in StatusAttributes]: number };
 
 export interface EspnClientLeagueSettings {
   name: string;
@@ -93,15 +207,15 @@ export interface EspnClientLeagueSettings {
 
 export type EspnClientScheduleSettings = { matchupPeriodCount: number };
 
-type RosterSettingsProps = 'positionLimits' | 'lineupSlotCounts';
-export type EspnClientLeagueRosterSettings = { [key in RosterSettingsProps]: Record<string, number> };
+type RosterSettingsAttributes = 'positionLimits' | 'lineupSlotCounts';
+export type EspnClientLeagueRosterSettings = { [key in RosterSettingsAttributes]: Record<string, number> };
 
-export interface EspnClientScheduleProps {
+export interface EspnClientScheduleAttributes {
   id: number;
   matchupPeriodId: number;
   home: EspnClientScheduleTeam;
   away: EspnClientScheduleTeam;
-  winner: string;
+  winner: EspnClientScheduleWinner;
   teams?: EspnClientScheduleTeam[];
 }
 
@@ -113,13 +227,14 @@ export type EspnClientFootballLeague = Omit<EspnClientLeague, 'teams'> & {
   teams: EspnClientFootballTeam[];
 };
 
-export type EspnClientScheduleEntity = EspnClientScheduleProps;
+export type EspnClientScheduleEntity = EspnClientScheduleAttributes;
 
-export interface EspnClientTeamProps {
+export interface EspnClientTeamAttributes {
   id: number;
   teamId: number;
   totalPoints: number;
   totalPointsLive: number;
+  totalProjectedPointsLive: number;
   rosterForCurrentScoringPeriod: EspnClientRoster;
   abbrev: string;
   location: string;
@@ -136,14 +251,13 @@ export interface EspnClientTeamProps {
   record: string;
 }
 
-export type EspnClientTeam = Omit<EspnClientTeamProps, 'teamId' | 'totalPoints' | 'totalPointsLive' | 'rosterForCurrentScoringPeriod'>;
+export type EspnClientTeam = Omit<EspnClientTeamAttributes, 'teamId' | 'totalPoints' | 'totalPointsLive' | 'rosterForCurrentScoringPeriod'>;
 export type EspnClientBaseballTeam = EspnClientTeam;
 export type EspnClientFootballTeam = Omit<EspnClientTeam, 'record'> & { record: EspnClientTeamRecordEntity };
 
-export type EspnClientScheduleTeam = Pick<
-  EspnClientTeamProps,
-  'teamId' | 'totalPoints' | 'totalPointsLive' | 'rosterForCurrentScoringPeriod'
-> & {
+export type EspnClientScheduleTeam = Pick<EspnClientTeamAttributes, 'teamId' | 'totalPoints' | 'rosterForCurrentScoringPeriod'> & {
+  totalProjectedPointsLive?: number;
+  totalPointsLive?: number;
   cumulativeScore: EspnClientTeamCumulativeScore;
 };
 
@@ -191,7 +305,7 @@ export interface EspnClientPlayerInfo {
   defaultPositionId: number;
   proTeamId: number;
   injured: boolean;
-  injuryStatus: string;
+  injuryStatus: EspnPlayerInjuryStatus;
   ownership: EspnClientPlayerOwnership;
   eligibleSlots: number[];
   stats?: EspnClientPlayerStatsYear[];
@@ -302,7 +416,7 @@ export interface EspnClientPaginatedFilter {
 
 export interface PlayerFilterEntity {
   filterStatus: FilterValueString;
-  filterSlotIds?: FilterValueNumber;
+  filterSlotIds?: Partial<FilterValueNumber>;
   filterStatsForTopScoringPeriodIds?: FilterStatsForTopScoringPeriodIds;
   filterRanksForScoringPeriodIds?: FilterValueNumber;
   sortPercOwned: SortMetaData;

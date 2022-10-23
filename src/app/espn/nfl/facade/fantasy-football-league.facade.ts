@@ -12,6 +12,7 @@ export class FantasyFootballLeagueFacade {
   currentScoringPeriodId$ = select(FantasyFootballLeagueSelectors.getCurrentScoringPeriodId);
   seasonId$ = select(FantasyFootballLeagueSelectors.getSeasonId);
   standings$ = select(FantasyFootballLeagueSelectors.standings);
+  isLoading$ = select(FantasyFootballLeagueSelectors.isLoading);
 
   // positionLimits$ = select(FantasyFootballLeagueSelectors.getLineupLimitsWithLabels);
 

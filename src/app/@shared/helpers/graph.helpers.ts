@@ -17,7 +17,7 @@ export function scatterData(xAxisData: number[], yAxisData: number[]): { x: numb
 }
 
 export function linearRegression(x: number[], y: number[]) {
-  let lr = {
+  let lr: Regression = {
     sl: 0,
     off: 0,
     r2: 0,
@@ -38,15 +38,14 @@ export function linearRegression(x: number[], y: number[]) {
   }
 
   // prettier-ignore
-  lr['sl'] = (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x);
+  lr.sl = (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x);
   // prettier-ignore
-  lr['off'] = (sum_y - lr.sl * sum_x) / n;
+  lr.off = (sum_y - lr.sl * sum_x) / n;
   // prettier-ignore
-  lr['r2'] = Math.pow((n * sum_xy - sum_x * sum_y) / Math.sqrt((n * sum_xx - sum_x * sum_x) * (n * sum_yy - sum_y * sum_y)), 2);
+  lr.r2 = Math.pow((n * sum_xy - sum_x * sum_y) / Math.sqrt((n * sum_xx - sum_x * sum_x) * (n * sum_yy - sum_y * sum_y)), 2);
 
   return lr;
 }
 
-class DataVisualization {
-  constructor() {}
-}
+type LinearRegressionAttr = 'sl' | 'off' | 'r2';
+type Regression = { [key in LinearRegressionAttr]: number };

@@ -42,6 +42,7 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
     };
 
     return {
+      id: p.id,
       name: p.name,
       isInjured: p.isInjured,
       injuryStatus: p.injuryStatus,
@@ -51,6 +52,7 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
       lineupSlotId: p.lineupSlotId,
       playerOwnershipChange: p.playerOwnershipChange,
       playerOwnershipPercentOwned: p.playerOwnershipPercentOwned,
+      highlightedPlayer: false,
       stats,
     };
   }
@@ -78,7 +80,7 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
         Object.entries(playerGames).map(([k, g]) => {
           if (gameIdSet.has(k)) {
             Object.assign(playerObj, {
-              startingStatus: g,
+              injuryStatus: g,
               opponent: getEventById(k).competitors,
             });
           }

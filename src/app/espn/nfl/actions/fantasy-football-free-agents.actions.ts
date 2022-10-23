@@ -5,6 +5,12 @@ export class SetFantasyFootballFreeAgents {
   constructor(public payload: FootballPlayerFreeAgent[]) {}
 }
 
+export class ClearAndAddFantasyFootballFreeAgents {
+  static readonly type = `[fantasyFootballFreeAgents] ClearAndAddFantasyFootballFreeAgents`;
+  constructor(public payload: FootballPlayerFreeAgent[]) {}
+}
+
 export class FetchFantasyFootballFreeAgents {
   static readonly type = `[fantasyFootballFreeAgents] FetchFantasyFootballFreeAgents`;
+  constructor(public payload: { leagueId: string }) {}
 }

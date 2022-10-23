@@ -14,9 +14,13 @@ export class EspnFastcastFacade {
   eventType$ = select(EspnFastcastSelectors.getEventType);
   lastDisconnect$ = select(EspnFastcastSelectors.getLastDisconnect);
   lastRefresh$ = select(EspnFastcastSelectors.getLastRefresh);
+  lastRefreshAsTickerDate$ = select(EspnFastcastSelectors.getLastRefreshAsTickerDate);
+
   isFeedValid$ = select(EspnFastcastSelectors.getIsFeedValid);
   feedLoadingValue$ = select(EspnFastcastSelectors.getFeedLoadingValue);
   showFeed$ = select(EspnFastcastSelectors.getShowFeed);
+  showLoader$ = select(EspnFastcastSelectors.getShowLoader);
+  showNoEventsMessage$ = select(EspnFastcastSelectors.showNoEventsMessage);
 
   constructor(private store: Store) {}
 

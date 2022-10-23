@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { LocalStorageFacade } from '@app/@core/store/local-storage/local-storage.facade';
 import { LocalStorageKeys } from '@app/@core/store/local-storage/local-storage.state';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
-import { UrlFragments } from '@app/@shared/url-builder';
+import { UrlFragments } from '@app/@core/store/router/url-builder';
 import { EspnFastcastEventFacade } from '@app/espn-fastcast/facade/espn-fastcast-event.facade';
 import { EspnFastcastLeagueFacade } from '@app/espn-fastcast/facade/espn-fastcast-league.facade';
 import { EspnFastcastFacade } from '@app/espn-fastcast/facade/espn-fastcast.facade';
@@ -33,8 +33,6 @@ export class EspnHomeComponent implements OnInit {
 
   ngOnInit() {
     this.espnLeaguesFacade.fetchLeagues();
-    // const leagues = await this.http.get('http://localhost:8080/teams/2').toPromise();
-    // console.log(test);
   }
 
   onNavigateLeague(val: { sport: UrlFragments; leagueId: string }) {
@@ -48,7 +46,7 @@ export class EspnHomeComponent implements OnInit {
     const notEmpty = this.localStorageFacade.getLocalStorageValue(LocalStorageKeys.UserLeagues);
   }
 
-  onRemoveLeague(leagueId: number): void {
+  onRemoveLeague(leagueId: string): void {
     this.espnLeaguesFacade.deleteLeague(leagueId);
   }
 }

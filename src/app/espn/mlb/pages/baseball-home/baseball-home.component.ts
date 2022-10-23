@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
-import { UrlFragments } from '@app/@shared/url-builder';
 import { MLB_STADIUM_LIST } from '../../consts/stadium.const';
 import { LEAGUE_STANDINGS_HEADERS, LEAGUE_STANDINGS_ROWS } from '../../consts/tables.const';
 import { FantasyBaseballFreeAgentsFacade } from '../../facade/fantasy-baseball-free-agents.facade';
@@ -27,8 +26,4 @@ export class BaseballHomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
-
-  get freeAgentsRoute(): string {
-    return `./${UrlFragments.FreeAgents}`;
-  }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GenericState, GenericStateClass } from '@app/@shared/generic-state/generic.state';
-import { EspnClientPlayerNewsFeedEntity } from '@client/espn-client.model';
+import { EspnClientPlayerNewsFeedEntity } from '@espnClient/espn-client.model';
 import { Action, State, StateContext } from '@ngxs/store';
 import { MlbService } from '../services/mlb.service';
 
@@ -14,6 +14,11 @@ export class SetBaseballPlayerNews {
   constructor(public payload: EspnClientPlayerNewsFeedEntity[]) {}
 }
 
+export class ClearAndAddBaseballPlayerNews {
+  static readonly type = `[fantasyBaseballPlayer] ClearAndAddBaseballPlayerNews`;
+  constructor(public payload: EspnClientPlayerNewsFeedEntity[]) {}
+}
+
 export interface FantasyBaseballPlayerStateModel {
   isLoading: boolean;
   map: Record<string, any>;
@@ -21,7 +26,11 @@ export interface FantasyBaseballPlayerStateModel {
 
 @State({ name: 'fantasyBaseballPlayer' })
 @Injectable()
-export class FantasyBaseballPlayerState extends GenericState({ idProperty: 'id', addOrUpdate: SetBaseballPlayerNews }) {
+export class FantasyBaseballPlayerState extends GenericState({
+  idProperty: 'id',
+  addOrUpdate: SetBaseballPlayerNews,
+  clearAndAdd: ClearAndAddBaseballPlayerNews,
+}) {
   constructor(private mlbService: MlbService) {
     super();
   }

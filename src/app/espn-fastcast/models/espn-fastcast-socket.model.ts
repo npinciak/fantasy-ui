@@ -1,9 +1,11 @@
-import { StatusCode } from '@app/@core/interceptors/error-handler.interceptor';
+import { ErrorStatusCode } from '@app/@core/interceptors/error-handler.interceptor';
+import { exists } from '@app/@shared/helpers/utils';
+import { FASTCAST_SERVICE_URI } from '@app/espn/espn.const';
 
 interface WebSocketResponseProps {
   hbi: number;
   op: OperationCode; // operationcode
-  rc: StatusCode; //response code
+  rc: ErrorStatusCode; //response code
   sid: string; //sessionID
   pl: string; // payload?
   tc: string;
@@ -86,13 +88,18 @@ export function transformEventToLiveFastcastEventType(payload: { sport: string; 
  * ```
  *
  */
-export function transformSportToFastcastEventType(payload: { sport: string; league: string }): string {
-  return `${FastcastEventType.Event}-${payload.sport}-${payload.sport}`;
+export function transformSportToFastcastEventType(payload: { sport: string; league: string }): string;
+export function transformSportToFastcastEventType(payload: { sport: string }): string;
+export function transformSportToFastcastEventType(payload: { sport: string; league?: string }): string {
+  if (!exists(payload.league)) {
+    `${FastcastEventType.Event}-${payload.sport}`;
+  }
+  return `${FastcastEventType.Event}-${payload.sport}-${payload.league}`;
 }
 
 export class WebSocketBuilder {
   private static _protocol = 'wss://';
-  private static _path = 'FastcastService/pubsub/profiles/12000';
+  private static _path = FASTCAST_SERVICE_URI;
 
   private _websocket: EspnWebSocket;
   constructor(websocket: EspnWebSocket) {
@@ -108,6 +115,6 @@ export class WebSocketBuilder {
   }
 
   private get _protocolIpPort() {
-    return `${WebSocketBuilder._protocol}${this._websocket.ip}:${this._websocket.securePort}/`;
+    return `${WebSocketBuilder._protocol}${this._websocket.ip}:${this._websocket.securePort}`;
   }
 }

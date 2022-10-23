@@ -1,3 +1,5 @@
+import { enumAsList } from '@app/@shared/helpers/enum-as-list';
+
 export enum FootballLineupSlot {
   QB,
   TQB,
@@ -26,3 +28,13 @@ export enum FootballLineupSlot {
   EDR,
   ALL,
 }
+
+export const FootballLineupSlotList = enumAsList(FootballLineupSlot);
+export const BasicFootballLineupSlotList: FootballLineupSlot[] = [
+  FootballLineupSlot.QB,
+  FootballLineupSlot.RB,
+  FootballLineupSlot.WR,
+  FootballLineupSlot.FLEX,
+  FootballLineupSlot.K,
+  FootballLineupSlot.DST,
+];

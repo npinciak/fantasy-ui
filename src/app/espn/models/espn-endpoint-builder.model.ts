@@ -29,6 +29,10 @@ export class EspnEndpointBuilder {
     return `${this.fantasyLeague}/transactions`;
   }
 
+  get fantasyLeagueComms(): string {
+    return `${this.fantasyLeague}/communication`;
+  }
+
   get fantasyLeague(): string {
     return `${this.fantasyBaseV3WithFragments}/segments/0/leagues/${this._leagueId}`;
   }
@@ -92,12 +96,12 @@ export enum EspnViewParamFragment {
   Roster = 'mRoster',
   Scoreboard = 'mScoreboard',
   Team = 'mTeam',
+  Transactions = 'mTransactions2',
   PendingTransactions = 'mPendingTransactions',
+  Comms = 'kona_league_communication',
 }
 
 export const espnViewParamFragmentList = enumAsList(EspnViewParamFragment);
-
-// type AllPropsString<T> = { [key in T]: string };
 
 export const FantasySportToLabelMap: { [key in FantasySports]: string } = {
   [FantasySports.Baseball]: 'Baseball',

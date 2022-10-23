@@ -2,6 +2,8 @@
  * Base league model
  */
 
+import { EspnLeagueId } from '@espnClient/espn-client.model';
+
 interface LeagueProps {
   id: string;
   uid: string;
@@ -21,14 +23,6 @@ export interface SportsUiClientLeague {
   leagueSport: string;
   createdAt: string;
   updatedAt: string;
-}
-
-export enum EspnLeagueId {
-  MLB = 10,
-  NCAAF = 23,
-  NFL = 28,
-  NBA = 46,
-  NHL = 90,
 }
 
 export const LeagueNameByEspnLeagueId: { [key in EspnLeagueId]: string } = {

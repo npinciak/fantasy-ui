@@ -1,4 +1,4 @@
-import { SiteSlateEntity } from '../models/daily-fantasy-client.model';
+import { SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
 
 export class FetchSlates {
   public static readonly type = `[dailyFantasySlate] FetchSlates`;
@@ -7,5 +7,10 @@ export class FetchSlates {
 
 export class SetSlates {
   static readonly type = `[dailyFantasySlates] SetSlates`;
+  constructor(public payload: SiteSlateEntity[]) {}
+}
+
+export class ClearAndAddSlates {
+  static readonly type = `[dailyFantasySlates] ClearAndAddSlates`;
   constructor(public payload: SiteSlateEntity[]) {}
 }

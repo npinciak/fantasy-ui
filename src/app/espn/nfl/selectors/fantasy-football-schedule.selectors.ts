@@ -1,9 +1,10 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { unique } from '@app/@shared/helpers/unique-by';
+import { exists } from '@app/@shared/helpers/utils';
 import { FilterOptions } from '@app/@shared/models/filter.model';
-import { EspnClientScheduleEntity } from '@client/espn-client.model';
+import { EspnClientScheduleEntity, EspnClientScheduleTeam, EspnClientScheduleWinner } from '@espnClient/espn-client.model';
 import { Selector } from '@ngxs/store';
-import { FantasyMatchup, FantasyMatchupMap } from '../models/fantasy-schedule.model';
+import { FantasyMatchup, FantasyMatchupMap, FantasyMatchupTeam } from '../models/fantasy-schedule.model';
 import { FootballTeam } from '../models/football-team.model';
 import { FantasyFootballScheduleState } from '../state/fantasy-football-schedule.state';
 import { FantasyFootballTeamSelectors } from './fantasy-football-team.selectors';
@@ -20,39 +21,55 @@ export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFoo
     return ids.map(id => ({ value: id, label: `Week ${id}` }));
   }
 
+  static transformTeamToMatchupTeam(
+    team: FootballTeam | null,
+    scheduleTeam: EspnClientScheduleTeam,
+    isWinner: boolean | null
+  ): FantasyMatchupTeam | null {
+    if (!exists(team)) return null;
+
+    const { cumulativeScore, totalProjectedPointsLive, totalPoints, totalPointsLive } = scheduleTeam;
+
+    const { roster, currentRank } = team;
+
+    return {
+      ...team,
+      currentRank,
+      cumulativeScore,
+      totalProjectedPointsLive,
+      roster,
+      totalPoints: exists(totalPointsLive) ? totalPointsLive : totalPoints,
+      isWinner,
+      currentPredictedWinPct: 0,
+    };
+  }
+
   @Selector([FantasyFootballScheduleSelectors.getList, FantasyFootballTeamSelectors.getById])
   static getMatchupListWithFantasyTeams(
     matchupList: EspnClientScheduleEntity[],
-    getTeamById: (id: number) => FootballTeam
+    getTeamById: (id: string | null) => FootballTeam | null
   ): FantasyMatchup[] {
-    return Object.values(matchupList).map(m => {
-      const home = getTeamById(m.away.teamId);
-      const away = getTeamById(m.home.teamId);
+    return matchupList.map(m => {
+      const home = getTeamById(m.home.teamId.toString());
+      const away = getTeamById(m.away.teamId.toString());
+
+      const homeWinner = m.winner === EspnClientScheduleWinner.UNDECIDED ? null : m.winner === EspnClientScheduleWinner.HOME;
+      const awayWinner = m.winner === EspnClientScheduleWinner.UNDECIDED ? null : m.winner === EspnClientScheduleWinner.AWAY;
+
+      const homeTeam = FantasyFootballScheduleSelectors.transformTeamToMatchupTeam(home, m.home, homeWinner);
+      const awayTeam = FantasyFootballScheduleSelectors.transformTeamToMatchupTeam(away, m.away, awayWinner);
 
       return {
         id: m.id,
         matchupPeriodId: m.matchupPeriodId,
-        homeTeam: {
-          ...home,
-          totalPoints: m.home.totalPoints,
-          isWinner: m.winner === 'HOME' ?? null,
-          rank: home.currentRank,
-          cumulativeScore: m.home.cumulativeScore,
-        },
-        awayTeam: {
-          ...away,
-          totalPoints: m.away.totalPoints,
-          rank: away.currentRank,
-          isWinner: m.winner === 'AWAY' ?? null,
-          cumulativeScore: m.away.cumulativeScore,
-        },
+        homeTeam,
+        awayTeam,
       };
     });
   }
 
-  @Selector([FantasyFootballScheduleSelectors.getMatchupListWithFantasyTeams])
-  static matchupListByMatchupPeriodId(matchupList: FantasyMatchup[]): FantasyMatchupMap {
-    const map = {};
+  static matchupListToMatchupMap(matchupList: FantasyMatchup[]): FantasyMatchupMap {
+    const map = {} as FantasyMatchupMap;
 
     matchupList.map(m => {
       if (m.matchupPeriodId in map) {
@@ -62,7 +79,12 @@ export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFoo
         map[m.matchupPeriodId].push(m);
       }
     });
-    return map as FantasyMatchupMap;
+    return map;
+  }
+
+  @Selector([FantasyFootballScheduleSelectors.getMatchupListWithFantasyTeams])
+  static matchupListByMatchupPeriodId(matchupList: FantasyMatchup[]): FantasyMatchupMap {
+    return FantasyFootballScheduleSelectors.matchupListToMatchupMap(matchupList);
   }
 
   @Selector([FantasyFootballScheduleSelectors.matchupListByMatchupPeriodId])

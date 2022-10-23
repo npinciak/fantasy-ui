@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { EspnEndpointBuilder, FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
-import { EspnClientLeague } from '@client/espn-client.model';
+import { EspnClientLeague } from '@espnClient/espn-client.model';
 import { NgxsModule, Store } from '@ngxs/store';
 import { MOCK_BASEBALL_LEAGUE } from '../models/baseball-league.model.mock';
 import { ESPN_BASEBALL_FREEAGENT_1 } from './free-agent.mock';

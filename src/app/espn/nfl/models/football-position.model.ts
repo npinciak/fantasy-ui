@@ -1,25 +1,5 @@
 import { enumAsList } from '@app/@shared/helpers/enum-as-list';
-
-export enum FootballPosition {
-  POS0,
-  QB,
-  RB,
-  WR,
-  TE,
-  K,
-  POS6,
-  P,
-  POS8,
-  DT,
-  DE,
-  LB,
-  CB,
-  S,
-  HC,
-  TQB,
-  DST,
-  EDR,
-}
+import { EspnClientFootballPosition as FootballPosition } from '@espnClient/espn-client.model';
 
 export const FOOTBALL_POSITION_LIST = enumAsList(FootballPosition);
 export const FOOTBALL_POSITION_LIST_DEFAULT = [
@@ -30,3 +10,5 @@ export const FOOTBALL_POSITION_LIST_DEFAULT = [
   FootballPosition.K,
   FootballPosition.DST,
 ];
+
+export { FootballPosition };

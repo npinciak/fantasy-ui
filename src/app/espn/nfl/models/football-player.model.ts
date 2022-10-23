@@ -1,17 +1,26 @@
 import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
-import { EspnClientPlayer, EspnClientPlayerInfo, EspnClientPlayerStatsByYearMap } from '@client/espn-client.model';
+import {
+  EspnClientPlayer,
+  EspnClientPlayerInfo,
+  EspnClientPlayerOwnership,
+  EspnClientPlayerStatsByYearMap,
+  EspnPlayerInjuryStatus,
+} from '@espnClient/espn-client.model';
+import { ExtendedFootballStatsMap } from './football-extended-stats.model';
 
-export interface FootballPlayerProperties {
+export interface FootballPlayerAttributes {
   isInjured: boolean;
-  injuryStatus: string | null;
+  injuryStatus: EspnPlayerInjuryStatus | null;
   lineupSlot: string | null;
   points: number;
   stats: EspnClientPlayerStatsByYearMap | null;
+  extendedStats: ExtendedFootballStatsMap | null;
 }
 
 export type FootballPlayer = PlayerEntity &
-  FootballPlayerProperties &
+  FootballPlayerAttributes &
   Pick<EspnClientPlayer, 'lineupSlotId'> &
-  Pick<EspnClientPlayerInfo, 'defaultPositionId'>;
+  Pick<EspnClientPlayerInfo, 'defaultPositionId'> &
+  Pick<EspnClientPlayerOwnership, 'percentChange' | 'percentOwned'>;
 
 export type FootballPlayerFreeAgent = FootballPlayer & Omit<FootballPlayer, 'lineupSlotId'>;

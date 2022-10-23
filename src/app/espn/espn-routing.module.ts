@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UrlFragments, UrlParams } from '@app/@shared/url-builder';
+import { UrlFragments, UrlParams } from '@app/@core/store/router/url-builder';
 import { BaseballFreeAgentsComponent } from './mlb/pages/baseball-free-agents/baseball-free-agents.component';
 import { BaseballHomeComponent } from './mlb/pages/baseball-home/baseball-home.component';
 import { BaseballTeamComponent } from './mlb/pages/baseball-team/baseball-team.component';
@@ -13,6 +13,7 @@ import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 
 const nflRoutes = {
   path: UrlFragments.NFL,
+  data: { sport: UrlFragments.NFL },
   children: [
     {
       path: UrlFragments.Empty,
@@ -55,6 +56,7 @@ const nflRoutes = {
 
 const mlbRoutes = {
   path: UrlFragments.MLB,
+  data: { sport: UrlFragments.MLB },
   children: [
     {
       path: UrlFragments.Empty,

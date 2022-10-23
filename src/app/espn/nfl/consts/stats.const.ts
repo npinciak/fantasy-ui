@@ -1083,4 +1083,9 @@ export const FOOTBALL_STATS_MAP: FootballStatsMap = {
     id: '10001',
     description: 'Total Rushing and Receiving TD',
   },
+  20000: {
+    abbrev: 'Tar/G',
+    id: '20000',
+    description: 'Targets per game',
+  },
 };

@@ -12,10 +12,10 @@ import {
   EspnClientLeague,
   EspnClientPaginatedFilter,
   EspnClientPlayer,
-} from '@client/espn-client.model';
+} from '@espnClient/espn-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { NFL_LINEUP_MAP } from '../consts/lineup.const';
+import { FOOTBALL_LINEUP_SLOT_MAP } from '../consts/lineup.const';
 import { NFL_POSITION_MAP } from '../consts/position.const';
 import { NFL_TEAM_MAP } from '../consts/team.const';
 import { FantasyFootballLeague } from '../models/fantasy-football-league.model';
@@ -34,22 +34,30 @@ export class FantasyFootballService {
     const team = NFL_TEAM_MAP[player.playerPoolEntry.player.proTeamId];
     const isDST = player.playerPoolEntry.player.defaultPositionId === 16;
     const stats = flattenPlayerStats(player.playerPoolEntry.player.stats);
+    const extendedStats = null;
+
+    const { lineupSlotId } = player;
+    const { percentOwned, percentChange } = player.playerPoolEntry.player.ownership;
+    const { defaultPositionId, injuryStatus } = player.playerPoolEntry.player;
 
     return {
+      team,
+      lineupSlotId,
+      injuryStatus,
+      defaultPositionId,
+      percentChange,
+      percentOwned,
+      stats,
+      extendedStats,
       id: player.playerId.toString(),
       name: player.playerPoolEntry.player.fullName,
       img: !isDST ? headshotImgBuilder(player.playerId, 'nfl') : logoImgBuilder(team, 'nfl'),
-      team,
       teamId: player.playerPoolEntry.player.proTeamId.toString(),
       teamUid: `s:20~l:28~t:${player.playerPoolEntry?.player.proTeamId}`,
       position: NFL_POSITION_MAP[player.playerPoolEntry.player.defaultPositionId].abbrev,
-      defaultPositionId: player.playerPoolEntry.player.defaultPositionId,
       isInjured: player.playerPoolEntry.player.injured,
-      injuryStatus: player.playerPoolEntry.player.injuryStatus,
-      lineupSlotId: player.lineupSlotId,
-      lineupSlot: NFL_LINEUP_MAP[player.lineupSlotId].abbrev,
+      lineupSlot: FOOTBALL_LINEUP_SLOT_MAP[player.lineupSlotId].abbrev,
       points: player.playerPoolEntry.appliedStatTotal,
-      stats,
     };
   }
 
@@ -59,6 +67,10 @@ export class FantasyFootballService {
 
   static calculatePredictedWinPct(pointsScored: number, pointsAllowed: number, exp: number) {
     const R = pointsScored / pointsAllowed;
+
+    if (pointsScored === 0 || pointsAllowed == 0) {
+      return 0;
+    }
 
     return Math.pow(R, exp) / (Math.pow(R, exp) + 1);
   }
@@ -76,15 +88,7 @@ export class FantasyFootballService {
   }
 
   static transformEspnClientTeamListToTeamList(team: EspnClientFootballTeam): FootballTeam {
-    const scoringRatio = FantasyFootballService.calculateScoringRatio(team.record.overall.pointsFor, team.record.overall.pointsAgainst);
-    const predictedWinPct = FantasyFootballService.calculatePredictedWinPct(
-      team.record.overall.pointsFor,
-      team.record.overall.pointsAgainst,
-      2
-    );
-    const predictedWinPctDiff = FantasyFootballService.calculatePredictedWinPctDiff(predictedWinPct, team.record.overall.percentage);
     const roster = team.roster.entries.map(p => FantasyFootballService.transformEspnClientTeamPlayerToFootballPlayer(p));
-    const absoluteError = FantasyFootballService.calculateAbsoluteError(predictedWinPct, team.record.overall.percentage);
     return {
       id: team.id.toString(),
       name: `${team.location} ${team.nickname}`,
@@ -97,11 +101,6 @@ export class FantasyFootballService {
       pointsAgainst: team.record.overall.pointsAgainst,
       pointsScored: team.record.overall.pointsFor,
       currentRank: team.playoffSeed,
-      scoringRatio,
-      predictedWinPct,
-      predictedWinPctDiff,
-      absoluteError,
-      predictedWins: null,
       roster,
     };
   }
@@ -114,8 +113,11 @@ export class FantasyFootballService {
 
       const team = NFL_TEAM_MAP[p.player.proTeamId];
       const isDST = p.player.defaultPositionId === 16;
+      const extendedStats = null;
 
       const stats = flattenPlayerStats(p.player.stats);
+
+      const { percentChange, percentOwned } = p.player.ownership;
 
       return {
         id: p.id.toString(),
@@ -129,9 +131,12 @@ export class FantasyFootballService {
         isInjured: p.player.injured,
         injuryStatus: p.player.injuryStatus,
         lineupSlotId: p.player.defaultPositionId,
-        lineupSlot: NFL_LINEUP_MAP[p.player.defaultPositionId].abbrev,
+        lineupSlot: FOOTBALL_LINEUP_SLOT_MAP[p.player.defaultPositionId].abbrev,
         points: 0, // p.player.appliedStatTotal,
+        percentChange,
+        percentOwned,
         stats,
+        extendedStats,
       };
     });
   }
@@ -157,35 +162,42 @@ export class FantasyFootballService {
    * @returns
    */
   footballLeague(leagueId: string, year: string): Observable<FantasyFootballLeague> {
-    return this.espnClient.espnFantasyLeagueBySport<EspnClientFootballLeague>({ sport: FantasySports.Football, leagueId, year }).pipe(
-      map(res => {
-        const teams = res.teams.map(t => FantasyFootballService.transformEspnClientTeamListToTeamList(t));
-        const schedule = res.schedule;
-        const seasonId = res.seasonId.toString();
+    let headers = new HttpHeaders();
 
-        const currentScoringPeriodId = res.scoringPeriodId;
+    // headers = headers.append('X-Fantasy-Platform', 'kona-PROD-c4559dd8257df5bff411b011384d90d4d60fbafa');
 
-        const settings = res.settings;
+    return this.espnClient
+      .espnFantasyLeagueBySport<EspnClientFootballLeague>({ sport: FantasySports.Football, leagueId, year, headers })
+      .pipe(
+        map(res => {
+          const { schedule, transactions, settings } = res;
 
-        const firstScoringPeriodId = res.status.firstScoringPeriod;
-        const finalScoringPeriodId = res.status.finalScoringPeriod;
-        const matchupPeriodCount = res.settings.scheduleSettings.matchupPeriodCount;
-        const leagueId = res.id.toString();
+          const teams = res.teams.map(t => FantasyFootballService.transformEspnClientTeamListToTeamList(t));
+          const seasonId = res.seasonId.toString();
 
-        return {
-          leagueId,
-          seasonId,
-          currentScoringPeriodId,
-          firstScoringPeriodId,
-          finalScoringPeriodId,
-          matchupPeriodCount,
-          teams,
-          schedule,
-          settings,
-          freeAgents: FantasyFootballService.transformEspnClientFreeAgentToFootballPlayer(res.players),
-        };
-      })
-    );
+          const currentScoringPeriodId = res.scoringPeriodId;
+
+          const firstScoringPeriodId = res.status.firstScoringPeriod;
+          const finalScoringPeriodId = res.status.finalScoringPeriod;
+
+          const matchupPeriodCount = res.settings.scheduleSettings.matchupPeriodCount;
+          const leagueId = res.id.toString();
+
+          return {
+            leagueId,
+            seasonId,
+            currentScoringPeriodId,
+            firstScoringPeriodId,
+            finalScoringPeriodId,
+            matchupPeriodCount,
+            transactions,
+            teams,
+            schedule,
+            settings,
+            freeAgents: FantasyFootballService.transformEspnClientFreeAgentToFootballPlayer(res.players),
+          };
+        })
+      );
   }
 
   /**
