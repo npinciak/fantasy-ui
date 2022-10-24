@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsRouterPluginModule, RouterStateSerializer } from '@ngxs/router-plugin';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
@@ -25,13 +24,12 @@ const states = [LocalStorageState];
     BrowserModule,
     HttpClientModule,
     NgxsRouterPluginModule.forRoot(),
-    NgxsSelectSnapshotModule.forRoot(),
     NgxsStoragePluginModule.forRoot({
       key: LocalStorageState,
       // beforeSerialize: (obj, key) => console.log('beforeSerialize ====>', obj, key),
       // afterDeserialize: (obj, key) => console.log('afterSerialize ====>', obj, key),
     }),
-    NgxsModule.forRoot(states, { developmentMode: !environment.production, selectorOptions:{  injectContainerState: false }}),
+    NgxsModule.forRoot(states, { developmentMode: !environment.production, selectorOptions: { injectContainerState: false } }),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
