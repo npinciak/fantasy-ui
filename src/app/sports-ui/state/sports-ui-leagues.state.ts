@@ -3,7 +3,7 @@ import { GenericState, GenericStateClass } from '@app/@shared/generic-state/gene
 import { SchemeHeaderExpertService } from '@app/sports-ui/service/scheme-header-expert.service';
 import { Action, State, StateContext } from '@ngxs/store';
 import { SportsUiLeagues } from '../../sports-ui/actions/sports-ui-leagues.actions';
-import { SportsUiClientLeague } from '../models/league.model';
+import { SportsUiClientLeague } from '../models/sports-ui-league.model';
 
 @State({ name: SportsUiLeagues.name })
 @Injectable()

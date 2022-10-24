@@ -1,4 +1,4 @@
-import { SportsUiClientLeague } from '../../espn/models/league.model';
+import { SportsUiClientLeague } from "../models/sports-ui-league.model";
 
 export namespace SportsUiLeagues {
   export const name = 'sportsUiLeagues';

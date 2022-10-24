@@ -13,7 +13,7 @@
     </mat-form-field>
   </div>
   <div>
-    <button [disabled]="espnAddLeagueFormFacade.isDirty$ | async" mat-flat-button color="primary" (click)="onAddLeague()">Add</button>
+    <button [disabled]="leagueFormFacade.isDirty$ | async" mat-flat-button color="primary" (click)="onAddLeague()">Add</button>
   </div>
 </div>
 
