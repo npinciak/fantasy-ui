@@ -44,7 +44,7 @@
     </mat-card>
   </div>
 
-  <div fxFlex.gt-sm fxFlex.xs="100" class="scoreboard container" id="scoreboard-feed" role="feed" aria-live="polite">
+  <div fxFlex.gt-sm="92" fxFlex.xs="100" class="scoreboard container" id="scoreboard-feed" role="feed" aria-live="polite">
     <ng-container *ngIf="showLoader$ | async; then progressBar"> </ng-container>
     <ng-container *ngIf="showFeed$ | async; then feed; else noEventsMessage"> </ng-container>
   </div>

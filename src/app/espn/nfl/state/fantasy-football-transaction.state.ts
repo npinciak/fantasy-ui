@@ -5,7 +5,7 @@ import {
   ClearAndAddFantasyFootballTransactions,
   name,
   SetFantasyFootballTransactions,
-} from '../actions/fantasy-football-communication.actions';
+} from '../actions/fantasy-football-transaction.actions';
 
 @State({ name })
 @Injectable()

@@ -16,15 +16,6 @@ interface LeagueProps {
 
 export type League = LeagueProps;
 
-export interface SportsUiClientLeague {
-  id: number;
-  leagueName: string;
-  leagueId: string;
-  leagueSport: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export const LeagueNameByEspnLeagueId: { [key in EspnLeagueId]: string } = {
   [EspnLeagueId.MLB]: 'MLB',
   [EspnLeagueId.NCAAF]: 'NCAAF',
