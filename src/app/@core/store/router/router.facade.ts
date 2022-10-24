@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { UrlBuilder, UrlFragments } from '@app/@core/store/router/url-builder';
 import { select } from '@app/@shared/models/typed-select';
-import { UrlBuilder, UrlFragments } from '@app/@shared/url-builder';
 import { Navigate } from '@ngxs/router-plugin';
 import { Store } from '@ngxs/store';
 import { RouterSelector } from './router.selectors';
