@@ -18,17 +18,22 @@ export class RouterSelector {
   }
 
   @Selector([RouterSelector.getRouterStateRoot])
+  static getRouterQueryParams(state: RouterStateModel | undefined) {
+    return state?.queryParams;
+  }
+
+  @Selector([RouterSelector.getRouterStateRoot])
   static getRouteData(state: RouterStateModel | undefined) {
     return state?.data;
   }
 
   @Selector([RouterSelector.getRouterParams])
-  static leagueId(params: Params | undefined) {
+  static getLeagueId(params: Params | undefined) {
     return objectIsEmpty(params) ? null : (params?.leagueId as string);
   }
 
   @Selector([RouterSelector.getRouterParams])
-  static teamId(params: Params | undefined) {
+  static getTeamId(params: Params | undefined) {
     return objectIsEmpty(params) ? null : (params?.teamId as string);
   }
 
@@ -37,7 +42,7 @@ export class RouterSelector {
     return data.sport;
   }
 
-  @Selector([RouterSelector.leagueId, RouterSelector.teamId])
+  @Selector([RouterSelector.getLeagueId, RouterSelector.getTeamId])
   static invalidRoutes(leagueId: string | null, teamId: string | null) {
     return leagueId || teamId ? true : false;
   }
