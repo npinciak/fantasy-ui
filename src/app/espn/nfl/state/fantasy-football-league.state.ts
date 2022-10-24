@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { Action, State, StateContext, Store } from '@ngxs/store';
-import { SetFantasyFootballTransactions } from '../actions/fantasy-football-communication.actions';
 import { FetchFootballLeague, SetCurrentScoringPeriodId } from '../actions/fantasy-football-league.actions';
 import { SetFantasyFootballSchedule } from '../actions/fantasy-football-schedule.actions';
 import { SetFantasyFootballTeams } from '../actions/fantasy-football-teams.actions';
+import { SetFantasyFootballTransactions } from '../actions/fantasy-football-transaction.actions';
 import { FantasyFootballService } from '../services/fantasy-football.service';
 
 export interface FantasyFootballLeagueStateModel {

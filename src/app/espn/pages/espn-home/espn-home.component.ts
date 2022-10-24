@@ -7,9 +7,9 @@ import { UrlFragments } from '@app/@core/store/router/url-builder';
 import { EspnFastcastEventFacade } from '@app/espn-fastcast/facade/espn-fastcast-event.facade';
 import { EspnFastcastLeagueFacade } from '@app/espn-fastcast/facade/espn-fastcast-league.facade';
 import { EspnFastcastFacade } from '@app/espn-fastcast/facade/espn-fastcast.facade';
-import { EspnAddLeagueFormFacade } from '@app/espn/facades/espn-add-league-form.facade';
-import { EspnLeaguesFacade } from '@app/espn/facades/espn-leagues.facade';
 import { FantasyBaseballLeagueFacade } from '@app/espn/mlb/facade/fantasy-baseball-league.facade';
+import { SportsUiLeagueFormFacade } from '@app/sports-ui/facades/sports-ui-league-form.facade';
+import { SportsUiLeaguesFacade } from '@app/sports-ui/facades/sports-ui-leagues.facade';
 import { Store } from '@ngxs/store';
 
 @Component({
@@ -20,12 +20,12 @@ import { Store } from '@ngxs/store';
 export class EspnHomeComponent implements OnInit {
   constructor(
     readonly routerFacade: RouterFacade,
-    readonly espnLeaguesFacade: EspnLeaguesFacade,
+    readonly espnLeaguesFacade: SportsUiLeaguesFacade,
     readonly fastcastFacade: EspnFastcastFacade,
     readonly fastcastLeagueFacade: EspnFastcastLeagueFacade,
     readonly fastcastEventFacade: EspnFastcastEventFacade,
     readonly fantasyLeagueFacade: FantasyBaseballLeagueFacade,
-    readonly fantasyForm: EspnAddLeagueFormFacade,
+    readonly fantasyForm: SportsUiLeagueFormFacade,
     private localStorageFacade: LocalStorageFacade,
     private store: Store,
     private http: HttpClient

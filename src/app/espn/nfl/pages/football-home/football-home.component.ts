@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { UrlBuilder } from '@app/@core/store/router/url-builder';
 import { Navigate } from '@ngxs/router-plugin';
 import { Store } from '@ngxs/store';
+import { of } from 'rxjs';
 import { FOOTBALL_LEAGUE_STANDINGS_HEADERS, FOOTBALL_LEAGUE_STANDINGS_ROWS } from '../../consts/fantasy-football-table.const';
 import { FantasyFootballLeagueFacade } from '../../facade/fantasy-football-league.facade';
-import { FantasyFootballScheduleFacade } from '../../facade/fantasy-football-schedule.facade';
 
 @Component({
   selector: 'app-football-home',
@@ -17,15 +17,16 @@ export class FootballHomeComponent implements OnInit {
 
   readonly LEAGUE_STANDINGS_ROWS = FOOTBALL_LEAGUE_STANDINGS_ROWS;
   readonly LEAGUE_STANDINGS_HEADERS = FOOTBALL_LEAGUE_STANDINGS_HEADERS;
-  matchupPeriodIdFilterOptions$ = this.fantasyFootballScheduleFacade.matchupPeriodIdFilterOptions$;
-  matchupListByMatchupPeriodId$ = this.fantasyFootballScheduleFacade.matchupListWithFantasyTeamsByMatchupPeriodId$;
+  matchupPeriodIdFilterOptions$ = of(); //this.fantasyFootballScheduleFacade.matchupPeriodIdFilterOptions$;
+  matchupListByMatchupPeriodId$ = of(); // this.fantasyFootballScheduleFacade.matchupListWithFantasyTeamsByMatchupPeriodId$;
   currentScoringPeriod$ = this.fantasyFootballLeagueFacade.currentScoringPeriodId$;
   standings$ = this.fantasyFootballLeagueFacade.standings$;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: Store,
-    readonly fantasyFootballLeagueFacade: FantasyFootballLeagueFacade,
+
+    readonly fantasyFootballLeagueFacade: FantasyFootballLeagueFacade
   ) {}
 
   ngOnInit(): void {}
