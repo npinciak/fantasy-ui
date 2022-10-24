@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UrlBuilder, UrlFragments, UrlQueryParams } from '@app/@shared/url-builder';
+import { UrlBuilder, UrlFragments, UrlQueryParams } from '@app/@core/store/router/url-builder';
 import { EspnFastcastFacade } from '@app/espn-fastcast/facade/espn-fastcast.facade';
 
 @Component({
