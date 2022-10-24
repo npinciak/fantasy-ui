@@ -11,17 +11,17 @@ import { RouterSelector } from './router.selectors';
 export class RouterFacade {
   sport$ = select(RouterSelector.getSport);
 
-  leagueId$ = select(RouterSelector.leagueId);
-  teamId$ = select(RouterSelector.teamId);
+  leagueId$ = select(RouterSelector.getLeagueId);
+  teamId$ = select(RouterSelector.getTeamId);
 
   constructor(private store: Store) {}
 
   get leagueId(): string | null {
-    return this.store.selectSnapshot(RouterSelector.leagueId);
+    return this.store.selectSnapshot(RouterSelector.getLeagueId);
   }
 
   get teamId(): string | null {
-    return this.store.selectSnapshot(RouterSelector.teamId);
+    return this.store.selectSnapshot(RouterSelector.getTeamId);
   }
 
   get sport(): UrlFragments {
