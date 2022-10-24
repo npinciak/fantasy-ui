@@ -37,3 +37,25 @@ export function addHoursToDate(date: Date, hours: number): Date {
 export function subtractYears(numOfYears, date = new Date()) {
   return new Date(date.setFullYear(date.getFullYear() - numOfYears)).getFullYear().toString();
 }
+
+/**
+ * Beautify ticker dates
+ * @param val
+ *
+ * @return Mon, 2:37 PM EDT
+ */
+export function tickerDate(val: number): string;
+export function tickerDate(): string;
+export function tickerDate(val?: number): string {
+  const format: Intl.DateTimeFormatOptions = {
+    weekday: 'short',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+    timeZoneName: 'short',
+  };
+  if (val == undefined) {
+    return new Date().toLocaleDateString('en-US', format);
+  }
+  return new Date(val).toLocaleDateString('en-US', format);
+}

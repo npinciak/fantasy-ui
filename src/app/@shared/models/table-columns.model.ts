@@ -35,3 +35,7 @@ export function transformTableColumnsToTableRows<T>(cols: BaseTableColumn<T>[]):
     headerLabel: col.headerLabel,
   }));
 }
+
+export function getTableHeaders<T>(rows: BaseTableRow<T>[]): (keyof T)[] {
+  return rows.map(row => row.columnDef);
+}
