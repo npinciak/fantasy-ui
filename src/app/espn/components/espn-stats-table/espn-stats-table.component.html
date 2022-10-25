@@ -13,8 +13,8 @@
                 <ng-template [ngSwitchCase]="'name'">
                   <app-espn-player [player]="data" [hideLineupSlot]="true"></app-espn-player>
                 </ng-template>
-                <ng-template [ngSwitchCase]="'playerOwnershipChange'">
-                  <app-player-trending-col [data]="col?.cellData(data)"></app-player-trending-col>
+                <ng-template [ngSwitchCase]="'percentChange'">
+                  <app-espn-player-trending-col [data]="col?.cellData(data)"></app-espn-player-trending-col>
                 </ng-template>
                 <ng-template [ngSwitchCase]="'break'">-</ng-template>
                 <ng-template [ngSwitchDefault]>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
 import { EspnFreeAgentAvailabilityStatus } from '@espnClient/espn-client.model';
-import { State, StateContext, Store } from '@ngxs/store';
+import { Action, State, StateContext, Store } from '@ngxs/store';
 import {
   ClearAndAddFantasyFootballFreeAgents,
   FetchFantasyFootballFreeAgents,
@@ -24,6 +24,7 @@ export class FantasyFootballFreeAgentsState extends GenericState({
     super();
   }
 
+  @Action(FetchFantasyFootballFreeAgents)
   async fetchFantasyFootballFreeAgents(
     { setState }: StateContext<GenericStateModel<FootballPlayer>>,
     { payload: { leagueId } }: FetchFantasyFootballFreeAgents
