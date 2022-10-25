@@ -8,6 +8,7 @@ import {
   SendWebSocketMessage,
   SetFastcastPause,
   SetSelectedEventType,
+  SetSelectedLeague,
 } from '@app/espn-fastcast/actions/espn-fastcast.actions';
 import { OperationCode, transformSportToFastcastEventType, WebSocketBuilder } from '@app/espn-fastcast/models/espn-fastcast-socket.model';
 import { fastcastURIBuilder } from '@app/espn/espn.const';
@@ -135,6 +136,14 @@ export class EspnFastcastState {
       const eventType = transformSportToFastcastEventType({ sport, league });
       patchState({ eventType });
     }
+  }
+
+  @Action(SetSelectedLeague)
+  async setSelectedLeague(
+    { patchState }: StateContext<EspnFastcastStateModel>,
+    { payload: { leagueSlug } }: SetSelectedLeague
+  ): Promise<void> {
+    patchState({ league: leagueSlug });
   }
 
   @Action(SetFastcastPause)

@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { ConnectWebSocket, DisconnectWebSocket, SetFastcastPause, SetSelectedEventType } from '../actions/espn-fastcast.actions';
+import {
+  ConnectWebSocket,
+  DisconnectWebSocket,
+  SetFastcastPause,
+  SetSelectedEventType,
+  SetSelectedLeague,
+} from '../actions/espn-fastcast.actions';
 import { EspnFastcastSelectors } from '../selectors/espn-fastcast.selectors';
 
 @Injectable({
@@ -21,6 +27,7 @@ export class EspnFastcastFacade {
   showFeed$ = select(EspnFastcastSelectors.getShowFeed);
   showLoader$ = select(EspnFastcastSelectors.getShowLoader);
   showNoEventsMessage$ = select(EspnFastcastSelectors.showNoEventsMessage);
+  selectedLeagueId$ = select(EspnFastcastSelectors.getSelectedLeagueId);
 
   constructor(private store: Store) {}
 
@@ -38,5 +45,9 @@ export class EspnFastcastFacade {
 
   setPauseState(): Observable<void> {
     return this.store.dispatch(new SetFastcastPause());
+  }
+
+  setSelectedLeague(leagueSlug: string) {
+    this.store.dispatch(new SetSelectedLeague({ leagueSlug }));
   }
 }

@@ -34,6 +34,11 @@ export class EspnFastcastSelectors {
   }
 
   @Selector([EspnFastcastState])
+  static getSelectedLeagueId(state: EspnFastcastStateModel) {
+    return state.league;
+  }
+
+  @Selector([EspnFastcastState])
   static getConnectionClosed(state: EspnFastcastStateModel) {
     return state.connectionClosed;
   }
