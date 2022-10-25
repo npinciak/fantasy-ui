@@ -64,6 +64,10 @@ export class EspnScoreboardCardComponent implements OnChanges {
       return `${this.event.note}`;
     }
 
+    if (this.event.completed && !this.isPostseason) {
+      return `${this.event.summary}`;
+    }
+
     return this.tickerDate;
   }
 
