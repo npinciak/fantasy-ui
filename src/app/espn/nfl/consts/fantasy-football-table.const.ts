@@ -142,6 +142,21 @@ export const RECEIVING_ROSTER_COLUMNS = [
   },
 ];
 
+export const DST_ROSTER_COLUMNS = [
+  {
+    columnDef: `stats.stats.${FootballStat.SK}`,
+    headerCell: `stats.stats.${FootballStat.SK}`,
+    headerLabel: FOOTBALL_STATS_MAP[FootballStat.SK].abbrev,
+    dataType: TableColumnDataType.Number,
+  },
+  {
+    columnDef: `stats.stats.${FootballStat.INT}`,
+    headerCell: `stats.stats.${FootballStat.INT}`,
+    headerLabel: FOOTBALL_STATS_MAP[FootballStat.INT].abbrev,
+    dataType: TableColumnDataType.Number,
+  },
+];
+
 export namespace FootballTableColumns {
   export const RosterColumnsByLineupSlot = {
     [FootballLineupSlot.QB]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...PASSING_ROSTER_COLUMNS],
@@ -150,7 +165,7 @@ export namespace FootballTableColumns {
     [FootballLineupSlot.TE]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...RECEIVING_ROSTER_COLUMNS],
     [FootballLineupSlot.FLEX]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...RUSHING_ROSTER_COLUMNS, ...RECEIVING_ROSTER_COLUMNS],
     [FootballLineupSlot.K]: DEFAULT_FOOTBALL_ROSTER_COLUMNS,
-    [FootballLineupSlot.DST]: DEFAULT_FOOTBALL_ROSTER_COLUMNS,
+    [FootballLineupSlot.DST]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...DST_ROSTER_COLUMNS],
   };
 
   export const RosterRowsByLineupSlot = {
@@ -180,7 +195,7 @@ export const FOOTBALL_ROSTER_COLUMNS_BY_POS = {
   [FootballPosition.WR]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...RECEIVING_ROSTER_COLUMNS],
   [FootballPosition.TE]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...RECEIVING_ROSTER_COLUMNS],
   [FootballPosition.K]: DEFAULT_FOOTBALL_ROSTER_COLUMNS,
-  [FootballPosition.DST]: DEFAULT_FOOTBALL_ROSTER_COLUMNS,
+  [FootballPosition.DST]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...DST_ROSTER_COLUMNS],
 };
 
 export const FOOTBALL_ROSTER_ROWS_BY_POS = {
