@@ -5,9 +5,9 @@ import { SharedModule } from '@app/@shared/shared.module';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
 import { EspnFastcastEventToggleState } from '../espn-fastcast/state/espn-fastcast-event-toggle.state';
-import { AddLeagueFormComponent } from '../sports-ui/components/add-league-form/add-league-form.component';
 import { EspnPlayerComponent } from './components/espn-player/espn-player.component';
 import { EspnStatsTableComponent } from './components/espn-stats-table/espn-stats-table.component';
+import { EspnPlayerTrendingColComponent } from './components/espn-player-trending-col/espn-player-trending-col.component';
 import { EspnRoutingModule } from './espn-routing.module';
 import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
 import { LineupCardComponent } from './mlb/components/lineup-card/lineup-card.component';
@@ -53,6 +53,7 @@ const declarations = [
   FootballScoreboardCardTeamComponent,
   EspnStatsTableComponent,
   EspnPlayerComponent,
+  EspnPlayerTrendingColComponent,
   StandingsComponent,
   RosterComponent,
   PlayerComponent,
@@ -62,7 +63,6 @@ const declarations = [
   TeamInfoColComponent,
   LeagueScoreboardComponent,
   LineupCardComponent,
-  AddLeagueFormComponent,
 ];
 
 const states = [
