@@ -22,14 +22,6 @@ export function includeLeagues(id: string): boolean {
   return new Set(['10', '28', '46', '90', '775', '776', '20296', '19483']).has(id);
 }
 
-/**
- * Team color handler.
- *
- * Matches colors with poor contrast and replaces with team's alternative color
- *
- * @param val
- * @returns Ex: #445058
- */
 export function teamColorHandler(val: CompetitorsEntity): string | null {
   const color = val.color;
   const altColor = val.alternateColor;
