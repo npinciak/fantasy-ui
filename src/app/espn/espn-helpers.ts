@@ -1,5 +1,6 @@
 import { exists } from '@app/@shared/helpers/utils';
 import { EspnClientLineupEntityMap, EspnClientPlayerStatsByYearMap, EspnClientPlayerStatsYear } from '@espnClient/espn-client.model';
+import { CompetitorsEntity } from '@espnClient/espn-fastcast.model';
 import { BaseballPlayer } from './mlb/models/baseball-player.model';
 import { StatTypePeriodId } from './models/espn-stats.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
@@ -12,11 +13,22 @@ export function includeLeagues(id: string): boolean {
   return new Set(['10', '28', '46', '90', '775', '776', '20296']).has(id);
 }
 
-export function teamColorHandler(val: undefined): null;
-export function teamColorHandler(val: null): null;
-export function teamColorHandler(val: string): string;
-export function teamColorHandler(val: string | undefined | null): string | null {
+
+export function teamColorHandler(val: CompetitorsEntity): string | null {
+  const color = val.color;
+  const altColor = val.alternateColor;
+
   const negativeColors = new Set(['ffffff', 'ffff00']);
+
+  if (exists(color)) {
+    if (negativeColors.has(color)) {
+      if (exists(altColor)) {
+        return `#${altColor}`;
+      }
+    }
+    return `#${color}`;
+  }
+
   return null;
 }
 
