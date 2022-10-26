@@ -74,7 +74,7 @@ export class EspnService {
       name: data.name ?? data.abbreviation,
       color: data.color === 'ffffff' || data.color === 'ffff00' ? `#${data.alternateColor}` : `#${data.color}`,
       altColor: `#${data.alternateColor}` ?? null,
-      record: data.record,
+      record: typeof data.record === 'string' ? data.record : data.record[0].displayValue,
       rank: data.rank ?? null,
       winPct: null,
     };
