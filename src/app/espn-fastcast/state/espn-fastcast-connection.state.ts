@@ -9,8 +9,13 @@ import {
   SetFastcastPause,
   SetSelectedEventType,
   SetSelectedLeague,
-} from '@app/espn-fastcast/actions/espn-fastcast.actions';
-import { OperationCode, transformSportToFastcastEventType, WebSocketBuilder } from '@app/espn-fastcast/models/espn-fastcast-socket.model';
+} from '@app/espn-fastcast/actions/espn-fastcast-connection.actions';
+import {
+  FastcastEventType,
+  OperationCode,
+  transformSportToFastcastEventType,
+  WebSocketBuilder,
+} from '@app/espn-fastcast/models/espn-fastcast-socket.model';
 import { fastcastURIBuilder } from '@app/espn/espn.const';
 import { EspnService } from '@app/espn/service/espn.service';
 import { Action, State, StateContext, Store } from '@ngxs/store';
@@ -19,22 +24,30 @@ import { SetFastcastEvents } from '../actions/espn-fastcast-event.actions';
 import { SetFastcastLeague } from '../actions/espn-fastcast-league.actions';
 import { SetFastcastSports } from '../actions/espn-fastcast-sport.actions';
 import { SetFastcastTeams } from '../actions/espn-fastcast-team.actions';
-import { EspnFastcastStateModel, INITIAL_STATE } from '../models/fastcast-state.model';
+import { EspnFastcastConnectionStateModel } from '../models/fastcast-connection-state.model';
+import { EspnFastcastConnectionSelectors } from '../selectors/espn-fastcast-connection.selectors';
 import { EspnFastcastLeagueSelectors } from '../selectors/espn-fastcast-league.selectors';
 import { EspnFastcastSportSelectors } from '../selectors/espn-fastcast-sport.selectors';
-import { EspnFastcastSelectors } from '../selectors/espn-fastcast.selectors';
 import { EspnFastcastService } from '../service/espn-fastcast.service';
 
-@State<EspnFastcastStateModel>({
-  name: 'espnFastcast',
-  defaults: INITIAL_STATE,
+@State<EspnFastcastConnectionStateModel>({
+  name: 'espnFastcastConnection',
+  defaults: {
+    disconnect: null,
+    connect: null,
+    lastRefresh: null,
+    eventType: FastcastEventType.TopEvents,
+    league: '90',
+    connectionClosed: true,
+    pause: false,
+  },
 })
 @Injectable()
-export class EspnFastcastState {
+export class EspnFastcastConnectionState {
   constructor(private fastcastService: EspnFastcastService, private espnService: EspnService, private store: Store) {}
 
   @Action(ConnectWebSocket)
-  async connectWebsocket({ getState, patchState, dispatch }: StateContext<EspnFastcastStateModel>): Promise<void> {
+  async connectWebsocket({ getState, patchState, dispatch }: StateContext<EspnFastcastConnectionStateModel>): Promise<void> {
     const pause = getState().pause;
 
     if (pause) {
@@ -58,10 +71,10 @@ export class EspnFastcastState {
 
   @Action(HandleWebSocketMessage)
   handleWebSocketMessage(
-    { getState, patchState }: StateContext<EspnFastcastStateModel>,
+    { getState, patchState }: StateContext<EspnFastcastConnectionStateModel>,
     { payload: { message } }: HandleWebSocketMessage
   ): void {
-    const eventType = this.store.selectSnapshot(EspnFastcastSelectors.getEventType);
+    const eventType = this.store.selectSnapshot(EspnFastcastConnectionSelectors.getEventType);
 
     const pause = getState().pause;
 
@@ -102,12 +115,12 @@ export class EspnFastcastState {
   }
 
   @Action(SendWebSocketMessage)
-  sendWebSocketMessage(_: StateContext<EspnFastcastStateModel>, { payload: { message } }: SendWebSocketMessage): void {
+  sendWebSocketMessage(_: StateContext<EspnFastcastConnectionStateModel>, { payload: { message } }: SendWebSocketMessage): void {
     this.fastcastService.sendMessage(message);
   }
 
   @Action(DisconnectWebSocket)
-  disconnectWebsocket({ patchState }: StateContext<EspnFastcastStateModel>): void {
+  disconnectWebsocket({ patchState }: StateContext<EspnFastcastConnectionStateModel>): void {
     this.fastcastService.disconnect();
 
     const disconnect = new Date().getTime();
@@ -116,15 +129,20 @@ export class EspnFastcastState {
   }
 
   @Action(FetchFastcast)
-  async fetchFastcast({ dispatch }: StateContext<EspnFastcastStateModel>, { payload: { uri } }: FetchFastcast): Promise<void> {
+  async fetchFastcast({}: StateContext<EspnFastcastConnectionStateModel>, { payload: { uri } }: FetchFastcast): Promise<void> {
     const { sports, leagues, events, teams } = await this.espnService.espnFastcast(uri).toPromise();
 
-    dispatch([new SetFastcastSports(sports), new SetFastcastLeague(leagues), new SetFastcastEvents(events), new SetFastcastTeams(teams)]);
+    this.store.dispatch([
+      new SetFastcastSports(sports),
+      new SetFastcastLeague(leagues),
+      new SetFastcastEvents(events),
+      new SetFastcastTeams(teams),
+    ]);
   }
 
   @Action(SetSelectedEventType)
   async setSelectedEventType(
-    { patchState }: StateContext<EspnFastcastStateModel>,
+    { patchState }: StateContext<EspnFastcastConnectionStateModel>,
     { payload: { eventType } }: SetSelectedEventType
   ): Promise<void> {
     const sportId = exists(eventType) ? eventType.split('~')[0] : null;
@@ -140,22 +158,22 @@ export class EspnFastcastState {
 
   @Action(SetSelectedLeague)
   async setSelectedLeague(
-    { patchState }: StateContext<EspnFastcastStateModel>,
+    { patchState }: StateContext<EspnFastcastConnectionStateModel>,
     { payload: { leagueSlug } }: SetSelectedLeague
   ): Promise<void> {
     patchState({ league: leagueSlug });
   }
 
   @Action(SetFastcastPause)
-  async setFastcastPause({ patchState, getState, dispatch }: StateContext<EspnFastcastStateModel>): Promise<void> {
+  async setFastcastPause({ patchState, getState }: StateContext<EspnFastcastConnectionStateModel>): Promise<void> {
     const pause = getState().pause;
 
     if (pause) {
       patchState({ pause: false });
-      dispatch(new ConnectWebSocket());
+      this.store.dispatch(new ConnectWebSocket());
     } else {
       patchState({ pause: true });
-      dispatch(new DisconnectWebSocket());
+      this.store.dispatch(new DisconnectWebSocket());
     }
   }
 }
