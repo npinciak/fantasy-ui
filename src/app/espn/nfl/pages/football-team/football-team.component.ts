@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
-import { YearToStatTypePeriod } from '@app/espn/espn-helpers';
+import { FOOTBALL_STAT_PERIOD_FILTER_OPTIONS, YearToStatTypePeriod } from '@app/espn/const/stat-period.const';
 import { StatTypePeriodId } from '@app/espn/models/espn-stats.model';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FOOTBALL_ROSTER_HEADERS_BY_POS, FOOTBALL_ROSTER_ROWS_BY_POS } from '../../consts/fantasy-football-table.const';
 import { NFL_POSITION_MAP } from '../../consts/position.const';
-import { FOOTBALL_STATS_MAP, FOOTBALL_STAT_PERIOD_FILTER_OPTIONS } from '../../consts/stats.const';
+import { FOOTBALL_STATS_MAP } from '../../consts/stats.const';
 import { FantasyFootballLeagueFacade } from '../../facade/fantasy-football-league.facade';
 import { FantasyFootballTeamFacade } from '../../facade/fantasy-football-team.facade';
 import { FootballPosition, FOOTBALL_POSITION_LIST_FILTER } from '../../models/football-position.model';

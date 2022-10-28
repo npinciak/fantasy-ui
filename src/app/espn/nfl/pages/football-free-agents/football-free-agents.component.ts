@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FOOTBALL_STAT_PERIOD_FILTER_OPTIONS } from '@app/espn/const/stat-period.const';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FootballTableColumns } from '../../consts/fantasy-football-table.const';
 import { FOOTBALL_LINEUP_SLOT_MAP } from '../../consts/lineup.const';
-import { FOOTBALL_STATS_MAP, FOOTBALL_STAT_PERIOD_FILTER_OPTIONS } from '../../consts/stats.const';
+import { FOOTBALL_STATS_MAP } from '../../consts/stats.const';
 import { FantasyFootballFreeAgentsFilterFacade } from '../../facade/fantasy-football-free-agents-filter.facade';
 import { FantasyFootballFreeAgentsFacade } from '../../facade/fantasy-football-free-agents.facade';
 import { BasicFootballLineupSlotList, FootballLineupSlot } from '../../models/football-lineup.model';

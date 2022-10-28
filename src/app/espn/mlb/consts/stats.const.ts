@@ -1,17 +1,4 @@
-import { subtractYears } from '@app/@shared/helpers/date';
-import { FilterOptions } from '@app/@shared/models/filter.model';
-import { YearToStatTypePeriod } from '@app/espn/espn-helpers';
-import { StatTypePeriodId } from '@app/espn/models/espn-stats.model';
 import { StatCategory, StatsMap, StatType } from '../models/mlb-stats.model';
-
-export const BASEBALL_STAT_PERIOD_FILTER_OPTIONS: FilterOptions<string>[] = [
-  { value: YearToStatTypePeriod(StatTypePeriodId.Season, subtractYears(1)), label: `${subtractYears(1).getFullYear()} Season` },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Projected), label: `${subtractYears(1).getFullYear()} Projected` },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Season), label: `${subtractYears(1).getFullYear()} Season` },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Last7), label: 'Last 7' },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Last15), label: 'Last 15' },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Last30), label: 'Last 30' },
-];
 
 export const MLB_STATS_MAP: StatsMap = {
   0: { abbrev: 'AB', description: 'At Bats', statCategoryId: StatCategory.Batting, statTypeId: StatType.Batting },
