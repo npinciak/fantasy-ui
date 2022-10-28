@@ -2,6 +2,7 @@ import { exists } from '@app/@shared/helpers/utils';
 import { EspnClientLineupEntityMap, EspnClientPlayerStatsByYearMap, EspnClientPlayerStatsYear } from '@espnClient/espn-client.model';
 import { CompetitorsEntity } from '@espnClient/espn-fastcast.model';
 import { BaseballPlayer } from './mlb/models/baseball-player.model';
+import { StatTypePeriodId } from './models/espn-stats.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
 
 /**
@@ -69,6 +70,18 @@ export function transformUidToId(uid: string | null): string | null {
 export function transformIdToUid(sport: string | null, league: string | null, team: string | null): string | null {
   if (!sport || !league || !team) return null;
   return `s:${sport}~l:${league}~t:${team}`;
+}
+
+export function YearToStatTypePeriod(periodType: StatTypePeriodId, dateObj = new Date()): string {
+  const year = dateObj.getFullYear();
+
+  const isProj = periodType === StatTypePeriodId.Projected;
+
+  return isProj ? `${periodType}${year}` : `0${periodType}${year}`;
+}
+
+export function StatTypePeriodToYear(statTypePeriod: string): string {
+  return statTypePeriod.split('').splice(2, 6).join('');
 }
 
 export function flattenPlayerStats(stats: EspnClientPlayerStatsYear[]): EspnClientPlayerStatsByYearMap;
