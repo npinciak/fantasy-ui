@@ -72,17 +72,7 @@ export function transformIdToUid(sport: string | null, league: string | null, te
   return `s:${sport}~l:${league}~t:${team}`;
 }
 
-export function YearToStatTypePeriod(periodType: StatTypePeriodId, dateObj = new Date()): string {
-  const year = dateObj.getFullYear();
 
-  const isProj = periodType === StatTypePeriodId.Projected;
-
-  return isProj ? `${periodType}${year}` : `0${periodType}${year}`;
-}
-
-export function StatTypePeriodToYear(statTypePeriod: string): string {
-  return statTypePeriod.split('').splice(2, 6).join('');
-}
 
 export function flattenPlayerStats(stats: EspnClientPlayerStatsYear[]): EspnClientPlayerStatsByYearMap;
 export function flattenPlayerStats(stats: EspnClientPlayerStatsYear[] | null): EspnClientPlayerStatsByYearMap | null;
