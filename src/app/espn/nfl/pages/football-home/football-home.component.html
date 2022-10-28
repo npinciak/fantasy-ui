@@ -4,7 +4,7 @@
       [selectedOption]="currentScoringPeriod$ | async"
       title="Week"
       [filterItems]="matchupPeriodIdFilterOptions$ | async"
-      (filterUpdate)="fantasyFootballLeagueFacade.updateCurrentScoringPeriodId($event.value)"
+      (filterUpdate)="fantasyFootballLeagueFacade.updateCurrentScoringPeriodId($event)"
     ></app-dropdown-filter>
     <ng-container *ngFor="let matchup of (matchupListByMatchupPeriodId$ | async)!(currentScoringPeriod$ | async)">
       <mat-card>

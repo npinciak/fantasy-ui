@@ -1,10 +1,6 @@
 <div fxLayout="row" fxLayoutGap="20px">
   <div>
-    <app-dropdown-filter
-      [selectedOption]="sportOption$ | async"
-      [filterItems]="fantasySportOptionList"
-      (filterUpdate)="fantasySportChange($event.value)"
-    ></app-dropdown-filter>
+    <app-dropdown-filter [selectedOption]="sportOption$ | async" [filterItems]="fantasySportOptionList" (filterUpdate)="fantasySportChange($event)"></app-dropdown-filter>
   </div>
   <div>
     <mat-form-field>

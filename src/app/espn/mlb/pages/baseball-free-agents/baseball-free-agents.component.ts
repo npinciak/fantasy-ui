@@ -76,8 +76,8 @@ export class BaseballFreeAgentsComponent implements OnInit {
     this.selectedLeagueTeam = val;
   }
 
-  scoringPeriodIdChange(change: MatSelectChange): void {
-    this.scoringPeriodId = change.value;
+  scoringPeriodIdChange(change: string): void {
+    this.scoringPeriodId = change;
   }
 
   onBatterStatChange(val: EspnBaseballStat): void {
