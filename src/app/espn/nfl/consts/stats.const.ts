@@ -6,15 +6,15 @@ import { FootballStatsMap } from '../models/football-stats.model';
 
 export const FOOTBALL_STAT_PERIOD_FILTER_OPTIONS: FilterOptions<string>[] = [
   {
-    value: YearToStatTypePeriod(StatTypePeriodId.Season, new Date().getFullYear().toString()),
-    label: `${new Date().getFullYear().toString()} Season`,
+    value: YearToStatTypePeriod(StatTypePeriodId.Season),
+    label: `${new Date().getFullYear()} Season`,
   },
   {
-    value: YearToStatTypePeriod(StatTypePeriodId.Projected, new Date().getFullYear().toString()),
-    label: `${new Date().getFullYear().toString()} Projected`,
+    value: YearToStatTypePeriod(StatTypePeriodId.Projected),
+    label: `${new Date().getFullYear()} Projected`,
   },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Season, subtractYears(1)), label: `${subtractYears(1)} Season` },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Projected, subtractYears(1)), label: `${subtractYears(1)} Proj` },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Season, subtractYears(1)), label: `${subtractYears(1).getFullYear()} Season` },
+  { value: YearToStatTypePeriod(StatTypePeriodId.Projected, subtractYears(1)), label: `${subtractYears(1).getFullYear()} Proj` },
 ];
 
 export const FOOTBALL_STATS_MAP: FootballStatsMap = {
