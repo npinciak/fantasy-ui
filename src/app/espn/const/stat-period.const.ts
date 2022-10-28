@@ -23,6 +23,12 @@ export const BASEBALL_STAT_PERIOD_FILTER_OPTIONS: FilterOptions<string>[] = [
 
 export const FOOTBALL_STAT_PERIOD_FILTER_OPTIONS: FilterOptions<string>[] = BASE_STAT_PERIOD_FILTER_OPTIONS;
 
+/**
+ * Returns transformed statPeriodId
+ * @param periodType
+ * @param dateObj
+ * @returns Ex: 0102022
+ */
 export function YearToStatTypePeriod(periodType: StatTypePeriodId, dateObj = new Date()): string {
   const year = dateObj.getFullYear();
 
@@ -30,6 +36,7 @@ export function YearToStatTypePeriod(periodType: StatTypePeriodId, dateObj = new
 
   return isProj ? `${periodType}${year}` : `0${periodType}${year}`;
 }
+
 
 export function StatTypePeriodToYear(statTypePeriod: string): string {
   return statTypePeriod.split('').splice(2, 6).join('');
