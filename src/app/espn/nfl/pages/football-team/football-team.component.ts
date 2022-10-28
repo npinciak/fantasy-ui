@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { YearToStatTypePeriod } from '@app/espn/espn-helpers';
 import { StatTypePeriodId } from '@app/espn/models/espn-stats.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { FOOTBALL_ROSTER_HEADERS_BY_POS, FOOTBALL_ROSTER_ROWS_BY_POS } from '../../consts/fantasy-football-table.const';
 import { NFL_POSITION_MAP } from '../../consts/position.const';
 import { FOOTBALL_STATS_MAP, FOOTBALL_STAT_PERIOD_FILTER_OPTIONS } from '../../consts/stats.const';
 import { FantasyFootballLeagueFacade } from '../../facade/fantasy-football-league.facade';
 import { FantasyFootballTeamFacade } from '../../facade/fantasy-football-team.facade';
-import { FootballPosition, FOOTBALL_POSITION_LIST_DEFAULT } from '../../models/football-position.model';
+import { FootballPosition, FOOTBALL_POSITION_LIST_FILTER } from '../../models/football-position.model';
 
 @Component({
   selector: 'app-football-team',
@@ -16,10 +17,11 @@ import { FootballPosition, FOOTBALL_POSITION_LIST_DEFAULT } from '../../models/f
   styleUrls: ['./football-team.component.scss'],
 })
 export class FootballTeamComponent implements OnInit {
-  readonly leagueId = this.activatedRoute.snapshot.params.leagueId;
+  readonly leagueId$ = this.routerFacade.leagueId$;
+  readonly teamId$ = this.routerFacade.teamId$;
 
   readonly FOOTBALL_STATS_MAP = FOOTBALL_STATS_MAP;
-  readonly FOOTBALL_POSITION_LIST = FOOTBALL_POSITION_LIST_DEFAULT;
+  readonly FOOTBALL_POSITION_LIST_FILTER = FOOTBALL_POSITION_LIST_FILTER;
   readonly NFL_POSITION_MAP = NFL_POSITION_MAP;
 
   readonly FOOTBALL_STAT_PERIOD_FILTER_OPTIONS = FOOTBALL_STAT_PERIOD_FILTER_OPTIONS;
@@ -29,27 +31,54 @@ export class FootballTeamComponent implements OnInit {
 
   readonly FootballPosition = FootballPosition;
 
-  selectedPosition: FootballPosition = FootballPosition.QB;
-  scoringPeriodId: string = YearToStatTypePeriod(StatTypePeriodId.Season, new Date().getFullYear().toString());
+  isLoading$ = this.footballLeagueFacade.isLoading$;
 
-  scoringPeriodId$ = new BehaviorSubject('');
+  scoringPeriodId$ = new BehaviorSubject(YearToStatTypePeriod(StatTypePeriodId.Season, new Date().getFullYear().toString()));
+  selectedPosition$ = new BehaviorSubject(FootballPosition.QB);
+
+  starters$ = combineLatest([this.footballTeamFacade.starters$, this.teamId$]).pipe(map(([starters, teamId]) => starters(teamId)));
+  startersPoints$ = combineLatest([this.footballTeamFacade.startersPoints$, this.teamId$]).pipe(
+    map(([startersPoints, teamId]) => startersPoints(teamId))
+  );
+
+  bench$ = combineLatest([this.footballTeamFacade.bench$, this.teamId$]).pipe(map(([bench, teamId]) => bench(teamId)));
+  benchPoints$ = combineLatest([this.footballTeamFacade.benchPoints$, this.teamId$]).pipe(
+    map(([benchPoints, teamId]) => benchPoints(teamId))
+  );
+
+  currentScoringPeriodId$ = this.footballLeagueFacade.currentScoringPeriodId$;
+
+  tableData$ = combineLatest([
+    this.footballTeamFacade.teamStatsByPositionId$,
+    this.scoringPeriodId$,
+    this.selectedPosition$,
+    this.teamId$,
+  ]).pipe(
+    map(([teamStatsByPositionId, scoringPeriodId, selectedPosition, teamId]) =>
+      teamStatsByPositionId(teamId, scoringPeriodId, selectedPosition)
+    )
+  );
+
+  tableConfig$ = combineLatest([this.selectedPosition$]).pipe(
+    map(([selectedPosition]) => ({
+      rows: FOOTBALL_ROSTER_ROWS_BY_POS[selectedPosition],
+      headers: FOOTBALL_ROSTER_HEADERS_BY_POS[selectedPosition],
+    }))
+  );
 
   constructor(
     readonly footballLeagueFacade: FantasyFootballLeagueFacade,
     readonly footballTeamFacade: FantasyFootballTeamFacade,
-    private activatedRoute: ActivatedRoute
+    readonly routerFacade: RouterFacade
   ) {}
-
-  readonly teamId = this.activatedRoute.snapshot.params.teamId;
 
   ngOnInit(): void {}
 
-  onSelectedPositionChange(val: FootballPosition) {
-    this.selectedPosition = val;
+  onSelectedPositionChange(val) {
+    this.selectedPosition$.next(Number(val) as unknown as FootballPosition);
   }
 
   scoringPeriodIdChange(val) {
-    this.scoringPeriodId = val;
     this.scoringPeriodId$.next(val);
   }
 }
