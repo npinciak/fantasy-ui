@@ -34,8 +34,8 @@ export function addHoursToDate(date: Date, hours: number): Date {
  * @param date
  * @returns
  */
-export function subtractYears(numOfYears, date = new Date()) {
-  return new Date(date.setFullYear(date.getFullYear() - numOfYears)).getFullYear().toString();
+export function subtractYears(numOfYears, date = new Date()): Date {
+  return new Date(date.setFullYear(date.getFullYear() - numOfYears));
 }
 
 /**

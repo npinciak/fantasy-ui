@@ -26,8 +26,6 @@ export class FootballLineupCardComponent {
   readonly InjurySeverityColorByInjurySeverity = InjurySeverityColorByInjurySeverity;
   readonly PlayerStatusAbbrevByInjuryStatusType = PlayerStatusAbbrevByInjuryStatusType;
 
-  constructor() {}
-
   playerLabel(player: FootballPlayer) {
     return `${player.name}, ${player.team}, ${player.lineupSlot}`;
   }

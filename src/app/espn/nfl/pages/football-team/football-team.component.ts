@@ -33,7 +33,7 @@ export class FootballTeamComponent implements OnInit {
 
   isLoading$ = this.footballLeagueFacade.isLoading$;
 
-  scoringPeriodId$ = new BehaviorSubject(YearToStatTypePeriod(StatTypePeriodId.Season, new Date().getFullYear().toString()));
+  scoringPeriodId$ = new BehaviorSubject(YearToStatTypePeriod(StatTypePeriodId.Season, new Date()));
   selectedPosition$ = new BehaviorSubject(FootballPosition.QB);
 
   starters$ = combineLatest([this.footballTeamFacade.starters$, this.teamId$]).pipe(map(([starters, teamId]) => starters(teamId)));

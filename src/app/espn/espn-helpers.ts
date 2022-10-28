@@ -48,16 +48,17 @@ export function transformUidToId(uid: string | null): string | null {
   return uid.split('~')[1].replace('l:', '');
 }
 
-export function transformIdToUid(sport: null, league: null, team: null): null;
-export function transformIdToUid(sport: string, league: string, team: string): string;
 export function transformIdToUid(sport: string | null, league: string | null, team: string | null): string | null {
   if (!sport || !league || !team) return null;
   return `s:${sport}~l:${league}~t:${team}`;
 }
 
-export function YearToStatTypePeriod(periodType: StatTypePeriodId, year: string): string {
-  if (periodType === StatTypePeriodId.Projected) return `${periodType}${year}`;
-  else return `0${periodType}${year}`;
+export function YearToStatTypePeriod(periodType: StatTypePeriodId, dateObj = new Date()): string {
+  const year = dateObj.getFullYear();
+
+  const isProj = periodType === StatTypePeriodId.Projected;
+
+  return isProj ? `${periodType}${year}` : `0${periodType}${year}`;
 }
 
 export function StatTypePeriodToYear(statTypePeriod: string): string {
