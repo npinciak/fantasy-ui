@@ -37,6 +37,7 @@ export function YearToStatTypePeriod(periodType: StatTypePeriodId, dateObj = new
   return isProj ? `${periodType}${year}` : `0${periodType}${year}`;
 }
 
+
 export function StatTypePeriodToYear(statTypePeriod: string): string {
   return statTypePeriod.split('').splice(2, 6).join('');
 }
