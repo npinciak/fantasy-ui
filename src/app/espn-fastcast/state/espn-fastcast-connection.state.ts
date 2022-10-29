@@ -5,6 +5,7 @@ import {
   DisconnectWebSocket,
   FetchFastcast,
   HandleWebSocketMessage,
+  name,
   SendWebSocketMessage,
   SetFastcastPause,
   SetSelectedEventType,
@@ -31,15 +32,15 @@ import { EspnFastcastSportSelectors } from '../selectors/espn-fastcast-sport.sel
 import { EspnFastcastService } from '../service/espn-fastcast.service';
 
 @State<EspnFastcastConnectionStateModel>({
-  name: 'espnFastcastConnection',
+  name,
   defaults: {
     disconnect: null,
     connect: null,
     lastRefresh: null,
-    eventType: FastcastEventType.TopEvents,
+    eventType: FastcastEventType.Soccer,
     league: '90',
     connectionClosed: true,
-    pause: false,
+    pause: true,
   },
 })
 @Injectable()

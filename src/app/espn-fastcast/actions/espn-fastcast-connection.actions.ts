@@ -1,5 +1,4 @@
-const name = 'espnFastcastConnection';
-
+export const name = 'espnFastcastConnection';
 export class ConnectWebSocket {
   static readonly type = `[${name}] ConnectWebSocket`;
 }
