@@ -37,7 +37,7 @@ import { EspnFastcastService } from '../service/espn-fastcast.service';
     disconnect: null,
     connect: null,
     lastRefresh: null,
-    eventType: FastcastEventType.TopEvents,
+    eventType: FastcastEventType.Soccer,
     league: '90',
     connectionClosed: true,
     pause: true,
