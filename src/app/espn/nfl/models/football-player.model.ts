@@ -22,7 +22,7 @@ export type FootballPlayer = PlayerEntity &
   FootballPlayerAttributes &
   Pick<EspnClientPlayer, 'lineupSlotId'> &
   Pick<EspnClientPlayerInfo, 'defaultPositionId'> &
-  Pick<EspnClientPlayerOwnership, 'percentChange' | 'percentOwned'>;
+  Pick<EspnClientPlayerOwnership, 'percentChange' | 'percentOwned' | 'percentStarted'>;
 
 export type FootballPlayerFreeAgent = FootballPlayer & Omit<FootballPlayer, 'lineupSlotId'>;
 

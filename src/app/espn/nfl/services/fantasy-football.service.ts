@@ -59,8 +59,7 @@ export class FantasyFootballService {
     const extendedStats = null;
 
     const { lineupSlotId } = player;
-    const { percentOwned, percentChange } = player.playerPoolEntry.player.ownership;
-    const { defaultPositionId, injuryStatus } = player.playerPoolEntry.player;
+    const { percentOwned, percentChange, percentStarted } = player.playerPoolEntry.player.ownership;
     const { defaultPositionId, injuryStatus, outlooks } = player.playerPoolEntry.player;
 
     const outlookByWeek = FantasyFootballService.transformOutlook(outlooks);
@@ -72,6 +71,7 @@ export class FantasyFootballService {
       defaultPositionId,
       percentChange,
       percentOwned,
+      percentStarted,
       stats,
       extendedStats,
       outlookByWeek,
@@ -143,7 +143,8 @@ export class FantasyFootballService {
 
       const stats = flattenPlayerStats(p.player.stats);
 
-      const { percentChange, percentOwned } = p.player.ownership;
+      const { percentChange, percentOwned, percentStarted } = p.player.ownership;
+
       const outlookByWeek = FantasyFootballService.transformOutlook(p.player.outlooks);
 
       return {
@@ -162,6 +163,7 @@ export class FantasyFootballService {
         points: 0, // p.player.appliedStatTotal,
         percentChange,
         percentOwned,
+        percentStarted,
         stats,
         extendedStats,
         outlookByWeek,
