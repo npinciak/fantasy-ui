@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { UrlBuilder, UrlFragments } from '@app/@core/store/router/url-builder';
 import { select } from '@app/@shared/models/typed-select';
-import { Navigate } from '@ngxs/router-plugin';
 import { Store } from '@ngxs/store';
 import { RouterSelector } from './router.selectors';
 
@@ -10,11 +10,10 @@ import { RouterSelector } from './router.selectors';
 })
 export class RouterFacade {
   sport$ = select(RouterSelector.getSport);
-
   leagueId$ = select(RouterSelector.getLeagueId);
   teamId$ = select(RouterSelector.getTeamId);
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private router: Router) {}
 
   get leagueId(): string | null {
     return this.store.selectSnapshot(RouterSelector.getLeagueId);
@@ -29,30 +28,42 @@ export class RouterFacade {
   }
 
   navigateToEspnHome() {
-    return this.store.dispatch(new Navigate([UrlBuilder.espnBaseUrl]));
+    this.navigate([UrlBuilder.espnBaseUrl]);
   }
 
   navigateToEspnBaseballLeagueHome(leagueId: string | null) {
-    return this.store.dispatch(new Navigate(UrlBuilder.espnMlbLeague(leagueId)));
+    this.navigate(UrlBuilder.espnMlbLeague(leagueId));
   }
 
   navigateToLeagueHome(sport: UrlFragments, leagueId: string | null) {
-    return this.store.dispatch(new Navigate(UrlBuilder.espnLeague(sport, leagueId)));
+    this.navigate(UrlBuilder.espnLeague(sport, leagueId));
   }
 
   navigateToFreeAgents(sport: UrlFragments, leagueId: string | null) {
-    return this.store.dispatch(new Navigate(UrlBuilder.espnFreeAgents(sport, leagueId)));
+    this.navigate(UrlBuilder.espnFreeAgents(sport, leagueId));
+  }
+
+  navigateToEspnFootballTeam(leagueId: string | null, teamId: string | null) {
+    this.navigate(UrlBuilder.espnTeam(UrlFragments.NFL, leagueId, teamId));
   }
 
   navigateToTeam(sport: UrlFragments, leagueId: string | null, teamId: string | null) {
-    return this.store.dispatch(new Navigate(UrlBuilder.espnTeam(sport, leagueId, teamId)));
+    this.navigate(UrlBuilder.espnTeam(sport, leagueId, teamId));
   }
 
   navigateToEspnBaseballFreeAgents(leagueId: string | null) {
-    return this.store.dispatch(new Navigate(UrlBuilder.espnMlbLeagueFreeAgents(leagueId)));
+    this.navigate(UrlBuilder.espnMlbLeagueFreeAgents(leagueId));
   }
 
   navigateToEspnBaseballTeam(leagueId: string | null, teamId: string | null) {
-    return this.store.dispatch(new Navigate(UrlBuilder.espnMlbLeagueTeam(leagueId, teamId)));
+    this.navigate(UrlBuilder.espnMlbLeagueTeam(leagueId, teamId));
+  }
+
+  navigateDfs(sport: UrlFragments, site: string) {
+    this.navigate(UrlBuilder.dfsSlates(sport, site), { queryParams: { sport: sport, site: site } });
+  }
+
+  private navigate(route: any[], opt?: any) {
+    return this.router.navigate(route, opt);
   }
 }

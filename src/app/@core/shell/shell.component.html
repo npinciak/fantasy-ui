@@ -9,11 +9,12 @@
 <mat-drawer-container style="height: 100%">
   <mat-drawer #drawer style="width: 300px">
     <mat-nav-list>
-      <a mat-list-item (click)="routerFacade.navigateToEspnHome()">ESPN</a>
-      <a mat-list-item (click)="routerFacade.navigateToLeagueHome(sport, leagueId)">League Home</a>
-      <a mat-list-item (click)="routerFacade.navigateToTeam(sport, leagueId, teamId)">Team</a>
-      <a mat-list-item (click)="routerFacade.navigateToFreeAgents(sport, leagueId)">Free Agents</a>
-      <a mat-list-item (click)="navigate()">DK</a>
+      <a mat-list-item (click)="onNavigateToEspnHome()">ESPN</a>
+      <a mat-list-item (click)="onNavigateToEspnLeagueHome()">League Home</a>
+      <a mat-list-item (click)="onNavigateToEspnTeam()">Team </a>
+      <a mat-list-item>Free Agents {{ leagueId }} {{ sport$ | async }},{{ leagueId$ | async }}</a>
+      <a mat-list-item (click)="navigateDfs(URL_FRAGMENT.MLB)">DK MLB</a>
+      <a mat-list-item (click)="navigateDfs(URL_FRAGMENT.NFL)">DK NFL</a>
     </mat-nav-list>
   </mat-drawer>
   <mat-drawer-content>
