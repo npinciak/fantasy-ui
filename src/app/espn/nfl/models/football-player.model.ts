@@ -15,6 +15,7 @@ export interface FootballPlayerAttributes {
   points: number;
   stats: EspnClientPlayerStatsByYearMap | null;
   extendedStats: ExtendedFootballStatsMap | null;
+  outlookByWeek: PlayerOutlookByWeek[];
 }
 
 export type FootballPlayer = PlayerEntity &
@@ -24,3 +25,8 @@ export type FootballPlayer = PlayerEntity &
   Pick<EspnClientPlayerOwnership, 'percentChange' | 'percentOwned'>;
 
 export type FootballPlayerFreeAgent = FootballPlayer & Omit<FootballPlayer, 'lineupSlotId'>;
+
+export type PlayerOutlookByWeek = {
+  week: number;
+  outlook: string | null;
+};

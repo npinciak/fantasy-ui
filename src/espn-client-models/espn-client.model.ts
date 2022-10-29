@@ -307,10 +307,13 @@ export interface EspnClientPlayerInfo {
   injured: boolean;
   injuryStatus: EspnPlayerInjuryStatus;
   ownership: EspnClientPlayerOwnership;
+  outlooks?: EspnClientPlayerOutlooksMap;
   eligibleSlots: number[];
   stats?: EspnClientPlayerStatsYear[];
   starterStatusByProGame: EspnClientGameStatus;
 }
+
+export type EspnClientPlayerOutlooksMap = { outlooksByWeek?: Record<string, string> };
 
 export type EspnClientGameStatus = Record<number, string>;
 

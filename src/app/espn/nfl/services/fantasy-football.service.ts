@@ -12,6 +12,7 @@ import {
   EspnClientLeague,
   EspnClientPaginatedFilter,
   EspnClientPlayer,
+  EspnClientPlayerOutlooksMap,
 } from '@espnClient/espn-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -26,6 +27,27 @@ import { FootballTeam } from '../models/football-team.model';
   providedIn: 'root',
 })
 export class FantasyFootballService {
+  static transformOutlook(outlooks?: EspnClientPlayerOutlooksMap) {
+    if (!exists(outlooks)) {
+      return [];
+    }
+
+    if (!exists(outlooks.outlooksByWeek)) {
+      return [];
+    }
+
+    const weeklyOutlook = outlooks.outlooksByWeek;
+
+    return Object.keys(outlooks.outlooksByWeek)
+      .map(k => {
+        return {
+          week: Number(k),
+          outlook: weeklyOutlook[k],
+        };
+      })
+      .sort((a, b) => b.week - a.week);
+  }
+
   static transformEspnClientTeamPlayerToFootballPlayer(player: EspnClientPlayer): FootballPlayer {
     if (!exists(player.playerPoolEntry)) {
       throw new Error('player.playerPoolEntry must be defined');
@@ -39,6 +61,9 @@ export class FantasyFootballService {
     const { lineupSlotId } = player;
     const { percentOwned, percentChange } = player.playerPoolEntry.player.ownership;
     const { defaultPositionId, injuryStatus } = player.playerPoolEntry.player;
+    const { defaultPositionId, injuryStatus, outlooks } = player.playerPoolEntry.player;
+
+    const outlookByWeek = FantasyFootballService.transformOutlook(outlooks);
 
     return {
       team,
@@ -49,6 +74,7 @@ export class FantasyFootballService {
       percentOwned,
       stats,
       extendedStats,
+      outlookByWeek,
       id: player.playerId.toString(),
       name: player.playerPoolEntry.player.fullName,
       img: !isDST ? headshotImgBuilder(player.playerId, 'nfl') : logoImgBuilder(team, 'nfl'),
@@ -118,6 +144,7 @@ export class FantasyFootballService {
       const stats = flattenPlayerStats(p.player.stats);
 
       const { percentChange, percentOwned } = p.player.ownership;
+      const outlookByWeek = FantasyFootballService.transformOutlook(p.player.outlooks);
 
       return {
         id: p.id.toString(),
@@ -137,6 +164,7 @@ export class FantasyFootballService {
         percentOwned,
         stats,
         extendedStats,
+        outlookByWeek,
       };
     });
   }
