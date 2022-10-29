@@ -12,7 +12,7 @@
       <a mat-list-item (click)="onNavigateToEspnHome()">ESPN</a>
       <a mat-list-item (click)="onNavigateToEspnLeagueHome()">League Home</a>
       <a mat-list-item (click)="onNavigateToEspnTeam()">Team </a>
-      <a mat-list-item>Free Agents {{ leagueId }} {{ sport$ | async }},{{ leagueId$ | async }}</a>
+      <a mat-list-item *ngIf="routerParams$ | async as params" (click)="onNavigateToEspnFreeAgents(params.sport, params.leagueId)">Free Agents </a>
       <a mat-list-item (click)="navigateDfs(URL_FRAGMENT.MLB)">DK MLB</a>
       <a mat-list-item (click)="navigateDfs(URL_FRAGMENT.NFL)">DK NFL</a>
     </mat-nav-list>

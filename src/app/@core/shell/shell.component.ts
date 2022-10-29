@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { UrlBuilder, UrlFragments, UrlQueryParams } from '@app/@core/store/router/url-builder';
 import { EspnFastcastConnectionFacade } from '@app/espn-fastcast/facade/espn-fastcast-connection.facade';
 import { Store } from '@ngxs/store';
+import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { RouterFacade } from '../store/router/router.facade';
 
 @Component({
@@ -23,6 +25,14 @@ export class ShellComponent implements OnInit {
   sport$ = this.routerFacade.sport$;
   leagueId$ = this.routerFacade.leagueId$;
   teamId$ = this.routerFacade.teamId$;
+
+  routerParams$ = combineLatest([this.routerFacade.sport$, this.routerFacade.leagueId$, this.routerFacade.teamId$]).pipe(
+    map(([sport, leagueId, teamId]) => ({
+      sport,
+      leagueId,
+      teamId,
+    }))
+  );
 
   constructor(private fastcastFacade: EspnFastcastConnectionFacade, readonly routerFacade: RouterFacade, private store: Store) {}
 
