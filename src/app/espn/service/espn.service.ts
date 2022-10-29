@@ -62,13 +62,16 @@ export class EspnService {
     if (!data) {
       return null;
     }
+
+    const { id, uid, score } = data;
+
     return {
-      id: data.id,
-      uid: data.uid,
+      id,
+      uid,
       eventUid,
+      score,
       abbrev: data.abbreviation,
       isHome: data.homeAway,
-      score: data.score,
       logo: data.logo.length > 0 ? data.logo : NO_LOGO,
       isWinner: data.winner,
       name: data.name ?? data.abbreviation,

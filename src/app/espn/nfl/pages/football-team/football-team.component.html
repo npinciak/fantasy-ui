@@ -11,6 +11,7 @@
       [lineup]="starters$ | async"
       [points]="startersPoints$ | async"
       [week]="currentScoringPeriodId$ | async"
+      (playerClicked)="onPlayerClick($event)"
     ></app-football-lineup-card>
     <div style="margin: 10px 0"></div>
     <app-football-lineup-card title="Bench" [lineup]="bench$ | async" [points]="benchPoints$ | async" [week]="currentScoringPeriodId$ | async"></app-football-lineup-card>

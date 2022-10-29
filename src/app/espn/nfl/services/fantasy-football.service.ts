@@ -77,7 +77,7 @@ export class FantasyFootballService {
       outlookByWeek,
       id: player.playerId.toString(),
       name: player.playerPoolEntry.player.fullName,
-      img: !isDST ? headshotImgBuilder(player.playerId, 'nfl') : logoImgBuilder(team, 'nfl'),
+      img: !isDST ? headshotImgBuilder(player.playerId, { league: 'nfl' }) : logoImgBuilder(team, 'nfl'),
       teamId: player.playerPoolEntry.player.proTeamId.toString(),
       teamUid: `s:20~l:28~t:${player.playerPoolEntry?.player.proTeamId}`,
       position: NFL_POSITION_MAP[player.playerPoolEntry.player.defaultPositionId].abbrev,
@@ -150,7 +150,7 @@ export class FantasyFootballService {
       return {
         id: p.id.toString(),
         name: p.player.fullName,
-        img: !isDST ? headshotImgBuilder(p.id, 'nfl') : logoImgBuilder(team, 'nfl'),
+        img: !isDST ? headshotImgBuilder(p.id, { league: 'nfl' }) : logoImgBuilder(team, 'nfl'),
         team,
         teamId: p.player.proTeamId.toString(),
         teamUid: `s:20~l:28~t:${p.player.proTeamId}`,

@@ -284,12 +284,7 @@ export interface EspnClientPlayer {
 }
 
 export type EspnClientFreeAgent = EspnClientFreeAgentEntry;
-
-export type EspnClientFreeAgentEntry = {
-  id: number;
-  player: EspnClientPlayerInfo;
-  ratings: EspnClientPlayerRatings;
-};
+export type EspnClientFreeAgentEntry = EspnClientPlayerEntry;
 
 export interface EspnClientPlayerEntry {
   id: number;

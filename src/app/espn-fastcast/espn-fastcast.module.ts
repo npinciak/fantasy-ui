@@ -9,6 +9,7 @@ import { EspnScoreboardCardTeamComponent } from './components/espn-scoreboard-ca
 import { EspnScoreboardCardComponent } from './components/espn-scoreboard-card/espn-scoreboard-card.component';
 import { EspnScoreboardComponent } from './components/espn-scoreboard/espn-scoreboard.component';
 import { EspnFastcastConnectionState } from './state/espn-fastcast-connection.state';
+import { EspnFastcastEventToggleState } from './state/espn-fastcast-event-toggle.state';
 import { EspnFastcastEventsState } from './state/espn-fastcast-events.state';
 import { EspnFastcastLeagueState } from './state/espn-fastcast-league.state';
 import { EspnFastcastSportState } from './state/espn-fastcast-sport.state';
@@ -21,6 +22,7 @@ const states = [
   EspnFastcastLeagueState,
   EspnFastcastTeamState,
   EspnFastcastSportState,
+  EspnFastcastEventToggleState,
 ];
 @NgModule({
   declarations: components,

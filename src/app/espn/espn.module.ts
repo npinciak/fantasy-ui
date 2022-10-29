@@ -5,7 +5,6 @@ import { SharedModule } from '@app/@shared/shared.module';
 import { SportsUiModule } from '@app/sports-ui/sports-ui.module';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
-import { EspnFastcastEventToggleState } from '../espn-fastcast/state/espn-fastcast-event-toggle.state';
 import { EspnPlayerDialogComponent } from './components/espn-player-dialog/espn-player-dialog.component';
 import { EspnPlayerTrendingColComponent } from './components/espn-player-trending-col/espn-player-trending-col.component';
 import { EspnPlayerComponent } from './components/espn-player/espn-player.component';
@@ -57,7 +56,6 @@ const states = [
   FantasyBaseballFreeAgentsFilterState,
   FantasyBaseballPlayerState,
   FantasyBaseballEventsState,
-  EspnFastcastEventToggleState,
 ];
 
 const imports = [
