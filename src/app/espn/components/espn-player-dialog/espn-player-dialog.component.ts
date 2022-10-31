@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { headshotImgBuilder } from '@app/espn/espn.const';
 
 @Component({
   selector: 'app-espn-player-dialog',
@@ -7,7 +8,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./espn-player-dialog.component.scss'],
 })
 export class EspnPlayerDialogComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { playerId: string }, public dialogRef: MatDialogRef<EspnPlayerDialogComponent>) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { player: any }, public dialogRef: MatDialogRef<EspnPlayerDialogComponent>) {
+    console.log(data);
+  }
+
+  get playerImg() {
+    return headshotImgBuilder(this.data.player.id, { league: 'nfl', width: 426, height: 320 });
+  }
 
   closeDialog() {
     this.dialogRef.close();

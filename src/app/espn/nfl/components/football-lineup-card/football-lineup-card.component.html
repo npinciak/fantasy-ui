@@ -6,7 +6,7 @@
       </div>
     </div>
     <mat-list>
-      <span mat-list-item *ngFor="let player of lineup">
+      <span mat-list-item *ngFor="let player of lineup" (click)="onPlayerClick(player)">
         <app-espn-player [player]="player"></app-espn-player>
       </span>
     </mat-list>
