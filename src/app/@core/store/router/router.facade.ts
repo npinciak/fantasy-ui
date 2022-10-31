@@ -10,9 +10,10 @@ import { RouterSelector } from './router.selectors';
 })
 export class RouterFacade {
   sport$ = select(RouterSelector.getSport);
-
   leagueId$ = select(RouterSelector.getLeagueId);
   teamId$ = select(RouterSelector.getTeamId);
+  dfsSite$ = select(RouterSelector.getDfsSite);
+  dfsSport$ = select(RouterSelector.getDfsSport);
 
   constructor(private store: Store) {}
 
@@ -26,6 +27,14 @@ export class RouterFacade {
 
   get sport(): UrlFragments {
     return this.store.selectSnapshot(RouterSelector.getSport);
+  }
+
+  get dfsSite(): UrlFragments {
+    return this.store.selectSnapshot(RouterSelector.getDfsSite);
+  }
+
+  get dfsSport(): UrlFragments {
+    return this.store.selectSnapshot(RouterSelector.getDfsSport);
   }
 
   navigateToEspnHome() {

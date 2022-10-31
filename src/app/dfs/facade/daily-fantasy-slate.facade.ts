@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
 import { FetchSlates } from '../actions/daily-fantasy-slates.actions';
 import { DailyFantasySlateSelectors } from '../selectors/daily-fantasy-slate.selectors';
 
@@ -14,7 +13,7 @@ export class DailyFantasySlateFacade {
 
   constructor(private store: Store) {}
 
-  fetchSlates(): Observable<void> {
-    return this.store.dispatch(new FetchSlates());
+  fetchSlates(site: string, sport: string): void {
+    this.store.dispatch(new FetchSlates({ site, sport }));
   }
 }

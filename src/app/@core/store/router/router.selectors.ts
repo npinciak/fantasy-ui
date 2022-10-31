@@ -1,5 +1,5 @@
 import { Params } from '@angular/router';
-import { objectIsEmpty } from '@app/@shared/helpers/utils';
+import { exists, objectIsEmpty } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { RouterState, RouterStateModel as RouterStateOuterModel } from '@ngxs/router-plugin';
 import { RouterStateModel } from './router-state.model';
@@ -37,9 +37,30 @@ export class RouterSelector {
     return objectIsEmpty(params) ? null : (params?.teamId as string);
   }
 
-  @Selector([RouterSelector.getRouteData])
-  static getSport(data: any) {
-    return data.sport;
+  @Selector([RouterSelector.getRouterParams])
+  static getSport(params: Params | undefined) {
+    if (!exists(params) || !exists(params.sport)) {
+      return;
+    }
+    return params.sport;
+  }
+
+  @Selector([RouterSelector.getRouterQueryParams])
+  static getDfsSport(queryParams: Params | undefined) {
+    console.log(queryParams);
+    if (!exists(queryParams) || !exists(queryParams.sport)) {
+      return;
+    }
+
+    return queryParams.sport;
+  }
+
+  @Selector([RouterSelector.getRouterQueryParams])
+  static getDfsSite(queryParams: Params | undefined) {
+    if (!exists(queryParams) || !exists(queryParams.site)) {
+      return;
+    }
+    return queryParams.site;
   }
 
   @Selector([RouterSelector.getLeagueId, RouterSelector.getTeamId])
