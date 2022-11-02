@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UrlBuilder, UrlFragments, UrlQueryParams } from '@app/@core/store/router/url-builder';
-import { EspnFastcastFacade } from '@app/espn-fastcast/facade/espn-fastcast.facade';
+import { EspnFastcastConnectionFacade } from '@app/espn-fastcast/facade/espn-fastcast-connection.facade';
 
 @Component({
   selector: 'app-page-layout',
@@ -14,7 +14,7 @@ export class PageLayoutComponent implements OnInit {
   readonly URL_QUERY_PARAMS = UrlQueryParams;
   readonly UrlBuilder = UrlBuilder;
 
-  constructor(private fastcastFacade: EspnFastcastFacade) {}
+  constructor(private fastcastFacade: EspnFastcastConnectionFacade) {}
 
   ngOnInit(): void {
     this.fastcastFacade.connect();

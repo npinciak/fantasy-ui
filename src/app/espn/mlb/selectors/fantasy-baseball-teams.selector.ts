@@ -3,8 +3,7 @@ import { linearRegression } from '@app/@shared/helpers/graph.helpers';
 import { exists } from '@app/@shared/helpers/utils';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
 import { EspnFastcastTeamSelectors } from '@app/espn-fastcast/selectors/espn-fastcast-team.selectors';
-import { benchPlayersFilter, startingBaseballPlayersFilter, YearToStatTypePeriod } from '@app/espn/espn-helpers';
-import { StatTypePeriodId } from '@app/espn/models/espn-stats.model';
+import { benchPlayersFilter, startingBaseballPlayersFilter } from '@app/espn/espn-helpers';
 import { Selector } from '@ngxs/store';
 import { AdvStats } from '../class/advStats.class';
 import { MLB_LINEUP_MAP } from '../consts/lineup.const';
@@ -243,8 +242,8 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
 
         let stats = {};
         if (eventUid) {
-          const event = YearToStatTypePeriod(StatTypePeriodId.Live, `${eventUid.split('~')[3].replace('c:', '')}`);
-          stats = exists(p.stats) ? p.stats[event] : {};
+          // const event = YearToStatTypePeriod(StatTypePeriodId.Live `${eventUid.split('~')[3].replace('c:', '')}`);
+          // stats = exists(p.stats) ? p.stats[event] : {};
         }
 
         return {

@@ -44,13 +44,19 @@ export const DEFAULT_FOOTBALL_ROSTER_COLUMNS = [
   {
     columnDef: `percentChange`,
     headerCell: `percentChange`,
-    headerLabel: 'percentChange',
+    headerLabel: 'Chng %',
+    dataType: TableColumnDataType.Number,
+  },
+  {
+    columnDef: `percentStarted`,
+    headerCell: `percentStarted`,
+    headerLabel: 'Start %',
     dataType: TableColumnDataType.Number,
   },
   {
     columnDef: `percentOwned`,
     headerCell: `percentOwned`,
-    headerLabel: 'percentOwned',
+    headerLabel: 'Own %',
     dataType: TableColumnDataType.Number,
   },
 ];

@@ -18,7 +18,7 @@ import { ApiService } from 'src/app/@shared/services/api.service';
 import { exists, flatten } from '../../@shared/helpers/utils';
 import { FastcastEvent, FootballSituation, MlbSituation } from '../../espn-fastcast/models/fastcast-event.model';
 import { FastcastEventTeam } from '../../espn-fastcast/models/fastcast-team.model';
-import { includeSports, transformUidToId } from '../espn-helpers';
+import { includeSports, teamColorHandler, transformUidToId } from '../espn-helpers';
 import { NO_LOGO } from '../espn.const';
 import {
   EspnEndpointBuilder,
@@ -62,19 +62,22 @@ export class EspnService {
     if (!data) {
       return null;
     }
+
+    const { id, uid, score } = data;
+
     return {
-      id: data.id,
-      uid: data.uid,
+      id,
+      uid,
       eventUid,
+      score,
       abbrev: data.abbreviation,
       isHome: data.homeAway,
-      score: data.score,
       logo: data.logo.length > 0 ? data.logo : NO_LOGO,
       isWinner: data.winner,
       name: data.name ?? data.abbreviation,
-      color: data.color === 'ffffff' || data.color === 'ffff00' ? `#${data.alternateColor}` : `#${data.color}`,
+      color: teamColorHandler(data),
       altColor: `#${data.alternateColor}` ?? null,
-      record: data.record,
+      record: typeof data.record === 'string' ? data.record : data.record[0].displayValue,
       rank: data.rank ?? null,
       winPct: null,
     };

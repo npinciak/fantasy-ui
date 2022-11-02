@@ -15,12 +15,18 @@ export interface FootballPlayerAttributes {
   points: number;
   stats: EspnClientPlayerStatsByYearMap | null;
   extendedStats: ExtendedFootballStatsMap | null;
+  outlookByWeek: PlayerOutlookByWeek[];
 }
 
 export type FootballPlayer = PlayerEntity &
   FootballPlayerAttributes &
   Pick<EspnClientPlayer, 'lineupSlotId'> &
   Pick<EspnClientPlayerInfo, 'defaultPositionId'> &
-  Pick<EspnClientPlayerOwnership, 'percentChange' | 'percentOwned'>;
+  Pick<EspnClientPlayerOwnership, 'percentChange' | 'percentOwned' | 'percentStarted'>;
 
 export type FootballPlayerFreeAgent = FootballPlayer & Omit<FootballPlayer, 'lineupSlotId'>;
+
+export type PlayerOutlookByWeek = {
+  week: number;
+  outlook: string | null;
+};

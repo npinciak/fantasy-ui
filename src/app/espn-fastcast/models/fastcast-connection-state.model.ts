@@ -1,6 +1,6 @@
 import { FastcastEventType } from '@app/espn-fastcast/models/espn-fastcast-socket.model';
 
-export interface EspnFastcastStateModel {
+export interface EspnFastcastConnectionStateModel {
   disconnect: number | null;
   connect: number | null;
   lastRefresh: number | null;
@@ -10,12 +10,12 @@ export interface EspnFastcastStateModel {
   connectionClosed: boolean;
 }
 
-export const INITIAL_STATE: EspnFastcastStateModel = {
+export const INITIAL_STATE: EspnFastcastConnectionStateModel = {
   disconnect: null,
   connect: null,
   lastRefresh: null,
   eventType: FastcastEventType.TopEvents,
-  league: null,
+  league: '90',
   connectionClosed: true,
-  pause: true,
+  pause: false,
 };

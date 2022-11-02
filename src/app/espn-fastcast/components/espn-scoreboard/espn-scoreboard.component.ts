@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
+import { EspnFastcastConnectionFacade } from '@app/espn-fastcast/facade/espn-fastcast-connection.facade';
 import { EspnFastcastEventToggleFacade } from '@app/espn-fastcast/facade/espn-fastcast-event-toggle.facade';
 import { EspnFastcastEventFacade } from '@app/espn-fastcast/facade/espn-fastcast-event.facade';
 import { EspnFastcastLeagueFacade } from '@app/espn-fastcast/facade/espn-fastcast-league.facade';
-import { EspnFastcastFacade } from '@app/espn-fastcast/facade/espn-fastcast.facade';
 import { Store } from '@ngxs/store';
 
 @Component({
@@ -28,7 +28,7 @@ export class EspnScoreboardComponent {
 
   constructor(
     readonly fastcastEventToggleFacade: EspnFastcastEventToggleFacade,
-    readonly fastcastFacade: EspnFastcastFacade,
+    readonly fastcastFacade: EspnFastcastConnectionFacade,
     readonly fastcastEventFacade: EspnFastcastEventFacade,
     readonly fastcastLeagueFacade: EspnFastcastLeagueFacade,
     readonly store: Store

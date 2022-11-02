@@ -3,10 +3,10 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { UrlBuilder } from '@app/@core/store/router/url-builder';
-import { StatTypePeriodToYear } from '@app/espn/espn-helpers';
+import { BASEBALL_STAT_PERIOD_FILTER_OPTIONS, StatTypePeriodToYear } from '@app/espn/const/stat-period.const';
 import { Store } from '@ngxs/store';
 import { SetSeasonId } from '../../actions/mlb.actions';
-import { BASEBALL_STAT_PERIOD_FILTER_OPTIONS, BATTER_STATS_LIST, MLB_STATS_MAP, PITCHER_STATS_LIST } from '../../consts/stats.const';
+import { BATTER_STATS_LIST, MLB_STATS_MAP, PITCHER_STATS_LIST } from '../../consts/stats.const';
 import {
   BATTER_STATS_HEADERS,
   BATTER_STATS_LIVE_HEADERS,

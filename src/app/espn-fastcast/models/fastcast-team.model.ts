@@ -9,7 +9,8 @@ type FastcastEventTeamProperties = FastcastEventTeamPropsStringNullable & {
   isWinner: boolean;
   isHome: string;
   winPct: number | null;
+  record: string | null;
 };
 
-export type FastcastEventTeam = TeamEntity & Pick<CompetitorsEntity, 'uid' | 'rank' | 'record'> & FastcastEventTeamProperties;
+export type FastcastEventTeam = TeamEntity & Pick<CompetitorsEntity, 'uid' | 'rank'> & FastcastEventTeamProperties;
 export type FastcastEventTeamMap = Record<string, FastcastEventTeam>;
