@@ -8,7 +8,6 @@ type ProfilerBaseAttributes = 'expectedPointsAdded' | 'fantasyPointsPerGame' | '
 type ProfilerQBAttributes =
   | 'passEpa'
   | 'rushEpa'
-  | 'productionPremiumRank'
   | 'totalQbr'
   | 'offensiveLineRank'
   | 'airYardsPerAttempt'
@@ -33,14 +32,13 @@ type ProfilerQBAttributes =
   | 'truePasserRating'
   | 'underPressureAttemptsPerGame';
 
-export type ProfilerBase = { profilerId: string } & { [attr in ProfilerBaseAttributes]: number | null };
+export type ProfilerBase = { statGroup: string; rgId: string; profilerId: string } & { [attr in ProfilerBaseAttributes]: number | null };
 
 export type ProfilerQB = ProfilerBase & { [attr in ProfilerQBAttributes]: number | null };
 
 type ProfilerRBAttributes =
   | 'rushEpa'
   | 'receivingEpa'
-  | 'productionPremiumRank'
   | 'dominatorRating'
   | 'goalLineCarriesPerGame'
   | 'gameScript'
@@ -92,4 +90,4 @@ export type PlayerProfilerTimeframeMap = { [prop in ProfilerTimeFrameAttributes]
 export type PlayerProfilerEntityMap = Record<string, PlayerProfilerTimeframeMap>;
 
 export type PlayerProfilerSeason = PlayerProfiler;
-export type PlayerProfilerSeasonMap = { [key in ProfilerPosition]: PlayerProfilerSeason };
+export type PlayerProfilerSeasonMap = { [key in ProfilerPosition]: PlayerProfilerSeason[] };

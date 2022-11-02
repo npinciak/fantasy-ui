@@ -18,6 +18,25 @@ export const STATS_COLUMNS = [
   { columnDef: 'ceil', headerCell: 'ceil', headerLabel: 'ceil', dataType: TableColumnDataType.Number },
   { columnDef: 'floor', headerCell: 'floor', headerLabel: 'floor', dataType: TableColumnDataType.Number },
   { columnDef: 'tar', headerCell: 'tar', headerLabel: 'tar', dataType: TableColumnDataType.Number },
+  {
+    columnDef: 'productionPremium',
+    headerCell: 'productionPremium',
+    headerLabel: 'productionPremium',
+    dataType: TableColumnDataType.Number,
+  },
+  {
+    columnDef: 'matchupRtg',
+    headerCell: 'matchupRtg',
+    headerLabel: 'matchupRtg',
+    dataType: TableColumnDataType.Number,
+  },
+  {
+    columnDef: 'weeklyVolatility',
+    headerCell: 'weeklyVolatility',
+    headerLabel: 'weeklyVolatility',
+    dataType: TableColumnDataType.Number,
+  },
+
   { columnDef: 'salaryDiff.rank', headerCell: 'salaryDiff.rank', headerLabel: 'sal rank', dataType: TableColumnDataType.Number },
 ];
 

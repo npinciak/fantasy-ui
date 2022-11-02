@@ -15,6 +15,8 @@ export class DfsResolver implements Resolve<void> {
     const site = route.queryParamMap.get(UrlQueryParams.Site);
     const sport = route.queryParamMap.get(UrlQueryParams.Sport);
 
-    if (exists(site) && exists(sport)) await Promise.all([this.store.dispatch(new FetchSlates())]);
+    if (exists(site) && exists(sport)) {
+      this.store.dispatch(new FetchSlates({ site, sport })).toPromise();
+    }
   }
 }

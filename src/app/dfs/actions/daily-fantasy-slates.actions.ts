@@ -4,6 +4,7 @@ export const name = 'dailyFantasySlate';
 
 export class FetchSlates {
   public static readonly type = `[${name}] FetchSlates`;
+  constructor(public payload: { sport: string; site: string }) {}
 }
 
 export class SetSlates {

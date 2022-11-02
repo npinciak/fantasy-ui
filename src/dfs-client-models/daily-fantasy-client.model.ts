@@ -54,7 +54,7 @@ export interface SiteSlateEntity {
   name: string;
   games: SiteSlateGameEntity[] | null;
   start: string;
-  type: string;
+  type: ClientSlateTypes;
   salaryCap: number;
   slate_path: string;
   source: string;
