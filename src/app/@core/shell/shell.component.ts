@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UrlBuilder, UrlFragments, UrlQueryParams } from '@app/@core/store/router/url-builder';
-import { EspnFastcastFacade } from '@app/espn-fastcast/facade/espn-fastcast.facade';
-import { Navigate } from '@ngxs/router-plugin';
+import { EspnFastcastConnectionFacade } from '@app/espn-fastcast/facade/espn-fastcast-connection.facade';
 import { Store } from '@ngxs/store';
+import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { RouterFacade } from '../store/router/router.facade';
 
 @Component({
@@ -21,40 +22,41 @@ export class ShellComponent implements OnInit {
   teamId = this.routerFacade.teamId;
   sport = this.routerFacade.sport;
 
-  constructor(private fastcastFacade: EspnFastcastFacade, readonly routerFacade: RouterFacade, private store: Store) {}
+  sport$ = this.routerFacade.sport$;
+  leagueId$ = this.routerFacade.leagueId$;
+  teamId$ = this.routerFacade.teamId$;
+
+  routerParams$ = combineLatest([this.routerFacade.sport$, this.routerFacade.leagueId$, this.routerFacade.teamId$]).pipe(
+    map(([sport, leagueId, teamId]) => ({
+      sport,
+      leagueId,
+      teamId,
+    }))
+  );
+
+  constructor(private fastcastFacade: EspnFastcastConnectionFacade, readonly routerFacade: RouterFacade, private store: Store) {}
 
   ngOnInit(): void {
     this.fastcastFacade.connect();
   }
 
-  get menu() {
-    return [
-      { label: 'Espn', route: UrlBuilder.espnBaseUrl, children: null },
-      {
-        label: 'DFS',
-        route: '',
-        children: [
-          { label: 'MLB', route: UrlBuilder.dfsBase, children: null },
-          { label: 'NFL', route: UrlBuilder.dfsBase, children: null },
-        ],
-      },
-    ];
+  onNavigateToEspnHome() {
+    this.routerFacade.navigateToEspnHome();
   }
 
-  navigate() {
-    this.store.dispatch(
-      new Navigate(['daily-fantasy'], {
-        sport: 'mlb',
-        site: 'draftkings',
-      })
-    );
+  onNavigateToEspnLeagueHome() {
+    this.routerFacade.navigateToLeagueHome(this.sport, this.leagueId);
   }
-}
 
-export const menu: Menu[] = [{ label: 'Espn', route: UrlBuilder.espnBaseUrl, children: null }];
+  onNavigateToEspnTeam() {
+    this.routerFacade.navigateToTeam(this.sport, this.leagueId, this.teamId);
+  }
 
-interface Menu {
-  label: string;
-  route: string;
-  children: Menu[] | null;
+  onNavigateToEspnFreeAgents(sport: UrlFragments, leagueId: string) {
+    this.routerFacade.navigateToFreeAgents(sport, leagueId);
+  }
+
+  navigateDfs(sport: UrlFragments) {
+    this.routerFacade.navigateDfs(sport, 'draftkings');
+  }
 }

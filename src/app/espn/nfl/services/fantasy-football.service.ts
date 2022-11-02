@@ -12,6 +12,7 @@ import {
   EspnClientLeague,
   EspnClientPaginatedFilter,
   EspnClientPlayer,
+  EspnClientPlayerOutlooksMap,
 } from '@espnClient/espn-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -26,6 +27,27 @@ import { FootballTeam } from '../models/football-team.model';
   providedIn: 'root',
 })
 export class FantasyFootballService {
+  static transformOutlook(outlooks?: EspnClientPlayerOutlooksMap) {
+    if (!exists(outlooks)) {
+      return [];
+    }
+
+    if (!exists(outlooks.outlooksByWeek)) {
+      return [];
+    }
+
+    const weeklyOutlook = outlooks.outlooksByWeek;
+
+    return Object.keys(outlooks.outlooksByWeek)
+      .map(k => {
+        return {
+          week: Number(k),
+          outlook: weeklyOutlook[k],
+        };
+      })
+      .sort((a, b) => b.week - a.week);
+  }
+
   static transformEspnClientTeamPlayerToFootballPlayer(player: EspnClientPlayer): FootballPlayer {
     if (!exists(player.playerPoolEntry)) {
       throw new Error('player.playerPoolEntry must be defined');
@@ -37,8 +59,10 @@ export class FantasyFootballService {
     const extendedStats = null;
 
     const { lineupSlotId } = player;
-    const { percentOwned, percentChange } = player.playerPoolEntry.player.ownership;
-    const { defaultPositionId, injuryStatus } = player.playerPoolEntry.player;
+    const { percentOwned, percentChange, percentStarted } = player.playerPoolEntry.player.ownership;
+    const { defaultPositionId, injuryStatus, outlooks } = player.playerPoolEntry.player;
+
+    const outlookByWeek = FantasyFootballService.transformOutlook(outlooks);
 
     return {
       team,
@@ -47,11 +71,13 @@ export class FantasyFootballService {
       defaultPositionId,
       percentChange,
       percentOwned,
+      percentStarted,
       stats,
       extendedStats,
+      outlookByWeek,
       id: player.playerId.toString(),
       name: player.playerPoolEntry.player.fullName,
-      img: !isDST ? headshotImgBuilder(player.playerId, 'nfl') : logoImgBuilder(team, 'nfl'),
+      img: !isDST ? headshotImgBuilder(player.playerId, { league: 'nfl' }) : logoImgBuilder(team, 'nfl'),
       teamId: player.playerPoolEntry.player.proTeamId.toString(),
       teamUid: `s:20~l:28~t:${player.playerPoolEntry?.player.proTeamId}`,
       position: NFL_POSITION_MAP[player.playerPoolEntry.player.defaultPositionId].abbrev,
@@ -117,12 +143,14 @@ export class FantasyFootballService {
 
       const stats = flattenPlayerStats(p.player.stats);
 
-      const { percentChange, percentOwned } = p.player.ownership;
+      const { percentChange, percentOwned, percentStarted } = p.player.ownership;
+
+      const outlookByWeek = FantasyFootballService.transformOutlook(p.player.outlooks);
 
       return {
         id: p.id.toString(),
         name: p.player.fullName,
-        img: !isDST ? headshotImgBuilder(p.id, 'nfl') : logoImgBuilder(team, 'nfl'),
+        img: !isDST ? headshotImgBuilder(p.id, { league: 'nfl' }) : logoImgBuilder(team, 'nfl'),
         team,
         teamId: p.player.proTeamId.toString(),
         teamUid: `s:20~l:28~t:${p.player.proTeamId}`,
@@ -135,8 +163,10 @@ export class FantasyFootballService {
         points: 0, // p.player.appliedStatTotal,
         percentChange,
         percentOwned,
+        percentStarted,
         stats,
         extendedStats,
+        outlookByWeek,
       };
     });
   }

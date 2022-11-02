@@ -14,7 +14,7 @@ import {
   EspnClientPlayerStatsEntityMap,
   EspnClientPlayerStatsYear,
   EspnClientScheduleTeam,
-  EspnClientTeam
+  EspnClientTeam,
 } from '@espnClient/espn-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -86,7 +86,7 @@ export class MlbService {
     return {
       id: player.playerId.toString(),
       name: player.playerPoolEntry?.player?.fullName,
-      img: headshotImgBuilder(player.playerId, 'mlb'),
+      img: headshotImgBuilder(player.playerId, { league: 'mlb' }),
       team: MLB_TEAM_MAP[player.playerPoolEntry?.player?.proTeamId],
       teamId: player.playerPoolEntry?.player.proTeamId.toString(),
       teamUid: `s:1~l:10~t:${player.playerPoolEntry?.player.proTeamId}`,
@@ -114,7 +114,7 @@ export class MlbService {
       return {
         id: player.playerId.toString(),
         name: player.playerPoolEntry?.player.fullName,
-        img: headshotImgBuilder(player.playerId, 'mlb'),
+        img: headshotImgBuilder(player.playerId, { league: 'mlb' }),
         teamUid: `s:1~l:10~t:${player.playerPoolEntry?.player.proTeamId}`,
         teamId: player.playerPoolEntry?.player.proTeamId.toString(),
         team: MLB_TEAM_MAP[player.playerPoolEntry?.player.proTeamId],
@@ -144,7 +144,7 @@ export class MlbService {
       return {
         id: player.id.toString(),
         name: player.player.fullName,
-        img: headshotImgBuilder(player.id, 'mlb'),
+        img: headshotImgBuilder(player.id, { league: 'mlb' }),
         teamId: player.player.proTeamId.toString(),
         teamUid: `s:1~l:10~t:${player.player.proTeamId}`,
         team: MLB_TEAM_MAP[player.player.proTeamId],

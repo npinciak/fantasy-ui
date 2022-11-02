@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { ShellService } from './@core/shell/shell.service';
-
 import { UrlFragments } from './@core/store/router/url-builder';
 
 const routes: Routes = [

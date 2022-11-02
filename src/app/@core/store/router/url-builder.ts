@@ -8,7 +8,11 @@ export class UrlBuilder {
   }
 
   static get dfsBase() {
-    return ['/' + UrlFragments.Dfs];
+    return UrlFragments.Dfs;
+  }
+
+  static dfsSlates(sport: UrlFragments, site: string) {
+    return [UrlBuilder.dfsBase];
   }
 
   static get dfsMlbBase() {

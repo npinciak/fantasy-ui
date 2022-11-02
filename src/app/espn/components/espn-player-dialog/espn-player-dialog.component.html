@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>
+  <div fxLayout="row" *ngIf="data.player as player">
+    <div fxFlex="75%">
+      <div fxLayout="row" fxLayoutGap="5px">
+        <div style="height: 160px; width: 213px">
+          <img height="160px" width="213px" role="presentation" [src]="playerImg" [alt]="player?.name" />
+        </div>
+        <div fxLayout="column" fxLayoutGap="5px">
+          <div class="player name">
+            {{ player?.name }}
+          </div>
+          <div class="player team-pos">{{ player?.team }}, {{ player?.position }}</div>
+        </div>
+      </div>
+    </div>
+    <div fxFlex>
+      <div fxLayout="column" fxLayoutGap="5px"></div>
+    </div>
+  </div>
+</h2>
+<mat-dialog-content>
+  <!-- <ul>
+    <li *ngFor="let c of data.player.outlookByWeek">
+      <h4>Week {{ c.week }}</h4>
+      <p>{{ c.outlook }}</p>
+    </li>
+  </ul> -->
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

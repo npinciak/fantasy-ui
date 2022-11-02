@@ -46,4 +46,8 @@ export class RouterSelector {
   static invalidRoutes(leagueId: string | null, teamId: string | null) {
     return leagueId || teamId ? true : false;
   }
+
+
+
+  
 }

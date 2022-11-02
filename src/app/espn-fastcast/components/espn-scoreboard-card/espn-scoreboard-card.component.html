@@ -5,7 +5,6 @@
   [attr.aria-describedby]="ariaInfo.eventDescription"
   [attr.aria-setsize]="ariaSetsize"
   [attr.aria-posinset]="ariaPosinset"
-  (click)="onCardClick(event)"
 >
   <span [id]="ariaInfo.eventName" class="meta-data">{{ event.name }}</span>
   <span [id]="ariaInfo.eventLocation" class="meta-data">{{ event.location }}</span>

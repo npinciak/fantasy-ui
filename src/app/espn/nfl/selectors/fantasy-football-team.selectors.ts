@@ -57,7 +57,6 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
         // if (stats.stats[FootballStat.RET] && stats.stats[FootballStat.GP]) {
         //   stats.stats[FootballStat.TargetsPerGame] = stats.stats[FootballStat.RET] / stats.stats[FootballStat.GP];
         // }
-        console.log(stats.stats[FootballStat.RRETD]);
         const extendedStats = {};
 
         if (stats.stats[FootballStat.RET] && stats.stats[FootballStat.GP]) {

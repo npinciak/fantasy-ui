@@ -2,12 +2,13 @@ import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FlexLayoutModule, GridModule } from '@angular/flex-layout';
 import { SharedModule } from '@app/@shared/shared.module';
+import { SportsUiModule } from '@app/sports-ui/sports-ui.module';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
-import { EspnFastcastEventToggleState } from '../espn-fastcast/state/espn-fastcast-event-toggle.state';
+import { EspnPlayerDialogComponent } from './components/espn-player-dialog/espn-player-dialog.component';
+import { EspnPlayerTrendingColComponent } from './components/espn-player-trending-col/espn-player-trending-col.component';
 import { EspnPlayerComponent } from './components/espn-player/espn-player.component';
 import { EspnStatsTableComponent } from './components/espn-stats-table/espn-stats-table.component';
-import { EspnPlayerTrendingColComponent } from './components/espn-player-trending-col/espn-player-trending-col.component';
 import { EspnRoutingModule } from './espn-routing.module';
 import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
 import { LineupCardComponent } from './mlb/components/lineup-card/lineup-card.component';
@@ -41,30 +42,6 @@ import { FantasyFootballTeamState } from './nfl/state/fantasy-football-teams.sta
 import { FantasyFootballTransactionState } from './nfl/state/fantasy-football-transaction.state';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 
-const declarations = [
-  EspnHomeComponent,
-  BaseballHomeComponent,
-  BaseballFreeAgentsComponent,
-  BaseballTeamComponent,
-  FootballHomeComponent,
-  FootballFreeAgentsComponent,
-  FootballTeamComponent,
-  FootballLineupCardComponent,
-  FootballScoreboardCardTeamComponent,
-  EspnStatsTableComponent,
-  EspnPlayerComponent,
-  EspnPlayerTrendingColComponent,
-  StandingsComponent,
-  RosterComponent,
-  PlayerComponent,
-  PlayerInfoColComponent,
-  PlayerTrendingColComponent,
-  PlayerRatingColComponent,
-  TeamInfoColComponent,
-  LeagueScoreboardComponent,
-  LineupCardComponent,
-];
-
 const states = [
   FantasyFootballLeagueState,
   FantasyFootballScheduleState,
@@ -79,7 +56,6 @@ const states = [
   FantasyBaseballFreeAgentsFilterState,
   FantasyBaseballPlayerState,
   FantasyBaseballEventsState,
-  EspnFastcastEventToggleState,
 ];
 
 const imports = [
@@ -89,15 +65,39 @@ const imports = [
   FlexLayoutModule,
   GridModule,
   SharedModule,
+  SportsUiModule,
   NgxsModule.forFeature(states),
 ];
 
 const exports = [StandingsComponent, RosterComponent];
 
 @NgModule({
-  declarations,
   imports,
   exports,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  declarations: [
+    EspnHomeComponent,
+    BaseballHomeComponent,
+    BaseballFreeAgentsComponent,
+    BaseballTeamComponent,
+    FootballHomeComponent,
+    FootballFreeAgentsComponent,
+    FootballTeamComponent,
+    FootballLineupCardComponent,
+    FootballScoreboardCardTeamComponent,
+    EspnStatsTableComponent,
+    EspnPlayerComponent,
+    EspnPlayerTrendingColComponent,
+    StandingsComponent,
+    RosterComponent,
+    PlayerComponent,
+    PlayerInfoColComponent,
+    PlayerTrendingColComponent,
+    PlayerRatingColComponent,
+    TeamInfoColComponent,
+    LeagueScoreboardComponent,
+    LineupCardComponent,
+    EspnPlayerDialogComponent,
+  ],
 })
 export class EspnModule {}

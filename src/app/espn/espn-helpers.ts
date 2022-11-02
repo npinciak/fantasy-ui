@@ -1,25 +1,63 @@
 import { exists } from '@app/@shared/helpers/utils';
 import { EspnClientLineupEntityMap, EspnClientPlayerStatsByYearMap, EspnClientPlayerStatsYear } from '@espnClient/espn-client.model';
+import { CompetitorsEntity } from '@espnClient/espn-fastcast.model';
 import { BaseballPlayer } from './mlb/models/baseball-player.model';
-import { StatTypePeriodId } from './models/espn-stats.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
 
+/**
+ * Sports to include in Fastcast
+ * @param id
+ * @returns boolean
+ */
 export function includeSports(id: string): boolean {
   return new Set(['1', '20', '40', '70', '600']).has(id);
 }
 
+/**
+ * Leagues to include in Fastcast
+ * @param id
+ * @returns boolean
+ */
 export function includeLeagues(id: string): boolean {
-  return new Set(['10', '28', '46', '90', '775', '776', '20296']).has(id);
+  return new Set(['10', '28', '46', '90', '775', '776', '20296', '19483']).has(id);
 }
 
-export function teamColorHandler(val: undefined): null;
-export function teamColorHandler(val: null): null;
-export function teamColorHandler(val: string): string;
-export function teamColorHandler(val: string | undefined | null): string | null {
-  const negativeColors = new Set(['ffffff', 'ffff00']);
-  return null;
+/**
+ * Team color handler.
+ *
+ * Matches colors with poor contrast and replaces with team's alternative color
+ *
+ * @param val
+ * @returns Ex: #445058
+ */
+export function teamColorHandler(val: CompetitorsEntity): string | null {
+  const color = val.color;
+  const altColor = val.alternateColor;
+
+  if (!exists(color) || !exists(altColor)) {
+    return null;
+  }
+
+  const negativeColors = new Set(['ffffff', 'ffff00', 'fcee33', 'fafafc', 'cccccc']);
+
+  if (negativeColors.has(color.toLocaleLowerCase()) && negativeColors.has(altColor.toLocaleLowerCase())) {
+    return '#445058';
+  }
+
+  if (negativeColors.has(color.toLocaleLowerCase())) {
+    return `#${altColor}`;
+  }
+
+  return `#${color}`;
 }
 
+/**
+ * Simple string concat to format football situation
+ * @param downDistanceText
+ * @param possessionText
+ *
+ * @returns Ex: 1st and 10, NE 25
+ */
 export function transformDownDistancePositionText(downDistanceText: null, possessionText: null): null;
 export function transformDownDistancePositionText(downDistanceText: string, possessionText: string): string;
 export function transformDownDistancePositionText(downDistanceText: string | null, possessionText: string | null): string | null {
@@ -36,20 +74,9 @@ export function transformUidToId(uid: string | null): string | null {
   return uid.split('~')[1].replace('l:', '');
 }
 
-export function transformIdToUid(sport: null, league: null, team: null): null;
-export function transformIdToUid(sport: string, league: string, team: string): string;
 export function transformIdToUid(sport: string | null, league: string | null, team: string | null): string | null {
   if (!sport || !league || !team) return null;
   return `s:${sport}~l:${league}~t:${team}`;
-}
-
-export function YearToStatTypePeriod(periodType: StatTypePeriodId, year: string): string {
-  if (periodType === StatTypePeriodId.Projected) return `${periodType}${year}`;
-  else return `0${periodType}${year}`;
-}
-
-export function StatTypePeriodToYear(statTypePeriod: string): string {
-  return statTypePeriod.split('').splice(2, 6).join('');
 }
 
 export function flattenPlayerStats(stats: EspnClientPlayerStatsYear[]): EspnClientPlayerStatsByYearMap;
@@ -65,12 +92,26 @@ export function flattenPlayerStats(stats: EspnClientPlayerStatsYear[] | null | u
   }, {} as EspnClientPlayerStatsByYearMap);
 }
 
+/**
+ * Filters players in starting lineup
+ *
+ * @param players
+ * @param lineupMap
+ * @returns
+ */
 export function startingBaseballPlayersFilter(players: BaseballPlayer[], lineupMap: EspnClientLineupEntityMap): BaseballPlayer[] {
   return players
     .filter(p => lineupMap[p.lineupSlotId].starter)
     .sort((a, b) => lineupMap[a.lineupSlotId].displayOrder - lineupMap[b.lineupSlotId].displayOrder);
 }
 
+/**
+ * Filters bench players
+ *
+ * @param players
+ * @param lineupMap
+ * @returns
+ */
 export function benchPlayersFilter(players: BaseballPlayer[], lineupMap: EspnClientLineupEntityMap): BaseballPlayer[] {
   return players.filter(p => lineupMap[p.lineupSlotId].bench);
 }

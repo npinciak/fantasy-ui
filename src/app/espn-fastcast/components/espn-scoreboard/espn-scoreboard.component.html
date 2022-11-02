@@ -59,7 +59,6 @@
     [isEventToggled]="(isIdToggled$ | async)!(event.id)"
     (toggleExpandedEvent)="onToggleExpandedEvent($event)"
     (toggleOffExpandedEvent)="onToggleOffExpandedEvent($event)"
-    (cardClick)="onEventCardClick($event)"
     [isTournament]="event.isTournament"
     [event]="event"
   ></app-espn-scoreboard-card>

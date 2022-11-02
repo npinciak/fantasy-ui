@@ -1,54 +1,54 @@
 import { tickerDate } from '@app/@shared/helpers/date';
 import { exists } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
-import { EspnFastcastStateModel } from '../models/fastcast-state.model';
-import { EspnFastcastState } from '../state/espn-fastcast.state';
+import { EspnFastcastConnectionStateModel } from '../models/fastcast-connection-state.model';
+import { EspnFastcastConnectionState } from '../state/espn-fastcast-connection.state';
 import { EspnFastcastEventSelectors } from './espn-fastcast-event.selectors';
 import { EspnFastcastLeagueSelectors } from './espn-fastcast-league.selectors';
 import { EspnFastcastSportSelectors } from './espn-fastcast-sport.selectors';
 
-export class EspnFastcastSelectors {
-  @Selector([EspnFastcastState])
-  static getConnected(state: EspnFastcastStateModel) {
+export class EspnFastcastConnectionSelectors {
+  @Selector([EspnFastcastConnectionState])
+  static getConnected(state: EspnFastcastConnectionStateModel) {
     return state.connect;
   }
 
-  @Selector([EspnFastcastState])
-  static getPaused(state: EspnFastcastStateModel) {
+  @Selector([EspnFastcastConnectionState])
+  static getPaused(state: EspnFastcastConnectionStateModel) {
     return state.pause;
   }
 
-  @Selector([EspnFastcastState])
-  static getLastDisconnect(state: EspnFastcastStateModel) {
+  @Selector([EspnFastcastConnectionState])
+  static getLastDisconnect(state: EspnFastcastConnectionStateModel) {
     return state.disconnect;
   }
 
-  @Selector([EspnFastcastState])
-  static getLastRefresh(state: EspnFastcastStateModel) {
+  @Selector([EspnFastcastConnectionState])
+  static getLastRefresh(state: EspnFastcastConnectionStateModel) {
     return state.lastRefresh;
   }
 
-  @Selector([EspnFastcastState])
-  static getEventType(state: EspnFastcastStateModel) {
+  @Selector([EspnFastcastConnectionState])
+  static getEventType(state: EspnFastcastConnectionStateModel) {
     return state.eventType;
   }
 
-  @Selector([EspnFastcastState])
-  static getSelectedLeagueId(state: EspnFastcastStateModel) {
+  @Selector([EspnFastcastConnectionState])
+  static getSelectedLeagueId(state: EspnFastcastConnectionStateModel) {
     return state.league;
   }
 
-  @Selector([EspnFastcastState])
-  static getConnectionClosed(state: EspnFastcastStateModel) {
+  @Selector([EspnFastcastConnectionState])
+  static getConnectionClosed(state: EspnFastcastConnectionStateModel) {
     return state.connectionClosed;
   }
 
-  @Selector([EspnFastcastSelectors.getConnectionClosed, EspnFastcastSelectors.getPaused])
+  @Selector([EspnFastcastConnectionSelectors.getConnectionClosed, EspnFastcastConnectionSelectors.getPaused])
   static showNoEventsMessage(connectionClosed: boolean, isPaused: boolean) {
     return connectionClosed && isPaused;
   }
 
-  @Selector([EspnFastcastSelectors.getLastRefresh])
+  @Selector([EspnFastcastConnectionSelectors.getLastRefresh])
   static getLastRefreshAsTickerDate(timestamp: number | null) {
     return exists(timestamp) ? tickerDate(timestamp) : null;
   }
@@ -71,12 +71,20 @@ export class EspnFastcastSelectors {
     return sportIdLoadingValue + leagueIdLoadingValue + eventIdLoadingValue + 1;
   }
 
-  @Selector([EspnFastcastSelectors.getPaused, EspnFastcastSelectors.getIsFeedValid, EspnFastcastSelectors.getFeedLoadingValue])
+  @Selector([
+    EspnFastcastConnectionSelectors.getPaused,
+    EspnFastcastConnectionSelectors.getIsFeedValid,
+    EspnFastcastConnectionSelectors.getFeedLoadingValue,
+  ])
   static getShowFeed(paused: boolean, eventsValid: boolean, loadingFeedValue: number) {
     return !paused && loadingFeedValue >= 100 && eventsValid;
   }
 
-  @Selector([EspnFastcastSelectors.getPaused, EspnFastcastSelectors.getShowFeed, EspnFastcastSelectors.getFeedLoadingValue])
+  @Selector([
+    EspnFastcastConnectionSelectors.getPaused,
+    EspnFastcastConnectionSelectors.getShowFeed,
+    EspnFastcastConnectionSelectors.getFeedLoadingValue,
+  ])
   static getShowLoader(paused: boolean, showFeed: boolean, loadingFeedValue: number) {
     return !paused && !showFeed && loadingFeedValue < 100;
   }

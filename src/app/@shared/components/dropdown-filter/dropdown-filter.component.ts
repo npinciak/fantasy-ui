@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 
 @Component({
@@ -9,7 +8,7 @@ import { FilterOptions } from '@app/@shared/models/filter.model';
 })
 export class DropdownFilterComponent {
   @Input() title: string;
-  @Input() selectedOption: string;
+  @Input() selectedOption: number | string;
   @Input() filterItems: FilterOptions<number | string>[];
-  @Output() filterUpdate = new EventEmitter<MatSelectChange>();
+  @Output() filterUpdate = new EventEmitter<number | string>();
 }
