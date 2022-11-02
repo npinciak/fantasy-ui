@@ -91,9 +91,9 @@
 
   <div fxFlex="70%" fxFlex.sm="100%">
     <app-espn-stats-table
-      [data]="(players$ | async)!(scoringPeriodId$ | async, seasonId)"
-      [dataColumns]="tableRows()!(selectedLineupSlotId$ | async)"
-      [headers]="tableHeaders()!(selectedLineupSlotId$ | async)"
+      [data]="tableData$ | async"
+      [dataColumns]="(tableConfig$ | async).rows"
+      [headers]="(tableConfig$ | async).headers"
       [statsMap]="FOOTBALL_STATS_MAP"
     >
     </app-espn-stats-table>

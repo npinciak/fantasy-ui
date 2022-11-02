@@ -4,9 +4,9 @@ import { LocalStorageFacade } from '@app/@core/store/local-storage/local-storage
 import { LocalStorageKeys } from '@app/@core/store/local-storage/local-storage.state';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { UrlFragments } from '@app/@core/store/router/url-builder';
+import { EspnFastcastConnectionFacade } from '@app/espn-fastcast/facade/espn-fastcast-connection.facade';
 import { EspnFastcastEventFacade } from '@app/espn-fastcast/facade/espn-fastcast-event.facade';
 import { EspnFastcastLeagueFacade } from '@app/espn-fastcast/facade/espn-fastcast-league.facade';
-import { EspnFastcastFacade } from '@app/espn-fastcast/facade/espn-fastcast.facade';
 import { FantasyBaseballLeagueFacade } from '@app/espn/mlb/facade/fantasy-baseball-league.facade';
 import { SportsUiLeagueFormFacade } from '@app/sports-ui/facades/sports-ui-league-form.facade';
 import { SportsUiLeaguesFacade } from '@app/sports-ui/facades/sports-ui-leagues.facade';
@@ -21,7 +21,7 @@ export class EspnHomeComponent implements OnInit {
   constructor(
     readonly routerFacade: RouterFacade,
     readonly espnLeaguesFacade: SportsUiLeaguesFacade,
-    readonly fastcastFacade: EspnFastcastFacade,
+    readonly fastcastFacade: EspnFastcastConnectionFacade,
     readonly fastcastLeagueFacade: EspnFastcastLeagueFacade,
     readonly fastcastEventFacade: EspnFastcastEventFacade,
     readonly fantasyLeagueFacade: FantasyBaseballLeagueFacade,

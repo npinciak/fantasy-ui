@@ -1,4 +1,4 @@
-﻿import { EspnGameStatusTypeId, FastCastGameStatus } from '@client/espn-client.model';
+﻿import { EspnGameStatusTypeId, FastCastGameStatus } from '@espnClient/espn-client.model';
 
 export type EntityBaseAttributes = 'id' | 'uid' | 'name';
 

@@ -19,7 +19,6 @@ export class EspnScoreboardCardComponent implements OnChanges {
 
   @Output() toggleExpandedEvent = new EventEmitter<string>();
   @Output() toggleOffExpandedEvent = new EventEmitter<string>();
-  @Output() cardClick = new EventEmitter<FastcastEvent>();
 
   readonly FASTCAST_DATE_SHORT = FASTCAST_DATE_SHORT;
 
@@ -45,10 +44,6 @@ export class EspnScoreboardCardComponent implements OnChanges {
 
   get isPostseason() {
     return this.event.seasonType === FastCastSeasonType.Post;
-  }
-
-  onCardClick(event: FastcastEvent) {
-    this.cardClick.emit(event);
   }
 
   get eventSummary() {

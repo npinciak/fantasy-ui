@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   InjurySeverityByInjuryStatus,
   InjurySeverityColor,
@@ -21,12 +21,12 @@ export class FootballLineupCardComponent {
   @Input() projectedPoints: number;
   @Input() week: number;
 
+  @Output() playerClicked = new EventEmitter<FootballPlayer | null>();
+
   readonly MatIconByEspnPlayerInjuryStatus = MatIconByEspnPlayerInjuryStatus;
   readonly InjurySeverityByInjuryStatus = InjurySeverityByInjuryStatus;
   readonly InjurySeverityColorByInjurySeverity = InjurySeverityColorByInjurySeverity;
   readonly PlayerStatusAbbrevByInjuryStatusType = PlayerStatusAbbrevByInjuryStatusType;
-
-  constructor() {}
 
   playerLabel(player: FootballPlayer) {
     return `${player.name}, ${player.team}, ${player.lineupSlot}`;
@@ -34,5 +34,9 @@ export class FootballLineupCardComponent {
 
   playerInjuryStatusColor(injuryStatus: EspnPlayerInjuryStatus): InjurySeverityColor {
     return InjurySeverityColorByInjurySeverity[InjurySeverityByInjuryStatus[injuryStatus]];
+  }
+
+  onPlayerClick(player) {
+    this.playerClicked.emit(player);
   }
 }

@@ -1,21 +1,4 @@
-import { subtractYears } from '@app/@shared/helpers/date';
-import { FilterOptions } from '@app/@shared/models/filter.model';
-import { YearToStatTypePeriod } from '@app/espn/espn-helpers';
-import { StatTypePeriodId } from '@app/espn/models/espn-stats.model';
 import { FootballStatsMap } from '../models/football-stats.model';
-
-export const FOOTBALL_STAT_PERIOD_FILTER_OPTIONS: FilterOptions<string>[] = [
-  {
-    value: YearToStatTypePeriod(StatTypePeriodId.Season, new Date().getFullYear().toString()),
-    label: `${new Date().getFullYear().toString()} Season`,
-  },
-  {
-    value: YearToStatTypePeriod(StatTypePeriodId.Projected, new Date().getFullYear().toString()),
-    label: `${new Date().getFullYear().toString()} Projected`,
-  },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Season, subtractYears(1)), label: `${subtractYears(1)} Season` },
-  { value: YearToStatTypePeriod(StatTypePeriodId.Projected, subtractYears(1)), label: `${subtractYears(1)} Proj` },
-];
 
 export const FOOTBALL_STATS_MAP: FootballStatsMap = {
   0: {
