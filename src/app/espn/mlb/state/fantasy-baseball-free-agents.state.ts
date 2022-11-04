@@ -1,37 +1,25 @@
 import { Injectable } from '@angular/core';
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
-import { setMap } from '@app/@shared/operators/entities.operators';
 import { Action, State, StateContext, Store } from '@ngxs/store';
-import {
-  ClearAndAddFantasyBaseballFreeAgents,
-  FetchFantasyBaseballFreeAgents,
-  SetFantasyBaseballFreeAgents,
-} from '../actions/fantasy-baseball-free-agents.actions';
+import { FantasyBaseballFreeAgents } from '../actions/fantasy-baseball-free-agents.actions';
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { FantasyBaseballFreeAgentsFilterSelector } from '../selectors/fantasy-baseball-free-agents-filter.selector';
 import { MlbService } from '../services/mlb.service';
 import { FantasyBaseballLeagueState } from './fantasy-baseball-league.state';
 
-@State({ name: 'fantasyBaseballFreeAgents' })
+@State({ name: FantasyBaseballFreeAgents.name })
 @Injectable()
 export class FantasyBaseballFreeAgentsState extends GenericState({
   idProperty: 'id',
-  addOrUpdate: SetFantasyBaseballFreeAgents,
-  clearAndAdd: ClearAndAddFantasyBaseballFreeAgents,
+  addOrUpdate: FantasyBaseballFreeAgents.AddOrUpdate,
+  clearAndAdd: FantasyBaseballFreeAgents.ClearAndAdd,
 }) {
   constructor(private mlbService: MlbService, private store: Store) {
     super();
   }
 
-  private static getId = (t: BaseballPlayer) => t.id as unknown as string;
-
-  @Action(ClearAndAddFantasyBaseballFreeAgents)
-  clearAndAdd({ setState }: StateContext<GenericStateModel<BaseballPlayer>>, { payload }: { payload: BaseballPlayer[] }): void {
-    setState(setMap(payload, FantasyBaseballFreeAgentsState.getId));
-  }
-
-  @Action(FetchFantasyBaseballFreeAgents)
+  @Action(FantasyBaseballFreeAgents.Fetch)
   async fetchFantasyBaseballFreeAgents({ dispatch }: StateContext<GenericStateModel<BaseballPlayer>>): Promise<void> {
     const leagueId = this.store.selectSnapshot(FantasyBaseballLeagueState.getLeagueId) ?? '';
 
@@ -74,7 +62,7 @@ export class FantasyBaseballFreeAgentsState extends GenericState({
       },
     };
     const freeAgents = await this.mlbService.baseballFreeAgents({ leagueId, scoringPeriodId, filter }).toPromise();
-    dispatch([new ClearAndAddFantasyBaseballFreeAgents(freeAgents)]);
+    this.store.dispatch([new FantasyBaseballFreeAgents.AddOrUpdate(freeAgents)]);
   }
 }
 // :{"value":5,"additionalValue":["002022","102022","002021","012022","022022","032022","042022","062022","010002022"]}
