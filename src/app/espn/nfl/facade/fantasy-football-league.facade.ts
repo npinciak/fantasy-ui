@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { FetchFootballLeague, SetCurrentScoringPeriodId } from '../actions/fantasy-football-league.actions';
+import { FantasyFootballLeague } from '../actions/fantasy-football-league.actions';
 import { FantasyFootballLeagueSelectors } from '../selectors/fantasy-football-league.selectors';
 
 @Injectable({
@@ -19,10 +19,10 @@ export class FantasyFootballLeagueFacade {
   constructor(private store: Store) {}
 
   getLeague(leagueId: string): Observable<void> {
-    return this.store.dispatch(new FetchFootballLeague({ leagueId }));
+    return this.store.dispatch(new FantasyFootballLeague.Fetch({ leagueId }));
   }
 
   updateCurrentScoringPeriodId(currentScoringPeriodId: number) {
-    return this.store.dispatch(new SetCurrentScoringPeriodId({ currentScoringPeriodId }));
+    return this.store.dispatch(new FantasyFootballLeague.SetCurrentScoringPeriodId({ currentScoringPeriodId }));
   }
 }
