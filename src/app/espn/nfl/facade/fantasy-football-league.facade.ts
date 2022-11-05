@@ -22,7 +22,7 @@ export class FantasyFootballLeagueFacade {
     return this.store.dispatch(new FantasyFootballLeague.Fetch({ leagueId }));
   }
 
-  updateCurrentScoringPeriodId(currentScoringPeriodId: number) {
-    return this.store.dispatch(new FantasyFootballLeague.SetCurrentScoringPeriodId({ currentScoringPeriodId }));
+  updateCurrentScoringPeriodId(scoringPeriodId: number) {
+    return this.store.dispatch(new FantasyFootballLeague.SetCurrentScoringPeriodId({ scoringPeriodId }));
   }
 }

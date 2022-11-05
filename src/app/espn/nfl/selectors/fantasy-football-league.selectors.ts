@@ -1,6 +1,7 @@
 import { Selector } from '@app/@shared/models/typed-selector';
+import { FantasyFootballLeagueStateModel } from '../models/football-league-state.model';
 import { FootballTeam } from '../models/football-team.model';
-import { FantasyFootballLeagueState, FantasyFootballLeagueStateModel } from '../state/fantasy-football-league.state';
+import { FantasyFootballLeagueState } from '../state/fantasy-football-league.state';
 import { FantasyFootballTeamSelectors } from './fantasy-football-team.selectors';
 
 export class FantasyFootballLeagueSelectors {

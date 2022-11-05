@@ -7,7 +7,6 @@ import { FootballPlayer } from '../models/football-player.model';
 import { FootballPosition } from '../models/football-position.model';
 import { FootballStat } from '../models/football-stats.model';
 import { FootballTeam } from '../models/football-team.model';
-import { FantasyFootballLeagueState, FantasyFootballLeagueStateModel } from '../state/fantasy-football-league.state';
 
 import { FantasyFootballTeamState } from '../state/fantasy-football-teams.state';
 
@@ -92,17 +91,6 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
           teamPositionCount[position]++;
         }
       });
-
-      return teamPositionCount;
-    };
-  }
-
-  @Selector([FantasyFootballLeagueState.getState, FantasyFootballTeamSelectors.getTeamPositionsCount])
-  static getLineupLimits(state: FantasyFootballLeagueStateModel, getTeamById: (id: string | null) => Record<string, number>) {
-    return (id: string | null) => {
-      const teamLineupCount = getTeamById(id);
-
-      const teamPositionCount = {};
 
       return teamPositionCount;
     };
