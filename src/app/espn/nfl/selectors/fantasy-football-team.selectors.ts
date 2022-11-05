@@ -7,7 +7,6 @@ import { FootballPlayer } from '../models/football-player.model';
 import { FootballPosition } from '../models/football-position.model';
 import { FootballStat } from '../models/football-stats.model';
 import { FootballTeam } from '../models/football-team.model';
-import { FantasyFootballLeagueState, FantasyFootballLeagueStateModel } from '../state/fantasy-football-league.state';
 
 import { FantasyFootballTeamState } from '../state/fantasy-football-teams.state';
 
@@ -96,25 +95,4 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
       return teamPositionCount;
     };
   }
-
-  @Selector([FantasyFootballLeagueState.getState, FantasyFootballTeamSelectors.getTeamPositionsCount])
-  static getLineupLimits(state: FantasyFootballLeagueStateModel, getTeamById: (id: string | null) => Record<string, number>) {
-    return (id: string | null) => {
-      const teamLineupCount = getTeamById(id);
-      const positionLimits = state.settings.rosterSettings.lineupCountLimits;
-
-      const teamPositionCount = {};
-
-      return teamPositionCount;
-    };
-  }
-
-  // @Selector([FantasyFootballTeamState.])
-  // static selectFantasyTeamById(map: { [id: number]: EspnClientTeam }): (id: number) => FantasyTeam {
-  //   return (id: number) => FantasyFootballTeamsSelectors.transformTeamImportToFantasyTeam(map[id]);
-  // }
-  // @Selector([FantasyFootballTeamState])
-  // static selectFantasyTeamList(map: { [id: number]: EspnClientTeam }): FantasyTeam[] {
-  //   return Object.values(map).map(m => FantasyFootballTeamsSelectors.transformTeamImportToFantasyTeam(m));
-  // }
 }

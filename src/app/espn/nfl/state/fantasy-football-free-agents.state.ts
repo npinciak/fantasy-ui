@@ -3,31 +3,27 @@ import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
 import { EspnFreeAgentAvailabilityStatus } from '@espnClient/espn-client.model';
 import { Action, State, StateContext, Store } from '@ngxs/store';
-import {
-  ClearAndAddFantasyFootballFreeAgents,
-  FetchFantasyFootballFreeAgents,
-  SetFantasyFootballFreeAgents,
-} from '../actions/fantasy-football-free-agents.actions';
+import { FantasyFootballFreeAgents } from '../actions/fantasy-football-free-agents.actions';
 import { FootballPlayer } from '../models/football-player.model';
 import { FantasyFootballLeagueSelectors } from '../selectors/fantasy-football-league.selectors';
 import { FantasyFootballService } from '../services/fantasy-football.service';
 import { FantasyFootballFreeAgentsFilterState } from './fantasy-football-free-agents-filter.state';
 
-@State({ name: 'fantasyFootballFreeAgents' })
+@State({ name: FantasyFootballFreeAgents.name })
 @Injectable()
 export class FantasyFootballFreeAgentsState extends GenericState({
   idProperty: 'id',
-  addOrUpdate: SetFantasyFootballFreeAgents,
-  clearAndAdd: ClearAndAddFantasyFootballFreeAgents,
+  addOrUpdate: FantasyFootballFreeAgents.AddOrUpdate,
+  clearAndAdd: FantasyFootballFreeAgents.ClearAndAdd,
 }) {
   constructor(private service: FantasyFootballService, private store: Store) {
     super();
   }
 
-  @Action(FetchFantasyFootballFreeAgents)
+  @Action(FantasyFootballFreeAgents.Fetch)
   async fetchFantasyFootballFreeAgents(
     { setState }: StateContext<GenericStateModel<FootballPlayer>>,
-    { payload: { leagueId } }: FetchFantasyFootballFreeAgents
+    { payload: { leagueId } }: FantasyFootballFreeAgents.Fetch
   ): Promise<void> {
     setState({ map: {} });
 
@@ -68,6 +64,6 @@ export class FantasyFootballFreeAgentsState extends GenericState({
     };
     const freeAgents = await this.service.footballFreeAgents({ leagueId, scoringPeriodId, filter }).toPromise();
 
-    this.store.dispatch([new SetFantasyFootballFreeAgents(freeAgents)]);
+    this.store.dispatch([new FantasyFootballFreeAgents.AddOrUpdate(freeAgents)]);
   }
 }

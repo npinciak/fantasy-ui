@@ -1,35 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { Action, State, StateContext, Store } from '@ngxs/store';
-import { FetchFootballLeague, SetCurrentScoringPeriodId } from '../actions/fantasy-football-league.actions';
-import { SetFantasyFootballSchedule } from '../actions/fantasy-football-schedule.actions';
-import { SetFantasyFootballTeams } from '../actions/fantasy-football-teams.actions';
-import { SetFantasyFootballTransactions } from '../actions/fantasy-football-transaction.actions';
+import { FantasyFootballLeague } from '../actions/fantasy-football-league.actions';
+import { FantasyFootballSchedule } from '../actions/fantasy-football-schedule.actions';
+import { FantasyFootballTeams } from '../actions/fantasy-football-teams.actions';
+import { FantasyFootballTransaction } from '../actions/fantasy-football-transaction.actions';
+import { FantasyFootballLeagueStateModel, INITIAL_STATE } from '../models/football-league-state.model';
 import { FantasyFootballService } from '../services/fantasy-football.service';
 
-export interface FantasyFootballLeagueStateModel {
-  seasonId: number | null;
-  currentScoringPeriodId: number | null;
-  firstScoringPeriodId: number | null;
-  finalScoringPeriodId: number | null;
-  matchupPeriodCount: number | null;
-  leagueId: string | null;
-  isLoading: boolean;
-  settings: any; // EspnClientLeagueSettings | null;
-}
-
 @State<FantasyFootballLeagueStateModel>({
-  name: 'fantasyFootballLeague',
-  defaults: {
-    seasonId: null,
-    currentScoringPeriodId: 1,
-    firstScoringPeriodId: 1,
-    finalScoringPeriodId: null,
-    matchupPeriodCount: null,
-    leagueId: null,
-    isLoading: false,
-    settings: {},
-  },
+  name: FantasyFootballLeague.name,
+  defaults: INITIAL_STATE,
 })
 @Injectable()
 export class FantasyFootballLeagueState {
@@ -40,40 +21,41 @@ export class FantasyFootballLeagueState {
 
   constructor(private nflService: FantasyFootballService, private store: Store) {}
 
-  @Action(FetchFootballLeague)
-  async footballLeague({ patchState }: StateContext<FantasyFootballLeagueStateModel>, { payload: { leagueId } }: FetchFootballLeague) {
+  @Action(FantasyFootballLeague.Fetch)
+  async footballLeague(
+    { patchState }: StateContext<FantasyFootballLeagueStateModel>,
+    { payload: { leagueId } }: FantasyFootballLeague.Fetch
+  ) {
     patchState({ isLoading: true });
 
     const year = new Date().getFullYear().toString();
 
-    const {
-      currentScoringPeriodId,
-      firstScoringPeriodId,
-      finalScoringPeriodId,
-      teams,
-      matchupPeriodCount,
-      schedule,
-      settings,
-      freeAgents,
-      transactions,
-    } = await this.nflService.footballLeague(leagueId, year).toPromise();
+    const { scoringPeriodId, firstScoringPeriod, finalScoringPeriod, teams, matchupPeriodCount, schedule, transactions } =
+      await this.nflService.footballLeague(leagueId, year).toPromise();
 
     await this.store
       .dispatch([
-        new SetFantasyFootballTeams(teams),
-        new SetFantasyFootballSchedule(schedule),
-        new SetCurrentScoringPeriodId({ currentScoringPeriodId }),
-        new SetFantasyFootballTransactions(transactions),
+        new FantasyFootballTeams.AddOrUpdate(teams),
+        new FantasyFootballSchedule.AddOrUpdate(schedule),
+        new FantasyFootballTransaction.AddOrUpdate(transactions),
       ])
       .toPromise();
-    patchState({ firstScoringPeriodId, finalScoringPeriodId, matchupPeriodCount, settings, leagueId, isLoading: false });
+
+    patchState({
+      firstScoringPeriod,
+      finalScoringPeriod,
+      scoringPeriodId,
+      matchupPeriodCount,
+      leagueId,
+      isLoading: false,
+    });
   }
 
-  @Action(SetCurrentScoringPeriodId)
+  @Action(FantasyFootballLeague.SetCurrentScoringPeriodId)
   setCurrentScoringPeriodId(
     { patchState }: StateContext<FantasyFootballLeagueStateModel>,
-    { payload: { currentScoringPeriodId } }: SetCurrentScoringPeriodId
+    { payload: { scoringPeriodId } }: FantasyFootballLeague.SetCurrentScoringPeriodId
   ) {
-    patchState({ currentScoringPeriodId });
+    patchState({ scoringPeriodId });
   }
 }

@@ -1,11 +1,16 @@
 import { FootballTeam } from '../models/football-team.model';
 
-export class SetFantasyFootballTeams {
-  public static readonly type = `[fantasyFootballTeams] PatchFantasyFootballTeams`;
-  constructor(public payload: FootballTeam[]) {}
-}
+export namespace FantasyFootballTeams {
+  export const name = 'fantasyFootballTeams';
+  type Entity = FootballTeam;
 
-export class ClearAndAddFantasyFootballTeams {
-  public static readonly type = `[fantasyFootballTeams] ClearAndAddFantasyFootballTeams`;
-  constructor(public payload: FootballTeam[]) {}
+  export class AddOrUpdate {
+    public static readonly type = `[${name}] AddOrUpdate`;
+    constructor(public payload: Entity[]) {}
+  }
+
+  export class ClearAndAdd {
+    public static readonly type = `[${name}] ClearAndAdd`;
+    constructor(public payload: Entity[]) {}
+  }
 }

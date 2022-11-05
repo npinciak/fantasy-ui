@@ -4,7 +4,7 @@ import { Selector } from '@app/@shared/models/typed-selector';
 import { EspnFreeAgentAvailabilityStatus } from '@espnClient/espn-client.model';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { SetLineupSlotId, SetPagination, TogglePlayerAvailabilityStatus } from '../actions/fantasy-football-free-agents-filter.actions';
-import { FetchFantasyFootballFreeAgents } from '../actions/fantasy-football-free-agents.actions';
+import { FantasyFootballFreeAgents } from '../actions/fantasy-football-free-agents.actions';
 import { FootballLineupSlot } from '../models/football-lineup.model';
 
 interface BaseFreeAgentFilterMetaData {
@@ -66,7 +66,7 @@ export class FantasyFootballFreeAgentsFilterState {
     patchState({ lineupSlotId });
     const leagueId = this.store.selectSnapshot(RouterSelector.getLeagueId) ?? '';
 
-    this.store.dispatch(new FetchFantasyFootballFreeAgents({ leagueId }));
+    this.store.dispatch(new FantasyFootballFreeAgents.Fetch({ leagueId }));
   }
 
   @Action(TogglePlayerAvailabilityStatus)

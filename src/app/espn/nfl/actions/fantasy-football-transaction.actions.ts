@@ -1,13 +1,16 @@
 import { EspnClientLeagueTransaction } from '@espnClient/espn-client.model';
 
-export const name = 'fantasyFootballTransaction';
+export namespace FantasyFootballTransaction {
+  export const name = 'fantasyFootballTransaction';
+  type Entity = EspnClientLeagueTransaction;
 
-export class SetFantasyFootballTransactions {
-  public static readonly type = `[${name}}] SetFantasyFootballTransactions`;
-  constructor(public payload: EspnClientLeagueTransaction[]) {}
-}
+  export class AddOrUpdate {
+    public static readonly type = `[${name}}] AddOrUpdate`;
+    constructor(public payload: Entity[]) {}
+  }
 
-export class ClearAndAddFantasyFootballTransactions {
-  public static readonly type = `[${name}}] ClearAndAddFantasyFootballTransactions`;
-  constructor(public payload: EspnClientLeagueTransaction[]) {}
+  export class ClearAndAdd {
+    public static readonly type = `[${name}}] ClearAndAdd`;
+    constructor(public payload: Entity[]) {}
+  }
 }

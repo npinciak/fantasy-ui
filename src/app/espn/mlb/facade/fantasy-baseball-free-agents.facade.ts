@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
-import { FetchFantasyBaseballFreeAgents } from '../actions/fantasy-baseball-free-agents.actions';
 import { FantasyBaseballFreeAgentsSelector } from '../selectors/fantasy-baseball-free-agents.selector';
 
 @Injectable({
@@ -22,8 +20,4 @@ export class FantasyBaseballFreeAgentsFacade {
   compareTeamAndFreeAgentPitcherList$ = select(FantasyBaseballFreeAgentsSelector.getCompareTeamAndFreeAgentPitcherList);
 
   constructor(private store: Store) {}
-
-  fetchFreeAgents(): Observable<void> {
-    return this.store.dispatch(new FetchFantasyBaseballFreeAgents());
-  }
 }
