@@ -248,12 +248,11 @@ export interface EspnClientTeamAttributes {
   rankCalculatedFinal: number;
   pointsByStat: Record<number, number>;
   valuesByStat: Record<number, number>;
-  record: string;
 }
 
 export type EspnClientTeam = Omit<EspnClientTeamAttributes, 'teamId' | 'totalPoints' | 'totalPointsLive' | 'rosterForCurrentScoringPeriod'>;
-export type EspnClientBaseballTeam = EspnClientTeam;
-export type EspnClientFootballTeam = Omit<EspnClientTeam, 'record'> & { record: EspnClientTeamRecordEntity };
+export type EspnClientBaseballTeam = EspnClientTeam & { record: string };
+export type EspnClientFootballTeam = EspnClientTeam & { record: EspnClientTeamRecordEntity };
 
 export type EspnClientScheduleTeam = Pick<EspnClientTeamAttributes, 'teamId' | 'totalPoints' | 'rosterForCurrentScoringPeriod'> & {
   totalProjectedPointsLive?: number;

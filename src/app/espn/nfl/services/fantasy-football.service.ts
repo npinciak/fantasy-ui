@@ -1,7 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { exists } from '@app/@shared/helpers/utils';
-import { transformEspnClientPlayerToPlayer } from '@app/espn/espn-helpers';
+import { transformEspnClientLeagueToLeague, transformEspnClientPlayerToPlayer } from '@app/espn/espn-helpers';
 import { headshotImgBuilder, logoImgBuilder } from '@app/espn/espn.const';
 import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
 import { EspnService } from '@app/espn/service/espn.service';
@@ -73,8 +73,9 @@ export class FantasyFootballService {
   static transformEspnClientTeamListToTeamList(team: EspnClientFootballTeam): FootballTeam {
     const roster = team.roster.entries.map(p => FantasyFootballService.transformEspnClientTeamPlayerToFootballPlayer(p));
 
-    const { abbrev, logo } = team;
-    const { wins, losses, ties, pointsAgainst } = team.record.overall;
+    const { abbrev, logo, record, playoffSeed: currentRank } = team;
+
+    const { wins, losses, ties, pointsAgainst, percentage: winPct, pointsFor: pointsScored } = record.overall;
 
     return {
       id: team.id.toString(),
@@ -86,9 +87,9 @@ export class FantasyFootballService {
       ties,
       roster,
       pointsAgainst,
-      winPct: team.record.overall.percentage,
-      pointsScored: team.record.overall.pointsFor,
-      currentRank: team.playoffSeed,
+      winPct,
+      pointsScored,
+      currentRank,
     };
   }
 
@@ -128,31 +129,16 @@ export class FantasyFootballService {
   footballLeague(leagueId: string, year: string): Observable<FantasyFootballLeague> {
     return this.espnClient.espnFantasyLeagueBySport<EspnClientFootballLeague>({ sport: FantasySports.Football, leagueId, year }).pipe(
       map(res => {
-        const { schedule, transactions, settings } = res;
+        const { schedule } = res;
 
         const teams = res.teams.map(t => FantasyFootballService.transformEspnClientTeamListToTeamList(t));
 
-        const { matchupPeriodCount } = settings.scheduleSettings;
-
-        const seasonId = res.seasonId.toString();
-        const leagueId = res.id.toString();
-
-        const currentScoringPeriodId = res.scoringPeriodId;
-
-        const firstScoringPeriodId = res.status.firstScoringPeriod;
-        const finalScoringPeriodId = res.status.finalScoringPeriod;
+        const genericLeagueSettings = transformEspnClientLeagueToLeague(res);
 
         return {
-          leagueId,
-          seasonId,
-          currentScoringPeriodId,
-          firstScoringPeriodId,
-          finalScoringPeriodId,
-          matchupPeriodCount,
-          transactions,
+          ...genericLeagueSettings,
           teams,
           schedule,
-          settings,
           freeAgents: FantasyFootballService.transformEspnClientFreeAgentToFootballPlayer(res.players),
         };
       })

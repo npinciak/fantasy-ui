@@ -92,9 +92,15 @@ export class FantasyBaseballLeagueState {
 
     const year = new Date().getFullYear().toString();
 
-    const { currentScoringPeriodId, firstScoringPeriodId, finalScoringPeriodId, seasonId, teams, teamsLive } = await this.mlbService
-      .baseballLeague(leagueId, year)
-      .toPromise();
+    const {
+      scoringPeriodId: currentScoringPeriodId,
+      firstScoringPeriod: firstScoringPeriodId,
+      finalScoringPeriod: finalScoringPeriodId,
+      seasonId,
+      teams,
+      teamsLive,
+    } = await this.mlbService.baseballLeague(leagueId, year).toPromise();
+
     const events = await this.mlbService.baseballEvents().toPromise();
 
     dispatch([

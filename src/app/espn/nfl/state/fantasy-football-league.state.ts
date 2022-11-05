@@ -15,7 +15,6 @@ export interface FantasyFootballLeagueStateModel {
   matchupPeriodCount: number | null;
   leagueId: string | null;
   isLoading: boolean;
-  settings: any; // EspnClientLeagueSettings | null;
 }
 
 @State<FantasyFootballLeagueStateModel>({
@@ -28,7 +27,6 @@ export interface FantasyFootballLeagueStateModel {
     matchupPeriodCount: null,
     leagueId: null,
     isLoading: false,
-    settings: {},
   },
 })
 @Injectable()
@@ -50,13 +48,12 @@ export class FantasyFootballLeagueState {
     const year = new Date().getFullYear().toString();
 
     const {
-      currentScoringPeriodId,
-      firstScoringPeriodId,
-      finalScoringPeriodId,
+      scoringPeriodId: currentScoringPeriodId,
+      firstScoringPeriod: firstScoringPeriodId,
+      finalScoringPeriod: finalScoringPeriodId,
       teams,
       matchupPeriodCount,
       schedule,
-      settings,
       freeAgents,
       transactions,
     } = await this.nflService.footballLeague(leagueId, year).toPromise();
@@ -69,7 +66,7 @@ export class FantasyFootballLeagueState {
         new FantasyFootballTransaction.AddOrUpdate(transactions),
       ])
       .toPromise();
-    patchState({ firstScoringPeriodId, finalScoringPeriodId, matchupPeriodCount, settings, leagueId, isLoading: false });
+    patchState({ firstScoringPeriodId, finalScoringPeriodId, matchupPeriodCount, leagueId, isLoading: false });
   }
 
   @Action(FantasyFootballLeague.SetCurrentScoringPeriodId)

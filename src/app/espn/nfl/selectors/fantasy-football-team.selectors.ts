@@ -101,20 +101,10 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
   static getLineupLimits(state: FantasyFootballLeagueStateModel, getTeamById: (id: string | null) => Record<string, number>) {
     return (id: string | null) => {
       const teamLineupCount = getTeamById(id);
-      const positionLimits = state.settings.rosterSettings.lineupCountLimits;
 
       const teamPositionCount = {};
 
       return teamPositionCount;
     };
   }
-
-  // @Selector([FantasyFootballTeamState.])
-  // static selectFantasyTeamById(map: { [id: number]: EspnClientTeam }): (id: number) => FantasyTeam {
-  //   return (id: number) => FantasyFootballTeamsSelectors.transformTeamImportToFantasyTeam(map[id]);
-  // }
-  // @Selector([FantasyFootballTeamState])
-  // static selectFantasyTeamList(map: { [id: number]: EspnClientTeam }): FantasyTeam[] {
-  //   return Object.values(map).map(m => FantasyFootballTeamsSelectors.transformTeamImportToFantasyTeam(m));
-  // }
 }

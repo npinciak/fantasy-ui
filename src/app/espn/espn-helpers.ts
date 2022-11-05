@@ -1,6 +1,7 @@
 import { PositionEntityMap } from '@app/@shared/base-models/base-position.model';
 import { exists } from '@app/@shared/helpers/utils';
 import {
+  EspnClientLeague,
   EspnClientLineupEntityMap,
   EspnClientPlayerInfo,
   EspnClientPlayerStatsByYearMap,
@@ -12,6 +13,7 @@ import {
 import { CompetitorsEntity } from '@espnClient/espn-fastcast.model';
 import { headshotImgBuilder } from './espn.const';
 import { BaseballPlayer } from './mlb/models/baseball-player.model';
+import { FantasyLeague } from './models/fantasy-league.model';
 import { LeagueNameByEspnLeagueId } from './models/league.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
 import { FantasyFootballService } from './nfl/services/fantasy-football.service';
@@ -135,6 +137,22 @@ export function startingPlayersFilter(
 
 // .filter(p => NFL_LINEUP_MAP[p.lineupSlotId].starter)
 // .sort((a, b) => NFL_LINEUP_MAP[a.lineupSlotId].displayOrder - NFL_LINEUP_MAP[b.lineupSlotId].displayOrder);
+
+export function transformEspnClientLeagueToLeague(league: EspnClientLeague): FantasyLeague {
+  const { id, seasonId, scoringPeriodId, status, settings, transactions } = league;
+  const { matchupPeriodCount } = settings.scheduleSettings;
+  const { firstScoringPeriod, finalScoringPeriod } = status;
+
+  return {
+    id: id.toString(),
+    seasonId: seasonId.toString(),
+    scoringPeriodId,
+    firstScoringPeriod,
+    finalScoringPeriod,
+    matchupPeriodCount,
+    transactions,
+  };
+}
 
 export function transformEspnClientPlayerToPlayer(
   playerInfo: EspnClientPlayerInfo,

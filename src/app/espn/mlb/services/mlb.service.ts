@@ -17,11 +17,12 @@ import {
 } from '@espnClient/espn-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { transformEspnClientPlayerToPlayer } from '../../espn-helpers';
+import { transformEspnClientLeagueToLeague, transformEspnClientPlayerToPlayer } from '../../espn-helpers';
 import { MLB_LINEUP_MAP, PitcherIdSet } from '../consts/lineup.const';
 import { MLB_POSITION_MAP } from '../consts/position.const';
 import { MLB_TEAM_MAP } from '../consts/team.const';
 import { BaseballEvent } from '../models/baseball-event.model';
+import { BaseballLeague } from '../models/baseball-league.model';
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
 
@@ -140,25 +141,15 @@ export class MlbService {
    * @param year
    * @returns
    */
-  baseballLeague(
-    leagueId: string,
-    year: string
-  ): Observable<{
-    leagueId: string;
-    seasonId: string;
-    currentScoringPeriodId: number;
-    firstScoringPeriodId: number;
-    finalScoringPeriodId: number;
-    teamsLive: BaseballTeamLive[];
-    teams: BaseballTeam[];
-    freeAgents: BaseballPlayer[];
-  }> {
+  baseballLeague(leagueId: string, year: string): Observable<BaseballLeague> {
     let headers = new HttpHeaders();
     headers = headers.append('X-Fantasy-Platform', 'kona-PROD-c4559dd8257df5bff411b011384d90d4d60fbafa');
     return this.espnClient
       .espnFantasyLeagueBySport<EspnClientBaseballLeague>({ sport: FantasySports.Baseball, leagueId, year, headers })
       .pipe(
         map(res => {
+          const genericLeagueSettings = transformEspnClientLeagueToLeague(res);
+
           const schedule = res.schedule[0];
 
           const teams = res.teams.map(t => MlbService.transformEspnClientTeamListToTeamList(t));
@@ -166,18 +157,8 @@ export class MlbService {
             ? schedule.teams.map(t => MlbService.transformEspnClientScheduleTeamListToTeamList(t))
             : [];
 
-          const seasonId = res.seasonId.toString();
-          const currentScoringPeriodId = res.scoringPeriodId;
-          const firstScoringPeriodId = res.status.firstScoringPeriod;
-          const finalScoringPeriodId = res.status.finalScoringPeriod;
-          const leagueId = res.id.toString();
-
           return {
-            leagueId,
-            seasonId,
-            currentScoringPeriodId,
-            firstScoringPeriodId,
-            finalScoringPeriodId,
+            ...genericLeagueSettings,
             teams,
             teamsLive,
             freeAgents: MlbService.transformEspnClientFreeAgentToBaseballPlayer(res.players),
