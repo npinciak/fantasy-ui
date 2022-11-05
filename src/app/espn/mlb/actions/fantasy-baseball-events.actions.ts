@@ -1,11 +1,16 @@
 import { BaseballEvent } from '../models/baseball-event.model';
 
-export class SetFantasyBaseballEvents {
-  static readonly type = `[fantasyBaseballEvents] SetFantasyBaseballEvents`;
-  constructor(public payload: BaseballEvent[]) {}
-}
+export namespace FantasyBaseballEvents {
+  export const name = 'fantasyBaseballEvents';
+  type Entity = BaseballEvent;
 
-export class ClearAndAddFantasyBaseballEvents {
-  static readonly type = `[fantasyBaseballEvents] ClearAndAddFantasyBaseballEvents`;
-  constructor(public payload: BaseballEvent[]) {}
+  export class AddOrUpdate {
+    public static readonly type = `[${name}}] AddOrUpdate`;
+    constructor(public payload: Entity[]) {}
+  }
+
+  export class ClearAndAdd {
+    public static readonly type = `[${name}}] ClearAndAdd`;
+    constructor(public payload: Entity[]) {}
+  }
 }

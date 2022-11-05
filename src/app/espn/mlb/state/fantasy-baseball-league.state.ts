@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { exists } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { Action, State, StateContext, Store } from '@ngxs/store';
-import { SetFantasyBaseballEvents } from '../actions/fantasy-baseball-events.actions';
-import { SetFantasyBaseballTeams } from '../actions/fantasy-baseball-team.actions';
+import { FantasyBaseballEvents } from '../actions/fantasy-baseball-events.actions';
+import { FantasyBaseballTeams } from '../actions/fantasy-baseball-team.actions';
 import { FetchBaseballLeague, SetCurrentScoringPeriodId, SetLeagueId, SetSeasonId } from '../actions/mlb.actions';
 import { MlbService } from '../services/mlb.service';
 import { SetEspnFantasyLeagueTeamsLive } from './fantasy-baseball-team-live.state';
@@ -92,17 +92,23 @@ export class FantasyBaseballLeagueState {
 
     const year = new Date().getFullYear().toString();
 
-    const { currentScoringPeriodId, firstScoringPeriodId, finalScoringPeriodId, seasonId, teams, teamsLive } = await this.mlbService
-      .baseballLeague(leagueId, year)
-      .toPromise();
+    const {
+      scoringPeriodId: currentScoringPeriodId,
+      firstScoringPeriod: firstScoringPeriodId,
+      finalScoringPeriod: finalScoringPeriodId,
+      seasonId,
+      teams,
+      teamsLive,
+    } = await this.mlbService.baseballLeague(leagueId, year).toPromise();
+
     const events = await this.mlbService.baseballEvents().toPromise();
 
     dispatch([
       new SetEspnFantasyLeagueTeamsLive(teamsLive),
       new SetSeasonId({ seasonId }),
       new SetLeagueId({ leagueId }),
-      new SetFantasyBaseballTeams(teams),
-      new SetFantasyBaseballEvents(events),
+      new FantasyBaseballTeams.AddOrUpdate(teams),
+      new FantasyBaseballEvents.ClearAndAdd(events),
     ]);
 
     patchState({ currentScoringPeriodId, finalScoringPeriodId, firstScoringPeriodId, isLoading: false });

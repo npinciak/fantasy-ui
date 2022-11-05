@@ -43,14 +43,14 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
     return {
       id: p.id,
       name: p.name,
-      isInjured: p.isInjured,
+      injured: p.injured,
       injuryStatus: p.injuryStatus,
       img: p.img,
       team: p.team,
       position: p.position,
       lineupSlotId: p.lineupSlotId,
-      playerOwnershipChange: p.playerOwnershipChange,
-      playerOwnershipPercentOwned: p.playerOwnershipPercentOwned,
+      percentChange: p.percentChange,
+      percentOwned: p.percentOwned,
       highlightedPlayer: false,
       stats,
     };
@@ -251,8 +251,8 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
           img: p.img,
           team: p.team,
           position: p.position,
-          playerOwnershipChange: p.playerOwnershipChange,
-          playerOwnershipPercentOwned: p.playerOwnershipPercentOwned,
+          percentChange: p.percentChange,
+          percentOwned: p.percentOwned,
           stats,
         };
       });

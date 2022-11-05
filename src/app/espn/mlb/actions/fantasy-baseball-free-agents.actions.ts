@@ -1,19 +1,21 @@
 import { BaseballPlayer } from '../models/baseball-player.model';
 
-export class SetFantasyBaseballFreeAgents {
-  static readonly type = `[fantasyBaseballFreeAgents] SetFantasyBaseballFreeAgents`;
-  constructor(public payload: BaseballPlayer[]) {}
-}
+export namespace FantasyBaseballFreeAgents {
+  export const name = 'fantasyBaseballFreeAgents';
+  type Entity = BaseballPlayer;
 
-export class ClearFantasyBaseballFreeAgents {
-  static readonly type = `[fantasyBaseballFreeAgents] ClearFantasyBaseballFreeAgents`;
-}
+  export class AddOrUpdate {
+    public static readonly type = `[${name}] AddOrUpdate`;
+    constructor(public payload: Entity[]) {}
+  }
 
-export class ClearAndAddFantasyBaseballFreeAgents {
-  static readonly type = `[fantasyBaseballFreeAgents] ClearAndAddFantasyBaseballFreeAgents`;
-  constructor(public payload: BaseballPlayer[]) {}
-}
+  export class ClearAndAdd {
+    public static readonly type = `[${name}] ClearAndAdd`;
+    constructor(public payload: Entity[]) {}
+  }
 
-export class FetchFantasyBaseballFreeAgents {
-  static readonly type = `[fantasyBaseballFreeAgents] FetchFantasyBaseballFreeAgents`;
+  export class Fetch {
+    static readonly type = `[${name}] Fetch`;
+    constructor(public payload: { leagueId: string }) {}
+  }
 }
