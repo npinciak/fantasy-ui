@@ -28,6 +28,8 @@ import { FootballTeam } from '../models/football-team.model';
   providedIn: 'root',
 })
 export class FantasyFootballService {
+  constructor(private espnClient: EspnService) {}
+
   static transformOutlook(outlooks?: EspnClientPlayerOutlooksMap) {
     const weeklyOutlook = outlooks?.outlooksByWeek;
 
@@ -59,7 +61,7 @@ export class FantasyFootballService {
       positionMap: NFL_POSITION_MAP,
     });
 
-    const isDST = player.playerPoolEntry.player.defaultPositionId === 16;
+    const isDST = playerInfo.defaultPositionId === 16;
 
     return {
       ...playerInfo,
@@ -117,8 +119,6 @@ export class FantasyFootballService {
       };
     });
   }
-
-  constructor(private espnClient: EspnService) {}
 
   /**
    * Return fantasy football league

@@ -21,17 +21,17 @@ export class FantasyFootballLeagueSelectors {
 
   @Selector([FantasyFootballLeagueSelectors.getState])
   static getCurrentScoringPeriodId(state: FantasyFootballLeagueStateModel) {
-    return state.currentScoringPeriodId;
+    return state.scoringPeriodId;
   }
 
   @Selector([FantasyFootballLeagueSelectors.getState])
   static getFirstScoringPeriodId(state: FantasyFootballLeagueStateModel) {
-    return state.firstScoringPeriodId;
+    return state.firstScoringPeriod;
   }
 
   @Selector([FantasyFootballLeagueSelectors.getState])
   static getFinalScoringPeriodId(state: FantasyFootballLeagueStateModel) {
-    return state.finalScoringPeriodId;
+    return state.finalScoringPeriod;
   }
 
   @Selector([FantasyFootballLeagueSelectors.getState])

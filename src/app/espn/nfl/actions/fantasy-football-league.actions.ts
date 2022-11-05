@@ -8,6 +8,6 @@ export namespace FantasyFootballLeague {
 
   export class SetCurrentScoringPeriodId {
     public static readonly type = `[${name}] SetCurrentScoringPeriodId`;
-    constructor(public payload: { currentScoringPeriodId: number | null }) {}
+    constructor(public payload: { scoringPeriodId: number | null }) {}
   }
 }
