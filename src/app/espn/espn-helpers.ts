@@ -1,14 +1,20 @@
+import { PositionEntityMap } from '@app/@shared/base-models/base-position.model';
 import { exists } from '@app/@shared/helpers/utils';
 import {
   EspnClientLineupEntityMap,
+  EspnClientPlayerInfo,
   EspnClientPlayerStatsByYearMap,
   EspnClientPlayerStatsYear,
   EspnLeagueId,
+  EspnPlayerInjuryStatus,
   EspnSport,
 } from '@espnClient/espn-client.model';
 import { CompetitorsEntity } from '@espnClient/espn-fastcast.model';
+import { headshotImgBuilder } from './espn.const';
 import { BaseballPlayer } from './mlb/models/baseball-player.model';
+import { LeagueNameByEspnLeagueId } from './models/league.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
+import { FantasyFootballService } from './nfl/services/fantasy-football.service';
 
 /**
  * Sports to include in Fastcast
@@ -129,3 +135,56 @@ export function startingPlayersFilter(
 
 // .filter(p => NFL_LINEUP_MAP[p.lineupSlotId].starter)
 // .sort((a, b) => NFL_LINEUP_MAP[a.lineupSlotId].displayOrder - NFL_LINEUP_MAP[b.lineupSlotId].displayOrder);
+
+export function transformEspnClientPlayerToPlayer(
+  playerInfo: EspnClientPlayerInfo,
+  opts: { sport: EspnSport; leagueId: EspnLeagueId; teamMap: Record<string, string>; positionMap: PositionEntityMap }
+): {
+  id: string;
+  name: string;
+  img: string;
+  teamId: string;
+  teamUid: string;
+  position: string;
+  injured: boolean;
+  team: string;
+  injuryStatus: EspnPlayerInjuryStatus;
+  defaultPositionId: number;
+  percentOwned: number;
+  percentChange: number;
+  percentStarted: number;
+  stats: EspnClientPlayerStatsByYearMap | null;
+  outlookByWeek: {
+    week: number;
+    outlook: string;
+  }[];
+} {
+  const { sport, leagueId, teamMap, positionMap } = opts;
+  const { proTeamId, defaultPositionId, injuryStatus, injured, outlooks, id } = playerInfo;
+  const { percentOwned, percentChange, percentStarted } = playerInfo?.ownership;
+
+  const league = LeagueNameByEspnLeagueId[leagueId];
+
+  const team = teamMap[proTeamId] as string;
+  const stats = flattenPlayerStats(playerInfo.stats);
+
+  const outlookByWeek = FantasyFootballService.transformOutlook(outlooks);
+
+  return {
+    id: id.toString(),
+    name: playerInfo.fullName,
+    teamId: proTeamId.toString(),
+    teamUid: transformIdToUid(sport, leagueId, proTeamId),
+    position: positionMap[defaultPositionId].abbrev,
+    img: headshotImgBuilder(id, { league }),
+    injured,
+    stats,
+    team,
+    injuryStatus,
+    defaultPositionId,
+    outlookByWeek,
+    percentOwned,
+    percentChange,
+    percentStarted,
+  };
+}

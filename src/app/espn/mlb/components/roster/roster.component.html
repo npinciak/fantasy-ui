@@ -11,7 +11,7 @@
                 <ng-template [ngSwitchCase]="'name'">
                   <app-player-info-col [player]="data"></app-player-info-col>
                 </ng-template>
-                <ng-template [ngSwitchCase]="'playerOwnershipChange'">
+                <ng-template [ngSwitchCase]="'percentChange'">
                   <app-player-trending-col [data]="col?.cellData(data)"></app-player-trending-col>
                 </ng-template>
                 <ng-template [ngSwitchCase]="'break'">-</ng-template>

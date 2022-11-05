@@ -28,7 +28,7 @@ export function fastcastURIBuilder(eventType: string | null, messageId: string):
   return `${FASTCAST_BASE}/${eventType}/message/${messageId}/checkpoint`;
 }
 
-export function logoImgBuilder(abbrev: string, league: 'mlb' | 'nfl'): string {
+export function logoImgBuilder(abbrev: string, league: string): string {
   return `${CDN_COMBINER}?img=/i/teamlogos/${league}/500/${abbrev.toLowerCase()}.png&h=100&w=100`;
 }
 
@@ -36,7 +36,7 @@ export function fieldImgBuilder(id: number): string {
   return `${CDN_REDESIGN_IMG}/mlb/fields/${id}.png`;
 }
 
-export function headshotImgBuilder(id: number | string, opts: { league: 'mlb' | 'nfl'; width?: number; height?: number }): string {
+export function headshotImgBuilder(id: number | string, opts: { league: string; width?: number; height?: number }): string {
   const w = exists(opts.width) ? opts.width : 96;
   const h = exists(opts.height) ? opts.height : 70;
 

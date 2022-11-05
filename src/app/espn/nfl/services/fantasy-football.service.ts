@@ -1,7 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { exists } from '@app/@shared/helpers/utils';
-import { flattenPlayerStats, transformIdToUid } from '@app/espn/espn-helpers';
+import { transformEspnClientPlayerToPlayer } from '@app/espn/espn-helpers';
 import { headshotImgBuilder, logoImgBuilder } from '@app/espn/espn.const';
 import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
 import { EspnService } from '@app/espn/service/espn.service';
@@ -11,11 +11,8 @@ import {
   EspnClientFreeAgentEntry,
   EspnClientPaginatedFilter,
   EspnClientPlayer,
-  EspnClientPlayerInfo,
   EspnClientPlayerOutlooksMap,
-  EspnClientPlayerStatsByYearMap,
   EspnLeagueId,
-  EspnPlayerInjuryStatus,
   EspnSport,
 } from '@espnClient/espn-client.model';
 import { Observable } from 'rxjs';
@@ -48,56 +45,6 @@ export class FantasyFootballService {
       .sort((a, b) => b.week - a.week);
   }
 
-  static testTransform(playerInfo: EspnClientPlayerInfo): {
-    id: string;
-    name: string;
-    teamId: string;
-    teamUid: string;
-    position: string;
-    injured: boolean;
-    team: string;
-    isDST: boolean;
-    injuryStatus: EspnPlayerInjuryStatus;
-    defaultPositionId: number;
-    percentOwned: number;
-    percentChange: number;
-    percentStarted: number;
-    stats: EspnClientPlayerStatsByYearMap | null;
-    outlookByWeek: {
-      week: number;
-      outlook: string;
-    }[];
-  } {
-    const { defaultPositionId, injuryStatus, injured, outlooks, id } = playerInfo;
-
-    const { percentOwned, percentChange, percentStarted } = playerInfo.ownership;
-
-    const team = NFL_TEAM_MAP[playerInfo.proTeamId] as string;
-    const stats = flattenPlayerStats(playerInfo.stats);
-
-    const isDST = playerInfo.defaultPositionId === 16;
-
-    const outlookByWeek = FantasyFootballService.transformOutlook(outlooks);
-
-    return {
-      id: id.toString(),
-      name: playerInfo.fullName,
-      teamId: playerInfo.proTeamId.toString(),
-      teamUid: transformIdToUid(EspnSport.Football, EspnLeagueId.NFL, playerInfo.proTeamId),
-      position: NFL_POSITION_MAP[playerInfo.defaultPositionId].abbrev,
-      injured,
-      stats,
-      team,
-      isDST,
-      injuryStatus,
-      defaultPositionId,
-      outlookByWeek,
-      percentOwned,
-      percentChange,
-      percentStarted,
-    };
-  }
-
   static transformEspnClientTeamPlayerToFootballPlayer(player: EspnClientPlayer): FootballPlayer {
     if (!exists(player.playerPoolEntry)) {
       throw new Error('player.playerPoolEntry must be defined');
@@ -105,41 +52,22 @@ export class FantasyFootballService {
 
     const { lineupSlotId } = player;
 
-    const playerInfo = FantasyFootballService.testTransform(player.playerPoolEntry.player);
+    const playerInfo = transformEspnClientPlayerToPlayer(player.playerPoolEntry.player, {
+      sport: EspnSport.Football,
+      leagueId: EspnLeagueId.NFL,
+      teamMap: NFL_TEAM_MAP,
+      positionMap: NFL_POSITION_MAP,
+    });
+
+    const isDST = player.playerPoolEntry.player.defaultPositionId === 16;
 
     return {
       ...playerInfo,
       lineupSlotId,
-      img: !playerInfo.isDST ? headshotImgBuilder(player.playerId, { league: 'nfl' }) : logoImgBuilder(playerInfo.team, 'nfl'),
+      img: !isDST ? headshotImgBuilder(player.playerId, { league: 'nfl' }) : logoImgBuilder(playerInfo.team, 'nfl'),
       lineupSlot: FOOTBALL_LINEUP_SLOT_MAP[player.lineupSlotId].abbrev,
       points: player.playerPoolEntry.appliedStatTotal,
     };
-  }
-
-  static transformEspnClientScheduleTeamListToTeamList(data: any[]) {
-    return [];
-  }
-
-  static calculatePredictedWinPct(pointsScored: number, pointsAllowed: number, exp: number) {
-    const R = pointsScored / pointsAllowed;
-
-    if (pointsScored === 0 || pointsAllowed == 0) {
-      return 0;
-    }
-
-    return Math.pow(R, exp) / (Math.pow(R, exp) + 1);
-  }
-
-  static calculateScoringRatio(pointsScored: number, pointsAllowed: number) {
-    return pointsScored / pointsAllowed;
-  }
-
-  static calculatePredictedWinPctDiff(predictedWinPct: number, winPct: number) {
-    return predictedWinPct - winPct;
-  }
-
-  static calculateAbsoluteError(predictedWinPct: number, actualWinPct: number) {
-    return Math.abs(actualWinPct - predictedWinPct);
   }
 
   static transformEspnClientTeamListToTeamList(team: EspnClientFootballTeam): FootballTeam {
@@ -170,11 +98,18 @@ export class FantasyFootballService {
         throw new Error('player must be defined');
       }
 
-      const playerInfo = FantasyFootballService.testTransform(p.player);
+      const playerInfo = transformEspnClientPlayerToPlayer(p.player, {
+        sport: EspnSport.Football,
+        leagueId: EspnLeagueId.NFL,
+        teamMap: NFL_TEAM_MAP,
+        positionMap: NFL_POSITION_MAP,
+      });
+
+      const isDST = playerInfo.defaultPositionId === 16;
 
       return {
         ...playerInfo,
-        img: !playerInfo.isDST ? headshotImgBuilder(p.id, { league: 'nfl' }) : logoImgBuilder(playerInfo.team, 'nfl'),
+        img: !isDST ? headshotImgBuilder(p.id, { league: 'nfl' }) : logoImgBuilder(playerInfo.team, 'nfl'),
         lineupSlotId: playerInfo.defaultPositionId,
         lineupSlot: FOOTBALL_LINEUP_SLOT_MAP[playerInfo.defaultPositionId].abbrev,
         points: 0, // p.player.appliedStatTotal,
