@@ -296,6 +296,7 @@ export interface EspnClientPlayerEntry {
 export interface EspnClientPlayerInfo {
   fullName: string;
   playerId: number;
+  id: number;
   lastNewsDate: number;
   defaultPositionId: number;
   proTeamId: number;
@@ -308,7 +309,10 @@ export interface EspnClientPlayerInfo {
   starterStatusByProGame: EspnClientGameStatus;
 }
 
-export type EspnClientPlayerOutlooksMap = { outlooksByWeek?: Record<string, string> };
+export type EspnClientPlayerOutlooks = Record<string, string>;
+export type EspnClientPlayerOutlooksMap = {
+  outlooksByWeek?: EspnClientPlayerOutlooks;
+};
 
 export type EspnClientGameStatus = Record<number, string>;
 
@@ -430,13 +434,13 @@ export interface SortMetaData {
   value: string | number | null;
 }
 
-export interface FilterValueString {
+export type FilterValueString = {
   value: string[];
-}
+};
 
-export interface FilterValueNumber {
+export type FilterValueNumber = {
   value: number[];
-}
+};
 
 export interface FilterStatsForTopScoringPeriodIds {
   value: number;
