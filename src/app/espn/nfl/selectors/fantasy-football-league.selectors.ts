@@ -1,6 +1,7 @@
 import { Selector } from '@app/@shared/models/typed-selector';
+import { FantasyFootballLeagueStateModel } from '../models/football-league-state.model';
 import { FootballTeam } from '../models/football-team.model';
-import { FantasyFootballLeagueState, FantasyFootballLeagueStateModel } from '../state/fantasy-football-league.state';
+import { FantasyFootballLeagueState } from '../state/fantasy-football-league.state';
 import { FantasyFootballTeamSelectors } from './fantasy-football-team.selectors';
 
 export class FantasyFootballLeagueSelectors {
@@ -21,17 +22,17 @@ export class FantasyFootballLeagueSelectors {
 
   @Selector([FantasyFootballLeagueSelectors.getState])
   static getCurrentScoringPeriodId(state: FantasyFootballLeagueStateModel) {
-    return state.currentScoringPeriodId;
+    return state.scoringPeriodId;
   }
 
   @Selector([FantasyFootballLeagueSelectors.getState])
   static getFirstScoringPeriodId(state: FantasyFootballLeagueStateModel) {
-    return state.firstScoringPeriodId;
+    return state.firstScoringPeriod;
   }
 
   @Selector([FantasyFootballLeagueSelectors.getState])
   static getFinalScoringPeriodId(state: FantasyFootballLeagueStateModel) {
-    return state.finalScoringPeriodId;
+    return state.finalScoringPeriod;
   }
 
   @Selector([FantasyFootballLeagueSelectors.getState])

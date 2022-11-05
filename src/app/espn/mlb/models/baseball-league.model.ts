@@ -1,8 +1,9 @@
-import { BaseballTeam } from './baseball-team.model';
+import { FantasyLeague } from '@app/espn/models/fantasy-league.model';
+import { BaseballPlayer } from './baseball-player.model';
+import { BaseballTeam, BaseballTeamLive } from './baseball-team.model';
 
-export type BaseballLeagueProps = {
+export interface BaseballLeague extends FantasyLeague {
+  teamsLive: BaseballTeamLive[];
   teams: BaseballTeam[];
-};
-
-// TODO: Create new FE model
-export type BaseballLeague = BaseballLeagueProps;
+  freeAgents: BaseballPlayer[];
+}

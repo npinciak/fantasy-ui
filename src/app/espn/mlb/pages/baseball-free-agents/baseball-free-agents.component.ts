@@ -69,9 +69,7 @@ export class BaseballFreeAgentsComponent implements OnInit {
     this.selectedPlayerAvailabilityStatus = new SelectionModel(true);
   }
 
-  ngOnInit(): void {
-    this.fantasyBaseballFreeAgentsFacade.fetchFreeAgents();
-  }
+  ngOnInit(): void {}
 
   onSelectedLeagueTeamChange(val: string): void {
     this.selectedLeagueTeam = val;
