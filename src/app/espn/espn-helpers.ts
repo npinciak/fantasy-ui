@@ -1,5 +1,11 @@
 import { exists } from '@app/@shared/helpers/utils';
-import { EspnClientLineupEntityMap, EspnClientPlayerStatsByYearMap, EspnClientPlayerStatsYear } from '@espnClient/espn-client.model';
+import {
+  EspnClientLineupEntityMap,
+  EspnClientPlayerStatsByYearMap,
+  EspnClientPlayerStatsYear,
+  EspnLeagueId,
+  EspnSport,
+} from '@espnClient/espn-client.model';
 import { CompetitorsEntity } from '@espnClient/espn-fastcast.model';
 import { BaseballPlayer } from './mlb/models/baseball-player.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
@@ -66,9 +72,9 @@ export function transformUidToId(uid: string | null): string | null {
   return uid.split('~')[1].replace('l:', '');
 }
 
-export function transformIdToUid(sport: string | null, league: string | null, team: string | null): string | null {
-  if (!sport || !league || !team) return null;
-  return `s:${sport}~l:${league}~t:${team}`;
+export function transformIdToUid(sportId: EspnSport | null, leagueId: EspnLeagueId | null, teamId: string | number | null): string {
+  if (!sportId || !leagueId || !teamId) return '';
+  return `s:${sportId}~l:${leagueId}~t:${teamId}`;
 }
 
 export function flattenPlayerStats(stats: EspnClientPlayerStatsYear[]): EspnClientPlayerStatsByYearMap;
