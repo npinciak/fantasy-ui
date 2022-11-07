@@ -29,7 +29,7 @@
       <app-dropdown-filter
         [selectedOption]="scoringPeriodId$ | async"
         title="Stat Period"
-        [filterItems]="FOOTBALL_STAT_PERIOD_FILTER_OPTIONS"
+        [filterItems]="statPeriodFilterOptions$ | async"
         (filterUpdate)="scoringPeriodIdChange($event)"
       ></app-dropdown-filter>
     </div>

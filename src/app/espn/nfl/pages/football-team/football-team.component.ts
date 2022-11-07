@@ -36,8 +36,10 @@ export class FootballTeamComponent implements OnInit {
 
   isLoading$ = this.footballLeagueFacade.isLoading$;
 
-  scoringPeriodId$ = new BehaviorSubject(YearToStatTypePeriod(StatTypePeriodId.Season, new Date()));
+  scoringPeriodId$ = new BehaviorSubject(YearToStatTypePeriod({ periodType: StatTypePeriodId.Season, dateObj: new Date() }));
   selectedPosition$ = new BehaviorSubject(FootballPosition.QB);
+
+  statPeriodFilterOptions$ = this.footballLeagueFacade.statPeriodFilterOptions$;
 
   starters$ = combineLatest([this.footballTeamFacade.starters$, this.teamId$]).pipe(map(([starters, teamId]) => starters(teamId)));
   startersPoints$ = combineLatest([this.footballTeamFacade.startersPoints$, this.teamId$]).pipe(
@@ -91,8 +93,8 @@ export class FootballTeamComponent implements OnInit {
       data: {
         player,
       },
-      height: '400px',
-      width: '600px',
+      height: '500px',
+      width: '800px',
     });
   }
 }
