@@ -1,14 +1,6 @@
 import { PositionEntityMap } from '@app/@shared/base-models/base-position.model';
 import { exists } from '@app/@shared/helpers/utils';
-import {
-  EspnClient,
-  EspnClientPlayerInfo,
-  EspnClientPlayerStatsByYearMap,
-  EspnClientPlayerStatsYear,
-  EspnLeagueId,
-  EspnPlayerInjuryStatus,
-  EspnSport,
-} from '@espnClient/espn-client.model';
+import { EspnClient, EspnLeagueId, EspnPlayerInjuryStatus, EspnSport } from '@espnClient/espn-client.model';
 import { CompetitorsEntity } from '@espnClient/espn-fastcast.model';
 import { headshotImgBuilder } from './espn.const';
 import { BaseballPlayer } from './mlb/models/baseball-player.model';
@@ -84,17 +76,17 @@ export function transformIdToUid(sportId: EspnSport | null, leagueId: EspnLeague
   return `s:${sportId}~l:${leagueId}~t:${teamId}`;
 }
 
-export function flattenPlayerStats(stats: EspnClientPlayerStatsYear[]): EspnClientPlayerStatsByYearMap;
-export function flattenPlayerStats(stats: EspnClientPlayerStatsYear[] | null): EspnClientPlayerStatsByYearMap | null;
-export function flattenPlayerStats(stats: EspnClientPlayerStatsYear[] | undefined): EspnClientPlayerStatsByYearMap | null;
-export function flattenPlayerStats(stats: EspnClientPlayerStatsYear[] | null | undefined): EspnClientPlayerStatsByYearMap | null {
+export function flattenPlayerStats(stats: EspnClient.PlayerStatsYear[]): EspnClient.PlayerStatsByYearMap;
+export function flattenPlayerStats(stats: EspnClient.PlayerStatsYear[] | null): EspnClient.PlayerStatsByYearMap | null;
+export function flattenPlayerStats(stats: EspnClient.PlayerStatsYear[] | undefined): EspnClient.PlayerStatsByYearMap | null;
+export function flattenPlayerStats(stats: EspnClient.PlayerStatsYear[] | null | undefined): EspnClient.PlayerStatsByYearMap | null {
   if (!exists(stats)) {
     return null;
   }
   return stats.reduce((obj, val) => {
     obj[val.id] = val;
     return obj;
-  }, {} as EspnClientPlayerStatsByYearMap);
+  }, {} as EspnClient.PlayerStatsByYearMap);
 }
 
 /**
@@ -154,7 +146,7 @@ export function transformEspnClientLeagueToLeague(league: EspnClient.League): Fa
 }
 
 export function transformEspnClientPlayerToPlayer(
-  playerInfo: EspnClientPlayerInfo,
+  playerInfo: EspnClient.PlayerInfo,
   opts: { sport: EspnSport; leagueId: EspnLeagueId; teamMap: Record<string, string>; positionMap: PositionEntityMap }
 ): {
   id: string;
@@ -170,7 +162,7 @@ export function transformEspnClientPlayerToPlayer(
   percentOwned: number;
   percentChange: number;
   percentStarted: number;
-  stats: EspnClientPlayerStatsByYearMap | null;
+  stats: EspnClient.PlayerStatsByYearMap | null;
   outlookByWeek: {
     week: number;
     outlook: string;

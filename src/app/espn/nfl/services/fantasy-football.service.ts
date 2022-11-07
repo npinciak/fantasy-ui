@@ -5,16 +5,7 @@ import { transformEspnClientLeagueToLeague, transformEspnClientPlayerToPlayer } 
 import { headshotImgBuilder, logoImgBuilder } from '@app/espn/espn.const';
 import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
 import { EspnService } from '@app/espn/service/espn.service';
-import {
-  EspnClientFootballLeague,
-  EspnClientFootballTeam,
-  EspnClientFreeAgentEntry,
-  EspnClientPaginatedFilter,
-  EspnClientPlayer,
-  EspnClientPlayerOutlooksMap,
-  EspnLeagueId,
-  EspnSport,
-} from '@espnClient/espn-client.model';
+import { EspnClient, EspnLeagueId, EspnSport } from '@espnClient/espn-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FOOTBALL_LINEUP_SLOT_MAP } from '../consts/lineup.const';
@@ -30,7 +21,7 @@ import { FootballTeam } from '../models/football-team.model';
 export class FantasyFootballService {
   constructor(private espnClient: EspnService) {}
 
-  static transformOutlook(outlooks?: EspnClientPlayerOutlooksMap) {
+  static transformOutlook(outlooks?: EspnClient.PlayerOutlooksMap) {
     const weeklyOutlook = outlooks?.outlooksByWeek;
 
     if (!exists(weeklyOutlook)) {
@@ -47,7 +38,7 @@ export class FantasyFootballService {
       .sort((a, b) => b.week - a.week);
   }
 
-  static transformEspnClientTeamPlayerToFootballPlayer(player: EspnClientPlayer): FootballPlayer {
+  static transformEspnClientTeamPlayerToFootballPlayer(player: EspnClient.TeamRosterEntry): FootballPlayer {
     if (!exists(player.playerPoolEntry)) {
       throw new Error('player.playerPoolEntry must be defined');
     }
@@ -72,7 +63,7 @@ export class FantasyFootballService {
     };
   }
 
-  static transformEspnClientTeamListToTeamList(team: EspnClientFootballTeam): FootballTeam {
+  static transformEspnClientTeamListToTeamList(team: EspnClient.FootballTeam): FootballTeam {
     const roster = team.roster.entries.map(p => FantasyFootballService.transformEspnClientTeamPlayerToFootballPlayer(p));
 
     const { abbrev, logo, record, playoffSeed: currentRank } = team;
@@ -95,7 +86,7 @@ export class FantasyFootballService {
     };
   }
 
-  static transformEspnClientFreeAgentToFootballPlayer(data: EspnClientFreeAgentEntry[]): FootballPlayerFreeAgent[] {
+  static transformEspnClientFreeAgentToFootballPlayer(data: EspnClient.FreeAgentEntry[]): FootballPlayerFreeAgent[] {
     return data.map(p => {
       if (!exists(p)) {
         throw new Error('player must be defined');
@@ -127,7 +118,7 @@ export class FantasyFootballService {
    * @returns
    */
   footballLeague(leagueId: string, year: string): Observable<FantasyFootballLeague> {
-    return this.espnClient.espnFantasyLeagueBySport<EspnClientFootballLeague>({ sport: FantasySports.Football, leagueId, year }).pipe(
+    return this.espnClient.espnFantasyLeagueBySport<EspnClient.FootballLeague>({ sport: FantasySports.Football, leagueId, year }).pipe(
       map(res => {
         const { schedule } = res;
 
@@ -150,7 +141,7 @@ export class FantasyFootballService {
    * @param payload
    * @returns
    */
-  footballFreeAgents(payload: { leagueId: string; scoringPeriodId: number; filter: EspnClientPaginatedFilter | null }) {
+  footballFreeAgents(payload: { leagueId: string; scoringPeriodId: number; filter: EspnClient.PaginatedFilter | null }) {
     let headers = new HttpHeaders();
     headers = headers.append('X-Fantasy-Filter', JSON.stringify(payload.filter));
     headers = headers.append('X-Fantasy-Platform', 'kona-PROD-c4559dd8257df5bff411b011384d90d4d60fbafa');

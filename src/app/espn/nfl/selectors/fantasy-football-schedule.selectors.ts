@@ -2,7 +2,7 @@ import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { unique } from '@app/@shared/helpers/unique-by';
 import { exists } from '@app/@shared/helpers/utils';
 import { FilterOptions } from '@app/@shared/models/filter.model';
-import { EspnClientScheduleEntity, EspnClientScheduleTeam, EspnClientScheduleWinner } from '@espnClient/espn-client.model';
+import { EspnClient, EspnClientScheduleWinner } from '@espnClient/espn-client.model';
 import { Selector } from '@ngxs/store';
 import { FantasyMatchup, FantasyMatchupMap, FantasyMatchupTeam } from '../models/fantasy-schedule.model';
 import { FootballTeam } from '../models/football-team.model';
@@ -11,7 +11,7 @@ import { FantasyFootballTeamSelectors } from './fantasy-football-team.selectors'
 
 export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFootballScheduleState) {
   @Selector([FantasyFootballScheduleSelectors.getList])
-  static getMatchupPeriodIds(matchupList: EspnClientScheduleEntity[]): number[] {
+  static getMatchupPeriodIds(matchupList: EspnClient.ScheduleEntity[]): number[] {
     const ids = matchupList.map(m => m.matchupPeriodId);
     return unique(ids);
   }
@@ -23,7 +23,7 @@ export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFoo
 
   static transformTeamToMatchupTeam(
     team: FootballTeam | null,
-    scheduleTeam: EspnClientScheduleTeam,
+    scheduleTeam: EspnClient.ScheduleTeam,
     isWinner: boolean | null
   ): FantasyMatchupTeam | null {
     if (!exists(team)) return null;
@@ -46,7 +46,7 @@ export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFoo
 
   @Selector([FantasyFootballScheduleSelectors.getList, FantasyFootballTeamSelectors.getById])
   static getMatchupListWithFantasyTeams(
-    matchupList: EspnClientScheduleEntity[],
+    matchupList: EspnClient.ScheduleEntity[],
     getTeamById: (id: string | null) => FootballTeam | null
   ): FantasyMatchup[] {
     return matchupList.map(m => {

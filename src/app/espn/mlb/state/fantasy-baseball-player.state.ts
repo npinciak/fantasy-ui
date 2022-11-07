@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GenericState, GenericStateClass } from '@app/@shared/generic-state/generic.state';
-import { EspnClientPlayerNewsFeedEntity } from '@espnClient/espn-client.model';
+import { EspnClient } from '@espnClient/espn-client.model';
 import { Action, State, StateContext } from '@ngxs/store';
 import { MlbService } from '../services/mlb.service';
 
@@ -11,12 +11,12 @@ export class FetchBaseballPlayerNews {
 
 export class SetBaseballPlayerNews {
   static readonly type = `[fantasyBaseballPlayer] SetBaseballPlayerNews`;
-  constructor(public payload: EspnClientPlayerNewsFeedEntity[]) {}
+  constructor(public payload: EspnClient.PlayerNewsFeedEntity[]) {}
 }
 
 export class ClearAndAddBaseballPlayerNews {
   static readonly type = `[fantasyBaseballPlayer] ClearAndAddBaseballPlayerNews`;
-  constructor(public payload: EspnClientPlayerNewsFeedEntity[]) {}
+  constructor(public payload: EspnClient.PlayerNewsFeedEntity[]) {}
 }
 
 export interface FantasyBaseballPlayerStateModel {
@@ -37,7 +37,7 @@ export class FantasyBaseballPlayerState extends GenericState({
 
   @Action(FetchBaseballPlayerNews)
   async fetchBaseballPlayerNews(
-    { dispatch }: StateContext<GenericStateClass<EspnClientPlayerNewsFeedEntity>>,
+    { dispatch }: StateContext<GenericStateClass<EspnClient.PlayerNewsFeedEntity>>,
     { payload: { lookbackDays, playerId } }: FetchBaseballPlayerNews
   ): Promise<void> {
     const news = await this.mlbService.baseballPlayerNews({ lookbackDays, playerId }).toPromise();
