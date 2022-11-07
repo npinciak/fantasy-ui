@@ -51,6 +51,10 @@ export class FootballTeamComponent implements OnInit {
     map(([benchPoints, teamId]) => benchPoints(teamId))
   );
 
+  injuredReserve$ = combineLatest([this.footballTeamFacade.injuredReserve$, this.teamId$]).pipe(
+    map(([injuredReserve, teamId]) => injuredReserve(teamId))
+  );
+
   currentScoringPeriodId$ = this.footballLeagueFacade.currentScoringPeriodId$;
 
   tableData$ = combineLatest([

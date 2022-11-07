@@ -3,7 +3,7 @@ import { linearRegression } from '@app/@shared/helpers/graph.helpers';
 import { exists } from '@app/@shared/helpers/utils';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
 import { EspnFastcastTeamSelectors } from '@app/espn-fastcast/selectors/espn-fastcast-team.selectors';
-import { benchPlayersFilter, startingBaseballPlayersFilter } from '@app/espn/espn-helpers';
+import { benchPlayersFilter, startingPlayersFilter } from '@app/espn/espn-helpers';
 import { Selector } from '@ngxs/store';
 import { AdvStats } from '../class/advStats.class';
 import { MLB_LINEUP_MAP } from '../consts/lineup.const';
@@ -101,7 +101,7 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
 
   @Selector([FantasyBaseballTeamsSelector.getTeamBatters])
   static getTeamStartingBatters(getTeamBatters: (id: string) => BaseballPlayer[]): (id: string) => any[] {
-    return (id: string) => startingBaseballPlayersFilter(getTeamBatters(id), MLB_LINEUP_MAP);
+    return (id: string) => startingPlayersFilter(getTeamBatters(id), MLB_LINEUP_MAP);
   }
 
   @Selector([FantasyBaseballTeamsSelector.getTeamBatters])
@@ -116,7 +116,7 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
 
   @Selector([FantasyBaseballTeamsSelector.getTeamPitchers])
   static getTeamStartingPitchers(getTeamPitchers: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
-    return (id: string) => startingBaseballPlayersFilter(getTeamPitchers(id), MLB_LINEUP_MAP);
+    return (id: string) => startingPlayersFilter(getTeamPitchers(id), MLB_LINEUP_MAP);
   }
 
   @Selector([FantasyBaseballTeamsSelector.getTeamPitchers])

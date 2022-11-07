@@ -17,4 +17,6 @@ export class FantasyFootballTeamFacade extends GenericFacade(FantasyFootballTeam
 
   bench$ = select(FantasyFootballTeamSelectors.getTeamBench);
   benchPoints$ = select(FantasyFootballTeamSelectors.getTeamBenchPoints);
+
+  injuredReserve$ = select(FantasyFootballTeamSelectors.getTeamInjuredReserve);
 }
