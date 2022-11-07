@@ -1,8 +1,8 @@
 import { PositionEntityMap } from '@app/@shared/base-models/base-position.model';
 import { exists } from '@app/@shared/helpers/utils';
 import {
+  EspnClient,
   EspnClientLeague,
-  EspnClientLineupEntityMap,
   EspnClientPlayerInfo,
   EspnClientPlayerStatsByYearMap,
   EspnClientPlayerStatsYear,
@@ -105,7 +105,7 @@ export function flattenPlayerStats(stats: EspnClientPlayerStatsYear[] | null | u
  * @param lineupMap
  * @returns
  */
-export function startingBaseballPlayersFilter(players: BaseballPlayer[], lineupMap: EspnClientLineupEntityMap): BaseballPlayer[] {
+export function startingBaseballPlayersFilter(players: BaseballPlayer[], lineupMap: EspnClient.LineupEntityMap): BaseballPlayer[] {
   return players
     .filter(p => lineupMap[p.lineupSlotId].starter)
     .sort((a, b) => lineupMap[a.lineupSlotId].displayOrder - lineupMap[b.lineupSlotId].displayOrder);
@@ -118,15 +118,15 @@ export function startingBaseballPlayersFilter(players: BaseballPlayer[], lineupM
  * @param lineupMap
  * @returns
  */
-export function benchPlayersFilter(players: BaseballPlayer[], lineupMap: EspnClientLineupEntityMap): BaseballPlayer[] {
+export function benchPlayersFilter(players: BaseballPlayer[], lineupMap: EspnClient.LineupEntityMap): BaseballPlayer[] {
   return players.filter(p => lineupMap[p.lineupSlotId].bench);
 }
 
-export function startingPlayersFilter(players: BaseballPlayer[], lineupMap: EspnClientLineupEntityMap): BaseballPlayer[];
-export function startingPlayersFilter(players: FootballPlayer[], lineupMap: EspnClientLineupEntityMap): FootballPlayer[];
+export function startingPlayersFilter(players: BaseballPlayer[], lineupMap: EspnClient.LineupEntityMap): BaseballPlayer[];
+export function startingPlayersFilter(players: FootballPlayer[], lineupMap: EspnClient.LineupEntityMap): FootballPlayer[];
 export function startingPlayersFilter(
   players: BaseballPlayer[] | FootballPlayer[],
-  lineupMap: EspnClientLineupEntityMap
+  lineupMap: EspnClient.LineupEntityMap
 ): BaseballPlayer[] | FootballPlayer[] {
   return (
     players

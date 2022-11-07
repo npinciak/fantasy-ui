@@ -123,21 +123,23 @@ export enum EspnClientFootballPosition {
   EDR,
 }
 
-interface EspnClientLineupAttributes {
-  parentId: number;
-  id: number;
-  abbrev: string;
-  bench: boolean;
-  eligiblePositions: number[];
-  lineupSlotEligible: boolean;
-  name: string;
-  starter: boolean;
-  displayOrder: number;
-  active: boolean;
-}
+export namespace EspnClient {
+  interface LineupAttributes {
+    parentId: number;
+    id: number;
+    abbrev: string;
+    bench: boolean;
+    eligiblePositions: number[];
+    lineupSlotEligible: boolean;
+    name: string;
+    starter: boolean;
+    displayOrder: number;
+    active: boolean;
+  }
 
-export type EspnClientLineupEntity = EspnClientLineupAttributes;
-export type EspnClientLineupEntityMap = Record<number, EspnClientLineupEntity>;
+  export type LineupEntity = LineupAttributes;
+  export type LineupEntityMap = Record<number, LineupEntity>;
+}
 
 export interface EspnClientLeague {
   id: number;
