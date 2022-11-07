@@ -2,7 +2,6 @@ import { PositionEntityMap } from '@app/@shared/base-models/base-position.model'
 import { exists } from '@app/@shared/helpers/utils';
 import {
   EspnClient,
-  EspnClientLeague,
   EspnClientPlayerInfo,
   EspnClientPlayerStatsByYearMap,
   EspnClientPlayerStatsYear,
@@ -138,7 +137,7 @@ export function startingPlayersFilter(
 // .filter(p => NFL_LINEUP_MAP[p.lineupSlotId].starter)
 // .sort((a, b) => NFL_LINEUP_MAP[a.lineupSlotId].displayOrder - NFL_LINEUP_MAP[b.lineupSlotId].displayOrder);
 
-export function transformEspnClientLeagueToLeague(league: EspnClientLeague): FantasyLeague {
+export function transformEspnClientLeagueToLeague(league: EspnClient.League): FantasyLeague {
   const { id, seasonId, scoringPeriodId, status, settings, transactions } = league;
   const { matchupPeriodCount } = settings.scheduleSettings;
   const { firstScoringPeriod, finalScoringPeriod } = status;

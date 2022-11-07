@@ -124,9 +124,19 @@ export enum EspnClientFootballPosition {
 }
 
 export namespace EspnClient {
-  interface LineupAttributes {
-    parentId: number;
-    id: number;
+  interface IdAttributes<T> {
+    id: T;
+    parentId: T;
+    seasonId: T;
+    scoringPeriodId: T;
+    teamId: T;
+    memberId: T;
+  }
+
+  type IdAttributesString = IdAttributes<string>;
+  type IdAttributesNumber = IdAttributes<number>;
+
+  type LineupAttributes = Pick<IdAttributesNumber, 'id' | 'parentId'> & {
     abbrev: string;
     bench: boolean;
     eligiblePositions: number[];
@@ -135,23 +145,20 @@ export namespace EspnClient {
     starter: boolean;
     displayOrder: number;
     active: boolean;
-  }
+  };
 
   export type LineupEntity = LineupAttributes;
   export type LineupEntityMap = Record<number, LineupEntity>;
-}
 
-export interface EspnClientLeague {
-  id: number;
-  schedule: EspnClientScheduleEntity[];
-  scoringPeriodId: number;
-  seasonId: number;
-  status: EspnClientLeagueStatus;
-  settings: EspnClientLeagueSettings;
-  teams: EspnClientTeam[];
-  players: EspnClientFreeAgent[];
-  communication: EspnClientLeagueComm;
-  transactions: EspnClientLeagueTransaction[];
+  export type League = Pick<IdAttributesNumber, 'id' | 'scoringPeriodId' | 'seasonId'> & {
+    schedule: EspnClientScheduleEntity[];
+    status: EspnClientLeagueStatus;
+    settings: EspnClientLeagueSettings;
+    teams: EspnClientTeam[];
+    players: EspnClientFreeAgent[];
+    communication: EspnClientLeagueComm;
+    transactions: EspnClientLeagueTransaction[];
+  };
 }
 
 export type EspnClientLeagueTransaction = {
@@ -221,11 +228,11 @@ export interface EspnClientScheduleAttributes {
   teams?: EspnClientScheduleTeam[];
 }
 
-export type EspnClientBaseballLeague = Omit<EspnClientLeague, 'teams'> & {
+export type EspnClientBaseballLeague = Omit<EspnClient.League, 'teams'> & {
   teams: EspnClientBaseballTeam[];
 };
 
-export type EspnClientFootballLeague = Omit<EspnClientLeague, 'teams'> & {
+export type EspnClientFootballLeague = Omit<EspnClient.League, 'teams'> & {
   teams: EspnClientFootballTeam[];
 };
 
