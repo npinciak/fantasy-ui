@@ -125,12 +125,20 @@ export enum EspnClientFootballPosition {
 
 export namespace EspnClient {
   interface IdAttributes<T> {
+    fromLineupSlotId: T;
+    fromTeamId: T;
     id: T;
+    memberId: T;
+    messageTypeId: T;
+    playerId: T;
     parentId: T;
     seasonId: T;
     scoringPeriodId: T;
+    targetId: T;
     teamId: T;
-    memberId: T;
+    toLineupSlotId: T;
+    topicId: T;
+    toTeamId: T;
   }
 
   type IdAttributesString = IdAttributes<string>;
@@ -156,53 +164,48 @@ export namespace EspnClient {
     settings: EspnClientLeagueSettings;
     teams: EspnClientTeam[];
     players: EspnClientFreeAgent[];
-    communication: EspnClientLeagueComm;
-    transactions: EspnClientLeagueTransaction[];
+    communication: EspnClient.LeagueComm;
+    transactions: EspnClient.LeagueTransaction[];
   };
-}
 
-export type EspnClientLeagueTransaction = {
-  bidAmount: number;
-  executionType: 'PROCESS' | 'CANCEL';
-  id: string;
-  isActingAsTeamOwner: boolean;
-  isLeagueManager: boolean;
-  isPending: boolean;
-  items?: EspnClientLeagueTransactionItem[] | null;
-  memberId: string;
-  proposedDate: number;
-  rating: number;
-  scoringPeriodId: number;
-  status: 'EXECUTED' | 'CANCELED';
-  teamId: number;
-  type: EspnClientTransactionType;
-  relatedTransactionId?: string | null;
-  processDate?: number | null;
-};
+  export type LeagueTransaction = Pick<IdAttributesString, 'id' | 'memberId'> &
+    Pick<IdAttributesNumber, 'id' | 'teamId'> & {
+      bidAmount: number;
+      executionType: 'PROCESS' | 'CANCEL';
+      isActingAsTeamOwner: boolean;
+      isLeagueManager: boolean;
+      isPending: boolean;
+      items?: LeagueTransactionEntity[] | null;
+      proposedDate: number;
+      rating: number;
+      scoringPeriodId: number;
+      status: 'EXECUTED' | 'CANCELED';
+      type: EspnClientTransactionType;
+      relatedTransactionId?: string | null;
+      processDate?: number | null;
+    };
 
-type TransactionItemAttributes = 'fromLineupSlotId' | 'fromTeamId' | 'overallPickNumber' | 'playerId' | 'toLineupSlotId' | 'toTeamId';
-export type EspnClientLeagueTransactionItem = { [key in TransactionItemAttributes]: number } & {
-  isKeeper: boolean;
-  type: EspnClientTransactionType;
-};
+  export type LeagueTransactionEntity = Pick<
+    IdAttributesNumber,
+    'playerId' | 'fromLineupSlotId' | 'fromTeamId' | 'toLineupSlotId' | 'toTeamId'
+  > & {
+    isKeeper: boolean;
+    overallPickNumber: number;
+    type: EspnClientTransactionType;
+  };
 
-export interface EspnClientLeagueComm {
-  topics: EspnClientLeagueCommTopic[];
-}
+  export type LeagueComm = { topics: LeagueCommTopicEntity[] };
 
-export interface EspnClientLeagueCommTopic {
-  id: string;
-  date: number;
-  messages: EspnClientLeagueCommTopicMsg[];
-  type: 'ACTIVITY_TRANSACTIONS' | 'ACTIVITY_SETTINGS';
-}
+  export type LeagueCommTopicEntity = Pick<IdAttributesString, 'id'> & {
+    date: number;
+    messages: LeagueCommTopicMsgEntity[];
+    type: 'ACTIVITY_TRANSACTIONS' | 'ACTIVITY_SETTINGS';
+  };
 
-export interface EspnClientLeagueCommTopicMsg {
-  id: string;
-  messageTypeId: number;
-  targetId: number; // playerId
-  to: number; // to teamId
-  topicId: string;
+  export type LeagueCommTopicMsgEntity = Pick<IdAttributesString, 'id'> &
+    Pick<IdAttributesNumber, 'messageTypeId' | 'targetId' | 'topicId'> & {
+      to: number; // to teamId
+    };
 }
 
 type StatusAttributes = 'firstScoringPeriod' | 'finalScoringPeriod';

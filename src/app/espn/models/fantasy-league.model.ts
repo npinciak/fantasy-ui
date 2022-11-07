@@ -1,4 +1,4 @@
-import { EspnClientLeagueTransaction } from '@espnClient/espn-client.model';
+import { EspnClient } from '@espnClient/espn-client.model';
 
 export interface FantasyLeague {
   id: string;
@@ -7,5 +7,5 @@ export interface FantasyLeague {
   firstScoringPeriod: number;
   finalScoringPeriod: number;
   matchupPeriodCount: number;
-  transactions: EspnClientLeagueTransaction[];
+  transactions: EspnClient.LeagueTransaction[];
 }
