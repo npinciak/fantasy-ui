@@ -204,39 +204,13 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
     };
   }
 
-  // let trace1 = {
-
-  //   x: [1, 2, 3, 4, 5],
-
-  //   y: [1, 6, 3, 6, 1],
-
-  //   mode: 'markers+text',
-
-  //   type: 'scatter',
-
-  //   name: 'Team A',
-
-  //   text: ['A-1', 'A-2', 'A-3', 'A-4', 'A-5'],
-
-  //   textposition: 'top center',
-
-  //   textfont: {
-
-  //     family:  'Raleway, sans-serif'
-
-  //   },
-
-  //   marker: { size: 12 }
-
-  // };
-
   @Selector([FantasyBaseballTeamsSelector.getLiveTeamBatters, EspnFastcastTeamSelectors.getById])
   static getLiveTeamBatterStats(
     getLiveTeamBatters: (id: string) => BaseballPlayer[],
     selectFastcastTeamById: (id: string) => FastcastEventTeam | null
   ) {
     return (id: string) => {
-      const batters = startingBaseballPlayersFilter(getLiveTeamBatters(id), MLB_LINEUP_MAP);
+      const batters = startingPlayersFilter(getLiveTeamBatters(id), MLB_LINEUP_MAP);
       return batters.map(p => {
         const eventUid = selectFastcastTeamById(p?.teamUid)?.eventUid;
 

@@ -5,18 +5,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsRouterPluginModule, RouterStateSerializer } from '@ngxs/router-plugin';
-import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { environment } from 'src/environments/environment';
 import { httpInterceptorProviders } from './@core/interceptors';
 import { ShellModule } from './@core/shell/shell.module';
-import { LocalStorageState } from './@core/store/local-storage/local-storage.state';
 import { CustomRouterStateSerializer } from './@core/store/router/router-state.serializer';
+import { RouterState } from './@core/store/router/router.state';
 import { SharedModule } from './@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-const states = [LocalStorageState];
+const states = [RouterState];
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -24,11 +23,6 @@ const states = [LocalStorageState];
     BrowserModule,
     HttpClientModule,
     NgxsRouterPluginModule.forRoot(),
-    NgxsStoragePluginModule.forRoot({
-      key: LocalStorageState,
-      // beforeSerialize: (obj, key) => console.log('beforeSerialize ====>', obj, key),
-      // afterDeserialize: (obj, key) => console.log('afterSerialize ====>', obj, key),
-    }),
     NgxsModule.forRoot(states, { developmentMode: !environment.production, selectorOptions: { injectContainerState: false } }),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
     ServiceWorkerModule.register('ngsw-worker.js', {

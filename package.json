@@ -33,7 +33,6 @@
     "@angular/service-worker": "~12.2.16",
     "@ngxs/router-plugin": "^3.7.4",
     "@ngxs/schematics": "0.0.1-alpha.5",
-    "@ngxs/storage-plugin": "^3.7.3",
     "@ngxs/store": "^3.7.1",
     "angular-plotly.js": "^4.0.4",
     "javascript-lp-solver": "^0.4.24",
