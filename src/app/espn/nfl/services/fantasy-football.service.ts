@@ -68,7 +68,7 @@ export class FantasyFootballService {
 
     const { abbrev, logo, record, playoffSeed: currentRank } = team;
 
-    const { wins, losses, ties, pointsAgainst, percentage: winPct, pointsFor: pointsScored } = record.overall;
+    const { wins, losses, ties, pointsAgainst, percentage, pointsFor } = record.overall;
 
     return {
       id: team.id.toString(),
@@ -80,8 +80,8 @@ export class FantasyFootballService {
       ties,
       roster,
       pointsAgainst,
-      winPct,
-      pointsScored,
+      percentage,
+      pointsFor,
       currentRank,
     };
   }
