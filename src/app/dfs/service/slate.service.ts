@@ -80,10 +80,10 @@ export class SlateService {
       return null;
     }
 
-    const qb = DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.qb);
-    const rb = DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.rb);
-    const wr = DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.wr);
-    const te = DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.te);
+    const qb = []; // DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.qb);
+    const rb = []; //DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.rb);
+    const wr = []; // DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.wr);
+    const te = []; // DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.te);
 
     return {
       qb,
