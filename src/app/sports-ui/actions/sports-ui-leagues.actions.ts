@@ -1,33 +1,32 @@
-import { SportsUiClientLeague } from "../models/sports-ui-league.model";
+import { SportsUiClientLeague } from '../models/sports-ui-league.model';
 
 export namespace SportsUiLeagues {
   export const name = 'sportsUiLeagues';
 
   export class VerifyLeagues {
-    static readonly type = `[espnLeagues] VerifyEspnLeagues`;
+    static readonly type = `[${name}] VerifyLeagues`;
   }
 
   export class CreateLeague {
-    static readonly type = `[espnLeagues] CreateLeague`;
-    // constructor(public payload: { leagueSport: FantasySports; leagueId: string; leagueYear: string; leagueName: string }) {}
+    static readonly type = `[${name}] CreateLeague`;
   }
 
   export class FetchLeagues {
-    static readonly type = `[espnLeagues] FetchEspnLeagues`;
+    static readonly type = `[${name}] FetchLeagues`;
   }
 
   export class DeleteLeague {
-    static readonly type = `[espnLeagues] DeleteEspnLeague`;
+    static readonly type = `[${name}] DeleteLeague`;
     constructor(public payload: { leagueId: string }) {}
   }
 
   export class SetLeagues {
-    static readonly type = `[espnLeagues] SetEspnLeagues`;
+    static readonly type = `[${name}] SetLeagues`;
     constructor(public payload: SportsUiClientLeague[]) {}
   }
 
   export class ClearAndAddLeagues {
-    static readonly type = `[espnLeagues] ClearAndAddEspnLeagues`;
+    static readonly type = `[${name}] ClearAndAddLeagues`;
     constructor(public payload: SportsUiClientLeague[]) {}
   }
 }

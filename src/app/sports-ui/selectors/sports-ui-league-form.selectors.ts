@@ -3,11 +3,11 @@ import { SportsUiLeagueFormState, SportsUiLeagueFormStateModel } from '../state/
 
 export class SportsUiLeagueFormSelectors {
   @Selector([SportsUiLeagueFormState])
-  static getEspnAddLeagueFormState(state: SportsUiLeagueFormStateModel): SportsUiLeagueFormStateModel {
+  static getForm(state: SportsUiLeagueFormStateModel): SportsUiLeagueFormStateModel {
     return state;
   }
 
-  @Selector([SportsUiLeagueFormSelectors.getEspnAddLeagueFormState])
+  @Selector([SportsUiLeagueFormSelectors.getForm])
   static getLeagueId(state: SportsUiLeagueFormStateModel): string | null {
     return state.leagueId;
   }
@@ -17,7 +17,7 @@ export class SportsUiLeagueFormSelectors {
     return leagueId ? true : false;
   }
 
-  @Selector([SportsUiLeagueFormSelectors.getEspnAddLeagueFormState])
+  @Selector([SportsUiLeagueFormSelectors.getForm])
   static getSport(state: SportsUiLeagueFormStateModel): string | null {
     return state.leagueSport;
   }
