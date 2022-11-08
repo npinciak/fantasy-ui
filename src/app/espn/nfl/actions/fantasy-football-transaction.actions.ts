@@ -1,8 +1,8 @@
-import { EspnClientLeagueTransaction } from '@espnClient/espn-client.model';
+import { EspnClient } from '@espnClient/espn-client.model';
 
 export namespace FantasyFootballTransaction {
   export const name = 'fantasyFootballTransaction';
-  type Entity = EspnClientLeagueTransaction;
+  type Entity = EspnClient.LeagueTransaction;
 
   export class AddOrUpdate {
     public static readonly type = `[${name}}] AddOrUpdate`;

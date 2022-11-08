@@ -33,7 +33,6 @@
     "@angular/service-worker": "~12.2.16",
     "@ngxs/router-plugin": "^3.7.4",
     "@ngxs/schematics": "0.0.1-alpha.5",
-    "@ngxs/storage-plugin": "^3.7.3",
     "@ngxs/store": "^3.7.1",
     "angular-plotly.js": "^4.0.4",
     "javascript-lp-solver": "^0.4.24",
@@ -46,7 +45,7 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~14.2.2",
+    "@angular-devkit/build-angular": "~12.2.18",
     "@angular-devkit/schematics": "^12.2.15",
     "@angular-devkit/schematics-cli": "^0.1102.19",
     "@angular-eslint/builder": "1.2.0",
