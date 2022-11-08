@@ -1,29 +1,32 @@
 ﻿import { EspnGameStatusTypeId, FastCastGameStatus, FastCastSeasonType } from '@espnClient/espn-client.model';
 
-export type EntityBaseAttributes = 'id' | 'uid' | 'name';
-export type EntityBase = { [prop in EntityBaseAttributes]: string };
+interface EntityBaseAttributes<T> {
+  id: T;
+  uid: T;
+  name: T;
+  shortName: T;
+  abbreviation: T;
+  slug: T;
+}
+
+export type EntityBase = EntityBaseAttributes<string>;
 
 export interface EspnClientFastcast {
   sports: SportsEntity[];
 }
 
-export type SportsEntity = EntityBase & {
-  slug: string;
+export type SportsEntity = Omit<EntityBase, 'abbreviation'> & {
   leagues: LeaguesEntity[];
 };
 
 export type LeaguesEntity = EntityBase & {
-  slug: string;
-  abbreviation: string;
-  shortName: string;
   isTournament: boolean;
   events?: EventsEntity[];
 };
 
-export type EventsEntity = EntityBase & {
+export type EventsEntity = Omit<EntityBase, 'abbreviation' | 'slug'> & {
   competitionId: string;
   date: string;
-  shortName: string;
   location: string;
   season: number;
   seasonType: FastCastSeasonType;
@@ -59,17 +62,14 @@ export interface EspnClientTeamOddsEntity {
   team: TeamAttributes;
 }
 
-type EspnClientGroupAttributes = 'groupId' | 'name' | 'abbreviation' | 'shortName';
-export type EspnClientGroup = { [key in EspnClientGroupAttributes]: string };
+export type EspnClientGroup = Pick<EntityBase, 'name' | 'abbreviation' | 'shortName'> & { groupId: string };
 
 export type FullStatus = { type: FullStatusType };
 export type FullStatusType = { id: EspnGameStatusTypeId; name: string; state: string; completed: boolean };
 
-export type TeamAttributes = Pick<CompetitorsEntity, 'id' | 'abbreviation'>;
+export type TeamAttributes = Pick<EntityBase, 'id' | 'abbreviation'>;
 
-export interface CompetitorsEntity {
-  id: string;
-  uid: string;
+export type CompetitorsEntity = Omit<EntityBase, 'slug' | 'shortName'> & {
   type: string;
   order: number;
   homeAway: string;
@@ -80,8 +80,6 @@ export interface CompetitorsEntity {
   logoDark: string;
   winner: boolean;
   displayName: string;
-  name: string;
-  abbreviation: string;
   location: string;
   color?: string;
   alternateColor?: string | null;
@@ -97,7 +95,7 @@ export interface CompetitorsEntity {
   form?: string | null;
   isNational?: boolean | null;
   uniform?: Uniform | null;
-}
+};
 
 export interface RecordEntity {
   type: string;
@@ -114,13 +112,20 @@ export interface RecordEntity {
   streakType: string;
 }
 
-export interface Leaders {
-  name: string;
-  displayName: string;
-  shortDisplayName: string;
-  abbreviation: string;
-  leaders?: Leader[] | null;
-}
+type AthleteEntityProps<T> = Pick<EntityBase, 'id'> & {
+  fullName: T;
+  displayName: T;
+  shortName: T;
+  headshot: T;
+  jersey: T;
+  position: T;
+};
+
+export type Leaders = Pick<EntityBase, 'name' | 'abbreviation'> &
+  Pick<AthleteEntity, 'displayName'> & {
+    shortDisplayName: string;
+    leaders?: Leader[] | null;
+  };
 
 export interface Leader {
   displayValue: string;
@@ -128,26 +133,20 @@ export interface Leader {
   athlete: AthleteEntity;
   team: TeamAttributes;
 }
-type AthleteEntityProps = 'id' | 'fullName' | 'displayName' | 'shortName' | 'headshot' | 'jersey' | 'position';
 
-export type AthleteEntity = { [key in AthleteEntityProps]: string } & {
+export type AthleteEntity = AthleteEntityProps<string> & {
   team: TeamAttributes;
   lastName?: string | null;
   active: boolean;
 };
-export interface Position {
-  abbreviation: string;
-}
 
-export interface GoalieSummaryEntity {
-  athlete: AthleteEntity;
-  displayValue: string;
-}
+type AthleteActionEntity = { athlete: AthleteEntity; displayValue: string };
 
-export interface ScoringEntity {
-  athlete: AthleteEntity;
-  displayValue: string;
-}
+export type PositionEntity = Pick<EntityBase, 'abbreviation'>;
+
+export type GoalieSummaryEntity = AthleteActionEntity;
+
+export type ScoringEntity = AthleteActionEntity;
 
 export interface Uniform {
   type: string;
@@ -183,35 +182,20 @@ export interface MlbSituationAthlete {
   athlete: AthleteEntity;
 }
 
-export type NflSituation = Situation & {
-  down: number;
-  yardLine: number;
-  distance: number;
-  downDistanceText: string;
-  shortDownDistanceText: string;
-  possessionText: string;
-  isRedZone: boolean;
-  homeTimeouts: number;
-  awayTimeouts: number;
-  possession: string;
-};
-
-export interface LastPlay {
-  id: string;
+export type LastPlay = Pick<EntityBase, 'id'> & {
   type: LastPlayType;
   text: string;
   scoreValue: number;
   team?: Pick<TeamAttributes, 'id'> | null;
   athletesInvolved?: AthletesInvolvedEntity[] | null;
-}
+};
 
-export interface LastPlayType {
-  id: string;
+export type LastPlayType = Pick<EntityBase, 'id'> & {
   text: string;
   abbreviation?: string | null;
-}
+};
 
-export type AthletesInvolvedEntity = { [key in AthleteEntityProps]: string } & {
+export type AthletesInvolvedEntity = AthleteEntityProps<string> & {
   team: Pick<TeamAttributes, 'id'>;
 };
 

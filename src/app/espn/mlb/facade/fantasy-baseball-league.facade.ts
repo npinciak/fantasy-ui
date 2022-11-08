@@ -13,7 +13,6 @@ export class FantasyBaseballLeagueFacade {
   isLoading$ = select(FantasyBaseballLeagueState.getIsLoading);
   scoringPeriod$ = select(FantasyBaseballLeagueState.getCurrentScoringPeriodId);
   standings$ = select(FantasyBaseballLeagueSelectors.standings);
-  localStorageLeagueList$ = select(FantasyBaseballLeagueSelectors.getLocalStorageLeagues);
 
   constructor(private store: Store) {}
 

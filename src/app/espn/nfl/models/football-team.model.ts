@@ -1,9 +1,11 @@
 import { TeamEntity } from '@app/@shared/base-models/base-team.model';
+import { EspnClient } from '@espnClient/espn-client.model';
 import { FootballPlayer } from './football-player.model';
 
-type FootballTeamAttributes = 'wins' | 'losses' | 'ties' | 'pointsAgainst' | 'pointsScored' | 'currentRank' | 'winPct';
+type FootballTeamAttributes = Pick<EspnClient.RecordEntity, 'wins' | 'losses' | 'ties' | 'pointsAgainst' | 'pointsFor' | 'percentage'>;
 
 export type FootballTeam = TeamEntity &
-  { [key in FootballTeamAttributes]: number } & {
+  FootballTeamAttributes & {
+    currentRank: number;
     roster: FootballPlayer[];
   };

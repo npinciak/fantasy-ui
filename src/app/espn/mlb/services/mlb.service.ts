@@ -3,18 +3,7 @@ import { Injectable } from '@angular/core';
 import { exists } from '@app/@shared/helpers/utils';
 import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
 import { EspnService } from '@app/espn/service/espn.service';
-import {
-  EspnClientBaseballLeague,
-  EspnClientEvent,
-  EspnClientFreeAgent,
-  EspnClientPaginatedFilter,
-  EspnClientPlayer,
-  EspnClientPlayerNewsFeedEntity,
-  EspnClientScheduleTeam,
-  EspnClientTeam,
-  EspnLeagueId,
-  EspnSport,
-} from '@espnClient/espn-client.model';
+import { EspnClient, EspnLeagueId, EspnSport } from '@espnClient/espn-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { transformEspnClientLeagueToLeague, transformEspnClientPlayerToPlayer } from '../../espn-helpers';
@@ -42,7 +31,7 @@ export class MlbService {
     return false;
   }
 
-  static transformEspnClientEventToBaseballEvent(event: EspnClientEvent): BaseballEvent {
+  static transformEspnClientEventToBaseballEvent(event: EspnClient.EventEntity): BaseballEvent {
     return {
       id: event.id,
       uid: event.uid,
@@ -54,7 +43,7 @@ export class MlbService {
     };
   }
 
-  static transformEspnClientTeamListToTeamList(team: EspnClientTeam): BaseballTeam {
+  static transformEspnClientTeamListToTeamList(team: EspnClient.Team): BaseballTeam {
     const { abbrev, logo } = team;
 
     return {
@@ -70,7 +59,7 @@ export class MlbService {
     };
   }
 
-  static transformEspnClientScheduleTeamListToTeamList(team: EspnClientScheduleTeam): BaseballTeamLive {
+  static transformEspnClientScheduleTeamListToTeamList(team: EspnClient.ScheduleTeam): BaseballTeamLive {
     const { totalPoints, teamId, totalPointsLive, rosterForCurrentScoringPeriod } = team;
 
     return {
@@ -81,7 +70,7 @@ export class MlbService {
     };
   }
 
-  static transformEspnClientTeamPlayerToBaseballPlayer(players: EspnClientPlayer[]): BaseballPlayer[] {
+  static transformEspnClientTeamPlayerToBaseballPlayer(players: EspnClient.TeamRosterEntry[]): BaseballPlayer[] {
     return players.map(player => {
       if (!exists(player.playerPoolEntry)) {
         throw new Error('player.playerPoolEntry must be defined');
@@ -108,7 +97,7 @@ export class MlbService {
     });
   }
 
-  static transformEspnClientFreeAgentToBaseballPlayer(players: EspnClientFreeAgent[]): BaseballPlayer[] {
+  static transformEspnClientFreeAgentToBaseballPlayer(players: EspnClient.FreeAgent[]): BaseballPlayer[] {
     return players.map(player => {
       if (!exists(player.player)) {
         throw new Error('player.player must be defined');
@@ -145,7 +134,7 @@ export class MlbService {
     let headers = new HttpHeaders();
     headers = headers.append('X-Fantasy-Platform', 'kona-PROD-c4559dd8257df5bff411b011384d90d4d60fbafa');
     return this.espnClient
-      .espnFantasyLeagueBySport<EspnClientBaseballLeague>({ sport: FantasySports.Baseball, leagueId, year, headers })
+      .espnFantasyLeagueBySport<EspnClient.BaseballLeague>({ sport: FantasySports.Baseball, leagueId, year, headers })
       .pipe(
         map(res => {
           const genericLeagueSettings = transformEspnClientLeagueToLeague(res);
@@ -182,7 +171,7 @@ export class MlbService {
    * @param payload
    * @returns
    */
-  baseballPlayerNews(payload: { lookbackDays: string; playerId: string }): Observable<EspnClientPlayerNewsFeedEntity[]> {
+  baseballPlayerNews(payload: { lookbackDays: string; playerId: string }): Observable<EspnClient.PlayerNewsFeedEntity[]> {
     const data = {
       sport: FantasySports.Baseball,
       lookbackDays: payload.lookbackDays,
@@ -199,7 +188,7 @@ export class MlbService {
   baseballFreeAgents(payload: {
     leagueId: string;
     scoringPeriodId: number;
-    filter: EspnClientPaginatedFilter;
+    filter: EspnClient.PaginatedFilter;
   }): Observable<BaseballPlayer[]> {
     let headers = new HttpHeaders();
     headers = headers.append('X-Fantasy-Filter', JSON.stringify(payload.filter));

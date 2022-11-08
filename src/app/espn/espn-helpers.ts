@@ -1,15 +1,6 @@
 import { PositionEntityMap } from '@app/@shared/base-models/base-position.model';
 import { exists } from '@app/@shared/helpers/utils';
-import {
-  EspnClientLeague,
-  EspnClientLineupEntityMap,
-  EspnClientPlayerInfo,
-  EspnClientPlayerStatsByYearMap,
-  EspnClientPlayerStatsYear,
-  EspnLeagueId,
-  EspnPlayerInjuryStatus,
-  EspnSport,
-} from '@espnClient/espn-client.model';
+import { EspnClient, EspnLeagueId, EspnPlayerInjuryStatus, EspnSport } from '@espnClient/espn-client.model';
 import { CompetitorsEntity } from '@espnClient/espn-fastcast.model';
 import { headshotImgBuilder } from './espn.const';
 import { BaseballPlayer } from './mlb/models/baseball-player.model';
@@ -85,30 +76,17 @@ export function transformIdToUid(sportId: EspnSport | null, leagueId: EspnLeague
   return `s:${sportId}~l:${leagueId}~t:${teamId}`;
 }
 
-export function flattenPlayerStats(stats: EspnClientPlayerStatsYear[]): EspnClientPlayerStatsByYearMap;
-export function flattenPlayerStats(stats: EspnClientPlayerStatsYear[] | null): EspnClientPlayerStatsByYearMap | null;
-export function flattenPlayerStats(stats: EspnClientPlayerStatsYear[] | undefined): EspnClientPlayerStatsByYearMap | null;
-export function flattenPlayerStats(stats: EspnClientPlayerStatsYear[] | null | undefined): EspnClientPlayerStatsByYearMap | null {
+export function flattenPlayerStats(stats: EspnClient.PlayerStatsYear[]): EspnClient.PlayerStatsByYearMap;
+export function flattenPlayerStats(stats: EspnClient.PlayerStatsYear[] | null): EspnClient.PlayerStatsByYearMap | null;
+export function flattenPlayerStats(stats: EspnClient.PlayerStatsYear[] | undefined): EspnClient.PlayerStatsByYearMap | null;
+export function flattenPlayerStats(stats: EspnClient.PlayerStatsYear[] | null | undefined): EspnClient.PlayerStatsByYearMap | null {
   if (!exists(stats)) {
     return null;
   }
   return stats.reduce((obj, val) => {
     obj[val.id] = val;
     return obj;
-  }, {} as EspnClientPlayerStatsByYearMap);
-}
-
-/**
- * Filters players in starting lineup
- *
- * @param players
- * @param lineupMap
- * @returns
- */
-export function startingBaseballPlayersFilter(players: BaseballPlayer[], lineupMap: EspnClientLineupEntityMap): BaseballPlayer[] {
-  return players
-    .filter(p => lineupMap[p.lineupSlotId].starter)
-    .sort((a, b) => lineupMap[a.lineupSlotId].displayOrder - lineupMap[b.lineupSlotId].displayOrder);
+  }, {} as EspnClient.PlayerStatsByYearMap);
 }
 
 /**
@@ -118,27 +96,21 @@ export function startingBaseballPlayersFilter(players: BaseballPlayer[], lineupM
  * @param lineupMap
  * @returns
  */
-export function benchPlayersFilter(players: BaseballPlayer[], lineupMap: EspnClientLineupEntityMap): BaseballPlayer[] {
+export function benchPlayersFilter<T extends FootballPlayer | BaseballPlayer>(players: T[], lineupMap: EspnClient.LineupEntityMap): T[] {
   return players.filter(p => lineupMap[p.lineupSlotId].bench);
 }
 
-export function startingPlayersFilter(players: BaseballPlayer[], lineupMap: EspnClientLineupEntityMap): BaseballPlayer[];
-export function startingPlayersFilter(players: FootballPlayer[], lineupMap: EspnClientLineupEntityMap): FootballPlayer[];
-export function startingPlayersFilter(
-  players: BaseballPlayer[] | FootballPlayer[],
-  lineupMap: EspnClientLineupEntityMap
-): BaseballPlayer[] | FootballPlayer[] {
-  return (
-    players
-      // .filter(p => lineupMap[p.lineupSlotId].starter instanceof BaseballPlayer | FootballPlayer)
-      .sort((a, b) => lineupMap[a.lineupSlotId].displayOrder - lineupMap[b.lineupSlotId].displayOrder)
-  );
+export function startingPlayersFilter<T extends FootballPlayer | BaseballPlayer>(players: T[], lineupMap: EspnClient.LineupEntityMap): T[] {
+  return players
+    .filter(p => lineupMap[p.lineupSlotId].starter)
+    .sort((a, b) => lineupMap[a.lineupSlotId].displayOrder - lineupMap[b.lineupSlotId].displayOrder);
 }
 
-// .filter(p => NFL_LINEUP_MAP[p.lineupSlotId].starter)
-// .sort((a, b) => NFL_LINEUP_MAP[a.lineupSlotId].displayOrder - NFL_LINEUP_MAP[b.lineupSlotId].displayOrder);
+export function injuredReservePlayersFilter<T extends FootballPlayer | BaseballPlayer>(players: T[]): T[] {
+  return players.filter(p => p.injuryStatus === EspnPlayerInjuryStatus.IR);
+}
 
-export function transformEspnClientLeagueToLeague(league: EspnClientLeague): FantasyLeague {
+export function transformEspnClientLeagueToLeague(league: EspnClient.League): FantasyLeague {
   const { id, seasonId, scoringPeriodId, status, settings, transactions } = league;
   const { matchupPeriodCount } = settings.scheduleSettings;
   const { firstScoringPeriod, finalScoringPeriod } = status;
@@ -155,7 +127,7 @@ export function transformEspnClientLeagueToLeague(league: EspnClientLeague): Fan
 }
 
 export function transformEspnClientPlayerToPlayer(
-  playerInfo: EspnClientPlayerInfo,
+  playerInfo: EspnClient.PlayerInfo,
   opts: { sport: EspnSport; leagueId: EspnLeagueId; teamMap: Record<string, string>; positionMap: PositionEntityMap }
 ): {
   id: string;
@@ -171,7 +143,7 @@ export function transformEspnClientPlayerToPlayer(
   percentOwned: number;
   percentChange: number;
   percentStarted: number;
-  stats: EspnClientPlayerStatsByYearMap | null;
+  stats: EspnClient.PlayerStatsByYearMap | null;
   outlookByWeek: {
     week: number;
     outlook: string;

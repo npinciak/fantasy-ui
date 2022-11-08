@@ -7,6 +7,7 @@ export enum StatTypePeriodId {
   Live,
   RestOfSeason,
   Projected = 10,
+  ProjectedWeek,
   BatterVsPitcher = 1000,
 }
 
@@ -19,5 +20,6 @@ export const StatTypePeriodIdMap: { [key in StatTypePeriodId]: string } = {
   [StatTypePeriodId.Live]: 'Live',
   [StatTypePeriodId.RestOfSeason]: 'Rest Of Season',
   [StatTypePeriodId.Projected]: 'Projected',
+  [StatTypePeriodId.ProjectedWeek]: 'Projected Week',
   [StatTypePeriodId.BatterVsPitcher]: 'BVP',
 };
