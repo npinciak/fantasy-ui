@@ -13,7 +13,7 @@ export class EspnPlayerDialogComponent {
   }
 
   get playerImg() {
-    return headshotImgBuilder(this.data.player.id, { league: 'nfl', width: 426, height: 320 });
+    return headshotImgBuilder(this.data.player.id, { league: 'nfl', width: 800, height: 500 });
   }
 
   closeDialog() {

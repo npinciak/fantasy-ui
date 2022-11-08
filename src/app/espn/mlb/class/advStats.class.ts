@@ -1,13 +1,13 @@
 import { exists } from '@app/@shared/helpers/utils';
-import { EspnClientPlayerStatsEntity } from '@espnClient/espn-client.model';
+import { EspnClient } from '@espnClient/espn-client.model';
 import { SeasonStatConst } from '../models/adv-stats.model';
 import { EspnBaseballStat } from '../models/mlb-stats.model';
 
 export class AdvStats {
-  private _stats: EspnClientPlayerStatsEntity;
+  private _stats: EspnClient.PlayerStatsEntity;
   private _seasonConst: SeasonStatConst;
 
-  constructor(configs: { seasonConst: SeasonStatConst; statsEntity: EspnClientPlayerStatsEntity }) {
+  constructor(configs: { seasonConst: SeasonStatConst; statsEntity: EspnClient.PlayerStatsEntity }) {
     this._stats = exists(configs.statsEntity) ? configs.statsEntity : [];
     this._seasonConst = configs.seasonConst;
   }

@@ -1,15 +1,10 @@
 import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
-import {
-  EspnClientPlayer,
-  EspnClientPlayerInfo,
-  EspnClientPlayerRatings,
-  EspnClientPlayerStatsEntityMap,
-} from '@espnClient/espn-client.model';
+import { EspnClient } from '@espnClient/espn-client.model';
 
 export interface BaseballPlayerProps {
   isStarting: boolean;
-  playerRatings: EspnClientPlayerRatings | undefined;
-  stats: EspnClientPlayerStatsEntityMap | null;
+  playerRatings: EspnClient.PlayerRatings | undefined;
+  stats: EspnClient.PlayerStatsEntityMap | null;
   percentChange: number | null;
   percentOwned: number | null;
   isPitcher: boolean;
@@ -18,14 +13,14 @@ export interface BaseballPlayerProps {
 
 export type BaseballPlayer = PlayerEntity &
   BaseballPlayerProps &
-  Pick<EspnClientPlayerInfo, 'injured' | 'injuryStatus' | 'starterStatusByProGame' | 'lastNewsDate'> &
-  Pick<EspnClientPlayer, 'lineupSlotId'>;
+  Pick<EspnClient.PlayerInfo, 'injured' | 'injuryStatus' | 'starterStatusByProGame' | 'lastNewsDate'> &
+  Pick<EspnClient.TeamRosterEntry, 'lineupSlotId'>;
 
 export type BaseballPlayerMap = Record<string, BaseballPlayer>;
 
 export type BaseballPlayerStatsRow = Pick<PlayerEntity, 'id'> &
   Pick<BaseballPlayer, 'injured' | 'injuryStatus'> &
-  Pick<EspnClientPlayer, 'lineupSlotId'> & {
+  Pick<EspnClient.TeamRosterEntry, 'lineupSlotId'> & {
     name: string;
     img: string | null;
     team: string | null;

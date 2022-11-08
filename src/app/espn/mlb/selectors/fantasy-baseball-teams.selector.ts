@@ -3,7 +3,7 @@ import { linearRegression } from '@app/@shared/helpers/graph.helpers';
 import { exists } from '@app/@shared/helpers/utils';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
 import { EspnFastcastTeamSelectors } from '@app/espn-fastcast/selectors/espn-fastcast-team.selectors';
-import { benchPlayersFilter, startingBaseballPlayersFilter } from '@app/espn/espn-helpers';
+import { benchPlayersFilter, startingPlayersFilter } from '@app/espn/espn-helpers';
 import { Selector } from '@ngxs/store';
 import { AdvStats } from '../class/advStats.class';
 import { MLB_LINEUP_MAP } from '../consts/lineup.const';
@@ -101,7 +101,7 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
 
   @Selector([FantasyBaseballTeamsSelector.getTeamBatters])
   static getTeamStartingBatters(getTeamBatters: (id: string) => BaseballPlayer[]): (id: string) => any[] {
-    return (id: string) => startingBaseballPlayersFilter(getTeamBatters(id), MLB_LINEUP_MAP);
+    return (id: string) => startingPlayersFilter(getTeamBatters(id), MLB_LINEUP_MAP);
   }
 
   @Selector([FantasyBaseballTeamsSelector.getTeamBatters])
@@ -116,7 +116,7 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
 
   @Selector([FantasyBaseballTeamsSelector.getTeamPitchers])
   static getTeamStartingPitchers(getTeamPitchers: (id: string) => BaseballPlayer[]): (id: string) => BaseballPlayer[] {
-    return (id: string) => startingBaseballPlayersFilter(getTeamPitchers(id), MLB_LINEUP_MAP);
+    return (id: string) => startingPlayersFilter(getTeamPitchers(id), MLB_LINEUP_MAP);
   }
 
   @Selector([FantasyBaseballTeamsSelector.getTeamPitchers])
@@ -204,39 +204,13 @@ export class FantasyBaseballTeamsSelector extends GenericSelector(FantasyBasebal
     };
   }
 
-  // let trace1 = {
-
-  //   x: [1, 2, 3, 4, 5],
-
-  //   y: [1, 6, 3, 6, 1],
-
-  //   mode: 'markers+text',
-
-  //   type: 'scatter',
-
-  //   name: 'Team A',
-
-  //   text: ['A-1', 'A-2', 'A-3', 'A-4', 'A-5'],
-
-  //   textposition: 'top center',
-
-  //   textfont: {
-
-  //     family:  'Raleway, sans-serif'
-
-  //   },
-
-  //   marker: { size: 12 }
-
-  // };
-
   @Selector([FantasyBaseballTeamsSelector.getLiveTeamBatters, EspnFastcastTeamSelectors.getById])
   static getLiveTeamBatterStats(
     getLiveTeamBatters: (id: string) => BaseballPlayer[],
     selectFastcastTeamById: (id: string) => FastcastEventTeam | null
   ) {
     return (id: string) => {
-      const batters = startingBaseballPlayersFilter(getLiveTeamBatters(id), MLB_LINEUP_MAP);
+      const batters = startingPlayersFilter(getLiveTeamBatters(id), MLB_LINEUP_MAP);
       return batters.map(p => {
         const eventUid = selectFastcastTeamById(p?.teamUid)?.eventUid;
 

@@ -1,13 +1,13 @@
-import { EspnClientScheduleEntity, EspnClientScheduleTeam } from '@espnClient/espn-client.model';
+import { EspnClient } from '@espnClient/espn-client.model';
 import { FootballTeam } from './football-team.model';
 
-export type FantasyMatchup = Pick<EspnClientScheduleEntity, 'id' | 'matchupPeriodId'> & {
+export type FantasyMatchup = Pick<EspnClient.ScheduleEntity, 'id' | 'matchupPeriodId'> & {
   homeTeam: FantasyMatchupTeam | null;
   awayTeam: FantasyMatchupTeam | null;
 };
 
 export type FantasyMatchupTeam = FootballTeam &
-  Pick<EspnClientScheduleTeam, 'totalPoints' | 'totalProjectedPointsLive' | 'cumulativeScore'> & {
+  Pick<EspnClient.ScheduleTeam, 'totalPoints' | 'totalProjectedPointsLive' | 'cumulativeScore'> & {
     currentPredictedWinPct: number;
     currentRank: number;
     isWinner: boolean | null;
