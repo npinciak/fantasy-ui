@@ -143,16 +143,16 @@ export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBa
   static getCompareTeamAndFreeAgentBatterChartData(
     getCompareTeamAndFreeAgentBatterList: (teamId: string | null, statPeriod: string) => (BaseballPlayer | BaseballPlayerStatsRow)[]
   ): (teamId: string | null, statPeriod: string) => ChartData[] {
-    return (teamId: string | null, statPeriod: string) =>
-      getCompareTeamAndFreeAgentBatterList(teamId, statPeriod)
-        .map(p => {
-          return {
-            data: exists(p.stats) ? p.stats[statPeriod] : 0,
-            label: p.name,
-            color: '#000000',
-          };
-        })
-        .sort((a, b) => b.data - a.data);
+    return (teamId: string | null, statPeriod: string) => [];
+    // getCompareTeamAndFreeAgentBatterList(teamId, statPeriod)
+    //   .map(p => {
+    //     return {
+    //       data: exists(p.stats) ? p.stats[statPeriod] : 0,
+    //       label: p.name,
+    //       color: '#000000',
+    //     };
+    //   })
+    //   .sort((a, b) => b.data - a.data);
   }
 
   @Selector([FantasyBaseballFreeAgentsSelector.getFreeAgentBatterStats])

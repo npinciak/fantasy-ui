@@ -1,7 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { LocalStorageFacade } from '@app/@core/store/local-storage/local-storage.facade';
-import { LocalStorageKeys } from '@app/@core/store/local-storage/local-storage.state';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { UrlFragments } from '@app/@core/store/router/url-builder';
 import { EspnFastcastConnectionFacade } from '@app/espn-fastcast/facade/espn-fastcast-connection.facade';
@@ -26,7 +24,6 @@ export class EspnHomeComponent implements OnInit {
     readonly fastcastEventFacade: EspnFastcastEventFacade,
     readonly fantasyLeagueFacade: FantasyBaseballLeagueFacade,
     readonly fantasyForm: SportsUiLeagueFormFacade,
-    private localStorageFacade: LocalStorageFacade,
     private store: Store,
     private http: HttpClient
   ) {}
@@ -42,8 +39,6 @@ export class EspnHomeComponent implements OnInit {
   // TODO: Refactor me
   onAddLeague(event: Record<string, { sport: string }>): void {
     const key = Object.keys(event)[0];
-
-    const notEmpty = this.localStorageFacade.getLocalStorageValue(LocalStorageKeys.UserLeagues);
   }
 
   onRemoveLeague(leagueId: string): void {

@@ -1,4 +1,4 @@
-import { EspnClientScheduleEntity } from '@espnClient/espn-client.model';
+import { EspnClient } from '@espnClient/espn-client.model';
 
 export class FetchBaseballLeague {
   public static readonly type = `[fantasyBaseballLeague] FetchBaseballLeague`;
@@ -22,5 +22,5 @@ export class SetCurrentScoringPeriodId {
 
 export class SetLiveSchedule {
   public static readonly type = `[fantasyBaseballLeague] SetLiveSchedule`;
-  constructor(public payload: { schedule: EspnClientScheduleEntity }) {}
+  constructor(public payload: { schedule: EspnClient.ScheduleEntity }) {}
 }

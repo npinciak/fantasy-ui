@@ -1,7 +1,8 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { exists } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
-import { EspnClientPlayerStatsByYearMap } from '@espnClient/espn-client.model';
+import { benchPlayersFilter, injuredReservePlayersFilter, startingPlayersFilter } from '@app/espn/espn-helpers';
+import { EspnClient } from '@espnClient/espn-client.model';
 import { FOOTBALL_LINEUP_SLOT_MAP } from '../consts/lineup.const';
 import { FootballPlayer } from '../models/football-player.model';
 import { FootballPosition } from '../models/football-position.model';
@@ -22,10 +23,7 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
 
   @Selector([FantasyFootballTeamSelectors.getRosterByTeamId])
   static getTeamStarters(getRosterByTeamId: (id: string | null) => FootballPlayer[]): (id: string | null) => FootballPlayer[] {
-    return (id: string | null) =>
-      getRosterByTeamId(id)
-        .filter(p => FOOTBALL_LINEUP_SLOT_MAP[p.lineupSlotId].starter)
-        .sort((a, b) => FOOTBALL_LINEUP_SLOT_MAP[a.lineupSlotId].displayOrder - FOOTBALL_LINEUP_SLOT_MAP[b.lineupSlotId].displayOrder);
+    return (id: string | null) => startingPlayersFilter(getRosterByTeamId(id), FOOTBALL_LINEUP_SLOT_MAP);
   }
 
   @Selector([FantasyFootballTeamSelectors.getTeamStarters])
@@ -35,7 +33,7 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
 
   @Selector([FantasyFootballTeamSelectors.getRosterByTeamId])
   static getTeamBench(getRosterByTeamId: (id: string | null) => FootballPlayer[]): (id: string | null) => FootballPlayer[] {
-    return (id: string | null) => getRosterByTeamId(id).filter(p => FOOTBALL_LINEUP_SLOT_MAP[p.lineupSlotId].bench);
+    return (id: string | null) => benchPlayersFilter(getRosterByTeamId(id), FOOTBALL_LINEUP_SLOT_MAP);
   }
 
   @Selector([FantasyFootballTeamSelectors.getTeamBench])
@@ -44,12 +42,17 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
   }
 
   @Selector([FantasyFootballTeamSelectors.getRosterByTeamId])
+  static getTeamInjuredReserve(getRosterByTeamId: (id: string | null) => FootballPlayer[]): (id: string | null) => FootballPlayer[] {
+    return (id: string | null) => injuredReservePlayersFilter(getRosterByTeamId(id));
+  }
+
+  @Selector([FantasyFootballTeamSelectors.getRosterByTeamId])
   static getTeamStats(getRosterByTeamId: (id: string | null) => FootballPlayer[]) {
     return (id: string | null, statPeriodId: string): FootballPlayer[] =>
       getRosterByTeamId(id).map(p => {
         const statsEntity = exists(p.stats) ? p.stats[statPeriodId] : {};
 
-        let stats: EspnClientPlayerStatsByYearMap = {
+        let stats: EspnClient.PlayerStatsByYearMap = {
           ...statsEntity,
         };
 

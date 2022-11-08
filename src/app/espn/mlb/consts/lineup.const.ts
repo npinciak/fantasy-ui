@@ -1,5 +1,5 @@
 import { enumAsList } from '@app/@shared/helpers/enum-as-list';
-import { EspnClientLineupEntityMap } from '@espnClient/espn-client.model';
+import { EspnClient } from '@espnClient/espn-client.model';
 
 export enum BaseballLineupSlot {
   C,
@@ -47,7 +47,7 @@ export const BATTING_LINEUP_SLOTS = [
 
 export const PITCHING_LINEUP_SLOTS = [BaseballLineupSlot.P, BaseballLineupSlot.SP, BaseballLineupSlot.RP];
 
-export const MLB_LINEUP_MAP: EspnClientLineupEntityMap = {
+export const MLB_LINEUP_MAP: EspnClient.LineupEntityMap = {
   0: {
     abbrev: 'C',
     active: true,

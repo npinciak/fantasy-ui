@@ -17,7 +17,7 @@ import { FootballPlayer } from '../../models/football-player.model';
 export class FootballLineupCardComponent {
   @Input() title: string = 'Lineup';
   @Input() lineup: FootballPlayer[];
-  @Input() points: number;
+  @Input() points = 0;
   @Input() projectedPoints: number;
   @Input() week: number;
 

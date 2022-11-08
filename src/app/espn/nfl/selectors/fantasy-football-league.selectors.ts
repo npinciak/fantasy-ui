@@ -1,4 +1,6 @@
 import { Selector } from '@app/@shared/models/typed-selector';
+import { FOOTBALL_STAT_PERIOD_FILTER_OPTIONS, YearToStatTypePeriod } from '@app/espn/const/stat-period.const';
+import { StatTypePeriodId } from '@app/espn/models/espn-stats.model';
 import { FantasyFootballLeagueStateModel } from '../models/football-league-state.model';
 import { FootballTeam } from '../models/football-team.model';
 import { FantasyFootballLeagueState } from '../state/fantasy-football-league.state';
@@ -48,5 +50,16 @@ export class FantasyFootballLeagueSelectors {
   @Selector([FantasyFootballLeagueSelectors.getMatchupPeriodCount, FantasyFootballTeamSelectors.getList])
   static standings(matchupPeriodCount: number, teamList: FootballTeam[]): FootballTeam[] {
     return teamList.sort((a, b) => b.wins - a.wins);
+  }
+
+  @Selector([FantasyFootballLeagueSelectors.getCurrentScoringPeriodId])
+  static statPeriodFilters(week: number) {
+    return [
+      ...FOOTBALL_STAT_PERIOD_FILTER_OPTIONS,
+      {
+        value: YearToStatTypePeriod({ periodType: StatTypePeriodId.ProjectedWeek, dateObj: new Date(), week }),
+        label: `Proj Week ${week}`,
+      },
+    ];
   }
 }
