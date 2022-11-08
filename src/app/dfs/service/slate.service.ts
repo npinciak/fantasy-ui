@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { currentDate } from '@app/@shared/helpers/date';
-import { exists, objectIsEmpty, transformPercToNumber } from '@app/@shared/helpers/utils';
+import { exists, normalizeStringToNumber, objectIsEmpty } from '@app/@shared/helpers/utils';
 import { ApiService } from '@app/@shared/services/api.service';
 import { SlateMasterMap } from '@dfsClient/daily-fantasy-client.model';
 import { Observable } from 'rxjs';
@@ -54,7 +54,7 @@ export class SlateService {
           obj[prop] = teamAttributes[prop];
           break;
         default:
-          obj[prop] = transformPercToNumber(teamAttributes[prop][site]);
+          obj[prop] = normalizeStringToNumber(teamAttributes[prop][site]);
           break;
       }
     }
@@ -69,28 +69,22 @@ export class SlateService {
 
     return Object.entries(teams).map(([id, team]) => {
       const { vegas, outsiders, safpts } = DfsSlateHelpers.normalizeSlateTeamAttributes(team);
-
-      // console.log({ vegas, outsiders, safpts });
       return { id, vegas, outsiders, safpts };
     });
   }
 
   static transformStatGroupsToProfiler(statGroup: ClientSlateStatGroups): PlayerProfilerSeasonMap | null {
+    // console.log('transformStatGroupsToProfiler', statGroup);
     if (objectIsEmpty(statGroup) || !exists(statGroup)) {
       return null;
     }
 
-    const qb = []; // DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.qb);
-    const rb = []; //DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.rb);
-    const wr = []; // DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.wr);
-    const te = []; // DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.te);
+    // const qb = DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.qb);
+    // const rb = DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.rb);
+    // const wr = DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.wr);
+    // const te = DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.te);
 
-    return {
-      qb,
-      rb,
-      te,
-      wr,
-    };
+    return DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup);
   }
 
   static transformPlayerSlateAttributes(players: ClientSlatePlayerAttributesMap, site: string): PlayerSlateAttr[] {
@@ -105,9 +99,9 @@ export class SlateService {
       statGroup: player.stat_group ?? null,
       salaryDiff: player.salary_diff?.[siteMap] ?? null,
       slateOwn: player.slate_ownership?.[siteMap] ?? null,
-      ownership: transformPercToNumber(player.ownership?.[siteMap]) ?? null,
-      value: transformPercToNumber(player.value_pct?.[siteMap]) ?? null,
-      smash: transformPercToNumber(player.smash_pct?.[siteMap]) ?? null,
+      ownership: normalizeStringToNumber(player.ownership?.[siteMap]) ?? null,
+      value: normalizeStringToNumber(player.value_pct?.[siteMap]) ?? null,
+      smash: normalizeStringToNumber(player.smash_pct?.[siteMap]) ?? null,
       expertRanking: null, // SlateService.isNFLPlayer(player) ? player.ecr : null,
       defenseVsPos: null, //SlateService.isNBAPlayer(player) ? player.dvp : null,
     }));

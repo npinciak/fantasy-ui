@@ -15,12 +15,20 @@
     </ng-container>
   </div>
   <div class="blocks four" gdArea="content">
-    <app-data-vis-scatter
-      title="hey there"
-      xAxisFilterTitle="hi there"
-      yAxisFilterTitle="ho there"
-      [chartData]="(nflMatchupGraphData$ | async)!('', '')"
-    ></app-data-vis-scatter>
+    <app-dropdown-filter
+      [selectedOption]="xAxisStat$ | async"
+      title="xAxis"
+      [filterItems]="playerScatterAxisOptions$ | async"
+      (filterUpdate)="onAxisXChange($event.value)"
+    ></app-dropdown-filter>
+
+    <app-dropdown-filter
+      [selectedOption]="yAxisStat$ | async"
+      title="yAxis"
+      [filterItems]="playerScatterAxisOptions$ | async"
+      (filterUpdate)="onAxisYChange($event.value)"
+    ></app-dropdown-filter>
+    <app-data-vis-scatter title="hey there" xAxisFilterTitle="hi there" yAxisFilterTitle="ho there" [chartData]="playerScatterData$ | async"></app-data-vis-scatter>
 
     <ng-container *ngIf="(dailyFantasySlateFacade.slatesEmpty$ | async) === false; else noSlates">
       <ng-container *ngIf="(dailyFantasyPlayersFacade.playersEmpty$ | async) === false">

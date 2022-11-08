@@ -13,7 +13,8 @@ import { DailyFantasyNflPlayerFacade } from '@app/dfs/nfl/facade/daily-fantasy-n
 import { DailyFantasyNflTeamSlateAttrFacade } from '@app/dfs/nfl/facade/daily-fantasy-nfl-team-slate-attr.facade';
 import { NFL_STAT_GROUP_MAP } from '@app/dfs/nfl/models/stat-group.model';
 import { SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -35,12 +36,22 @@ export class HomeComponent implements OnInit {
   nflTeamList$ = this.nflPlayerFacade.teamList$;
   nflMatchupGraphData$ = this.nflTeamSlateAttrFacade.matchupGraphData$;
 
+  playerScatterAxisOptions$ = this.nflPlayerFacade.playerScatterAxisOptions$;
+
   statGroup: string;
   teamId: number | null = null;
   position: string | null = null;
   teamFilter$ = new BehaviorSubject<string | null>(null);
   statGroupFilter$ = new BehaviorSubject<string | null>(null);
   positionFilter$ = new BehaviorSubject<string | null>(null);
+  xAxisStat$ = new BehaviorSubject<string | null>(null);
+  yAxisStat$ = new BehaviorSubject<string | null>(null);
+
+  playerScatterData$ = combineLatest([this.nflPlayerFacade.playerScatterData$, this.xAxisStat$, this.yAxisStat$]).pipe(
+    map(([playerScatterData, xAxis, yAxis]) => {
+      return playerScatterData(xAxis, yAxis);
+    })
+  );
 
   constructor(
     private router: Router,
@@ -58,7 +69,14 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    // if (exists(this.LEAGUE) && exists(this.SITE)) this.dailyFantasySlateFacade.fetchSlates();
+  }
+
+  onAxisXChange(val: string) {
+    this.xAxisStat$.next(val);
+  }
+
+  onAxisYChange(val: string) {
+    this.yAxisStat$.next(val);
   }
 
   statGroupFilter(val: string) {

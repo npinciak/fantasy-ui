@@ -53,7 +53,7 @@ export type NFLClientProfiler = { profiler: NFLClientProfilerEntity };
 
 export type ProfilerTimeFrameAttributes = 'season' | 'last-season' | 'combined';
 
-export type NFLClientProfilerEntity = { [attr in ProfilerTimeFrameAttributes]: NFLClientProfilerTimeFrameEntity };
+export type NFLClientProfilerEntity = { [attr in ProfilerTimeFrameAttributes]?: NFLClientProfilerTimeFrameEntity };
 
 type ProfilerQBAttributes =
   | 'profilerId'

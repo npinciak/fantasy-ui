@@ -6,7 +6,7 @@ import { ClearAndAddNflProfilerWR, name, SetPlayerNflProfilerWR } from '../actio
 @State({ name })
 @Injectable()
 export class DailyFantasyNflProfilerWRState extends GenericState({
-  idProperty: 'profilerId',
+  idProperty: 'rgId',
   addOrUpdate: SetPlayerNflProfilerWR,
   clearAndAdd: ClearAndAddNflProfilerWR,
 }) {}

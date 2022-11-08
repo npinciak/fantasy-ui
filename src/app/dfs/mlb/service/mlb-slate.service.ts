@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { currentDate } from '@app/@shared/helpers/date';
-import { objectIsEmpty, transformPercToNumber } from '@app/@shared/helpers/utils';
+import { normalizeStringToNumber, objectIsEmpty } from '@app/@shared/helpers/utils';
 import { ApiService } from '@app/@shared/services/api.service';
 import { DailyFantasyEndpointBuilder } from '@app/dfs/daily-fantasy-endpoint-builder';
 import { DfsSiteToDfsSiteTypeMap } from '@app/dfs/dfs.const';
@@ -71,9 +71,9 @@ export class MlbSlateService {
       statGroup: player.stat_group ?? null,
       salaryDiff: player.salary_diff?.[siteMap] ?? null,
       slateOwn: player.slate_ownership?.[siteMap] ?? null,
-      ownership: transformPercToNumber(player.ownership?.[siteMap]) ?? null,
-      value: transformPercToNumber(player.value_pct?.[siteMap]) ?? null,
-      smash: transformPercToNumber(player.smash_pct?.[siteMap]) ?? null,
+      ownership: normalizeStringToNumber(player.ownership?.[siteMap]) ?? null,
+      value: normalizeStringToNumber(player.value_pct?.[siteMap]) ?? null,
+      smash: normalizeStringToNumber(player.smash_pct?.[siteMap]) ?? null,
       stats: player.stats,
       plateIq: player.plateiq,
     }));

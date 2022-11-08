@@ -46,14 +46,18 @@ export function normalizePropsFromStrToNum<T>(obj: T | null | undefined): CamelC
   if (obj === undefined || obj === null) return null;
   const map = {} as CamelCasedProperties<T>;
   Object.keys(obj).forEach(k => {
-    obj[camelCase(k)] = transformPercToNumber(obj[k]);
+    obj[camelCase(k)] = normalizeStringToNumber(obj[k]);
   });
   return map;
 }
 
-export function transformPercToNumber(str: string | undefined | null): number | null {
-  if (str == undefined || str == null) return null;
-  return Number(str.split('%')[0]);
+export function normalizeStringToNumber(str: string | undefined | null): number | null {
+  if (str == undefined || str == null) {
+    return null;
+  }
+  const dirty = str.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, '');
+
+  return Number(dirty);
 }
 
 export function normalizeNestedToCamelCase<T extends Object>(obj: T): {} {

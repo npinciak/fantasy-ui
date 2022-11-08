@@ -1,10 +1,18 @@
-import { exists, objectIsEmpty } from '@app/@shared/helpers/utils';
+import { exists, normalizeStringToNumber, objectIsEmpty } from '@app/@shared/helpers/utils';
 import { ClientSlateTeamAttributes } from '@dfsClient/daily-fantasy-client-slate-attr.model';
 import { ClientVegas } from '@dfsClient/daily-fantasy-client.model';
-import { NFLClientOutsidersProperties, NFLClientProfiler, NFLClientSafptsProperties } from '@dfsClient/nfl-client.model';
+import {
+  NFLClientOutsidersProperties,
+  NFLClientProfilerQBProperties,
+  NFLClientProfilerRBProperties,
+  NFLClientProfilerReceiverProperties,
+  NFLClientProfilerTimeFrameEntity,
+  NFLClientSafptsProperties,
+  NFLClientStatGroup,
+} from '@dfsClient/nfl-client.model';
 import { camelCase } from 'lodash';
 import { Vegas } from './models/vegas.model';
-import { PlayerProfiler, PlayerProfilerSeason } from './nfl/models/nfl-profiler.model';
+import { ProfilerQB, ProfilerRB, ProfilerReceiver } from './nfl/models/nfl-profiler.model';
 import { NewTeamSlateAttributes, Outsiders, SaFpts } from './nfl/models/nfl-slate-attr.model';
 
 export namespace DfsSlateHelpers {
@@ -98,60 +106,73 @@ export namespace DfsSlateHelpers {
     return Object.keys(obj).map(k => camelCase(k));
   }
 
-  export function normalizeStatGroupToProfiler(pos: NFLClientProfiler): PlayerProfiler;
+  export function normalizeStatGroupToProfiler(pos: NFLClientStatGroup): {
+    qb: ProfilerQB[];
+    rb: ProfilerRB[];
+    te: ProfilerReceiver[];
+    wr: ProfilerReceiver[];
+  };
   export function normalizeStatGroupToProfiler(pos: undefined): null;
-  export function normalizeStatGroupToProfiler(pos: NFLClientProfiler | undefined): PlayerProfiler | null {
-    if (!exists(pos) || objectIsEmpty(pos)) return null;
+  export function normalizeStatGroupToProfiler(
+    statGroup: NFLClientStatGroup | undefined
+  ): { qb: ProfilerQB[]; rb: ProfilerRB[]; te: ProfilerReceiver[]; wr: ProfilerReceiver[] } | null {
+    if (!exists(statGroup) || objectIsEmpty(statGroup)) {
+      return null;
+    }
 
-    const newPos = {} as PlayerProfilerSeason;
+    const statGroupQb = statGroup.qb.profiler.season;
+    const statGroupRb = statGroup.rb.profiler.season;
+    const statGroupWr = statGroup.wr.profiler.season;
+    const statGroupTe = statGroup.te.profiler.season;
 
-    const test = {};
+    const qb = transformStatGroup<ProfilerQB>(statGroupQb);
+    const rb = transformStatGroup<ProfilerRB>(statGroupRb);
+    const te = transformStatGroup<ProfilerReceiver>(statGroupTe);
+    const wr = transformStatGroup<ProfilerReceiver>(statGroupWr);
 
-    // Object.entries(pos.profiler.season).map(([id, props], i) => {
-    //   console.log({ id, props });
-    // });
+    return {
+      qb,
+      rb,
+      te,
+      wr,
+    };
+  }
 
-    const season = Object.values(pos.profiler.season);
+  function transformStatGroup<T>(obj: NFLClientProfilerTimeFrameEntity | undefined): T[] {
+    if (!obj) {
+      return [];
+    }
 
-    const keys = season.map(v => camelCaseObjProps(v));
+    const f = [] as any[];
 
-    // const an = Object.values(pos.profiler.season).map((v, i) => {
-    //   const normalizedKeys = Object.keys(v).map(k => camelCase(k));
+    for (const [key, value] of Object.entries(obj)) {
+      const transform = {
+        rgId: key,
+        productionPremium: normalizeStringToNumber(value['Production Premium']),
+        matchupRtg: isNFLClientProfilerReceiver(value) ? normalizeStringToNumber(value['Matchup Rtg']) : null,
+        weeklyVolatility: normalizeStringToNumber(value['Weekly Volatility']),
+      };
 
-    //   newPos[normalizedKeys[i]] = v[i];
+      f.push(transform);
+    }
+    return f;
+  }
 
-    //   console.log(v);
+  export function isNFLClientProfilerQB(
+    value: NFLClientProfilerQBProperties | NFLClientProfilerRBProperties | NFLClientProfilerReceiverProperties
+  ): value is NFLClientProfilerQBProperties {
+    return value.hasOwnProperty('Total QBR');
+  }
 
-    //   return;
-    // });
-    // console.log(newPos);
+  export function isNFLClientProfilerRB(
+    value: NFLClientProfilerQBProperties | NFLClientProfilerRBProperties | NFLClientProfilerReceiverProperties
+  ): value is NFLClientProfilerRBProperties {
+    return value.hasOwnProperty('passEpa');
+  }
 
-    // console.log(an);
-    // Object.keys(pos.profiler.season).map(k => {
-    //   test[camelCase(k)] = 0;
-    // });
-
-    // console.log(test);
-    // Object.entries(pos.profiler.season).map(([id, prop], i) => {
-    //   // console.log({ id, prop[i] });
-
-    //   const test = prop[i];
-
-    //   // newPos[camelCase(prop)];
-    //   // const normalizedProp = prop;
-    //   // const normalizedVal = pos.profiler.season;
-    //   // newPos[id] = normalizedVal;
-    // });
-
-    // for (const prop in pos.profiler.season) {
-    //   if (pos.profiler.season.hasOwnProperty(prop)) {
-    //     const normalizedProp = camelCase(prop);
-    //     const normalizedVal = pos.profiler.season;
-    //     newPos[normalizedProp] = normalizedVal;
-    //   }
-    // }
-
-    // console.log(newPos);
-    return newPos;
+  export function isNFLClientProfilerReceiver(
+    value: NFLClientProfilerQBProperties | NFLClientProfilerRBProperties | NFLClientProfilerReceiverProperties
+  ): value is NFLClientProfilerReceiverProperties {
+    return value.hasOwnProperty('Matchup Rtg');
   }
 }

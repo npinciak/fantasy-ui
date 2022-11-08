@@ -9,5 +9,8 @@ import { DailyFantasyNflPlayerSelectors } from '../selectors/daily-fantasy-nfl-p
 export class DailyFantasyNflPlayerFacade extends GenericFacade(DailyFantasyNflPlayerSelectors) {
   playerList$ = select(DailyFantasyNflPlayerSelectors.getPlayerTableData);
   teamList$ = select(DailyFantasyNflPlayerSelectors.getPlayerTeams);
-  positionList$ = select(DailyFantasyNflPlayerSelectors.getPlayerPositions)
+  positionList$ = select(DailyFantasyNflPlayerSelectors.getPlayerPositions);
+
+  playerScatterData$ = select(DailyFantasyNflPlayerSelectors.getPlayerScatterData);
+  playerScatterAxisOptions$ = select(DailyFantasyNflPlayerSelectors.getPlayerScatterAxisOptions);
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RouterSelector } from '@app/@core/store/router/router.selectors';
+import { exists } from '@app/@shared/helpers/utils';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { SetMlbPlayerSlateAttributes } from '../mlb/actions/daily-fantasy-mlb-player-slate-attr.actions';
 import { SetMlbTeamSlateAttributes } from '../mlb/actions/daily-fantasy-mlb-team-slate-attr.actions';
@@ -11,6 +12,7 @@ import { ClearAndAddNflProfilerRB } from '../nfl/actions/daily-fantasy-nfl-profi
 import { ClearAndAddNflProfilerTE } from '../nfl/actions/daily-fantasy-nfl-profiler-te.actions';
 import { ClearAndAddNflProfilerWR } from '../nfl/actions/daily-fantasy-nfl-profiler-wr.actions';
 import { SetNflTeamSlateAttributes } from '../nfl/actions/daily-fantasy-nfl-team-slate-attr.actions';
+import { PlayerProfiler } from '../nfl/models/nfl-profiler.model';
 
 import { SlateService, SlateTeamMap } from '../service/slate.service';
 
@@ -57,7 +59,12 @@ export class DailyFantasySlateAttrState {
     const site = queryParams?.site;
 
     const { statGroups, teams, players } = await this.slateService.getGameAttrBySlateId({ sport, site, slate }).toPromise();
-    // const { qb, rb, wr, te } = statGroups;
+    
+    const qbStatGroup = exists(statGroups) ? statGroups.qb : ([] as PlayerProfiler[]);
+    const rbStatGroup = exists(statGroups) ? statGroups.rb : ([] as PlayerProfiler[]);
+    const wrStatGroup = exists(statGroups) ? statGroups.wr : ([] as PlayerProfiler[]);
+    const teStatGroup = exists(statGroups) ? statGroups.te : ([] as PlayerProfiler[]);
+
     // console.log({ statGroups });
 
     switch (sport) {
@@ -71,10 +78,10 @@ export class DailyFantasySlateAttrState {
         await dispatch([
           new SetNflPlayerSlateAttributes(players),
           new SetNflTeamSlateAttributes(teams),
-          new ClearAndAddNflProfilerQB([]),
-          new ClearAndAddNflProfilerRB([]),
-          new ClearAndAddNflProfilerWR([]),
-          new ClearAndAddNflProfilerTE([]),
+          new ClearAndAddNflProfilerQB(qbStatGroup),
+          new ClearAndAddNflProfilerRB(rbStatGroup),
+          new ClearAndAddNflProfilerWR(wrStatGroup),
+          new ClearAndAddNflProfilerTE(teStatGroup),
           new FetchGridIronPlayers({ site }),
         ]).toPromise();
         break;
