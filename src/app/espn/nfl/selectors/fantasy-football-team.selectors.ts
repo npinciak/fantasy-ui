@@ -2,11 +2,9 @@ import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { exists } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { benchPlayersFilter, injuredReservePlayersFilter, startingPlayersFilter } from '@app/espn/espn-helpers';
-import { EspnClient } from '@espnClient/espn-client.model';
 import { FOOTBALL_LINEUP_SLOT_MAP } from '../consts/lineup.const';
 import { FootballPlayer } from '../models/football-player.model';
 import { FootballPosition } from '../models/football-position.model';
-import { FootballStat } from '../models/football-stats.model';
 import { FootballTeam } from '../models/football-team.model';
 
 import { FantasyFootballTeamState } from '../state/fantasy-football-teams.state';
@@ -50,25 +48,11 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
   static getTeamStats(getRosterByTeamId: (id: string | null) => FootballPlayer[]) {
     return (id: string | null, statPeriodId: string): FootballPlayer[] =>
       getRosterByTeamId(id).map(p => {
-        const statsEntity = exists(p.stats) ? p.stats[statPeriodId] : {};
-
-        let stats: EspnClient.PlayerStatsByYearMap = {
-          ...statsEntity,
-        };
-
-        // if (stats.stats[FootballStat.RET] && stats.stats[FootballStat.GP]) {
-        //   stats.stats[FootballStat.TargetsPerGame] = stats.stats[FootballStat.RET] / stats.stats[FootballStat.GP];
-        // }
-        const extendedStats = {};
-
-        if (stats.stats[FootballStat.RET] && stats.stats[FootballStat.GP]) {
-          Object.assign(extendedStats, { [FootballStat.TargetsPerGame]: stats.stats[FootballStat.RET] / stats.stats[FootballStat.GP] });
-        }
+        const stats = exists(p.stats) && exists(p.stats[statPeriodId]) ? p.stats[statPeriodId] : {};
 
         return {
           ...p,
           stats,
-          extendedStats,
         };
       });
   }
