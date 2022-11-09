@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '@app/material.module';
 import { PlotlyModule } from 'angular-plotly.js';
@@ -28,7 +27,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     TableCellSkeletonComponent,
     MlbStatPipe,
   ],
-  imports: [PlotlyModule, RouterModule, MaterialModule, FlexLayoutModule, CommonModule, NgxSkeletonLoaderModule],
+  imports: [PlotlyModule, RouterModule, MaterialModule, CommonModule, NgxSkeletonLoaderModule],
   exports: [
     MlbStatPipe,
     DataVisComponent,

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule, GridModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '@app/@shared/shared.module';
 import { MaterialModule } from '@app/material.module';
@@ -52,16 +51,7 @@ const declarations = [
   PlayerTableComponent,
 ];
 
-const imports = [
-  CommonModule,
-  DfsRoutingModule,
-  FormsModule,
-  MaterialModule,
-  FlexLayoutModule,
-  GridModule,
-  SharedModule,
-  NgxsModule.forFeature(states),
-];
+const imports = [CommonModule, DfsRoutingModule, FormsModule, MaterialModule, SharedModule, NgxsModule.forFeature(states)];
 
 @NgModule({
   declarations,
