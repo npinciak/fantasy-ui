@@ -1,10 +1,10 @@
-<div fxLayout="row" [ngStyle]="{ opacity: opacity }">
-  <div fxFlex="75%">
-    <div fxLayout="row" fxLayoutGap="5px">
+<div [ngStyle]="{ opacity: opacity }">
+  <div>
+    <div>
       <div>
         <img class="game-team-logo" height="40px" [alt]="team?.name" [src]="team?.logo" />
       </div>
-      <div fxLayout="column" fxLayoutGap="5px">
+      <div>
         <div class="ui-font-weight-bold" [ngStyle]="{ color: team.color }">
           <small style="margin-right: 5px" [hidden]="noTeamRank">{{ team?.rank }}</small
           >{{ team?.name }}
@@ -17,14 +17,14 @@
       </div>
     </div>
   </div>
-  <div fxFlex fxLayoutAlign="end center" style="text-align: right">
-    <div fxLayout="column" fxLayoutGap="5px">
+  <div style="text-align: right">
+    <div>
       <div class="game-score-item">
         <span [class.game-score-winner]="team?.isWinner" [hidden]="isPregame"> {{ team?.score }}</span>
       </div>
     </div>
   </div>
-  <div fxFlex="5%" fxLayoutAlign="center center">
+  <div>
     <div>
       <mat-icon>{{ team?.isWinner ? 'arrow_left' : '' }}</mat-icon>
     </div>

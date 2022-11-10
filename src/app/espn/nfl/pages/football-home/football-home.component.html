@@ -1,5 +1,5 @@
-<div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
-  <div fxFlex="30%" fxFlex.sm="100%">
+<div>
+  <div>
     <app-dropdown-filter
       [selectedOption]="currentScoringPeriod$ | async"
       title="Week"
@@ -16,7 +16,7 @@
       <div style="margin: 10px 0"></div>
     </ng-container>
   </div>
-  <div fxFlex="70%" fxFlex.sm="100%">
+  <div>
     <div style="padding: 20px 0">
       <app-standings [data]="standings$ | async" [rows]="LEAGUE_STANDINGS_ROWS" [headers]="LEAGUE_STANDINGS_HEADERS"></app-standings>
     </div>

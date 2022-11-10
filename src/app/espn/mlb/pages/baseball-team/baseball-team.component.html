@@ -1,5 +1,5 @@
-<div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
-  <div fxFlex="30%" fxFlex.sm="100%">
+<div>
+  <div>
     <div>
       <ng-container *ngIf="fantasyBaseballLeagueFacade.isLoading$ | async; else refreshBtn">
         <mat-spinner diameter="20"></mat-spinner>
@@ -29,12 +29,12 @@
       (fetchPlayerDetails)="fantasyBaseballPlayerFacade.getPlayerNews($event.id)"
     ></app-lineup-card>
   </div>
-  <div fxFlex="70%" fxFlex.sm="100%">
+  <div>
     <mat-slide-toggle (change)="onBatterGraphSelectChange($event)" color="primary">Scatter</mat-slide-toggle>
 
     <div style="margin: 10px 0"></div>
 
-    <div fxLayout="row" fxLayoutGap="20px">
+    <div>
       <div>
         <app-dropdown-filter
           [selectedOption]="scoringPeriodId"

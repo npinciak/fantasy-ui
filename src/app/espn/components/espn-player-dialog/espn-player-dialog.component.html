@@ -1,18 +1,18 @@
 <mat-dialog-title>
-  <div fxLayout="row" fxLayoutGap="5px" *ngIf="data.player as player">
-    <div fxFlex>
+  <div *ngIf="data.player as player">
+    <div>
       <img height="160px" width="213px" role="presentation" [src]="playerImg" [alt]="player?.name" />
     </div>
-    <div fxFlex>
-      <div fxLayout="column" fxLayoutGap="5px">
+    <div>
+      <div>
         <div class="player name">
           {{ player?.name }}
         </div>
         <div class="player team-pos">{{ player?.team }}, {{ player?.position }}</div>
       </div>
     </div>
-    <div fxFlex>
-      <div fxLayout="column" fxLayoutGap="5px">
+    <div>
+      <div>
         <h3>% Owned</h3>
         <div>{{ player?.percentOwned | number: '1.0-2' }} ({{ player?.percentChange | number: '1.0-2' }})</div>
       </div>

@@ -1,5 +1,5 @@
-<div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
-  <div fxFlex="30%" fxFlex.sm="100%">
+<div>
+  <div>
     <div>
       <ng-container *ngIf="fantasyBaseballLeagueFacade.isLoading$ | async; else refreshBtn">
         <mat-spinner diameter="20"></mat-spinner>
@@ -59,7 +59,7 @@
       </mat-card-content>
     </mat-card>
   </div>
-  <div fxFlex>
+  <div>
     <mat-tab-group mat-align-tabs="start" (selectedTabChange)="onTabChange($event.index)">
       <mat-tab label="Batters">
         <h4>{{ MLB_STAT_MAP[selectedBatterStat].description }}</h4>

@@ -1,5 +1,5 @@
-<div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
-  <div fxFlex="30%" fxFlex.sm="100%">
+<div>
+  <div>
     <mat-card>
       <mat-card-content>
         <app-dropdown-filter
@@ -16,7 +16,7 @@
       <mat-card-content>
         <label id="lineup-slot-label">Lineup Slot</label>
 
-        <mat-radio-group fxLayout="column" aria-labelledby="lineup-slot-label">
+        <mat-radio-group aria-labelledby="lineup-slot-label">
           <mat-radio-button
             (change)="onLineupFilterSlotIdChange($event.value)"
             *ngFor="let slot of LINEUP_SLOTS"
@@ -89,7 +89,7 @@
     </mat-card> -->
   </div>
 
-  <div fxFlex="70%" fxFlex.sm="100%">
+  <div>
     <app-espn-stats-table
       [data]="tableData$ | async"
       [dataColumns]="(tableConfig$ | async).rows"
