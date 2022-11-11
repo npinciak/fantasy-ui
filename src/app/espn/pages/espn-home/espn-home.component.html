@@ -1,6 +1,5 @@
-<div>
-  <div></div>
-  <div>
+<app-page-layout>
+  <div sidebar>
     <app-add-league-form
       [leagues]="espnLeaguesFacade.allLeagues$ | async"
       (addLeague)="onAddLeague($event)"
@@ -8,4 +7,5 @@
       (navigateLeague)="onNavigateLeague($event)"
     ></app-add-league-form>
   </div>
-</div>
+  <div main></div>
+</app-page-layout>

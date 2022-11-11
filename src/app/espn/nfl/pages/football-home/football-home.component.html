@@ -1,5 +1,5 @@
-<div>
-  <div>
+<app-page-layout>
+  <div sidebar>
     <app-dropdown-filter
       [selectedOption]="currentScoringPeriod$ | async"
       title="Week"
@@ -16,9 +16,7 @@
       <div style="margin: 10px 0"></div>
     </ng-container>
   </div>
-  <div>
-    <div style="padding: 20px 0">
-      <app-standings [data]="standings$ | async" [rows]="LEAGUE_STANDINGS_ROWS" [headers]="LEAGUE_STANDINGS_HEADERS"></app-standings>
-    </div>
+  <div main>
+    <app-standings [data]="standings$ | async" [rows]="LEAGUE_STANDINGS_ROWS" [headers]="LEAGUE_STANDINGS_HEADERS"></app-standings>
   </div>
-</div>
+</app-page-layout>
