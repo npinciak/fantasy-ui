@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { LayoutService } from '@app/@shared/services/layout.service';
 import { EspnFastcastConnectionFacade } from '@app/espn-fastcast/facade/espn-fastcast-connection.facade';
 import { EspnFastcastEventToggleFacade } from '@app/espn-fastcast/facade/espn-fastcast-event-toggle.facade';
 import { EspnFastcastEventFacade } from '@app/espn-fastcast/facade/espn-fastcast-event.facade';
 import { EspnFastcastLeagueFacade } from '@app/espn-fastcast/facade/espn-fastcast-league.facade';
 import { Store } from '@ngxs/store';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-espn-scoreboard',
@@ -15,7 +17,7 @@ export class EspnScoreboardComponent {
 
   showNoEventsMessage$ = this.fastcastFacade.showNoEventsMessage$;
   feedLoadingValue$ = this.fastcastFacade.feedLoadingValue$;
-  showFeed$ = this.fastcastFacade.showFeed$;
+  showFeed$ = of(true); //this.fastcastFacade.showFeed$;
   showLoader$ = this.fastcastFacade.showLoader$;
   lastRefreshAsTickerDate$ = this.fastcastFacade.lastRefreshAsTickerDate$;
   paused$ = this.fastcastFacade.paused$;
@@ -26,12 +28,15 @@ export class EspnScoreboardComponent {
 
   isIdToggled$ = this.fastcastEventToggleFacade.isIdToggled$;
 
+  isMobile$ = this.layoutService.isMobile$;
+
   constructor(
     readonly fastcastEventToggleFacade: EspnFastcastEventToggleFacade,
     readonly fastcastFacade: EspnFastcastConnectionFacade,
     readonly fastcastEventFacade: EspnFastcastEventFacade,
     readonly fastcastLeagueFacade: EspnFastcastLeagueFacade,
-    readonly store: Store
+    readonly store: Store,
+    private layoutService: LayoutService
   ) {}
 
   onLeagueSelectChange(val: string) {

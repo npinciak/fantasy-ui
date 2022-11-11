@@ -29,6 +29,7 @@ mat-card-subtitle {
   &.container {
     max-width: 100%;
     display: flex;
+    flex-wrap: nowrap;
     overflow-x: auto;
     scrollbar-color: #fff #f5f6f6;
     scrollbar-width: thin;
