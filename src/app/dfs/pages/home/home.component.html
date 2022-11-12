@@ -1,20 +1,14 @@
-<div
-  gdAreas.xs="sidebar | content | footer"
-  gdGap="1em"
-  gdColumns.xs="none"
-  gdAreas.sm="sidebar content | footer footer"
-  gdColumns.sm="30%!"
-  gdAreas.gt-sm="sidebar content  | footer footer "
-  gdColumns.gt-sm="30% auto"
-  gdGap.gt-sm="20px"
-  [ngStyle]="{ 'max-width': 'auto' }"
->
-  <div class="blocks two" gdArea="sidebar">
+<ng-template #noPlayers> <app-no-data title="No Players for this Slate"></app-no-data></ng-template>
+<ng-template #noSlates> <app-no-data title="No Slates Available"></app-no-data></ng-template>
+
+<app-page-layout>
+  <div sidebar>
     <ng-container *ngIf="(dailyFantasySlateFacade.slatesEmpty$ | async) === false">
       <app-slate-list [slateList]="dailyFantasySlateFacade.selectSlateByType$ | async" (selectSlate)="onSelectSlate($event)"></app-slate-list>
     </ng-container>
   </div>
-  <div class="blocks four" gdArea="content">
+  <div navbar></div>
+  <div main>
     <app-dropdown-filter
       [selectedOption]="xAxisStat$ | async"
       title="xAxis"
@@ -34,12 +28,12 @@
       <ng-container *ngIf="(dailyFantasyPlayersFacade.playersEmpty$ | async) === false">
         <div>
           <!-- <mat-form-field>
-            <mat-label>Position</mat-label>
-            <mat-select (selectionChange)="filterChange($event)">
-              <mat-option value="">All</mat-option>
-              <mat-option *ngFor="let pos of []" [value]="pos">{{ pos }}</mat-option>
-            </mat-select>
-          </mat-form-field> -->
+          <mat-label>Position</mat-label>
+          <mat-select (selectionChange)="filterChange($event)">
+            <mat-option value="">All</mat-option>
+            <mat-option *ngFor="let pos of []" [value]="pos">{{ pos }}</mat-option>
+          </mat-select>
+        </mat-form-field> -->
 
           <mat-form-field>
             <mat-label>Team</mat-label>
@@ -83,8 +77,4 @@
       </ng-container>
     </ng-container>
   </div>
-  <div class="blocks five" gdArea="footer"></div>
-</div>
-
-<ng-template #noPlayers> <app-no-data title="No Players for this Slate"></app-no-data></ng-template>
-<ng-template #noSlates> <app-no-data title="No Slates Available"></app-no-data></ng-template>
+</app-page-layout>

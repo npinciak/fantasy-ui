@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '@app/material.module';
 import { PlotlyModule } from 'angular-plotly.js';
@@ -10,27 +9,29 @@ import { DataVisScatterComponent } from './components/data-vis-scatter/data-vis-
 import { DataVisComponent } from './components/data-vis/data-vis.component';
 import { DropdownFilterComponent } from './components/dropdown-filter/dropdown-filter.component';
 import { NoDataComponent } from './components/no-data/no-data.component';
+import { PageLayoutComponent } from './components/page-layout/page-layout.component';
 import { ScrollableTableComponent } from './components/scrollable-table/scrollable-table.component';
 import { StickyTableCellComponent } from './components/sticky-table-cell/sticky-table-cell.component';
 import { TableCellSkeletonComponent } from './components/table-cell-skeleton/table-cell-skeleton.component';
-import { MlbStatPipe } from './pipes/mlb-stat.pipe';
+import { StatPipe } from './pipes/stat-format.pipe';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
   declarations: [
     NoDataComponent,
+    PageLayoutComponent,
     ScrollableTableComponent,
     StickyTableCellComponent,
     DropdownFilterComponent,
     DataVisComponent,
     DataVisScatterComponent,
     TableCellSkeletonComponent,
-    MlbStatPipe,
+    StatPipe,
   ],
-  imports: [PlotlyModule, RouterModule, MaterialModule, FlexLayoutModule, CommonModule, NgxSkeletonLoaderModule],
+  imports: [PlotlyModule, RouterModule, MaterialModule, CommonModule, NgxSkeletonLoaderModule],
   exports: [
-    MlbStatPipe,
+    StatPipe,
     DataVisComponent,
     NoDataComponent,
     ScrollableTableComponent,
@@ -38,6 +39,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     DropdownFilterComponent,
     DataVisScatterComponent,
     TableCellSkeletonComponent,
+    PageLayoutComponent,
   ],
 })
 export class SharedModule {}

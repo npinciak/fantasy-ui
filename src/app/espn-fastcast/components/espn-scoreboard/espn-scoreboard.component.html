@@ -1,67 +1,74 @@
-<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" style="margin-bottom: 20px">
-  <div fxFlex.gt-sm="8" fxFlex.xs="100">
-    <mat-card>
-      <mat-card-subtitle>
-        <span class="scoreboard refresh timestamp">{{ lastRefreshAsTickerDate$ | async }}</span>
-      </mat-card-subtitle>
-      <mat-card-content>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+<section>
+  <div style="display: grid; grid-template-columns: 13% 2% 85%; margin-bottom: 20px">
+    <div>
+      <mat-card>
+        <mat-card-subtitle>
+          <span class="scoreboard refresh timestamp">{{ lastRefreshAsTickerDate$ | async }}</span>
+        </mat-card-subtitle>
+        <mat-card-content>
           <div>
-            <button mat-icon-button aria-label="Button to start and pause feed" (click)="onStartFeed()">
-              <mat-icon>{{ (paused$ | async) ? 'play_arrow_outline' : 'pause_circle_outline' }}</mat-icon>
-            </button>
+            <div>
+              <button mat-icon-button aria-label="Button to start and pause feed" (click)="onStartFeed()">
+                <mat-icon>{{ (paused$ | async) ? 'play_arrow_outline' : 'pause_circle_outline' }}</mat-icon>
+              </button>
+            </div>
           </div>
-        </div>
-        <div>
-          <mat-form-field fxShow fxHide.xs>
-            <mat-select
-              [disabled]="(showFeed$ | async) === false"
-              style="text-align: center"
-              [value]="selectedLeagueId$ | async"
-              (selectionChange)="onLeagueSelectChange($event.value)"
-            >
-              <mat-option *ngFor="let league of leagueList$ | async" [value]="league.id">
-                {{ league.shortName }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field fxHide fxShow.xs>
-            <select
-              #nativeLeagueSelect
-              matNativeControl
-              [disabled]="(showFeed$ | async) === false"
-              style="text-align: center"
-              [value]="selectedLeagueId$ | async"
-              (change)="onLeagueSelectChange($event.target.value)"
-            >
-              <option *ngFor="let league of leagueList$ | async" [value]="league.id">
-                {{ league.shortName }}
-              </option>
-            </select>
-          </mat-form-field>
-        </div>
-      </mat-card-content>
-    </mat-card>
+          <div>
+            <ng-container *ngIf="!(isMobile$ | async); else native">
+              <mat-form-field>
+                <mat-select
+                  [disabled]="(showFeed$ | async) === false"
+                  style="text-align: center"
+                  [value]="selectedLeagueId$ | async"
+                  (selectionChange)="onLeagueSelectChange($event.value)"
+                >
+                  <mat-option *ngFor="let league of leagueList$ | async" [value]="league.id">
+                    {{ league.shortName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-container>
+            <ng-template #native>
+              <mat-form-field>
+                <select
+                  #nativeLeagueSelect
+                  matNativeControl
+                  [disabled]="(showFeed$ | async) === false"
+                  style="text-align: center"
+                  [value]="selectedLeagueId$ | async"
+                  (change)="onLeagueSelectChange($event.target.value)"
+                >
+                  <option *ngFor="let league of leagueList$ | async" [value]="league.id">
+                    {{ league.shortName }}
+                  </option>
+                </select>
+              </mat-form-field>
+            </ng-template>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div></div>
+    <div class="scoreboard container" id="scoreboard-feed" role="feed" aria-live="polite">
+      <ng-container *ngIf="showLoader$ | async; then progressBar"> </ng-container>
+      <ng-container *ngIf="showFeed$ | async; then feed; else noEventsMessage"> </ng-container>
+    </div>
   </div>
-
-  <div fxFlex.gt-sm="92" fxFlex.xs="100" class="scoreboard container" id="scoreboard-feed" role="feed" aria-live="polite">
-    <ng-container *ngIf="showLoader$ | async; then progressBar"> </ng-container>
-    <ng-container *ngIf="showFeed$ | async; then feed; else noEventsMessage"> </ng-container>
-  </div>
-</div>
+</section>
 
 <ng-template #feed>
-  <app-espn-scoreboard-card
-    *ngFor="let event of (eventsByLeagueId$ | async)!(selectedLeagueId$ | async); let i = index"
-    [index]="i"
-    [ariaSetsize]="(eventsByLeagueId$ | async)!(selectedLeagueId$ | async).length"
-    [ariaPosinset]="i + 1"
-    [isEventToggled]="(isIdToggled$ | async)!(event.id)"
-    (toggleExpandedEvent)="onToggleExpandedEvent($event)"
-    (toggleOffExpandedEvent)="onToggleOffExpandedEvent($event)"
-    [isTournament]="event.isTournament"
-    [event]="event"
-  ></app-espn-scoreboard-card>
+  <ng-container *ngFor="let event of (eventsByLeagueId$ | async)!(selectedLeagueId$ | async); let i = index">
+    <app-espn-scoreboard-card
+      [index]="i"
+      [ariaSetsize]="(eventsByLeagueId$ | async)!(selectedLeagueId$ | async).length"
+      [ariaPosinset]="i + 1"
+      [isEventToggled]="(isIdToggled$ | async)!(event.id)"
+      (toggleExpandedEvent)="onToggleExpandedEvent($event)"
+      (toggleOffExpandedEvent)="onToggleOffExpandedEvent($event)"
+      [isTournament]="event.isTournament"
+      [event]="event"
+    ></app-espn-scoreboard-card>
+  </ng-container>
 </ng-template>
 
 <ng-template #progressBar>

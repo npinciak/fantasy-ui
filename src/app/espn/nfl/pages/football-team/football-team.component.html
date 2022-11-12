@@ -1,5 +1,5 @@
-<div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
-  <div fxFlex="30%" fxFlex.sm="100%">
+<app-page-layout>
+  <div sidebar>
     <ng-container *ngIf="isLoading$ | async; else refreshBtn">
       <mat-spinner diameter="20"></mat-spinner>
     </ng-container>
@@ -18,7 +18,7 @@
     <div style="margin: 10px 0"></div>
     <app-football-lineup-card title="Injured Reserve" [lineup]="injuredReserve$ | async" [week]="currentScoringPeriodId$ | async"></app-football-lineup-card>
   </div>
-  <div fxFlex="70%" fxFlex.sm="100%">
+  <div main>
     <div>
       <app-dropdown-filter
         [selectedOption]="selectedPosition$ | async"
@@ -44,4 +44,4 @@
     >
     </app-espn-stats-table>
   </div>
-</div>
+</app-page-layout>

@@ -1,3 +1,7 @@
-.mat-column-name {
-  width: 250px;
+// .mat-column-name {
+//   width: 250px;
+// }
+
+td.mat-cell:first-of-type {
+  padding-left: 10px;
 }

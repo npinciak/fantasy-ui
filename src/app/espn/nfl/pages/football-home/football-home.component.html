@@ -1,5 +1,5 @@
-<div fxLayout="row" fxLayoutGap="20px" fxLayout.sm="column" fxLayout.xs="column">
-  <div fxFlex="30%" fxFlex.sm="100%">
+<app-page-layout>
+  <div sidebar>
     <app-dropdown-filter
       [selectedOption]="currentScoringPeriod$ | async"
       title="Week"
@@ -8,7 +8,7 @@
     ></app-dropdown-filter>
     <ng-container *ngFor="let matchup of matchups$ | async">
       <mat-card>
-        <mat-card-content>
+        <mat-card-content style="display: grid; grid-template-rows: auto; row-gap: 5px">
           <app-football-scoreboard-card-team [team]="matchup.awayTeam"></app-football-scoreboard-card-team>
           <app-football-scoreboard-card-team [team]="matchup.homeTeam"></app-football-scoreboard-card-team>
         </mat-card-content>
@@ -16,9 +16,7 @@
       <div style="margin: 10px 0"></div>
     </ng-container>
   </div>
-  <div fxFlex="70%" fxFlex.sm="100%">
-    <div style="padding: 20px 0">
-      <app-standings [data]="standings$ | async" [rows]="LEAGUE_STANDINGS_ROWS" [headers]="LEAGUE_STANDINGS_HEADERS"></app-standings>
-    </div>
+  <div main>
+    <app-standings [data]="standings$ | async" [rows]="LEAGUE_STANDINGS_ROWS" [headers]="LEAGUE_STANDINGS_HEADERS"></app-standings>
   </div>
-</div>
+</app-page-layout>

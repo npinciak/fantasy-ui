@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutGap="20px">
+<div>
   <div>
     <app-dropdown-filter [selectedOption]="sportOption$ | async" [filterItems]="fantasySportOptionList" (filterUpdate)="fantasySportChange($event)"></app-dropdown-filter>
   </div>
@@ -13,8 +13,8 @@
   </div>
 </div>
 
-<div style="margin-top: 20px" fxLayout="row" fxLayoutGap="20px">
-  <div fxFlex *ngFor="let league of leagues">
+<div style="margin-top: 20px">
+  <div *ngFor="let league of leagues">
     <mat-card style="display: flex">
       <mat-card-header>
         <div class="fantasy-sport-logo" [ngStyle]="{ 'background-position': LeagueSportToImageLocationMap[league.leagueSport] }"></div>

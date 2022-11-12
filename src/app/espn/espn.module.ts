@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { FlexLayoutModule, GridModule } from '@angular/flex-layout';
 import { SharedModule } from '@app/@shared/shared.module';
 import { SportsUiModule } from '@app/sports-ui/sports-ui.module';
 import { NgxsModule } from '@ngxs/store';
@@ -58,16 +57,7 @@ const states = [
   FantasyBaseballEventsState,
 ];
 
-const imports = [
-  CommonModule,
-  EspnRoutingModule,
-  MaterialModule,
-  FlexLayoutModule,
-  GridModule,
-  SharedModule,
-  SportsUiModule,
-  NgxsModule.forFeature(states),
-];
+const imports = [CommonModule, EspnRoutingModule, MaterialModule, SharedModule, SportsUiModule, NgxsModule.forFeature(states)];
 
 const exports = [StandingsComponent, RosterComponent];
 

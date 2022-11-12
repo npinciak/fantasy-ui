@@ -21,7 +21,10 @@ export class FootballLineupCardComponent {
   @Input() projectedPoints: number;
   @Input() week: number;
 
+  @Input() isLoading = false;
+
   @Output() playerClicked = new EventEmitter<FootballPlayer | null>();
+  @Output() refreshClicked = new EventEmitter();
 
   readonly MatIconByEspnPlayerInjuryStatus = MatIconByEspnPlayerInjuryStatus;
   readonly InjurySeverityByInjuryStatus = InjurySeverityByInjuryStatus;
@@ -38,5 +41,9 @@ export class FootballLineupCardComponent {
 
   onPlayerClick(player) {
     this.playerClicked.emit(player);
+  }
+
+  onRefreshClick() {
+    this.refreshClicked.emit();
   }
 }

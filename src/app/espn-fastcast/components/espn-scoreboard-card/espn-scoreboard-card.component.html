@@ -6,21 +6,19 @@
   [attr.aria-setsize]="ariaSetsize"
   [attr.aria-posinset]="ariaPosinset"
 >
-  <span [id]="ariaInfo.eventName" class="meta-data">{{ event.name }}</span>
-  <span [id]="ariaInfo.eventLocation" class="meta-data">{{ event.location }}</span>
-  <mat-card-subtitle [id]="ariaInfo.eventSummary" class="event-summary"
-    >{{ eventSummary }}
-    <a [href]="event?.link" target="_blank"><mat-icon class="new-tab-icon">open_in_new</mat-icon></a>
-  </mat-card-subtitle>
   <mat-card-content>
+    <div [id]="ariaInfo.eventSummary" class="event-summary">
+      <span [id]="ariaInfo.eventName" class="meta-data">{{ event.name }}</span>
+      <span [id]="ariaInfo.eventLocation" class="meta-data">{{ event.location }}</span>
+      {{ eventSummary }}
+      <a [title]="ariaInfo.eventGamecast" [href]="event?.link" target="_blank"><mat-icon class="new-tab-icon">open_in_new</mat-icon></a>
+    </div>
     <app-espn-scoreboard-card-team [eventStatus]="event.status" [isTournament]="isTournament" [team]="event?.teams?.away"></app-espn-scoreboard-card-team>
-    <div></div>
     <app-espn-scoreboard-card-team [eventStatus]="event.status" [isTournament]="isTournament" [team]="event?.teams?.home"></app-espn-scoreboard-card-team>
   </mat-card-content>
 
-  <mat-card-actions>
+  <mat-card-actions style="display: none">
     <span class="event-summary" *ngIf="!eventInProgress && isTournament"> {{ event?.seriesSummary }}</span>
-
     <!-- <ng-container *ngIf="eventInProgress"> -->
     <ng-container *ngIf="false">
       <mat-accordion [multi]="true">

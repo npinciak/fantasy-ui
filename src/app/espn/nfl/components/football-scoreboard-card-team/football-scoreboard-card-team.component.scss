@@ -10,3 +10,32 @@
 mat-icon {
   vertical-align: middle;
 }
+
+.wrapper {
+  display: grid;
+  row-gap: 5px;
+  grid-template-columns: 75% 20% 5%;
+}
+
+.team-wrapper {
+  display: grid;
+  grid-row: auto;
+}
+
+.team-info-wrapper {
+  display: grid;
+  grid-template-columns: 25% 75%;
+}
+
+.game-score-item {
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.game-team-logo {
+  width: 45px;
+}
+
+mat-icon {
+  vertical-align: middle;
+}

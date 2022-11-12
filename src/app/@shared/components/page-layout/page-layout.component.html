@@ -1,43 +1,30 @@
-<mat-toolbar style="background-color: #205493; color: #ffffff">
-  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
-    <mat-icon>more_vert</mat-icon>
-  </button>
+<!-- <div [class.page-wrapper-m]="isMobile$ | async" [class.page-wrapper]="!(isMobile$ | async)">
+  <aside class="sidebar">
+    {{ isMobile$ | async }}
+    <h1>sidebar</h1>
+    <ng-content select="[sidebar]"></ng-content>
+  </aside>
+  <nav class="nav">
+    <h1>nav</h1>
+    <ng-content select="[nav]"></ng-content>
+  </nav>
+  <main class="main">
+    <h1>main</h1>
+    <ng-content select="[main]"></ng-content>
+  </main>
+</div> -->
 
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item [routerLink]="UrlBuilder.espnBaseUrl">ESPN</button>
-    <button mat-menu-item [matMenuTriggerFor]="dfs">DFS</button>
-  </mat-menu>
-
-  <mat-menu #espn="matMenu">
-    <button mat-menu-item [routerLink]="UrlBuilder.espnMlbBase" disabled>NFL</button>
-    <button disabled mat-menu-item [routerLink]="UrlBuilder.espnMlbBase" disabled>MLB</button>
-  </mat-menu>
-
-  <mat-menu #dfs="matMenu">
-    <button mat-menu-item [matMenuTriggerFor]="dfsNflSite">NFL</button>
-    <button mat-menu-item [matMenuTriggerFor]="dfsNbaSite">NBA</button>
-    <button mat-menu-item [matMenuTriggerFor]="dfsMlbSite">MLB</button>
-  </mat-menu>
-
-  <mat-menu #dfsNflSite="matMenu">
-    <button mat-menu-item [routerLink]="UrlBuilder.dfsBase" [queryParams]="{ sport: 'nfl', site: 'draftkings' }">DK</button>
-    <button mat-menu-item [routerLink]="UrlBuilder.dfsBase" [queryParams]="{ sport: 'nfl', site: 'fanduel' }">FD</button>
-  </mat-menu>
-
-  <mat-menu #dfsMlbSite="matMenu">
-    <button mat-menu-item [routerLink]="UrlBuilder.dfsBase" [queryParams]="{ sport: 'mlb', site: 'draftkings' }">DK</button>
-    <button mat-menu-item [routerLink]="UrlBuilder.dfsBase" [queryParams]="{ sport: 'mlb', site: 'fanduel' }">FD</button>
-  </mat-menu>
-
-  <mat-menu #dfsNbaSite="matMenu">
-    <button mat-menu-item [routerLink]="UrlBuilder.dfsBase" [queryParams]="{ sport: 'nba', site: 'draftkings' }">DK</button>
-    <button mat-menu-item [routerLink]="UrlBuilder.dfsBase" [queryParams]="{ sport: 'nba', site: 'fanduel' }">FD</button>
-  </mat-menu>
-
-  <span>{{ pageTitle }}</span>
-  <span class="example-spacer"></span>
-</mat-toolbar>
-<div class="container">
-  <app-espn-scoreboard></app-espn-scoreboard>
-  <ng-content></ng-content>
+<div class="page-wrap">
+  <!-- <header class="page-header">Header</header> -->
+  <nav class="page-nav">
+    Link 1 / Link 2 / Link 3
+    <ng-content select="[nav]"></ng-content>
+  </nav>
+  <main class="page-main">
+    <ng-content select="[main]"></ng-content>
+  </main>
+  <aside class="page-sidebar">
+    <ng-content select="[sidebar]"></ng-content>
+  </aside>
+  <!-- <footer class="page-footer">Footer</footer> -->
 </div>

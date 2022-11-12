@@ -1,14 +1,23 @@
 <mat-card>
-  <mat-card-content>
-    <div fxLayout="row" class="ui-w-100">
-      <div fxFlex>
+  <mat-card-content style="display: grid; grid-template-rows: auto">
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr)">
+      <div>
         {{ title }}
       </div>
+      <div style="text-align: right">
+        <ng-container *ngIf="isLoading; else refreshBtn">
+          <mat-spinner title="loading" diameter="20"></mat-spinner>
+        </ng-container>
+        <ng-template #refreshBtn>
+          <mat-icon title="refresh league" class="cursor-pointer" [disabled]="true" (click)="onRefreshClick()">refresh</mat-icon>
+        </ng-template>
+      </div>
     </div>
-    <mat-list>
-      <span mat-list-item *ngFor="let player of lineup" (click)="onPlayerClick(player)">
+
+    <mat-nav-list>
+      <a *ngFor="let player of lineup; let i = index" [attr.data-index]="i" tabindex="0" mat-list-item (click)="onPlayerClick(player)">
         <app-espn-player [player]="player"></app-espn-player>
-      </span>
-    </mat-list>
+      </a>
+    </mat-nav-list>
   </mat-card-content>
 </mat-card>

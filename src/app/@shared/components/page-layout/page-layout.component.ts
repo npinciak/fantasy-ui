@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { UrlBuilder, UrlFragments, UrlQueryParams } from '@app/@core/store/router/url-builder';
-import { EspnFastcastConnectionFacade } from '@app/espn-fastcast/facade/espn-fastcast-connection.facade';
+import { Component, OnInit } from '@angular/core';
+import { LayoutService } from '@app/@shared/services/layout.service';
 
 @Component({
   selector: 'app-page-layout',
@@ -8,15 +7,9 @@ import { EspnFastcastConnectionFacade } from '@app/espn-fastcast/facade/espn-fas
   styleUrls: ['./page-layout.component.scss'],
 })
 export class PageLayoutComponent implements OnInit {
-  @Input() pageTitle = 'SportsUi';
+  isMobile$ = this.layoutService.isMobile$;
 
-  readonly URL_FRAGMENT = UrlFragments;
-  readonly URL_QUERY_PARAMS = UrlQueryParams;
-  readonly UrlBuilder = UrlBuilder;
+  constructor(private layoutService: LayoutService) {}
 
-  constructor(private fastcastFacade: EspnFastcastConnectionFacade) {}
-
-  ngOnInit(): void {
-    this.fastcastFacade.connect();
-  }
+  ngOnInit(): void {}
 }
