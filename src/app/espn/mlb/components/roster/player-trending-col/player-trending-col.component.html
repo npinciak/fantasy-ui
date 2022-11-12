@@ -3,7 +3,7 @@
     color: trendingPositive ? '#00876c' : trendingNegative ? '#d43d51' : ''
   }"
 >
-  {{ data | mlbStat: 'number' | number: '1.2' }}
+  {{ data | statFormat: 'number' | number: '1.2' }}
   <mat-icon *ngIf="trendingPositive">{{ trendingPositive ? 'arrow_drop_up' : '' }}</mat-icon>
   <mat-icon *ngIf="trendingNegative">{{ trendingNegative ? 'arrow_drop_down' : '' }}</mat-icon>
 </span>

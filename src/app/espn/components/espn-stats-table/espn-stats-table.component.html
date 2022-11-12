@@ -9,7 +9,7 @@
               <span [matTooltip]="col?.headerTooltip">{{ col?.headerLabel }}</span>
             </th>
             <td mat-cell *matCellDef="let data">
-              <ng-container [ngSwitch]="col.columnDef">
+              <ng-container [ngSwitch]="col.columnDef" [sticky]="col.columnDef === 'name'">
                 <ng-template [ngSwitchCase]="'name'">
                   <app-espn-player [player]="data" [hideLineupSlot]="true"></app-espn-player>
                 </ng-template>
@@ -18,13 +18,13 @@
                 </ng-template>
                 <ng-template [ngSwitchCase]="'break'">-</ng-template>
                 <ng-template [ngSwitchDefault]>
-                  {{ col.dataType === TableColumnDataType.number ? (col?.cellData(data) | mlbStat: 'number' | number: '1.0-2') : col?.cellData(data) }}
+                  {{ col.dataType === TableColumnDataType.number ? (col?.cellData(data) | statFormat: 'number' | number: '1.0-2') : col?.cellData(data) }}
                 </ng-template>
               </ng-container>
             </td>
           </ng-container>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="headers"></tr>
+        <tr mat-header-row *matHeaderRowDef="headers; sticky: true"></tr>
         <tr mat-row *matRowDef="let player; columns: headers" [ngStyle]="{ 'background-color': player.highlightedPlayer ? '#f4e8bc' : '' }"></tr>
       </table>
     </app-scrollable-table>

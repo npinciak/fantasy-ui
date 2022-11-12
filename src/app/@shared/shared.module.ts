@@ -13,7 +13,7 @@ import { PageLayoutComponent } from './components/page-layout/page-layout.compon
 import { ScrollableTableComponent } from './components/scrollable-table/scrollable-table.component';
 import { StickyTableCellComponent } from './components/sticky-table-cell/sticky-table-cell.component';
 import { TableCellSkeletonComponent } from './components/table-cell-skeleton/table-cell-skeleton.component';
-import { MlbStatPipe } from './pipes/mlb-stat.pipe';
+import { StatPipe } from './pipes/stat-format.pipe';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -27,11 +27,11 @@ PlotlyModule.plotlyjs = PlotlyJS;
     DataVisComponent,
     DataVisScatterComponent,
     TableCellSkeletonComponent,
-    MlbStatPipe,
+    StatPipe,
   ],
   imports: [PlotlyModule, RouterModule, MaterialModule, CommonModule, NgxSkeletonLoaderModule],
   exports: [
-    MlbStatPipe,
+    StatPipe,
     DataVisComponent,
     NoDataComponent,
     ScrollableTableComponent,
