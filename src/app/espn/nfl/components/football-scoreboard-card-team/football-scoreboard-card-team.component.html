@@ -1,33 +1,25 @@
-<div [ngStyle]="{ opacity: opacity }">
+<div class="wrapper" [ngStyle]="{ opacity: opacity }">
   <div>
-    <div>
+    <div class="team-info-wrapper" fxLayout="row" fxLayoutGap="5px">
       <div>
         <img class="game-team-logo" height="40px" [alt]="team?.name" [src]="team?.logo" />
       </div>
-      <div>
+      <div fxLayout="column" fxLayoutGap="5px" style="display: grid; grid-row: auto; font-size: 12px">
         <div class="ui-font-weight-bold">
-          <small style="margin-right: 5px">{{ team?.currentRank }}</small
+          <span style="margin-right: 5px">{{ team?.currentRank }}</span
           >{{ team?.name }}
         </div>
-        <div>
-          <small>{{ team?.wins ?? 0 }}-{{ team?.losses ?? 0 }}-{{ team?.ties ?? 0 }}</small>
-        </div>
+        <div>{{ team?.wins ?? 0 }}-{{ team?.losses ?? 0 }}-{{ team?.ties ?? 0 }}</div>
       </div>
     </div>
   </div>
-  <div style="text-align: right">
-    <div>
-      <div class="game-score-item">
-        {{ team?.totalPoints }}
-      </div>
-      <div *ngIf="team?.totalProjectedPointsLive">
-        <small>Proj: {{ team?.totalProjectedPointsLive | number }}</small>
-      </div>
+  <div style="display: grid; grid-column: auto; text-align: right; justify-content: end">
+    <div class="game-score-item">
+      {{ team?.totalPoints }}
     </div>
+    <div style="font-size: 12px" *ngIf="team?.totalProjectedPointsLive">Proj: {{ team?.totalProjectedPointsLive | number }}</div>
   </div>
-  <div>
-    <div>
-      <mat-icon>{{ team?.isWinner ? 'arrow_left' : '' }}</mat-icon>
-    </div>
+  <div style="align-content: center; justify-content: center">
+    <mat-icon>{{ team?.isWinner ? 'arrow_left' : '' }}</mat-icon>
   </div>
 </div>

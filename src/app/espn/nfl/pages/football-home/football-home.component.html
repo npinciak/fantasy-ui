@@ -8,7 +8,7 @@
     ></app-dropdown-filter>
     <ng-container *ngFor="let matchup of matchups$ | async">
       <mat-card>
-        <mat-card-content>
+        <mat-card-content style="display: grid; grid-template-rows: auto; row-gap: 5px">
           <app-football-scoreboard-card-team [team]="matchup.awayTeam"></app-football-scoreboard-card-team>
           <app-football-scoreboard-card-team [team]="matchup.homeTeam"></app-football-scoreboard-card-team>
         </mat-card-content>

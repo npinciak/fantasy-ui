@@ -1,19 +1,10 @@
-<div>
+<div [title]="playerLabel" style="display: grid; grid-template-columns: auto 85%; column-gap: 5px">
   <div>
-    <div>
-      <div>
-        <img role="presentation" width="48" height="35" [src]="player?.img" [alt]="player?.name" />
-      </div>
-      <div>
-        <div class="player name">
-          {{ player?.name }}
-        </div>
-        <div class="player team-pos">{{ player?.team }}, {{ player?.position }}</div>
-      </div>
-    </div>
+    <img role="presentation" [src]="player?.img" [alt]="player?.name" />
   </div>
-  <div >
-    <div>
+  <div style="display: grid; grid-template-rows: auto">
+    <div class="player name">
+      {{ player?.name }}
       <mat-icon
         *ngIf="player?.injuryStatus"
         [ngStyle]="{ color: playerInjuryStatusColor(player.injuryStatus) }"
@@ -21,5 +12,6 @@
         >{{ MatIconByEspnPlayerInjuryStatus[player?.injuryStatus] }}</mat-icon
       >
     </div>
+    <div class="player team-pos">{{ player?.team }}, {{ player?.position }}</div>
   </div>
 </div>
