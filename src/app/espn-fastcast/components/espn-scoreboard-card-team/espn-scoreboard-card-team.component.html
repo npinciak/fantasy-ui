@@ -1,33 +1,27 @@
-<div fxLayout="row" [ngStyle]="{ opacity: opacity }">
-  <div fxFlex="75%">
-    <div fxLayout="row" fxLayoutGap="5px">
+<div class="wrapper" [ngStyle]="{ opacity: opacity }">
+  <div>
+    <div class="team-info-wrapper" fxLayout="row" fxLayoutGap="5px">
       <div>
-        <img class="game-team-logo" height="40px" [alt]="team?.name" [src]="team?.logo" />
+        <img class="game-team-logo" [alt]="team?.name" [src]="team?.logo" />
       </div>
-      <div fxLayout="column" fxLayoutGap="5px">
+      <div fxLayout="column" fxLayoutGap="5px" style="display: grid; grid-row: auto; font-size: 12px">
         <div class="ui-font-weight-bold" [ngStyle]="{ color: team.color }">
-          <small style="margin-right: 5px" [hidden]="noTeamRank">{{ team?.rank }}</small
+          <span style="margin-right: 5px" [hidden]="noTeamRank">{{ team?.rank }}</span
           >{{ team?.name }}
         </div>
         <div>
-          <ng-container *ngIf="!isTournament; else tournamentAggregate">
-            <small>{{ team?.record }}</small>
-          </ng-container>
+          <ng-container *ngIf="!isTournament; else tournamentAggregate"> {{ team?.record }}</ng-container>
         </div>
       </div>
     </div>
   </div>
-  <div fxFlex fxLayoutAlign="end center" style="text-align: right">
-    <div fxLayout="column" fxLayoutGap="5px">
-      <div class="game-score-item">
-        <span [class.game-score-winner]="team?.isWinner" [hidden]="isPregame"> {{ team?.score }}</span>
-      </div>
+  <div style="display: grid; grid-column: auto; align-content: center; justify-content: end">
+    <div class="game-score-item">
+      <span [class.game-score-winner]="team?.isWinner" [hidden]="isPregame"> {{ team?.score }}</span>
     </div>
   </div>
-  <div fxFlex="5%" fxLayoutAlign="center center">
-    <div>
-      <mat-icon>{{ team?.isWinner ? 'arrow_left' : '' }}</mat-icon>
-    </div>
+  <div style="align-content: center; justify-content: center">
+    <mat-icon>{{ team?.isWinner ? 'arrow_left' : '' }}</mat-icon>
   </div>
 </div>
 <ng-template #tournamentAggregate>

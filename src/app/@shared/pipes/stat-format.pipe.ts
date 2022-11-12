@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'mlbStat',
+  name: 'statFormat',
 })
-export class MlbStatPipe implements PipeTransform {
+export class StatPipe implements PipeTransform {
   transform(value: unknown, arg: unknown): unknown {
     switch (arg) {
       case 'number':

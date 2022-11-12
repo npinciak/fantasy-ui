@@ -51,12 +51,12 @@ export class EspnScoreboardCardComponent implements OnChanges {
       return this.event.summary;
     }
 
-    if (!this.eventInProgress && this.isPostseason) {
+    if (!this.event.completed && this.isPostseason) {
       return `${this.event.note} | ${this.tickerDate}`;
     }
 
     if (this.event.completed && this.isPostseason) {
-      return `${this.event.note}`;
+      return `${this.event.note ?? this.event.summary}`;
     }
 
     if (this.event.completed && !this.isPostseason) {
@@ -76,7 +76,8 @@ export class EspnScoreboardCardComponent implements OnChanges {
       eventLocation: `event-location-${this.index}`,
       eventSummary: `event-summary-${this.index}`,
       eventLastPlay: `event-last-play-${this.index}`,
-      eventDescription: `event-location-${this.index} event-summary-${this.index} event-last-play${this.index}`,
+      eventDescription: `event-location-${this.index} event-summary-${this.index} event-last-play-${this.index}`,
+      eventGamecast: `${this.event.name} ESPN gamecast link`,
     };
   }
 }
