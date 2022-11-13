@@ -7,6 +7,7 @@ import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { SlatePlayer } from '@app/dfs/models/player.model';
 import { DailyFantasyPlayersState } from '@app/dfs/state/daily-fantasy-players.state';
+import { NFL_TEAM_ID_MAP } from '../consts/nfl.const';
 import { GridIronPlayer } from '../models/nfl-gridIron.model';
 import { NflDfsPlayerTableData } from '../models/nfl-player.model';
 import { ProfilerQB, ProfilerRB, ProfilerReceiver } from '../models/nfl-profiler.model';
@@ -27,6 +28,22 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
   static getPlayerPositions(list: SlatePlayer[]) {
     const positions = existsFilter(list.map(p => p.position));
     return uniqueBy(positions, t => t);
+  }
+
+  @Selector([DailyFantasyNflPlayerSelectors.getPlayerTeams])
+  static getPlayerTeamsFilterOptions(list: number[]): FilterOptions<number | null>[] {
+    const reset = [{ value: null, label: 'All' }];
+    const teams = list.map(t => ({ value: t, label: NFL_TEAM_ID_MAP[t] as string })).sort((a, b) => a.label.localeCompare(b.label));
+
+    return [...reset, ...teams];
+  }
+
+  @Selector([DailyFantasyNflPlayerSelectors.getPlayerPositions])
+  static getPlayerPositionFilterOptions(list: string[]): FilterOptions<string | null>[] {
+    const reset = [{ value: null, label: 'All' }];
+    const positions = list.map(p => ({ value: p, label: p }));
+
+    return [...reset, ...positions];
   }
 
   @Selector([

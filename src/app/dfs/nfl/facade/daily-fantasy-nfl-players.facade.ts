@@ -13,4 +13,7 @@ export class DailyFantasyNflPlayerFacade extends GenericFacade(DailyFantasyNflPl
 
   playerScatterData$ = select(DailyFantasyNflPlayerSelectors.getPlayerScatterData);
   playerScatterAxisOptions$ = select(DailyFantasyNflPlayerSelectors.getPlayerScatterAxisOptions);
+
+  playerTeamsFilterOptions$ = select(DailyFantasyNflPlayerSelectors.getPlayerTeamsFilterOptions);
+  playerPositionFilterOptions$ = select(DailyFantasyNflPlayerSelectors.getPlayerPositionFilterOptions);
 }

@@ -36,7 +36,14 @@ export class HomeComponent implements OnInit {
   nflTeamList$ = this.nflPlayerFacade.teamList$;
   nflMatchupGraphData$ = this.nflTeamSlateAttrFacade.matchupGraphData$;
 
+  slatesEmpty$ = this.dailyFantasySlateFacade.slatesEmpty$;
+  selectSlateByType$ = this.dailyFantasySlateFacade.selectSlateByType$;
+
+  playersEmpty$ = this.dailyFantasyPlayersFacade.playersEmpty$;
+
   playerScatterAxisOptions$ = this.nflPlayerFacade.playerScatterAxisOptions$;
+  playerTeamsFilterOptions$ = this.nflPlayerFacade.playerTeamsFilterOptions$;
+  playerPositionFilterOptions$ = this.nflPlayerFacade.playerPositionFilterOptions$;
 
   statGroup: string;
   teamId: number | null = null;
@@ -46,6 +53,8 @@ export class HomeComponent implements OnInit {
   positionFilter$ = new BehaviorSubject<string | null>(null);
   xAxisStat$ = new BehaviorSubject<string | null>(null);
   yAxisStat$ = new BehaviorSubject<string | null>(null);
+
+  selectedSlate$ = new BehaviorSubject<string | null>(null);
 
   playerScatterData$ = combineLatest([this.nflPlayerFacade.playerScatterData$, this.xAxisStat$, this.yAxisStat$]).pipe(
     map(([playerScatterData, xAxis, yAxis]) => {
@@ -93,6 +102,9 @@ export class HomeComponent implements OnInit {
 
   onSelectSlate(event: SiteSlateEntity) {
     this.dailyFantasyPlayersFacade.fetchPlayers(event.slate_path);
+
+    this.selectedSlate$.next(event.name);
+
     if (exists(this.LEAGUE) && exists(this.SITE)) {
       switch (this.LEAGUE) {
         case 'mlb':
