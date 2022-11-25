@@ -34,7 +34,7 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
 
   readonly TableColumnDataType = TableColumnDataType;
   filter = '';
-  filterTypeSelected: FilterType = 0;
+  filterTypeSelected: FilterType;
   readonly filterType = FilterType;
 
   dataSource: MatTableDataSource<unknown>;
@@ -89,9 +89,9 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
 
   dataSourceFilter(): (data: NflDfsPlayerTableData, filterVal: string) => boolean {
     return (data, filterVal): boolean => {
-      if (filterVal === '') {
-        return true;
-      }
+      // if (filterVal === '') {
+      //   return true;
+      // }
 
       let textMatches = false;
 
@@ -104,7 +104,7 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
             break;
           case FilterType.team:
             if (data.teamId) {
-              textMatches = data.teamId.includes(filterVal);
+              textMatches = data.teamId === filterVal;
             }
             break;
           case FilterType.pos:

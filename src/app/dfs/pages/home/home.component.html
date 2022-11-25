@@ -7,47 +7,47 @@
   <div nav>
     <h4>{{ selectedSlate$ | async }}</h4>
   </div>
-  <div main style="display: grid; grid-template-rows: auto">
+  <div main class="flex-col">
     <div>
-      <div style="display: grid; column-gap: 10px; grid-template-columns: repeat(2, 1fr)">
-        <div>
-          <app-dropdown-filter
-            [selectedOption]="xAxisStat$ | async"
-            title="xAxis"
-            [filterItems]="playerScatterAxisOptions$ | async"
-            (filterUpdate)="onAxisXChange($event.value)"
-          ></app-dropdown-filter>
-        </div>
-
-        <div>
-          <app-dropdown-filter
-            [selectedOption]="yAxisStat$ | async"
-            title="yAxis"
-            [filterItems]="playerScatterAxisOptions$ | async"
-            (filterUpdate)="onAxisYChange($event.value)"
-          ></app-dropdown-filter>
-        </div>
-      </div>
+      <app-dropdown-filter
+        [isMobile]="isMobile$ | async"
+        [selectedOption]="xAxisStat$ | async"
+        title="xAxis"
+        [filterItems]="playerScatterAxisOptions$ | async"
+        (filterUpdate)="onAxisXChange($event.value)"
+      ></app-dropdown-filter>
+    </div>
+    <div>
+      <app-dropdown-filter
+        [isMobile]="isMobile$ | async"
+        [selectedOption]="yAxisStat$ | async"
+        title="yAxis"
+        [filterItems]="playerScatterAxisOptions$ | async"
+        (filterUpdate)="onAxisYChange($event.value)"
+      ></app-dropdown-filter>
     </div>
     <div>
       <app-data-vis-scatter title="hey there" xAxisFilterTitle="hi there" yAxisFilterTitle="ho there" [chartData]="playerScatterData$ | async"></app-data-vis-scatter>
     </div>
-
-    <div>
+    <div class="flex-col gap-10">
       <ng-container *ngIf="!(slatesEmpty$ | async); else noSlates">
         <ng-container *ngIf="!(playersEmpty$ | async)">
-          <div style="display: grid; column-gap: 10px; grid-template-columns: repeat(3, 1fr)">
-            <div>
-              <app-dropdown-filter title="Teams" [filterItems]="playerTeamsFilterOptions$ | async" (filterUpdate)="teamFilterChange($event)"></app-dropdown-filter>
-            </div>
+          <div>
+            <app-dropdown-filter
+              [isMobile]="isMobile$ | async"
+              title="Teams"
+              [filterItems]="playerTeamsFilterOptions$ | async"
+              (filterUpdate)="teamFilterChange($event)"
+            ></app-dropdown-filter>
+          </div>
 
-            <div>
-              <app-dropdown-filter
-                title="Position"
-                [filterItems]="playerPositionFilterOptions$ | async"
-                (filterUpdate)="positionFilterChange($event)"
-              ></app-dropdown-filter>
-            </div>
+          <div>
+            <app-dropdown-filter
+              title="Position"
+              [isMobile]="isMobile$ | async"
+              [filterItems]="playerPositionFilterOptions$ | async"
+              (filterUpdate)="positionFilterChange($event)"
+            ></app-dropdown-filter>
           </div>
 
           <app-player-table
