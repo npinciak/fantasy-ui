@@ -28,8 +28,11 @@ export function fastcastURIBuilder(eventType: string | null, messageId: string):
   return `${FASTCAST_BASE}/${eventType}/message/${messageId}/checkpoint`;
 }
 
-export function logoImgBuilder(abbrev: string, league: string): string {
-  return `${CDN_COMBINER}?img=/i/teamlogos/${league}/500/${abbrev.toLowerCase()}.png&h=100&w=100`;
+export function logoImgBuilder(id: number | string, opts: { league: string; width?: number; height?: number }): string {
+  const w = exists(opts.width) ? opts.width : 100;
+  const h = exists(opts.height) ? opts.height : 100;
+
+  return `${CDN_COMBINER}?img=/i/teamlogos/${opts.league}/500/${id}.png&w=${w}&h=${h}&cb=1`;
 }
 
 export function fieldImgBuilder(id: number): string {
@@ -37,8 +40,8 @@ export function fieldImgBuilder(id: number): string {
 }
 
 export function headshotImgBuilder(id: number | string, opts: { league: string; width?: number; height?: number }): string {
-  const w = exists(opts.width) ? opts.width : 96;
-  const h = exists(opts.height) ? opts.height : 70;
+  const w = exists(opts.width) ? opts.width : 55;
+  const h = exists(opts.height) ? opts.height : 40;
 
   const mediumW = exists(opts.width) ? opts.width : 426;
   const mediumH = exists(opts.height) ? opts.height : 320;

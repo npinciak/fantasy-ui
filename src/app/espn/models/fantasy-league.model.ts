@@ -7,5 +7,6 @@ export interface FantasyLeague {
   firstScoringPeriod: number;
   finalScoringPeriod: number;
   matchupPeriodCount: number;
+  playoffMatchupPeriodLength: number;
   transactions: EspnClient.LeagueTransaction[];
 }

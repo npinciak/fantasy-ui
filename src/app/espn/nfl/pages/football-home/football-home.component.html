@@ -1,22 +1,32 @@
 <app-page-layout>
   <div sidebar>
     <app-dropdown-filter
+      [isMobile]="isMobile$ | async"
       [selectedOption]="currentScoringPeriod$ | async"
       title="Week"
       [filterItems]="matchupPeriodIdFilterOptions$ | async"
       (filterUpdate)="fantasyFootballLeagueFacade.updateCurrentScoringPeriodId($event)"
     ></app-dropdown-filter>
-    <ng-container *ngFor="let matchup of matchups$ | async">
-      <mat-card>
-        <mat-card-content style="display: grid; grid-template-rows: auto; row-gap: 5px">
-          <app-football-scoreboard-card-team [team]="matchup.awayTeam"></app-football-scoreboard-card-team>
-          <app-football-scoreboard-card-team [team]="matchup.homeTeam"></app-football-scoreboard-card-team>
-        </mat-card-content>
-      </mat-card>
-      <div style="margin: 10px 0"></div>
-    </ng-container>
+
+    <div class="flex-col gap-10">
+      <ng-container *ngFor="let matchup of matchups$ | async">
+        <div>
+          <mat-card>
+            <mat-card-content class="flex-row">
+              <app-football-scoreboard-card-team [team]="matchup.awayTeam"></app-football-scoreboard-card-team>
+              <app-football-scoreboard-card-team [team]="matchup.homeTeam"></app-football-scoreboard-card-team>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </ng-container>
+    </div>
   </div>
   <div main>
-    <app-standings [data]="standings$ | async" [rows]="LEAGUE_STANDINGS_ROWS" [headers]="LEAGUE_STANDINGS_HEADERS"></app-standings>
+    <app-espn-standings-table
+      [data]="standings$ | async"
+      [rows]="LEAGUE_STANDINGS_ROWS"
+      [headers]="LEAGUE_STANDINGS_HEADERS"
+      (navigateToTeam)="onNavigateToTeam($event)"
+    ></app-espn-standings-table>
   </div>
 </app-page-layout>

@@ -5,7 +5,8 @@ import { EspnFastcastEventToggleFacade } from '@app/espn-fastcast/facade/espn-fa
 import { EspnFastcastEventFacade } from '@app/espn-fastcast/facade/espn-fastcast-event.facade';
 import { EspnFastcastLeagueFacade } from '@app/espn-fastcast/facade/espn-fastcast-league.facade';
 import { Store } from '@ngxs/store';
-import { of } from 'rxjs';
+import { combineLatest, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-espn-scoreboard',
@@ -24,7 +25,9 @@ export class EspnScoreboardComponent {
 
   leagueList$ = this.fastcastLeagueFacade.leagueList$;
 
-  eventsByLeagueId$ = this.fastcastEventFacade.eventsByLeagueId$;
+  eventsByLeagueId$ = combineLatest([this.fastcastEventFacade.eventsByLeagueId$, this.selectedLeagueId$]).pipe(
+    map(([events, selectedLeague]) => events(selectedLeague))
+  );
 
   isIdToggled$ = this.fastcastEventToggleFacade.isIdToggled$;
 
@@ -53,5 +56,13 @@ export class EspnScoreboardComponent {
 
   onStartFeed() {
     this.fastcastFacade.setPauseState();
+  }
+
+  scroll() {
+    document.getElementById('scoreboard-feed')!.scrollLeft += 300;
+  }
+
+  scrollBack() {
+    document.getElementById('scoreboard-feed')!.scrollLeft -= 300;
   }
 }

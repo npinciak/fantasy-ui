@@ -23,32 +23,40 @@ td[colspan='3'] {
   text-align: center;
 }
 
-mat-card.game-card {
+.game-card:first-child {
+  border-left: none;
+}
+
+.game-card {
   width: 300px;
   min-width: 300px;
   margin-right: 10px;
+
+  @media (max-width: 767.98px) {
+    width: 100%;
+    min-width: 300px;
+  }
 
   mat-card-subtitle {
     margin-bottom: 10px;
   }
 
-  mat-card-content {
-    margin-bottom: 0;
-    display: grid;
-    grid-row: auto;
-    row-gap: 5px;
+  // mat-card-content {
+  //   margin-bottom: 0;
+  //
+  //   grid-row: auto;
+  //   row-gap: 5px;
 
-    .event-summary {
-      color: $sub-text-color;
-      font-size: 12px;
-      margin-bottom: 5px;
-    }
+  .event-summary {
+    color: $sub-text-color;
+    font-size: 12px;
+    margin-bottom: 5px;
   }
+  // }
 }
 
 mat-card.game-card {
   &-mlb {
-    margin-right: 5px;
     width: 300px;
     min-width: 300px;
   }

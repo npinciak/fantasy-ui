@@ -1,29 +1,11 @@
-<!-- <div [class.page-wrapper-m]="isMobile$ | async" [class.page-wrapper]="!(isMobile$ | async)">
-  <aside class="sidebar">
-    {{ isMobile$ | async }}
-    <h1>sidebar</h1>
+<div class="container">
+  <!-- <nav class="page-nav">
+    <ng-content select="[nav]"></ng-content>
+  </nav -->
+  <aside class="left-sidebar">
     <ng-content select="[sidebar]"></ng-content>
   </aside>
-  <nav class="nav">
-    <h1>nav</h1>
-    <ng-content select="[nav]"></ng-content>
-  </nav>
-  <main class="main">
-    <h1>main</h1>
+  <main class="content">
     <ng-content select="[main]"></ng-content>
   </main>
-</div> -->
-
-<div class="page-wrap">
-  <!-- <header class="page-header">Header</header> -->
-  <nav class="page-nav">
-    <ng-content select="[nav]"></ng-content>
-  </nav>
-  <main class="page-main">
-    <ng-content select="[main]"></ng-content>
-  </main>
-  <aside class="page-sidebar">
-    <ng-content select="[sidebar]"></ng-content>
-  </aside>
-  <!-- <footer class="page-footer">Footer</footer> -->
 </div>

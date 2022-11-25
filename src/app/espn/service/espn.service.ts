@@ -258,6 +258,7 @@ export class EspnService {
         const sports = res.sports.map(s => EspnService.transformSportsEntityToSport(s));
 
         const leaguesImport = res.sports.filter(s => includeSports(s.id)).map(i => i.leagues);
+
         const flattenLeaguesImport = flatten(leaguesImport);
 
         const leagues = exists(flattenLeaguesImport)

@@ -6,5 +6,5 @@ import { EspnFastcastLeagueSelectors } from '../selectors/espn-fastcast-league.s
   providedIn: 'root',
 })
 export class EspnFastcastLeagueFacade {
-  leagueList$ = select(EspnFastcastLeagueSelectors.getValidList);
+  leagueList$ = select(EspnFastcastLeagueSelectors.getLeagueList);
 }

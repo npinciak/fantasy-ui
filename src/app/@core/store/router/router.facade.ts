@@ -54,11 +54,13 @@ export class RouterFacade {
   }
 
   navigateToEspnFootballTeam(leagueId: string | null, teamId: string | null) {
-    this.navigate(UrlBuilder.espnTeam(UrlFragments.NFL, leagueId, teamId));
+    console.log(UrlBuilder.espnNflTeam(UrlFragments.NFL, leagueId, teamId));
+
+    this.navigate(UrlBuilder.espnNflTeam(UrlFragments.NFL, leagueId, teamId));
   }
 
   navigateToTeam(sport: UrlFragments, leagueId: string | null, teamId: string | null) {
-    this.navigate(UrlBuilder.espnTeam(sport, leagueId, teamId));
+    this.navigate(UrlBuilder.espnNflTeam(sport, leagueId, teamId));
   }
 
   navigateToEspnBaseballFreeAgents(leagueId: string | null) {

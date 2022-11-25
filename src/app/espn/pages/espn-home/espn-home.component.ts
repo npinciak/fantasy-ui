@@ -1,14 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { UrlFragments } from '@app/@core/store/router/url-builder';
-import { EspnFastcastConnectionFacade } from '@app/espn-fastcast/facade/espn-fastcast-connection.facade';
-import { EspnFastcastEventFacade } from '@app/espn-fastcast/facade/espn-fastcast-event.facade';
-import { EspnFastcastLeagueFacade } from '@app/espn-fastcast/facade/espn-fastcast-league.facade';
-import { FantasyBaseballLeagueFacade } from '@app/espn/mlb/facade/fantasy-baseball-league.facade';
-import { SportsUiLeagueFormFacade } from '@app/sports-ui/facades/sports-ui-league-form.facade';
+import { LayoutService } from '@app/@shared/services/layout.service';
 import { SportsUiLeaguesFacade } from '@app/sports-ui/facades/sports-ui-leagues.facade';
-import { Store } from '@ngxs/store';
 
 @Component({
   selector: 'app-espn-home',
@@ -16,20 +10,17 @@ import { Store } from '@ngxs/store';
   styleUrls: ['./espn-home.component.scss'],
 })
 export class EspnHomeComponent implements OnInit {
+  isMobile$ = this.layoutService.isMobile$;
+  allLeagues$ = this.sportsUiLeaguesFacade.allLeagues$;
+
   constructor(
-    readonly routerFacade: RouterFacade,
-    readonly espnLeaguesFacade: SportsUiLeaguesFacade,
-    readonly fastcastFacade: EspnFastcastConnectionFacade,
-    readonly fastcastLeagueFacade: EspnFastcastLeagueFacade,
-    readonly fastcastEventFacade: EspnFastcastEventFacade,
-    readonly fantasyLeagueFacade: FantasyBaseballLeagueFacade,
-    readonly fantasyForm: SportsUiLeagueFormFacade,
-    private store: Store,
-    private http: HttpClient
+    private layoutService: LayoutService,
+    private routerFacade: RouterFacade,
+    private sportsUiLeaguesFacade: SportsUiLeaguesFacade
   ) {}
 
   ngOnInit() {
-    this.espnLeaguesFacade.fetchLeagues();
+    this.sportsUiLeaguesFacade.fetchLeagues();
   }
 
   onNavigateLeague(val: { sport: UrlFragments; leagueId: string }) {
@@ -42,6 +33,6 @@ export class EspnHomeComponent implements OnInit {
   }
 
   onRemoveLeague(leagueId: string): void {
-    this.espnLeaguesFacade.deleteLeague(leagueId);
+    this.sportsUiLeaguesFacade.deleteLeague(leagueId);
   }
 }

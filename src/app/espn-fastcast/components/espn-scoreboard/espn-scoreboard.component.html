@@ -1,70 +1,44 @@
 <section>
-  <div style="display: grid; grid-template-columns: 13% 2% 85%; margin-bottom: 20px">
-    <div>
-      <mat-card>
-        <mat-card-subtitle>
-          <span class="scoreboard refresh timestamp">{{ lastRefreshAsTickerDate$ | async }}</span>
-        </mat-card-subtitle>
-        <mat-card-content>
-          <div>
-            <div>
-              <button mat-icon-button aria-label="Button to start and pause feed" (click)="onStartFeed()">
-                <mat-icon>{{ (paused$ | async) ? 'play_arrow_outline' : 'pause_circle_outline' }}</mat-icon>
-              </button>
-            </div>
+  <mat-card style="padding: 0">
+    <mat-card-content>
+      <div class="flex-col">
+        <div class="flex-row" style="align-items: center; padding: 15px">
+          <div class="scoreboard refresh timestamp" style="display: flex; flex: 1 1 auto">{{ lastRefreshAsTickerDate$ | async }}</div>
+          <div style="display: flex; align-content: center; flex: 1 1 auto; place-content: center flex-end">
+            <button mat-icon-button aria-label="Button to start and pause feed" (click)="onStartFeed()">
+              <mat-icon>{{ (paused$ | async) ? 'play_arrow_outline' : 'pause_circle_outline' }}</mat-icon>
+            </button>
           </div>
-          <div>
-            <ng-container *ngIf="!(isMobile$ | async); else native">
-              <mat-form-field>
-                <mat-select
-                  [disabled]="(showFeed$ | async) === false"
-                  style="text-align: center"
-                  [value]="selectedLeagueId$ | async"
-                  (selectionChange)="onLeagueSelectChange($event.value)"
-                >
-                  <mat-option *ngFor="let league of leagueList$ | async" [value]="league.id">
-                    {{ league.shortName }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </ng-container>
-            <ng-template #native>
-              <mat-form-field>
-                <select
-                  #nativeLeagueSelect
-                  matNativeControl
-                  [disabled]="(showFeed$ | async) === false"
-                  style="text-align: center"
-                  [value]="selectedLeagueId$ | async"
-                  (change)="onLeagueSelectChange($event.target.value)"
-                >
-                  <option *ngFor="let league of leagueList$ | async" [value]="league.id">
-                    {{ league.shortName }}
-                  </option>
-                </select>
-              </mat-form-field>
-            </ng-template>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div></div>
-    <div class="scoreboard container" id="scoreboard-feed" role="feed" aria-live="polite">
-      <ng-container *ngIf="showLoader$ | async; then progressBar"> </ng-container>
-      <ng-container *ngIf="showFeed$ | async; then feed; else noEventsMessage"> </ng-container>
-    </div>
-  </div>
+        </div>
+        <div style="padding: 15px">
+          <app-dropdown-filter
+            [isMobile]="isMobile$ | async"
+            [disabled]="!(showFeed$ | async)"
+            [selectedOption]="selectedLeagueId$ | async"
+            [filterItems]="leagueList$ | async"
+            (filterUpdate)="onLeagueSelectChange($event)"
+          ></app-dropdown-filter>
+        </div>
+      </div>
+      <div>
+        <div class="scoreboard container" id="scoreboard-feed" role="feed" aria-live="polite">
+          <ng-container *ngIf="showLoader$ | async; then progressBar"> </ng-container>
+          <ng-container *ngIf="showFeed$ | async; then feed; else noEventsMessage"> </ng-container>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </section>
 
 <ng-template #feed>
-  <ng-container *ngFor="let event of (eventsByLeagueId$ | async)!(selectedLeagueId$ | async); let i = index">
+  <ng-container *ngFor="let event of eventsByLeagueId$ | async; let i = index">
+    <!-- (toggleExpandedEvent)="onToggleExpandedEvent($event)"
+    (toggleOffExpandedEvent)="onToggleOffExpandedEvent($event)" -->
     <app-espn-scoreboard-card
       [index]="i"
-      [ariaSetsize]="(eventsByLeagueId$ | async)!(selectedLeagueId$ | async).length"
+      [ariaSetsize]="(eventsByLeagueId$ | async).length"
       [ariaPosinset]="i + 1"
       [isEventToggled]="(isIdToggled$ | async)!(event.id)"
-      (toggleExpandedEvent)="onToggleExpandedEvent($event)"
-      (toggleOffExpandedEvent)="onToggleOffExpandedEvent($event)"
       [isTournament]="event.isTournament"
       [event]="event"
     ></app-espn-scoreboard-card>
