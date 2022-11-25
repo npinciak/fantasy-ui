@@ -7,7 +7,9 @@ import { MaterialModule } from 'src/app/material.module';
 import { EspnPlayerDialogComponent } from './components/espn-player-dialog/espn-player-dialog.component';
 import { EspnPlayerTrendingColComponent } from './components/espn-player-trending-col/espn-player-trending-col.component';
 import { EspnPlayerComponent } from './components/espn-player/espn-player.component';
+import { EspnStandingsTableComponent } from './components/espn-standings-table/espn-standings-table.component';
 import { EspnStatsTableComponent } from './components/espn-stats-table/espn-stats-table.component';
+import { EspnTeamInfoColComponent } from './components/espn-team-info-col/espn-team-info-col.component';
 import { EspnRoutingModule } from './espn-routing.module';
 import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
 import { LineupCardComponent } from './mlb/components/lineup-card/lineup-card.component';
@@ -17,7 +19,6 @@ import { PlayerRatingColComponent } from './mlb/components/roster/player-rating-
 import { PlayerTrendingColComponent } from './mlb/components/roster/player-trending-col/player-trending-col.component';
 import { RosterComponent } from './mlb/components/roster/roster.component';
 import { StandingsComponent } from './mlb/components/standings/standings.component';
-import { TeamInfoColComponent } from './mlb/components/standings/team-info-col/team-info-col.component';
 import { BaseballFreeAgentsComponent } from './mlb/pages/baseball-free-agents/baseball-free-agents.component';
 import { BaseballHomeComponent } from './mlb/pages/baseball-home/baseball-home.component';
 import { BaseballTeamComponent } from './mlb/pages/baseball-team/baseball-team.component';
@@ -84,10 +85,11 @@ const exports = [StandingsComponent, RosterComponent];
     PlayerInfoColComponent,
     PlayerTrendingColComponent,
     PlayerRatingColComponent,
-    TeamInfoColComponent,
+    EspnTeamInfoColComponent,
     LeagueScoreboardComponent,
     LineupCardComponent,
     EspnPlayerDialogComponent,
+    EspnStandingsTableComponent,
   ],
 })
 export class EspnModule {}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
+import { LayoutService } from '@app/@shared/services/layout.service';
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FOOTBALL_LEAGUE_STANDINGS_HEADERS, FOOTBALL_LEAGUE_STANDINGS_ROWS } from '../../consts/fantasy-football-table.const';
@@ -21,15 +22,26 @@ export class FootballHomeComponent implements OnInit {
   standings$ = this.fantasyFootballLeagueFacade.standings$;
   leagueId$ = this.routerFacade.leagueId$;
 
+  isMobile$ = this.layoutService.isMobile$;
+
   matchups$ = combineLatest([this.matchupListByMatchupPeriodId$, this.currentScoringPeriod$]).pipe(
     map(([matchupListByMatchupPeriodId, currentScoringPeriod]) => matchupListByMatchupPeriodId(currentScoringPeriod))
   );
 
   constructor(
+    private layoutService: LayoutService,
     readonly routerFacade: RouterFacade,
     readonly fantasyFootballScheduleFacade: FantasyFootballScheduleFacade,
     readonly fantasyFootballLeagueFacade: FantasyFootballLeagueFacade
   ) {}
 
   ngOnInit(): void {}
+
+  onNavigateToTeam(teamId: string) {
+    const leagueId = this.routerFacade.leagueId;
+
+    if (!leagueId) return;
+
+    this.routerFacade.navigateToEspnFootballTeam(leagueId, teamId);
+  }
 }

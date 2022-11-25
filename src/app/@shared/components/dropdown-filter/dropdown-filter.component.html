@@ -1,7 +1,7 @@
-<ng-container *ngIf="!(isMobile$ | async); else nativeDropdown">
+<ng-container *ngIf="!isMobile; else nativeDropdown">
   <mat-form-field>
     <mat-label>{{ title }}</mat-label>
-    <mat-select [(value)]="selectedOption" (selectionChange)="filterUpdate.emit($event.value)">
+    <mat-select [disabled]="isDisabled" [(value)]="selectedOption" (selectionChange)="filterUpdate.emit($event.value)">
       <mat-option *ngFor="let item of filterItems" [value]="item.value">{{ item.label }}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -10,7 +10,7 @@
 <ng-template #nativeDropdown>
   <mat-form-field>
     <mat-label>{{ title }}</mat-label>
-    <select matNativeControl style="text-align: center" [(value)]="selectedOption" (change)="filterUpdate.emit($event.target.value)">
+    <select [disabled]="isDisabled" matNativeControl style="text-align: center" [(value)]="selectedOption" (change)="filterUpdate.emit($event.target.value)">
       <option *ngFor="let item of filterItems" [value]="item.value">{{ item.label }}</option>
     </select>
   </mat-form-field>

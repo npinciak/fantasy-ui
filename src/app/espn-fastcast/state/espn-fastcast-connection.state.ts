@@ -40,7 +40,7 @@ import { EspnFastcastService } from '../service/espn-fastcast.service';
     eventType: FastcastEventType.TopEvents,
     league: '90',
     connectionClosed: true,
-    pause: true,
+    pause: false,
   },
 })
 @Injectable()
@@ -48,7 +48,7 @@ export class EspnFastcastConnectionState {
   constructor(private fastcastService: EspnFastcastService, private espnService: EspnService, private store: Store) {}
 
   @Action(ConnectWebSocket)
-  async connectWebsocket({ getState, patchState, dispatch }: StateContext<EspnFastcastConnectionStateModel>): Promise<void> {
+  async connectWebsocket({ getState, patchState }: StateContext<EspnFastcastConnectionStateModel>): Promise<void> {
     const pause = getState().pause;
 
     if (pause) {
@@ -62,8 +62,8 @@ export class EspnFastcastConnectionState {
     await this.fastcastService
       .connect(socket.websocketUri)
       .pipe(
-        startWith(dispatch(new SendWebSocketMessage({ message: { op: OperationCode.C } }))),
-        tap(message => dispatch(new HandleWebSocketMessage({ message })))
+        startWith(this.store.dispatch(new SendWebSocketMessage({ message: { op: OperationCode.C } }))),
+        tap(message => this.store.dispatch(new HandleWebSocketMessage({ message })))
       )
       .toPromise();
 
@@ -138,6 +138,7 @@ export class EspnFastcastConnectionState {
       new SetFastcastLeague(leagues),
       new SetFastcastEvents(events),
       new SetFastcastTeams(teams),
+      new SetSelectedLeague({ leagueSlug: leagues[0].id }),
     ]);
   }
 

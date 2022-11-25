@@ -17,6 +17,8 @@ import { SportsUiLeagueFormFacade } from '@app/sports-ui/facades/sports-ui-leagu
 })
 export class AddLeagueFormComponent implements OnInit {
   @Input() leagues: any[];
+  @Input() isMobile: boolean;
+
   @ViewChild('leagueIdInput') leagueIdElement!: ElementRef;
   @ViewChild('fantasySport') fantasySportElement!: ElementRef;
 

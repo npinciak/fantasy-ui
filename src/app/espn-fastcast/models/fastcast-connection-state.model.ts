@@ -15,7 +15,7 @@ export const INITIAL_STATE: EspnFastcastConnectionStateModel = {
   connect: null,
   lastRefresh: null,
   eventType: FastcastEventType.TopEvents,
-  league: '90',
+  league: null,
   connectionClosed: true,
   pause: false,
 };

@@ -23,6 +23,10 @@ export class FantasyFootballLeagueFacade {
     return this.store.dispatch(new FantasyFootballLeague.Fetch({ leagueId }));
   }
 
+  refreshCurrentLeague(): Observable<void> {
+    return this.store.dispatch(new FantasyFootballLeague.Refresh());
+  }
+
   updateCurrentScoringPeriodId(scoringPeriodId: number) {
     return this.store.dispatch(new FantasyFootballLeague.SetCurrentScoringPeriodId({ scoringPeriodId }));
   }

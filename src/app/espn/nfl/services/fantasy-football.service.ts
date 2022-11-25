@@ -52,12 +52,14 @@ export class FantasyFootballService {
       positionMap: NFL_POSITION_MAP,
     });
 
+    const league = 'nfl';
+
     const isDST = playerInfo.defaultPositionId === 16;
 
     return {
       ...playerInfo,
       lineupSlotId,
-      img: !isDST ? headshotImgBuilder(player.playerId, { league: 'nfl' }) : logoImgBuilder(playerInfo.team, 'nfl'),
+      img: !isDST ? headshotImgBuilder(player.playerId, { league }) : logoImgBuilder(playerInfo.team, { league, height: 40, width: 54 }),
       lineupSlot: FOOTBALL_LINEUP_SLOT_MAP[player.lineupSlotId].abbrev,
       points: player.playerPoolEntry.appliedStatTotal,
     };
@@ -101,9 +103,11 @@ export class FantasyFootballService {
 
       const isDST = playerInfo.defaultPositionId === 16;
 
+      const league = 'nfl';
+
       return {
         ...playerInfo,
-        img: !isDST ? headshotImgBuilder(p.id, { league: 'nfl' }) : logoImgBuilder(playerInfo.team, 'nfl'),
+        img: !isDST ? headshotImgBuilder(p.id, { league }) : logoImgBuilder(playerInfo.team, { league, height: 40, width: 55 }),
         lineupSlotId: playerInfo.defaultPositionId,
         lineupSlot: FOOTBALL_LINEUP_SLOT_MAP[playerInfo.defaultPositionId].abbrev,
         points: 0, // p.player.appliedStatTotal,

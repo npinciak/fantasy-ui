@@ -1,7 +1,8 @@
 <app-page-layout>
   <div sidebar>
     <app-add-league-form
-      [leagues]="espnLeaguesFacade.allLeagues$ | async"
+      [isMobile]="isMobile$ | async"
+      [leagues]="allLeagues$ | async"
       (addLeague)="onAddLeague($event)"
       (removeLeague)="onRemoveLeague($event)"
       (navigateLeague)="onNavigateLeague($event)"

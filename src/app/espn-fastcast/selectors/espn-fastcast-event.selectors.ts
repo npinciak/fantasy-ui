@@ -15,7 +15,7 @@ export class EspnFastcastEventSelectors extends GenericSelector(EspnFastcastEven
   }
 
   @Selector([EspnFastcastEventSelectors.getList])
-  static getFastcastEventsByLeagueId(selectEventList: FastcastEvent[]): (id: string) => FastcastEvent[] {
-    return (id: string) => selectEventList.filter(e => e.leagueId === id).sort((a, b) => a.timestamp - b.timestamp);
+  static getFastcastEventsByLeagueId(selectEventList: FastcastEvent[]): (id: string | null) => FastcastEvent[] {
+    return (id: string | null) => selectEventList.filter(e => e.leagueId === id).sort((a, b) => a.timestamp - b.timestamp);
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
+import { LayoutService } from '@app/@shared/services/layout.service';
 import { EspnPlayerDialogComponent } from '@app/espn/components/espn-player-dialog/espn-player-dialog.component';
 import { FOOTBALL_STAT_PERIOD_FILTER_OPTIONS, YearToStatTypePeriod } from '@app/espn/const/stat-period.const';
 import { StatTypePeriodId } from '@app/espn/models/espn-stats.model';
@@ -33,6 +34,8 @@ export class FootballTeamComponent implements OnInit {
   readonly FOOTBALL_ROSTER_ROWS_BY_POS = FOOTBALL_ROSTER_ROWS_BY_POS;
 
   readonly FootballPosition = FootballPosition;
+
+  isMobile$ = this.layoutService.isMobile$;
 
   isLoading$ = this.footballLeagueFacade.isLoading$;
 
@@ -79,7 +82,8 @@ export class FootballTeamComponent implements OnInit {
     readonly footballLeagueFacade: FantasyFootballLeagueFacade,
     readonly footballTeamFacade: FantasyFootballTeamFacade,
     readonly routerFacade: RouterFacade,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private layoutService: LayoutService
   ) {}
 
   ngOnInit(): void {}
@@ -90,6 +94,10 @@ export class FootballTeamComponent implements OnInit {
 
   scoringPeriodIdChange(val) {
     this.scoringPeriodId$.next(val);
+  }
+
+  refreshLeague() {
+    this.footballLeagueFacade.refreshCurrentLeague();
   }
 
   onPlayerClick(player: FootballPlayer) {

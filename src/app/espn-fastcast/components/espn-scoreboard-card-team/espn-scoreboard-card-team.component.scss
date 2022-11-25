@@ -1,17 +1,18 @@
 .wrapper {
-  display: grid;
-  row-gap: 5px;
-  grid-template-columns: 75% 20% 5%;
+  display: flex;
+  flex-direction: column;
+  flex: 75% 20% 5%;
 }
 
 .team-wrapper {
-  display: grid;
-  grid-row: auto;
+  display: flex;
+  flex-direction: row;
 }
 
 .team-info-wrapper {
-  display: grid;
-  grid-template-columns: 25% 75%;
+  display: flex;
+  flex-direction: column;
+  flex: 25% 75%;
 }
 
 .game-score-item {

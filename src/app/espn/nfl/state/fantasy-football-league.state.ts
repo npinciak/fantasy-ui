@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { exists } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { FantasyFootballLeague } from '../actions/fantasy-football-league.actions';
@@ -6,6 +7,7 @@ import { FantasyFootballSchedule } from '../actions/fantasy-football-schedule.ac
 import { FantasyFootballTeams } from '../actions/fantasy-football-teams.actions';
 import { FantasyFootballTransaction } from '../actions/fantasy-football-transaction.actions';
 import { FantasyFootballLeagueStateModel, INITIAL_STATE } from '../models/football-league-state.model';
+import { FantasyFootballLeagueSelectors } from '../selectors/fantasy-football-league.selectors';
 import { FantasyFootballService } from '../services/fantasy-football.service';
 
 @State<FantasyFootballLeagueStateModel>({
@@ -30,8 +32,16 @@ export class FantasyFootballLeagueState {
 
     const year = new Date().getFullYear().toString();
 
-    const { scoringPeriodId, firstScoringPeriod, finalScoringPeriod, teams, matchupPeriodCount, schedule, transactions } =
-      await this.nflService.footballLeague(leagueId, year).toPromise();
+    const {
+      scoringPeriodId,
+      firstScoringPeriod,
+      finalScoringPeriod,
+      teams,
+      matchupPeriodCount,
+      playoffMatchupPeriodLength,
+      schedule,
+      transactions,
+    } = await this.nflService.footballLeague(leagueId, year).toPromise();
 
     await this.store
       .dispatch([
@@ -46,9 +56,19 @@ export class FantasyFootballLeagueState {
       finalScoringPeriod,
       scoringPeriodId,
       matchupPeriodCount,
+      playoffMatchupPeriodLength,
       leagueId,
       isLoading: false,
     });
+  }
+
+  @Action(FantasyFootballLeague.Refresh)
+  async refresh() {
+    const leagueId = this.store.selectSnapshot(FantasyFootballLeagueSelectors.getLeagueId);
+
+    if (exists(leagueId)) {
+      this.store.dispatch(new FantasyFootballLeague.Fetch({ leagueId }));
+    }
   }
 
   @Action(FantasyFootballLeague.SetCurrentScoringPeriodId)
