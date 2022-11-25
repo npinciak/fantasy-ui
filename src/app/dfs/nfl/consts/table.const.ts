@@ -2,12 +2,7 @@ import { TableColumnDataType, transformTableColumnsToTableRows } from '@app/@sha
 
 export const STATS_COLUMNS = [
   { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String },
-  {
-    columnDef: 'position',
-    headerCell: 'position',
-    headerLabel: 'pos',
-    dataType: TableColumnDataType.String,
-  },
+
   { columnDef: 'opp', headerCell: 'opp', headerLabel: 'Opp', dataType: TableColumnDataType.String },
   { columnDef: 'salary', headerCell: 'salary', headerLabel: 'salary', dataType: TableColumnDataType.Number },
   { columnDef: 'pown', headerCell: 'pown', headerLabel: 'pown', dataType: TableColumnDataType.Number },
