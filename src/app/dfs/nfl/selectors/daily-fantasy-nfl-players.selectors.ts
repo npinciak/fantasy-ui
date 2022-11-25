@@ -133,14 +133,15 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
       .filter(p => p.opp != null);
   }
 
-  @Selector([DailyFantasyNflPlayerSelectors.getPlayerTableData])
-  static getPlayerScatterAxisOptions(players: NflDfsPlayerTableData[]): FilterOptions<string>[] {
+  @Selector()
+  static getPlayerScatterAxisOptions(): FilterOptions<string>[] {
     return [
-      { value: 'fpts', label: 'fpts' },
-      { value: 'val', label: 'val' },
-      { value: 'smash', label: 'smash' },
-      { value: 'tar', label: 'tar' },
-      { value: 'productionPremium', label: 'productionPremium' },
+      { value: 'pown', label: 'Own %' },
+      { value: 'fpts', label: 'Fantasy Pts' },
+      { value: 'val', label: 'Value' },
+      { value: 'smash', label: 'Smash' },
+      { value: 'tar', label: 'Targets' },
+      { value: 'productionPremium', label: 'Production Premium' },
     ];
   }
 

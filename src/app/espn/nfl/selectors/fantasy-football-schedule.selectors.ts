@@ -14,7 +14,6 @@ export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFoo
   static getMatchupPeriodIds(matchupList: EspnClient.ScheduleEntity[]): number[] {
     const ids = matchupList.map(m => m.matchupPeriodId);
 
-    console.log(ids);
     return unique(ids);
   }
 

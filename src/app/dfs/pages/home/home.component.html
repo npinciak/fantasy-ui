@@ -14,7 +14,7 @@
         [selectedOption]="xAxisStat$ | async"
         title="xAxis"
         [filterItems]="playerScatterAxisOptions$ | async"
-        (filterUpdate)="onAxisXChange($event.value)"
+        (filterUpdate)="onAxisXChange($event)"
       ></app-dropdown-filter>
     </div>
     <div>
@@ -23,11 +23,16 @@
         [selectedOption]="yAxisStat$ | async"
         title="yAxis"
         [filterItems]="playerScatterAxisOptions$ | async"
-        (filterUpdate)="onAxisYChange($event.value)"
+        (filterUpdate)="onAxisYChange($event)"
       ></app-dropdown-filter>
     </div>
     <div>
-      <app-data-vis-scatter title="hey there" xAxisFilterTitle="hi there" yAxisFilterTitle="ho there" [chartData]="playerScatterData$ | async"></app-data-vis-scatter>
+      <app-data-vis-scatter
+        title="hey there"
+        [xAxisFilterTitle]="xAxisStat$ | async"
+        [yAxisFilterTitle]="yAxisStat$ | async"
+        [chartData]="playerScatterData$ | async"
+      ></app-data-vis-scatter>
     </div>
     <div class="flex-col gap-10">
       <ng-container *ngIf="!(slatesEmpty$ | async); else noSlates">
