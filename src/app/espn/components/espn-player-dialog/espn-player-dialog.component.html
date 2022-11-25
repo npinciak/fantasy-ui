@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <mat-dialog-title>
   <div *ngIf="data.player as player">
     <div>
@@ -15,18 +16,39 @@
       <div>
         <h3>% Owned</h3>
         <div>{{ player?.percentOwned | number: '1.0-2' }} ({{ player?.percentChange | number: '1.0-2' }})</div>
+=======
+<mat-dialog-content *ngIf="data.player as player">
+  <div class="flex-col gap-10">
+    <div class="flex-row gap-10">
+      <div style="flex: 40">
+        <img height="94px" width="125px" role="presentation" [src]="playerImg" [alt]="player?.name" />
+      </div>
+      <div style="flex: 60">
+        <div class="flex-col gap-10">
+          <div>
+            <div class="player name">
+              {{ player?.name }}
+            </div>
+            <div class="player team-pos">{{ player?.team }}, {{ player?.position }}</div>
+          </div>
+          <div>
+            <div>Own %</div>
+            <div>{{ player?.percentOwned | number: '1.0-2' }} ({{ player?.percentChange | number: '1.0-2' }})</div>
+          </div>
+        </div>
+>>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
       </div>
     </div>
   </div>
-</mat-dialog-title>
-<mat-dialog-content>
-  <h4>Outlook By Week</h4>
-  <ul>
-    <li *ngFor="let c of data.player.outlookByWeek">
-      <h4>Week {{ c.week }}</h4>
-      <p>{{ c.outlook }}</p>
-    </li>
-  </ul>
+  <div>
+    <span>Outlook By Week</span>
+    <ul>
+      <li *ngFor="let c of data.player.outlookByWeek">
+        <h4>Week {{ c.week }}</h4>
+        <p>{{ c.outlook }}</p>
+      </li>
+    </ul>
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>Close</button>

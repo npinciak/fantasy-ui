@@ -20,9 +20,7 @@ export class EspnScoreboardCardTeamComponent {
   }
 
   get opacity() {
-    if (this.isGameUndecided) {
-      return '100%';
-    } else if (this.eventStatus === FastCastGameStatus.Pre || this.eventStatus === FastCastGameStatus.InProgress) {
+    if (this.eventStatus === FastCastGameStatus.InProgress) {
       return '100%';
     }
 

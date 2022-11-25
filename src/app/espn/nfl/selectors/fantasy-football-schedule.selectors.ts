@@ -13,6 +13,8 @@ export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFoo
   @Selector([FantasyFootballScheduleSelectors.getList])
   static getMatchupPeriodIds(matchupList: EspnClient.ScheduleEntity[]): number[] {
     const ids = matchupList.map(m => m.matchupPeriodId);
+
+    console.log(ids);
     return unique(ids);
   }
 
@@ -29,7 +31,6 @@ export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFoo
     if (!exists(team)) return null;
 
     const { cumulativeScore, totalProjectedPointsLive, totalPoints, totalPointsLive } = scheduleTeam;
-
     const { roster, currentRank } = team;
 
     return {
@@ -50,6 +51,8 @@ export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFoo
     getTeamById: (id: string | null) => FootballTeam | null
   ): FantasyMatchup[] {
     return matchupList.map(m => {
+      const { id, matchupPeriodId } = m;
+
       const home = getTeamById(m.home.teamId.toString());
       const away = getTeamById(m.away.teamId.toString());
 
@@ -60,8 +63,8 @@ export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFoo
       const awayTeam = FantasyFootballScheduleSelectors.transformTeamToMatchupTeam(away, m.away, awayWinner);
 
       return {
-        id: m.id,
-        matchupPeriodId: m.matchupPeriodId,
+        id,
+        matchupPeriodId,
         homeTeam,
         awayTeam,
       };

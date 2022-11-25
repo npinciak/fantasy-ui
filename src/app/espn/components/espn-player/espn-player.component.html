@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 <div [title]="playerLabel" style="display: grid; grid-template-columns: auto 85%; column-gap: 5px">
   <div>
     <img role="presentation" [src]="player?.img" [alt]="player?.name" />
   </div>
   <div style="display: grid; grid-template-rows: auto">
+=======
+<div [title]="playerLabel" style="display: flex; flex-direction: row">
+  <div>
+    <img role="presentation" [src]="player?.img" [alt]="player?.name" />
+  </div>
+  <div class="flex-col">
+>>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
     <div class="player name">
       {{ player?.name }}
       <mat-icon

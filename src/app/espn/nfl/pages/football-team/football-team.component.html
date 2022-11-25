@@ -1,26 +1,34 @@
 <app-page-layout>
   <div sidebar>
+<<<<<<< HEAD
     <ng-container *ngIf="isLoading$ | async; else refreshBtn">
       <mat-spinner diameter="20"></mat-spinner>
     </ng-container>
     <ng-template #refreshBtn>
       <mat-icon class="cursor-pointer" [disabled]="true">refresh</mat-icon>
     </ng-template>
+=======
+>>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
     <app-football-lineup-card
       title="Starters"
+      [isLoading]="isLoading$ | async"
       [lineup]="starters$ | async"
       [points]="startersPoints$ | async"
       [week]="currentScoringPeriodId$ | async"
       (playerClicked)="onPlayerClick($event)"
+      (refreshClicked)="refreshLeague()"
     ></app-football-lineup-card>
-    <div style="margin: 10px 0"></div>
+    <div style="margin: 25px 0"></div>
     <app-football-lineup-card title="Bench" [lineup]="bench$ | async" [points]="benchPoints$ | async" [week]="currentScoringPeriodId$ | async"></app-football-lineup-card>
-    <div style="margin: 10px 0"></div>
-    <app-football-lineup-card title="Injured Reserve" [lineup]="injuredReserve$ | async" [week]="currentScoringPeriodId$ | async"></app-football-lineup-card>
+    <div style="margin: 25px 0"></div>
+    <ng-container *ngIf="(injuredReserve$ | async).length">
+      <app-football-lineup-card title="Injured Reserve" [lineup]="injuredReserve$ | async" [week]="currentScoringPeriodId$ | async"></app-football-lineup-card>
+    </ng-container>
   </div>
   <div main>
     <div>
       <app-dropdown-filter
+        [isMobile]="isMobile$ | async"
         [selectedOption]="selectedPosition$ | async"
         title="Position"
         [filterItems]="FOOTBALL_POSITION_LIST_FILTER"
@@ -29,6 +37,7 @@
     </div>
     <div>
       <app-dropdown-filter
+        [isMobile]="isMobile$ | async"
         [selectedOption]="scoringPeriodId$ | async"
         title="Stat Period"
         [filterItems]="statPeriodFilterOptions$ | async"

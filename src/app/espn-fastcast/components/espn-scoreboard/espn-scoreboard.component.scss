@@ -1,5 +1,31 @@
 @import '../../../../theme/theme-variables.scss';
 
+mat-card-content {
+  // display: grid;
+  // grid-template-columns: 10% 3% 84% 3%;
+
+  // @media (max-width: 767.98px) {
+  //   grid-template-columns: 25% 75% 25%;
+  //   grid-template-rows: auto;
+
+  //   > * {
+  //     grid-column: 1 / -1 !important;
+  //     grid-row: auto !important;
+  //   }
+  // }
+
+  // @media (max-width: 575.98px) {
+  //   grid-template-columns: 100%;
+  //   grid-template-rows: auto;
+  //   overflow: hidden;
+
+  //   > * {
+  //     grid-column: 1 / -1 !important;
+  //     grid-row: auto !important;
+  //   }
+  // }
+}
+
 mat-form-field {
   width: 100%;
 }
@@ -30,9 +56,14 @@ mat-card-subtitle {
     max-width: 100%;
     display: flex;
     flex-wrap: nowrap;
+<<<<<<< HEAD
+=======
+    // overflow: hidden;
+    scroll-behavior: smooth;
+>>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
     overflow-x: auto;
-    scrollbar-color: #fff #f5f6f6;
-    scrollbar-width: thin;
-    padding: 10px;
+    // scrollbar-color: #fff #f5f6f6;
+    // scrollbar-width: thin;
+    // padding: 10px;
   }
 }

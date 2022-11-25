@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import {
   InjurySeverityByInjuryStatus,
   InjurySeverityColor,
@@ -13,6 +13,7 @@ import { FootballPlayer } from '../../models/football-player.model';
   selector: 'app-football-lineup-card',
   templateUrl: './football-lineup-card.component.html',
   styleUrls: ['./football-lineup-card.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class FootballLineupCardComponent {
   @Input() title: string = 'Lineup';

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LayoutService } from '@app/@shared/services/layout.service';
 import { FOOTBALL_STAT_PERIOD_FILTER_OPTIONS } from '@app/espn/const/stat-period.const';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -7,6 +8,7 @@ import { FOOTBALL_LINEUP_SLOT_MAP } from '../../consts/lineup.const';
 import { FOOTBALL_STATS_MAP } from '../../consts/stats.const';
 import { FantasyFootballFreeAgentsFilterFacade } from '../../facade/fantasy-football-free-agents-filter.facade';
 import { FantasyFootballFreeAgentsFacade } from '../../facade/fantasy-football-free-agents.facade';
+import { FantasyFootballLeagueFacade } from '../../facade/fantasy-football-league.facade';
 import { BasicFootballLineupSlotList, FootballLineupSlot } from '../../models/football-lineup.model';
 
 @Component({
@@ -23,6 +25,8 @@ export class FootballFreeAgentsComponent implements OnInit {
   scoringPeriodId$ = new BehaviorSubject('');
   selectedLineupSlotId$ = this.freeAgentsFilterFacade.selectedLineupSlotId$;
 
+  statPeriodFilterOptions$ = this.footballLeagueFacade.statPeriodFilterOptions$;
+
   tableData$ = combineLatest([this.freeAgentsFacade.getFreeAgentsStats$, this.scoringPeriodId$]).pipe(
     map(([getFreeAgentStats, scoringPeriodId]) => getFreeAgentStats(scoringPeriodId))
   );
@@ -34,9 +38,13 @@ export class FootballFreeAgentsComponent implements OnInit {
     }))
   );
 
+  isMobile$ = this.layoutService.isMobile$;
+
   constructor(
+    readonly footballLeagueFacade: FantasyFootballLeagueFacade,
     readonly freeAgentsFacade: FantasyFootballFreeAgentsFacade,
-    readonly freeAgentsFilterFacade: FantasyFootballFreeAgentsFilterFacade
+    readonly freeAgentsFilterFacade: FantasyFootballFreeAgentsFilterFacade,
+    private layoutService: LayoutService
   ) {}
 
   ngOnInit(): void {}

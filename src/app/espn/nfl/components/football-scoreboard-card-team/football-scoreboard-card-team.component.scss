@@ -11,6 +11,7 @@ mat-icon {
   vertical-align: middle;
 }
 
+<<<<<<< HEAD
 .wrapper {
   display: grid;
   row-gap: 5px;
@@ -30,6 +31,11 @@ mat-icon {
 .game-score-item {
   font-weight: bold;
   font-size: 25px;
+=======
+.game-score-item {
+  font-weight: bold;
+  font-size: 20px;
+>>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
 }
 
 .game-team-logo {

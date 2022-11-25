@@ -6,6 +6,10 @@ export namespace FantasyFootballLeague {
     constructor(public payload: { leagueId: string }) {}
   }
 
+  export class Refresh {
+    public static readonly type = `[${name}] Refresh`;
+  }
+
   export class SetCurrentScoringPeriodId {
     public static readonly type = `[${name}] SetCurrentScoringPeriodId`;
     constructor(public payload: { scoringPeriodId: number | null }) {}

@@ -27,6 +27,15 @@ export function includeLeagues(id: string): boolean {
   return new Set(['10', '28', '46', '90', '775', '776', '20296', '19483']).has(id);
 }
 
+/**
+ * Leagues to exclude in Fastcast
+ * @param id
+ * @returns boolean
+ */
+export function excludeLeagues(id: string): boolean {
+  return new Set(['3923', '54']).has(id);
+}
+
 export function teamColorHandler(val: CompetitorsEntity): string | null {
   const color = val.color;
   const altColor = val.alternateColor;
@@ -112,7 +121,7 @@ export function injuredReservePlayersFilter<T extends FootballPlayer | BaseballP
 
 export function transformEspnClientLeagueToLeague(league: EspnClient.League): FantasyLeague {
   const { id, seasonId, scoringPeriodId, status, settings, transactions } = league;
-  const { matchupPeriodCount } = settings.scheduleSettings;
+  const { matchupPeriodCount, playoffMatchupPeriodLength } = settings.scheduleSettings;
   const { firstScoringPeriod, finalScoringPeriod } = status;
 
   return {
@@ -122,6 +131,7 @@ export function transformEspnClientLeagueToLeague(league: EspnClient.League): Fa
     firstScoringPeriod,
     finalScoringPeriod,
     matchupPeriodCount,
+    playoffMatchupPeriodLength,
     transactions,
   };
 }

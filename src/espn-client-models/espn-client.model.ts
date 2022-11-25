@@ -214,7 +214,7 @@ export namespace EspnClient {
     };
 
   export type LeagueStatus = { firstScoringPeriod: number; finalScoringPeriod: number };
-  export type ScheduleSettings = { matchupPeriodCount: number };
+  export type ScheduleSettings = { matchupPeriodCount: number; playoffMatchupPeriodLength: number };
   export type LeagueRosterSettings = { positionLimits: Record<string, number>; lineupSlotCounts: Record<string, number> };
 
   export interface LeagueSettings {

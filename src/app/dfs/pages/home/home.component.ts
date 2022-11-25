@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UrlQueryParams } from '@app/@core/store/router/url-builder';
 import { exists } from '@app/@shared/helpers/utils';
+import { LayoutService } from '@app/@shared/services/layout.service';
 import { DailyFantasyPlayersFacade } from '@app/dfs/facade/daily-fantasy-players.facade';
 import { DailyFantasySlateAttrFacade } from '@app/dfs/facade/daily-fantasy-slate-attr.facade';
 import { DailyFantasySlateFacade } from '@app/dfs/facade/daily-fantasy-slate.facade';
@@ -36,7 +37,14 @@ export class HomeComponent implements OnInit {
   nflTeamList$ = this.nflPlayerFacade.teamList$;
   nflMatchupGraphData$ = this.nflTeamSlateAttrFacade.matchupGraphData$;
 
+  slatesEmpty$ = this.dailyFantasySlateFacade.slatesEmpty$;
+  selectSlateByType$ = this.dailyFantasySlateFacade.selectSlateByType$;
+
+  playersEmpty$ = this.dailyFantasyPlayersFacade.playersEmpty$;
+
   playerScatterAxisOptions$ = this.nflPlayerFacade.playerScatterAxisOptions$;
+  playerTeamsFilterOptions$ = this.nflPlayerFacade.playerTeamsFilterOptions$;
+  playerPositionFilterOptions$ = this.nflPlayerFacade.playerPositionFilterOptions$;
 
   statGroup: string;
   teamId: number | null = null;
@@ -47,14 +55,19 @@ export class HomeComponent implements OnInit {
   xAxisStat$ = new BehaviorSubject<string | null>(null);
   yAxisStat$ = new BehaviorSubject<string | null>(null);
 
+  selectedSlate$ = new BehaviorSubject<string | null>(null);
+
   playerScatterData$ = combineLatest([this.nflPlayerFacade.playerScatterData$, this.xAxisStat$, this.yAxisStat$]).pipe(
     map(([playerScatterData, xAxis, yAxis]) => {
       return playerScatterData(xAxis, yAxis);
     })
   );
 
+  isMobile$ = this.layoutService.isMobile$;
+
   constructor(
     private router: Router,
+    private layoutService: LayoutService,
     private activatedRoute: ActivatedRoute,
     readonly nflPlayerFacade: DailyFantasyNflPlayerFacade,
 
@@ -93,6 +106,9 @@ export class HomeComponent implements OnInit {
 
   onSelectSlate(event: SiteSlateEntity) {
     this.dailyFantasyPlayersFacade.fetchPlayers(event.slate_path);
+
+    this.selectedSlate$.next(event.name);
+
     if (exists(this.LEAGUE) && exists(this.SITE)) {
       switch (this.LEAGUE) {
         case 'mlb':

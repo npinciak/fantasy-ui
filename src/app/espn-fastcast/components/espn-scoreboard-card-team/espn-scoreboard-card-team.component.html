@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="wrapper" [ngStyle]="{ opacity: opacity }">
   <div>
     <div class="team-info-wrapper" fxLayout="row" fxLayoutGap="5px">
@@ -5,6 +6,15 @@
         <img class="game-team-logo" [alt]="team?.name" [src]="team?.logo" />
       </div>
       <div fxLayout="column" fxLayoutGap="5px" style="display: grid; grid-row: auto; font-size: 12px">
+=======
+<div class="flex-row" [ngStyle]="{ opacity: opacity }">
+  <div style="flex: 75%">
+    <div class="flex-row gap-5">
+      <div>
+        <img class="game-team-logo" [alt]="team?.name" [src]="team?.logo" />
+      </div>
+      <div class="flex-col gap-5">
+>>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
         <div class="ui-font-weight-bold" [ngStyle]="{ color: team.color }">
           <span style="margin-right: 5px" [hidden]="noTeamRank">{{ team?.rank }}</span
           >{{ team?.name }}
@@ -15,15 +25,24 @@
       </div>
     </div>
   </div>
+<<<<<<< HEAD
   <div style="display: grid; grid-column: auto; align-content: center; justify-content: end">
+=======
+  <div style="flex: auto; place-content: center flex-end; align-items: center">
+>>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
     <div class="game-score-item">
       <span [class.game-score-winner]="team?.isWinner" [hidden]="isPregame"> {{ team?.score }}</span>
     </div>
   </div>
+<<<<<<< HEAD
   <div style="align-content: center; justify-content: center">
+=======
+  <div style="flex: 5%; align-content: center; justify-content: center">
+>>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
     <mat-icon>{{ team?.isWinner ? 'arrow_left' : '' }}</mat-icon>
   </div>
 </div>
+
 <ng-template #tournamentAggregate>
   <small>Aggregate: {{ team?.aggregateScore }}</small>
 </ng-template>

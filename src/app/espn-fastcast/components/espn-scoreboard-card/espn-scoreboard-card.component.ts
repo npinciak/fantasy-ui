@@ -77,7 +77,11 @@ export class EspnScoreboardCardComponent implements OnChanges {
       eventSummary: `event-summary-${this.index}`,
       eventLastPlay: `event-last-play-${this.index}`,
       eventDescription: `event-location-${this.index} event-summary-${this.index} event-last-play-${this.index}`,
+<<<<<<< HEAD
       eventGamecast: `${this.event.name} ESPN gamecast link`,
+=======
+      eventGamecast: `View ${this.event.teams?.away.name} @ ${this.event.teams?.home.name} gamecast`,
+>>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
     };
   }
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <ng-template #noPlayers> <app-no-data title="No Players for this Slate"></app-no-data></ng-template>
 <ng-template #noSlates> <app-no-data title="No Slates Available"></app-no-data></ng-template>
 
@@ -54,27 +55,77 @@
               <mat-option *ngFor="let pos of nflPositionList$ | async" [value]="pos">{{ pos }}</mat-option>
             </mat-select>
           </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Position Group</mat-label>
-            <mat-select (selectionChange)="statGroupFilterChange($event)" disabled>
-              <mat-option value="">All</mat-option>
-              <mat-option *ngFor="let pos of [1, 2, 3]" [value]="pos">{{ NFL_STAT_GROUP_MAP[pos] ? NFL_STAT_GROUP_MAP[pos] : 'UNMAPPED_POS' }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-        <app-player-table
-          [teamFilter]="teamFilter$ | async"
-          [statGroupFilter]="statGroupFilter$ | async"
-          [positionFilter]="positionFilter$ | async"
-          [teamMap]="NFL_TEAM_ID_MAP"
-          [data]="nflPlayerList$ | async"
-          [dataRows]="STATS_ROWS"
-          [dataHeaders]="STATS_HEADERS"
-        ></app-player-table>
-        <!-- <app-nfl-player-table [dfsPlayers]="nflPlayerFacade.playerList$ | async" [dataRows]="STATS_ROWS" [dataHeaders]="STATS_HEADERS"></app-nfl-player-table> -->
-      </ng-container>
+=======
+<app-page-layout>
+  <div sidebar>
+    <ng-container *ngIf="!(slatesEmpty$ | async)">
+      <app-slate-list [slateList]="selectSlateByType$ | async" (selectSlate)="onSelectSlate($event)"></app-slate-list>
     </ng-container>
   </div>
+  <div nav>
+    <h4>{{ selectedSlate$ | async }}</h4>
+  </div>
+  <div main class="flex-col">
+    <div>
+      <app-dropdown-filter
+        [isMobile]="isMobile$ | async"
+        [selectedOption]="xAxisStat$ | async"
+        title="xAxis"
+        [filterItems]="playerScatterAxisOptions$ | async"
+        (filterUpdate)="onAxisXChange($event.value)"
+      ></app-dropdown-filter>
+    </div>
+    <div>
+      <app-dropdown-filter
+        [isMobile]="isMobile$ | async"
+        [selectedOption]="yAxisStat$ | async"
+        title="yAxis"
+        [filterItems]="playerScatterAxisOptions$ | async"
+        (filterUpdate)="onAxisYChange($event.value)"
+      ></app-dropdown-filter>
+    </div>
+    <div>
+      <app-data-vis-scatter title="hey there" xAxisFilterTitle="hi there" yAxisFilterTitle="ho there" [chartData]="playerScatterData$ | async"></app-data-vis-scatter>
+    </div>
+    <div class="flex-col gap-10">
+      <ng-container *ngIf="!(slatesEmpty$ | async); else noSlates">
+        <ng-container *ngIf="!(playersEmpty$ | async)">
+          <div>
+            <app-dropdown-filter
+              [isMobile]="isMobile$ | async"
+              title="Teams"
+              [filterItems]="playerTeamsFilterOptions$ | async"
+              (filterUpdate)="teamFilterChange($event)"
+            ></app-dropdown-filter>
+          </div>
+>>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
+
+          <div>
+            <app-dropdown-filter
+              title="Position"
+              [isMobile]="isMobile$ | async"
+              [filterItems]="playerPositionFilterOptions$ | async"
+              (filterUpdate)="positionFilterChange($event)"
+            ></app-dropdown-filter>
+          </div>
+
+          <app-player-table
+            [teamFilter]="teamFilter$ | async"
+            [statGroupFilter]="statGroupFilter$ | async"
+            [positionFilter]="positionFilter$ | async"
+            [teamMap]="NFL_TEAM_ID_MAP"
+            [data]="nflPlayerList$ | async"
+            [dataRows]="STATS_ROWS"
+            [dataHeaders]="STATS_HEADERS"
+          ></app-player-table>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
 </app-page-layout>
+<<<<<<< HEAD
+=======
+
+<ng-template #noPlayers> <app-no-data title="No Players for this Slate"></app-no-data></ng-template>
+<ng-template #noSlates> <app-no-data title="No Slates Available"></app-no-data></ng-template>
+>>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
