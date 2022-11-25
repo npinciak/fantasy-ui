@@ -22,6 +22,7 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
     const teams = existsFilter(list.map(p => p.teamId));
     return uniqueBy(teams, t => t).map(t => Number(t));
   }
+  zz;
 
   @Selector([DailyFantasyNflPlayerSelectors.getList])
   static getPlayerPositions(list: SlatePlayer[]) {
