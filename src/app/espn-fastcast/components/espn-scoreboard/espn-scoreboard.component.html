@@ -1,72 +1,4 @@
 <section>
-<<<<<<< HEAD
-  <div style="display: grid; grid-template-columns: 13% 2% 85%; margin-bottom: 20px">
-    <div>
-      <mat-card>
-        <mat-card-subtitle>
-          <span class="scoreboard refresh timestamp">{{ lastRefreshAsTickerDate$ | async }}</span>
-        </mat-card-subtitle>
-        <mat-card-content>
-          <div>
-            <div>
-              <button mat-icon-button aria-label="Button to start and pause feed" (click)="onStartFeed()">
-                <mat-icon>{{ (paused$ | async) ? 'play_arrow_outline' : 'pause_circle_outline' }}</mat-icon>
-              </button>
-            </div>
-          </div>
-          <div>
-            <ng-container *ngIf="!(isMobile$ | async); else native">
-              <mat-form-field>
-                <mat-select
-                  [disabled]="(showFeed$ | async) === false"
-                  style="text-align: center"
-                  [value]="selectedLeagueId$ | async"
-                  (selectionChange)="onLeagueSelectChange($event.value)"
-                >
-                  <mat-option *ngFor="let league of leagueList$ | async" [value]="league.id">
-                    {{ league.shortName }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </ng-container>
-            <ng-template #native>
-              <mat-form-field>
-                <select
-                  #nativeLeagueSelect
-                  matNativeControl
-                  [disabled]="(showFeed$ | async) === false"
-                  style="text-align: center"
-                  [value]="selectedLeagueId$ | async"
-                  (change)="onLeagueSelectChange($event.target.value)"
-                >
-                  <option *ngFor="let league of leagueList$ | async" [value]="league.id">
-                    {{ league.shortName }}
-                  </option>
-                </select>
-              </mat-form-field>
-            </ng-template>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div></div>
-    <div class="scoreboard container" id="scoreboard-feed" role="feed" aria-live="polite">
-      <ng-container *ngIf="showLoader$ | async; then progressBar"> </ng-container>
-      <ng-container *ngIf="showFeed$ | async; then feed; else noEventsMessage"> </ng-container>
-    </div>
-  </div>
-</section>
-
-<ng-template #feed>
-  <ng-container *ngFor="let event of (eventsByLeagueId$ | async)!(selectedLeagueId$ | async); let i = index">
-    <app-espn-scoreboard-card
-      [index]="i"
-      [ariaSetsize]="(eventsByLeagueId$ | async)!(selectedLeagueId$ | async).length"
-      [ariaPosinset]="i + 1"
-      [isEventToggled]="(isIdToggled$ | async)!(event.id)"
-      (toggleExpandedEvent)="onToggleExpandedEvent($event)"
-      (toggleOffExpandedEvent)="onToggleOffExpandedEvent($event)"
-=======
   <mat-card style="padding: 0">
     <mat-card-content>
       <div class="flex-col">
@@ -107,7 +39,6 @@
       [ariaSetsize]="(eventsByLeagueId$ | async).length"
       [ariaPosinset]="i + 1"
       [isEventToggled]="(isIdToggled$ | async)!(event.id)"
->>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
       [isTournament]="event.isTournament"
       [event]="event"
     ></app-espn-scoreboard-card>

@@ -10,15 +10,9 @@
             <td mat-cell *matCellDef="let data">
               <ng-container [ngSwitch]="col.columnDef">
                 <ng-template [ngSwitchCase]="'name'">
-<<<<<<< HEAD
-                  <div style="display: grid; grid-template-rows: auto">
-                    <div>{{ col?.cellData(data) }}</div>
-                    <div style="font-size: 12px">{{ teamMap[data?.teamId] }}, {{ data?.position }}</div>
-=======
                   <div class="flex-col gap-5" style="margin-right: 10px">
                     <div class="ui-font-weight-bold" style="font-size: 12px">{{ col?.cellData(data) }}</div>
                     <div style="font-size: 11px">{{ teamMap[data?.teamId] }}, {{ data?.position }}</div>
->>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
                   </div>
                 </ng-template>
                 <ng-template [ngSwitchCase]="'opp'">

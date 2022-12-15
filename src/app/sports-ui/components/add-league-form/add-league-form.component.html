@@ -1,21 +1,3 @@
-<<<<<<< HEAD
-<div>
-  <div>
-    <app-dropdown-filter [selectedOption]="sportOption$ | async" [filterItems]="fantasySportOptionList" (filterUpdate)="fantasySportChange($event)"></app-dropdown-filter>
-  </div>
-  <div>
-    <mat-form-field>
-      <input matInput #leagueIdInput placeholder="Ex. 21345679" (change)="leagueIdInputChange(leagueIdInput.value)" autocomplete="off" />
-      <mat-hint>League Id</mat-hint>
-    </mat-form-field>
-  </div>
-  <div>
-    <button [disabled]="leagueFormFacade.isDirty$ | async" mat-flat-button color="primary" (click)="onAddLeague()">Add</button>
-  </div>
-</div>
-
-<div style="margin-top: 20px">
-=======
 <mat-card>
   <mat-card-content>
     <div class="add-league-form">
@@ -41,7 +23,6 @@
 </mat-card>
 
 <div style="margin-top: 20px; flex-direction: column; display: flex; gap: 25px">
->>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
   <div *ngFor="let league of leagues">
     <mat-card style="display: flex">
       <mat-card-header>

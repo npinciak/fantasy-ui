@@ -5,12 +5,8 @@ import { EspnFastcastEventToggleFacade } from '@app/espn-fastcast/facade/espn-fa
 import { EspnFastcastEventFacade } from '@app/espn-fastcast/facade/espn-fastcast-event.facade';
 import { EspnFastcastLeagueFacade } from '@app/espn-fastcast/facade/espn-fastcast-league.facade';
 import { Store } from '@ngxs/store';
-<<<<<<< HEAD
-import { of } from 'rxjs';
-=======
 import { combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
->>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
 
 @Component({
   selector: 'app-espn-scoreboard',
