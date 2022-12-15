@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 import { ApiService } from '../../@shared/services/api.service';
 import { FantasySports } from '../../espn/models/espn-endpoint-builder.model';
 import { SportsUiClientLeague } from '../models/sports-ui-league.model';
@@ -78,7 +77,7 @@ interface PayloadLeagueId {
 }
 
 class EndpointBuilder {
-  private readonly _baseUrl = environment.sportsApi;
+  private readonly _baseUrl = 'api'; // environment.sportsApi;
   private readonly _leagues = '/leagues';
   private readonly _users = '/users';
 

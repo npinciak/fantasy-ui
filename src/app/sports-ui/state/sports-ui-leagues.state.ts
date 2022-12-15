@@ -6,6 +6,7 @@ import { SportsUiLeagues } from '../../sports-ui/actions/sports-ui-leagues.actio
 import { SportsUiLeagueForm } from '../actions/sports-ui-league-form.actions';
 import { SportsUiClientLeague } from '../models/sports-ui-league.model';
 import { SportsUiLeagueFormSelectors } from '../selectors/sports-ui-league-form.selectors';
+import { SupaService } from '../service/supa.service';
 
 @State({ name: SportsUiLeagues.name })
 @Injectable()
@@ -14,13 +15,16 @@ export class SportsUiLeaguesState extends GenericState({
   addOrUpdate: SportsUiLeagues.SetLeagues,
   clearAndAdd: SportsUiLeagues.ClearAndAddLeagues,
 }) {
-  constructor(private apiService: SchemeHeaderExpertService, private store: Store) {
+  constructor(private supaService: SupaService, private apiService: SchemeHeaderExpertService, private store: Store) {
     super();
   }
 
   @Action(SportsUiLeagues.FetchLeagues)
   async fetchEspnLeagues({ dispatch }: StateContext<GenericStateClass<SportsUiClientLeague>>): Promise<void> {
-    const leagues = await this.apiService.getLeagues().toPromise();
+    const res = await this.supaService.fetchLeagues();
+
+    const leagues = res;
+
     dispatch([new SportsUiLeagues.ClearAndAddLeagues(leagues)]);
   }
 

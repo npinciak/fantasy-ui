@@ -1,8 +1,7 @@
 export interface SportsUiClientLeague {
   id: number;
-  leagueName: string;
+  name: string;
   leagueId: string;
-  leagueSport: string;
+  sport: string;
   createdAt: string;
-  updatedAt: string;
 }
