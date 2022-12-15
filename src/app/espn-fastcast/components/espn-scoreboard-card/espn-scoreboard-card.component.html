@@ -6,6 +6,22 @@
   [attr.aria-posinset]="ariaPosinset"
   style="padding: 10px; border-left: 1px solid #a5a6a7"
 >
+<<<<<<< HEAD
+  <mat-card-content>
+    <div [id]="ariaInfo.eventSummary" class="event-summary">
+      <span [id]="ariaInfo.eventName" class="meta-data">{{ event.name }}</span>
+      <span [id]="ariaInfo.eventLocation" class="meta-data">{{ event.location }}</span>
+      {{ eventSummary }}
+      <a [title]="ariaInfo.eventGamecast" [href]="event?.link" target="_blank"><mat-icon class="new-tab-icon">open_in_new</mat-icon></a>
+    </div>
+    <app-espn-scoreboard-card-team [eventStatus]="event.status" [isTournament]="isTournament" [team]="event?.teams?.away"></app-espn-scoreboard-card-team>
+    <app-espn-scoreboard-card-team [eventStatus]="event.status" [isTournament]="isTournament" [team]="event?.teams?.home"></app-espn-scoreboard-card-team>
+  </mat-card-content>
+
+  <mat-card-actions style="display: none">
+    <span class="event-summary" *ngIf="!eventInProgress && isTournament"> {{ event?.seriesSummary }}</span>
+    <!-- <ng-container *ngIf="eventInProgress"> -->
+=======
   <div [id]="ariaInfo.eventSummary" class="event-summary flex-row">
     <div style="flex: auto">
       <span [id]="ariaInfo.eventName" class="meta-data">{{ event.name }}</span>
@@ -23,6 +39,7 @@
 <!-- <mat-card-actions style="display: none">
     <span class="event-summary" *ngIf="!eventInProgress && isTournament"> {{ event?.seriesSummary }}</span>
    <ng-container *ngIf="eventInProgress"> 
+>>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
     <ng-container *ngIf="false">
       <mat-accordion [multi]="true">
         <mat-expansion-panel [expanded]="isEventToggled" class="mat-elevation-z0" (opened)="toggleExpansionPanel(event.id)" (closed)="toggleOffExpansionPanel(event.id)">

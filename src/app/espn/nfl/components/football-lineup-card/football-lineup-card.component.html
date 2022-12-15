@@ -1,6 +1,11 @@
 <mat-card>
+<<<<<<< HEAD
+  <mat-card-content style="display: grid; grid-template-rows: auto">
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr)">
+=======
   <mat-card-content>
     <div style="display: flex">
+>>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
       <div>
         {{ title }}
       </div>
@@ -15,6 +20,10 @@
     </div>
 
     <mat-nav-list>
+<<<<<<< HEAD
+      <a *ngFor="let player of lineup; let i = index" [attr.data-index]="i" tabindex="0" mat-list-item (click)="onPlayerClick(player)">
+        <app-espn-player [player]="player"></app-espn-player>
+=======
       <a style="padding: 0px" *ngFor="let player of lineup; let i = index" [attr.data-index]="i" tabindex="0" mat-list-item (click)="onPlayerClick(player)">
         <div class="flex-row gap-5" style="flex: 1 1 auto">
           <div>
@@ -24,6 +33,7 @@
             {{ player?.stats }}
           </div>
         </div>
+>>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
       </a>
     </mat-nav-list>
   </mat-card-content>

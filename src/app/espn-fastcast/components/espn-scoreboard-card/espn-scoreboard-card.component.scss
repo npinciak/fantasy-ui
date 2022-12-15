@@ -23,6 +23,12 @@ td[colspan='3'] {
   text-align: center;
 }
 
+<<<<<<< HEAD
+mat-card.game-card {
+  width: 300px;
+  min-width: 300px;
+  margin-right: 10px;
+=======
 .game-card:first-child {
   border-left: none;
 }
@@ -36,11 +42,25 @@ td[colspan='3'] {
     width: 100%;
     min-width: 300px;
   }
+>>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
 
   mat-card-subtitle {
     margin-bottom: 10px;
   }
 
+<<<<<<< HEAD
+  mat-card-content {
+    margin-bottom: 0;
+    display: grid;
+    grid-row: auto;
+    row-gap: 5px;
+
+    .event-summary {
+      color: $sub-text-color;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+=======
   // mat-card-content {
   //   margin-bottom: 0;
   //
@@ -51,6 +71,7 @@ td[colspan='3'] {
     color: $sub-text-color;
     font-size: 12px;
     margin-bottom: 5px;
+>>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
   }
   // }
 }
