@@ -5,13 +5,16 @@ export const ESPN_TEXT: Record<string, string> = {
   NO_GAMES_TEXT: `No games scheduled for today`,
 };
 
+export const API_BASE = environment.espnBaseApi;
+export const API_BASE_V2 = API_BASE + '/v2';
+
 export const CDN: string = environment.espncdn;
 export const CDN_COMBINER: string = CDN + 'combiner/i';
 export const CDN_REDESIGN_IMG: string = CDN + 'redesign/assets/img';
 
 export const COMMON_V3: string = environment.espnCommon;
 
-export const FANTASY_BASE_V2: string = environment.espnFantasyBaseV2;
+export const FANTASY_BASE_V2: string = API_BASE + '/fantasy/v2';
 export const FANTASY_BASE_V3: string = environment.espnFantasyBaseV3;
 
 export const FASTCAST_SERVICE_URI: string = environment.espnFastcastServiceUri;

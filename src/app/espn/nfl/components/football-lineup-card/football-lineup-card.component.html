@@ -17,7 +17,12 @@
     <mat-nav-list>
       <a style="padding: 0px" *ngFor="let player of lineup; let i = index" [attr.data-index]="i" tabindex="0" mat-list-item (click)="onPlayerClick(player)">
         <div class="flex-row gap-5" style="flex: 1 1 auto">
-          <app-espn-player [player]="player"></app-espn-player>
+          <div>
+            <app-espn-player [player]="player"></app-espn-player>
+          </div>
+          <div>
+            {{ player?.stats }}
+          </div>
         </div>
       </a>
     </mat-nav-list>

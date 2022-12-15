@@ -1,3 +1,9 @@
 td.mat-cell:first-of-type {
   padding-left: 0;
 }
+
+.mat-sort-header-container:hover,
+.mat-sort-header-container:active,
+.mat-sort-header-container:focus {
+  color: #000066;
+}

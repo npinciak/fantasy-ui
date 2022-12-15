@@ -20,14 +20,13 @@
       </div>
     </div>
   </div>
-  <div>
-    <span>Outlook By Week</span>
-    <ul>
-      <li *ngFor="let c of data.player.outlookByWeek">
-        <h4>Week {{ c.week }}</h4>
-        <p>{{ c.outlook }}</p>
-      </li>
-    </ul>
+  <div class="flex-col gap-5">
+    <div class="ui-font-weight-bold">Outlook By Week</div>
+    <div class="flex-col gap-10" *ngFor="let c of data.player.outlookByWeek">
+      <div class="ui-font-weight-bold">Week {{ c.week }}</div>
+      <div>{{ c.outlook }}</div>
+      <mat-divider></mat-divider>
+    </div>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>

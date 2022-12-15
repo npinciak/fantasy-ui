@@ -14,7 +14,6 @@ import { FantasyFootballLeagueFacade } from '../../facade/fantasy-football-leagu
 import { FantasyFootballTeamFacade } from '../../facade/fantasy-football-team.facade';
 import { FootballPlayer } from '../../models/football-player.model';
 import { FootballPosition, FOOTBALL_POSITION_LIST_FILTER } from '../../models/football-position.model';
-
 @Component({
   selector: 'app-football-team',
   templateUrl: './football-team.component.html',
@@ -45,6 +44,7 @@ export class FootballTeamComponent implements OnInit {
   statPeriodFilterOptions$ = this.footballLeagueFacade.statPeriodFilterOptions$;
 
   starters$ = combineLatest([this.footballTeamFacade.starters$, this.teamId$]).pipe(map(([starters, teamId]) => starters(teamId)));
+
   startersPoints$ = combineLatest([this.footballTeamFacade.startersPoints$, this.teamId$]).pipe(
     map(([startersPoints, teamId]) => startersPoints(teamId))
   );
@@ -89,7 +89,7 @@ export class FootballTeamComponent implements OnInit {
   ngOnInit(): void {}
 
   onSelectedPositionChange(val) {
-    this.selectedPosition$.next(Number(val) as unknown as FootballPosition);
+    this.selectedPosition$.next(Number(val));
   }
 
   scoringPeriodIdChange(val) {
@@ -101,7 +101,7 @@ export class FootballTeamComponent implements OnInit {
   }
 
   onPlayerClick(player: FootballPlayer) {
-    let dialogRef = this.dialog.open(EspnPlayerDialogComponent, {
+    this.dialog.open(EspnPlayerDialogComponent, {
       data: {
         player,
       },

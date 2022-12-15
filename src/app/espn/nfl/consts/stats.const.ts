@@ -1,4 +1,4 @@
-import { FootballStatsMap } from '../models/football-stats.model';
+import { FootballStatsMap, FootballStatsProperties } from '../models/football-stats.model';
 
 export const FOOTBALL_STATS_MAP: FootballStatsMap = {
   0: {
@@ -1072,3 +1072,5 @@ export const FOOTBALL_STATS_MAP: FootballStatsMap = {
     description: 'Targets per game',
   },
 };
+
+export const FOOTBALL_STATS_LIST: FootballStatsProperties[] = Object.values(FOOTBALL_STATS_MAP);

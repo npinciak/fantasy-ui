@@ -43,7 +43,7 @@ describe('EspnService', () => {
   describe('espnFantasyLeagueBySport', () => {
     it('should make request', () => {
       const spy = spyOn(service, 'espnFantasyLeagueBySport').and.callThrough();
-      service.espnFantasyLeagueBySport(sport, leagueId).subscribe();
+      service.fetchFantasyLeagueBySport(sport, leagueId).subscribe();
       expect(spy).toHaveBeenCalled();
 
       const endpoint = new EspnEndpointBuilder(sport, leagueId);
@@ -90,7 +90,7 @@ describe('EspnService', () => {
         type: 'ROSTER',
       };
 
-      service.espnUpdateFantasyTeam({}, sport, leagueId).subscribe(res => {
+      service.updateFantasyTeam({}, sport, leagueId).subscribe(res => {
         expect(res).toEqual(expected);
       });
 
@@ -111,7 +111,7 @@ describe('EspnService', () => {
 
       const expected = {};
 
-      service.espnFantasyPlayerNewsBySport({ sport, lookbackDays, playerId }).subscribe();
+      service.fetchFantasyPlayerNewsBySport({ sport, lookbackDays, playerId }).subscribe();
 
       expect(spy).toHaveBeenCalled();
 
@@ -131,7 +131,7 @@ describe('EspnService', () => {
 
       const expected = {};
 
-      service.espnFantasyFreeAgentsBySport(sport, leagueId, scoringPeriodId, new HttpHeaders()).subscribe();
+      service.fetchFantasyFreeAgentsBySport(sport, leagueId, scoringPeriodId, new HttpHeaders()).subscribe();
 
       expect(spy).toHaveBeenCalled();
 
@@ -153,7 +153,7 @@ describe('EspnService', () => {
       const expected = { sports: [] };
       const endpoint = 'https://jsonplaceholder.typicode.com/posts';
 
-      service.espnFastcast(endpoint).subscribe();
+      service.fetchFastcast(endpoint).subscribe();
 
       expect(spy).toHaveBeenCalled();
 

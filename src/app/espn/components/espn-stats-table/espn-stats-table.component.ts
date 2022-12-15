@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,6 +12,7 @@ import { StatTypePeriodId } from '@app/espn/models/espn-stats.model';
   selector: 'app-espn-stats-table',
   templateUrl: './espn-stats-table.component.html',
   styleUrls: ['./espn-stats-table.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class EspnStatsTableComponent implements OnChanges, AfterViewInit {
   @Input() data: any[];
