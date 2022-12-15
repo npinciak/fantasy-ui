@@ -11,6 +11,7 @@ export class FantasyFootballTeamFacade extends GenericFacade(FantasyFootballTeam
 
   starters$ = select(FantasyFootballTeamSelectors.getTeamStarters);
   startersPoints$ = select(FantasyFootballTeamSelectors.getTeamStartersPoints);
+  // startersLineupCard$ = select(FantasyFootballTeamSelectors.getTeamStartersLineupCard);
 
   starterStats$ = select(FantasyFootballTeamSelectors.getTeamStats);
   teamStatsByPositionId$ = select(FantasyFootballTeamSelectors.getTeamStatsByPositionId);

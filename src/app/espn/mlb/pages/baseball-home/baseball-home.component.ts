@@ -18,6 +18,10 @@ export class BaseballHomeComponent implements OnInit {
   readonly MLB_STADIUM_LIST = MLB_STADIUM_LIST;
   readonly leagueId = this.routerFacade.leagueId;
 
+  standings$ = this.fantasyBaseballLeagueFacade.standings$;
+
+
+
   constructor(
     readonly routerFacade: RouterFacade,
     readonly fantasyBaseballFreeAgentsFacade: FantasyBaseballFreeAgentsFacade,

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GenericFacade } from '@app/@shared/generic-state/generic.facade';
 import { select } from '@app/@shared/models/typed-select';
+import { of } from 'rxjs';
 import { DailyFantasyNflPlayerSelectors } from '../selectors/daily-fantasy-nfl-players.selectors';
 
 @Injectable({
@@ -16,4 +17,6 @@ export class DailyFantasyNflPlayerFacade extends GenericFacade(DailyFantasyNflPl
 
   playerTeamsFilterOptions$ = select(DailyFantasyNflPlayerSelectors.getPlayerTeamsFilterOptions);
   playerPositionFilterOptions$ = select(DailyFantasyNflPlayerSelectors.getPlayerPositionFilterOptions);
+
+  teamOwnPercent$ = of(); // select(DailyFantasyNflPlayerSelectors.teamOwnPercent);
 }

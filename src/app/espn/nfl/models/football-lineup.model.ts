@@ -1,4 +1,5 @@
-import { enumAsList } from '@app/@shared/helpers/enum-as-list';
+import { enumAsList } from 'sports-ui-sdk/lib/helpers/enum-as-list/enum-as-list';
+import { FootballLineup } from '../consts/lineup.const';
 
 export enum FootballLineupSlot {
   QB,
@@ -38,3 +39,8 @@ export const BasicFootballLineupSlotList: FootballLineupSlot[] = [
   FootballLineupSlot.K,
   FootballLineupSlot.DST,
 ];
+
+export const BasicFootballLineupSlotFilterOptions = BasicFootballLineupSlotList.map(s => ({
+  value: s,
+  label: FootballLineup.LineupSlotMap[s].name,
+}));

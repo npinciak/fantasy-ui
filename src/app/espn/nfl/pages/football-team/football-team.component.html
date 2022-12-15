@@ -14,15 +14,26 @@
       [isLoading]="isLoading$ | async"
       [lineup]="starters$ | async"
       [points]="startersPoints$ | async"
-      [week]="currentScoringPeriodId$ | async"
+      [scoringPeriodId]="currentScoringPeriodId$ | async"
       (playerClicked)="onPlayerClick($event)"
       (refreshClicked)="refreshLeague()"
     ></app-football-lineup-card>
     <div style="margin: 25px 0"></div>
-    <app-football-lineup-card title="Bench" [lineup]="bench$ | async" [points]="benchPoints$ | async" [week]="currentScoringPeriodId$ | async"></app-football-lineup-card>
+    <app-football-lineup-card
+      title="Bench"
+      [lineup]="bench$ | async"
+      [points]="benchPoints$ | async"
+      [scoringPeriodId]="currentScoringPeriodId$ | async"
+      (playerClicked)="onPlayerClick($event)"
+    ></app-football-lineup-card>
     <div style="margin: 25px 0"></div>
-    <ng-container *ngIf="(injuredReserve$ | async).length">
-      <app-football-lineup-card title="Injured Reserve" [lineup]="injuredReserve$ | async" [week]="currentScoringPeriodId$ | async"></app-football-lineup-card>
+    <ng-container *ngIf="(injuredReserve$ | async).length > 0">
+      <app-football-lineup-card
+        title="Injured Reserve"
+        [lineup]="injuredReserve$ | async"
+        [scoringPeriodId]="currentScoringPeriodId$ | async"
+        (playerClicked)="onPlayerClick($event)"
+      ></app-football-lineup-card>
     </ng-container>
   </div>
   <div main>

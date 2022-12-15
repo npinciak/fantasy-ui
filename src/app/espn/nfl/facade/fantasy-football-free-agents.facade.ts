@@ -10,7 +10,9 @@ import { FantasyFootballFreeAgentsSelectors } from '../selectors/fantasy-footbal
   providedIn: 'root',
 })
 export class FantasyFootballFreeAgentsFacade extends GenericFacade(FantasyFootballFreeAgentsSelectors) {
-  getFreeAgentsStats$ = select(FantasyFootballFreeAgentsSelectors.getFreeAgentsStats);
+  freeAgentsScatter$ = select(FantasyFootballFreeAgentsSelectors.getFreeAgentsScatter);
+  freeAgentsStats$ = select(FantasyFootballFreeAgentsSelectors.getFreeAgentsStats);
+  compareTeamAndFreeAgentList$ = select(FantasyFootballFreeAgentsSelectors.getCompareTeamAndFreeAgentList);
 
   constructor(private store: Store) {
     super();

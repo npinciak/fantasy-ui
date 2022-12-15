@@ -2,13 +2,7 @@ import { Injectable } from '@angular/core';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import {
-  ConnectWebSocket,
-  DisconnectWebSocket,
-  SetFastcastPause,
-  SetSelectedEventType,
-  SetSelectedLeague,
-} from '../actions/espn-fastcast-connection.actions';
+import { FastCastConnection } from '../actions/espn-fastcast-connection.actions';
 import { EspnFastcastConnectionSelectors } from '../selectors/espn-fastcast-connection.selectors';
 
 @Injectable({
@@ -31,23 +25,27 @@ export class EspnFastcastConnectionFacade {
 
   constructor(private store: Store) {}
 
-  connect(): Observable<void> {
-    return this.store.dispatch(new ConnectWebSocket());
+  fetchStaticFastcast(): Observable<void> {
+    return this.store.dispatch(new FastCastConnection.FetchStaticFastcast());
+  }
+
+  connectWebSocket(): Observable<void> {
+    return this.store.dispatch(new FastCastConnection.ConnectWebSocket());
   }
 
   disconnect(): Observable<void> {
-    return this.store.dispatch(new DisconnectWebSocket());
+    return this.store.dispatch(new FastCastConnection.DisconnectWebSocket());
   }
 
   setEventType(eventType: string | null): Observable<void> {
-    return this.store.dispatch(new SetSelectedEventType({ eventType }));
+    return this.store.dispatch(new FastCastConnection.SetSelectedEventType({ eventType }));
   }
 
   setPauseState(): Observable<void> {
-    return this.store.dispatch(new SetFastcastPause());
+    return this.store.dispatch(new FastCastConnection.SetFastcastPause());
   }
 
   setSelectedLeague(leagueSlug: string) {
-    this.store.dispatch(new SetSelectedLeague({ leagueSlug }));
+    this.store.dispatch(new FastCastConnection.SetSelectedLeague({ leagueSlug }));
   }
 }

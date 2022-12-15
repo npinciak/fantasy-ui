@@ -1,9 +1,9 @@
 import { FantasyLeague } from '@app/espn/models/fantasy-league.model';
-import { EspnClient } from '@espnClient/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
 import { FootballPlayerFreeAgent } from './football-player.model';
 import { FootballTeam } from './football-team.model';
 
-export interface FantasyFootballLeague extends FantasyLeague {
+export interface FootballLeague extends FantasyLeague {
   teams: FootballTeam[];
   freeAgents: FootballPlayerFreeAgent[];
   schedule: EspnClient.ScheduleEntity[];

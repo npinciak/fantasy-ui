@@ -63,9 +63,6 @@ const imports = [CommonModule, EspnRoutingModule, MaterialModule, SharedModule, 
 const exports = [StandingsComponent, RosterComponent];
 
 @NgModule({
-  imports,
-  exports,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     EspnHomeComponent,
     BaseballHomeComponent,
@@ -91,5 +88,8 @@ const exports = [StandingsComponent, RosterComponent];
     EspnPlayerDialogComponent,
     EspnStandingsTableComponent,
   ],
+  imports,
+  exports,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class EspnModule {}

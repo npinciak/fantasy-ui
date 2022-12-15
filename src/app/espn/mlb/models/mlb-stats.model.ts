@@ -1,5 +1,5 @@
 import { StatEntity } from '@app/@shared/base-models/base-stats.model';
-import { enumAsList } from '@app/@shared/helpers/enum-as-list';
+import { enumAsList } from 'sports-ui-sdk/lib/helpers/enum-as-list/enum-as-list';
 
 export enum PeriodId {
   Season,

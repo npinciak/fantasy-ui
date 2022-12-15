@@ -1,3 +1,3 @@
-import { SportsEntity } from '@espnClient/espn-fastcast.model';
+import { EspnFastcastClient } from 'sports-ui-sdk/lib/models/espn-fastcast.model';
 
-export type FastcastSport = Omit<SportsEntity, 'leagues' | 'shortName'>;
+export type FastcastSport = Omit<EspnFastcastClient.SportsEntity, 'leagues' | 'shortName'>;

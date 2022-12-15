@@ -1,37 +1,43 @@
-export const name = 'espnFastcastConnection';
-export class ConnectWebSocket {
-  static readonly type = `[${name}] ConnectWebSocket`;
-}
+export namespace FastCastConnection {
+  export const name = 'espnFastcastConnection';
+  export class ConnectWebSocket {
+    static readonly type = `[${name}] ConnectWebSocket`;
+  }
 
-export class DisconnectWebSocket {
-  static readonly type = `[${name}] DisconnectWebSocket`;
-}
+  export class DisconnectWebSocket {
+    static readonly type = `[${name}] DisconnectWebSocket`;
+  }
 
-export class FetchFastcast {
-  static readonly type = `[${name}] FetchFastcast`;
-  constructor(public payload: { uri: string }) {}
-}
+  export class FetchFastcast {
+    static readonly type = `[${name}] FetchFastcast`;
+    constructor(public payload: { uri: string }) {}
+  }
 
-export class HandleWebSocketMessage {
-  static readonly type = `[${name}] HandleWebSocketMessage`;
-  constructor(public payload: { message: any }) {}
-}
+  export class FetchStaticFastcast {
+    static readonly type = `[${name}] FetchStaticFastcast`;
+  }
 
-export class SendWebSocketMessage {
-  static readonly type = `[${name}] SendWebSocketMessage`;
-  constructor(public payload: { message: any }) {}
-}
+  export class HandleWebSocketMessage {
+    static readonly type = `[${name}] HandleWebSocketMessage`;
+    constructor(public payload: { message: any }) {}
+  }
 
-export class SetSelectedLeague {
-  static readonly type = `[${name}] SetSelectedLeague`;
-  constructor(public payload: { leagueSlug: string | null }) {}
-}
+  export class SendWebSocketMessage {
+    static readonly type = `[${name}] SendWebSocketMessage`;
+    constructor(public payload: { message: any }) {}
+  }
 
-export class SetSelectedEventType {
-  static readonly type = `[${name}] SetSelectedEventType`;
-  constructor(public payload: { eventType: string | null }) {}
-}
+  export class SetSelectedLeague {
+    static readonly type = `[${name}] SetSelectedLeague`;
+    constructor(public payload: { leagueSlug: string | null }) {}
+  }
 
-export class SetFastcastPause {
-  static readonly type = `[${name}] SetFastcastPause`;
+  export class SetSelectedEventType {
+    static readonly type = `[${name}] SetSelectedEventType`;
+    constructor(public payload: { eventType: string | null }) {}
+  }
+
+  export class SetFastcastPause {
+    static readonly type = `[${name}] SetFastcastPause`;
+  }
 }

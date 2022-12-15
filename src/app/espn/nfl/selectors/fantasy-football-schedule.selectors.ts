@@ -1,8 +1,9 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { unique } from '@app/@shared/helpers/unique-by';
 import { exists } from '@app/@shared/helpers/utils';
 import { FilterOptions } from '@app/@shared/models/filter.model';
-import { EspnClient, EspnClientScheduleWinner } from '@espnClient/espn-client.model';
+import { unique } from 'sports-ui-sdk/lib/helpers/unique-by/unique-by';
+import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+
 import { Selector } from '@ngxs/store';
 import { FantasyMatchup, FantasyMatchupMap, FantasyMatchupTeam } from '../models/fantasy-schedule.model';
 import { FootballTeam } from '../models/football-team.model';
@@ -14,7 +15,6 @@ export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFoo
   static getMatchupPeriodIds(matchupList: EspnClient.ScheduleEntity[]): number[] {
     const ids = matchupList.map(m => m.matchupPeriodId);
 
-    console.log(ids);
     return unique(ids);
   }
 
@@ -56,8 +56,8 @@ export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFoo
       const home = getTeamById(m.home.teamId.toString());
       const away = getTeamById(m.away.teamId.toString());
 
-      const homeWinner = m.winner === EspnClientScheduleWinner.UNDECIDED ? null : m.winner === EspnClientScheduleWinner.HOME;
-      const awayWinner = m.winner === EspnClientScheduleWinner.UNDECIDED ? null : m.winner === EspnClientScheduleWinner.AWAY;
+      const homeWinner = m.winner === EspnClient.ScheduleWinner.UNDECIDED ? null : m.winner === EspnClient.ScheduleWinner.HOME;
+      const awayWinner = m.winner === EspnClient.ScheduleWinner.UNDECIDED ? null : m.winner === EspnClient.ScheduleWinner.AWAY;
 
       const homeTeam = FantasyFootballScheduleSelectors.transformTeamToMatchupTeam(home, m.home, homeWinner);
       const awayTeam = FantasyFootballScheduleSelectors.transformTeamToMatchupTeam(away, m.away, awayWinner);

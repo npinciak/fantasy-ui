@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { cellDataAccessor } from '@app/@shared/helpers/utils';
@@ -8,6 +8,7 @@ import { TableColumnDataType } from '@app/@shared/models/table-columns.model';
   selector: 'app-espn-standings-table',
   templateUrl: './espn-standings-table.component.html',
   styleUrls: ['./espn-standings-table.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class EspnStandingsTableComponent<T> {
   @Input() data: T[];

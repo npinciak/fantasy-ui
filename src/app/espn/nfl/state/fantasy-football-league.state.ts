@@ -41,7 +41,7 @@ export class FantasyFootballLeagueState {
       playoffMatchupPeriodLength,
       schedule,
       transactions,
-    } = await this.nflService.footballLeague(leagueId, year).toPromise();
+    } = await this.nflService.fetchLeague(leagueId, year).toPromise();
 
     await this.store
       .dispatch([

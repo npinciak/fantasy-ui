@@ -7,7 +7,7 @@ import {
   MatIconByEspnPlayerInjuryStatus,
   PlayerStatusAbbrevByInjuryStatusType,
 } from '@app/espn/models/injury.model';
-import { EspnPlayerInjuryStatus } from '@espnClient/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
 
 @Component({
   selector: 'app-espn-player',
@@ -27,7 +27,7 @@ export class EspnPlayerComponent<T extends PlayerEntity> {
     return `${this.player.name}, ${this.player.team}, ${this.player.position}`;
   }
 
-  playerInjuryStatusColor(injuryStatus: EspnPlayerInjuryStatus): InjurySeverityColor {
+  playerInjuryStatusColor(injuryStatus: EspnClient.PlayerInjuryStatus): InjurySeverityColor {
     return InjurySeverityColorByInjurySeverity[InjurySeverityByInjuryStatus[injuryStatus]];
   }
 }

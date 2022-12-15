@@ -6,10 +6,10 @@ import { FantasySports } from '../models/espn-endpoint-builder.model';
 import { EspnService } from './espn.service';
 
 export class EspnServiceMock implements Mock<EspnService> {
-  espnUpdateFantasyTeam(payload: unknown, sport: FantasySports, leagueId: string): Observable<unknown> {
+  updateFantasyTeam(payload: unknown, sport: FantasySports, leagueId: string): Observable<unknown> {
     throw new Error('Method not implemented.');
   }
-  espnFantasyLeagueBySport<T>(data: {
+  fetchFantasyLeagueBySport<T>(data: {
     sport: FantasySports;
     leagueId: string;
     year: string;
@@ -17,13 +17,13 @@ export class EspnServiceMock implements Mock<EspnService> {
   }): Observable<T> {
     throw new Error('Method not implemented.');
   }
-  espnFantasyLeagueEvents(sport: FantasySports, headers?: HttpHeaders | undefined): Observable<EspnClientEventList> {
+  fetchFantasyLeagueEvents(sport: FantasySports, headers?: HttpHeaders | undefined): Observable<EspnClientEventList> {
     throw new Error('Method not implemented.');
   }
-  espnFantasyPlayerNewsBySport(data: { sport: FantasySports; lookbackDays: string; playerId: string }): Observable<EspnClientPlayerNews> {
+  fetchFantasyPlayerNewsBySport(data: { sport: FantasySports; lookbackDays: string; playerId: string }): Observable<EspnClientPlayerNews> {
     throw new Error('Method not implemented.');
   }
-  espnFantasyFreeAgentsBySport(
+  fetchFantasyFreeAgentsBySport(
     sport: FantasySports,
     leagueId: string,
     scoringPeriod: number,
@@ -31,7 +31,7 @@ export class EspnServiceMock implements Mock<EspnService> {
   ): Observable<{ players: EspnClientFreeAgentEntry[] }> {
     throw new Error('Method not implemented.');
   }
-  espnFastcast(url: string): Observable<void> {
+  fetchFastcast(url: string): Observable<void> {
     throw new Error('Method not implemented.');
   }
 }

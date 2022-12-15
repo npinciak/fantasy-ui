@@ -24,6 +24,7 @@
       "@dfsNfl/*": ["src/app/dfs/nfl/*"]
     },
     "typeRoots": [
+      "./node_modules/sports-ui-sdk/lib/models",
       "./node_modules/@types",
       "src/espn-client-models/*",
       "src/dfs-client-models/*"

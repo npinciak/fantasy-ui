@@ -1,11 +1,12 @@
-import { EspnFreeAgentAvailabilityStatus } from '@espnClient/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+
 import { FootballLineupSlot } from '../models/football-lineup.model';
 
 const name = 'fantasyFootballFreeAgentsFilter';
 
 export class TogglePlayerAvailabilityStatus {
   static readonly type = `[${name}] SetPlayerAvailabilityStatus`;
-  constructor(public payload: { availabilityStatus: EspnFreeAgentAvailabilityStatus }) {}
+  constructor(public payload: { availabilityStatus: EspnClient.FreeAgentAvailabilityStatus }) {}
 }
 
 export class SetPagination {

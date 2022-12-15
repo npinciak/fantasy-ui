@@ -1,5 +1,5 @@
 import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
-import { EspnClient } from '@espnClient/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
 
 export interface BaseballPlayerProps {
   isStarting: boolean;

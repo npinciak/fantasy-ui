@@ -1,13 +1,9 @@
-import { PositionEntityMap } from '@app/@shared/base-models/base-position.model';
 import { exists } from '@app/@shared/helpers/utils';
-import { EspnClient, EspnLeagueId, EspnPlayerInjuryStatus, EspnSport } from '@espnClient/espn-client.model';
-import { CompetitorsEntity } from '@espnClient/espn-fastcast.model';
-import { headshotImgBuilder } from './espn.const';
+import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+import { EspnFastcastClient } from 'sports-ui-sdk/lib/models/espn-fastcast.model';
+import { PitcherIdSet } from './mlb/consts/lineup.const';
 import { BaseballPlayer } from './mlb/models/baseball-player.model';
-import { FantasyLeague } from './models/fantasy-league.model';
-import { LeagueNameByEspnLeagueId } from './models/league.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
-import { FantasyFootballService } from './nfl/services/fantasy-football.service';
 
 /**
  * Sports to include in Fastcast
@@ -33,10 +29,26 @@ export function includeLeagues(id: string): boolean {
  * @returns boolean
  */
 export function excludeLeagues(id: string): boolean {
-  return new Set(['3923', '54']).has(id);
+  return new Set(['3923', '8097', '20226', '54', '19834']).has(id);
 }
 
-export function teamColorHandler(val: CompetitorsEntity): string | null {
+/**
+ * Find if player is eligible pitcher
+ *
+ * @param eligiblePos
+ * @returns
+ */
+export function isPitcher(eligiblePos: number[]): boolean {
+  for (let i = 0; i < eligiblePos.length; i++) {
+    if (PitcherIdSet.has(eligiblePos[i])) {
+      return true;
+    }
+    return false;
+  }
+  return false;
+}
+
+export function teamColorHandler(val: EspnFastcastClient.CompetitorsEntity): string | null {
   const color = val.color;
   const altColor = val.alternateColor;
 
@@ -44,7 +56,7 @@ export function teamColorHandler(val: CompetitorsEntity): string | null {
     return null;
   }
 
-  const negativeColors = new Set(['ffffff', 'ffff00', 'fcee33', 'fafafc', 'cccccc']);
+  const negativeColors = new Set(['ffffff', 'ffff00', 'fcee33', 'fafafc', 'cccccc', 'ffdc02']);
 
   if (negativeColors.has(color.toLocaleLowerCase()) && negativeColors.has(altColor.toLocaleLowerCase())) {
     return '#445058';
@@ -80,7 +92,11 @@ export function transformUidToId(uid: string | null): string | null {
   return uid.split('~')[1].replace('l:', '');
 }
 
-export function transformIdToUid(sportId: EspnSport | null, leagueId: EspnLeagueId | null, teamId: string | number | null): string {
+export function transformIdToUid(
+  sportId: EspnClient.Sport | null,
+  leagueId: EspnClient.LeagueId | null,
+  teamId: string | number | null
+): string {
   if (!sportId || !leagueId || !teamId) return '';
   return `s:${sportId}~l:${leagueId}~t:${teamId}`;
 }
@@ -116,75 +132,5 @@ export function startingPlayersFilter<T extends FootballPlayer | BaseballPlayer>
 }
 
 export function injuredReservePlayersFilter<T extends FootballPlayer | BaseballPlayer>(players: T[]): T[] {
-  return players.filter(p => p.injuryStatus === EspnPlayerInjuryStatus.IR);
-}
-
-export function transformEspnClientLeagueToLeague(league: EspnClient.League): FantasyLeague {
-  const { id, seasonId, scoringPeriodId, status, settings, transactions } = league;
-  const { matchupPeriodCount, playoffMatchupPeriodLength } = settings.scheduleSettings;
-  const { firstScoringPeriod, finalScoringPeriod } = status;
-
-  return {
-    id: id.toString(),
-    seasonId: seasonId.toString(),
-    scoringPeriodId,
-    firstScoringPeriod,
-    finalScoringPeriod,
-    matchupPeriodCount,
-    playoffMatchupPeriodLength,
-    transactions,
-  };
-}
-
-export function transformEspnClientPlayerToPlayer(
-  playerInfo: EspnClient.PlayerInfo,
-  opts: { sport: EspnSport; leagueId: EspnLeagueId; teamMap: Record<string, string>; positionMap: PositionEntityMap }
-): {
-  id: string;
-  name: string;
-  img: string;
-  teamId: string;
-  teamUid: string;
-  position: string;
-  injured: boolean;
-  team: string;
-  injuryStatus: EspnPlayerInjuryStatus;
-  defaultPositionId: number;
-  percentOwned: number;
-  percentChange: number;
-  percentStarted: number;
-  stats: EspnClient.PlayerStatsByYearMap | null;
-  outlookByWeek: {
-    week: number;
-    outlook: string;
-  }[];
-} {
-  const { sport, leagueId, teamMap, positionMap } = opts;
-  const { proTeamId, defaultPositionId, injuryStatus, injured, outlooks, id } = playerInfo;
-  const { percentOwned, percentChange, percentStarted } = playerInfo?.ownership;
-
-  const league = LeagueNameByEspnLeagueId[leagueId];
-
-  const team = teamMap[proTeamId] as string;
-  const stats = flattenPlayerStats(playerInfo.stats);
-
-  const outlookByWeek = FantasyFootballService.transformOutlook(outlooks);
-
-  return {
-    id: id.toString(),
-    name: playerInfo.fullName,
-    teamId: proTeamId.toString(),
-    teamUid: transformIdToUid(sport, leagueId, proTeamId),
-    position: positionMap[defaultPositionId].abbrev,
-    img: headshotImgBuilder(id, { league }),
-    injured,
-    stats,
-    team,
-    injuryStatus,
-    defaultPositionId,
-    outlookByWeek,
-    percentOwned,
-    percentChange,
-    percentStarted,
-  };
+  return players.filter(p => p.injuryStatus === EspnClient.PlayerInjuryStatus.IR);
 }
