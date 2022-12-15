@@ -20,6 +20,7 @@ export class DataVisScatterComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.graph = {
+      ...this.config,
       data: [this.data],
       layout: { ...this.graphLayout },
     };

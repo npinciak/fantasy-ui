@@ -1,6 +1,5 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { PropertyOfType } from '@app/@shared/generic-state/generic.state';
-import { linearRegression } from '@app/@shared/helpers/graph.helpers';
+import { linearRegression, pickData, transformGraphData } from '@app/@shared/helpers/graph.helpers';
 import { exists, existsFilter } from '@app/@shared/helpers/utils';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
@@ -133,16 +132,37 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
       .filter(p => p.opp != null);
   }
 
+  // @Selector([DailyFantasyNflPlayerSelectors.getPlayerTableData])
+  // static teamOwnPercent(players: NflDfsPlayerTableData[]) {
+  //   const teams = new Map<string, NflDfsPlayerTableData[]>();
+
+  //   players.map(p => {
+  //     if (teams.has(p.teamId)) {
+  //       teams.get(p.teamId)?.push(p);
+  //     } else {
+  //       teams.set(p.teamId, [p]);
+  //     }
+  //   });
+
+  //   console.log(teams);
+
+  //   return;
+  // }
+
   @Selector()
   static getPlayerScatterAxisOptions(): FilterOptions<string>[] {
     return [
       { value: 'pown', label: 'Own %' },
       { value: 'fpts', label: 'Fantasy Pts' },
+      { value: 'fptsPerK', label: 'fptsPerK' },
+      { value: 'ceil', label: 'Ceil' },
+      { value: 'floor', label: 'Floor' },
+      { value: 'salary', label: 'Salary' },
       { value: 'val', label: 'Value' },
       { value: 'smash', label: 'Smash' },
       { value: 'tar', label: 'Targets' },
       { value: 'productionPremium', label: 'Production Premium' },
-    ];
+    ].sort((a, b) => a.label.localeCompare(b.label));
   }
 
   @Selector([DailyFantasyNflPlayerSelectors.getPlayerTableData])
@@ -158,7 +178,7 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
 
       const lR = linearRegression(x, y);
 
-      const text: string[] = pickAxisData(players, p => p.name);
+      const text: string[] = pickData(players, p => p.name);
 
       const fitFrom = Math.min(...x);
       const fitTo = Math.max(...x);
@@ -169,44 +189,19 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
         text,
         mode: 'lines',
         type: 'scatter',
-        name: 'R2='.concat((Math.round(lR.r2 * 10000) / 10000).toString()),
+        // name: 'R2='.concat((Math.round(lR.r2 * 10000) / 10000).toString()),
       };
 
-      const points = transformGraphData(players, { xAxis, yAxis, labels: 'name', graphType: 'scatter' });
+      const points = transformGraphData(players, {
+        x,
+        y,
+        xAxisLabel: xAxis,
+        yAxisLabel: yAxis,
+        labels: 'name',
+        graphType: 'scatter',
+      });
 
       return [{ ...points }, { ...fit }];
     };
   }
-}
-
-function transformGraphData<T, P extends PropertyOfType<T, string | number>>(
-  data: T[],
-  opts: { xAxis: string; yAxis: string; labels: P; graphType?: 'scatter' }
-) {
-  const x = pickAxisData(data, d => d[opts.xAxis]) as number[];
-  const y = pickAxisData(data, d => d[opts.yAxis]) as number[];
-
-  const text: string[] = pickAxisData(data, d => d[opts.labels]) as string[];
-
-  return {
-    x,
-    y,
-    text,
-    type: opts.graphType,
-    mode: 'markers',
-    textfont: {
-      family: 'Roboto',
-    },
-    textposition: 'top center',
-    marker: { size: 12 },
-  };
-}
-
-export function pickAxisData<T, U>(data: T[], getter: (t: T) => any): U[] {
-  return data.map(d => {
-    if (getter(d) !== undefined) {
-      return getter(d);
-    }
-    return [];
-  });
 }
