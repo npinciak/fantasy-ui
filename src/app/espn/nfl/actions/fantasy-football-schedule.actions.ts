@@ -1,4 +1,4 @@
-import { EspnClient } from '@espnClient/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
 
 export namespace FantasyFootballSchedule {
   export const name = 'fantasyFootballSchedule';

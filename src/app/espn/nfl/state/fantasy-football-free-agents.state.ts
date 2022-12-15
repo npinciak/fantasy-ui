@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
-import { EspnFreeAgentAvailabilityStatus } from '@espnClient/espn-client.model';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { FantasyFootballFreeAgents } from '../actions/fantasy-football-free-agents.actions';
 import { FootballPlayer } from '../models/football-player.model';
 import { FantasyFootballLeagueSelectors } from '../selectors/fantasy-football-league.selectors';
 import { FantasyFootballService } from '../services/fantasy-football.service';
 import { FantasyFootballFreeAgentsFilterState } from './fantasy-football-free-agents-filter.state';
+
+import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
 
 @State({ name: FantasyFootballFreeAgents.name })
 @Injectable()
@@ -33,7 +34,9 @@ export class FantasyFootballFreeAgentsState extends GenericState({
     const lineupSlotId = this.store.selectSnapshot(FantasyFootballFreeAgentsFilterState.getSelectedLineupSlotId);
 
     const filterSlotIds = { value: [lineupSlotId] };
-    const filterStatus = { value: [EspnFreeAgentAvailabilityStatus.FreeAgent, EspnFreeAgentAvailabilityStatus.Waivers] }; // { value: availabilityStatus };
+    const filterStatus = {
+      value: [EspnClient.FreeAgentAvailabilityStatus.FreeAgent, EspnClient.FreeAgentAvailabilityStatus.Waivers],
+    }; // { value: availabilityStatus };
     //   const filterSlotIds = { value: lineupSlotIds };
     //   const filterStatsForTopScoringPeriodIds = {
     //     value: 5,
@@ -62,7 +65,7 @@ export class FantasyFootballFreeAgentsState extends GenericState({
         // sortDraftRanks: { sortPriority: 100, sortAsc: pagination.sortDirection === 'asc' ? true : false, value: 'STANDARD' },
       },
     };
-    const freeAgents = await this.service.footballFreeAgents({ leagueId, scoringPeriodId, filter }).toPromise();
+    const freeAgents = await this.service.fetchFreeAgents({ leagueId, scoringPeriodId, filter }).toPromise();
 
     this.store.dispatch([new FantasyFootballFreeAgents.AddOrUpdate(freeAgents)]);
   }

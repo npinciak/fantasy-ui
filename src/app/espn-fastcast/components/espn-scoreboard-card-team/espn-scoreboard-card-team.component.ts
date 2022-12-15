@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { exists } from '@app/@shared/helpers/utils';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
-import { FastCastGameStatus } from '@espnClient/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
 
 @Component({
   selector: 'app-espn-scoreboard-card-team',
@@ -11,7 +11,7 @@ import { FastCastGameStatus } from '@espnClient/espn-client.model';
 export class EspnScoreboardCardTeamComponent {
   @Input() team: FastcastEventTeam;
   @Input() isTournament: boolean;
-  @Input() eventStatus: FastCastGameStatus;
+  @Input() eventStatus: EspnClient.FastCastGameStatus;
 
   get ariaInfo() {
     return {
@@ -20,7 +20,7 @@ export class EspnScoreboardCardTeamComponent {
   }
 
   get opacity() {
-    if (this.eventStatus === FastCastGameStatus.InProgress) {
+    if (this.eventStatus === EspnClient.FastCastGameStatus.InProgress) {
       return '100%';
     }
 
@@ -36,6 +36,6 @@ export class EspnScoreboardCardTeamComponent {
   }
 
   get isPregame() {
-    return this.eventStatus === FastCastGameStatus.Pre;
+    return this.eventStatus === EspnClient.FastCastGameStatus.Pre;
   }
 }

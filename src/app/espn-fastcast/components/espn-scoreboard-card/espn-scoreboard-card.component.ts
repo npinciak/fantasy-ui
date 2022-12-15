@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { tickerDate } from '@app/@shared/helpers/date';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
 import { FASTCAST_DATE_SHORT } from '@app/espn/espn.const';
-import { EspnLeagueId, FastCastGameStatus, FastCastSeasonType } from '@espnClient/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
 
 @Component({
   selector: 'app-espn-scoreboard-card',
@@ -28,7 +28,7 @@ export class EspnScoreboardCardComponent implements OnChanges {
     this.isEventToggled = changes.isEventToggled.currentValue;
   }
 
-  readonly league = EspnLeagueId;
+  readonly league = EspnClient.LeagueId;
 
   toggleExpansionPanel(eventId: string): void {
     this.toggleExpandedEvent.emit(eventId);
@@ -39,11 +39,11 @@ export class EspnScoreboardCardComponent implements OnChanges {
   }
 
   get eventInProgress(): boolean {
-    return this.event.status === FastCastGameStatus.InProgress;
+    return this.event.status === EspnClient.FastCastGameStatus.InProgress;
   }
 
   get isPostseason() {
-    return this.event.seasonType === FastCastSeasonType.Post;
+    return this.event.seasonType === EspnClient.FastCastSeasonType.Post;
   }
 
   get eventSummary() {
@@ -52,7 +52,7 @@ export class EspnScoreboardCardComponent implements OnChanges {
     }
 
     if (!this.event.completed && this.isPostseason) {
-      return `${this.event.note} | ${this.tickerDate}`;
+      return `${this.event.note ? this.event.note : this.event.name} | ${this.tickerDate}`;
     }
 
     if (this.event.completed && this.isPostseason) {

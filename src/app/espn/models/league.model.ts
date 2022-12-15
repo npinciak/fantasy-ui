@@ -2,7 +2,7 @@
  * Base league model
  */
 
-import { EspnLeagueId } from '@espnClient/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
 
 interface LeagueProps {
   id: string;
@@ -16,10 +16,10 @@ interface LeagueProps {
 
 export type League = LeagueProps;
 
-export const LeagueNameByEspnLeagueId: { [key in EspnLeagueId]: string } = {
-  [EspnLeagueId.MLB]: 'MLB',
-  [EspnLeagueId.NCAAF]: 'NCAAF',
-  [EspnLeagueId.NFL]: 'NFL',
-  [EspnLeagueId.NBA]: 'NBA',
-  [EspnLeagueId.NHL]: 'NHL',
+export const LeagueNameByEspnClient: { [key in EspnClient.LeagueId]: string } = {
+  [EspnClient.LeagueId.MLB]: 'MLB',
+  [EspnClient.LeagueId.NCAAF]: 'NCAAF',
+  [EspnClient.LeagueId.NFL]: 'NFL',
+  [EspnClient.LeagueId.NBA]: 'NBA',
+  [EspnClient.LeagueId.NHL]: 'NHL',
 };

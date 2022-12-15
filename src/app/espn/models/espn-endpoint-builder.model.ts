@@ -1,5 +1,5 @@
-import { enumAsList } from '@app/@shared/helpers/enum-as-list';
 import { COMMON_V3, FANTASY_BASE_V2, FANTASY_BASE_V3, ONE_FEED_BASE } from '../espn.const';
+import { enumAsList } from 'sports-ui-sdk/lib/helpers/enum-as-list/enum-as-list';
 
 export class EspnEndpointBuilder {
   private static fantasyBaseV3 = FANTASY_BASE_V3;

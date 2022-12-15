@@ -1,5 +1,5 @@
-import { enumAsList } from '@app/@shared/helpers/enum-as-list';
-import { EspnClient } from '@espnClient/espn-client.model';
+import { enumAsList } from 'sports-ui-sdk/lib/helpers/enum-as-list/enum-as-list';
+import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
 
 export enum BaseballLineupSlot {
   C,

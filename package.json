@@ -38,6 +38,7 @@
     "ngx-skeleton-loader": "^6.0.0",
     "plotly.js-dist-min": "^2.11.1",
     "rxjs": "^6.6.6",
+    "sports-ui-sdk": "file:../sports-ui-sdk",
     "tslib": "^2.4.1",
     "zone.js": "~0.11.4"
   },

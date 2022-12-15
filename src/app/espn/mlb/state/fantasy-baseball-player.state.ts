@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GenericState, GenericStateClass } from '@app/@shared/generic-state/generic.state';
-import { EspnClient } from '@espnClient/espn-client.model';
 import { Action, State, StateContext } from '@ngxs/store';
+import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
 import { MlbService } from '../services/mlb.service';
 
 export class FetchBaseballPlayerNews {

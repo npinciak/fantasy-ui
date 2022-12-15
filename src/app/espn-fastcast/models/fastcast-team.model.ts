@@ -1,5 +1,5 @@
 import { TeamEntity } from '@app/@shared/base-models/base-team.model';
-import { CompetitorsEntity } from '@espnClient/espn-fastcast.model';
+import { EspnFastcastClient } from 'sports-ui-sdk/lib/models/espn-fastcast.model';
 
 type FastcastEventTeamAttr = 'score' | 'color' | 'altColor';
 
@@ -12,5 +12,5 @@ type FastcastEventTeamProperties = FastcastEventTeamPropsStringNullable & {
   record: string | null;
 };
 
-export type FastcastEventTeam = TeamEntity & Pick<CompetitorsEntity, 'uid' | 'rank'> & FastcastEventTeamProperties;
+export type FastcastEventTeam = TeamEntity & Pick<EspnFastcastClient.CompetitorsEntity, 'uid' | 'rank'> & FastcastEventTeamProperties;
 export type FastcastEventTeamMap = Record<string, FastcastEventTeam>;

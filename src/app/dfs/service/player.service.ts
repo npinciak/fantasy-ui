@@ -1,6 +1,5 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { uniqueBy } from '@app/@shared/helpers/unique-by';
 import { exists } from '@app/@shared/helpers/utils';
 import { ApiService } from '@app/@shared/services/api.service';
 import { DfsSlatePlayer, Schedule as ScheduleImport, ScheduleTeamEntity } from '@dfsClient/daily-fantasy-client.model';
@@ -8,6 +7,7 @@ import { NFLClientGridIronPlayer } from '@dfsClient/nfl-client.model';
 import { camelCase } from 'lodash';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
+import { uniqueBy } from 'sports-ui-sdk/lib/helpers/unique-by/unique-by';
 import { DailyFantasyEndpointBuilder } from '../daily-fantasy-endpoint-builder';
 import { PlayersBySlate, SlatePlayer } from '../models/player.model';
 import { Schedule } from '../models/schedule.model';

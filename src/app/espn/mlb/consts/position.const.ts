@@ -1,5 +1,5 @@
 import { PositionEntityMap } from '@app/@shared/base-models/base-position.model';
-import { enumAsList } from '@app/@shared/helpers/enum-as-list';
+import { enumAsList } from 'sports-ui-sdk/lib/helpers/enum-as-list/enum-as-list';
 
 export enum MLB_POSITION {
   POS0,

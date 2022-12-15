@@ -1,12 +1,12 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { PropertyOfType } from '@app/@shared/generic-state/generic.state';
 import { linearRegression } from '@app/@shared/helpers/graph.helpers';
-import { uniqueBy } from '@app/@shared/helpers/unique-by';
 import { exists, existsFilter } from '@app/@shared/helpers/utils';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { SlatePlayer } from '@app/dfs/models/player.model';
 import { DailyFantasyPlayersState } from '@app/dfs/state/daily-fantasy-players.state';
+import { uniqueBy } from 'sports-ui-sdk/lib/helpers/unique-by/unique-by';
 import { NFL_TEAM_ID_MAP } from '../consts/nfl.const';
 import { GridIronPlayer } from '../models/nfl-gridIron.model';
 import { NflDfsPlayerTableData } from '../models/nfl-player.model';
