@@ -1,14 +1,5 @@
 <app-page-layout>
   <div sidebar>
-<<<<<<< HEAD
-    <ng-container *ngIf="isLoading$ | async; else refreshBtn">
-      <mat-spinner diameter="20"></mat-spinner>
-    </ng-container>
-    <ng-template #refreshBtn>
-      <mat-icon class="cursor-pointer" [disabled]="true">refresh</mat-icon>
-    </ng-template>
-=======
->>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
     <app-football-lineup-card
       title="Starters"
       [isLoading]="isLoading$ | async"
