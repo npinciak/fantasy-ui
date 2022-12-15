@@ -11,6 +11,7 @@ import { DfsRoutingModule } from './dfs-routing.module';
 import { DailyFantasyMlbPlayerSlateAttributeState } from './mlb/state/daily-fantasy-mlb-player-slate-attr.state';
 import { DailyFantasyMlbTeamSlateAttributeState } from './mlb/state/daily-fantasy-mlb-team-slate-attr.state';
 import { PlayerTableRankingColumnComponent } from './nfl/components/player-table-ranking-column/player-table-ranking-column.component';
+import { DailyFantasyNflHomeComponent } from './nfl/pages/daily-fantasy-nfl-home/daily-fantasy-nfl-home.component';
 import { DailyFantasyNflGridIronState } from './nfl/state/daily-fantasy-nfl-grid-iron.state';
 import { DailyFantasyNflPlayersSlateAttributeState } from './nfl/state/daily-fantasy-nfl-players-slate-attr.state';
 import { DailyFantasyNflProfilerQBState } from './nfl/state/daily-fantasy-nfl-profiler-qb.state';
@@ -18,7 +19,6 @@ import { DailyFantasyNflProfilerRBState } from './nfl/state/daily-fantasy-nfl-pr
 import { DailyFantasyNflProfilerTEState } from './nfl/state/daily-fantasy-nfl-profiler-te.state';
 import { DailyFantasyNflProfilerWRState } from './nfl/state/daily-fantasy-nfl-profiler-wr.state';
 import { DailyFantasyNflTeamSlateAttributeState } from './nfl/state/daily-fantasy-nfl-team-slate-attr.state';
-import { HomeComponent as DfsHomeComponent } from './pages/home/home.component';
 import { DailyFantasyPlayersState } from './state/daily-fantasy-players.state';
 import { DailyFantasyScheduleState } from './state/daily-fantasy-schedule.state';
 import { DailyFantasySlateAttrState } from './state/daily-fantasy-slate-attr.state';
@@ -47,7 +47,7 @@ const declarations = [
   DfsTeamMatchupTableComponent,
   DfsSlateListComponent,
   PlayerTableRankingColumnComponent,
-  DfsHomeComponent,
+  DailyFantasyNflHomeComponent,
   PlayerTableComponent,
 ];
 

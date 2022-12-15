@@ -35,6 +35,7 @@
       ></app-data-vis-scatter>
     </div>
     <div class="flex-col gap-10">
+      OWN PCT {{ teamOwnPercent$ | async }}
       <ng-container *ngIf="!(slatesEmpty$ | async); else noSlates">
         <ng-container *ngIf="!(playersEmpty$ | async)">
           <div>
