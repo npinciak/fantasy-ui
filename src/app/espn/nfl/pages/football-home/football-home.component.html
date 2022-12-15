@@ -7,21 +7,6 @@
       [filterItems]="matchupPeriodIdFilterOptions$ | async"
       (filterUpdate)="fantasyFootballLeagueFacade.updateCurrentScoringPeriodId($event)"
     ></app-dropdown-filter>
-<<<<<<< HEAD
-    <ng-container *ngFor="let matchup of matchups$ | async">
-      <mat-card>
-        <mat-card-content style="display: grid; grid-template-rows: auto; row-gap: 5px">
-          <app-football-scoreboard-card-team [team]="matchup.awayTeam"></app-football-scoreboard-card-team>
-          <app-football-scoreboard-card-team [team]="matchup.homeTeam"></app-football-scoreboard-card-team>
-        </mat-card-content>
-      </mat-card>
-      <div style="margin: 10px 0"></div>
-    </ng-container>
-  </div>
-  <div main>
-    <app-standings [data]="standings$ | async" [rows]="LEAGUE_STANDINGS_ROWS" [headers]="LEAGUE_STANDINGS_HEADERS"></app-standings>
-  </div>
-=======
 
     <div class="flex-col gap-10">
       <ng-container *ngFor="let matchup of matchups$ | async">
@@ -44,5 +29,4 @@
       (navigateToTeam)="onNavigateToTeam($event)"
     ></app-espn-standings-table>
   </div>
->>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
 </app-page-layout>

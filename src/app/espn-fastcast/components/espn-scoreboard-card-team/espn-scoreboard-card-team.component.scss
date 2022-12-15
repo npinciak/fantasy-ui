@@ -1,19 +1,4 @@
 .wrapper {
-<<<<<<< HEAD
-  display: grid;
-  row-gap: 5px;
-  grid-template-columns: 75% 20% 5%;
-}
-
-.team-wrapper {
-  display: grid;
-  grid-row: auto;
-}
-
-.team-info-wrapper {
-  display: grid;
-  grid-template-columns: 25% 75%;
-=======
   display: flex;
   flex-direction: column;
   flex: 75% 20% 5%;
@@ -28,7 +13,6 @@
   display: flex;
   flex-direction: column;
   flex: 25% 75%;
->>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
 }
 
 .game-score-item {
