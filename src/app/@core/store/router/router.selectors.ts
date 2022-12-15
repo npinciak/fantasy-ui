@@ -3,6 +3,7 @@ import { exists, objectIsEmpty } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { RouterState, RouterStateModel as RouterStateOuterModel } from '@ngxs/router-plugin';
 import { RouterStateModel } from './router-state.model';
+import { UrlFragments } from './url-builder';
 
 export class RouterSelector {
   constructor() {}
@@ -13,18 +14,23 @@ export class RouterSelector {
   }
 
   @Selector([RouterSelector.getRouterStateRoot])
+  static getRouterUrl(state: RouterStateModel | undefined) {
+    return state?.url;
+  }
+
+  @Selector([RouterSelector.getRouterStateRoot])
   static getRouterParams(state: RouterStateModel | undefined) {
     return state?.params;
   }
 
   @Selector([RouterSelector.getRouterStateRoot])
-  static getRouterQueryParams(state: RouterStateModel | undefined) {
-    return state?.queryParams;
+  static getRouterData(state: RouterStateModel | undefined) {
+    return state?.data;
   }
 
   @Selector([RouterSelector.getRouterStateRoot])
-  static getRouteData(state: RouterStateModel | undefined) {
-    return state?.data;
+  static getRouterQueryParams(state: RouterStateModel | undefined) {
+    return state?.queryParams;
   }
 
   @Selector([RouterSelector.getRouterParams])
@@ -37,8 +43,8 @@ export class RouterSelector {
     return objectIsEmpty(params) ? null : (params?.teamId as string);
   }
 
-  @Selector([RouterSelector.getRouterParams])
-  static getSport(params: Params | undefined) {
+  @Selector([RouterSelector.getRouterData])
+  static getSport(params: any) {
     if (!exists(params) || !exists(params.sport)) {
       return;
     }
@@ -47,7 +53,6 @@ export class RouterSelector {
 
   @Selector([RouterSelector.getRouterQueryParams])
   static getDfsSport(queryParams: Params | undefined) {
-    console.log(queryParams);
     if (!exists(queryParams) || !exists(queryParams.sport)) {
       return;
     }
@@ -68,7 +73,8 @@ export class RouterSelector {
     return leagueId || teamId ? true : false;
   }
 
-
-
-  
+  @Selector([RouterSelector.getRouterUrl, RouterSelector.getLeagueId])
+  static showEspnNavigation(url: string, leagueId: string | null) {
+    return url.split('/')[1] === UrlFragments.Espn && exists(leagueId);
+  }
 }

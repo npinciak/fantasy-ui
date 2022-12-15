@@ -25,6 +25,7 @@ export class ShellComponent implements OnInit {
   sport$ = this.routerFacade.sport$;
   leagueId$ = this.routerFacade.leagueId$;
   teamId$ = this.routerFacade.teamId$;
+  isEspn$ = this.routerFacade.isEspn$;
 
   routerParams$ = combineLatest([this.routerFacade.sport$, this.routerFacade.leagueId$, this.routerFacade.teamId$]).pipe(
     map(([sport, leagueId, teamId]) => ({
@@ -37,7 +38,7 @@ export class ShellComponent implements OnInit {
   constructor(private fastcastFacade: EspnFastcastConnectionFacade, readonly routerFacade: RouterFacade, private store: Store) {}
 
   ngOnInit(): void {
-    this.fastcastFacade.connect();
+    this.fastcastFacade.connectWebSocket();
   }
 
   onNavigateToEspnHome() {
@@ -52,8 +53,8 @@ export class ShellComponent implements OnInit {
     this.routerFacade.navigateToTeam(this.sport, this.leagueId, this.teamId);
   }
 
-  onNavigateToEspnFreeAgents(sport: UrlFragments, leagueId: string) {
-    this.routerFacade.navigateToFreeAgents(sport, leagueId);
+  onNavigateToEspnFreeAgents() {
+    this.routerFacade.navigateToFreeAgents(this.sport, this.leagueId);
   }
 
   navigateDfs(sport: UrlFragments) {

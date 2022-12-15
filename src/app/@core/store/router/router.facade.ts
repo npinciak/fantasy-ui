@@ -15,6 +15,8 @@ export class RouterFacade {
   dfsSite$ = select(RouterSelector.getDfsSite);
   dfsSport$ = select(RouterSelector.getDfsSport);
 
+  isEspn$ = select(RouterSelector.showEspnNavigation);
+
   constructor(private store: Store, private router: Router) {}
 
   get leagueId(): string | null {
@@ -54,8 +56,6 @@ export class RouterFacade {
   }
 
   navigateToEspnFootballTeam(leagueId: string | null, teamId: string | null) {
-    console.log(UrlBuilder.espnNflTeam(UrlFragments.NFL, leagueId, teamId));
-
     this.navigate(UrlBuilder.espnNflTeam(UrlFragments.NFL, leagueId, teamId));
   }
 
