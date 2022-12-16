@@ -1,6 +1,5 @@
 <mat-card>
   <mat-card-content>
-    <app-scrollable-table>
       <table class="ui-w-100" mat-table [dataSource]="dataSource" matSortDirection="asc" matSort>
         <ng-container *ngFor="let col of rows">
           <ng-container [matColumnDef]="col?.columnDef">
@@ -23,6 +22,5 @@
         <tr mat-header-row *matHeaderRowDef="headers"></tr>
         <tr mat-row *matRowDef="let team; columns: headers"></tr>
       </table>
-    </app-scrollable-table>
   </mat-card-content>
 </mat-card>

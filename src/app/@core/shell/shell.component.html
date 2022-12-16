@@ -5,8 +5,8 @@
   <span>{{ pageTitle }} </span>
   <span class="shell-spacer"></span>
 </mat-toolbar>
-<mat-drawer-container style="height: 100%">
-  <mat-drawer #drawer style="width: 300px">
+<mat-drawer-container>
+  <mat-drawer #drawer>
     <mat-nav-list>
       <a mat-list-item (click)="onNavigateToEspnHome()">ESPN</a>
       <ng-container *ngIf="isEspn$ | async">

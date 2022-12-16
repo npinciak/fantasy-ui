@@ -25,37 +25,48 @@
       </mat-card-content>
     </mat-card>
   </div>
-  <div main class="flex-col">
-    <div>
-      <app-dropdown-filter
-        [isMobile]="isMobile$ | async"
-        [selectedOption]="xAxisStat$ | async"
-        title="xAxis"
-        [filterItems]="FOOTBALL_STATS_FILTER"
-        (filterUpdate)="onAxisXChange($event)"
-      ></app-dropdown-filter>
+  <div main class="flex-col gap-25">
+    <div class="flex-row gap-25">
+      <mat-card>
+        <mat-card-content>
+          <app-dropdown-filter
+            [isMobile]="isMobile$ | async"
+            [selectedOption]="xAxisStat$ | async"
+            title="xAxis"
+            [filterItems]="FOOTBALL_STATS_FILTER"
+            (filterUpdate)="onAxisXChange($event)"
+          >
+          </app-dropdown-filter>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-content>
+          <app-dropdown-filter
+            [isMobile]="isMobile$ | async"
+            [selectedOption]="yAxisStat$ | async"
+            title="yAxis"
+            [filterItems]="FOOTBALL_STATS_FILTER"
+            (filterUpdate)="onAxisYChange($event)"
+          ></app-dropdown-filter>
+        </mat-card-content>
+      </mat-card>
     </div>
     <div>
-      <app-dropdown-filter
-        [isMobile]="isMobile$ | async"
-        [selectedOption]="yAxisStat$ | async"
-        title="yAxis"
-        [filterItems]="FOOTBALL_STATS_FILTER"
-        (filterUpdate)="onAxisYChange($event)"
-      ></app-dropdown-filter>
+      <app-data-vis-scatter
+        [xAxisFilterTitle]="xAxisStat$ | async"
+        [yAxisFilterTitle]="yAxisStat$ | async"
+        [chartData]="freeAgentsScatter$ | async"
+      ></app-data-vis-scatter>
     </div>
-    <app-data-vis-scatter
-      title=""
-      [xAxisFilterTitle]="xAxisStat$ | async"
-      [yAxisFilterTitle]="yAxisStat$ | async"
-      [chartData]="freeAgentsScatter$ | async"
-    ></app-data-vis-scatter>
-    <app-espn-stats-table
-      [data]="tableDataWithTeams$ | async"
-      [dataColumns]="(tableConfig$ | async).rows"
-      [headers]="(tableConfig$ | async).headers"
-      [statsMap]="FOOTBALL_STATS_MAP"
-    >
-    </app-espn-stats-table>
+    <div>
+      <app-espn-stats-table
+        [data]="tableDataWithTeams$ | async"
+        [dataColumns]="(tableConfig$ | async).rows"
+        [headers]="(tableConfig$ | async).headers"
+        [statsMap]="FOOTBALL_STATS_MAP"
+      >
+      </app-espn-stats-table>
+    </div>
   </div>
 </app-page-layout>
