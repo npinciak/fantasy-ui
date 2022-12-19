@@ -1,16 +1,5 @@
 import { Selector } from '../models/typed-selector';
-import { GenericStateModel } from './generic.model';
-import { GenericStateClass } from './generic.state';
-
-export interface GenericSelectorClass<T> {
-  new (...args: any[]): any;
-  stateClass: GenericStateClass<T>;
-  getMap(state: GenericStateModel<T>): Record<string, T>;
-  getById(map: Record<string, T>): (id: string | null) => T | null;
-  getList(map: Record<string, T>): T[];
-  getIdList(map: Record<string, T>): string[];
-  getIdSet(list: string[]): Set<string>;
-}
+import { GenericSelectorClass, GenericStateClass, GenericStateModel } from './generic.model';
 
 export function GenericSelector<EntityType>(stateClass: GenericStateClass<EntityType>): GenericSelectorClass<EntityType> {
   class GenericSelectorBase {

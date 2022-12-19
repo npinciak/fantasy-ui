@@ -1,12 +1,4 @@
-export interface GenericPayloadActionClass<T> {
-  type: string;
-  new (payload: T[]): { payload: T[] };
-}
-
-export interface GenericPayloadClearActionClass {
-  type: string;
-  new (): unknown;
-}
+import { IGenericActionsClass } from './generic.model';
 
 export function GenericActions<T>({ stateName }: { stateName: string }): IGenericActionsClass<T> {
   class GenericActionsClass {
@@ -24,11 +16,4 @@ export function GenericActions<T>({ stateName }: { stateName: string }): IGeneri
   }
 
   return GenericActionsClass;
-}
-
-interface IGenericActionsClass<T> {
-  new (...args: any[]): any;
-  stateName: string;
-  AddOrUpdate: GenericPayloadActionClass<T>;
-  ClearAndAdd: GenericPayloadActionClass<T>;
 }

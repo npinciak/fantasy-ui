@@ -1,14 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
 import { patchMap, setMap } from '../operators';
-import { GenericPayloadActionClass } from './generic.actions';
-import { GenericStateModel } from './generic.model';
-
-export interface GenericStateClass<T> {
-  new (...args: any[]): any;
-  addOrUpdate: GenericPayloadActionClass<T>;
-  clearAndAdd: GenericPayloadActionClass<T>;
-}
+import { GenericPayloadActionClass, GenericStateClass, GenericStateModel } from './generic.model';
 
 export type PropertyOfType<T, U> = { [K in keyof T]: T[K] extends U ? K : never }[keyof T];
 

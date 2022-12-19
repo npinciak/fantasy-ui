@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
-import { GenericFacade } from './generic.model';
-import { GenericSelectorClass } from './generic.selector';
+import { GenericFacade, GenericSelectorClass } from './generic.model';
 
 export function GenericFacade<T>(selectorClass: GenericSelectorClass<T>): {
   new (...args: any[]): GenericFacade<T>;

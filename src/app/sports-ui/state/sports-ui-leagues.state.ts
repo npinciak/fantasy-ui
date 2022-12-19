@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { GenericState, GenericStateClass } from '@app/@shared/generic-state/generic.state';
+import { GenericStateClass } from '@app/@shared/generic-state/generic.model';
+import { GenericState } from '@app/@shared/generic-state/generic.state';
 import { SchemeHeaderExpertService } from '@app/sports-ui/service/scheme-header-expert.service';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { SportsUiLeagues } from '../../sports-ui/actions/sports-ui-leagues.actions';
