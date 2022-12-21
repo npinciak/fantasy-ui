@@ -25,6 +25,10 @@ export class SupaService {
     this.supabase = createClient<Database>(environment.supaUrl, environment.supaKey);
   }
 
+  signIn(email: string, password: string) {
+    return this.supabase.auth.signInWithPassword({ email, password });
+  }
+
   async fetchLeagues() {
     return await this.supabase
       .from('Leagues')

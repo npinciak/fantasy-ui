@@ -9,13 +9,14 @@ import { NgxsModule } from '@ngxs/store';
 import { environment } from 'src/environments/environment';
 import { httpInterceptorProviders } from './@core/interceptors';
 import { ShellModule } from './@core/shell/shell.module';
+import { AuthenticationFormState } from './@core/store/authentication-form/authentication-form.state';
 import { CustomRouterStateSerializer } from './@core/store/router/router-state.serializer';
 import { RouterState } from './@core/store/router/router.state';
 import { SharedModule } from './@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-const states = [RouterState];
+const states = [AuthenticationFormState, RouterState];
 @NgModule({
   declarations: [AppComponent],
   imports: [
