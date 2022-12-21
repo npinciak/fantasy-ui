@@ -38,6 +38,3 @@ export class AuthenticationFormState {
     }
   }
 }
-
-// email: 'nathan.pinciak@outlook.com',
-//       password: 'Ah$7ViRoX53zyU'
