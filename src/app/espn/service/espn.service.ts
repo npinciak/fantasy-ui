@@ -120,18 +120,16 @@ export class EspnService {
    *
    * @returns
    */
-  fetchStaticScoreboard(): Observable<FastcastTransform> {
+  fetchStaticScoreboard(opts?: {
+    sport: string | null;
+    league: string | null;
+    weeks: number | null;
+    seasontype: number | null;
+  }): Observable<FastcastTransform> {
     const endpoint = new EspnEndpointBuilder();
-    // .set('weeks', 13).set('seasontype', 2)
-    const params = new HttpParams()
-      .set('sport', 'football')
-      .set('league', 'nfl')
-      .set('weeks', 10)
-      .set('seasontype', 2)
-      .set('contentorigin', 'espn');
 
     return this.api
-      .get<EspnFastcastClient.EspnClientFastcast>(endpoint.staticScoreboard, { params })
+      .get<EspnFastcastClient.EspnClientFastcast>(endpoint.staticScoreboard)
       .pipe(map(res => EspnTransformers.clientFastcastToFastcast(res)));
   }
 
