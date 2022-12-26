@@ -32,6 +32,18 @@ export class FantasyFootballService {
   }
 
   /**
+   * Return player news by Id
+   *
+   * @param playerId
+   * @returns
+   */
+  fetchPlayerNews(playerId): Observable<EspnClient.PlayerNewsFeedEntity[]> {
+    return this.espnClient
+      .fetchFantasyPlayerNewsBySport({ sport: FantasySports.Football, lookbackDays: '30', playerId })
+      .pipe(map(res => res.feed));
+  }
+
+  /**
    * Return fantasy football league free agents
    * @param payload
    * @returns
