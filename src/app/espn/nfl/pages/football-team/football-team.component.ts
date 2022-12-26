@@ -5,8 +5,10 @@ import { LayoutService } from '@app/@shared/services/layout.service';
 import { EspnPlayerDialogComponent } from '@app/espn/components/espn-player-dialog/espn-player-dialog.component';
 import { FOOTBALL_STAT_PERIOD_FILTER_OPTIONS, YearToStatTypePeriod } from '@app/espn/const/stat-period.const';
 import { StatTypePeriodId } from '@app/espn/models/espn-stats.model';
+import { Store } from '@ngxs/store';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { FantasyFootballPlayerNews } from '../../actions/fantasy-football-player-news.actions';
 import { FOOTBALL_ROSTER_HEADERS_BY_POS, FOOTBALL_ROSTER_ROWS_BY_POS } from '../../consts/fantasy-football-table.const';
 import { NFL_POSITION_MAP } from '../../consts/position.const';
 import { FOOTBALL_STATS_MAP } from '../../consts/stats.const';
@@ -41,7 +43,7 @@ export class FootballTeamComponent implements OnInit {
   scoringPeriodId$ = new BehaviorSubject(YearToStatTypePeriod({ periodType: StatTypePeriodId.Season, dateObj: new Date() }));
   selectedPosition$ = new BehaviorSubject(FootballPosition.QB);
 
-  statPeriodFilterOptions$ = this.footballLeagueFacade.statPeriodFilterOptions$;
+  statPeriodFilterOptions$ = this.footballLeagueFacade.scoringPeriodFilterOptions$;
 
   starters$ = combineLatest([this.footballTeamFacade.starters$, this.teamId$]).pipe(map(([starters, teamId]) => starters(teamId)));
 
@@ -83,7 +85,8 @@ export class FootballTeamComponent implements OnInit {
     readonly footballTeamFacade: FantasyFootballTeamFacade,
     readonly routerFacade: RouterFacade,
     private dialog: MatDialog,
-    private layoutService: LayoutService
+    private layoutService: LayoutService,
+    private store: Store
   ) {}
 
   ngOnInit(): void {}
@@ -101,6 +104,7 @@ export class FootballTeamComponent implements OnInit {
   }
 
   onPlayerClick(player: FootballPlayer) {
+    this.store.dispatch([new FantasyFootballPlayerNews.Fetch({ playerId: player.id })]);
     this.dialog.open(EspnPlayerDialogComponent, {
       data: {
         player,

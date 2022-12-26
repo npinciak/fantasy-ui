@@ -9,6 +9,8 @@ import { FantasyFootballTeamSelectors } from '../selectors/fantasy-football-team
 export class FantasyFootballTeamFacade extends GenericFacade(FantasyFootballTeamSelectors) {
   teamPositions$ = select(FantasyFootballTeamSelectors.getTeamPositionsCount);
 
+  teamFilterOptions$ = select(FantasyFootballTeamSelectors.getTeamFilterOptions);
+
   starters$ = select(FantasyFootballTeamSelectors.getTeamStarters);
   startersPoints$ = select(FantasyFootballTeamSelectors.getTeamStartersPoints);
   // startersLineupCard$ = select(FantasyFootballTeamSelectors.getTeamStartersLineupCard);

@@ -57,7 +57,7 @@ export class FantasyFootballLeagueSelectors {
   }
 
   @Selector([FantasyFootballLeagueSelectors.getCurrentScoringPeriodId, FantasyFootballLeagueSelectors.getCurrentStatTypePeriod])
-  static statPeriodFilters(week: number, currentScoringPeriodId: string) {
+  static scoringPeriodFilters(week: number, currentScoringPeriodId: string) {
     return [
       ...FOOTBALL_STAT_PERIOD_FILTER_OPTIONS,
       {

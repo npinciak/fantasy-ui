@@ -8,6 +8,7 @@ import { FantasyBaseballResolver } from './mlb/resolvers/mlb.resolver';
 import { FootballFreeAgentsComponent } from './nfl/pages/football-free-agents/football-free-agents.component';
 import { FootballHomeComponent } from './nfl/pages/football-home/football-home.component';
 import { FootballTeamComponent } from './nfl/pages/football-team/football-team.component';
+import { FantasyFootballFreeAgentsResolver } from './nfl/resolvers/fantasy-football-free-agents.resolver';
 import { FantasyFootballLeagueResolver } from './nfl/resolvers/fantasy-football-league.resolver';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 
@@ -29,6 +30,7 @@ const nflRoutes = {
         },
         {
           path: UrlFragments.FreeAgents,
+          resolve: [FantasyFootballFreeAgentsResolver],
           children: [
             {
               path: UrlFragments.Empty,
