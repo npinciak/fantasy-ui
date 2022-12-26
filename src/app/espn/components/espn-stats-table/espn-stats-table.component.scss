@@ -1,13 +1,18 @@
-// .mat-column-name {
-//   width: 250px;
-// }
-
-td.mat-cell:first-of-type {
-  padding-left: 10px;
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+  padding-left: 10px !important;
+  width: 150px;
+  min-width: 150px;
 }
 
 .mat-sort-header-container:hover,
 .mat-sort-header-container:active,
 .mat-sort-header-container:focus {
   color: #000066;
+}
+
+td.mat-cell {
+  width: 55px;
+  min-width: 65px;
 }
