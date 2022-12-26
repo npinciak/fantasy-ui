@@ -73,6 +73,7 @@ export enum UrlFragments {
   NFL = 'nfl',
   Team = 'team',
   FreeAgents = 'free-agents',
+  MyProfile = 'my-profile',
 }
 
 export enum UrlParams {
@@ -87,3 +88,8 @@ export enum UrlQueryParams {
   Sport = 'sport',
   Slate = 'slate',
 }
+
+export const SportToUrlFragmentSportMap = {
+  ffl: UrlFragments.NFL,
+  flb: UrlFragments.MLB,
+};

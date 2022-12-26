@@ -14,7 +14,7 @@ const routes: Routes = [
       loadChildren: () => import('./dfs/dfs.module').then(m => m.DfsModule),
     },
     {
-      path: 'my-profile',
+      path: UrlFragments.MyProfile,
       loadChildren: () => import('./sports-ui/sports-ui.module').then(m => m.SportsUiModule),
     },
     { path: '**', redirectTo: '/espn', pathMatch: 'full' },
