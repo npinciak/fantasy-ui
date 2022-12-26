@@ -5,6 +5,11 @@ export namespace AuthenticationForm {
     static readonly type = `[${name}] SignIn`;
   }
 
+  export class UpdateUser {
+    static readonly type = `[${name}] UpdateUser`;
+    constructor(public payload: { email?: string; password?: string }) {}
+  }
+
   export class SetEmail {
     static readonly type = `[${name}] SetEmail`;
     constructor(public payload: { email: string | null }) {}

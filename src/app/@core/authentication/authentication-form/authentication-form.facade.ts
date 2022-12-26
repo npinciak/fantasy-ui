@@ -8,9 +8,9 @@ import { AuthenticationFormSelector } from './authentication-form.selectors';
   providedIn: 'root',
 })
 export class AuthenticationFormFacade {
-  email = select(AuthenticationFormSelector.getEmail);
-  password = select(AuthenticationFormSelector.getPassword);
-  isFormValid = select(AuthenticationFormSelector.getIsFormValid);
+  email$ = select(AuthenticationFormSelector.getEmail);
+  password$ = select(AuthenticationFormSelector.getPassword);
+  isFormValid$ = select(AuthenticationFormSelector.getIsFormValid);
 
   constructor(private store: Store) {}
 
