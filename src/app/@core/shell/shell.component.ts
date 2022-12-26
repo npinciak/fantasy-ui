@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { UrlBuilder, UrlFragments, UrlQueryParams } from '@app/@core/store/router/url-builder';
 import { EspnFastcastConnectionFacade } from '@app/espn-fastcast/facade/espn-fastcast-connection.facade';
 import { Store } from '@ngxs/store';
@@ -35,10 +36,18 @@ export class ShellComponent implements OnInit {
     }))
   );
 
-  constructor(private fastcastFacade: EspnFastcastConnectionFacade, readonly routerFacade: RouterFacade, private store: Store) {}
+  constructor(
+    private fastcastFacade: EspnFastcastConnectionFacade,
+    readonly routerFacade: RouterFacade,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.fastcastFacade.connectWebSocket();
+  }
+
+  onNavigateToMyProfile() {
+    this.routerFacade.navigateToMyProfile();
   }
 
   onNavigateToEspnHome() {
@@ -46,15 +55,11 @@ export class ShellComponent implements OnInit {
   }
 
   onNavigateToEspnLeagueHome() {
-    this.routerFacade.navigateToLeagueHome(this.sport, this.leagueId);
-  }
-
-  onNavigateToEspnTeam() {
-    this.routerFacade.navigateToTeam(this.sport, this.leagueId, this.teamId);
+    this.routerFacade.navigateToLeagueHome(this.routerFacade.sport, this.routerFacade.leagueId);
   }
 
   onNavigateToEspnFreeAgents() {
-    this.routerFacade.navigateToFreeAgents(this.sport, this.leagueId);
+    this.routerFacade.navigateToFreeAgents(this.routerFacade.sport, this.routerFacade.leagueId);
   }
 
   navigateDfs(sport: UrlFragments) {
