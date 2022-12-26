@@ -1,5 +1,6 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { exists } from '@app/@shared/helpers/utils';
+import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { benchPlayersFilter, injuredReservePlayersFilter, startingPlayersFilter } from '@app/espn/espn-helpers';
 import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
@@ -10,6 +11,11 @@ import { FootballTeam } from '../models/football-team.model';
 import { FantasyFootballTeamState } from '../state/fantasy-football-teams.state';
 
 export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootballTeamState) {
+  @Selector([FantasyFootballTeamSelectors.getList])
+  static getTeamFilterOptions(teams: FootballTeam[]): FilterOptions<string>[] {
+    return teams.map(t => ({ value: t.id, label: t.name }));
+  }
+
   @Selector([FantasyFootballTeamSelectors.getById])
   static getRosterByTeamId(getById: (id: string | null) => FootballTeam | null): (id: string | null) => FootballPlayer[] {
     return (id: string | null) => {
@@ -23,31 +29,6 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
   static getTeamStarters(getRosterByTeamId: (id: string | null) => FootballPlayer[]): (id: string | null) => FootballPlayer[] {
     return (id: string | null) => startingPlayersFilter(getRosterByTeamId(id), FootballLineup.LineupSlotMap);
   }
-
-  // @Selector([FantasyFootballLeagueSelectors.getCurrentStatTypePeriod, FantasyFootballTeamSelectors.getTeamStarters])
-  // static getTeamStartersLineupCard(
-  //   currentStatTypePeriod: string,
-  //   getTeamStarters: (id: string | null) => FootballPlayer[]
-  // ): (id: string | null) => FootballPlayerLineupCard[] {
-  //   return (id: string | null) =>
-  //     getTeamStarters(id).map(p => {
-  //       const { id, name, img, team, teamId, teamUid, position, injuryStatus } = p;
-
-  //       const projectedPoints = statsValidator(p.stats, currentStatTypePeriod).appliedTotal;
-
-  //       return {
-  //         id,
-  //         name,
-  //         img,
-  //         team,
-  //         teamId,
-  //         teamUid,
-  //         position,
-  //         injuryStatus,
-  //         projectedPoints,
-  //       };
-  //     });
-  // }
 
   @Selector([FantasyFootballTeamSelectors.getTeamStarters])
   static getTeamStartersPoints(getTeamStarters: (id: string | null) => FootballPlayer[]): (id: string | null) => number {
@@ -73,7 +54,7 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
   static getTeamStats(getRosterByTeamId: (id: string | null) => FootballPlayer[]) {
     return (id: string | null, statPeriodId: string): FootballPlayer[] =>
       getRosterByTeamId(id).map(p => {
-        const stats = exists(p.stats) && exists(p.stats[statPeriodId]) ? p.stats[statPeriodId] : {};
+        const stats = statsValidator(p.stats, statPeriodId);
 
         return {
           ...p,
@@ -114,5 +95,5 @@ function statsValidator(stats: EspnClient.PlayerStatsByYearMap | null, statPerio
     return stats[statPeriod];
   }
 
-  return {} as EspnClient.PlayerStatsYear;
+  return {};
 }
