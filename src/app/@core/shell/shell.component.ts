@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UrlBuilder, UrlFragments, UrlQueryParams } from '@app/@core/store/router/url-builder';
 import { EspnFastcastConnectionFacade } from '@app/espn-fastcast/facade/espn-fastcast-connection.facade';
-import { Store } from '@ngxs/store';
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RouterFacade } from '../store/router/router.facade';
@@ -43,7 +42,13 @@ export class ShellComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fastcastFacade.connectWebSocket();
+    this.fastcastFacade.fetchStaticFastcast({
+      sport: null,
+      league: null,
+      weeks: null,
+      seasontype: null,
+    });
+    // this.fastcastFacade.connectWebSocket();
   }
 
   onNavigateToMyProfile() {
