@@ -1,16 +1,4 @@
+import { GenericActions } from '@app/@shared/generic-state/generic.actions';
 import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
 
-export namespace FantasyFootballTransaction {
-  export const name = 'fantasyFootballTransaction';
-  type Entity = EspnClient.LeagueTransaction;
-
-  export class AddOrUpdate {
-    public static readonly type = `[${name}}] AddOrUpdate`;
-    constructor(public payload: Entity[]) {}
-  }
-
-  export class ClearAndAdd {
-    public static readonly type = `[${name}}] ClearAndAdd`;
-    constructor(public payload: Entity[]) {}
-  }
-}
+export class FantasyFootballTransaction extends GenericActions<EspnClient.LeagueTransaction>({ stateName: 'fantasyFootballTransaction' }) {}
