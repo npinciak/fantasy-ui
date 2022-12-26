@@ -4,4 +4,5 @@ export interface SportsUiClientLeague {
   leagueId: string;
   sport: string;
   createdAt: string;
+  ownerId: string;
 }

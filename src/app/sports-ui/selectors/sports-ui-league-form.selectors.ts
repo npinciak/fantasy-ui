@@ -28,7 +28,7 @@ export class SportsUiLeagueFormSelectors {
   }
 
   @Selector([SportsUiLeagueFormSelectors.getSportValid, SportsUiLeagueFormSelectors.getLeagueIdValid])
-  static getIsDirty(sportValid: boolean, leagueIdValid): boolean {
+  static getIsDirty(sportValid: boolean, leagueIdValid: boolean): boolean {
     return !sportValid || !leagueIdValid;
   }
 }

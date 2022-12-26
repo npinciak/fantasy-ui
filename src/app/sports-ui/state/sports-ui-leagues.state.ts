@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { GenericStateClass } from '@app/@shared/generic-state/generic.model';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
-import { SchemeHeaderExpertService } from '@app/sports-ui/service/scheme-header-expert.service';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { SportsUiLeagues } from '../../sports-ui/actions/sports-ui-leagues.actions';
 import { SportsUiLeagueForm } from '../actions/sports-ui-league-form.actions';
 import { SportsUiClientLeague } from '../models/sports-ui-league.model';
 import { SportsUiLeagueFormSelectors } from '../selectors/sports-ui-league-form.selectors';
-import { SupaService } from '../service/supa.service';
+import { LeaguesClientService } from '../service/leagues-client.service';
 
 @State({ name: SportsUiLeagues.name })
 @Injectable()
@@ -16,16 +15,13 @@ export class SportsUiLeaguesState extends GenericState({
   addOrUpdate: SportsUiLeagues.SetLeagues,
   clearAndAdd: SportsUiLeagues.ClearAndAddLeagues,
 }) {
-  constructor(private supaService: SupaService, private apiService: SchemeHeaderExpertService, private store: Store) {
+  constructor(private leagueClientService: LeaguesClientService, private store: Store) {
     super();
   }
 
   @Action(SportsUiLeagues.FetchLeagues)
   async fetchEspnLeagues({ dispatch }: StateContext<GenericStateClass<SportsUiClientLeague>>): Promise<void> {
-    const res = await this.supaService.fetchLeagues();
-
-    const leagues = res;
-
+    const leagues = await this.leagueClientService.getAll();
     dispatch([new SportsUiLeagues.ClearAndAddLeagues(leagues)]);
   }
 
@@ -35,7 +31,7 @@ export class SportsUiLeaguesState extends GenericState({
     { payload: { leagueId } }: SportsUiLeagues.DeleteLeague
   ): Promise<void> {
     try {
-      await this.apiService.deleteLeague({ leagueId }).toPromise();
+      await this.leagueClientService.delete(leagueId);
     } catch (error) {}
     dispatch([new SportsUiLeagues.FetchLeagues()]);
   }
@@ -45,7 +41,7 @@ export class SportsUiLeaguesState extends GenericState({
     const { leagueSport, leagueId, leagueYear } = this.store.selectSnapshot(SportsUiLeagueFormSelectors.getForm);
 
     if (leagueId && leagueSport && leagueYear) {
-      await this.api.createLeague({ leagueSport, leagueId, leagueYear, leagueName: leagueSport }).toPromise();
+      await this.leagueClientService.create({ leagueSport, leagueId, leagueYear, leagueName: leagueSport });
       this.store.dispatch([new SportsUiLeagues.FetchLeagues(), new SportsUiLeagueForm.Reset()]);
     }
   }
