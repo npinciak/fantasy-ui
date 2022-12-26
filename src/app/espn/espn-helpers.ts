@@ -20,7 +20,7 @@ export function includeSports(id: string): boolean {
  * @returns boolean
  */
 export function includeLeagues(id: string): boolean {
-  return new Set(['10', '28', '46', '90', '775', '776', '20296', '19483']).has(id);
+  return new Set(['10', '28', '46', '90', '775', '776', '20296']).has(id);
 }
 
 /**
@@ -29,7 +29,7 @@ export function includeLeagues(id: string): boolean {
  * @returns boolean
  */
 export function excludeLeagues(id: string): boolean {
-  return new Set(['3923', '8097', '20226', '54', '19834']).has(id);
+  return new Set(['3923', '8097', '20226', '54', '19834', '19483']).has(id);
 }
 
 /**

@@ -17,6 +17,37 @@ export function currentDate(delim?: string): string {
   return `${year}${delimeter}${formatMonth}${delimeter}${formatDay}`;
 }
 
+export function espnDateFormatter(date?: Date, delim?: string): string {
+  const _date = date ? date : new Date();
+
+  const day = _date.getDate();
+  const month = _date.getMonth() + 1;
+  const year = _date.getFullYear().toString();
+
+  const formatMonth = month <= 9 ? `0${month}` : month.toString();
+  const formatDay = day <= 9 ? `0${day}` : day.toString();
+
+  const delimeter = delim ? delim : '';
+
+  return `${year}${delimeter}${formatMonth}${delimeter}${formatDay}`;
+}
+
+/**
+ * Helper function for date range for espn fantasy games
+ * @returns Date in format yyyymmdd-yyyymmdd
+ */
+export function espnDateRange(lookAheadDays?: number): string {
+  const startDate = espnDateFormatter();
+
+  const endDate = new Date();
+
+  if (lookAheadDays != undefined) {
+    endDate.setDate(endDate.getDate() + lookAheadDays);
+  }
+
+  return `${startDate}-${espnDateFormatter(endDate)}`;
+}
+
 /**
  * Add hours to specific date/time
  * @param date
@@ -34,7 +65,7 @@ export function addHoursToDate(date: Date, hours: number): Date {
  * @param date
  * @returns
  */
-export function subtractYears(numOfYears, date = new Date()): Date {
+export function subtractYears(numOfYears: number, date = new Date()): Date {
   return new Date(date.setFullYear(date.getFullYear() - numOfYears));
 }
 
