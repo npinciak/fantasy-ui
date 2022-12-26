@@ -5,14 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { cellDataAccessor } from '@app/@shared/helpers/utils';
 import { TableColumnDataType } from '@app/@shared/models/table-columns.model';
 import { NflDfsPlayerTableData } from '@app/dfs/nfl/models/nfl-player.model';
-
-enum FilterType {
-  team,
-  pos,
-  name,
-  statGroup,
-  salary,
-}
+import { FilterType, TableFilter } from '@app/dfs/nfl/models/nfl-table.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-player-table',
@@ -23,7 +17,10 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
   @Input() dataRows: any[];
   @Input() dataHeaders: any[];
 
-  @Input() teamMap: any;
+  @Input() teamMap: Record<number, string>;
+
+  @Input() filter!: string;
+
   @Input() teamFilter: string;
   @Input() positionFilter: string;
   @Input() statGroupFilter: string;
@@ -32,14 +29,16 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
   readonly TableColumnDataType = TableColumnDataType;
-  filter = '';
+  // filter = '';
   filterTypeSelected: FilterType;
   readonly filterType = FilterType;
 
-  dataSource: MatTableDataSource<unknown>;
+  dataSource: MatTableDataSource<NflDfsPlayerTableData>;
+
+  isLoading$ = new BehaviorSubject(false);
 
   constructor() {
-    this.dataSource = new MatTableDataSource<unknown>();
+    this.dataSource = new MatTableDataSource<NflDfsPlayerTableData>();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -47,20 +46,7 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
       this.dataSource.data = changes.data.currentValue;
     }
 
-    if (changes.teamFilter) {
-      this.dataSource.filter = changes.teamFilter.currentValue;
-      this.filterTypeSelected = FilterType.team;
-    }
-
-    if (changes.positionFilter) {
-      this.dataSource.filter = changes.positionFilter.currentValue;
-      this.filterTypeSelected = FilterType.pos;
-    }
-
-    if (changes.statGroupFilter) {
-      this.dataSource.filter = changes.statGroupFilter.currentValue;
-      this.filterTypeSelected = FilterType.statGroup;
-    }
+    this.dataSource.filter = changes?.filter?.currentValue;
   }
 
   ngAfterViewInit(): void {
@@ -75,50 +61,38 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
     this.dataSource.filterPredicate = this.dataSourceFilter();
   }
 
-  // applyFilter(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value;
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-  // }
+  dataSourceFilter(): (data: NflDfsPlayerTableData, filterJson: string) => boolean {
+    return (data, filterJson): boolean => {
+      if (filterJson === '') {
+        return true;
+      }
 
-  // filterChange(change: { value: string }, filterType: FilterType) {
-  //   this.filter = change.value;
-  //   this.filterTypeSelected = filterType;
-  //   this.dataSource.filter = change.value;
-  // }
-
-  dataSourceFilter(): (data: NflDfsPlayerTableData, filterVal: string) => boolean {
-    return (data, filterVal): boolean => {
-      // if (filterVal === '') {
-      //   return true;
-      // }
-
+      const filter: TableFilter = JSON.parse(filterJson);
       let textMatches = false;
 
-      if (this.filterTypeSelected in FilterType) {
-        switch (this.filterTypeSelected) {
-          case FilterType.name:
-            if (data.name) {
-              textMatches = data.name.includes(filterVal);
-            }
-            break;
-          case FilterType.team:
-            if (data.teamId) {
-              textMatches = data.teamId === filterVal;
-            }
-            break;
-          case FilterType.pos:
-            if (data.position) {
-              textMatches = data.position.includes(filterVal);
-            }
-            break;
-          case FilterType.statGroup:
-            // if (data.statGroupFilter) {
-            //   textMatches = data.statGroup.includes(filterVal);
-            // }
-            break;
-          default:
-            break;
-        }
+      switch (filter.filterType) {
+        case FilterType.name:
+          if (data.name) {
+            textMatches = data.name.includes(filter.value);
+          }
+          break;
+        case FilterType.team:
+          if (data.teamId) {
+            textMatches = data.teamId === filter.value;
+          }
+          break;
+        case FilterType.pos:
+          if (data.position) {
+            textMatches = data.position.includes(filter.value);
+          }
+          break;
+        case FilterType.statGroup:
+          // if (data.statGroupFilter) {
+          //   textMatches = data.statGroup.includes(filterVal);
+          // }
+          break;
+        default:
+          break;
       }
 
       return textMatches;

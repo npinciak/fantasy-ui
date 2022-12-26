@@ -12,6 +12,7 @@ import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '../../consts/nfl.const';
 import { STATS_HEADERS, STATS_ROWS } from '../../consts/table.const';
 import { DailyFantasyNflPlayerFacade } from '../../facade/daily-fantasy-nfl-players.facade';
 import { DailyFantasyNflTeamSlateAttrFacade } from '../../facade/daily-fantasy-nfl-team-slate-attr.facade';
+import { FilterType } from '../../models/nfl-table.model';
 import { NFL_STAT_GROUP_MAP } from '../../models/stat-group.model';
 
 @Component({
@@ -47,6 +48,7 @@ export class DailyFantasyNflHomeComponent implements OnInit {
   statGroup: string;
   teamId: number | null = null;
   position: string | null = null;
+  tableFilter$ = new BehaviorSubject<string | null>(null);
   teamFilter$ = new BehaviorSubject<string | null>(null);
   statGroupFilter$ = new BehaviorSubject<string | null>(null);
   positionFilter$ = new BehaviorSubject<string | null>(null);
@@ -87,12 +89,12 @@ export class DailyFantasyNflHomeComponent implements OnInit {
     this.statGroupFilter$.next(val);
   }
 
-  positionFilterChange(val: string) {
-    this.positionFilter$.next(val);
+  positionFilterChange(value: string) {
+    this.tableFilter$.next(JSON.stringify({ filterType: FilterType.pos, value }));
   }
 
-  teamFilterChange(val: number) {
-    this.teamFilter$.next(val.toString());
+  teamFilterChange(value: number) {
+    this.tableFilter$.next(JSON.stringify({ filterType: FilterType.team, value: value.toString() }));
   }
 
   onSelectSlate(event: SiteSlateEntity) {

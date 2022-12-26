@@ -1,3 +1,13 @@
+export type TableFilter = { filterType: FilterType; value: string };
+
+export enum FilterType {
+  team,
+  pos,
+  name,
+  statGroup,
+  salary,
+}
+
 export enum NFLTableColumn {
   Name = 'name',
   Salary = 'salary',
@@ -22,5 +32,3 @@ export enum NFLTableColumn {
   OppFPtsToWR = 'opponent.fptsAllowedRk.allowedToAdjWr',
   OppFPtsToTE = 'opponent.fptsAllowedRk.allowedToAdjTe',
 }
-
-
