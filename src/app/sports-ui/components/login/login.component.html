@@ -1,0 +1,21 @@
+<mat-card>
+  <mat-card-content>
+    <div class="flex-col">
+      <div>
+        <mat-form-field>
+          <input matInput #emailInput placeholder="me@example.com" (change)="onEmailInputChange(emailInput.value)" />
+          <mat-label>email</mat-label>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput #passwordInput (change)="onPasswordInputChange(passwordInput.value)" type="password" />
+          <mat-label>password</mat-label>
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-flat-button color="primary" [disabled]="isFormValid" (click)="onSignIn()">Sign In</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
