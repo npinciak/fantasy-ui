@@ -19,17 +19,13 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
 
   @Input() teamMap: Record<number, string>;
 
-  @Input() filter!: string;
-
-  @Input() teamFilter: string;
-  @Input() positionFilter: string;
-  @Input() statGroupFilter: string;
+  @Input() filter: string;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
   readonly TableColumnDataType = TableColumnDataType;
-  // filter = '';
+
   filterTypeSelected: FilterType;
   readonly filterType = FilterType;
 
@@ -47,6 +43,8 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
     }
 
     this.dataSource.filter = changes?.filter?.currentValue;
+
+    console.log(changes?.filter);
   }
 
   ngAfterViewInit(): void {

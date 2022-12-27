@@ -48,9 +48,6 @@ export class DailyFantasyNflHomeComponent implements OnInit {
   teamId: number | null = null;
   position: string | null = null;
   tableFilter$ = new BehaviorSubject<string | null>(null);
-  teamFilter$ = new BehaviorSubject<string | null>(null);
-  statGroupFilter$ = new BehaviorSubject<string | null>(null);
-  positionFilter$ = new BehaviorSubject<string | null>(null);
   xAxisStat$ = new BehaviorSubject<string | null>(null);
   yAxisStat$ = new BehaviorSubject<string | null>(null);
 
@@ -81,8 +78,8 @@ export class DailyFantasyNflHomeComponent implements OnInit {
     this.yAxisStat$.next(val);
   }
 
-  statGroupFilter(val: string) {
-    this.statGroupFilter$.next(val);
+  statGroupFilter(value: string) {
+    this.tableFilter$.next(JSON.stringify({ filterType: FilterType.statGroup, value }));
   }
 
   positionFilterChange(value: string) {

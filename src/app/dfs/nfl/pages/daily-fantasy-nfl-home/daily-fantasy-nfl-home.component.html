@@ -58,9 +58,7 @@
           </div>
 
           <app-player-table
-            [teamFilter]="teamFilter$ | async"
-            [statGroupFilter]="statGroupFilter$ | async"
-            [positionFilter]="positionFilter$ | async"
+            [filter]="tableFilter$ | async"
             [teamMap]="NFL_TEAM_ID_MAP"
             [data]="nflPlayerList$ | async"
             [dataRows]="STATS_ROWS"
