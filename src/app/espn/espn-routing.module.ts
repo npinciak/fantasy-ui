@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthenticationGuard } from '@app/@core/authentication/guards/authentication.guard';
 import { UrlFragments, UrlParams } from '@app/@core/store/router/url-builder';
 import { BaseballFreeAgentsComponent } from './mlb/pages/baseball-free-agents/baseball-free-agents.component';
 import { BaseballHomeComponent } from './mlb/pages/baseball-home/baseball-home.component';
@@ -15,6 +16,7 @@ import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 const nflRoutes = {
   path: UrlFragments.NFL,
   data: { sport: UrlFragments.NFL },
+  canActivate: [AuthenticationGuard],
   children: [
     {
       path: UrlFragments.Empty,

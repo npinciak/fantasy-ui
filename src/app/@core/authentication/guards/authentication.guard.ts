@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { AuthenticationService } from '@app/sports-ui/service/authentication.service';
+import { AuthenticationService } from '@app/@core/authentication/services/authentication.service';
 import { Observable } from 'rxjs';
 
 @Injectable({
