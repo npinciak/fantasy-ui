@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UrlQueryParams } from '@app/@core/store/router/url-builder';
-import { LayoutService } from '@app/@shared/services/layout.service';
 import { DailyFantasyPlayersFacade } from '@app/dfs/facade/daily-fantasy-players.facade';
 import { DailyFantasySlateAttrFacade } from '@app/dfs/facade/daily-fantasy-slate-attr.facade';
 import { DailyFantasySlateFacade } from '@app/dfs/facade/daily-fantasy-slate.facade';
@@ -63,10 +62,7 @@ export class DailyFantasyNflHomeComponent implements OnInit {
     })
   );
 
-  isMobile$ = this.layoutService.isMobile$;
-
   constructor(
-    private layoutService: LayoutService,
     private activatedRoute: ActivatedRoute,
     readonly nflPlayerFacade: DailyFantasyNflPlayerFacade,
     readonly nflTeamSlateAttrFacade: DailyFantasyNflTeamSlateAttrFacade,

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { LayoutService } from '@app/@shared/services/layout.service';
 import { EspnFastcastConnectionFacade } from '@app/espn-fastcast/facade/espn-fastcast-connection.facade';
 import { EspnFastcastEventToggleFacade } from '@app/espn-fastcast/facade/espn-fastcast-event-toggle.facade';
 import { EspnFastcastEventFacade } from '@app/espn-fastcast/facade/espn-fastcast-event.facade';
@@ -31,15 +30,12 @@ export class EspnScoreboardComponent {
 
   isIdToggled$ = this.fastcastEventToggleFacade.isIdToggled$;
 
-  isMobile$ = this.layoutService.isMobile$;
-
   constructor(
     readonly fastcastEventToggleFacade: EspnFastcastEventToggleFacade,
     readonly fastcastFacade: EspnFastcastConnectionFacade,
     readonly fastcastEventFacade: EspnFastcastEventFacade,
     readonly fastcastLeagueFacade: EspnFastcastLeagueFacade,
-    readonly store: Store,
-    private layoutService: LayoutService
+    readonly store: Store
   ) {}
 
   onLeagueSelectChange(val: string) {

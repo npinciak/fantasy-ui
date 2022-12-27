@@ -7,52 +7,67 @@
   <div nav>
     <h4>{{ selectedSlate$ | async }}</h4>
   </div>
-  <div main class="flex-col">
+  <div main class="flex-col gap-25">
     <div>
       <mat-card>
         <mat-card-content>
-          <app-dropdown-filter
-            [selectedOption]="xAxisStat$ | async"
-            title="xAxis"
-            [filterItems]="playerScatterAxisOptions$ | async"
-            (filterUpdate)="onAxisXChange($event)"
-          ></app-dropdown-filter>
-          <app-dropdown-filter
-            [selectedOption]="yAxisStat$ | async"
-            title="yAxis"
-            [filterItems]="playerScatterAxisOptions$ | async"
-            (filterUpdate)="onAxisYChange($event)"
-          ></app-dropdown-filter>
+          <div class="flex-row gap-15">
+            <div>
+              <app-dropdown-filter
+                [selectedOption]="xAxisStat$ | async"
+                title="xAxis"
+                [filterItems]="playerScatterAxisOptions$ | async"
+                (filterUpdate)="onAxisXChange($event)"
+              ></app-dropdown-filter>
+            </div>
+            <div>
+              <app-dropdown-filter
+                [selectedOption]="yAxisStat$ | async"
+                title="yAxis"
+                [filterItems]="playerScatterAxisOptions$ | async"
+                (filterUpdate)="onAxisYChange($event)"
+              ></app-dropdown-filter>
+            </div>
+          </div>
         </mat-card-content>
       </mat-card>
     </div>
-    <div>
-      <!-- <app-data-vis-scatter
+    <!-- <div> -->
+    <!-- <app-data-vis-scatter
         title="hey there"
         [xAxisFilterTitle]="xAxisStat$ | async"
         [yAxisFilterTitle]="yAxisStat$ | async"
         [chartData]="playerScatterData$ | async"
       ></app-data-vis-scatter> -->
-    </div>
+    <!-- </div> -->
+
     <div>
       <mat-card>
         <mat-card-content>
-          <app-dropdown-filter title="Teams" [filterItems]="playerTeamsFilterOptions$ | async" (filterUpdate)="teamFilterChange($event)"></app-dropdown-filter>
-          <app-dropdown-filter title="Position" [filterItems]="playerPositionFilterOptions$ | async" (filterUpdate)="positionFilterChange($event)"></app-dropdown-filter>
+          <div class="flex-row gap-15">
+            <div>
+              <app-dropdown-filter title="Teams" [filterItems]="playerTeamsFilterOptions$ | async" (filterUpdate)="teamFilterChange($event)"></app-dropdown-filter>
+            </div>
+            <div>
+              <app-dropdown-filter
+                title="Position"
+                [filterItems]="playerPositionFilterOptions$ | async"
+                (filterUpdate)="positionFilterChange($event)"
+              ></app-dropdown-filter>
+            </div>
+          </div>
+
+          <app-player-table
+            [teamFilter]="teamFilter$ | async"
+            [statGroupFilter]="statGroupFilter$ | async"
+            [positionFilter]="positionFilter$ | async"
+            [teamMap]="NFL_TEAM_ID_MAP"
+            [data]="nflPlayerList$ | async"
+            [dataRows]="STATS_ROWS"
+            [dataHeaders]="STATS_HEADERS"
+          ></app-player-table>
         </mat-card-content>
       </mat-card>
-    </div>
-    <div></div>
-    <div>
-      <app-player-table
-        [teamFilter]="teamFilter$ | async"
-        [statGroupFilter]="statGroupFilter$ | async"
-        [positionFilter]="positionFilter$ | async"
-        [teamMap]="NFL_TEAM_ID_MAP"
-        [data]="nflPlayerList$ | async"
-        [dataRows]="STATS_ROWS"
-        [dataHeaders]="STATS_HEADERS"
-      ></app-player-table>
     </div>
   </div>
 </app-page-layout>
