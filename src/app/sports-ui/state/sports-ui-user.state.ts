@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { AuthenticationService } from '@app/@core/authentication/services/authentication.service';
 import { Action, State, StateContext, Store } from '@ngxs/store';
-import { AuthenticationService } from '../../@core/authentication/services/authentication.service';
 
 const name = 'sportsUiUser';
 
@@ -23,9 +23,9 @@ export class SportsUiUserState {
   constructor(private supaService: AuthenticationService, private store: Store) {}
 
   @Action(FetchUser)
-  async fetchUser({ patchState }: StateContext<SportsUiUserStateModel>): Promise<void> {
-    const res = await this.supaService.get user();
+  fetchUser({ patchState }: StateContext<SportsUiUserStateModel>) {
+    const user = this.supaService.user;
 
-    patchState({ email: res.data.user?.email });
+    patchState({ email: user?.email });
   }
 }

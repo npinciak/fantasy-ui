@@ -5,7 +5,6 @@ import { Action, State, StateContext, Store } from '@ngxs/store';
 import { FantasyFootballLeague } from '../actions/fantasy-football-league.actions';
 import { FantasyFootballSchedule } from '../actions/fantasy-football-schedule.actions';
 import { FantasyFootballTeams } from '../actions/fantasy-football-teams.actions';
-import { FantasyFootballTransaction } from '../actions/fantasy-football-transaction.actions';
 import { FantasyFootballLeagueStateModel, INITIAL_STATE } from '../models/football-league-state.model';
 import { FantasyFootballLeagueSelectors } from '../selectors/fantasy-football-league.selectors';
 import { FantasyFootballService } from '../services/fantasy-football.service';
@@ -32,24 +31,10 @@ export class FantasyFootballLeagueState {
 
     const year = new Date().getFullYear().toString();
 
-    const {
-      scoringPeriodId,
-      firstScoringPeriod,
-      finalScoringPeriod,
-      teams,
-      matchupPeriodCount,
-      playoffMatchupPeriodLength,
-      schedule,
-      transactions,
-    } = await this.nflService.fetchLeague(leagueId, year).toPromise();
+    const { scoringPeriodId, firstScoringPeriod, finalScoringPeriod, teams, matchupPeriodCount, playoffMatchupPeriodLength, schedule } =
+      await this.nflService.fetchLeague(leagueId, year).toPromise();
 
-    await this.store
-      .dispatch([
-        new FantasyFootballTeams.AddOrUpdate(teams),
-        new FantasyFootballSchedule.AddOrUpdate(schedule),
-        new FantasyFootballTransaction.AddOrUpdate(transactions),
-      ])
-      .toPromise();
+    await this.store.dispatch([new FantasyFootballTeams.AddOrUpdate(teams), new FantasyFootballSchedule.AddOrUpdate(schedule)]).toPromise();
 
     patchState({
       firstScoringPeriod,
