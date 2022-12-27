@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { SchemeHeaderExpertService } from '@app/sports-ui/service/scheme-header-expert.service';
 import { Action, State, StateContext } from '@ngxs/store';
 import { FantasySports } from '../../espn/models/espn-endpoint-builder.model';
 import { SportsUiLeagueForm } from '../actions/sports-ui-league-form.actions';
@@ -25,7 +24,7 @@ export interface SportsUiLeagueFormStateModel {
 })
 @Injectable()
 export class SportsUiLeagueFormState {
-  constructor(private api: SchemeHeaderExpertService) {}
+  constructor() {}
 
   @Action(SportsUiLeagueForm.SetLeagueSportValue)
   setSportValue(

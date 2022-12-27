@@ -4,14 +4,16 @@
   </button>
   <span>{{ pageTitle }} </span>
   <span class="shell-spacer"></span>
+  <button mat-icon-button class="example-icon" (click)="onNavigateToMyProfile()" aria-label="icon-button with account icon">
+    <mat-icon>account_circle</mat-icon>
+  </button>
 </mat-toolbar>
-<mat-drawer-container style="height: 100%">
-  <mat-drawer #drawer style="width: 300px">
+<mat-drawer-container>
+  <mat-drawer #drawer>
     <mat-nav-list>
       <a mat-list-item (click)="onNavigateToEspnHome()">ESPN</a>
       <ng-container *ngIf="isEspn$ | async">
-        <a mat-list-item (click)="onNavigateToEspnLeagueHome()">League Home</a>
-        <a mat-list-item (click)="onNavigateToEspnTeam()">Team </a>
+        <a mat-list-item (click)="onNavigateToEspnLeagueHome()">Home</a>
         <a mat-list-item (click)="onNavigateToEspnFreeAgents()">Free Agents </a>
       </ng-container>
       <a mat-list-item (click)="navigateDfs(URL_FRAGMENT.MLB)">DK MLB</a>

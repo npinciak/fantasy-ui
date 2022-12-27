@@ -1,0 +1,23 @@
+<app-page-layout>
+  <div sidebar class="flex-col">
+    <app-login
+      [isFormValid]="isFormValid$ | async"
+      (signInClicked)="onSignIn()"
+      (passwordInputChanged)="passwordInputChange($event)"
+      (emailInputChanged)="emailInputChange($event)"
+    ></app-login>
+    <div>Email: {{ (userEmail$ | async) ?? 'No Email' }}</div>
+    <div>anotherfield</div>
+    <div>field</div>
+  </div>
+  <div main class="flex-col gap-20">
+    <app-leagues-table
+      [data]="allLeagues$ | async"
+      [rows]="LEAGUE_ROWS"
+      [headers]="LEAGUE_HEADERS"
+      (addLeague)="onAddLeague()"
+      (removeLeague)="onRemoveLeague($event)"
+      (navigateToLeague)="onNavigateToLeague($event)"
+    ></app-leagues-table>
+  </div>
+</app-page-layout>

@@ -5,6 +5,7 @@ import { SportsUiModule } from '@app/sports-ui/sports-ui.module';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
 import { EspnPlayerDialogComponent } from './components/espn-player-dialog/espn-player-dialog.component';
+import { EspnPlayerInfoColComponent } from './components/espn-player-info-col/espn-player-info-col.component';
 import { EspnPlayerTrendingColComponent } from './components/espn-player-trending-col/espn-player-trending-col.component';
 import { EspnPlayerComponent } from './components/espn-player/espn-player.component';
 import { EspnStandingsTableComponent } from './components/espn-standings-table/espn-standings-table.component';
@@ -37,6 +38,7 @@ import { FootballTeamComponent } from './nfl/pages/football-team/football-team.c
 import { FantasyFootballFreeAgentsFilterState } from './nfl/state/fantasy-football-free-agents-filter.state';
 import { FantasyFootballFreeAgentsState } from './nfl/state/fantasy-football-free-agents.state';
 import { FantasyFootballLeagueState } from './nfl/state/fantasy-football-league.state';
+import { FantasyFootballPlayerNewsState } from './nfl/state/fantasy-football-player-news.state';
 import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-schedule.state';
 import { FantasyFootballTeamState } from './nfl/state/fantasy-football-teams.state';
 import { FantasyFootballTransactionState } from './nfl/state/fantasy-football-transaction.state';
@@ -48,6 +50,7 @@ const states = [
   FantasyFootballTeamState,
   FantasyFootballFreeAgentsState,
   FantasyFootballFreeAgentsFilterState,
+  FantasyFootballPlayerNewsState,
   FantasyFootballTransactionState,
   FantasyBaseballLeagueState,
   FantasyBaseballTeamState,
@@ -76,6 +79,7 @@ const exports = [StandingsComponent, RosterComponent];
     EspnStatsTableComponent,
     EspnPlayerComponent,
     EspnPlayerTrendingColComponent,
+    EspnPlayerInfoColComponent,
     StandingsComponent,
     RosterComponent,
     PlayerComponent,

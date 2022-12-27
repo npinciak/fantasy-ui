@@ -21,11 +21,7 @@
       <span [class.game-score-winner]="team?.isWinner" [hidden]="isPregame"> {{ team?.score }}</span>
     </div>
   </div>
-  <div style="flex: 5%; align-content: center; justify-content: center" [ngStyle]="{ color: team.color }">
-    <div class="game-score-item">
-      <span [class.game-score-winner]="team?.isWinner" [hidden]="isPregame"> {{ team?.score }}</span>
-    </div>
-  </div>
+
   <div style="align-content: center; justify-content: center">
     <mat-icon>{{ team?.isWinner ? 'arrow_left' : '' }}</mat-icon>
   </div>

@@ -1,29 +1,7 @@
 @import '../../../../theme/theme-variables.scss';
 
-mat-card-content {
-  // display: grid;
-  // grid-template-columns: 10% 3% 84% 3%;
-
-  // @media (max-width: 767.98px) {
-  //   grid-template-columns: 25% 75% 25%;
-  //   grid-template-rows: auto;
-
-  //   > * {
-  //     grid-column: 1 / -1 !important;
-  //     grid-row: auto !important;
-  //   }
-  // }
-
-  // @media (max-width: 575.98px) {
-  //   grid-template-columns: 100%;
-  //   grid-template-rows: auto;
-  //   overflow: hidden;
-
-  //   > * {
-  //     grid-column: 1 / -1 !important;
-  //     grid-row: auto !important;
-  //   }
-  // }
+section {
+  margin-bottom: 20px;
 }
 
 mat-form-field {

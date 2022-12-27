@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <ng-template #noPlayers> <app-no-data title="No Players for this Slate"></app-no-data></ng-template>
 <ng-template #noSlates> <app-no-data title="No Slates Available"></app-no-data></ng-template>
 
@@ -55,56 +54,6 @@
               <mat-option *ngFor="let pos of nflPositionList$ | async" [value]="pos">{{ pos }}</mat-option>
             </mat-select>
           </mat-form-field>
-=======
-<app-page-layout>
-  <div sidebar>
-    <ng-container *ngIf="!(slatesEmpty$ | async)">
-      <app-slate-list [slateList]="selectSlateByType$ | async" (selectSlate)="onSelectSlate($event)"></app-slate-list>
-    </ng-container>
-  </div>
-  <div nav>
-    <h4>{{ selectedSlate$ | async }}</h4>
-  </div>
-  <div main class="flex-col">
-    <div>
-      <app-dropdown-filter
-        [isMobile]="isMobile$ | async"
-        [selectedOption]="xAxisStat$ | async"
-        title="xAxis"
-        [filterItems]="playerScatterAxisOptions$ | async"
-        (filterUpdate)="onAxisXChange($event)"
-      ></app-dropdown-filter>
-    </div>
-    <div>
-      <app-dropdown-filter
-        [isMobile]="isMobile$ | async"
-        [selectedOption]="yAxisStat$ | async"
-        title="yAxis"
-        [filterItems]="playerScatterAxisOptions$ | async"
-        (filterUpdate)="onAxisYChange($event)"
-      ></app-dropdown-filter>
-    </div>
-    <div>
-      <app-data-vis-scatter
-        title="hey there"
-        [xAxisFilterTitle]="xAxisStat$ | async"
-        [yAxisFilterTitle]="yAxisStat$ | async"
-        [chartData]="playerScatterData$ | async"
-      ></app-data-vis-scatter>
-    </div>
-    <div class="flex-col gap-10">
-      OWN PCT {{ teamOwnPercent$ | async }}
-      <ng-container *ngIf="!(slatesEmpty$ | async); else noSlates">
-        <ng-container *ngIf="!(playersEmpty$ | async)">
-          <div>
-            <app-dropdown-filter
-              [isMobile]="isMobile$ | async"
-              title="Teams"
-              [filterItems]="playerTeamsFilterOptions$ | async"
-              (filterUpdate)="teamFilterChange($event)"
-            ></app-dropdown-filter>
-          </div>
->>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
 
           <div>
             <app-dropdown-filter
@@ -129,9 +78,3 @@
     </div>
   </div>
 </app-page-layout>
-<<<<<<< HEAD
-=======
-
-<ng-template #noPlayers> <app-no-data title="No Players for this Slate"></app-no-data></ng-template>
-<ng-template #noSlates> <app-no-data title="No Slates Available"></app-no-data></ng-template>
->>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74

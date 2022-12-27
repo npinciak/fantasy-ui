@@ -10,12 +10,12 @@ import { FOOTBALL_STATS_MAP } from '../../consts/stats.const';
 import { FantasyFootballFreeAgentsFilterFacade } from '../../facade/fantasy-football-free-agents-filter.facade';
 import { FantasyFootballFreeAgentsFacade } from '../../facade/fantasy-football-free-agents.facade';
 import { FantasyFootballLeagueFacade } from '../../facade/fantasy-football-league.facade';
+import { FantasyFootballTeamFacade } from '../../facade/fantasy-football-team.facade';
 import { BasicFootballLineupSlotFilterOptions, FootballLineupSlot } from '../../models/football-lineup.model';
 
 @Component({
   selector: 'app-football-free-agents',
   templateUrl: './football-free-agents.component.html',
-  styleUrls: ['./football-free-agents.component.scss'],
 })
 export class FootballFreeAgentsComponent implements OnInit {
   readonly FOOTBALL_STATS_MAP = FOOTBALL_STATS_MAP;
@@ -32,7 +32,8 @@ export class FootballFreeAgentsComponent implements OnInit {
   isMobile$ = this.layoutService.isMobile$;
 
   selectedLineupSlotId$ = this.freeAgentsFilterFacade.selectedLineupSlotId$;
-  statPeriodFilterOptions$ = this.footballLeagueFacade.statPeriodFilterOptions$;
+  scoringPeriodFilterOptions$ = this.footballLeagueFacade.scoringPeriodFilterOptions$;
+  teamFilterOptions$ = this.footballTeamFacade.teamFilterOptions$;
 
   tableData$ = combineLatest([this.freeAgentsFacade.freeAgentsStats$, this.scoringPeriodId$]).pipe(
     map(([getFreeAgentStats, scoringPeriodId]) => getFreeAgentStats(scoringPeriodId))
@@ -61,6 +62,7 @@ export class FootballFreeAgentsComponent implements OnInit {
   );
 
   constructor(
+    readonly footballTeamFacade: FantasyFootballTeamFacade,
     readonly footballLeagueFacade: FantasyFootballLeagueFacade,
     readonly freeAgentsFacade: FantasyFootballFreeAgentsFacade,
     readonly freeAgentsFilterFacade: FantasyFootballFreeAgentsFilterFacade,
@@ -83,5 +85,9 @@ export class FootballFreeAgentsComponent implements OnInit {
 
   onAxisYChange(val: string) {
     this.yAxisStat$.next(val);
+  }
+
+  onTeamFilterOptionChange(val: string) {
+    this.selectedTeamId$.next(val);
   }
 }

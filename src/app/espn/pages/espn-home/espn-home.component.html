@@ -1,12 +1,4 @@
 <app-page-layout>
-  <div sidebar>
-    <app-add-league-form
-      [isMobile]="isMobile$ | async"
-      [leagues]="allLeagues$ | async"
-      (addLeague)="onAddLeague($event)"
-      (removeLeague)="onRemoveLeague($event)"
-      (navigateLeague)="onNavigateLeague($event)"
-    ></app-add-league-form>
-  </div>
+  <div sidebar></div>
   <div main></div>
 </app-page-layout>

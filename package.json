@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port=4400 --proxy-config proxy.conf.json",
-    "build": "ng build",
+    "build": "ng build --configuration=production",
     "build:patch": "npm run bump:patch && npm run build",
     "build:minor": "npm run bump:minor && npm run build",
     "build:major": "npm run bump:major && npm run build",

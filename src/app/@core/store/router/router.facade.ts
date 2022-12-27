@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationCancel, NavigationEnd, Router } from '@angular/router';
 import { UrlBuilder, UrlFragments } from '@app/@core/store/router/url-builder';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
 import { RouterSelector } from './router.selectors';
+
+type NavigationComplete = NavigationEnd | NavigationCancel;
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +39,10 @@ export class RouterFacade {
 
   get dfsSport(): UrlFragments {
     return this.store.selectSnapshot(RouterSelector.getDfsSport);
+  }
+
+  navigateToMyProfile() {
+    this.navigate([UrlFragments.MyProfile]);
   }
 
   navigateToEspnHome() {

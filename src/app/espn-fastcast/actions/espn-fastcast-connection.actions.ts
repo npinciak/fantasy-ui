@@ -15,6 +15,7 @@ export namespace FastCastConnection {
 
   export class FetchStaticFastcast {
     static readonly type = `[${name}] FetchStaticFastcast`;
+    constructor(public payload: { sport: string | null; league: string | null; weeks: number | null; seasontype: number | null }) {}
   }
 
   export class HandleWebSocketMessage {

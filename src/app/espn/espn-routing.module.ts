@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthenticationGuard } from '@app/@core/authentication/guards/authentication.guard';
 import { UrlFragments, UrlParams } from '@app/@core/store/router/url-builder';
 import { BaseballFreeAgentsComponent } from './mlb/pages/baseball-free-agents/baseball-free-agents.component';
 import { BaseballHomeComponent } from './mlb/pages/baseball-home/baseball-home.component';
@@ -8,12 +9,14 @@ import { FantasyBaseballResolver } from './mlb/resolvers/mlb.resolver';
 import { FootballFreeAgentsComponent } from './nfl/pages/football-free-agents/football-free-agents.component';
 import { FootballHomeComponent } from './nfl/pages/football-home/football-home.component';
 import { FootballTeamComponent } from './nfl/pages/football-team/football-team.component';
+import { FantasyFootballFreeAgentsResolver } from './nfl/resolvers/fantasy-football-free-agents.resolver';
 import { FantasyFootballLeagueResolver } from './nfl/resolvers/fantasy-football-league.resolver';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 
 const nflRoutes = {
   path: UrlFragments.NFL,
   data: { sport: UrlFragments.NFL },
+  canActivate: [AuthenticationGuard],
   children: [
     {
       path: UrlFragments.Empty,
@@ -29,6 +32,7 @@ const nflRoutes = {
         },
         {
           path: UrlFragments.FreeAgents,
+          resolve: [FantasyFootballFreeAgentsResolver],
           children: [
             {
               path: UrlFragments.Empty,

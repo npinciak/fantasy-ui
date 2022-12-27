@@ -1,16 +1,8 @@
-<<<<<<< HEAD
-<div [title]="playerLabel" style="display: grid; grid-template-columns: auto 85%; column-gap: 5px">
-  <div>
-    <img role="presentation" [src]="player?.img" [alt]="player?.name" />
-  </div>
-  <div style="display: grid; grid-template-rows: auto">
-=======
-<div [title]="playerLabel" style="display: flex; flex-direction: row">
+<div class="flex-row gap-10" [title]="playerLabel" [attr.id]="playerLabel">
   <div>
     <img role="presentation" [src]="player?.img" [alt]="player?.name" />
   </div>
   <div class="flex-col">
->>>>>>> a539abaf408e10d5944de3ab1a263b99cbacab74
     <div class="player name">
       {{ player?.name }}
       <mat-icon
@@ -23,3 +15,12 @@
     <div class="player team-pos">{{ player?.team }}, {{ player?.position }}</div>
   </div>
 </div>
+
+<!-- <div class="flex-row gap-5" style="cursor: pointer; margin-right: 10px" [attr.id]="teamTableLabel">
+  <div style="flex: 10%" [attr.aria-label]="team?.name" [attr.aria-labelledby]="teamTableLabel">
+    <img width="48" height="35" [title]="team?.name" [alt]="team?.name" [src]="team?.logo" [alt]="team?.name" />
+  </div>
+  <div class="ui-font-weight-bold" style="display: flex; flex: 90%; font-size: 12px">
+    <a (click)="navigateToTeam()" tabindex="0">{{ team?.name }}</a>
+  </div>
+</div> -->

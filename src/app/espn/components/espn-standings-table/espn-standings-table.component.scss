@@ -1,5 +1,15 @@
-td.mat-cell:first-of-type {
-  padding-left: 0;
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+  padding-left: 10px !important;
+  width: 150px;
+  min-width: 150px;
+}
+
+.mat-sort-header-container:hover,
+.mat-sort-header-container:active,
+.mat-sort-header-container:focus {
+  color: #000066;
 }
 
 .mat-sort-header-container:hover,

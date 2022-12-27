@@ -139,8 +139,13 @@ export class EspnFastcastConnectionState {
   }
 
   @Action(FastCastConnection.FetchStaticFastcast)
-  async fetchStaticFastcast(): Promise<void> {
-    const { sports, leagues, events, teams } = await this.espnService.fetchStaticScoreboard().toPromise();
+  async fetchStaticFastcast(
+    _: StateContext<EspnFastcastConnectionStateModel>,
+    { payload: { sport, league, weeks, seasontype } }: FastCastConnection.FetchStaticFastcast
+  ): Promise<void> {
+    const { sports, leagues, events, teams } = await this.espnService
+      .fetchStaticScoreboard({ sport, league, weeks, seasontype })
+      .toPromise();
 
     this.store.dispatch([
       new SetFastcastSports(sports),

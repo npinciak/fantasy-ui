@@ -13,6 +13,10 @@ const routes: Routes = [
       path: UrlFragments.Dfs,
       loadChildren: () => import('./dfs/dfs.module').then(m => m.DfsModule),
     },
+    {
+      path: UrlFragments.MyProfile,
+      loadChildren: () => import('./sports-ui/sports-ui.module').then(m => m.SportsUiModule),
+    },
     { path: '**', redirectTo: '/espn', pathMatch: 'full' },
   ]),
 ];

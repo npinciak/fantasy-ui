@@ -25,8 +25,13 @@ export class EspnFastcastConnectionFacade {
 
   constructor(private store: Store) {}
 
-  fetchStaticFastcast(): Observable<void> {
-    return this.store.dispatch(new FastCastConnection.FetchStaticFastcast());
+  fetchStaticFastcast(opts: {
+    sport: string | null;
+    league: string | null;
+    weeks: number | null;
+    seasontype: number | null;
+  }): Observable<void> {
+    return this.store.dispatch(new FastCastConnection.FetchStaticFastcast(opts));
   }
 
   connectWebSocket(): Observable<void> {

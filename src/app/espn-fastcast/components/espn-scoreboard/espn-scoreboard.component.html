@@ -31,10 +31,12 @@
 </section>
 
 <ng-template #feed>
-  <ng-container *ngFor="let event of eventsByLeagueId$ | async; let i = index">
+  <ng-container *ngFor="let event of eventsByLeagueId$ | async; let first = first; let last = last; let i = index">
     <!-- (toggleExpandedEvent)="onToggleExpandedEvent($event)"
     (toggleOffExpandedEvent)="onToggleOffExpandedEvent($event)" -->
+
     <app-espn-scoreboard-card
+      [ngStyle]="{ 'border-left': !first ? '1px solid #a5a6a7' : '' }"
       [index]="i"
       [ariaSetsize]="(eventsByLeagueId$ | async).length"
       [ariaPosinset]="i + 1"

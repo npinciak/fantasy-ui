@@ -7,15 +7,14 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsRouterPluginModule, RouterStateSerializer } from '@ngxs/router-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { environment } from 'src/environments/environment';
+import { AuthenticationModule } from './@core/authentication/authentication.module';
 import { httpInterceptorProviders } from './@core/interceptors';
 import { ShellModule } from './@core/shell/shell.module';
 import { CustomRouterStateSerializer } from './@core/store/router/router-state.serializer';
-import { RouterState } from './@core/store/router/router.state';
 import { SharedModule } from './@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-const states = [RouterState];
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -23,7 +22,7 @@ const states = [RouterState];
     BrowserModule,
     HttpClientModule,
     NgxsRouterPluginModule.forRoot(),
-    NgxsModule.forRoot(states, { developmentMode: !environment.production, selectorOptions: { injectContainerState: false } }),
+    NgxsModule.forRoot([], { developmentMode: !environment.production, selectorOptions: { injectContainerState: false } }),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
@@ -31,6 +30,7 @@ const states = [RouterState];
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000',
     }),
+    AuthenticationModule,
     SharedModule,
     ShellModule,
     AppRoutingModule,
