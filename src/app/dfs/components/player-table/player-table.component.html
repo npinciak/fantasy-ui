@@ -9,7 +9,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ col?.headerLabel }}</th>
             <td mat-cell *matCellDef="let data">
               <app-table-cell-skeleton [loading]="isLoading$ | async">
-                <ng-container [ngSwitch]="col.columnDef">
+                <ng-container [ngSwitch]="col.columnDef" >
                   <ng-template [ngSwitchCase]="'name'">
                     <div class="flex-col gap-5" style="margin-right: 10px">
                       <div class="ui-font-weight-bold" style="font-size: 12px">{{ col?.cellData(data) }}</div>

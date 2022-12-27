@@ -30,7 +30,6 @@
   <div main>
     <div>
       <app-dropdown-filter
-        [isMobile]="isMobile$ | async"
         [selectedOption]="selectedPosition$ | async"
         title="Position"
         [filterItems]="FOOTBALL_POSITION_LIST_FILTER"
@@ -39,7 +38,6 @@
     </div>
     <div>
       <app-dropdown-filter
-        [isMobile]="isMobile$ | async"
         [selectedOption]="scoringPeriodId$ | async"
         title="Stat Period"
         [filterItems]="statPeriodFilterOptions$ | async"
