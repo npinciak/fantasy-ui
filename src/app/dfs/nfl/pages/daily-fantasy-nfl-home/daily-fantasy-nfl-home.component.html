@@ -1,81 +1,80 @@
+<ng-template #noPlayers> <app-no-data title="No Players for this Slate"></app-no-data></ng-template>
+<ng-template #noSlates> <app-no-data title="No Slates Available"></app-no-data></ng-template>
+
 <app-page-layout>
   <div sidebar>
-    <ng-container *ngIf="!(slatesEmpty$ | async)">
-      <app-slate-list [slateList]="selectSlateByType$ | async" (selectSlate)="onSelectSlate($event)"></app-slate-list>
+    <ng-container *ngIf="(dailyFantasySlateFacade.slatesEmpty$ | async) === false">
+      <app-slate-list [slateList]="dailyFantasySlateFacade.selectSlateByType$ | async" (selectSlate)="onSelectSlate($event)"></app-slate-list>
     </ng-container>
   </div>
-  <div nav>
-    <h4>{{ selectedSlate$ | async }}</h4>
-  </div>
-  <div main class="flex-col">
-    <div class="flex-row" style="display: none">
-      <div>
-        <app-dropdown-filter
-          [isMobile]="isMobile$ | async"
-          [selectedOption]="xAxisStat$ | async"
-          title="xAxis"
-          [filterItems]="playerScatterAxisOptions$ | async"
-          (filterUpdate)="onAxisXChange($event)"
-        ></app-dropdown-filter>
-      </div>
-      <div>
-        <app-dropdown-filter
-          [isMobile]="isMobile$ | async"
-          [selectedOption]="yAxisStat$ | async"
-          title="yAxis"
-          [filterItems]="playerScatterAxisOptions$ | async"
-          (filterUpdate)="onAxisYChange($event)"
-        ></app-dropdown-filter>
-      </div>
-    </div>
+  <div navbar></div>
+  <div main>
+    <app-dropdown-filter
+      [selectedOption]="xAxisStat$ | async"
+      title="xAxis"
+      [filterItems]="playerScatterAxisOptions$ | async"
+      (filterUpdate)="onAxisXChange($event.value)"
+    ></app-dropdown-filter>
 
-    <div style="display: none">
-      <app-data-vis-scatter
-        title="hey there"
-        [xAxisFilterTitle]="xAxisStat$ | async"
-        [yAxisFilterTitle]="yAxisStat$ | async"
-        [chartData]="playerScatterData$ | async"
-      ></app-data-vis-scatter>
-    </div>
-    <div class="flex-col gap-10">
-      <ng-container *ngIf="!(slatesEmpty$ | async); else noSlates">
-        <ng-container *ngIf="!(playersEmpty$ | async)">
-          <div class="flex-row">
-            <div>
-              <app-dropdown-filter
-                [isMobile]="isMobile$ | async"
-                title="Teams"
-                [filterItems]="playerTeamsFilterOptions$ | async"
-                (filterUpdate)="teamFilterChange($event)"
-              ></app-dropdown-filter>
-            </div>
+    <app-dropdown-filter
+      [selectedOption]="yAxisStat$ | async"
+      title="yAxis"
+      [filterItems]="playerScatterAxisOptions$ | async"
+      (filterUpdate)="onAxisYChange($event.value)"
+    ></app-dropdown-filter>
+    <app-data-vis-scatter title="hey there" xAxisFilterTitle="hi there" yAxisFilterTitle="ho there" [chartData]="playerScatterData$ | async"></app-data-vis-scatter>
 
-            <div>
-              <app-dropdown-filter
-                title="Position"
-                [isMobile]="isMobile$ | async"
-                [filterItems]="playerPositionFilterOptions$ | async"
-                (filterUpdate)="positionFilterChange($event)"
-              ></app-dropdown-filter>
-            </div>
-          </div>
+    <ng-container *ngIf="(dailyFantasySlateFacade.slatesEmpty$ | async) === false; else noSlates">
+      <ng-container *ngIf="(dailyFantasyPlayersFacade.playersEmpty$ | async) === false">
+        <div>
+          <!-- <mat-form-field>
+          <mat-label>Position</mat-label>
+          <mat-select (selectionChange)="filterChange($event)">
+            <mat-option value="">All</mat-option>
+            <mat-option *ngFor="let pos of []" [value]="pos">{{ pos }}</mat-option>
+          </mat-select>
+        </mat-form-field> -->
+
+          <mat-form-field>
+            <mat-label>Team</mat-label>
+
+            <mat-select (selectionChange)="teamFilterChange($event.value)">
+              <mat-option value="">All</mat-option>
+              <mat-select-trigger>
+                <!-- {{ teamId ? NFL_TEAM_ID_MAP[teamId] : null }} -->
+              </mat-select-trigger>
+              <mat-option *ngFor="let team of nflTeamList$ | async" [value]="team">{{ NFL_TEAM_ID_MAP[team] }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Position</mat-label>
+            <mat-select (selectionChange)="positionFilterChange($event.value)">
+              <mat-option value="">All</mat-option>
+              <mat-option *ngFor="let pos of nflPositionList$ | async" [value]="pos">{{ pos }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
           <div>
-            <app-player-table
-              [filter]="tableFilter$ | async"
-              [teamFilter]="teamFilter$ | async"
-              [statGroupFilter]="statGroupFilter$ | async"
-              [positionFilter]="positionFilter$ | async"
-              [teamMap]="NFL_TEAM_ID_MAP"
-              [data]="nflPlayerList$ | async"
-              [dataRows]="STATS_ROWS"
-              [dataHeaders]="STATS_HEADERS"
-            ></app-player-table>
+            <app-dropdown-filter
+              title="Position"
+              [isMobile]="isMobile$ | async"
+              [filterItems]="playerPositionFilterOptions$ | async"
+              (filterUpdate)="positionFilterChange($event)"
+            ></app-dropdown-filter>
           </div>
+
+          <app-player-table
+            [teamFilter]="teamFilter$ | async"
+            [statGroupFilter]="statGroupFilter$ | async"
+            [positionFilter]="positionFilter$ | async"
+            [teamMap]="NFL_TEAM_ID_MAP"
+            [data]="nflPlayerList$ | async"
+            [dataRows]="STATS_ROWS"
+            [dataHeaders]="STATS_HEADERS"
+          ></app-player-table>
         </ng-container>
       </ng-container>
     </div>
   </div>
 </app-page-layout>
-
-<ng-template #noPlayers> <app-no-data title="No Players for this Slate"></app-no-data></ng-template>
-<ng-template #noSlates> <app-no-data title="No Slates Available"></app-no-data></ng-template>

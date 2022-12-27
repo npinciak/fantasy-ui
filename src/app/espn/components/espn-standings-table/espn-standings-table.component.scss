@@ -11,3 +11,9 @@ td.mat-footer-cell:first-of-type {
 .mat-sort-header-container:focus {
   color: #000066;
 }
+
+.mat-sort-header-container:hover,
+.mat-sort-header-container:active,
+.mat-sort-header-container:focus {
+  color: #000066;
+}

@@ -16,3 +16,9 @@ td.mat-cell {
   width: 55px;
   min-width: 65px;
 }
+
+.mat-sort-header-container:hover,
+.mat-sort-header-container:active,
+.mat-sort-header-container:focus {
+  color: #000066;
+}
