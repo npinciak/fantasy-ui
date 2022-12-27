@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { SportsUiLeagues } from '@app/sports-ui/actions/sports-ui-leagues.actions';
-import { AuthenticationService } from '@app/sports-ui/service/authentication.service';
 import { FetchUser } from '@app/sports-ui/state/sports-ui-user.state';
 import { Action, State, StateContext, Store } from '@ngxs/store';
+import { AuthenticationService } from '../services/authentication.service';
 import { AuthenticationForm } from './authentication-form.actions';
 
 export interface AuthenticationFormStateModel {
