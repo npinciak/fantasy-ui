@@ -62,8 +62,8 @@
             [positionFilter]="positionFilter$ | async"
             [teamMap]="NFL_TEAM_ID_MAP"
             [data]="nflPlayerList$ | async"
-            [dataRows]="STATS_ROWS"
-            [dataHeaders]="STATS_HEADERS"
+            [dataRows]="(tableConfig$ | async).rows"
+            [dataHeaders]="(tableConfig$ | async).headers"
           ></app-player-table>
         </ng-container>
       </ng-container>
