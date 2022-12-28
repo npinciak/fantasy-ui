@@ -1,5 +1,5 @@
 import { exists } from '@app/@shared/helpers/utils';
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk';
 import { headshotImgBuilder, logoImgBuilder } from '../espn.const';
 import { EspnTransformers } from '../espn.transformers';
 import { FantasyLeague } from '../models/fantasy-league.model';

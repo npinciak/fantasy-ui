@@ -1,5 +1,5 @@
 import { exists } from '@app/@shared/helpers/utils';
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk';
 import { SeasonStatConst } from '../models/adv-stats.model';
 import { EspnBaseballStat } from '../models/mlb-stats.model';
 

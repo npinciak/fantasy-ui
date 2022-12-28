@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { tickerDate } from '@app/@shared/helpers/date';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
 import { FASTCAST_DATE_SHORT } from '@app/espn/espn.const';
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk';
 
 @Component({
   selector: 'app-espn-scoreboard-card',

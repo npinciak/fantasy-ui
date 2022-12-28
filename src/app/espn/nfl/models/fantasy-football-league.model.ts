@@ -1,5 +1,5 @@
 import { FantasyLeague } from '@app/espn/models/fantasy-league.model';
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk';
 import { FootballPlayerFreeAgent } from './football-player.model';
 import { FootballTeam } from './football-team.model';
 

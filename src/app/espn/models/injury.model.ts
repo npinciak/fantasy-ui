@@ -1,4 +1,4 @@
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk';
 
 export enum InjurySeverityColor {
   Serious = '#cb0123',

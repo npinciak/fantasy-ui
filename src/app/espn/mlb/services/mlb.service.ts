@@ -5,7 +5,7 @@ import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
 import { EspnService } from '@app/espn/service/espn.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk';
 import { FantasyBaseballTransformers } from '../fantasy-baseball.transformers';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballLeague } from '../models/baseball-league.model';

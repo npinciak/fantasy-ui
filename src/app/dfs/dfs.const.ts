@@ -1,4 +1,4 @@
-import { enumAsList } from 'sports-ui-sdk/lib/helpers/enum-as-list/enum-as-list';
+import { enumAsList } from 'sports-ui-sdk';
 import { environment } from 'src/environments/environment';
 
 export const DAILY_FANTASY_BASE = environment.dailyFantasyBase;

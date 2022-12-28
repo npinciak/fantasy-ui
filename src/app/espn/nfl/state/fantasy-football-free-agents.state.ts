@@ -8,7 +8,7 @@ import { FantasyFootballLeagueSelectors } from '../selectors/fantasy-football-le
 import { FantasyFootballService } from '../services/fantasy-football.service';
 import { FantasyFootballFreeAgentsFilterState } from './fantasy-football-free-agents-filter.state';
 
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk';
 
 @State({ name: FantasyFootballFreeAgents.name })
 @Injectable()

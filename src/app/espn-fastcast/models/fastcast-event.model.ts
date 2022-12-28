@@ -1,5 +1,5 @@
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
-import { EspnFastcastClient } from 'sports-ui-sdk/lib/models/espn-fastcast.model';
+import { EspnClient, EspnFastcastClient } from 'sports-ui-sdk';
+
 import { FastcastEventTeam } from './fastcast-team.model';
 
 interface FastcastEventAttributes {

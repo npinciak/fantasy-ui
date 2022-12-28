@@ -97,7 +97,7 @@ export const NFL_RG_TEAM_ID_MAP = {
   30: 'LAR',
   31: 'SF',
   32: 'SEA',
-};
+} as const;
 
 export const NFL_TEAM_ID_MAP = {
   323: 'ATL',
@@ -132,4 +132,4 @@ export const NFL_TEAM_ID_MAP = {
   364: 'CAR',
   365: 'JAC',
   366: 'BAL',
-};
+} as const;

@@ -1,8 +1,7 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { exists } from '@app/@shared/helpers/utils';
 import { FilterOptions } from '@app/@shared/models/filter.model';
-import { unique } from 'sports-ui-sdk/lib/helpers/unique-by/unique-by';
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+import { EspnClient, unique } from 'sports-ui-sdk';
 
 import { Selector } from '@ngxs/store';
 import { FantasyMatchup, FantasyMatchupMap, FantasyMatchupTeam } from '../models/fantasy-schedule.model';

@@ -7,7 +7,7 @@ import {
   MatIconByEspnPlayerInjuryStatus,
   PlayerStatusAbbrevByInjuryStatusType,
 } from '@app/espn/models/injury.model';
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk';
 
 @Component({
   selector: 'app-espn-player',

@@ -1,5 +1,5 @@
 import { StatEntity } from '@app/@shared/base-models/base-stats.model';
-import { enumAsList } from 'sports-ui-sdk/lib/helpers/enum-as-list/enum-as-list';
+import { enumAsList } from 'sports-ui-sdk';
 
 export type FootballStatsProperties = StatEntity & { id: string };
 export type FootballStatsMap = Record<FootballStat, FootballStatsProperties>;
@@ -222,4 +222,3 @@ export enum FootballStat {
 }
 
 export const StatList = enumAsList(FootballStat);
-

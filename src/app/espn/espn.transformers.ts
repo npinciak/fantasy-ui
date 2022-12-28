@@ -5,8 +5,8 @@ import { FastcastLeague } from '@app/espn-fastcast/models/fastcast-league.model'
 import { FastcastSport } from '@app/espn-fastcast/models/fastcast-sport.model';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
 import { FastcastTransform } from '@app/espn-fastcast/models/fastcast-transform.model';
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
-import { EspnFastcastClient } from 'sports-ui-sdk/lib/models/espn-fastcast.model';
+import { EspnClient, EspnFastcastClient } from 'sports-ui-sdk';
+
 import { excludeLeagues, flattenPlayerStats, includeSports, teamColorHandler, transformIdToUid, transformUidToId } from './espn-helpers';
 import { headshotImgBuilder, NO_LOGO } from './espn.const';
 import { FantasyLeague } from './models/fantasy-league.model';

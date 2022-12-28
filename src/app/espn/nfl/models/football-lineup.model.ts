@@ -1,4 +1,4 @@
-import { enumAsList } from 'sports-ui-sdk/lib/helpers/enum-as-list/enum-as-list';
+import { enumAsList } from 'sports-ui-sdk';
 import { FootballLineup } from '../consts/lineup.const';
 
 export enum FootballLineupSlot {

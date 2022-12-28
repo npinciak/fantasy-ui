@@ -1,6 +1,6 @@
 import { exists } from '@app/@shared/helpers/utils';
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
-import { EspnFastcastClient } from 'sports-ui-sdk/lib/models/espn-fastcast.model';
+import { EspnClient, EspnFastcastClient } from 'sports-ui-sdk';
+
 import { PitcherIdSet } from './mlb/consts/lineup.const';
 import { BaseballPlayer } from './mlb/models/baseball-player.model';
 import { FootballPlayer } from './nfl/models/football-player.model';

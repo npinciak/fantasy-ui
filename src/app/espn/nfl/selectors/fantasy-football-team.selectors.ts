@@ -3,7 +3,7 @@ import { exists } from '@app/@shared/helpers/utils';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { benchPlayersFilter, injuredReservePlayersFilter, startingPlayersFilter } from '@app/espn/espn-helpers';
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk';
 import { FootballLineup } from '../consts/lineup.const';
 import { FootballPlayer } from '../models/football-player.model';
 import { FootballTeam } from '../models/football-team.model';

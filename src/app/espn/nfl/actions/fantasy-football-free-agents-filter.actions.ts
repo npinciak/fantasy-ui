@@ -1,4 +1,4 @@
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk';
 
 import { FootballLineupSlot } from '../models/football-lineup.model';
 

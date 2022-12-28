@@ -7,7 +7,7 @@ import { NFLClientGridIronPlayer } from '@dfsClient/nfl-client.model';
 import { camelCase } from 'lodash';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
-import { uniqueBy } from 'sports-ui-sdk/lib/helpers/unique-by/unique-by';
+import { uniqueBy } from 'sports-ui-sdk';
 import { DailyFantasyEndpointBuilder } from '../daily-fantasy-endpoint-builder';
 import { PlayersBySlate, SlatePlayer } from '../models/player.model';
 import { Schedule } from '../models/schedule.model';

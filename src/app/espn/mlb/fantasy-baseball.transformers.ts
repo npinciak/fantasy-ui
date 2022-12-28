@@ -1,5 +1,5 @@
 import { exists } from '@app/@shared/helpers/utils';
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk';
 
 import { isPitcher } from '../espn-helpers';
 import { EspnTransformers } from '../espn.transformers';

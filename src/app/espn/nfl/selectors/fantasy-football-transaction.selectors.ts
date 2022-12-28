@@ -1,6 +1,6 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { Selector } from '@app/@shared/models/typed-selector';
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk';
 import { FootballPlayerFreeAgent } from '../models/football-player.model';
 import { FootballTeam } from '../models/football-team.model';
 import { FantasyFootballTransactionState } from '../state/fantasy-football-transaction.state';

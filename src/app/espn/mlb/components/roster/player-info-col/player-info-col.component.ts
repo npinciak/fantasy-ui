@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { BaseballPlayer } from '@app/espn/mlb/models/baseball-player.model';
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk';
 
 @Component({
   selector: 'app-player-info-col',

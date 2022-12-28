@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk';
 
 import { Action, State, StateContext, StateOperator } from '@ngxs/store';
 import { BaseballLineupSlot } from '../consts/lineup.const';

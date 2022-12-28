@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EspnClient } from 'sports-ui-sdk/lib/models/espn-client.model';
+import { EspnClient } from 'sports-ui-sdk';
 
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';

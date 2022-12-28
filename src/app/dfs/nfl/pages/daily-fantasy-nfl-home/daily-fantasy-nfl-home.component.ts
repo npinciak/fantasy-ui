@@ -59,8 +59,6 @@ export class DailyFantasyNflHomeComponent implements OnInit {
     })
   );
 
-<<<<<<< HEAD
-=======
   tableConfig$ = combineLatest([this.position$]).pipe(
     map(([position]) => {
       const headers = position != null ? DfsNflTableColumns.HEADERS_BY_POS[position] : DfsNflTableColumns.HEADERS_BY_POS['All'];
@@ -72,7 +70,6 @@ export class DailyFantasyNflHomeComponent implements OnInit {
     })
   );
 
->>>>>>> main
   constructor(
     private activatedRoute: ActivatedRoute,
     readonly nflPlayerFacade: DailyFantasyNflPlayerFacade,
