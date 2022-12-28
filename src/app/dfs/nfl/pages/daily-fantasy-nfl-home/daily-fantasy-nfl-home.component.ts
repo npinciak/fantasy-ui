@@ -7,8 +7,8 @@ import { DailyFantasySlateFacade } from '@app/dfs/facade/daily-fantasy-slate.fac
 import { SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '../../consts/nfl.const';
-import { STATS_HEADERS, STATS_ROWS } from '../../consts/table.const';
+import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '../../consts/nfl-dfs-table.const';
+import { DfsNflTableColumns } from '../../consts/table.const';
 import { DailyFantasyNflPlayerFacade } from '../../facade/daily-fantasy-nfl-players.facade';
 import { DailyFantasyNflTeamSlateAttrFacade } from '../../facade/daily-fantasy-nfl-team-slate-attr.facade';
 import { FilterType } from '../../models/nfl-table.model';
@@ -22,8 +22,8 @@ export class DailyFantasyNflHomeComponent implements OnInit {
   readonly LEAGUE = this.activatedRoute.snapshot.queryParamMap.get(UrlQueryParams.Sport);
   readonly SITE = this.activatedRoute.snapshot.queryParamMap.get(UrlQueryParams.Site);
 
-  readonly STATS_ROWS = STATS_ROWS;
-  readonly STATS_HEADERS = STATS_HEADERS;
+  readonly TABLE_HEADERS_BY_POS = DfsNflTableColumns.HEADERS_BY_POS;
+  readonly TABLE_ROWS_BY_POS = DfsNflTableColumns.ROWS_BY_POS;
 
   readonly NFL_STAT_GROUP_MAP = NFL_STAT_GROUP_MAP;
   readonly NFL_RG_TEAM_ID_MAP = NFL_RG_TEAM_ID_MAP;
@@ -46,7 +46,7 @@ export class DailyFantasyNflHomeComponent implements OnInit {
 
   statGroup: string;
   teamId: number | null = null;
-  position: string | null = null;
+  position$ = new BehaviorSubject<string | null>('All');
   tableFilter$ = new BehaviorSubject<string | null>(null);
   xAxisStat$ = new BehaviorSubject<string | null>(null);
   yAxisStat$ = new BehaviorSubject<string | null>(null);
@@ -59,6 +59,20 @@ export class DailyFantasyNflHomeComponent implements OnInit {
     })
   );
 
+<<<<<<< HEAD
+=======
+  tableConfig$ = combineLatest([this.position$]).pipe(
+    map(([position]) => {
+      const headers = position != null ? DfsNflTableColumns.HEADERS_BY_POS[position] : DfsNflTableColumns.HEADERS_BY_POS['All'];
+      const rows = position != null ? DfsNflTableColumns.ROWS_BY_POS[position] : DfsNflTableColumns.ROWS_BY_POS['All'];
+      return {
+        headers,
+        rows,
+      };
+    })
+  );
+
+>>>>>>> main
   constructor(
     private activatedRoute: ActivatedRoute,
     readonly nflPlayerFacade: DailyFantasyNflPlayerFacade,
@@ -83,6 +97,7 @@ export class DailyFantasyNflHomeComponent implements OnInit {
   }
 
   positionFilterChange(value: string) {
+    this.position$.next(value);
     this.tableFilter$.next(JSON.stringify({ filterType: FilterType.pos, value }));
   }
 

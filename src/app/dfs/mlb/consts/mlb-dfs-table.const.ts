@@ -1,13 +1,14 @@
-import { TableColumnDataType, transformTableColumnsToTableRows } from '@app/@shared/models/table-columns.model';
+import { getTableHeaders, TableColumnDataType, transformTableColumnsToTableRows } from '@app/@shared/models/table-columns.model';
 
-export const BASE_PLAYER_COLUMNS = [
+export const BASE_STATS_COLUMNS = [
   { columnDef: 'name', headerCell: 'name', headerLabel: 'Name', dataType: TableColumnDataType.String },
   { columnDef: 'opp', headerCell: 'opp', headerLabel: 'Opp', dataType: TableColumnDataType.String },
+  { columnDef: 'salary', headerCell: 'salary', headerLabel: 'salary', dataType: TableColumnDataType.Number },
 ];
 
 export const BATTER_PLATEIQ_COLUMNS = [
-  { columnDef: 'salary', headerCell: 'salary', headerLabel: 'salary', dataType: TableColumnDataType.Number },
   { columnDef: 'smash_pct', headerCell: 'smash_pct', headerLabel: 'Smash Pct', dataType: TableColumnDataType.Number },
+
   // { columnDef: 'stack_diff', headerCell: 'stack_diff', headerLabel: 'Stack Diff', dataType: TableColumnDataType.Number },
   // { columnDef: 'stack_field', headerCell: 'stack_field', headerLabel: 'Stack Field', dataType: TableColumnDataType.Number },
   // { columnDef: 'stack_leverage', headerCell: 'stack_leverage', headerLabel: 'Stack Lev.', dataType: TableColumnDataType.Number },
@@ -51,8 +52,7 @@ export const BATTER_PLATEIQ_COLUMNS = [
   // { columnDef: `stats.${statLine}.xwoba`, headerCell: '', headerLabel: '', dataType: TableColumnDataType.Number }
 ];
 
-export const PITCHER_PLATEIQ_COLUMNS = [
-  { columnDef: 'salary', headerCell: 'salary', headerLabel: 'salary', dataType: TableColumnDataType.Number },
+export const PITCHER_STATS_COLUMNS = [
   // { columnDef: 'smash_pct', headerCell: 'smash_pct', headerLabel: 'Smash Pct', dataType: TableColumnDataType.Number },
   // { columnDef: 'stack_diff', headerCell: 'stack_diff', headerLabel: 'Stack Diff', dataType: TableColumnDataType.Number },
   // { columnDef: 'stack_field', headerCell: 'stack_field', headerLabel: 'Stack Field', dataType: TableColumnDataType.Number },
@@ -76,10 +76,19 @@ export const PITCHER_PLATEIQ_COLUMNS = [
   // { columnDef: `stats.${statLine}.xwoba`, headerCell: '', headerLabel: '', dataType: TableColumnDataType.Number }
 ];
 
-export const BATTER_STATS_COLUMNS = [...BASE_PLAYER_COLUMNS, ...BATTER_PLATEIQ_COLUMNS];
-export const BATTER_STATS_ROWS = transformTableColumnsToTableRows(BASE_PLAYER_COLUMNS);
-export const BATTER_STATS_HEADERS = BATTER_STATS_ROWS.map(r => r.columnDef);
+export namespace DfsMlbTableColumns {
+  export const COLUMNS_BY_POS = {
+    B: [...BASE_STATS_COLUMNS, ...BATTER_PLATEIQ_COLUMNS],
+    P: [...BASE_STATS_COLUMNS, ...PITCHER_STATS_COLUMNS],
+  };
 
-export const PITCHER_STATS_COLUMNS = [...BASE_PLAYER_COLUMNS, ...PITCHER_PLATEIQ_COLUMNS];
-export const PITCHER_STATS_ROWS = transformTableColumnsToTableRows(PITCHER_STATS_COLUMNS);
-export const PITCHER_STATS_HEADERS = PITCHER_STATS_ROWS.map(r => r.columnDef);
+  export const ROWS_BY_POS = {
+    B: transformTableColumnsToTableRows(COLUMNS_BY_POS['B']),
+    P: transformTableColumnsToTableRows(COLUMNS_BY_POS['P']),
+  };
+
+  export const HEADERS_BY_POS = {
+    B: getTableHeaders(ROWS_BY_POS['B']),
+    P: getTableHeaders(ROWS_BY_POS['P']),
+  };
+}

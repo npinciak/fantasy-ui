@@ -6,7 +6,7 @@ import { Selector } from '@app/@shared/models/typed-selector';
 import { SlatePlayer } from '@app/dfs/models/player.model';
 import { DailyFantasyPlayersState } from '@app/dfs/state/daily-fantasy-players.state';
 import { uniqueBy } from 'sports-ui-sdk/lib/helpers/unique-by/unique-by';
-import { NFL_TEAM_ID_MAP } from '../consts/nfl.const';
+import { NFL_TEAM_ID_MAP } from '../consts/nfl-dfs-table.const';
 import { GridIronPlayer } from '../models/nfl-gridIron.model';
 import { NflDfsPlayerTableData } from '../models/nfl-player.model';
 import { ProfilerQB, ProfilerRB, ProfilerReceiver } from '../models/nfl-profiler.model';
@@ -84,6 +84,7 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
             : null;
 
         const matchupRtg = playerProfilerWr?.matchupRtg;
+
         const weeklyVolatility =
           playerProfilerQb != null
             ? playerProfilerQb.weeklyVolatility
@@ -94,6 +95,23 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
             : playerProfilerTe != null
             ? playerProfilerTe.weeklyVolatility
             : null;
+
+        const redZoneTargetShare =
+          playerProfilerWr != null
+            ? playerProfilerWr.redZoneTargetShare
+            : playerProfilerTe != null
+            ? playerProfilerTe.redZoneTargetShare
+            : null;
+
+        const targetShare =
+          playerProfilerWr != null ? playerProfilerWr.targetShare : playerProfilerTe != null ? playerProfilerTe.targetShare : null;
+
+        const dominatorRating =
+          playerProfilerWr != null ? playerProfilerWr.dominatorRating : playerProfilerTe != null ? playerProfilerTe.dominatorRating : null;
+
+        const protectionRate = playerProfilerQb != null ? playerProfilerQb.protectionRate : null;
+        const truePasserRating = playerProfilerQb != null ? playerProfilerQb.truePasserRating : null;
+        const pressuredCompletionPercentage = playerProfilerQb != null ? playerProfilerQb.pressuredCompletionPercentage : null;
 
         const { name, teamId, position } = p;
 
@@ -106,6 +124,11 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
           teamId,
           position,
           salary,
+          dominatorRating,
+          protectionRate,
+          truePasserRating,
+          pressuredCompletionPercentage,
+          targetShare,
           // pown,
           // opp,
           // smash,
@@ -118,7 +141,7 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
           productionPremium,
           matchupRtg,
           weeklyVolatility,
-
+          redZoneTargetShare,
           pown: exists(gridIron) ? gridIron.pown : null,
           opp: exists(gridIron) ? gridIron.opp : null,
           smash: exists(gridIron) ? gridIron.smash : null,

@@ -11,6 +11,7 @@ import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-player-table',
   templateUrl: './player-table.component.html',
+  styleUrls: ['./player-table.component.scss'],
 })
 export class PlayerTableComponent implements AfterViewInit, OnChanges {
   @Input() data: NflDfsPlayerTableData[];
