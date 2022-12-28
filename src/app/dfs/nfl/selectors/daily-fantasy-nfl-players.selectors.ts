@@ -6,7 +6,7 @@ import { Selector } from '@app/@shared/models/typed-selector';
 import { SlatePlayer } from '@app/dfs/models/player.model';
 import { DailyFantasyPlayersState } from '@app/dfs/state/daily-fantasy-players.state';
 import { uniqueBy } from 'sports-ui-sdk/lib/helpers/unique-by/unique-by';
-import { NFL_TEAM_ID_MAP } from '../consts/nfl.const';
+import { NFL_TEAM_ID_MAP } from '../consts/nfl-dfs-table.const';
 import { GridIronPlayer } from '../models/nfl-gridIron.model';
 import { NflDfsPlayerTableData } from '../models/nfl-player.model';
 import { ProfilerQB, ProfilerRB, ProfilerReceiver } from '../models/nfl-profiler.model';

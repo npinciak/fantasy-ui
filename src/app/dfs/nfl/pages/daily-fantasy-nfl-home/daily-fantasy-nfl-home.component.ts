@@ -8,7 +8,7 @@ import { DailyFantasySlateFacade } from '@app/dfs/facade/daily-fantasy-slate.fac
 import { SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '../../consts/nfl.const';
+import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '../../consts/nfl-dfs-table.const';
 import { DfsNflTableColumns } from '../../consts/table.const';
 import { DailyFantasyNflPlayerFacade } from '../../facade/daily-fantasy-nfl-players.facade';
 import { DailyFantasyNflTeamSlateAttrFacade } from '../../facade/daily-fantasy-nfl-team-slate-attr.facade';

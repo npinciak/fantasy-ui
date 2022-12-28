@@ -3,7 +3,7 @@ import { linearRegression } from '@app/@shared/helpers/graph.helpers';
 import { exists, existsFilter } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { SlateTeam } from '@app/dfs/service/slate.service';
-import { NFL_RG_TEAM_ID_MAP } from '../consts/nfl.const';
+import { NFL_RG_TEAM_ID_MAP } from '../consts/nfl-dfs-table.const';
 import { DailyFantasyNflTeamSlateAttributeState } from '../state/daily-fantasy-nfl-team-slate-attr.state';
 
 export class DailyFantasyNflTeamSlateAttributeSelectors extends GenericSelector(DailyFantasyNflTeamSlateAttributeState) {
