@@ -1,7 +1,6 @@
 <app-page-layout>
   <div sidebar>
     <app-dropdown-filter
-      [isMobile]="isMobile$ | async"
       [selectedOption]="currentScoringPeriod$ | async"
       title="Week"
       [filterItems]="matchupPeriodIdFilterOptions$ | async"

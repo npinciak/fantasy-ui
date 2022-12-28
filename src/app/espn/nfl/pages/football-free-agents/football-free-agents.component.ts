@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LayoutService } from '@app/@shared/services/layout.service';
 import { FOOTBALL_STAT_PERIOD_FILTER_OPTIONS } from '@app/espn/const/stat-period.const';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -28,8 +27,6 @@ export class FootballFreeAgentsComponent implements OnInit {
   scoringPeriodId$ = new BehaviorSubject('');
   xAxisStat$ = new BehaviorSubject<string>('');
   yAxisStat$ = new BehaviorSubject<string>('');
-
-  isMobile$ = this.layoutService.isMobile$;
 
   selectedLineupSlotId$ = this.freeAgentsFilterFacade.selectedLineupSlotId$;
   scoringPeriodFilterOptions$ = this.footballLeagueFacade.scoringPeriodFilterOptions$;
@@ -65,8 +62,7 @@ export class FootballFreeAgentsComponent implements OnInit {
     readonly footballTeamFacade: FantasyFootballTeamFacade,
     readonly footballLeagueFacade: FantasyFootballLeagueFacade,
     readonly freeAgentsFacade: FantasyFootballFreeAgentsFacade,
-    readonly freeAgentsFilterFacade: FantasyFootballFreeAgentsFilterFacade,
-    private layoutService: LayoutService
+    readonly freeAgentsFilterFacade: FantasyFootballFreeAgentsFilterFacade
   ) {}
 
   ngOnInit(): void {}

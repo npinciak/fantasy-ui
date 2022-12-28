@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isMobile; else nativeDropdown">
+<ng-container *ngIf="!(isMobile$ | async); else nativeDropdown">
   <mat-form-field>
     <mat-label>{{ title }}</mat-label>
     <mat-select [disabled]="isDisabled" [(value)]="selectedOption" (selectionChange)="filterUpdate.emit($event.value)">

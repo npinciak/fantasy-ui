@@ -3,34 +3,24 @@
     <mat-card>
       <mat-card-content>
         <app-dropdown-filter
-          [isMobile]="isMobile$ | async"
           [selectedOption]="scoringPeriodId$ | async"
           title="Stat Period"
           [filterItems]="scoringPeriodFilterOptions$ | async"
           (filterUpdate)="scoringPeriodIdChange($event)"
         ></app-dropdown-filter>
-      </mat-card-content>
-    </mat-card>
-    <div style="margin: 10px 0"></div>
 
-    <mat-card>
-      <mat-card-content>
+        <div style="margin: 10px 0"></div>
+
         <app-dropdown-filter
-          [isMobile]="isMobile$ | async"
           [selectedOption]="selectedLineupSlotId$ | async"
           title="Position"
           [filterItems]="LINEUP_SLOTS"
           (filterUpdate)="onLineupFilterSlotIdChange($event)"
         ></app-dropdown-filter>
-      </mat-card-content>
-    </mat-card>
 
-    <div style="margin: 10px 0"></div>
+        <div style="margin: 10px 0"></div>
 
-    <mat-card>
-      <mat-card-content>
         <app-dropdown-filter
-          [isMobile]="isMobile$ | async"
           [selectedOption]="selectedTeamId$ | async"
           title="Teams"
           [filterItems]="teamFilterOptions$ | async"
@@ -40,34 +30,20 @@
     </mat-card>
   </div>
   <div main class="flex-col gap-20">
-    <div class="flex-row gap-20">
-      <div class="flex-col">
-        <mat-card>
-          <mat-card-content>
-            <app-dropdown-filter
-              [isMobile]="isMobile$ | async"
-              [selectedOption]="xAxisStat$ | async"
-              title="xAxis"
-              [filterItems]="FOOTBALL_STATS_FILTER"
-              (filterUpdate)="onAxisXChange($event)"
-            >
-            </app-dropdown-filter>
-          </mat-card-content>
-        </mat-card>
-      </div>
-      <div class="flex-col">
-        <mat-card>
-          <mat-card-content>
-            <app-dropdown-filter
-              [isMobile]="isMobile$ | async"
-              [selectedOption]="yAxisStat$ | async"
-              title="yAxis"
-              [filterItems]="FOOTBALL_STATS_FILTER"
-              (filterUpdate)="onAxisYChange($event)"
-            ></app-dropdown-filter>
-          </mat-card-content>
-        </mat-card>
-      </div>
+    <div class="flex-col">
+      <mat-card>
+        <mat-card-content>
+          <app-dropdown-filter [selectedOption]="xAxisStat$ | async" title="xAxis" [filterItems]="FOOTBALL_STATS_FILTER" (filterUpdate)="onAxisXChange($event)">
+          </app-dropdown-filter>
+
+          <app-dropdown-filter
+            [selectedOption]="yAxisStat$ | async"
+            title="yAxis"
+            [filterItems]="FOOTBALL_STATS_FILTER"
+            (filterUpdate)="onAxisYChange($event)"
+          ></app-dropdown-filter>
+        </mat-card-content>
+      </mat-card>
     </div>
     <div>
       <app-data-vis-scatter

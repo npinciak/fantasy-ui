@@ -7,66 +7,65 @@
   <div nav>
     <h4>{{ selectedSlate$ | async }}</h4>
   </div>
-  <div main class="flex-col">
+  <div main class="flex-col gap-25">
     <div>
-      <app-dropdown-filter
-        [isMobile]="isMobile$ | async"
-        [selectedOption]="xAxisStat$ | async"
-        title="xAxis"
-        [filterItems]="playerScatterAxisOptions$ | async"
-        (filterUpdate)="onAxisXChange($event)"
-      ></app-dropdown-filter>
+      <mat-card>
+        <mat-card-content>
+          <div class="flex-row gap-15">
+            <div>
+              <app-dropdown-filter
+                [selectedOption]="xAxisStat$ | async"
+                title="xAxis"
+                [filterItems]="playerScatterAxisOptions$ | async"
+                (filterUpdate)="onAxisXChange($event)"
+              ></app-dropdown-filter>
+            </div>
+            <div>
+              <app-dropdown-filter
+                [selectedOption]="yAxisStat$ | async"
+                title="yAxis"
+                [filterItems]="playerScatterAxisOptions$ | async"
+                (filterUpdate)="onAxisYChange($event)"
+              ></app-dropdown-filter>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </div>
-    <div>
-      <app-dropdown-filter
-        [isMobile]="isMobile$ | async"
-        [selectedOption]="yAxisStat$ | async"
-        title="yAxis"
-        [filterItems]="playerScatterAxisOptions$ | async"
-        (filterUpdate)="onAxisYChange($event)"
-      ></app-dropdown-filter>
-    </div>
-    <div>
-      <app-data-vis-scatter
+    <!-- <div> -->
+    <!-- <app-data-vis-scatter
         title="hey there"
         [xAxisFilterTitle]="xAxisStat$ | async"
         [yAxisFilterTitle]="yAxisStat$ | async"
         [chartData]="playerScatterData$ | async"
-      ></app-data-vis-scatter>
-    </div>
-    <div class="flex-col gap-10">
-      OWN PCT {{ teamOwnPercent$ | async }}
-      <ng-container *ngIf="!(slatesEmpty$ | async); else noSlates">
-        <ng-container *ngIf="!(playersEmpty$ | async)">
-          <div>
-            <app-dropdown-filter
-              [isMobile]="isMobile$ | async"
-              title="Teams"
-              [filterItems]="playerTeamsFilterOptions$ | async"
-              (filterUpdate)="teamFilterChange($event)"
-            ></app-dropdown-filter>
-          </div>
+      ></app-data-vis-scatter> -->
+    <!-- </div> -->
 
-          <div>
-            <app-dropdown-filter
-              title="Position"
-              [isMobile]="isMobile$ | async"
-              [filterItems]="playerPositionFilterOptions$ | async"
-              (filterUpdate)="positionFilterChange($event)"
-            ></app-dropdown-filter>
+    <div>
+      <mat-card>
+        <mat-card-content>
+          <div class="flex-row gap-15">
+            <div>
+              <app-dropdown-filter title="Teams" [filterItems]="playerTeamsFilterOptions$ | async" (filterUpdate)="teamFilterChange($event)"></app-dropdown-filter>
+            </div>
+            <div>
+              <app-dropdown-filter
+                title="Position"
+                [filterItems]="playerPositionFilterOptions$ | async"
+                (filterUpdate)="positionFilterChange($event)"
+              ></app-dropdown-filter>
+            </div>
           </div>
 
           <app-player-table
-            [teamFilter]="teamFilter$ | async"
-            [statGroupFilter]="statGroupFilter$ | async"
-            [positionFilter]="positionFilter$ | async"
+            [filter]="tableFilter$ | async"
             [teamMap]="NFL_TEAM_ID_MAP"
             [data]="nflPlayerList$ | async"
             [dataRows]="(tableConfig$ | async).rows"
             [dataHeaders]="(tableConfig$ | async).headers"
           ></app-player-table>
-        </ng-container>
-      </ng-container>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </app-page-layout>

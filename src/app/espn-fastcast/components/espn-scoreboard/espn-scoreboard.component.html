@@ -12,7 +12,6 @@
         </div>
         <div style="padding: 15px">
           <app-dropdown-filter
-            [isMobile]="isMobile$ | async"
             [disabled]="!(showFeed$ | async)"
             [selectedOption]="selectedLeagueId$ | async"
             [filterItems]="leagueList$ | async"

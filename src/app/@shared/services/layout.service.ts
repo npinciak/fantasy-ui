@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class LayoutService {
-  isMobile$ = this.breakpoints.observe([Breakpoints.HandsetPortrait]).pipe(map(v => v.matches));
+  isMobile$ = this.breakpoints.observe([Breakpoints.Handset, Breakpoints.Tablet]).pipe(map(v => v.matches));
 
   constructor(private breakpoints: BreakpointObserver) {}
 }

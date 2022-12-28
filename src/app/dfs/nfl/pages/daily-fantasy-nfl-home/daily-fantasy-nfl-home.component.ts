@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UrlQueryParams } from '@app/@core/store/router/url-builder';
-import { LayoutService } from '@app/@shared/services/layout.service';
 import { DailyFantasyPlayersFacade } from '@app/dfs/facade/daily-fantasy-players.facade';
 import { DailyFantasySlateAttrFacade } from '@app/dfs/facade/daily-fantasy-slate-attr.facade';
 import { DailyFantasySlateFacade } from '@app/dfs/facade/daily-fantasy-slate.facade';
@@ -49,9 +48,6 @@ export class DailyFantasyNflHomeComponent implements OnInit {
   teamId: number | null = null;
   position$ = new BehaviorSubject<string | null>('All');
   tableFilter$ = new BehaviorSubject<string | null>(null);
-  teamFilter$ = new BehaviorSubject<string | null>(null);
-  statGroupFilter$ = new BehaviorSubject<string | null>(null);
-  positionFilter$ = new BehaviorSubject<string | null>(null);
   xAxisStat$ = new BehaviorSubject<string | null>(null);
   yAxisStat$ = new BehaviorSubject<string | null>(null);
 
@@ -63,6 +59,8 @@ export class DailyFantasyNflHomeComponent implements OnInit {
     })
   );
 
+<<<<<<< HEAD
+=======
   tableConfig$ = combineLatest([this.position$]).pipe(
     map(([position]) => {
       const headers = position != null ? DfsNflTableColumns.HEADERS_BY_POS[position] : DfsNflTableColumns.HEADERS_BY_POS['All'];
@@ -74,8 +72,8 @@ export class DailyFantasyNflHomeComponent implements OnInit {
     })
   );
 
+>>>>>>> main
   constructor(
-    private layoutService: LayoutService,
     private activatedRoute: ActivatedRoute,
     readonly nflPlayerFacade: DailyFantasyNflPlayerFacade,
     readonly nflTeamSlateAttrFacade: DailyFantasyNflTeamSlateAttrFacade,
@@ -94,8 +92,8 @@ export class DailyFantasyNflHomeComponent implements OnInit {
     this.yAxisStat$.next(val);
   }
 
-  statGroupFilter(val: string) {
-    this.statGroupFilter$.next(val);
+  statGroupFilter(value: string) {
+    this.tableFilter$.next(JSON.stringify({ filterType: FilterType.statGroup, value }));
   }
 
   positionFilterChange(value: string) {
