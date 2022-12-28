@@ -151,10 +151,19 @@ export namespace DfsSlateHelpers {
         productionPremium: normalizeStringToNumber(value['Production Premium']),
         matchupRtg: isNFLClientProfilerReceiver(value) ? normalizeStringToNumber(value['Matchup Rtg']) : null,
         weeklyVolatility: normalizeStringToNumber(value['Weekly Volatility']),
+        redZoneTargetShare: normalizeStringToNumber(value['Red Zone Target Share']),
+        targetShare: normalizeStringToNumber(value['Target Share']),
+
+        dominatorRating: normalizeStringToNumber(value['Dominator Rating']),
+        protectionRate: normalizeStringToNumber(value['Protection Rate']),
+        truePasserRating: normalizeStringToNumber(value['True Passer Rating']),
+        pressuredCompletionPercentage: normalizeStringToNumber(value['Pressured Completion Percentage']),
       };
 
       f.push(transform);
     }
+
+    console.log(f);
     return f;
   }
 

@@ -26,6 +26,7 @@ export type TableColumn = {
 export enum TableColumnDataType {
   Number,
   String,
+  Percentage,
 }
 
 export function transformTableColumnsToTableRows<T>(cols: BaseTableColumn<T>[]): BaseTableRow<T>[] {

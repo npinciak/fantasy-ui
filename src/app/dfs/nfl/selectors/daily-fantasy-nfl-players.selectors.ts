@@ -84,6 +84,7 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
             : null;
 
         const matchupRtg = playerProfilerWr?.matchupRtg;
+
         const weeklyVolatility =
           playerProfilerQb != null
             ? playerProfilerQb.weeklyVolatility
@@ -94,6 +95,23 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
             : playerProfilerTe != null
             ? playerProfilerTe.weeklyVolatility
             : null;
+
+        const redZoneTargetShare =
+          playerProfilerWr != null
+            ? playerProfilerWr.redZoneTargetShare
+            : playerProfilerTe != null
+            ? playerProfilerTe.redZoneTargetShare
+            : null;
+
+        const targetShare =
+          playerProfilerWr != null ? playerProfilerWr.targetShare : playerProfilerTe != null ? playerProfilerTe.targetShare : null;
+
+        const dominatorRating =
+          playerProfilerWr != null ? playerProfilerWr.dominatorRating : playerProfilerTe != null ? playerProfilerTe.dominatorRating : null;
+
+        const protectionRate = playerProfilerQb != null ? playerProfilerQb.protectionRate : null;
+        const truePasserRating = playerProfilerQb != null ? playerProfilerQb.truePasserRating : null;
+        const pressuredCompletionPercentage = playerProfilerQb != null ? playerProfilerQb.pressuredCompletionPercentage : null;
 
         const { name, teamId, position } = p;
 
@@ -106,6 +124,11 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
           teamId,
           position,
           salary,
+          dominatorRating,
+          protectionRate,
+          truePasserRating,
+          pressuredCompletionPercentage,
+          targetShare,
           // pown,
           // opp,
           // smash,
@@ -118,7 +141,7 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
           productionPremium,
           matchupRtg,
           weeklyVolatility,
-
+          redZoneTargetShare,
           pown: exists(gridIron) ? gridIron.pown : null,
           opp: exists(gridIron) ? gridIron.opp : null,
           smash: exists(gridIron) ? gridIron.smash : null,

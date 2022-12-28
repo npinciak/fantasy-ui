@@ -1,20 +1,3 @@
-<!-- <div [title]="playerLabel" class="flex-row">
-  <div>
-    <img role="presentation" [src]="player?.img" [alt]="player?.name" />
-  </div>
-  <div class="flex-col">
-    <div class="player name">
-      {{ player?.name }}
-      <mat-icon
-        *ngIf="player?.injuryStatus"
-        [ngStyle]="{ color: playerInjuryStatusColor(player.injuryStatus) }"
-        [title]="PlayerStatusAbbrevByInjuryStatusType[player?.injuryStatus]"
-        >{{ MatIconByEspnPlayerInjuryStatus[player?.injuryStatus] }}</mat-icon
-      >
-    </div>
-    <div class="player team-pos">{{ player?.team }}, {{ player?.position }}</div>
-  </div>
-</div> -->
 <div class="flex-row gap-5" style="cursor: pointer; margin-right: 10px">
   <div style="flex: 10%" [attr.aria-label]="player?.name">
     <img width="48" height="35" [title]="player?.name" [alt]="player?.name" [src]="player?.img" [alt]="player?.name" />
