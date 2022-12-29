@@ -1,12 +1,12 @@
 import { exists } from '@app/@shared/helpers/utils';
-import { EspnClient } from 'sports-ui-sdk';
+import { EspnClient, MlbTeams } from 'sports-ui-sdk';
 
 import { isPitcher } from '../espn-helpers';
 import { EspnTransformers } from '../espn.transformers';
 import { FantasyLeague } from '../models/fantasy-league.model';
 import { MLB_LINEUP_MAP } from './consts/lineup.const';
+
 import { MLB_POSITION_MAP } from './consts/position.const';
-import { MlbTeam } from './consts/team.const';
 import { BaseballEvent } from './models/baseball-event.model';
 import { BaseballLeague } from './models/baseball-league.model';
 import { BaseballPlayer } from './models/baseball-player.model';
@@ -63,7 +63,7 @@ export namespace FantasyBaseballTransformers {
       const playerInfo = EspnTransformers.clientPlayerToPlayer(player.playerPoolEntry.player, {
         sport: EspnClient.Sport.Baseball,
         leagueId: EspnClient.LeagueId.MLB,
-        teamMap: MlbTeam.Map,
+        teamMap: MlbTeams.Map,
         positionMap: MLB_POSITION_MAP,
       });
 
@@ -92,7 +92,7 @@ export namespace FantasyBaseballTransformers {
       const playerInfo = EspnTransformers.clientPlayerToPlayer(player.player, {
         sport: EspnClient.Sport.Baseball,
         leagueId: EspnClient.LeagueId.MLB,
-        teamMap: MlbTeam.Map,
+        teamMap: MlbTeams.Map,
         positionMap: MLB_POSITION_MAP,
       });
 
