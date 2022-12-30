@@ -43,6 +43,7 @@ import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-sched
 import { FantasyFootballTeamState } from './nfl/state/fantasy-football-teams.state';
 import { FantasyFootballTransactionState } from './nfl/state/fantasy-football-transaction.state';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
+import { EspnLineupCardComponent } from './component/espn-lineup-card/espn-lineup-card.component';
 
 const states = [
   FantasyFootballLeagueState,
@@ -91,6 +92,7 @@ const exports = [StandingsComponent, RosterComponent];
     LineupCardComponent,
     EspnPlayerDialogComponent,
     EspnStandingsTableComponent,
+    EspnLineupCardComponent,
   ],
   imports,
   exports,
