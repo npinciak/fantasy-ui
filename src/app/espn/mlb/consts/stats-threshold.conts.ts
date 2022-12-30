@@ -1,92 +1,90 @@
-import { StatByThreshold, StatThreshold } from '@app/@shared/models/stat-threshold.model';
+import { StatThresholds } from '@app/@shared/models/stat-threshold.model';
 import { EspnBaseballStat } from '../models/mlb-stats.model';
 
-export const opsThreshold: StatByThreshold = {
-  [StatThreshold.excellent]: 1.0,
-  [StatThreshold.great]: 0.9,
-  [StatThreshold.aboveAvg]: 0.8,
-  [StatThreshold.avg]: 0.71,
-  [StatThreshold.belowAvg]: 0.67,
-  [StatThreshold.poor]: 0.6,
-  [StatThreshold.awful]: 0.57,
-};
+export const OpsThreshold = {
+  [StatThresholds.excellent]: 1.0,
+  [StatThresholds.great]: 0.9,
+  [StatThresholds.aboveAvg]: 0.8,
+  [StatThresholds.avg]: 0.71,
+  [StatThresholds.belowAvg]: 0.67,
+  [StatThresholds.poor]: 0.6,
+  [StatThresholds.awful]: 0.57,
+} as const;
 
-export const wraaThreshold: StatByThreshold = {
-  [StatThreshold.excellent]: 40,
-  [StatThreshold.great]: 20,
-  [StatThreshold.aboveAvg]: 10,
-  [StatThreshold.avg]: 0,
-  [StatThreshold.belowAvg]: -5,
-  [StatThreshold.poor]: -10,
-  [StatThreshold.awful]: -20,
-};
+export const WraaThreshold = {
+  [StatThresholds.excellent]: 40,
+  [StatThresholds.great]: 20,
+  [StatThresholds.aboveAvg]: 10,
+  [StatThresholds.avg]: 0,
+  [StatThresholds.belowAvg]: -5,
+  [StatThresholds.poor]: -10,
+  [StatThresholds.awful]: -20,
+} as const;
 
-export const wobaThreshold: StatByThreshold = {
-  [StatThreshold.excellent]: 0.4,
-  [StatThreshold.great]: 0.37,
-  [StatThreshold.aboveAvg]: 0.34,
-  [StatThreshold.avg]: 0.32,
-  [StatThreshold.belowAvg]: 0.31,
-  [StatThreshold.poor]: 0.3,
-  [StatThreshold.awful]: 0.29,
-};
+export const wobaThreshold = {
+  [StatThresholds.excellent]: 0.4,
+  [StatThresholds.great]: 0.37,
+  [StatThresholds.aboveAvg]: 0.34,
+  [StatThresholds.avg]: 0.32,
+  [StatThresholds.belowAvg]: 0.31,
+  [StatThresholds.poor]: 0.3,
+  [StatThresholds.awful]: 0.29,
+} as const;
 
-export const k9Threshold: StatByThreshold = {
-  [StatThreshold.excellent]: 10,
-  [StatThreshold.great]: 9,
-  [StatThreshold.aboveAvg]: 8.2,
-  [StatThreshold.avg]: 7.7,
-  [StatThreshold.belowAvg]: 7.0,
-  [StatThreshold.poor]: 6.0,
-  [StatThreshold.awful]: 5.0,
-};
+export const k9Threshold = {
+  [StatThresholds.excellent]: 10,
+  [StatThresholds.great]: 9,
+  [StatThresholds.aboveAvg]: 8.2,
+  [StatThresholds.avg]: 7.7,
+  [StatThresholds.belowAvg]: 7.0,
+  [StatThresholds.poor]: 6.0,
+  [StatThresholds.awful]: 5.0,
+} as const;
 
-export const kPctThreshold: StatByThreshold = {
-  [StatThreshold.excellent]: 27,
-  [StatThreshold.great]: 24,
-  [StatThreshold.aboveAvg]: 22,
-  [StatThreshold.avg]: 20,
-  [StatThreshold.belowAvg]: 17,
-  [StatThreshold.poor]: 15,
-  [StatThreshold.awful]: 13,
-};
+export const kPctThreshold = {
+  [StatThresholds.excellent]: 27,
+  [StatThresholds.great]: 24,
+  [StatThresholds.aboveAvg]: 22,
+  [StatThresholds.avg]: 20,
+  [StatThresholds.belowAvg]: 17,
+  [StatThresholds.poor]: 15,
+  [StatThresholds.awful]: 13,
+} as const;
 
-export const bb9Threshold: StatByThreshold = {
-  [StatThreshold.excellent]: 1.5,
-  [StatThreshold.great]: 1.9,
-  [StatThreshold.aboveAvg]: 2.5,
-  [StatThreshold.avg]: 2.9,
-  [StatThreshold.belowAvg]: 3.2,
-  [StatThreshold.poor]: 3.5,
-  [StatThreshold.awful]: 4.0,
-};
+export const bb9Threshold = {
+  [StatThresholds.excellent]: 1.5,
+  [StatThresholds.great]: 1.9,
+  [StatThresholds.aboveAvg]: 2.5,
+  [StatThresholds.avg]: 2.9,
+  [StatThresholds.belowAvg]: 3.2,
+  [StatThresholds.poor]: 3.5,
+  [StatThresholds.awful]: 4.0,
+} as const;
 
-export const bbPctThreshold: StatByThreshold = {
-  [StatThreshold.excellent]: 4.5,
-  [StatThreshold.great]: 5.5,
-  [StatThreshold.aboveAvg]: 6.5,
-  [StatThreshold.avg]: 7.7,
-  [StatThreshold.belowAvg]: 8.0,
-  [StatThreshold.poor]: 8.5,
-  [StatThreshold.awful]: 9.0,
-};
+export const bbPctThreshold = {
+  [StatThresholds.excellent]: 4.5,
+  [StatThresholds.great]: 5.5,
+  [StatThresholds.aboveAvg]: 6.5,
+  [StatThresholds.avg]: 7.7,
+  [StatThresholds.belowAvg]: 8.0,
+  [StatThresholds.poor]: 8.5,
+  [StatThresholds.awful]: 9.0,
+} as const;
 
-export const lobPctThreshold: StatByThreshold = {
-  [StatThreshold.excellent]: 80,
-  [StatThreshold.great]: 78,
-  [StatThreshold.aboveAvg]: 75,
-  [StatThreshold.avg]: 72,
-  [StatThreshold.belowAvg]: 70,
-  [StatThreshold.poor]: 65,
-  [StatThreshold.awful]: 60,
-};
+export const lobPctThreshold = {
+  [StatThresholds.excellent]: 80,
+  [StatThresholds.great]: 78,
+  [StatThresholds.aboveAvg]: 75,
+  [StatThresholds.avg]: 72,
+  [StatThresholds.belowAvg]: 70,
+  [StatThresholds.poor]: 65,
+  [StatThresholds.awful]: 60,
+} as const;
 
-export const THRESHOLD_MAP: {
-  [x: number]: StatByThreshold;
-} = {
-  [EspnBaseballStat.wRAA]: wraaThreshold,
+export const THRESHOLD_MAP = {
+  [EspnBaseballStat.wRAA]: WraaThreshold,
   [EspnBaseballStat.wOBA]: wobaThreshold,
-  [EspnBaseballStat.OPS]: opsThreshold,
+  [EspnBaseballStat.OPS]: OpsThreshold,
   [EspnBaseballStat.K_9]: k9Threshold,
   [EspnBaseballStat.LOB_PCT]: lobPctThreshold,
-};
+} as const;

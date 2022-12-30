@@ -127,7 +127,7 @@ export const MLB_STATS_MAP: StatsMap = {
     statCategoryId: StatCategory.Pitching,
     statTypeId: StatType.Pitching,
   },
-};
+} as const;
 
 export const MLB_STATS_LIST = Object.entries(MLB_STATS_MAP).map(([key, stat]) => {
   return {

@@ -1,4 +1,4 @@
-export enum StatThreshold {
+export enum StatThresholds {
   excellent,
   great,
   aboveAvg,
@@ -8,47 +8,75 @@ export enum StatThreshold {
   awful,
 }
 
-export enum StatThresholdColor {
-  excellent = '#00876c',
-  great = '#71a879',
-  aboveAvg = '#b6c794',
-  avg = '#f4e8bc',
-  belowAvg = '#eab780',
-  poor = '#e2805b',
-  awful = '#d43d51',
-}
+export const StatThresholdColors = {
+  excellent: '#00876c',
+  great: '#71a879',
+  aboveAvg: '#b6c794',
+  avg: '#f4e8bc',
+  belowAvg: '#eab780',
+  poor: '#e2805b',
+  awful: '#d43d51',
+} as const;
 
-export enum StatThresholdClass {
-  excellent = 'excellent',
-  great = 'great',
-  aboveAvg = 'above-avg',
-  avg = 'avg',
-  belowAvg = 'below-avg',
-  poor = 'poor',
-  awful = 'awful',
-}
+export const StatThresholdClass = {
+  excellent: 'excellent',
+  great: 'great',
+  aboveAvg: 'above-avg',
+  avg: 'avg',
+  belowAvg: 'below-avg',
+  poor: 'poor',
+  awful: 'awful',
+} as const;
 
-export type StatByThreshold = { [key in StatThreshold]: number };
-export type StatThresholdByStat = { [key in StatThreshold]: StatByThreshold };
-export type StatThresholdClassByStatThreshold = { [key in StatThreshold]: StatThresholdClass };
-export type StatThresholdColorByStatThreshold = { [key in StatThreshold]: StatThresholdColor };
+export const StatThresholdLabel = {
+  excellent: 'Excellent',
+  great: 'Great',
+  aboveAvg: 'Above Avg',
+  avg: 'Avg',
+  belowAvg: 'Below Avg',
+  poor: 'Poor',
+  awful: 'Awful',
+} as const;
 
-export const StatThresholdByClassMap: StatThresholdClassByStatThreshold = {
-  [StatThreshold.excellent]: StatThresholdClass.excellent,
-  [StatThreshold.great]: StatThresholdClass.great,
-  [StatThreshold.aboveAvg]: StatThresholdClass.aboveAvg,
-  [StatThreshold.avg]: StatThresholdClass.avg,
-  [StatThreshold.belowAvg]: StatThresholdClass.belowAvg,
-  [StatThreshold.poor]: StatThresholdClass.poor,
-  [StatThreshold.awful]: StatThresholdClass.awful,
-};
+// type t = typeof StatThresholdColorss;
+// type StatThresholdColorssType = keyof t; // 'low' | 'average' | 'high'
+// type StatThresholdColorssValueType = t[keyof t]; // '1' | '2' | '3'
 
-export const StatThresholdByColorMap: StatThresholdColorByStatThreshold = {
-  [StatThreshold.excellent]: StatThresholdColor.excellent,
-  [StatThreshold.great]: StatThresholdColor.great,
-  [StatThreshold.aboveAvg]: StatThresholdColor.aboveAvg,
-  [StatThreshold.avg]: StatThresholdColor.avg,
-  [StatThreshold.belowAvg]: StatThresholdColor.belowAvg,
-  [StatThreshold.poor]: StatThresholdColor.poor,
-  [StatThreshold.awful]: StatThresholdColor.awful,
-};
+// // const hisPay: payValueType = '3'; //okay
+// // const myPay: payValueType = '4'; // error
+
+export type StatByThreshold = { [key in StatThresholds]: number };
+export type StatThresholdByStat = { [key in StatThresholds]: StatByThreshold };
+
+type t = typeof StatThresholdLabel;
+export type StatThresholdByStatThresholdLabel = { [key in keyof t]: number };
+
+export const StatThresholdLabelByStatThreshold = {
+  [StatThresholds.excellent]: StatThresholdLabel.excellent,
+  [StatThresholds.great]: StatThresholdLabel.great,
+  [StatThresholds.aboveAvg]: StatThresholdLabel.aboveAvg,
+  [StatThresholds.avg]: StatThresholdLabel.avg,
+  [StatThresholds.belowAvg]: StatThresholdLabel.belowAvg,
+  [StatThresholds.poor]: StatThresholdLabel.poor,
+  [StatThresholds.awful]: StatThresholdLabel.awful,
+} as const;
+
+export const StatThresholdClassByStatThreshold = {
+  [StatThresholds.excellent]: StatThresholdClass.excellent,
+  [StatThresholds.great]: StatThresholdClass.great,
+  [StatThresholds.aboveAvg]: StatThresholdClass.aboveAvg,
+  [StatThresholds.avg]: StatThresholdClass.avg,
+  [StatThresholds.belowAvg]: StatThresholdClass.belowAvg,
+  [StatThresholds.poor]: StatThresholdClass.poor,
+  [StatThresholds.awful]: StatThresholdClass.awful,
+} as const;
+
+export const StatThresholdColorByStatThreshold = {
+  [StatThresholds.excellent]: StatThresholdColors.excellent,
+  [StatThresholds.great]: StatThresholdColors.great,
+  [StatThresholds.aboveAvg]: StatThresholdColors.aboveAvg,
+  [StatThresholds.avg]: StatThresholdColors.avg,
+  [StatThresholds.belowAvg]: StatThresholdColors.belowAvg,
+  [StatThresholds.poor]: StatThresholdColors.poor,
+  [StatThresholds.awful]: StatThresholdColors.awful,
+} as const;
