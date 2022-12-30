@@ -1,0 +1,6 @@
+<ng-container *ngIf="isLoading; else refreshBtn">
+  <mat-spinner title="loading" diameter="20"></mat-spinner>
+</ng-container>
+<ng-template #refreshBtn>
+  <mat-icon title="refresh" class="cursor-pointer" [disabled]="true" (click)="onClick()">refresh</mat-icon>
+</ng-template>

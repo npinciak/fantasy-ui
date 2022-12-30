@@ -1,16 +1,11 @@
 <mat-card>
   <mat-card-content>
-    <div style="display: flex">
-      <div>
+    <div class="flex-row ui-w-100">
+      <div style="flex-basis: 100%">
         {{ title }}
       </div>
-      <div style="text-align: right">
-        <ng-container *ngIf="isLoading; else refreshBtn">
-          <mat-spinner title="loading" diameter="20"></mat-spinner>
-        </ng-container>
-        <ng-template #refreshBtn>
-          <mat-icon title="refresh league" class="cursor-pointer" [disabled]="true" (click)="onRefreshClick()">refresh</mat-icon>
-        </ng-template>
+      <div class="flex" style="flex-basis: 100%; justify-content: end">
+        <app-refresh-btn [isLoading]="isLoading" (refreshButtonClicked)="onRefreshClick()"></app-refresh-btn>
       </div>
     </div>
 
@@ -18,7 +13,10 @@
       <a style="padding: 0px" *ngFor="let player of lineup; let i = index" [attr.data-index]="i" tabindex="0" mat-list-item (click)="onPlayerClick(player)">
         <div class="flex-row">
           <div class="flex-col" style="flex-basis: 100%">
-            <app-espn-player [player]="player"></app-espn-player>
+            <ngx-skeleton-loader *ngIf="isLoading; else playerInfo"></ngx-skeleton-loader>
+            <ng-template #playerInfo>
+              <app-espn-player [player]="player"></app-espn-player>
+            </ng-template>
           </div>
           <div class="flex-col">
             <span style="font-weight: bold"> {{ player?.points | number: '1.0' }}</span>
