@@ -1,10 +1,30 @@
 <mat-card>
   <mat-card-content>
-    <h3>{{ title }}</h3>
-    <mat-list>
-      <span mat-list-item *ngFor="let player of lineup">
-        <app-espn-player [player]="player"></app-espn-player>
-      </span>
-    </mat-list>
+    <div style="display: flex">
+      <div>
+        {{ title }}
+      </div>
+      <div style="text-align: right">
+        <ng-container *ngIf="isLoading; else refreshBtn">
+          <mat-spinner title="loading" diameter="20"></mat-spinner>
+        </ng-container>
+        <ng-template #refreshBtn>
+          <mat-icon title="refresh league" class="cursor-pointer" [disabled]="true" (click)="onRefreshClick()">refresh</mat-icon>
+        </ng-template>
+      </div>
+    </div>
+
+    <mat-nav-list>
+      <a style="padding: 0px" *ngFor="let player of lineup; let i = index" [attr.data-index]="i" tabindex="0" mat-list-item (click)="onPlayerClick(player)">
+        <div class="flex-row">
+          <div class="flex-col" style="flex-basis: 100%">
+            <app-espn-player [player]="player"></app-espn-player>
+          </div>
+          <div class="flex-col">
+            <span style="font-weight: bold"> {{ player?.points | number: '1.0' }}</span>
+          </div>
+        </div>
+      </a>
+    </mat-nav-list>
   </mat-card-content>
 </mat-card>

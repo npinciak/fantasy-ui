@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
@@ -26,7 +26,7 @@ import { EspnBaseballStat } from '../../models/mlb-stats.model';
   templateUrl: './baseball-team.component.html',
   styleUrls: ['./baseball-team.component.scss'],
 })
-export class BaseballTeamComponent implements OnInit {
+export class BaseballTeamComponent {
   teamLineup: BaseballPlayer[];
 
   readonly STAT_PERIOD_FILTER_OPTIONS = BASEBALL_STAT_PERIOD_FILTER_OPTIONS;
@@ -70,7 +70,7 @@ export class BaseballTeamComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {}
+  onPlayerClick(event) {}
 
   onLiveScoringSelectChange(event: MatSlideToggleChange) {
     this.isLiveScore = event.checked;

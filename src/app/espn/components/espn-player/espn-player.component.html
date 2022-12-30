@@ -1,6 +1,11 @@
 <div class="flex-row gap-10" [title]="playerLabel" [attr.id]="playerLabel">
   <div>
-    <img role="presentation" [src]="player?.img" [alt]="player?.name" />
+    <img
+      role="presentation"
+      [src]="player?.img"
+      [alt]="player?.name"
+      onerror="this.src='https://a.espncdn.com/combiner/i?img=/games/lm-static/flb/images/nomug.png&w=55&h=40&cb=1'"
+    />
   </div>
   <div class="flex-col">
     <div class="player name">

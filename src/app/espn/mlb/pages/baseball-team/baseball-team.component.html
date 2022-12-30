@@ -13,20 +13,20 @@
     <app-lineup-card
       title="Starting Lineup"
       [lineup]="(fantasyBaseballTeamFacade.startingBatters$ | async)!(teamId)"
-      (fetchPlayerDetails)="fantasyBaseballPlayerFacade.getPlayerNews($event.id)"
+      (playerClicked)="onPlayerClick($event)"
     ></app-lineup-card>
     <div style="margin: 10px 0"></div>
     <app-lineup-card
       title="Bench"
       [lineup]="(fantasyBaseballTeamFacade.benchBatters$ | async)!(teamId)"
-      (fetchPlayerDetails)="fantasyBaseballPlayerFacade.getPlayerNews($event.id)"
+      (playerClicked)="onPlayerClick($event)"
     ></app-lineup-card>
     <div style="margin: 10px 0"></div>
 
     <app-lineup-card
       title="Starting Lineup"
       [lineup]="(fantasyBaseballTeamFacade.startingPitchers$ | async)!(teamId)"
-      (fetchPlayerDetails)="fantasyBaseballPlayerFacade.getPlayerNews($event.id)"
+      (playerClicked)="onPlayerClick($event)"
     ></app-lineup-card>
   </div>
   <div main>

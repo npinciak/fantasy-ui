@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { EspnLineupCardComponent } from '@app/espn/components/espn-lineup-card/espn-lineup-card.component';
 import { BaseballPlayer } from '../../models/baseball-player.model';
 
 @Component({
@@ -6,12 +7,8 @@ import { BaseballPlayer } from '../../models/baseball-player.model';
   templateUrl: './lineup-card.component.html',
   styleUrls: ['./lineup-card.component.scss'],
 })
-export class LineupCardComponent {
-  @Input() title: string = 'Lineup';
-  @Input() lineup: BaseballPlayer[];
+export class LineupCardComponent extends EspnLineupCardComponent<BaseballPlayer> {
   @Output() fetchPlayerDetails = new EventEmitter<BaseballPlayer>();
-
-  constructor() {}
 
   showPlayerDetails(player: BaseballPlayer) {
     this.fetchPlayerDetails.emit(player);
