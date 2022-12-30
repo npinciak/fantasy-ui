@@ -1,6 +1,11 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { StatThreshold, StatThresholdColor } from '@app/@shared/models/stat-threshold.model';
-import { THRESHOLD_MAP } from '@app/espn/mlb/consts/stats-threshold.conts';
+import {
+  StatByThreshold,
+  StatThresholdByStatThresholdLabel,
+  StatThresholdColors,
+  StatThresholdLabelByStatThreshold,
+} from '@app/@shared/models/stat-threshold.model';
+import { MlbThresholds } from '@app/espn/mlb/consts/stats-threshold.m';
 import { MLB_STATS_MAP } from '@app/espn/mlb/consts/stats.const';
 import { ChartData } from '@app/espn/mlb/models/chart-data.model';
 import { EspnBaseballStat } from '@app/espn/mlb/models/mlb-stats.model';
@@ -50,6 +55,17 @@ export class DataVisComponent implements OnInit, OnChanges {
     }
   }
 
+  private statThresholdPoints(data: ChartData[], thresholdByStat: StatByThreshold): StatThresholdByStatThresholdLabel {
+    const length = data.length;
+
+    const map = {} as StatThresholdByStatThresholdLabel;
+    for (const [x, y] of Object.entries(thresholdByStat)) {
+      map[StatThresholdLabelByStatThreshold[x]] = Array.from<number>({ length }).fill(thresholdByStat[x]);
+    }
+
+    return map;
+  }
+
   private updateChart(data: ChartData[], statFilter: EspnBaseballStat) {
     const labels = data.map(d => d.label);
     const baseData = data.map(d => d.data);
@@ -66,16 +82,8 @@ export class DataVisComponent implements OnInit, OnChanges {
 
     this.test = [chartData];
 
-    const thresholdByStat = THRESHOLD_MAP[statFilter];
-
-    if (statFilter in THRESHOLD_MAP) {
-      const excellent = new Array(data.length).fill(thresholdByStat[StatThreshold.excellent]);
-      const great = new Array(data.length).fill(thresholdByStat[StatThreshold.great]);
-      const aboveAvg = new Array(data.length).fill(thresholdByStat[StatThreshold.aboveAvg]);
-      const avg = new Array(data.length).fill(thresholdByStat[StatThreshold.avg]);
-      const belowAvg = new Array(data.length).fill(thresholdByStat[StatThreshold.belowAvg]);
-      const poor = new Array(data.length).fill(thresholdByStat[StatThreshold.poor]);
-      const awful = new Array(data.length).fill(thresholdByStat[StatThreshold.awful]);
+    if (statFilter in MlbThresholds.THRESHOLD_MAP) {
+      const { excellent, great, avg, poor } = this.statThresholdPoints(data, MlbThresholds.THRESHOLD_MAP[statFilter]);
 
       this.test.push(
         {
@@ -84,7 +92,7 @@ export class DataVisComponent implements OnInit, OnChanges {
           type: 'lines',
           name: 'great',
           line: {
-            color: StatThresholdColor.great,
+            color: StatThresholdColors.great,
             width: 2,
             dash: 'solid',
           },
@@ -95,7 +103,7 @@ export class DataVisComponent implements OnInit, OnChanges {
           type: 'lines',
           name: 'Avg',
           line: {
-            color: StatThresholdColor.avg,
+            color: StatThresholdColors.avg,
             width: 2,
             dash: 'solid',
           },
@@ -106,7 +114,7 @@ export class DataVisComponent implements OnInit, OnChanges {
           type: 'lines',
           name: 'poor',
           line: {
-            color: StatThresholdColor.poor,
+            color: StatThresholdColors.poor,
             width: 2,
             dash: 'solid',
           },

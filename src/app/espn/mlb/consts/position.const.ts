@@ -77,7 +77,7 @@ export const MLB_POSITION_MAP: PositionEntityMap = {
     abbrev: 'PR',
     name: 'Pinch Runner',
   },
-};
+} as const;
 
 export const pitchingPositions = [];
 export const fieldingPositions = [];

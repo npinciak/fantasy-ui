@@ -46,4 +46,4 @@ export const MLB_WEIGHTED_STATS: Record<string, SeasonStatConst> = {
     'R/W': 9.547,
     cFIP: 3.119,
   },
-};
+} as const;
