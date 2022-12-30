@@ -1,14 +1,28 @@
 <app-page-layout>
   <div sidebar>
-    <app-baseball-lineup-card title="Starting Lineup" [lineup]="(startingBatters$ | async)!(teamId)" (playerClicked)="onPlayerClick($event)"></app-baseball-lineup-card>
+    <app-baseball-lineup-card
+      title="Starting Lineup"
+      [isLoading]="isLoading$ | async"
+      [lineup]="(startingBatters$ | async)!(teamId)"
+      (playerClicked)="onPlayerClick($event)"
+      (refreshClicked)="onRefreshClick()"
+    ></app-baseball-lineup-card>
     <div style="margin: 10px 0"></div>
-    <app-baseball-lineup-card title="Bench" [lineup]="(benchBatters$ | async)!(teamId)" (playerClicked)="onPlayerClick($event)"></app-baseball-lineup-card>
+    <app-baseball-lineup-card
+      title="Bench"
+      [isLoading]="isLoading$ | async"
+      [lineup]="(benchBatters$ | async)!(teamId)"
+      (playerClicked)="onPlayerClick($event)"
+      (refreshClicked)="onRefreshClick()"
+    ></app-baseball-lineup-card>
     <div style="margin: 10px 0"></div>
 
     <app-baseball-lineup-card
       title="Starting Pitchers"
+      [isLoading]="isLoading$ | async"
       [lineup]="(startingPitchers$ | async)!(teamId)"
       (playerClicked)="onPlayerClick($event)"
+      (refreshClicked)="onRefreshClick()"
     ></app-baseball-lineup-card>
   </div>
   <div main>

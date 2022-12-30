@@ -76,6 +76,10 @@ export class BaseballTeamComponent {
 
   onPlayerClick(event) {}
 
+  onRefreshClick() {
+    this.fantasyBaseballLeagueFacade.getLeague(this.leagueId);
+  }
+
   onLiveScoringSelectChange(event: MatSlideToggleChange) {
     this.isLiveScore = event.checked;
   }

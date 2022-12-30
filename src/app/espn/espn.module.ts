@@ -3,6 +3,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { SharedModule } from '@app/@shared/shared.module';
 import { SportsUiModule } from '@app/sports-ui/sports-ui.module';
 import { NgxsModule } from '@ngxs/store';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MaterialModule } from 'src/app/material.module';
 import { EspnLineupCardComponent } from './components/espn-lineup-card/espn-lineup-card.component';
 import { EspnPlayerDialogComponent } from './components/espn-player-dialog/espn-player-dialog.component';
@@ -13,8 +14,8 @@ import { EspnStandingsTableComponent } from './components/espn-standings-table/e
 import { EspnStatsTableComponent } from './components/espn-stats-table/espn-stats-table.component';
 import { EspnTeamInfoColComponent } from './components/espn-team-info-col/espn-team-info-col.component';
 import { EspnRoutingModule } from './espn-routing.module';
-import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
 import { BaseballLineupCardComponent } from './mlb/components/baseball-lineup-card/baseball-lineup-card.component';
+import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
 import { PlayerComponent } from './mlb/components/player/player.component';
 import { PlayerInfoColComponent } from './mlb/components/roster/player-info-col/player-info-col.component';
 import { PlayerRatingColComponent } from './mlb/components/roster/player-rating-col/player-rating-col.component';
@@ -62,7 +63,15 @@ const states = [
   FantasyBaseballEventsState,
 ];
 
-const imports = [CommonModule, EspnRoutingModule, MaterialModule, SharedModule, SportsUiModule, NgxsModule.forFeature(states)];
+const imports = [
+  CommonModule,
+  EspnRoutingModule,
+  MaterialModule,
+  SharedModule,
+  SportsUiModule,
+  NgxSkeletonLoaderModule,
+  NgxsModule.forFeature(states),
+];
 
 const exports = [StandingsComponent, RosterComponent];
 
