@@ -9,7 +9,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header tabindex="0">{{ col?.headerLabel }}</th>
             <td mat-cell *matCellDef="let data">
               <ng-container [ngSwitch]="col.columnDef">
-                <app-table-cell-skeleton [loading]="isLoading$ | async">
+                <app-loading-skeleton [isLoading]="isLoading$ | async">
                   <ng-template [ngSwitchCase]="'name'">
                     <app-espn-player-info-col [player]="data" [hideLineupSlot]="true"></app-espn-player-info-col>
                   </ng-template>
@@ -20,7 +20,7 @@
                   <ng-template [ngSwitchDefault]>
                     {{ col.dataType === TableColumnDataType.number ? (col?.cellData(data) | statFormat: 'number' | number: '1.0-2') : col?.cellData(data) }}
                   </ng-template>
-                </app-table-cell-skeleton>
+                </app-loading-skeleton>
               </ng-container>
             </td>
           </ng-container>

@@ -13,7 +13,7 @@ import { PageLayoutComponent } from './components/page-layout/page-layout.compon
 import { RefreshBtnComponent } from './components/refresh-btn/refresh-btn.component';
 import { ScrollableTableComponent } from './components/scrollable-table/scrollable-table.component';
 import { StickyTableCellComponent } from './components/sticky-table-cell/sticky-table-cell.component';
-import { TableCellSkeletonComponent } from './components/table-cell-skeleton/table-cell-skeleton.component';
+import { LoadingSkeletonComponent } from './components/loading-skeleton/loading-skeleton.component';
 import { StatPipe } from './pipes/stat-format.pipe';
 
 PlotlyModule.plotlyjs = PlotlyJS;
@@ -27,7 +27,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     DropdownFilterComponent,
     DataVisComponent,
     DataVisScatterComponent,
-    TableCellSkeletonComponent,
+    LoadingSkeletonComponent,
     StatPipe,
     RefreshBtnComponent,
   ],
@@ -40,7 +40,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     StickyTableCellComponent,
     DropdownFilterComponent,
     DataVisScatterComponent,
-    TableCellSkeletonComponent,
+    LoadingSkeletonComponent,
     PageLayoutComponent,
     RefreshBtnComponent,
   ],

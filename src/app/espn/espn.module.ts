@@ -3,7 +3,6 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { SharedModule } from '@app/@shared/shared.module';
 import { SportsUiModule } from '@app/sports-ui/sports-ui.module';
 import { NgxsModule } from '@ngxs/store';
-import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MaterialModule } from 'src/app/material.module';
 import { EspnLineupCardComponent } from './components/espn-lineup-card/espn-lineup-card.component';
 import { EspnPlayerDialogComponent } from './components/espn-player-dialog/espn-player-dialog.component';
@@ -63,15 +62,7 @@ const states = [
   FantasyBaseballEventsState,
 ];
 
-const imports = [
-  CommonModule,
-  EspnRoutingModule,
-  MaterialModule,
-  SharedModule,
-  SportsUiModule,
-  NgxSkeletonLoaderModule,
-  NgxsModule.forFeature(states),
-];
+const imports = [CommonModule, EspnRoutingModule, MaterialModule, SharedModule, SportsUiModule, NgxsModule.forFeature(states)];
 
 const exports = [StandingsComponent, RosterComponent];
 
