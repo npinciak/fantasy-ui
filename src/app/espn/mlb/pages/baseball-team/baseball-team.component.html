@@ -1,33 +1,29 @@
 <app-page-layout>
   <div sidebar>
-    <div>
-      <ng-container *ngIf="fantasyBaseballLeagueFacade.isLoading$ | async; else refreshBtn">
-        <mat-spinner diameter="20"></mat-spinner>
-      </ng-container>
-      <ng-template #refreshBtn>
-        <mat-icon class="cursor-pointer" (click)="fantasyBaseballLeagueFacade.getLeague(leagueId)">refresh</mat-icon>
-      </ng-template>
-    </div>
-    <div style="margin: 10px 0"></div>
-
-    <app-lineup-card
+    <app-baseball-lineup-card
       title="Starting Lineup"
-      [lineup]="(fantasyBaseballTeamFacade.startingBatters$ | async)!(teamId)"
-      (fetchPlayerDetails)="fantasyBaseballPlayerFacade.getPlayerNews($event.id)"
-    ></app-lineup-card>
+      [isLoading]="isLoading$ | async"
+      [lineup]="(startingBatters$ | async)!(teamId)"
+      (playerClicked)="onPlayerClick($event)"
+      (refreshClicked)="onRefreshClick()"
+    ></app-baseball-lineup-card>
     <div style="margin: 10px 0"></div>
-    <app-lineup-card
+    <app-baseball-lineup-card
       title="Bench"
-      [lineup]="(fantasyBaseballTeamFacade.benchBatters$ | async)!(teamId)"
-      (fetchPlayerDetails)="fantasyBaseballPlayerFacade.getPlayerNews($event.id)"
-    ></app-lineup-card>
+      [isLoading]="isLoading$ | async"
+      [lineup]="(benchBatters$ | async)!(teamId)"
+      (playerClicked)="onPlayerClick($event)"
+      (refreshClicked)="onRefreshClick()"
+    ></app-baseball-lineup-card>
     <div style="margin: 10px 0"></div>
 
-    <app-lineup-card
-      title="Starting Lineup"
-      [lineup]="(fantasyBaseballTeamFacade.startingPitchers$ | async)!(teamId)"
-      (fetchPlayerDetails)="fantasyBaseballPlayerFacade.getPlayerNews($event.id)"
-    ></app-lineup-card>
+    <app-baseball-lineup-card
+      title="Starting Pitchers"
+      [isLoading]="isLoading$ | async"
+      [lineup]="(startingPitchers$ | async)!(teamId)"
+      (playerClicked)="onPlayerClick($event)"
+      (refreshClicked)="onRefreshClick()"
+    ></app-baseball-lineup-card>
   </div>
   <div main>
     <div>

@@ -13,9 +13,12 @@
       <a style="padding: 0px" *ngFor="let player of lineup; let i = index" [attr.data-index]="i" tabindex="0" mat-list-item (click)="onPlayerClick(player)">
         <div class="flex-row">
           <div class="flex-col" style="flex-basis: 100%">
-            <app-loading-skeleton [isLoading]="isLoading">
+            <app-loading-skeleton [isLoading]="isLoading$ | async">
               <app-espn-player [player]="player"></app-espn-player>
             </app-loading-skeleton>
+          </div>
+          <div class="flex-col">
+            <span style="font-weight: bold"> {{ player?.points | number: '1.0' }}</span>
           </div>
         </div>
       </a>

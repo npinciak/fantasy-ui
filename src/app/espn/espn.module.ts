@@ -4,6 +4,7 @@ import { SharedModule } from '@app/@shared/shared.module';
 import { SportsUiModule } from '@app/sports-ui/sports-ui.module';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
+import { EspnLineupCardComponent } from './components/espn-lineup-card/espn-lineup-card.component';
 import { EspnPlayerDialogComponent } from './components/espn-player-dialog/espn-player-dialog.component';
 import { EspnPlayerInfoColComponent } from './components/espn-player-info-col/espn-player-info-col.component';
 import { EspnPlayerTrendingColComponent } from './components/espn-player-trending-col/espn-player-trending-col.component';
@@ -12,8 +13,8 @@ import { EspnStandingsTableComponent } from './components/espn-standings-table/e
 import { EspnStatsTableComponent } from './components/espn-stats-table/espn-stats-table.component';
 import { EspnTeamInfoColComponent } from './components/espn-team-info-col/espn-team-info-col.component';
 import { EspnRoutingModule } from './espn-routing.module';
+import { BaseballLineupCardComponent } from './mlb/components/baseball-lineup-card/baseball-lineup-card.component';
 import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
-import { LineupCardComponent } from './mlb/components/lineup-card/lineup-card.component';
 import { PlayerComponent } from './mlb/components/player/player.component';
 import { PlayerInfoColComponent } from './mlb/components/roster/player-info-col/player-info-col.component';
 import { PlayerRatingColComponent } from './mlb/components/roster/player-rating-col/player-rating-col.component';
@@ -88,9 +89,10 @@ const exports = [StandingsComponent, RosterComponent];
     PlayerRatingColComponent,
     EspnTeamInfoColComponent,
     LeagueScoreboardComponent,
-    LineupCardComponent,
+    BaseballLineupCardComponent,
     EspnPlayerDialogComponent,
     EspnStandingsTableComponent,
+    EspnLineupCardComponent,
   ],
   imports,
   exports,

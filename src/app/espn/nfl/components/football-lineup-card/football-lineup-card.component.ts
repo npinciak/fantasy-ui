@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { EspnLineupCardComponent } from '@app/espn/components/espn-lineup-card/espn-lineup-card.component';
 import { FootballPlayer } from '../../models/football-player.model';
 
 @Component({
@@ -7,27 +8,4 @@ import { FootballPlayer } from '../../models/football-player.model';
   styleUrls: ['./football-lineup-card.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class FootballLineupCardComponent implements OnChanges {
-  @Input() title: string = 'Lineup';
-  @Input() lineup: FootballPlayer[];
-  @Input() points = 0;
-  @Input() projectedPoints: number;
-  @Input() scoringPeriodId: number;
-
-  @Input() isLoading = false;
-
-  @Output() playerClicked = new EventEmitter<FootballPlayer | null>();
-  @Output() refreshClicked = new EventEmitter();
-
-  ngOnChanges(changes: SimpleChanges): void {
-    // console.log(changes);
-  }
-
-  onPlayerClick(player): void {
-    this.playerClicked.emit(player);
-  }
-
-  onRefreshClick(): void {
-    this.refreshClicked.emit();
-  }
-}
+export class FootballLineupCardComponent extends EspnLineupCardComponent<FootballPlayer> {}
