@@ -1,33 +1,15 @@
 <app-page-layout>
   <div sidebar>
-    <div>
-      <ng-container *ngIf="fantasyBaseballLeagueFacade.isLoading$ | async; else refreshBtn">
-        <mat-spinner diameter="20"></mat-spinner>
-      </ng-container>
-      <ng-template #refreshBtn>
-        <mat-icon class="cursor-pointer" (click)="fantasyBaseballLeagueFacade.getLeague(leagueId)">refresh</mat-icon>
-      </ng-template>
-    </div>
+    <app-baseball-lineup-card title="Starting Lineup" [lineup]="(startingBatters$ | async)!(teamId)" (playerClicked)="onPlayerClick($event)"></app-baseball-lineup-card>
+    <div style="margin: 10px 0"></div>
+    <app-baseball-lineup-card title="Bench" [lineup]="(benchBatters$ | async)!(teamId)" (playerClicked)="onPlayerClick($event)"></app-baseball-lineup-card>
     <div style="margin: 10px 0"></div>
 
-    <app-lineup-card
-      title="Starting Lineup"
-      [lineup]="(fantasyBaseballTeamFacade.startingBatters$ | async)!(teamId)"
+    <app-baseball-lineup-card
+      title="Starting Pitchers"
+      [lineup]="(startingPitchers$ | async)!(teamId)"
       (playerClicked)="onPlayerClick($event)"
-    ></app-lineup-card>
-    <div style="margin: 10px 0"></div>
-    <app-lineup-card
-      title="Bench"
-      [lineup]="(fantasyBaseballTeamFacade.benchBatters$ | async)!(teamId)"
-      (playerClicked)="onPlayerClick($event)"
-    ></app-lineup-card>
-    <div style="margin: 10px 0"></div>
-
-    <app-lineup-card
-      title="Starting Lineup"
-      [lineup]="(fantasyBaseballTeamFacade.startingPitchers$ | async)!(teamId)"
-      (playerClicked)="onPlayerClick($event)"
-    ></app-lineup-card>
+    ></app-baseball-lineup-card>
   </div>
   <div main>
     <div>

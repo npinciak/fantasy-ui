@@ -60,6 +60,10 @@ export class BaseballTeamComponent {
 
   isLoading$ = this.fantasyBaseballLeagueFacade.isLoading$;
 
+  startingBatters$ = this.fantasyBaseballTeamFacade.startingBatters$;
+  benchBatters$ = this.fantasyBaseballTeamFacade.benchBatters$;
+  startingPitchers$ = this.fantasyBaseballTeamFacade.startingPitchers$;
+
   constructor(
     private store: Store,
     readonly routerFacade: RouterFacade,
