@@ -146,14 +146,14 @@ export namespace DfsSlateHelpers {
     const f = [] as any[];
 
     for (const [key, value] of Object.entries(obj)) {
+      const rgId = key;
       const transform = {
-        rgId: key,
+        rgId,
         productionPremium: normalizeStringToNumber(value['Production Premium']),
         matchupRtg: isNFLClientProfilerReceiver(value) ? normalizeStringToNumber(value['Matchup Rtg']) : null,
         weeklyVolatility: normalizeStringToNumber(value['Weekly Volatility']),
         redZoneTargetShare: normalizeStringToNumber(value['Red Zone Target Share']),
         targetShare: normalizeStringToNumber(value['Target Share']),
-
         dominatorRating: normalizeStringToNumber(value['Dominator Rating']),
         protectionRate: normalizeStringToNumber(value['Protection Rate']),
         truePasserRating: normalizeStringToNumber(value['True Passer Rating']),
@@ -163,7 +163,6 @@ export namespace DfsSlateHelpers {
       f.push(transform);
     }
 
-    console.log(f);
     return f;
   }
 

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,6 +12,7 @@ import { BehaviorSubject } from 'rxjs';
   selector: 'app-player-table',
   templateUrl: './player-table.component.html',
   styleUrls: ['./player-table.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class PlayerTableComponent implements AfterViewInit, OnChanges {
   @Input() data: NflDfsPlayerTableData[];
@@ -42,10 +43,7 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
     if (changes.data) {
       this.dataSource.data = changes.data.currentValue;
     }
-
     this.dataSource.filter = changes?.filter?.currentValue;
-
-    console.log(changes?.filter);
   }
 
   ngAfterViewInit(): void {
