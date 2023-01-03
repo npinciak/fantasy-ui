@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { cellDataAccessor } from '@app/@shared/helpers/utils';
 import { TableColumnDataType } from '@app/@shared/models/table-columns.model';
+import { DfsNflThresholds } from '@app/dfs/nfl/consts/stats-threshold.m';
 import { NflDfsPlayerTableData } from '@app/dfs/nfl/models/nfl-player.model';
 import { FilterType, TableFilter } from '@app/dfs/nfl/models/nfl-table.model';
 import { BehaviorSubject } from 'rxjs';
@@ -27,6 +28,7 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
   readonly TableColumnDataType = TableColumnDataType;
+  readonly matchupThresholdInverse = DfsNflThresholds.matchupThresholdInverse;
 
   filterTypeSelected: FilterType;
   readonly filterType = FilterType;
@@ -57,6 +59,8 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
     this.dataSource.sortingDataAccessor = (player, stat) => cellDataAccessor(player, stat);
     this.dataSource.filterPredicate = this.dataSourceFilter();
   }
+
+  
 
   dataSourceFilter(): (data: NflDfsPlayerTableData, filterJson: string) => boolean {
     return (data, filterJson): boolean => {

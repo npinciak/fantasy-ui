@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
 import { Action, State, StateContext, Store } from '@ngxs/store';
-import { ClearAndAddSchedule } from '../actions/daily-fantasy-matchup.actions';
+import { DailyFantasyMatchups } from '../actions/daily-fantasy-matchup.actions';
 import { ClearAndAddPlayers, FetchPlayers, SetPlayers } from '../actions/daily-fantasy-players.actions';
 import { ClearAndAddTeams } from '../actions/daily-fantasy-teams.actions';
 import { SlatePlayer } from '../models/player.model';
@@ -22,6 +22,6 @@ export class DailyFantasyPlayersState extends GenericState({
   @Action(FetchPlayers)
   async fetchPlayers({}: StateContext<GenericStateModel<SlatePlayer>>, { payload: { slatePath } }: FetchPlayers): Promise<void> {
     const { players, schedule, teams } = await this.playerService.playersBySlate({ slatePath }).toPromise();
-    this.store.dispatch([new ClearAndAddPlayers(players), new ClearAndAddSchedule(schedule), new ClearAndAddTeams(teams)]);
+    this.store.dispatch([new ClearAndAddPlayers(players), new DailyFantasyMatchups.ClearAndAdd(schedule), new ClearAndAddTeams(teams)]);
   }
 }
