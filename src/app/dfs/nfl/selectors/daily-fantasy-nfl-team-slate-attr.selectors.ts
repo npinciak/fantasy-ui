@@ -3,7 +3,7 @@ import { linearRegression } from '@app/@shared/helpers/graph.helpers';
 import { exists, existsFilter } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { SlateTeam } from '@app/dfs/service/slate.service';
-import { NFL_RG_TEAM_ID_MAP } from '../consts/nfl-dfs-table.const';
+import { DfsNflTeams } from 'sports-ui-sdk';
 import { DailyFantasyNflTeamSlateAttributeState } from '../state/daily-fantasy-nfl-team-slate-attr.state';
 
 export class DailyFantasyNflTeamSlateAttributeSelectors extends GenericSelector(DailyFantasyNflTeamSlateAttributeState) {
@@ -19,7 +19,7 @@ export class DailyFantasyNflTeamSlateAttributeSelectors extends GenericSelector(
 
       const lR = linearRegression(x, y);
 
-      const text = teams.map(p => NFL_RG_TEAM_ID_MAP[p.id]);
+      const text = teams.map(p => DfsNflTeams.NFL_RG_TEAM_ID_MAP[p.id]);
 
       const type = 'scatter';
 

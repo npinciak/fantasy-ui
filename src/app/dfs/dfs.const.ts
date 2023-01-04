@@ -1,13 +1,10 @@
-import { enumAsList } from 'sports-ui-sdk';
-import { environment } from 'src/environments/environment';
+import { DfsMlbTeams } from 'sports-ui-sdk';
 
-export const DAILY_FANTASY_BASE = environment.dailyFantasyBase;
-
-export enum DfsSite {
-  DraftKings = 'draftkings',
-  FanDuel = 'fanduel',
-  Yahoo = 'yahoo',
-}
+export const DfsSite: Record<string, string> = {
+  DraftKings: 'draftkings',
+  FanDuel: 'fanduel',
+  Yahoo: 'yahoo',
+} as const;
 
 export enum DfsSiteType {
   FanDuel = 2,
@@ -15,71 +12,38 @@ export enum DfsSiteType {
   Yahoo = 50,
 }
 
-export const DfsSiteToDfsSiteTypeMap: { [key in DfsSite]: DfsSiteType } = {
+export const DfsSiteToDfsSiteTypeMap = {
   [DfsSite.FanDuel]: DfsSiteType.FanDuel,
   [DfsSite.DraftKings]: DfsSiteType.DraftKings,
   [DfsSite.Yahoo]: DfsSiteType.Yahoo,
-};
+} as const;
 
-export enum RotogrindMLBTeam {
-  Bos = 95,
-  Bal,
-  ChW,
-  Cle,
-  Det,
-  KC,
-  LAA,
-  Min,
-  NYY,
-  Oak,
-  Sea,
-  TB,
-  Tex,
-  Tor,
-  Ari,
-  Atl,
-  ChC,
-  Cin,
-  Col,
-  Mia,
-  Hou,
-  LAD,
-  Mil,
-  NYM,
-  Phi,
-  Pit,
-  SD,
-  SF,
-  StL,
-  Wsh,
-}
+export import RotogrindMLBTeam = DfsMlbTeams.RgTeamId;
 
-export enum DfsSport {
-  afl = 'afl',
-  bball = 'bball',
-  cbb = 'cbb',
-  cfb = 'cfb',
-  cod = 'cod',
-  csgo = 'csgo',
-  el = 'el',
-  golf = 'golf',
-  kbo = 'kbo',
-  lol = 'lol',
-  madden = 'madden',
-  mlb = 'mlb',
-  mma = 'mma',
-  nas = 'nas',
-  nba = 'nba',
-  nfl = 'nfl',
-  nhl = 'nhl',
-  npb = 'npb',
-  rl = 'rl',
-  soc = 'soc',
-  ten = 'ten',
-  wnba = 'wnba',
-}
-
-export const DfsSportEnumList: DfsSport[] = enumAsList(DfsSport);
+export const DfsSport: Record<string, string> = {
+  afl: 'afl',
+  bball: 'bball',
+  cbb: 'cbb',
+  cfb: 'cfb',
+  cod: 'cod',
+  csgo: 'csgo',
+  el: 'el',
+  golf: 'golf',
+  kbo: 'kbo',
+  lol: 'lol',
+  madden: 'madden',
+  mlb: 'mlb',
+  mma: 'mma',
+  nas: 'nas',
+  nba: 'nba',
+  nfl: 'nfl',
+  nhl: 'nhl',
+  npb: 'npb',
+  rl: 'rl',
+  soc: 'soc',
+  ten: 'ten',
+  wnba: 'wnba',
+} as const;
 
 export const DFS_MLB_TEAM_MAP: { [key in RotogrindMLBTeam]: string } = {
   [RotogrindMLBTeam.Bal]: 'Bal',
@@ -112,13 +76,13 @@ export const DFS_MLB_TEAM_MAP: { [key in RotogrindMLBTeam]: string } = {
   [RotogrindMLBTeam.Mia]: 'Mia',
   [RotogrindMLBTeam.Ari]: 'Ari',
   [RotogrindMLBTeam.TB]: 'TB',
-};
+} as const;
 
-export const positionFilter = ['', 'C', '1B', '2B', 'SS', '3B', 'OF'];
+export const positionFilter = ['', 'C', '1B', '2B', 'SS', '3B', 'OF'] as const;
 
-export const tierFilter = ['', 'T1', 'T2', 'T3', 'T4', 'T5', 'T6'];
+export const tierFilter = ['', 'T1', 'T2', 'T3', 'T4', 'T5', 'T6'] as const;
 
-export const DFS_TOOLTIPS = {
+export const DFS_TOOLTIPS: Record<string, string> = {
   CONTACT: 'Batted ball trajectory stats. Batted ball quality stats. Examples: GB%, Hard%, Speed-Angle combination stats.',
   CONTEXT: 'Elements outside the realm of evaluation in a single pitch. Examples: Batting Order, Weather, Park, Umpire',
   PITCH_TYPE:
@@ -128,4 +92,4 @@ export const DFS_TOOLTIPS = {
   PLATE_DISC: 'Skills displayed by batters and pitchers controlling the PA. Examples: Contact%, SwStrk%, OSwing%, Batter Ahead%',
   RECENT_SKILL:
     'A Review and rating of more recent behavior across categories. Example: EV Differential, Pitcher Velocity Change, 60 Day K%',
-};
+} as const;
