@@ -52,6 +52,10 @@ a:focus {
     flex-direction: row;
     width: 100%;
   }
+
+  &-100 {
+    flex-basis: 100%;
+  }
 }
 
 #global-scoreboard .wrap {
@@ -86,39 +90,40 @@ body {
   cursor: pointer;
 }
 
+// @link https://vega.github.io/vega/docs/schemes/#redyellowblue
 .status-indicator {
   font-weight: bold;
   &.excellent {
-    background-color: #00876c;
+    background-color: #5c8cc0;
     color: whitesmoke;
   }
 
   &.great {
-    background-color: #71a879;
+    background-color: #a3d0e5;
     color: whitesmoke;
   }
 
   &.above-avg {
-    background-color: #b6c794;
-    color: whitesmoke;
+    background-color: #e5f3e0;
+    color: black;
   }
   &.avg {
-    background-color: #f4e8bc;
-    color: whitesmoke;
+    background-color: #faf8c1;
+    color: black;
   }
 
   &.below-avg {
-    background-color: #eab780;
-    color: whitesmoke;
+    background-color: #fed185;
+    color: black;
   }
 
   &.poor {
-    background-color: #e2805b;
+    background-color: #f78d54;
     color: whitesmoke;
   }
 
   &.awful {
-    background-color: #d43d51;
+    background-color: #db4132;
     color: whitesmoke;
   }
 }

@@ -1,14 +1,5 @@
 @import '../../../../theme/theme-variables.scss';
 
-.mat-icon {
-  height: 15px;
-  width: 15px;
-}
-
-.material-icons {
-  font-size: 15px;
-}
-
 .player {
   &.team-pos {
     font-size: 11px;
@@ -20,5 +11,5 @@
 }
 
 .table-col {
-  text-align: center;
+  text-align: center !important;
 }
