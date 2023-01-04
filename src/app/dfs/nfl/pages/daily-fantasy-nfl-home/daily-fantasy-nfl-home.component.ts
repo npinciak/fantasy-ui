@@ -7,7 +7,7 @@ import { DailyFantasySlateFacade } from '@app/dfs/facade/daily-fantasy-slate.fac
 import { SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '../../consts/nfl-dfs-table.const';
+import { DfsNflTeams } from 'sports-ui-sdk';
 import { DfsNflTableColumns } from '../../consts/table.const';
 import { DailyFantasyNflPlayerFacade } from '../../facade/daily-fantasy-nfl-players.facade';
 import { DailyFantasyNflTeamSlateAttrFacade } from '../../facade/daily-fantasy-nfl-team-slate-attr.facade';
@@ -26,8 +26,8 @@ export class DailyFantasyNflHomeComponent implements OnInit {
   readonly TABLE_ROWS_BY_POS = DfsNflTableColumns.ROWS_BY_POS;
 
   readonly NFL_STAT_GROUP_MAP = NFL_STAT_GROUP_MAP;
-  readonly NFL_RG_TEAM_ID_MAP = NFL_RG_TEAM_ID_MAP;
-  readonly NFL_TEAM_ID_MAP = NFL_TEAM_ID_MAP;
+  readonly NFL_RG_TEAM_ID_MAP = DfsNflTeams.NFL_RG_TEAM_ID_MAP;
+  readonly NFL_TEAM_ID_MAP = DfsNflTeams.NFL_TEAM_ID_MAP;
 
   nflPositionList$ = this.nflPlayerFacade.positionList$;
   nflPlayerList$ = this.nflPlayerFacade.playerList$;

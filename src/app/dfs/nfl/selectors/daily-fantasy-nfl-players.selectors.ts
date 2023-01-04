@@ -5,8 +5,7 @@ import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { SlatePlayer } from '@app/dfs/models/player.model';
 import { DailyFantasyPlayersState } from '@app/dfs/state/daily-fantasy-players.state';
-import { uniqueBy } from 'sports-ui-sdk';
-import { NFL_TEAM_ID_MAP } from '../consts/nfl-dfs-table.const';
+import { DfsNflTeams, uniqueBy } from 'sports-ui-sdk';
 import { GridIronPlayer } from '../models/nfl-gridIron.model';
 import { NflDfsPlayerTableData } from '../models/nfl-player.model';
 import { ProfilerQB, ProfilerRB, ProfilerReceiver } from '../models/nfl-profiler.model';
@@ -33,7 +32,9 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
   @Selector([DailyFantasyNflPlayerSelectors.getPlayerTeams])
   static getPlayerTeamsFilterOptions(list: number[]): FilterOptions<number | null>[] {
     const reset = [{ value: null, label: 'All' }];
-    const teams = list.map(t => ({ value: t, label: NFL_TEAM_ID_MAP[t] as string })).sort((a, b) => a.label.localeCompare(b.label));
+    const teams = list
+      .map(t => ({ value: t, label: DfsNflTeams.NFL_TEAM_ID_MAP[t] as string }))
+      .sort((a, b) => a.label.localeCompare(b.label));
 
     return [...reset, ...teams];
   }
