@@ -48,8 +48,7 @@ export const StatThresholdLabel = {
 export type StatByThreshold = { [key in StatThresholds]: number };
 export type StatThresholdByStat = { [key in StatThresholds]: StatByThreshold };
 
-type t = typeof StatThresholdLabel;
-export type StatThresholdByStatThresholdLabel = { [key in keyof t]: number };
+export type StatThresholdByStatThresholdLabel = { [key in keyof typeof StatThresholdLabel]: number };
 
 export const StatThresholdLabelByStatThreshold = {
   [StatThresholds.excellent]: StatThresholdLabel.excellent,

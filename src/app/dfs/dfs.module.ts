@@ -19,15 +19,15 @@ import { DailyFantasyNflProfilerRBState } from './nfl/state/daily-fantasy-nfl-pr
 import { DailyFantasyNflProfilerTEState } from './nfl/state/daily-fantasy-nfl-profiler-te.state';
 import { DailyFantasyNflProfilerWRState } from './nfl/state/daily-fantasy-nfl-profiler-wr.state';
 import { DailyFantasyNflTeamSlateAttributeState } from './nfl/state/daily-fantasy-nfl-team-slate-attr.state';
+import { DailyFantasyMatchupState } from './state/daily-fantasy-matchup.state';
 import { DailyFantasyPlayersState } from './state/daily-fantasy-players.state';
-import { DailyFantasyScheduleState } from './state/daily-fantasy-schedule.state';
 import { DailyFantasySlateAttrState } from './state/daily-fantasy-slate-attr.state';
 import { DailyFantasySlateState } from './state/daily-fantasy-slate.state';
 import { DailyFantasyTeamsState } from './state/daily-fantasy-team.state';
 
 const states = [
   DailyFantasyPlayersState,
-  DailyFantasyScheduleState,
+  DailyFantasyMatchupState,
   DailyFantasySlateState,
   DailyFantasySlateAttrState,
   DailyFantasyTeamsState,

@@ -4,6 +4,7 @@ import { exists, existsFilter } from '@app/@shared/helpers/utils';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { SlatePlayer } from '@app/dfs/models/player.model';
+import { SlateTeam } from '@app/dfs/service/slate.service';
 import { DailyFantasyPlayersState } from '@app/dfs/state/daily-fantasy-players.state';
 import { DfsNflTeams, uniqueBy } from 'sports-ui-sdk';
 import { GridIronPlayer } from '../models/nfl-gridIron.model';
@@ -14,6 +15,7 @@ import { DailyFantasyNflProfilerQBSelectors } from './daily-fantasy-nfl-profiler
 import { DailyFantasyNflProfilerRBSelectors } from './daily-fantasy-nfl-profiler-rb.selectors';
 import { DailyFantasyNflProfilerTESelectors } from './daily-fantasy-nfl-profiler-te.selectors';
 import { DailyFantasyNflProfilerWRSelectors } from './daily-fantasy-nfl-profiler-wr.selectors';
+import { DailyFantasyNflTeamSlateAttributeSelectors } from './daily-fantasy-nfl-team-slate-attr.selectors';
 
 export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasyPlayersState) {
   @Selector([DailyFantasyNflPlayerSelectors.getList])
@@ -54,6 +56,7 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
     DailyFantasyNflProfilerRBSelectors.getById,
     DailyFantasyNflProfilerWRSelectors.getById,
     DailyFantasyNflProfilerTESelectors.getById,
+    DailyFantasyNflTeamSlateAttributeSelectors.getById,
   ])
   static getPlayerTableData(
     list: SlatePlayer[],
@@ -61,10 +64,13 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
     playerProfilerQbById: (rgId: string | null) => ProfilerQB | null,
     playerProfilerRbById: (rgId: string | null) => ProfilerRB | null,
     playerProfilerWrById: (rgId: string | null) => ProfilerReceiver | null,
-    playerProfilerTeById: (rgId: string | null) => ProfilerReceiver | null
+    playerProfilerTeById: (rgId: string | null) => ProfilerReceiver | null,
+    teamMatchupById: (rgId: string | null) => SlateTeam | null
   ): NflDfsPlayerTableData[] {
     return list
       .map(p => {
+        const matchup = teamMatchupById(p.rgTeamId);
+
         const salary = exists(p.salaries) ? Number(p.salaries[0].salary) : 0;
         const gridIron = gridIronById(p.rgId);
 
@@ -116,10 +122,6 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
 
         const { name, teamId, position } = p;
 
-        if (exists(gridIron)) {
-          const { pown, opp, smash, ceil, floor, tar, fpts, fptsPerK } = gridIron;
-        }
-
         return {
           name,
           teamId,
@@ -130,6 +132,8 @@ export class DailyFantasyNflPlayerSelectors extends GenericSelector(DailyFantasy
           truePasserRating,
           pressuredCompletionPercentage,
           targetShare,
+          oppRushDefRank: matchup?.outsiders?.oppRuDefRk,
+          oppPassDefRank: matchup?.outsiders?.oppPaDefRk,
           // pown,
           // opp,
           // smash,

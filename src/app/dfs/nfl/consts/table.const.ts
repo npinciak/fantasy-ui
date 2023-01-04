@@ -19,6 +19,8 @@ const BASE_STATS_COLUMNS: BaseTableColumn<any>[] = [
 ];
 
 export const RECEIVER_STATS_COLUMNS = [
+  { columnDef: 'oppPassDefRank', headerCell: 'oppPassDefRank', headerLabel: 'oppPassDefRank', dataType: TableColumnDataType.Number },
+
   { columnDef: 'tar', headerCell: 'tar', headerLabel: 'Tar', dataType: TableColumnDataType.Number },
   {
     columnDef: 'productionPremium',
@@ -52,7 +54,13 @@ export const RECEIVER_STATS_COLUMNS = [
   },
 ];
 
+export const RUSH_STATS_COLUMNS = [
+  { columnDef: 'oppRushDefRank', headerCell: 'oppRushDefRank', headerLabel: 'oppRushDefRank', dataType: TableColumnDataType.Number },
+];
+
 export const PASSING_STATS_COLUMNS = [
+  { columnDef: 'oppPassDefRank', headerCell: 'oppPassDefRank', headerLabel: 'oppPassDefRank', dataType: TableColumnDataType.Number },
+
   {
     columnDef: 'protectionRate',
     headerCell: 'protectionRate',
@@ -77,7 +85,7 @@ export namespace DfsNflTableColumns {
   export const COLUMNS_BY_POS = {
     All: [...BASE_STATS_COLUMNS],
     QB: [...BASE_STATS_COLUMNS, ...PASSING_STATS_COLUMNS],
-    RB: [...BASE_STATS_COLUMNS, ...RECEIVER_STATS_COLUMNS],
+    RB: [...BASE_STATS_COLUMNS, ...RUSH_STATS_COLUMNS, ...RECEIVER_STATS_COLUMNS],
     WR: [...BASE_STATS_COLUMNS, ...RECEIVER_STATS_COLUMNS],
     TE: [...BASE_STATS_COLUMNS, ...RECEIVER_STATS_COLUMNS],
     DST: [...BASE_STATS_COLUMNS],
