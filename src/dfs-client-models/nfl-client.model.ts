@@ -1,6 +1,6 @@
-import { DfsSiteType } from '@app/dfs/dfs.const';
 import { SlateAttrTeamProperties } from '@app/dfs/models/team.model';
 import { ClientSalaryDiff, DfsClientPlayerAttributes } from '@dfsClient/daily-fantasy-client-slate-attr.model';
+import { DfsSiteType } from 'sports-ui-sdk/lib/lib/dfs/site.const';
 
 type SafptsAttributes =
   | 'RawQB'

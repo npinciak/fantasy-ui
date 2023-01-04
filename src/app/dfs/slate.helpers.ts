@@ -75,7 +75,7 @@ export namespace DfsSlateHelpers {
       oppPaDef: client['Opp PaDef'],
       oppPaDefRk: client['Opp PaDef Rk'],
       oppRuDef: client['Opp RuDef'],
-      oppRuDefRk: client['Opp RuDef'],
+      oppRuDefRk: client['Opp RuDef Rk'],
       paOff: client.PaOff,
       paOffRk: client['PaOff Rk'],
       ruOff: client.RuOff,
@@ -96,7 +96,7 @@ export namespace DfsSlateHelpers {
     const safpts = transformClientSafptsToSafpts(teamAttributes.safpts);
     final['safpts'] = safpts;
 
-    const vegas = null; //transformClientVegasToVegas(teamAttributes.vegas);
+    const vegas = transformClientVegasToVegas(teamAttributes.vegas);
     final['vegas'] = vegas;
 
     return final;
