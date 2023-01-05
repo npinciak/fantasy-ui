@@ -1,0 +1,119 @@
+<app-page-layout>
+  <div sidebar>
+    <ng-container *ngIf="!(slatesEmpty$ | async)">
+      <app-slate-list [slateList]="selectSlateByType$ | async" (selectSlate)="onSelectSlate($event)"></app-slate-list>
+    </ng-container>
+  </div>
+  <div nav>
+    <h4>{{ selectedSlate$ | async }}</h4>
+  </div>
+  <div main class="flex-col gap-25">
+    <!-- <div>
+      <div class="flex-col ui-w-100 gap-5" style="text-align: center" *ngFor="let matchup of matchups$ | async">
+        <div class="flex-row" style="margin-top: 10px">
+          <div class="flex-100">{{ matchup.away.name }}</div>
+          <div class="flex-100">@</div>
+          <div class="flex-100">{{ matchup.home.name }}</div>
+        </div>
+        <div class="flex-row">
+          <div class="flex-100">{{ matchup.away.total }}</div>
+          <div class="flex-100">{{ matchup.away.overUnder }}</div>
+          <div class="flex-100">{{ matchup.home.total }}</div>
+        </div>
+        <div class="flex-row">
+          <div class="flex-100" [ngClass]="matchupThreshold(matchup.away.dPowerRk)">{{ matchup.away.dPowerRk }}</div>
+          <div class="flex-100">D Power Rank</div>
+          <div class="flex-100" [ngClass]="matchupThreshold(matchup.home.dPowerRk)">{{ matchup.home.dPowerRk }}</div>
+        </div>
+        <div class="flex-row">
+          <div class="flex-100" [ngClass]="matchupThreshold(matchup.away.oPowerRk)">{{ matchup.away.oPowerRk }}</div>
+          <div class="flex-100">O Power Rank</div>
+          <div class="flex-100" [ngClass]="matchupThreshold(matchup.home.oPowerRk)">{{ matchup.home.oPowerRk }}</div>
+        </div>
+        <div class="flex-row">
+          <div class="flex-100" [ngClass]="matchupThreshold(matchup.away.paOffRk)">{{ matchup.away.paOffRk }}</div>
+          <div class="flex-100">Pa Rank</div>
+          <div class="flex-100" [ngClass]="matchupThreshold(matchup.home.paOffRk)">{{ matchup.home.paOffRk }}</div>
+        </div>
+        <div class="flex-row">
+          <div class="flex-100" [ngClass]="matchupThreshold(matchup.away.ruOffRk)">{{ matchup.away.ruOffRk }}</div>
+          <div class="flex-100">Ru Rank</div>
+          <div class="flex-100" [ngClass]="matchupThreshold(matchup.home.ruOffRk)">{{ matchup.home.ruOffRk }}</div>
+        </div>
+        <div class="flex-row">
+          <div class="flex-100" [ngClass]="matchupThresholdInverse(matchup.away.oppPaDefRk)">{{ matchup.away.oppPaDefRk }}</div>
+          <div class="flex-100">OppPaDefRk</div>
+          <div class="flex-100" [ngClass]="matchupThresholdInverse(matchup.home.oppPaDefRk)">{{ matchup.home.oppPaDefRk }}</div>
+        </div>
+        <div class="flex-row">
+          <div class="flex-100" [ngClass]="matchupThresholdInverse(matchup.away.oppRuDefRk)">{{ matchup.away.oppRuDefRk }}</div>
+          <div class="flex-100">OppRuDefRk</div>
+          <div class="flex-100" [ngClass]="matchupThresholdInverse(matchup.home.oppRuDefRk)">{{ matchup.home.oppRuDefRk }}</div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- <div>
+      <mat-card>
+        <mat-card-content>
+          <div class="flex-row gap-15">
+            <div>
+              <app-dropdown-filter
+                [selectedOption]="xAxisStat$ | async"
+                title="xAxis"
+                [filterItems]="playerScatterAxisOptions$ | async"
+                (filterUpdate)="onAxisXChange($event)"
+              ></app-dropdown-filter>
+            </div>
+            <div>
+              <app-dropdown-filter
+                [selectedOption]="yAxisStat$ | async"
+                title="yAxis"
+                [filterItems]="playerScatterAxisOptions$ | async"
+                (filterUpdate)="onAxisYChange($event)"
+              ></app-dropdown-filter>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <!-- <div> -->
+    <!-- <app-data-vis-scatter
+        title="hey there"
+        [xAxisFilterTitle]="xAxisStat$ | async"
+        [yAxisFilterTitle]="yAxisStat$ | async"
+        [chartData]="playerScatterData$ | async"
+      ></app-data-vis-scatter> -->
+    <!-- </div> -->
+
+    <div>
+      <mat-card>
+        <mat-card-content>
+          <div class="flex-row gap-15">
+            <div>
+              <app-dropdown-filter title="Teams" [filterItems]="playerTeamsFilterOptions$ | async" (filterUpdate)="teamFilterChange($event)"></app-dropdown-filter>
+            </div>
+            <div>
+              <app-dropdown-filter
+                title="Position"
+                [filterItems]="playerPositionFilterOptions$ | async"
+                (filterUpdate)="positionFilterChange($event)"
+              ></app-dropdown-filter>
+            </div>
+          </div>
+
+          <app-player-table
+            [filter]="tableFilter$ | async"
+            [teamMap]="NFL_TEAM_ID_MAP"
+            [data]="nflPlayerList$ | async"
+            [dataRows]="(tableConfig$ | async).rows"
+            [dataHeaders]="(tableConfig$ | async).headers"
+          ></app-player-table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</app-page-layout>
+
+<ng-template #noPlayers> <app-no-data title="No Players for this Slate"></app-no-data></ng-template>
+<ng-template #noSlates> <app-no-data title="No Slates Available"></app-no-data></ng-template>

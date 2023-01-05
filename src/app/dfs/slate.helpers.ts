@@ -13,7 +13,7 @@ import {
 import { camelCase } from 'lodash';
 import { Vegas } from './models/vegas.model';
 import { ProfilerQB, ProfilerRB, ProfilerReceiver } from './nfl/models/nfl-profiler.model';
-import { NewTeamSlateAttributes, Outsiders, SaFpts } from './nfl/models/nfl-slate-attr.model';
+import { Outsiders, SaFpts, SlateTeamNfl } from './nfl/models/nfl-slate-attr.model';
 
 export namespace DfsSlateHelpers {
   function transformClientVegasToVegas(client: ClientVegas | null | undefined): Vegas | null {
@@ -85,8 +85,8 @@ export namespace DfsSlateHelpers {
     return convertIntObj(obj);
   }
 
-  export function normalizeSlateTeamAttributes(teamAttributes: ClientSlateTeamAttributes | null | undefined): NewTeamSlateAttributes {
-    const final = { outsiders: null, safpts: null, vegas: null } as NewTeamSlateAttributes;
+  export function normalizeSlateTeamAttributes(teamAttributes: ClientSlateTeamAttributes | null | undefined): SlateTeamNfl {
+    const final = { outsiders: null, safpts: null, vegas: null } as SlateTeamNfl;
 
     if (!exists(teamAttributes)) return final;
 

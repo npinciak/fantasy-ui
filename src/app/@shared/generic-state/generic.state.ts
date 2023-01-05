@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
 import { patchMap, setMap } from '../operators';
-import { GenericPayloadActionClass, GenericStateClass, GenericStateModel } from './generic.model';
+import { GenericPayloadActionClass, GenericStateClass, GenericStateModel, IGenericActionsClass } from './generic.model';
 
 export type PropertyOfType<T, U> = { [K in keyof T]: T[K] extends U ? K : never }[keyof T];
 
-export function GenericState<EntityType, IdProperty extends PropertyOfType<EntityType, string | number>>({
+export function GenericState<EntityType, IdProperty extends PropertyOfType<EntityType, string | number>, EntityFetchType = {}>({
   idProperty,
   addOrUpdate,
   clearAndAdd,
+  actionHandler,
 }: {
   idProperty: IdProperty;
   addOrUpdate: GenericPayloadActionClass<EntityType>;
   clearAndAdd: GenericPayloadActionClass<EntityType>;
+  actionHandler?: IGenericActionsClass<EntityType, EntityFetchType>;
 }): GenericStateClass<EntityType> {
   @State<GenericStateModel<EntityType>>({
     name: 'genericStateBase',
@@ -24,6 +26,7 @@ export function GenericState<EntityType, IdProperty extends PropertyOfType<Entit
   class GenericStateBase {
     static addOrUpdate = addOrUpdate;
     static clearAndAdd = clearAndAdd;
+    static actionHandler = actionHandler;
     // static clear = clear;
 
     private static getId = (t: EntityType) => t[idProperty] as unknown as string;

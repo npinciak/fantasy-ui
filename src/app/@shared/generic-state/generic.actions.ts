@@ -1,6 +1,6 @@
-import { GenericPayloadActionClass, IGenericActionsClass } from './generic.model';
+import { GenericPayloadActionClass, GenericPayloadFetchActionClass, IGenericActionsClass } from './generic.model';
 
-export function GenericActions<T>({ stateName }: { stateName: string }): IGenericActionsClass<T> {
+export function GenericActions<T = [], U = {}>({ stateName }: { stateName: string }): IGenericActionsClass<T, U> {
   class GenericActionsClass {
     static readonly stateName = stateName;
 
@@ -12,6 +12,11 @@ export function GenericActions<T>({ stateName }: { stateName: string }): IGeneri
     static ClearAndAdd: GenericPayloadActionClass<T> = class {
       public static readonly type = `[${stateName}] ClearAndAdd`;
       constructor(public payload: T[]) {}
+    };
+
+    static Fetch: GenericPayloadFetchActionClass<U> = class {
+      public static readonly type = `[${stateName}] Fetch`;
+      constructor(public payload: U) {}
     };
   }
 

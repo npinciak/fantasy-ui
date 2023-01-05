@@ -8,46 +8,46 @@ import { PlayerTableComponent } from './components/player-table/player-table.com
 import { DfsSlateListComponent } from './components/slate-list/slate-list.component';
 import { DfsTeamMatchupTableComponent } from './components/team-matchup-table/team-matchup-table.component';
 import { DfsRoutingModule } from './dfs-routing.module';
-import { DailyFantasyMlbPlayerSlateAttributeState } from './mlb/state/daily-fantasy-mlb-player-slate-attr.state';
-import { DailyFantasyMlbTeamSlateAttributeState } from './mlb/state/daily-fantasy-mlb-team-slate-attr.state';
+import { DailyFantasyMlbPlayerSlateAttributeState } from './mlb/state/dfs-mlb-player-slate-attr.state';
+import { DfsMlbTeamSlateDetailsState } from './mlb/state/dfs-mlb-slate-teams.state';
 import { PlayerTableRankingColumnComponent } from './nfl/components/player-table-ranking-column/player-table-ranking-column.component';
-import { DailyFantasyNflHomeComponent } from './nfl/pages/daily-fantasy-nfl-home/daily-fantasy-nfl-home.component';
-import { DailyFantasyNflGridIronState } from './nfl/state/daily-fantasy-nfl-grid-iron.state';
-import { DailyFantasyNflPlayersSlateAttributeState } from './nfl/state/daily-fantasy-nfl-players-slate-attr.state';
-import { DailyFantasyNflProfilerQBState } from './nfl/state/daily-fantasy-nfl-profiler-qb.state';
-import { DailyFantasyNflProfilerRBState } from './nfl/state/daily-fantasy-nfl-profiler-rb.state';
-import { DailyFantasyNflProfilerTEState } from './nfl/state/daily-fantasy-nfl-profiler-te.state';
-import { DailyFantasyNflProfilerWRState } from './nfl/state/daily-fantasy-nfl-profiler-wr.state';
-import { DailyFantasyNflTeamSlateAttributeState } from './nfl/state/daily-fantasy-nfl-team-slate-attr.state';
-import { DailyFantasyMatchupState } from './state/daily-fantasy-matchup.state';
-import { DailyFantasyPlayersState } from './state/daily-fantasy-players.state';
-import { DailyFantasySlateAttrState } from './state/daily-fantasy-slate-attr.state';
-import { DailyFantasySlateState } from './state/daily-fantasy-slate.state';
-import { DailyFantasyTeamsState } from './state/daily-fantasy-team.state';
+import { DfsNflHomeComponent } from './nfl/pages/dfs-nfl-home/dfs-nfl-home.component';
+import { DfsNflGridIronState } from './nfl/state/dfs-nfl-grid-iron.state';
+import { DfsNflProfilerQbState } from './nfl/state/dfs-nfl-profiler-qb.state';
+import { DfsNflProfilerRbState } from './nfl/state/dfs-nfl-profiler-rb.state';
+import { DfsNflProfilerTeState } from './nfl/state/dfs-nfl-profiler-te.state';
+import { DfsNflProfilerWrState } from './nfl/state/dfs-nfl-profiler-wr.state';
+import { DfsNflSlatePlayerState } from './nfl/state/dfs-nfl-slate-players.state';
+import { DfsNflSlateTeamDetailsState } from './nfl/state/dfs-nfl-slate-teams.state';
+import { DfsMatchupsState } from './state/dfs-matchups.state';
+import { DfsSlatePlayersState } from './state/dfs-players.state';
+import { DfsSlateAttributesState } from './state/dfs-slate-attr.state';
+import { DfsSlatesState } from './state/dfs-slates.state';
+import { DfsTeamsState } from './state/dfs-team.state';
 
 const states = [
-  DailyFantasyPlayersState,
-  DailyFantasyMatchupState,
-  DailyFantasySlateState,
-  DailyFantasySlateAttrState,
-  DailyFantasyTeamsState,
+  DfsSlatePlayersState,
+  DfsMatchupsState,
+  DfsSlatesState,
+  DfsSlateAttributesState,
+  DfsTeamsState,
   DailyFantasyMlbPlayerSlateAttributeState,
-  DailyFantasyMlbTeamSlateAttributeState,
-  DailyFantasyNflProfilerQBState,
-  DailyFantasyNflProfilerRBState,
-  DailyFantasyNflProfilerWRState,
-  DailyFantasyNflProfilerTEState,
-  DailyFantasyNflPlayersSlateAttributeState,
-  DailyFantasyNflTeamSlateAttributeState,
-  DailyFantasyNflProfilerQBState,
-  DailyFantasyNflGridIronState,
+  DfsMlbTeamSlateDetailsState,
+  DfsNflProfilerQbState,
+  DfsNflProfilerRbState,
+  DfsNflProfilerWrState,
+  DfsNflProfilerTeState,
+  DfsNflSlatePlayerState,
+  DfsNflSlateTeamDetailsState,
+  DfsNflProfilerQbState,
+  DfsNflGridIronState,
 ];
 
 const declarations = [
   DfsTeamMatchupTableComponent,
   DfsSlateListComponent,
   PlayerTableRankingColumnComponent,
-  DailyFantasyNflHomeComponent,
+  DfsNflHomeComponent,
   PlayerTableComponent,
 ];
 

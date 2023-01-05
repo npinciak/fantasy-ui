@@ -1,8 +1,8 @@
-import { PlayerSlateAttr } from '@app/dfs/models/player-slate-attr.model';
-import { Vegas } from '@app/dfs/models/vegas.model';
+import { SlatePlayer } from '@app/dfs/models/slate-player.model';
+import { SlateTeam } from '@app/dfs/models/slate-team.model';
 import { PlayerEcrByDfsSiteType } from '../../../../dfs-client-models/nfl-client.model';
 
-export type NFLPlayerSlateAttr = PlayerSlateAttr & {
+export type SlatePlayerNfl = SlatePlayer & {
   expertRanking: PlayerEcrByDfsSiteType;
 };
 
@@ -45,8 +45,7 @@ type OutsidersAttributes =
 export type SaFpts = { [att in SaFptsAttributes]: number | null };
 export type Outsiders = { [att in OutsidersAttributes]: number | null };
 
-export interface NewTeamSlateAttributes {
+export type SlateTeamNfl = SlateTeam & {
   outsiders: Outsiders | null;
   safpts: SaFpts | null;
-  vegas: Vegas | null;
-}
+};

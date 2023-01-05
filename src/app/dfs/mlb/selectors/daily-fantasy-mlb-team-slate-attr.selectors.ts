@@ -1,4 +1,4 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { DailyFantasyMlbTeamSlateAttributeState } from '../state/daily-fantasy-mlb-team-slate-attr.state';
+import { DfsMlbTeamSlateDetailsState } from '../state/dfs-mlb-slate-teams.state';
 
-export class DailyFantasyMlbTeamSlateAttributeSelectors extends GenericSelector(DailyFantasyMlbTeamSlateAttributeState) {}
+export class DailyFantasyMlbTeamSlateAttributeSelectors extends GenericSelector(DfsMlbTeamSlateDetailsState) {}

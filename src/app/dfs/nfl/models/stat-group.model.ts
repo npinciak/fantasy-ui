@@ -10,4 +10,4 @@ export const NFL_STAT_GROUP_MAP = {
   [NFLStatGroup.Flex]: 'Flex',
   [NFLStatGroup.Kicker]: 'K',
   [NFLStatGroup.Defense]: 'Def',
-};
+} as const;

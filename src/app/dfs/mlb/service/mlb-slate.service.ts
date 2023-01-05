@@ -4,8 +4,7 @@ import { currentDate } from '@app/@shared/helpers/date';
 import { normalizeStringToNumber, objectIsEmpty } from '@app/@shared/helpers/utils';
 import { ApiService } from '@app/@shared/services/api.service';
 import { DailyFantasyEndpointBuilder } from '@app/dfs/daily-fantasy-endpoint-builder';
-import { DfsSiteToDfsSiteTypeMap } from '@app/dfs/dfs.const';
-import { PlayerSlateAttr } from '@app/dfs/models/player-slate-attr.model';
+import { SlatePlayer } from '@app/dfs/models/slate-player.model';
 import { SlateService } from '@app/dfs/service/slate.service';
 import {
   ClientSlateAttributes,
@@ -18,6 +17,7 @@ import { ClientVegas } from '@dfsClient/daily-fantasy-client.model';
 import { MLBClientTeamAttributes } from '@dfsClient/mlb-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { DfsSiteToDfsSiteTypeMap } from 'sports-ui-sdk/lib/lib/dfs/site.const';
 
 @Injectable({
   providedIn: 'root',
@@ -59,7 +59,7 @@ export class MlbSlateService {
     });
   }
 
-  static transformPlayerSlateAttributes(players: ClientSlatePlayerAttributesMap, site: string): PlayerSlateAttr[] {
+  static transformPlayerSlateAttributes(players: ClientSlatePlayerAttributesMap, site: string): SlatePlayer[] {
     if (objectIsEmpty(players)) {
       return [];
     }
@@ -85,7 +85,7 @@ export class MlbSlateService {
    * @returns
    */
   getGameAttrBySlateId(request: { sport: string; site: string; slate: string }): Observable<SlateAttributes> {
-    const endpoint = new DailyFantasyEndpointBuilder(request.sport);
+    const endpoint = new DailyFantasyEndpointBuilder();
     let params = new HttpParams();
     params = params.append('date', currentDate('-'));
     params = params.append('site', request.site);
@@ -105,7 +105,7 @@ export class MlbSlateService {
 
 type SlateAttributes = {
   teams: MlbSlateTeam[];
-  players: PlayerSlateAttr[];
+  players: SlatePlayer[];
 };
 
 export type MlbSlateTeam = { id: string; vegas: ClientVegas } & DfsClientPlayerAttributes;

@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { UrlQueryParams } from '@app/@core/store/router/url-builder';
 import { exists } from '@app/@shared/helpers/utils';
 import { Store } from '@ngxs/store';
-import { FetchSlates } from '../actions/daily-fantasy-slates.actions';
+import { DfsSlates } from '../actions/dfs-slates.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class DfsResolver implements Resolve<void> {
     const sport = route.queryParamMap.get(UrlQueryParams.Sport);
 
     if (exists(site) && exists(sport)) {
-      this.store.dispatch(new FetchSlates({ site, sport })).toPromise();
+      this.store.dispatch(new DfsSlates.Fetch({ site, sport })).toPromise();
     }
   }
 }

@@ -30,11 +30,12 @@ export interface GenericSelectorClass<T> {
   getIdSet(list: string[]): Set<string>;
 }
 
-export interface IGenericActionsClass<T> {
+export interface IGenericActionsClass<T, U> {
   new (...args: any[]): any;
   stateName: string;
   AddOrUpdate: GenericPayloadActionClass<T>;
   ClearAndAdd: GenericPayloadActionClass<T>;
+  Fetch: GenericPayloadFetchActionClass<U>;
 }
 
 export interface GenericPayloadActionClass<T> {
@@ -45,4 +46,9 @@ export interface GenericPayloadActionClass<T> {
 export interface GenericPayloadClearActionClass {
   type: string;
   new (): unknown;
+}
+
+export interface GenericPayloadFetchActionClass<T> {
+  type: string;
+  new (payload: T): { payload: T };
 }

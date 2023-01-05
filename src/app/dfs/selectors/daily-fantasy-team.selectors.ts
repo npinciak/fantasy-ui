@@ -1,4 +1,4 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { DailyFantasyTeamsState } from '../state/daily-fantasy-team.state';
+import { DfsTeamsState } from '../state/dfs-team.state';
 
-export class DailyFantasyTeamsSelectors extends GenericSelector(DailyFantasyTeamsState) {}
+export class DailyFantasyTeamsSelectors extends GenericSelector(DfsTeamsState) {}

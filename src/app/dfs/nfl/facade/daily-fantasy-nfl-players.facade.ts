@@ -2,21 +2,21 @@ import { Injectable } from '@angular/core';
 import { GenericFacade } from '@app/@shared/generic-state/generic.facade';
 import { select } from '@app/@shared/models/typed-select';
 import { of } from 'rxjs';
-import { DailyFantasyNflPlayerSelectors } from '../selectors/daily-fantasy-nfl-players.selectors';
+import { DfsNflPlayerSelectors } from '../selectors/dfs-nfl-players.selectors';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DailyFantasyNflPlayerFacade extends GenericFacade(DailyFantasyNflPlayerSelectors) {
-  playerList$ = select(DailyFantasyNflPlayerSelectors.getPlayerTableData);
-  teamList$ = select(DailyFantasyNflPlayerSelectors.getPlayerTeams);
-  positionList$ = select(DailyFantasyNflPlayerSelectors.getPlayerPositions);
+export class DfsNflPlayerFacade extends GenericFacade(DfsNflPlayerSelectors) {
+  playerList$ = select(DfsNflPlayerSelectors.getPlayerTableData);
+  teamList$ = select(DfsNflPlayerSelectors.getPlayerTeams);
+  positionList$ = select(DfsNflPlayerSelectors.getPlayerPositions);
 
-  playerScatterData$ = select(DailyFantasyNflPlayerSelectors.getPlayerScatterData);
-  playerScatterAxisOptions$ = select(DailyFantasyNflPlayerSelectors.getPlayerScatterAxisOptions);
+  playerScatterData$ = select(DfsNflPlayerSelectors.getPlayerScatterData);
+  playerScatterAxisOptions$ = select(DfsNflPlayerSelectors.getPlayerScatterAxisOptions);
 
-  playerTeamsFilterOptions$ = select(DailyFantasyNflPlayerSelectors.getPlayerTeamsFilterOptions);
-  playerPositionFilterOptions$ = select(DailyFantasyNflPlayerSelectors.getPlayerPositionFilterOptions);
+  playerTeamsFilterOptions$ = select(DfsNflPlayerSelectors.getPlayerTeamsFilterOptions);
+  playerPositionFilterOptions$ = select(DfsNflPlayerSelectors.getPlayerPositionFilterOptions);
 
-  teamOwnPercent$ = of(); // select(DailyFantasyNflPlayerSelectors.teamOwnPercent);
+  teamOwnPercent$ = of(); // select(DfsNflPlayerSelectors.teamOwnPercent);
 }

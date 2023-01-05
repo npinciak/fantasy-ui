@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GenericFacade } from '@app/@shared/generic-state/generic.facade';
-import { FetchSlateAttr } from '@app/dfs/state/daily-fantasy-slate-attr.state';
 import { Store } from '@ngxs/store';
+import { DfsMlbSlatePlayer } from '../actions/dfs-mlb-slate-player.actions';
 import { DailyFantasyMlbPlayerSlateAttributeSelectors } from '../selectors/daily-fantasy-mlb-player-slate-attr.selectors';
 
 @Injectable({
@@ -13,6 +13,6 @@ export class DailyFantasyMlbPlayerSlateAttrFacade extends GenericFacade(DailyFan
   }
 
   fetchSlateAttr(slate: string): void {
-    this.store.dispatch(new FetchSlateAttr({ slate }));
+    this.store.dispatch(new DfsMlbSlatePlayer.Fetch({ slate }));
   }
 }

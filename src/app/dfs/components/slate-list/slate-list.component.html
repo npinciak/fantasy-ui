@@ -1,15 +1,23 @@
-<mat-card>
-  <mat-card-content>
-    Slates
-    <mat-action-list>
-      <ng-container *ngFor="let slate of slateList | keyvalue">
-        <ng-container *ngIf="slate.value.length > 0">
-          <h3>{{ slate.key | titlecase }}</h3>
-          <button mat-list-item *ngFor="let item of slate.value" (click)="selectSlate.emit(item)">
-            {{ item.name }}
-          </button>
-        </ng-container>
-      </ng-container>
-    </mat-action-list>
-  </mat-card-content>
-</mat-card>
+<div class="flex-col gap-10">
+  <ng-container *ngFor="let slate of slateList | keyvalue">
+    <ng-container *ngIf="slate.value.length > 0">
+      <mat-action-list>
+        <div>
+          <mat-accordion>
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <h3>{{ slate.key | titlecase }}</h3>
+                </mat-panel-title>
+                <mat-panel-description> {{ slate.value.length }} {{ slate.value.length === 1 ? 'slate' : 'slates' }}</mat-panel-description>
+              </mat-expansion-panel-header>
+              <button mat-list-item *ngFor="let item of slate.value" (click)="selectSlate.emit(item)">
+                {{ item.name }}
+              </button>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </mat-action-list>
+    </ng-container>
+  </ng-container>
+</div>

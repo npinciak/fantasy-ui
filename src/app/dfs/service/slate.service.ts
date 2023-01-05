@@ -6,7 +6,7 @@ import { ApiService } from '@app/@shared/services/api.service';
 import { SlateMasterMap } from '@dfsClient/daily-fantasy-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DfsSites } from 'sports-ui-sdk';
+import { DfsSiteToDfsSiteTypeMap } from 'sports-ui-sdk/lib/lib/dfs/site.const';
 import {
   ClientSlateAttributes,
   ClientSlatePlayerAttributesMap,
@@ -16,10 +16,9 @@ import {
 } from '../../../dfs-client-models/daily-fantasy-client-slate-attr.model';
 import { MLBClientTeamAttributes } from '../../../dfs-client-models/mlb-client.model';
 import { DailyFantasyEndpointBuilder } from '../daily-fantasy-endpoint-builder';
-import { PlayerSlateAttr } from '../models/player-slate-attr.model';
-import { Team } from '../models/team.model';
+import { SlatePlayer } from '../models/slate-player.model';
+import { SlateTeam } from '../models/slate-team.model';
 import { PlayerProfilerSeasonMap } from '../nfl/models/nfl-profiler.model';
-import { NewTeamSlateAttributes } from '../nfl/models/nfl-slate-attr.model';
 import { DfsSlateHelpers } from '../slate.helpers';
 
 @Injectable({
@@ -87,12 +86,12 @@ export class SlateService {
     return DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup);
   }
 
-  static transformPlayerSlateAttributes(players: ClientSlatePlayerAttributesMap, site: string): PlayerSlateAttr[] {
+  static transformPlayerSlateAttributes(players: ClientSlatePlayerAttributesMap, site: string): SlatePlayer[] {
     if (objectIsEmpty(players)) {
       return [];
     }
 
-    const siteMap = DfsSites.DfsSiteToDfsSiteTypeMap[site];
+    const siteMap = DfsSiteToDfsSiteTypeMap[site];
 
     return Object.entries(players).map(([id, player]) => ({
       id,
@@ -102,8 +101,6 @@ export class SlateService {
       ownership: normalizeStringToNumber(player.ownership?.[siteMap]) ?? null,
       value: normalizeStringToNumber(player.value_pct?.[siteMap]) ?? null,
       smash: normalizeStringToNumber(player.smash_pct?.[siteMap]) ?? null,
-      expertRanking: null, // SlateService.isNFLPlayer(player) ? player.ecr : null,
-      defenseVsPos: null, //SlateService.isNBAPlayer(player) ? player.dvp : null,
     }));
   }
 
@@ -129,12 +126,10 @@ export class SlateService {
   }
 }
 
-export type SlateTeam = Pick<Team, 'id'> & NewTeamSlateAttributes;
-
-export type SlateTeamMap = Record<string, SlateTeam>;
-
 type SlateAttributes = {
   teams: SlateTeam[];
-  players: PlayerSlateAttr[];
+  players: SlatePlayer[];
   statGroups: PlayerProfilerSeasonMap | null;
 };
+
+type DfsQueryParamAttributes = 'date' | 'site' | 'slate_id';
