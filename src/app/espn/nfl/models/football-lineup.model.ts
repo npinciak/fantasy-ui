@@ -1,5 +1,4 @@
-import { enumAsList } from 'sports-ui-sdk';
-import { FootballLineup } from '../consts/lineup.const';
+import { enumAsList, FootballLineup } from 'sports-ui-sdk';
 
 export enum FootballLineupSlot {
   QB,
