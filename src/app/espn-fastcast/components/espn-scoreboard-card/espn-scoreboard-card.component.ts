@@ -38,6 +38,10 @@ export class EspnScoreboardCardComponent implements OnChanges {
     this.toggleOffExpandedEvent.emit(eventId);
   }
 
+  get eventPostponed(): boolean {
+    return this.event.status === EspnClient.FastCastGameStatus.Post;
+  }
+
   get eventInProgress(): boolean {
     return this.event.status === EspnClient.FastCastGameStatus.InProgress;
   }
@@ -48,6 +52,10 @@ export class EspnScoreboardCardComponent implements OnChanges {
 
   get eventSummary() {
     if (this.eventInProgress) {
+      return this.event.summary;
+    }
+
+    if (this.eventPostponed) {
       return this.event.summary;
     }
 
