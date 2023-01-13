@@ -3,10 +3,9 @@ import { linearRegression } from '@app/@shared/helpers/graph.helpers';
 import { exists } from '@app/@shared/helpers/utils';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@ngxs/store';
-import { MLB_STATS_KEYS, MLB_STATS_MAP } from 'sports-ui-sdk';
+import { BaseballStat, MLB_STATS_KEYS, MLB_STATS_MAP } from 'sports-ui-sdk';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
 import { ChartData } from '../models/chart-data.model';
-import { EspnBaseballStat } from '../models/mlb-stats.model';
 import { FantasyBaseballFreeAgentsState } from '../state/fantasy-baseball-free-agents.state';
 import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.state';
 import { FantasyBaseballTeamsSelector } from './fantasy-baseball-teams.selector';
@@ -32,8 +31,8 @@ export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBa
   @Selector([FantasyBaseballFreeAgentsSelector.getFreeAgentBatterStats, FantasyBaseballLeagueState.getSeasonId])
   static getFreeAgentBatterScatterChartData(
     getTeamBatters: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[]
-  ): (teamId: string, statPeriod: string, xAxisFilter: EspnBaseballStat, yAxisFilter: EspnBaseballStat) => any {
-    return (teamId: string, statPeriod: string, xAxisFilter: EspnBaseballStat, yAxisFilter: EspnBaseballStat) => {
+  ): (teamId: string, statPeriod: string, xAxisFilter: BaseballStat, yAxisFilter: BaseballStat) => any {
+    return (teamId: string, statPeriod: string, xAxisFilter: BaseballStat, yAxisFilter: BaseballStat) => {
       const batters = getTeamBatters(teamId, statPeriod);
 
       const x = batters
@@ -158,8 +157,8 @@ export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBa
   @Selector([FantasyBaseballFreeAgentsSelector.getFreeAgentBatterStats])
   static getFreeAgentBatterChartData(
     getFreeAgentBatterStats: (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[]
-  ): (statPeriod: string, seasonId: string, statFilter: EspnBaseballStat) => ChartData[] {
-    return (statPeriod: string, seasonId: string, statFilter: EspnBaseballStat) =>
+  ): (statPeriod: string, seasonId: string, statFilter: BaseballStat) => ChartData[] {
+    return (statPeriod: string, seasonId: string, statFilter: BaseballStat) =>
       getFreeAgentBatterStats(statPeriod, seasonId)
         .map(p => {
           return {
@@ -173,8 +172,8 @@ export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBa
   @Selector([FantasyBaseballFreeAgentsSelector.getFreeAgentPitcherStats])
   static getFreeAgentPitcherChartData(
     getFreeAgentPitcherStats: (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[]
-  ): (statPeriod: string, seasonId: string, statFilter: EspnBaseballStat) => ChartData[] {
-    return (statPeriod: string, seasonId: string, statFilter: EspnBaseballStat) =>
+  ): (statPeriod: string, seasonId: string, statFilter: BaseballStat) => ChartData[] {
+    return (statPeriod: string, seasonId: string, statFilter: BaseballStat) =>
       getFreeAgentPitcherStats(statPeriod, seasonId)
         .map(p => {
           return {

@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UrlBuilder } from '@app/@core/store/router/url-builder';
 import { BASEBALL_STAT_PERIOD_FILTER_OPTIONS } from '@app/espn/const/stat-period.const';
 import {
+  BaseballStat,
   BATTER_STATS_LIST,
   BATTING_LINEUP_SLOTS,
   MLB_LINEUP_MAP,
@@ -19,7 +20,6 @@ import { FantasyBaseballFreeAgentsFilterFacade } from '../../facade/fantasy-base
 import { FantasyBaseballFreeAgentsFacade } from '../../facade/fantasy-baseball-free-agents.facade';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
-import { EspnBaseballStat } from '../../models/mlb-stats.model';
 
 enum PositionTabGroup {
   Batters,
@@ -52,8 +52,8 @@ export class BaseballFreeAgentsComponent implements OnInit {
 
   scoringPeriodId: string = '002022';
 
-  selectedPitcherStat = EspnBaseballStat.ERA;
-  selectedBatterStat = EspnBaseballStat.AVG;
+  selectedPitcherStat = BaseballStat.ERA;
+  selectedBatterStat = BaseballStat.AVG;
 
   selectedLeagueTeam = '1';
 
@@ -85,11 +85,11 @@ export class BaseballFreeAgentsComponent implements OnInit {
     this.scoringPeriodId = change;
   }
 
-  onBatterStatChange(val: EspnBaseballStat): void {
+  onBatterStatChange(val: BaseballStat): void {
     this.selectedBatterStat = val;
   }
 
-  onPitcherStatChange(val: EspnBaseballStat): void {
+  onPitcherStatChange(val: BaseballStat): void {
     this.selectedPitcherStat = val;
   }
 

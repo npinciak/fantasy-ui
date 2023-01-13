@@ -5,7 +5,7 @@ import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { UrlBuilder } from '@app/@core/store/router/url-builder';
 import { BASEBALL_STAT_PERIOD_FILTER_OPTIONS, StatTypePeriodToYear } from '@app/espn/const/stat-period.const';
 import { Store } from '@ngxs/store';
-import { BATTER_STATS_LIST, MLB_STATS_MAP, PITCHER_STATS_LIST } from 'sports-ui-sdk';
+import { BaseballStat, BATTER_STATS_LIST, MLB_STATS_MAP, PITCHER_STATS_LIST } from 'sports-ui-sdk';
 import { SetSeasonId } from '../../actions/mlb.actions';
 import {
   BATTER_STATS_HEADERS,
@@ -19,7 +19,6 @@ import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-leagu
 import { FantasyBaseballPlayerFacade } from '../../facade/fantasy-baseball-player.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
 import { BaseballPlayer } from '../../models/baseball-player.model';
-import { EspnBaseballStat } from '../../models/mlb-stats.model';
 
 @Component({
   selector: 'app-baseball-team',
@@ -45,12 +44,12 @@ export class BaseballTeamComponent {
   readonly BATTER_STATS_LIVE_ROWS = BATTER_STATS_LIVE_ROWS;
   readonly BATTER_STATS_LIVE_HEADERS = BATTER_STATS_LIVE_HEADERS;
 
-  selectedPitcherStat = EspnBaseballStat.fip;
-  selectedBatterStatXAxis = EspnBaseballStat.wOBA;
-  selectedBatterStatYAxis = EspnBaseballStat.AB;
+  selectedPitcherStat = BaseballStat.fip;
+  selectedBatterStatXAxis = BaseballStat.wOBA;
+  selectedBatterStatYAxis = BaseballStat.AB;
 
-  selectedPitcherStatXAxis = EspnBaseballStat.SO;
-  selectedPitcherStatYAxis = EspnBaseballStat.APP;
+  selectedPitcherStatXAxis = BaseballStat.SO;
+  selectedPitcherStatYAxis = BaseballStat.APP;
 
   scoringPeriodId = '002022';
 
@@ -77,7 +76,7 @@ export class BaseballTeamComponent {
   onPlayerClick(event) {}
 
   onRefreshClick() {
-    this.fantasyBaseballLeagueFacade.getLeague(this.leagueId);
+    // this.fantasyBaseballLeagueFacade.getLeague(this.leagueId);
   }
 
   onLiveScoringSelectChange(event: MatSlideToggleChange) {

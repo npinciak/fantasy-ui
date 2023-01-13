@@ -1,5 +1,5 @@
 import { StatThresholds } from '@app/@shared/models/stat-threshold.model';
-import { EspnBaseballStat } from '../models/mlb-stats.model';
+import { BaseballStat } from 'sports-ui-sdk';
 
 export const OpsThreshold = {
   [StatThresholds.excellent]: 1.0,
@@ -82,9 +82,9 @@ export const lobPctThreshold = {
 } as const;
 
 export const THRESHOLD_MAP = {
-  [EspnBaseballStat.wRAA]: WraaThreshold,
-  [EspnBaseballStat.wOBA]: wobaThreshold,
-  [EspnBaseballStat.OPS]: OpsThreshold,
-  [EspnBaseballStat.K_9]: k9Threshold,
-  [EspnBaseballStat.LOB_PCT]: lobPctThreshold,
+  [BaseballStat.wRAA]: WraaThreshold,
+  [BaseballStat.wOBA]: wobaThreshold,
+  [BaseballStat.OPS]: OpsThreshold,
+  [BaseballStat.K_9]: k9Threshold,
+  [BaseballStat.LOB_PCT]: lobPctThreshold,
 } as const;

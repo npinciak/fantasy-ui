@@ -1,47 +1,42 @@
-import { MOCK_BASEBALL_PLAYER_1, MOCK_BASEBALL_PLAYER_2 } from '../models/baseball-player.model.mock';
-import { EspnBaseballStat } from '../models/mlb-stats.model';
+import { MOCK_BASEBALL_STATS_ENTITY } from 'sports-ui-sdk';
 import { AdvStats } from './advStats.class';
 
 describe('Advanced Stats', () => {
   const seasonConst = {
-    wOBA: 0.306,
-    wOBAScale: 1.306,
-    wBB: 0.694,
-    wHBP: 0.727,
-    w1B: 0.897,
-    w2B: 1.288,
-    w3B: 1.641,
-    wHR: 2.134,
-    runSB: 0.2,
-    runCS: -0.389,
-    'R/PA': 0.112,
-    'R/W': 9.362,
-    cFIP: 3.134,
+    wOBA: 1,
+    wOBAScale: 1,
+    wBB: 1,
+    wHBP: 1,
+    w1B: 1,
+    w2B: 1,
+    w3B: 1,
+    wHR: 1,
+    runSB: 1,
+    runCS: -1,
+    'R/PA': 1,
+    'R/W': 1,
+    cFIP: 1,
   };
 
-  const statsEntity = MOCK_BASEBALL_PLAYER_1.stats['022021'];
-  const advancedStatsBatter = new AdvStats({ seasonConst, statsEntity });
+  const statsEntity = MOCK_BASEBALL_STATS_ENTITY;
+  const advancedStats = new AdvStats({ seasonConst, statsEntity });
 
-  const pitcherStatsMock = MOCK_BASEBALL_PLAYER_2.stats[2];
-  const advancedStatsPitcher = new AdvStats({ seasonConst, statsEntity: pitcherStatsMock });
+  const advancedStatsPitcher = advancedStats;
 
   const additionalStats = {};
-  additionalStats[EspnBaseballStat.TRIPLE] = 2;
-  additionalStats[EspnBaseballStat.IBB] = 6;
-  additionalStats[EspnBaseballStat.K] = 8;
 
-  const advancedStatsBatterWithMissing = new AdvStats({ seasonConst, statsEntity: { ...statsEntity, ...additionalStats } });
+  const advancedStatsWithMissing = new AdvStats({ seasonConst, statsEntity: { ...statsEntity, ...additionalStats } });
 
   describe('wOBA', () => {
     it('should return wOBA', () => {
       const expected = 0.2904166666666667;
-      const actual = advancedStatsBatterWithMissing.wOBA;
+      const actual = advancedStatsWithMissing.wOBA;
       expect(actual).toEqual(expected);
     });
 
     it('should return 0 if invalid properties', () => {
       const expected = 0;
-      const actual = advancedStatsBatter.wOBA;
+      const actual = advancedStats.wOBA;
       expect(actual).toEqual(expected);
     });
   });
@@ -55,7 +50,7 @@ describe('Advanced Stats', () => {
 
     it('should return 0 if invalid properties', () => {
       const expected = 0;
-      const actual = advancedStatsBatter.wRC;
+      const actual = advancedStats.wRC;
       expect(actual).toEqual(expected);
     });
   });
@@ -63,13 +58,13 @@ describe('Advanced Stats', () => {
   describe('wRAA', () => {
     it('should return wRAA', () => {
       const expected = -0.21477794793261798;
-      const actual = advancedStatsBatterWithMissing.wRAA;
+      const actual = advancedStatsWithMissing.wRAA;
       expect(actual).toEqual(expected);
     });
 
     it('should return 0 if invalid properties', () => {
       const expected = 0;
-      const actual = advancedStatsBatter.wRAA;
+      const actual = advancedStats.wRAA;
       expect(actual).toEqual(expected);
     });
   });
@@ -83,7 +78,7 @@ describe('Advanced Stats', () => {
 
     it('should return 0 if invalid properties', () => {
       const expected = 0;
-      const actual = advancedStatsBatter.fip;
+      const actual = { ...advancedStats };
       expect(actual).toEqual(expected);
     });
   });
@@ -91,13 +86,13 @@ describe('Advanced Stats', () => {
   describe('BABIP', () => {
     it('should return BABIP', () => {
       const expected = 0;
-      const actual = advancedStatsBatterWithMissing.babip;
+      const actual = advancedStatsWithMissing.babip;
       expect(actual).toEqual(expected);
     });
 
     it('should return 0 if invalid properties', () => {
       const expected = 0;
-      const actual = advancedStatsBatter.babip;
+      const actual = advancedStats.babip;
       expect(actual).toEqual(expected);
     });
   });
@@ -105,14 +100,14 @@ describe('Advanced Stats', () => {
   describe('weighted hits', () => {
     it('should return weighted hits', () => {
       const expected = 3.4850000000000003;
-      const actual = advancedStatsBatterWithMissing.weightedHits;
+      const actual = advancedStatsWithMissing.weightedHits;
 
       expect(actual).toEqual(expected);
     });
 
     it('should return 0 if invalid properties', () => {
       const expected = 0;
-      const actual = advancedStatsBatter.weightedHits;
+      const actual = advancedStats.weightedHits;
 
       expect(actual).toEqual(expected);
     });
@@ -121,14 +116,14 @@ describe('Advanced Stats', () => {
   describe('non hits', () => {
     it('should return non hits', () => {
       const expected = 12;
-      const actual = advancedStatsBatterWithMissing.nonHits;
+      const actual = advancedStatsWithMissing.nonHits;
 
       expect(actual).toEqual(expected);
     });
 
     it('should return 0 if invalid properties', () => {
       const expected = 0;
-      const actual = advancedStatsBatter.nonHits;
+      const actual = advancedStats.nonHits;
 
       expect(actual).toEqual(expected);
     });
@@ -137,14 +132,14 @@ describe('Advanced Stats', () => {
   describe('unintentionalBB', () => {
     it('should return unintentionalBB', () => {
       const expected = -1;
-      const actual = advancedStatsBatterWithMissing.unintentionalBB;
+      const actual = advancedStatsWithMissing.unintentionalBB;
 
       expect(actual).toEqual(expected);
     });
 
     it('should return 0 if invalid properties', () => {
       const expected = 0;
-      const actual = advancedStatsBatter.unintentionalBB;
+      const actual = advancedStats.unintentionalBB;
 
       expect(actual).toEqual(expected);
     });
