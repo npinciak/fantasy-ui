@@ -1,21 +1,11 @@
+import { GenericActions } from '@app/@shared/generic-state/generic.actions';
 import { BaseballPlayer } from '../models/baseball-player.model';
 
-export namespace FantasyBaseballFreeAgents {
-  export const name = 'fantasyBaseballFreeAgents';
-  type Entity = BaseballPlayer;
-
-  export class AddOrUpdate {
-    public static readonly type = `[${name}] AddOrUpdate`;
-    constructor(public payload: Entity[]) {}
-  }
-
-  export class ClearAndAdd {
-    public static readonly type = `[${name}] ClearAndAdd`;
-    constructor(public payload: Entity[]) {}
-  }
-
-  export class Fetch {
-    static readonly type = `[${name}] Fetch`;
+export class FantasyBaseballFreeAgents extends GenericActions<BaseballPlayer>({
+  stateName: 'fantasyBaseballFreeAgents',
+}) {
+  Fetch = class {
+    static readonly type = `[${FantasyBaseballFreeAgents.stateName}] Fetch`;
     constructor(public payload: { leagueId: string }) {}
-  }
+  };
 }

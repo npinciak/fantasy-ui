@@ -3,7 +3,7 @@ import { GenericState } from '@app/@shared/generic-state/generic.state';
 import { State } from '@ngxs/store';
 import { FantasyBaseballEvents } from '../actions/fantasy-baseball-events.actions';
 
-@State({ name: FantasyBaseballEvents.name })
+@State({ name: FantasyBaseballEvents.stateName })
 @Injectable()
 export class FantasyBaseballEventsState extends GenericState({
   idProperty: 'id',

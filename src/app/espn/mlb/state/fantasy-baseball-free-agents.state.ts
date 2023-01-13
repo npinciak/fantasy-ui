@@ -6,7 +6,6 @@ import { FantasyBaseballFreeAgents } from '../actions/fantasy-baseball-free-agen
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { FantasyBaseballFreeAgentsFilterSelector } from '../selectors/fantasy-baseball-free-agents-filter.selector';
 import { MlbService } from '../services/mlb.service';
-import { FantasyBaseballLeagueState } from './fantasy-baseball-league.state';
 
 @State({ name: FantasyBaseballFreeAgents.name })
 @Injectable()
@@ -20,16 +19,17 @@ export class FantasyBaseballFreeAgentsState extends GenericState({
   }
 
   @Action(FantasyBaseballFreeAgents.Fetch)
-  async fetchFantasyBaseballFreeAgents({ dispatch }: StateContext<GenericStateModel<BaseballPlayer>>): Promise<void> {
-    const leagueId = this.store.selectSnapshot(FantasyBaseballLeagueState.getLeagueId) ?? '';
-
+  async fetchFantasyBaseballFreeAgents(
+    { dispatch }: StateContext<GenericStateModel<BaseballPlayer>>,
+    { payload: { leagueId } }
+  ): Promise<void> {
     const lineupSlotIds = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedLineupSlotIds).map(id => Number(id));
     const availabilityStatus = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedAvailabilityStatus);
     const topScoringPeriodIds = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedTopScoringPeriodIds);
 
     const pagination = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getPagination);
 
-    const scoringPeriodId = Number(this.store.selectSnapshot(FantasyBaseballLeagueState.getCurrentScoringPeriodId)) ?? 0;
+    const scoringPeriodId = 0; //Number(this.store.selectSnapshot(FantasyBaseballLeagueState.getCurrentScoringPeriodId)) ?? 0;
 
     const filterRanksForScoringPeriodIds = { value: [scoringPeriodId] };
     const filterSlotIds = { value: lineupSlotIds };
