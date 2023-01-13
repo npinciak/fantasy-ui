@@ -4,11 +4,11 @@ import {
   TableColumnDataType,
   transformTableColumnsToTableRows,
 } from '@app/@shared/models/table-columns.model';
+import { NFL_STATS_MAP } from 'sports-ui-sdk';
 import { FootballLineupSlot } from '../models/football-lineup.model';
 import { FootballPosition } from '../models/football-position.model';
 import { FootballStat } from '../models/football-stats.model';
 import { FootballTeam } from '../models/football-team.model';
-import { FOOTBALL_STATS_MAP } from './stats.const';
 
 const LEAGUE_STANDINGS_COLUMNS: BaseTableColumn<FootballTeam>[] = [
   { columnDef: 'name', headerCell: 'name', headerLabel: 'Team', dataType: TableColumnDataType.String },
@@ -25,8 +25,8 @@ export const DEFAULT_FOOTBALL_ROSTER_COLUMNS = [
   {
     columnDef: `stats.stats.${FootballStat.GP}`,
     headerCell: `stats.stats.${FootballStat.GP}`,
-    headerLabel: FOOTBALL_STATS_MAP[FootballStat.GP].abbrev,
-    headerTooltip: FOOTBALL_STATS_MAP[FootballStat.GP].description,
+    headerLabel: NFL_STATS_MAP[FootballStat.GP].abbrev,
+    headerTooltip: NFL_STATS_MAP[FootballStat.GP].description,
     dataType: TableColumnDataType.Number,
   },
   {
@@ -65,7 +65,7 @@ export const PASSING_ROSTER_COLUMNS = [
   {
     columnDef: `stats.stats.${FootballStat.PY}`,
     headerCell: `stats.stats.${FootballStat.PY}`,
-    headerLabel: FOOTBALL_STATS_MAP[FootballStat.PY].abbrev,
+    headerLabel: NFL_STATS_MAP[FootballStat.PY].abbrev,
     dataType: TableColumnDataType.Number,
   },
   {
@@ -92,13 +92,13 @@ export const RUSHING_ROSTER_COLUMNS = [
   {
     columnDef: `stats.stats.${FootballStat.RA}`,
     headerCell: `stats.stats.${FootballStat.RA}`,
-    headerLabel: FOOTBALL_STATS_MAP[FootballStat.RA].abbrev,
+    headerLabel: NFL_STATS_MAP[FootballStat.RA].abbrev,
     dataType: TableColumnDataType.Number,
   },
   {
     columnDef: `stats.stats.${FootballStat.RY}`,
     headerCell: `stats.stats.${FootballStat.RY}`,
-    headerLabel: FOOTBALL_STATS_MAP[FootballStat.RY].abbrev,
+    headerLabel: NFL_STATS_MAP[FootballStat.RY].abbrev,
     dataType: TableColumnDataType.Number,
   },
   {
@@ -113,7 +113,7 @@ export const RECEIVING_ROSTER_COLUMNS = [
   {
     columnDef: `stats.stats.${FootballStat.REC}`,
     headerCell: `stats.stats.${FootballStat.REC}`,
-    headerLabel: FOOTBALL_STATS_MAP[FootballStat.REC].abbrev,
+    headerLabel: NFL_STATS_MAP[FootballStat.REC].abbrev,
     dataType: TableColumnDataType.Number,
   },
   {
@@ -152,13 +152,13 @@ export const DST_ROSTER_COLUMNS = [
   {
     columnDef: `stats.stats.${FootballStat.SK}`,
     headerCell: `stats.stats.${FootballStat.SK}`,
-    headerLabel: FOOTBALL_STATS_MAP[FootballStat.SK].abbrev,
+    headerLabel: NFL_STATS_MAP[FootballStat.SK].abbrev,
     dataType: TableColumnDataType.Number,
   },
   {
     columnDef: `stats.stats.${FootballStat.INT}`,
     headerCell: `stats.stats.${FootballStat.INT}`,
-    headerLabel: FOOTBALL_STATS_MAP[FootballStat.INT].abbrev,
+    headerLabel: NFL_STATS_MAP[FootballStat.INT].abbrev,
     dataType: TableColumnDataType.Number,
   },
 ];

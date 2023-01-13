@@ -7,10 +7,10 @@ import { StatTypePeriodId } from '@app/espn/models/espn-stats.model';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { NFL_STATS_MAP } from 'sports-ui-sdk';
 import { FantasyFootballPlayerNews } from '../../actions/fantasy-football-player-news.actions';
 import { FOOTBALL_ROSTER_HEADERS_BY_POS, FOOTBALL_ROSTER_ROWS_BY_POS } from '../../consts/fantasy-football-table.const';
 import { NFL_POSITION_MAP } from '../../consts/position.const';
-import { FOOTBALL_STATS_MAP } from '../../consts/stats.const';
 import { FantasyFootballLeagueFacade } from '../../facade/fantasy-football-league.facade';
 import { FantasyFootballTeamFacade } from '../../facade/fantasy-football-team.facade';
 import { FootballPlayer } from '../../models/football-player.model';
@@ -24,7 +24,7 @@ export class FootballTeamComponent implements OnInit {
   readonly leagueId$ = this.routerFacade.leagueId$;
   readonly teamId$ = this.routerFacade.teamId$;
 
-  readonly FOOTBALL_STATS_MAP = FOOTBALL_STATS_MAP;
+  readonly FOOTBALL_STATS_MAP = NFL_STATS_MAP;
   readonly FOOTBALL_POSITION_LIST_FILTER = FOOTBALL_POSITION_LIST_FILTER;
   readonly NFL_POSITION_MAP = NFL_POSITION_MAP;
 

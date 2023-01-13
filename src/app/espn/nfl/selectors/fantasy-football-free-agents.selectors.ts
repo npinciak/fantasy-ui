@@ -2,7 +2,7 @@ import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { linearRegression, pickData, transformGraphData } from '@app/@shared/helpers/graph.helpers';
 import { exists } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
-import { FOOTBALL_STATS_MAP } from '../consts/stats.const';
+import { NFL_STATS_MAP } from 'sports-ui-sdk';
 import { FootballPlayer, FootballPlayerFreeAgent } from '../models/football-player.model';
 import { FantasyFootballFreeAgentsState } from '../state/fantasy-football-free-agents.state';
 import { FantasyFootballTeamSelectors } from './fantasy-football-team.selectors';
@@ -86,8 +86,8 @@ export class FantasyFootballFreeAgentsSelectors extends GenericSelector(FantasyF
       const points = transformGraphData(list, {
         x,
         y,
-        xAxisLabel: FOOTBALL_STATS_MAP[Number(xAxis)].abbrev,
-        yAxisLabel: FOOTBALL_STATS_MAP[Number(yAxis)].abbrev,
+        xAxisLabel: NFL_STATS_MAP[Number(xAxis)].abbrev,
+        yAxisLabel: NFL_STATS_MAP[Number(yAxis)].abbrev,
         labels: 'name',
         graphType: 'scatter',
       });
