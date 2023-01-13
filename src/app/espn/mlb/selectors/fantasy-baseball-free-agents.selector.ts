@@ -3,7 +3,7 @@ import { linearRegression } from '@app/@shared/helpers/graph.helpers';
 import { exists } from '@app/@shared/helpers/utils';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@ngxs/store';
-import { MLB_STATS_KEYS, MLB_STATS_MAP } from '../consts/stats.const';
+import { MLB_STATS_KEYS, MLB_STATS_MAP } from 'sports-ui-sdk';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
 import { ChartData } from '../models/chart-data.model';
 import { EspnBaseballStat } from '../models/mlb-stats.model';

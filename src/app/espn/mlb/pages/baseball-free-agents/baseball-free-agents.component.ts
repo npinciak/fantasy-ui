@@ -6,8 +6,14 @@ import { Sort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 import { UrlBuilder } from '@app/@core/store/router/url-builder';
 import { BASEBALL_STAT_PERIOD_FILTER_OPTIONS } from '@app/espn/const/stat-period.const';
-import { BATTING_LINEUP_SLOTS, MLB_LINEUP_MAP, PITCHING_LINEUP_SLOTS } from 'sports-ui-sdk';
-import { BATTER_STATS_LIST, MLB_STATS_MAP, PITCHER_STATS_LIST } from '../../consts/stats.const';
+import {
+  BATTER_STATS_LIST,
+  BATTING_LINEUP_SLOTS,
+  MLB_LINEUP_MAP,
+  MLB_STATS_MAP,
+  PITCHER_STATS_LIST,
+  PITCHING_LINEUP_SLOTS,
+} from 'sports-ui-sdk';
 import { BATTER_STATS_HEADERS, BATTER_STATS_ROWS, PITCHER_STATS_HEADERS, PITCHER_STATS_ROWS } from '../../consts/tables.const';
 import { FantasyBaseballFreeAgentsFilterFacade } from '../../facade/fantasy-baseball-free-agents-filter.facade';
 import { FantasyBaseballFreeAgentsFacade } from '../../facade/fantasy-baseball-free-agents.facade';

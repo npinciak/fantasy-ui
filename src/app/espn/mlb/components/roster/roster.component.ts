@@ -7,7 +7,7 @@ import { TableColumn, TableColumnDataType } from '@app/@shared/models/table-colu
 import { StatTypePeriodId } from '@app/espn/models/espn-stats.model';
 import { merge } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { MLB_STATS_MAP } from '../../consts/stats.const';
+import { MLB_STATS_MAP } from 'sports-ui-sdk';
 import { BaseballPlayer } from '../../models/baseball-player.model';
 
 @Component({

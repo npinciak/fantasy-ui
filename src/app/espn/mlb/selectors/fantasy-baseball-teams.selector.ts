@@ -5,8 +5,8 @@ import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model
 import { EspnFastcastTeamSelectors } from '@app/espn-fastcast/selectors/espn-fastcast-team.selectors';
 import { benchPlayersFilter, startingPlayersFilter } from '@app/espn/espn-helpers';
 import { Selector } from '@ngxs/store';
+import { MLB_LINEUP_MAP } from 'sports-ui-sdk';
 import { AdvStats } from '../class/advStats.class';
-import { MLB_LINEUP_MAP } from '../consts/lineup.const';
 import { MLB_WEIGHTED_STATS } from '../consts/weighted-stats.const';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
