@@ -1,4 +1,4 @@
-import { MLB_LINEUP_MAP } from '../consts/lineup.const';
+import { MLB_LINEUP_MAP } from 'sports-ui-sdk';
 
 export class FreeAgentFilter {
   private _playerStatus: string[] = [];

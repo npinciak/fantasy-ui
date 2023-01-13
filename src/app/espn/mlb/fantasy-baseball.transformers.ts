@@ -1,10 +1,9 @@
 import { exists } from '@app/@shared/helpers/utils';
-import { EspnClient, MLB_TEAM_MAP } from 'sports-ui-sdk';
+import { EspnClient, MLB_TEAM_MAP,MLB_LINEUP_MAP } from 'sports-ui-sdk';
 
 import { isPitcher } from '../espn-helpers';
 import { EspnTransformers } from '../espn.transformers';
 import { FantasyLeague } from '../models/fantasy-league.model';
-import { MLB_LINEUP_MAP } from './consts/lineup.const';
 
 import { MLB_POSITION_MAP } from './consts/position.const';
 import { BaseballEvent } from './models/baseball-event.model';

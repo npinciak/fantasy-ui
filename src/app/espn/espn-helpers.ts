@@ -1,7 +1,6 @@
 import { exists } from '@app/@shared/helpers/utils';
-import { EspnClient, EspnFastcastClient } from 'sports-ui-sdk';
+import { EspnClient, EspnFastcastClient, PITCHING_LINEUP_IDS } from 'sports-ui-sdk';
 
-import { PitcherIdSet } from './mlb/consts/lineup.const';
 import { BaseballPlayer } from './mlb/models/baseball-player.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
 
@@ -39,13 +38,7 @@ export function excludeLeagues(id: string): boolean {
  * @returns
  */
 export function isPitcher(eligiblePos: number[]): boolean {
-  for (let i = 0; i < eligiblePos.length; i++) {
-    if (PitcherIdSet.has(eligiblePos[i])) {
-      return true;
-    }
-    return false;
-  }
-  return false;
+  return eligiblePos.some(posId => PITCHING_LINEUP_IDS.has(posId));
 }
 
 export function teamColorHandler(val: EspnFastcastClient.CompetitorsEntity): string | null {
