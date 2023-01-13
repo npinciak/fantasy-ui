@@ -28,7 +28,7 @@ export const statusCodeToEspnMessage: { [key in ErrorStatusCode]: string } = {
   [ErrorStatusCode.BadGateway]: 'Bad Gateway',
   [ErrorStatusCode.ServiceUnavailable]: 'Service Unavailable',
   [ErrorStatusCode.GatewayTimeout]: 'Gateway Timeout',
-};
+} as const;
 
 export const statusCodeToMessage: { [key in ErrorStatusCode]: string } = {
   [ErrorStatusCode.Unknown]: 'Could not contact server',
@@ -41,4 +41,4 @@ export const statusCodeToMessage: { [key in ErrorStatusCode]: string } = {
   [ErrorStatusCode.BadGateway]: 'Bad Gateway',
   [ErrorStatusCode.ServiceUnavailable]: 'Service Unavailable',
   [ErrorStatusCode.GatewayTimeout]: 'Gateway Timeout',
-};
+} as const;

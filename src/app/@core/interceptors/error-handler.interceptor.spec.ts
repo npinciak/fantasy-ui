@@ -2,6 +2,8 @@ import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { RouterModule } from '@angular/router';
+import { NgxsModule } from '@ngxs/store';
 import { ErrorHandlerInterceptor } from './error-handler.interceptor';
 
 describe('ErrorHandlerInterceptor', () => {
@@ -9,7 +11,7 @@ describe('ErrorHandlerInterceptor', () => {
   let httpMock: HttpTestingController;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [MatSnackBarModule, HttpClientTestingModule],
+      imports: [RouterModule.forRoot([]), NgxsModule.forRoot(), MatSnackBarModule, HttpClientTestingModule],
       providers: [
         {
           provide: HTTP_INTERCEPTORS,
