@@ -4,7 +4,7 @@
       <mat-action-list>
         <div>
           <mat-accordion>
-            <mat-expansion-panel hideToggle>
+            <mat-expansion-panel hideToggle [expanded]="slate.key === 'classic'">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   <h3>{{ slate.key | titlecase }}</h3>
