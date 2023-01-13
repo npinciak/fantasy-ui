@@ -6,9 +6,8 @@ import {
   StatThresholdLabelByStatThreshold,
 } from '@app/@shared/models/stat-threshold.model';
 import { MlbThresholds } from '@app/espn/mlb/consts/stats-threshold.m';
-import { MLB_STATS_MAP } from '@app/espn/mlb/consts/stats.const';
 import { ChartData } from '@app/espn/mlb/models/chart-data.model';
-import { EspnBaseballStat } from '@app/espn/mlb/models/mlb-stats.model';
+import { BaseballStat, MLB_STATS_MAP } from 'sports-ui-sdk';
 
 @Component({
   selector: `app-data-vis`,
@@ -17,7 +16,7 @@ import { EspnBaseballStat } from '@app/espn/mlb/models/mlb-stats.model';
 export class DataVisComponent implements OnInit, OnChanges {
   @Input() title = '';
   @Input() chartData: ChartData[];
-  @Input() statFilter: EspnBaseballStat = EspnBaseballStat.AB;
+  @Input() statFilter: BaseballStat = BaseballStat.AB;
 
   public graph: ChartNew<number>;
   public test: any[]; //{ x: string[]; y: number[]; type: string; name?: string; showlegend?: boolean }[];
@@ -66,7 +65,7 @@ export class DataVisComponent implements OnInit, OnChanges {
     return map;
   }
 
-  private updateChart(data: ChartData[], statFilter: EspnBaseballStat) {
+  private updateChart(data: ChartData[], statFilter: BaseballStat) {
     const labels = data.map(d => d.label);
     const baseData = data.map(d => d.data);
 

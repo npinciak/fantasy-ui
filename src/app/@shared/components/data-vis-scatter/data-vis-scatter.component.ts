@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { MLB_STATS_MAP } from '@app/espn/mlb/consts/stats.const';
+import { MLB_STATS_MAP } from 'sports-ui-sdk';
 
 @Component({
   selector: `app-data-vis-scatter`,
