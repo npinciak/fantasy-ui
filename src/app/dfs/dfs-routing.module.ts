@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UrlFragments } from '@app/@core/store/router/url-builder';
+import { UrlPathFragments } from '@app/@core/store/router/url-builder';
 import { DfsNflHomeComponent } from './nfl/pages/dfs-nfl-home/dfs-nfl-home.component';
 import { DfsResolver } from './resolvers/dfs.resolver';
 
 export const routes: Routes = [
   {
-    path: UrlFragments.Empty,
+    path: UrlPathFragments.Empty,
     component: DfsNflHomeComponent,
     resolve: [DfsResolver],
   },
-  { path: '**', redirectTo: UrlFragments.Empty, pathMatch: 'full' },
+  { path: '**', redirectTo: UrlPathFragments.Empty, pathMatch: 'full' },
 ];
 
 @NgModule({

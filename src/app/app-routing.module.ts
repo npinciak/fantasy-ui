@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { ShellService } from './@core/shell/shell.service';
-import { UrlFragments } from './@core/store/router/url-builder';
+import { UrlPathFragments } from './@core/store/router/url-builder';
 
 const routes: Routes = [
   ShellService.childRoutes([
     {
-      path: UrlFragments.Espn,
+      path: UrlPathFragments.Espn,
       loadChildren: () => import('./espn/espn.module').then(m => m.EspnModule),
     },
     {
-      path: UrlFragments.Dfs,
+      path: UrlPathFragments.Dfs,
       loadChildren: () => import('./dfs/dfs.module').then(m => m.DfsModule),
     },
     {
-      path: UrlFragments.MyProfile,
+      path: UrlPathFragments.MyProfile,
       loadChildren: () => import('./sports-ui/sports-ui.module').then(m => m.SportsUiModule),
     },
     { path: '**', redirectTo: '/espn', pathMatch: 'full' },

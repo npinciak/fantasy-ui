@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthenticationGuard } from '@app/@core/authentication/guards/authentication.guard';
-import { UrlFragments, UrlParams } from '@app/@core/store/router/url-builder';
+import { UrlPathFragments, UrlPathParams } from '@app/@core/store/router/url-builder';
 import { BaseballFreeAgentsComponent } from './mlb/pages/baseball-free-agents/baseball-free-agents.component';
 import { BaseballHomeComponent } from './mlb/pages/baseball-home/baseball-home.component';
 import { BaseballTeamComponent } from './mlb/pages/baseball-team/baseball-team.component';
@@ -14,84 +13,132 @@ import { FantasyFootballLeagueResolver } from './nfl/resolvers/fantasy-football-
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 
 const nflRoutes = {
-  path: UrlFragments.NFL,
-  data: { sport: UrlFragments.NFL },
-  canActivate: [AuthenticationGuard],
+  path: UrlPathFragments.NFL,
+  data: { sport: UrlPathFragments.NFL },
   children: [
     {
-      path: UrlFragments.Empty,
-      component: FootballHomeComponent,
-    },
-    {
-      path: UrlParams.LeagueId,
-      resolve: [FantasyFootballLeagueResolver],
+      path: UrlPathParams.Year,
       children: [
         {
-          path: UrlFragments.Empty,
-          component: FootballHomeComponent,
-        },
-        {
-          path: UrlFragments.FreeAgents,
-          resolve: [FantasyFootballFreeAgentsResolver],
+          path: UrlPathFragments.League,
           children: [
             {
-              path: UrlFragments.Empty,
-              component: FootballFreeAgentsComponent,
-            },
-          ],
-        },
-        {
-          path: UrlFragments.Team,
-          children: [
-            {
-              path: UrlFragments.Empty,
-              component: FootballHomeComponent,
-            },
-            {
-              path: UrlParams.TeamId,
-              component: FootballTeamComponent,
+              path: UrlPathParams.LeagueId,
+              resolve: [FantasyFootballLeagueResolver],
+              children: [
+                {
+                  path: UrlPathFragments.Empty,
+                  component: FootballHomeComponent,
+                },
+                {
+                  path: UrlPathFragments.Team,
+                  children: [
+                    {
+                      path: UrlPathParams.TeamId,
+                      children: [
+                        {
+                          path: UrlPathFragments.Empty,
+                          component: FootballTeamComponent,
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  path: UrlPathFragments.FreeAgents,
+                  resolve: [FantasyFootballFreeAgentsResolver],
+                  children: [
+                    {
+                      path: UrlPathFragments.Empty,
+                      component: FootballFreeAgentsComponent,
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },
       ],
     },
   ],
+
+  //   data: { sport: UrlPathFragments.NFL },
+  //   // canActivate: [AuthenticationGuard],
+  //   children: [
+  //     {
+  //       path: UrlPathFragments.Empty,
+  //       component: FootballHomeComponent,
+  //     },
+  //     {
+  //       path: UrlPathParams.LeagueId,
+  //       resolve: [FantasyFootballLeagueResolver],
+  //       children: [
+  //         {
+  //           path: UrlPathFragments.Empty,
+  //           component: FootballHomeComponent,
+  //         },
+  //         {
+  //           path: UrlPathFragments.FreeAgents,
+  //           resolve: [FantasyFootballFreeAgentsResolver],
+  //           children: [
+  //             {
+  //               path: UrlPathFragments.Empty,
+  //               component: FootballFreeAgentsComponent,
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           path: UrlPathFragments.Team,
+  //           children: [
+  //             {
+  //               path: UrlPathFragments.Empty,
+  //               component: FootballHomeComponent,
+  //             },
+  //             {
+  //               path: UrlPathParams.TeamId,
+  //               component: FootballTeamComponent,
+  //             },
+  //           ],
+  //         },
+  //       ],
+  //     },
+  //   ],
 };
 
 const mlbRoutes = {
-  path: UrlFragments.MLB,
-  data: { sport: UrlFragments.MLB },
+  path: UrlPathFragments.MLB,
+  data: { sport: UrlPathFragments.MLB },
   children: [
     {
-      path: UrlFragments.Empty,
+      path: UrlPathFragments.Empty,
       component: BaseballHomeComponent,
     },
     {
-      path: UrlParams.LeagueId,
+      path: UrlPathParams.LeagueId,
       resolve: [FantasyBaseballResolver],
       children: [
         {
-          path: UrlFragments.Empty,
+          path: UrlPathFragments.Empty,
           component: BaseballHomeComponent,
         },
         {
-          path: UrlFragments.FreeAgents,
+          path: UrlPathFragments.FreeAgents,
           children: [
             {
-              path: UrlFragments.Empty,
+              path: UrlPathFragments.Empty,
               component: BaseballFreeAgentsComponent,
             },
           ],
         },
         {
-          path: UrlFragments.Team,
+          path: UrlPathFragments.Team,
           children: [
             {
-              path: UrlFragments.Empty,
+              path: UrlPathFragments.Empty,
               component: BaseballTeamComponent,
             },
             {
-              path: UrlParams.TeamId,
+              path: UrlPathParams.TeamId,
               component: BaseballTeamComponent,
             },
           ],
@@ -103,12 +150,12 @@ const mlbRoutes = {
 
 export const routes: Routes = [
   {
-    path: UrlFragments.Empty,
+    path: UrlPathFragments.Empty,
     component: EspnHomeComponent,
   },
   nflRoutes,
   mlbRoutes,
-  { path: '**', redirectTo: UrlFragments.Empty, pathMatch: 'full' },
+  // { path: '**', redirectTo: UrlPathFragments.Empty, pathMatch: 'full' },
 ];
 
 @NgModule({

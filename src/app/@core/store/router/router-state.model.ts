@@ -1,8 +1,11 @@
-import { Params } from '@angular/router';
+import { ActivatedRouteSnapshot, Params } from '@angular/router';
 
 export interface RouterStateModel {
-  url: string;
-  params: Params;
-  queryParams: Params;
-  data: any;
+  state?: {
+    url: string;
+    params: any;
+    queryParams: Params;
+    snapshot: ActivatedRouteSnapshot;
+    data: any;
+  };
 }

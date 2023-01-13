@@ -1,35 +1,76 @@
-import { Params } from '@angular/router';
+import { ActivatedRouteSnapshot, Params } from '@angular/router';
 import { exists, objectIsEmpty } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
-import { RouterState, RouterStateModel as RouterStateOuterModel } from '@ngxs/router-plugin';
+// import { RouterState, RouterStateModel as RouterStateOuterModel } from '@ngxs/router-plugin';
 import { RouterStateModel } from './router-state.model';
-import { UrlFragments } from './url-builder';
+import { RouterState } from './router.state';
+import { UrlPathFragments } from './url-builder';
 
 export class RouterSelector {
   constructor() {}
 
   @Selector([RouterState])
-  static getRouterStateRoot({ state }: RouterStateOuterModel<RouterStateModel>) {
-    return state;
+  static getRouterStateRoot(state: RouterStateModel) {
+    return state.state;
   }
 
   @Selector([RouterSelector.getRouterStateRoot])
-  static getRouterUrl(state: RouterStateModel | undefined) {
+  static getRouterUrl(
+    state:
+      | {
+          url: string;
+          params: Params | undefined;
+          queryParams: Params;
+          snapshot: ActivatedRouteSnapshot;
+          data: { reuse: boolean; sport: UrlPathFragments };
+        }
+      | undefined
+  ) {
     return state?.url;
   }
 
   @Selector([RouterSelector.getRouterStateRoot])
-  static getRouterParams(state: RouterStateModel | undefined) {
+  static getRouterParams(
+    state:
+      | {
+          url: string;
+          params: Params | undefined;
+          queryParams: Params;
+          snapshot: ActivatedRouteSnapshot;
+          data: { reuse: boolean; sport: UrlPathFragments };
+        }
+      | undefined
+  ) {
     return state?.params;
   }
 
   @Selector([RouterSelector.getRouterStateRoot])
-  static getRouterData(state: RouterStateModel | undefined) {
+  static getRouterData(
+    state:
+      | {
+          url: string;
+          params: Params | undefined;
+          queryParams: Params;
+          snapshot: ActivatedRouteSnapshot;
+          data: { reuse: boolean; sport: UrlPathFragments };
+        }
+      | undefined
+  ) {
     return state?.data;
   }
 
   @Selector([RouterSelector.getRouterStateRoot])
-  static getRouterQueryParams(state: RouterStateModel | undefined) {
+  static getRouterQueryParams(
+    state:
+      | {
+          url: string;
+          params: Params | undefined;
+          queryParams: Params;
+          snapshot: ActivatedRouteSnapshot;
+          data: { reuse: boolean; sport: UrlPathFragments };
+        }
+      | undefined
+  ) {
     return state?.queryParams;
   }
 
@@ -44,11 +85,16 @@ export class RouterSelector {
   }
 
   @Selector([RouterSelector.getRouterData])
-  static getSport(params: any) {
-    if (!exists(params) || !exists(params.sport)) {
-      return;
+  static getSport(data: { reuse: boolean; sport: UrlPathFragments } | undefined) {
+    if (!exists(data) || !exists(data.sport)) {
+      return null;
     }
-    return params.sport;
+    return data.sport;
+  }
+
+  @Selector([RouterSelector.getRouterParams])
+  static getSeason(params: Params | undefined) {
+    return objectIsEmpty(params) ? null : (params?.year as string);
   }
 
   @Selector([RouterSelector.getRouterQueryParams])
@@ -75,6 +121,6 @@ export class RouterSelector {
 
   @Selector([RouterSelector.getRouterUrl, RouterSelector.getLeagueId])
   static showEspnNavigation(url: string, leagueId: string | null) {
-    return url.split('/')[1] === UrlFragments.Espn && exists(leagueId);
+    return url.split('/')[1] === UrlPathFragments.Espn && exists(leagueId);
   }
 }

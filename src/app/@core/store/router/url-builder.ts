@@ -1,46 +1,46 @@
 export class UrlBuilder {
   static get baseUrl() {
-    return UrlFragments.Empty;
+    return UrlPathFragments.Empty;
   }
 
   static get espnBaseUrl() {
-    return UrlFragments.Espn;
+    return UrlPathFragments.Espn;
   }
 
   static get dfsBase() {
-    return UrlFragments.Dfs;
+    return UrlPathFragments.Dfs;
   }
 
-  static dfsSlates(sport: UrlFragments, site: string) {
+  static dfsSlates(sport: UrlPathFragments, site: string) {
     return [UrlBuilder.dfsBase];
   }
 
   static get dfsMlbBase() {
-    return `${UrlFragments.Dfs}/${UrlFragments.MLB}`;
+    return `${UrlPathFragments.Dfs}/${UrlPathFragments.MLB}`;
   }
 
   static get dfsNflBase() {
-    return `${UrlFragments.Dfs}/${UrlFragments.NFL}`;
+    return `${UrlPathFragments.Dfs}/${UrlPathFragments.NFL}`;
   }
 
   static get espnMlbBase() {
-    return `${UrlBuilder.espnBaseUrl}/${UrlFragments.MLB}`;
+    return `${UrlBuilder.espnBaseUrl}/${UrlPathFragments.MLB}`;
   }
 
   static get espnNflBase() {
-    return `${UrlBuilder.espnBaseUrl}/${UrlFragments.NFL}`;
+    return `${UrlBuilder.espnBaseUrl}/${UrlPathFragments.NFL}`;
   }
 
-  public static espnLeague(sport: UrlFragments, leagueId: string | null) {
+  public static espnLeague(sport: UrlPathFragments, leagueId: string | null) {
     return [UrlBuilder.espnBaseUrl, sport, leagueId];
   }
 
-  public static espnFreeAgents(sport: UrlFragments, leagueId: string | null) {
-    return [UrlBuilder.espnBaseUrl, sport, leagueId, UrlFragments.FreeAgents];
+  public static espnFreeAgents(sport: UrlPathFragments, leagueId: string | null) {
+    return [UrlBuilder.espnBaseUrl, sport, leagueId, UrlPathFragments.FreeAgents];
   }
 
-  public static espnNflTeam(sport: UrlFragments, leagueId: string | null, teamId: string | null) {
-    return [UrlBuilder.espnBaseUrl, sport, leagueId, UrlFragments.Team, teamId];
+  public static espnNflTeam(sport: UrlPathFragments, leagueId: string | null, teamId: string | null) {
+    return [UrlBuilder.espnBaseUrl, sport, leagueId, UrlPathFragments.Team, teamId];
   }
 
   public static espnMlbLeague(leagueId: string | null) {
@@ -48,11 +48,11 @@ export class UrlBuilder {
   }
 
   public static espnMlbLeagueFreeAgents(leagueId: string | null) {
-    return [UrlBuilder.espnMlbBase, leagueId, UrlFragments.FreeAgents];
+    return [UrlBuilder.espnMlbBase, leagueId, UrlPathFragments.FreeAgents];
   }
 
   public static espnMlbLeagueTeam(leagueId: string | null, teamId: string | null) {
-    return [UrlBuilder.espnMlbBase, leagueId, UrlFragments.Team, teamId];
+    return [UrlBuilder.espnMlbBase, leagueId, UrlPathFragments.Team, teamId];
   }
 
   public static espnNflLeague(leagueId: string | null) {
@@ -60,23 +60,26 @@ export class UrlBuilder {
   }
 
   public static espnNflLeagueTeam(leagueId: string | null, teamId: string | null) {
-    return [UrlBuilder.espnNflBase, leagueId, UrlFragments.Team, teamId];
+    return [UrlBuilder.espnNflBase, leagueId, UrlPathFragments.Team, teamId];
   }
 }
 
-export enum UrlFragments {
+export enum UrlPathFragments {
   Dfs = 'daily-fantasy',
   Empty = '',
   Espn = 'espn',
   Game = 'game',
+  League = 'league',
   MLB = 'mlb',
   NFL = 'nfl',
   Team = 'team',
   FreeAgents = 'free-agents',
   MyProfile = 'my-profile',
+  Year = 'year',
 }
 
-export enum UrlParams {
+export enum UrlPathParams {
+  Year = ':year',
   GameId = ':gameId',
   LeagueId = ':leagueId',
   Sport = ':sport',
@@ -90,6 +93,6 @@ export enum UrlQueryParams {
 }
 
 export const SportToUrlFragmentSportMap = {
-  ffl: UrlFragments.NFL,
-  flb: UrlFragments.MLB,
+  ffl: UrlPathFragments.NFL,
+  flb: UrlPathFragments.MLB,
 };
