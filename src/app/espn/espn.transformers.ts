@@ -36,17 +36,16 @@ export namespace EspnTransformers {
 
   export function clientLeagueToLeague(league: EspnClient.League): FantasyLeague {
     const { id, seasonId, scoringPeriodId, status, settings, transactions } = league;
-    const { matchupPeriodCount, playoffMatchupPeriodLength } = settings.scheduleSettings;
+    const { matchupPeriodCount } = settings.scheduleSettings;
     const { firstScoringPeriod, finalScoringPeriod } = status;
 
     return {
       id: id.toString(),
       seasonId: seasonId.toString(),
-      scoringPeriodId,
-      firstScoringPeriod,
-      finalScoringPeriod,
-      matchupPeriodCount,
-      playoffMatchupPeriodLength,
+      scoringPeriodId: scoringPeriodId.toString(),
+      firstScoringPeriod: firstScoringPeriod.toString(),
+      finalScoringPeriod: finalScoringPeriod.toString(),
+      matchupPeriodCount: matchupPeriodCount.toString(),
       transactions,
     };
   }
@@ -75,35 +74,29 @@ export namespace EspnTransformers {
     }[];
   } {
     const { sport, leagueId, teamMap, positionMap } = opts;
-    const { proTeamId, defaultPositionId, injuryStatus, injured, outlooks, id } = playerInfo;
-
-    const percentOwned = playerInfo?.ownership ? playerInfo?.ownership.percentOwned : 0;
-    const percentChange = playerInfo?.ownership ? playerInfo?.ownership.percentChange : 0;
-    const percentStarted = playerInfo?.ownership ? playerInfo?.ownership.percentStarted : 0;
+    const { proTeamId, defaultPositionId, injuryStatus, injured, outlooks, id, fullName, stats, ownership } = playerInfo;
 
     const league = LeagueNameByEspnClient[leagueId];
-
     const team = teamMap[proTeamId] as string;
-    const stats = flattenPlayerStats(playerInfo.stats);
-
+    const flatStats = flattenPlayerStats(stats);
     const outlookByWeek = clientPlayerOutlook(outlooks);
 
     return {
       id: id.toString(),
-      name: playerInfo.fullName,
+      name: fullName,
       teamId: proTeamId.toString(),
       teamUid: transformIdToUid(sport, leagueId, proTeamId),
       position: positionMap[defaultPositionId].abbrev,
       img: headshotImgBuilder(id, { league }),
       injured,
-      stats,
+      stats: flatStats,
       team,
       injuryStatus,
       defaultPositionId,
       outlookByWeek,
-      percentOwned,
-      percentChange,
-      percentStarted,
+      percentOwned: ownership ? ownership.percentOwned : 0,
+      percentChange: ownership ? ownership.percentChange : 0,
+      percentStarted: ownership ? ownership.percentStarted : 0,
     };
   }
 

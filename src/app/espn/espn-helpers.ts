@@ -45,41 +45,43 @@ export function teamColorHandler(val: EspnFastcastClient.CompetitorsEntity): str
   const color = val.color;
   const altColor = val.alternateColor;
 
-  if (!exists(color) || !exists(altColor)) {
+  if (!color || !altColor) {
     return null;
   }
 
   const negativeColors = new Set(['ffffff', 'ffff00', 'fcee33', 'fafafc', 'cccccc', 'ffdc02']);
 
-  if (negativeColors.has(color.toLocaleLowerCase()) && negativeColors.has(altColor.toLocaleLowerCase())) {
+  if (negativeColors.has(color.toLowerCase()) && negativeColors.has(altColor.toLowerCase())) {
     return '#445058';
   }
 
-  if (negativeColors.has(color.toLocaleLowerCase())) {
-    return `#${altColor}`;
-  }
-
-  return `#${color}`;
+  return negativeColors.has(color.toLowerCase()) ? `#${altColor}` : `#${color}`;
 }
 
 /**
  * Simple string concat to format football situation
- * @param downDistanceText
- * @param possessionText
  *
- * @returns Ex: 1st and 10, NE 25
+ * @param {string | null} downDistanceText
+ * @param {string | null} possessionText
+ *
+ * @returns {string | null}
+ *
+ * @example transformDownDistancePositionText('1st and 10', 'NE 25') // returns 1st and 10, NE 25
+ *
  */
-export function transformDownDistancePositionText(downDistanceText: null, possessionText: null): null;
-export function transformDownDistancePositionText(downDistanceText: string, possessionText: string): string;
 export function transformDownDistancePositionText(downDistanceText: string | null, possessionText: string | null): string | null {
-  if (downDistanceText && possessionText) {
-    return `${downDistanceText}, ${possessionText}`;
+  if (!downDistanceText || !possessionText) {
+    return null;
   }
-  return null;
+  return `${downDistanceText}, ${possessionText}`;
 }
 
-export function transformUidToId(uid: null): null;
-export function transformUidToId(uid: string): string;
+/**
+ * Transforms uid string to id
+ *
+ * @param uid
+ * @returns
+ */
 export function transformUidToId(uid: string | null): string | null {
   if (!uid) return null;
   return uid.split('~')[1].replace('l:', '');
