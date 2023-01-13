@@ -3,7 +3,7 @@ export namespace FantasyFootballLeague {
 
   export class Fetch {
     public static readonly type = `[${name}]  FetchFootballLeague`;
-    constructor(public payload: { leagueId: string }) {}
+    constructor(public payload: { leagueId: string; year: string }) {}
   }
 
   export class Refresh {
@@ -12,6 +12,6 @@ export namespace FantasyFootballLeague {
 
   export class SetCurrentScoringPeriodId {
     public static readonly type = `[${name}] SetCurrentScoringPeriodId`;
-    constructor(public payload: { scoringPeriodId: number | null }) {}
+    constructor(public payload: { scoringPeriodId: string | null }) {}
   }
 }

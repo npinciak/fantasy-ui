@@ -1,6 +1,7 @@
 import { Selector } from '@app/@shared/models/typed-selector';
-import { FOOTBALL_STAT_PERIOD_FILTER_OPTIONS, YearToStatTypePeriod } from '@app/espn/const/stat-period.const';
+import { YearToScoringPeriodId } from '@app/espn/const/stat-period.const';
 import { StatTypePeriodId } from '@app/espn/models/espn-stats.model';
+import { FootballScoringPeriod } from '../fantasy-football-scoring-period';
 import { FantasyFootballLeagueStateModel } from '../models/football-league-state.model';
 import { FootballTeam } from '../models/football-team.model';
 import { FantasyFootballLeagueState } from '../state/fantasy-football-league.state';
@@ -14,7 +15,7 @@ export class FantasyFootballLeagueSelectors {
 
   @Selector([FantasyFootballLeagueState])
   static getLeagueId(state: FantasyFootballLeagueStateModel) {
-    return state.leagueId;
+    return state.id;
   }
 
   @Selector([FantasyFootballLeagueState.getState])
@@ -48,18 +49,22 @@ export class FantasyFootballLeagueSelectors {
   }
 
   @Selector([FantasyFootballLeagueSelectors.getCurrentScoringPeriodId])
-  static getCurrentStatTypePeriod(getCurrentScoringPeriodId: number | null) {
-    return YearToStatTypePeriod({
+  static getCurrentStatTypePeriod(getCurrentScoringPeriodId: string | null) {
+    return YearToScoringPeriodId({
       periodType: StatTypePeriodId.ProjectedWeek,
       dateObj: new Date(),
-      week: getCurrentScoringPeriodId ? getCurrentScoringPeriodId : 0,
+      week: getCurrentScoringPeriodId ? getCurrentScoringPeriodId : '0',
     });
   }
 
-  @Selector([FantasyFootballLeagueSelectors.getCurrentScoringPeriodId, FantasyFootballLeagueSelectors.getCurrentStatTypePeriod])
-  static scoringPeriodFilters(week: number, currentScoringPeriodId: string) {
+  @Selector([
+    FantasyFootballLeagueSelectors.getSeasonId,
+    FantasyFootballLeagueSelectors.getCurrentScoringPeriodId,
+    FantasyFootballLeagueSelectors.getCurrentStatTypePeriod,
+  ])
+  static scoringPeriodFilters(seasonId: string | null, week: string | null, currentScoringPeriodId: string) {
     return [
-      ...FOOTBALL_STAT_PERIOD_FILTER_OPTIONS,
+      ...FootballScoringPeriod.filterOptionList(seasonId!.toString() ?? new Date().getFullYear()),
       {
         value: currentScoringPeriodId,
         label: `Proj Week ${week}`,

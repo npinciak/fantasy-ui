@@ -19,15 +19,23 @@ export class FantasyFootballLeagueFacade {
 
   constructor(private store: Store) {}
 
-  getLeague(leagueId: string): Observable<void> {
-    return this.store.dispatch(new FantasyFootballLeague.Fetch({ leagueId }));
+  get seasonId() {
+    return this.store.selectSnapshot(FantasyFootballLeagueSelectors.getSeasonId);
+  }
+
+  get leagueId() {
+    return this.store.selectSnapshot(FantasyFootballLeagueSelectors.getLeagueId);
+  }
+
+  getLeague(leagueId: string, year: string): Observable<void> {
+    return this.store.dispatch(new FantasyFootballLeague.Fetch({ leagueId, year }));
   }
 
   refreshCurrentLeague(): Observable<void> {
     return this.store.dispatch(new FantasyFootballLeague.Refresh());
   }
 
-  updateCurrentScoringPeriodId(scoringPeriodId: number) {
+  updateCurrentScoringPeriodId(scoringPeriodId: string) {
     return this.store.dispatch(new FantasyFootballLeague.SetCurrentScoringPeriodId({ scoringPeriodId }));
   }
 }
