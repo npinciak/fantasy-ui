@@ -4,9 +4,8 @@ import {
   TableColumnDataType,
   transformTableColumnsToTableRows,
 } from '@app/@shared/models/table-columns.model';
-import { FootballLineupSlot, NFL_STATS_MAP } from 'sports-ui-sdk';
+import { FootballLineupSlot, FootballStat, NFL_STATS_MAP } from 'sports-ui-sdk';
 import { FootballPosition } from '../models/football-position.model';
-import { FootballStat } from '../models/football-stats.model';
 import { FootballTeam } from '../models/football-team.model';
 
 const LEAGUE_STANDINGS_COLUMNS: BaseTableColumn<FootballTeam>[] = [
