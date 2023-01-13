@@ -1,7 +1,5 @@
 import { FilterOptions } from '@app/@shared/models/filter.model';
-import { enumAsList, EspnClient } from 'sports-ui-sdk';
-
-import { NFL_POSITION_MAP } from '../consts/position.const';
+import { enumAsList, EspnClient, NFL_POSITION_MAP } from 'sports-ui-sdk';
 
 export const FOOTBALL_POSITION_LIST = enumAsList(EspnClient.FootballPosition);
 export const FOOTBALL_POSITION_LIST_DEFAULT = [

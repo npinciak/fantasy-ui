@@ -1,9 +1,8 @@
 import { exists } from '@app/@shared/helpers/utils';
-import { EspnClient, FootballLineup, NFL_TEAM_MAP } from 'sports-ui-sdk';
+import { EspnClient, FootballLineup, NFL_POSITION_MAP, NFL_TEAM_MAP } from 'sports-ui-sdk';
 import { headshotImgBuilder, logoImgBuilder } from '../espn.const';
 import { EspnTransformers } from '../espn.transformers';
 import { FantasyLeague } from '../models/fantasy-league.model';
-import { NFL_POSITION_MAP } from './consts/position.const';
 import { FootballLeague } from './models/fantasy-football-league.model';
 import { FootballPlayer, FootballPlayerFreeAgent } from './models/football-player.model';
 import { FootballTeam } from './models/football-team.model';
