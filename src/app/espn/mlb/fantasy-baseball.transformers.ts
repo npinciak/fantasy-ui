@@ -1,11 +1,10 @@
 import { exists } from '@app/@shared/helpers/utils';
-import { EspnClient, MLB_TEAM_MAP,MLB_LINEUP_MAP } from 'sports-ui-sdk';
+import { EspnClient, MLB_LINEUP_MAP, MLB_POSITION_MAP, MLB_TEAM_MAP } from 'sports-ui-sdk';
 
 import { isPitcher } from '../espn-helpers';
 import { EspnTransformers } from '../espn.transformers';
 import { FantasyLeague } from '../models/fantasy-league.model';
 
-import { MLB_POSITION_MAP } from './consts/position.const';
 import { BaseballEvent } from './models/baseball-event.model';
 import { BaseballLeague } from './models/baseball-league.model';
 import { BaseballPlayer } from './models/baseball-player.model';
@@ -13,16 +12,11 @@ import { BaseballTeam, BaseballTeamLive } from './models/baseball-team.model';
 
 export namespace FantasyBaseballTransformers {
   export function clientEventToBaseballEvent(event: EspnClient.EventEntity): BaseballEvent {
-    const { id, uid } = event;
-
+    const { id, uid, competitors } = event;
     return {
       id,
       uid,
-      competitors: event.competitors.reduce((acc, val) => {
-        const { id, homeAway, abbreviation } = val;
-        acc[val.id] = { id, homeAway, abbreviation };
-        return acc;
-      }, {}),
+      competitors: competitors.reduce((acc, val) => ({ ...acc, [val.id]: { ...val } }), {}),
     };
   }
 
