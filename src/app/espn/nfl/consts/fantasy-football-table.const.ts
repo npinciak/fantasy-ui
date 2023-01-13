@@ -4,8 +4,7 @@ import {
   TableColumnDataType,
   transformTableColumnsToTableRows,
 } from '@app/@shared/models/table-columns.model';
-import { NFL_STATS_MAP } from 'sports-ui-sdk';
-import { FootballLineupSlot } from '../models/football-lineup.model';
+import { FootballLineupSlot, NFL_STATS_MAP } from 'sports-ui-sdk';
 import { FootballPosition } from '../models/football-position.model';
 import { FootballStat } from '../models/football-stats.model';
 import { FootballTeam } from '../models/football-team.model';

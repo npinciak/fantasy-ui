@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FOOTBALL_STAT_PERIOD_FILTER_OPTIONS } from '@app/espn/const/stat-period.const';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FootballLineup, NFL_STATS_MAP } from 'sports-ui-sdk';
+import { BasicFootballLineupSlotFilterOptions, FootballLineupSlot, FOOTBALL_LINEUP_MAP, NFL_STATS_MAP } from 'sports-ui-sdk';
 import { FootballTableColumns } from '../../consts/fantasy-football-table.const';
 import { FOOTBALL_STATS_FILTER } from '../../consts/stats-filters.const';
 import { FantasyFootballFreeAgentsFilterFacade } from '../../facade/fantasy-football-free-agents-filter.facade';
 import { FantasyFootballFreeAgentsFacade } from '../../facade/fantasy-football-free-agents.facade';
 import { FantasyFootballLeagueFacade } from '../../facade/fantasy-football-league.facade';
 import { FantasyFootballTeamFacade } from '../../facade/fantasy-football-team.facade';
-import { BasicFootballLineupSlotFilterOptions, FootballLineupSlot } from '../../models/football-lineup.model';
 
 @Component({
   selector: 'app-football-free-agents',
@@ -18,7 +17,7 @@ import { BasicFootballLineupSlotFilterOptions, FootballLineupSlot } from '../../
 export class FootballFreeAgentsComponent implements OnInit {
   readonly FOOTBALL_STATS_MAP = NFL_STATS_MAP;
   readonly FOOTBALL_STAT_PERIOD_FILTER_OPTIONS = FOOTBALL_STAT_PERIOD_FILTER_OPTIONS;
-  readonly FOOTBALL_LINEUP_SLOT_MAP = FootballLineup.LineupSlotMap;
+  readonly FOOTBALL_LINEUP_SLOT_MAP = FOOTBALL_LINEUP_MAP;
   readonly LINEUP_SLOTS = BasicFootballLineupSlotFilterOptions;
   readonly FOOTBALL_STATS_FILTER = FOOTBALL_STATS_FILTER;
 

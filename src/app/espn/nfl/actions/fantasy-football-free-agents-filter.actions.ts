@@ -1,6 +1,4 @@
-import { EspnClient } from 'sports-ui-sdk';
-
-import { FootballLineupSlot } from '../models/football-lineup.model';
+import { EspnClient, FootballLineupSlot } from 'sports-ui-sdk';
 
 const name = 'fantasyFootballFreeAgentsFilter';
 

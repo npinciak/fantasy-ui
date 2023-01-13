@@ -3,7 +3,7 @@ import { exists } from '@app/@shared/helpers/utils';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { benchPlayersFilter, injuredReservePlayersFilter, startingPlayersFilter } from '@app/espn/espn-helpers';
-import { EspnClient, FootballLineup } from 'sports-ui-sdk';
+import { EspnClient, FOOTBALL_LINEUP_MAP } from 'sports-ui-sdk';
 import { FootballPlayer } from '../models/football-player.model';
 import { FootballTeam } from '../models/football-team.model';
 
@@ -26,7 +26,7 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
 
   @Selector([FantasyFootballTeamSelectors.getRosterByTeamId])
   static getTeamStarters(getRosterByTeamId: (id: string | null) => FootballPlayer[]): (id: string | null) => FootballPlayer[] {
-    return (id: string | null) => startingPlayersFilter(getRosterByTeamId(id), FootballLineup.LineupSlotMap);
+    return (id: string | null) => startingPlayersFilter(getRosterByTeamId(id), FOOTBALL_LINEUP_MAP);
   }
 
   // @Selector([FantasyFootballLeagueSelectors.getCurrentStatTypePeriod, FantasyFootballTeamSelectors.getTeamStarters])
@@ -61,7 +61,7 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
 
   @Selector([FantasyFootballTeamSelectors.getRosterByTeamId])
   static getTeamBench(getRosterByTeamId: (id: string | null) => FootballPlayer[]): (id: string | null) => FootballPlayer[] {
-    return (id: string | null) => benchPlayersFilter(getRosterByTeamId(id), FootballLineup.LineupSlotMap);
+    return (id: string | null) => benchPlayersFilter(getRosterByTeamId(id), FOOTBALL_LINEUP_MAP);
   }
 
   @Selector([FantasyFootballTeamSelectors.getTeamBench])
@@ -99,7 +99,7 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
       const teamPositionCount = {};
 
       getRosterByTeamId(id).map(p => {
-        const position = FootballLineup.LineupSlotMap[p.defaultPositionId].abbrev;
+        const position = FOOTBALL_LINEUP_MAP[p.defaultPositionId].abbrev;
 
         if (position in teamPositionCount) {
           teamPositionCount[position]++;

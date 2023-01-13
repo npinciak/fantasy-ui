@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EspnClient, LineupSlot } from 'sports-ui-sdk';
+import { BaseballLineupSlot, EspnClient } from 'sports-ui-sdk';
 
 import { Action, State, StateContext, StateOperator } from '@ngxs/store';
 
@@ -25,7 +25,7 @@ export class ToggleStatIds {
 
 export class ToggleLineupSlotIds {
   static readonly type = '[fantasyBaseballFreeAgentsFilter] ToggleLineupSlotIds';
-  constructor(public payload: { lineupSlotIds: LineupSlot[] }) {}
+  constructor(public payload: { lineupSlotIds: BaseballLineupSlot[] }) {}
 }
 
 export class RemovePlayerAvailabilityStatus {
@@ -40,12 +40,12 @@ export class RemoveScoringPeriodIds {
 
 export class RemoveLineupSlotIds {
   static readonly type = '[fantasyBaseballFreeAgentsFilter] RemoveLineupSlotIds';
-  constructor(public payload: { lineupSlotIds: LineupSlot[] }) {}
+  constructor(public payload: { lineupSlotIds: BaseballLineupSlot[] }) {}
 }
 
 export interface FantasyBaseballFreeAgentsFilterStateModel {
   availabilityStatus: { [key in EspnClient.FreeAgentAvailabilityStatus]: boolean };
-  lineupSlotIds: { [key in LineupSlot]: boolean };
+  lineupSlotIds: { [key in BaseballLineupSlot]: boolean };
   topScoringPeriodIds: { [id: string]: boolean };
   sortStatId: { [id: string]: boolean };
   sortDirection: string;

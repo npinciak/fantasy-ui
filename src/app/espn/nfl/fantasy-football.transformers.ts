@@ -1,5 +1,5 @@
 import { exists } from '@app/@shared/helpers/utils';
-import { EspnClient, FootballLineup, NFL_POSITION_MAP, NFL_TEAM_MAP } from 'sports-ui-sdk';
+import { EspnClient, FOOTBALL_LINEUP_MAP, NFL_POSITION_MAP, NFL_TEAM_MAP } from 'sports-ui-sdk';
 import { headshotImgBuilder, logoImgBuilder } from '../espn.const';
 import { EspnTransformers } from '../espn.transformers';
 import { FantasyLeague } from '../models/fantasy-league.model';
@@ -42,7 +42,7 @@ export namespace FantasyFootballTransformers {
       ...playerInfo,
       lineupSlotId,
       img: !isDST ? headshotImgBuilder(player.playerId, { league }) : logoImgBuilder(playerInfo.team, { league, height: 40, width: 54 }),
-      lineupSlot: FootballLineup.LineupSlotMap[player.lineupSlotId].abbrev,
+      lineupSlot: FOOTBALL_LINEUP_MAP[player.lineupSlotId].abbrev,
       points: player.playerPoolEntry.appliedStatTotal,
     };
   }
@@ -91,7 +91,7 @@ export namespace FantasyFootballTransformers {
         ...playerInfo,
         img: !isDST ? headshotImgBuilder(p.id, { league }) : logoImgBuilder(playerInfo.team, { league, height: 40, width: 55 }),
         lineupSlotId: playerInfo.defaultPositionId,
-        lineupSlot: FootballLineup.LineupSlotMap[playerInfo.defaultPositionId].abbrev,
+        lineupSlot: FOOTBALL_LINEUP_MAP[playerInfo.defaultPositionId].abbrev,
         points: 0, // p.player.appliedStatTotal,
       };
     });
