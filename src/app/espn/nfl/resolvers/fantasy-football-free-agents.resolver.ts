@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { FantasyFootballFreeAgents } from '../actions/fantasy-football-free-agents.actions';
+import { FantasyFootballFreeAgentsFacade } from '../facade/fantasy-football-free-agents.facade';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FantasyFootballFreeAgentsResolver implements Resolve<void> {
-  constructor(private store: Store) {}
+  constructor(private store: Store, private freeAgentsFacade: FantasyFootballFreeAgentsFacade) {}
 
   async resolve(route: ActivatedRouteSnapshot): Promise<void> {
     const leagueId = route.paramMap.get('leagueId');
+    const season = route.paramMap.get('season');
 
-    if (leagueId) {
-      await this.store.dispatch(new FantasyFootballFreeAgents.Fetch({ leagueId })).toPromise();
+    if (leagueId && season) {
+      await this.freeAgentsFacade.fetchFreeAgents(leagueId, season);
     }
   }
 }

@@ -16,6 +16,6 @@ export namespace FantasyFootballFreeAgents {
 
   export class Fetch {
     static readonly type = `[${name}] Fetch`;
-    constructor(public payload: { leagueId: string }) {}
+    constructor(public payload: { leagueId: string; season: string }) {}
   }
 }

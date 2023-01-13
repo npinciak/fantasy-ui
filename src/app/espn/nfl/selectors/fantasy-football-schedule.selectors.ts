@@ -90,7 +90,7 @@ export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFoo
   }
 
   @Selector([FantasyFootballScheduleSelectors.matchupListByMatchupPeriodId])
-  static getMatchupListByMatchupPeriodId(matchupListByMatchupPeriodId: FantasyMatchupMap): (id: number | null) => FantasyMatchup[] {
-    return (id: number | null) => (exists(id) ? matchupListByMatchupPeriodId[id] : []);
+  static getMatchupListByMatchupPeriodId(matchupListByMatchupPeriodId: FantasyMatchupMap): (id: string | null) => FantasyMatchup[] {
+    return (id: string | null) => (exists(id) ? matchupListByMatchupPeriodId[id] : []);
   }
 }

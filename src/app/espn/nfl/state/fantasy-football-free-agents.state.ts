@@ -24,7 +24,7 @@ export class FantasyFootballFreeAgentsState extends GenericState({
   @Action(FantasyFootballFreeAgents.Fetch)
   async fetchFantasyFootballFreeAgents(
     { setState }: StateContext<GenericStateModel<FootballPlayer>>,
-    { payload: { leagueId } }: FantasyFootballFreeAgents.Fetch
+    { payload: { leagueId, season } }: FantasyFootballFreeAgents.Fetch
   ): Promise<void> {
     setState({ map: {} });
 

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { RouterSelector } from '@app/@core/store/router/router.selectors';
 import { Selector } from '@app/@shared/models/typed-selector';
-import { EspnClient } from 'sports-ui-sdk';
+import { EspnClient, FootballLineupSlot } from 'sports-ui-sdk';
 
+import { exists } from '@app/@shared/helpers/utils';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { SetLineupSlotId, SetPagination, TogglePlayerAvailabilityStatus } from '../actions/fantasy-football-free-agents-filter.actions';
 import { FantasyFootballFreeAgents } from '../actions/fantasy-football-free-agents.actions';
-import { FootballLineupSlot } from '../models/football-lineup.model';
 
 interface BaseFreeAgentFilterMetaData {
   sortStatId: string;
@@ -65,9 +65,13 @@ export class FantasyFootballFreeAgentsFilterState {
   @Action(SetLineupSlotId)
   setLineupSlotId({ patchState }: StateContext<FantasyFootballFreeAgentsFilterStateModel>, { payload: { lineupSlotId } }: SetLineupSlotId) {
     patchState({ lineupSlotId });
-    const leagueId = this.store.selectSnapshot(RouterSelector.getLeagueId) ?? '';
+    const leagueId = this.store.selectSnapshot(RouterSelector.getLeagueId);
+    const season = this.store.selectSnapshot(RouterSelector.getSeason);
 
-    this.store.dispatch(new FantasyFootballFreeAgents.Fetch({ leagueId }));
+    if (!exists(leagueId)) throw new Error('leagueId cannot be null');
+    if (!exists(season)) throw new Error('season cannot be null');
+
+    this.store.dispatch(new FantasyFootballFreeAgents.Fetch({ leagueId, season }));
   }
 
   @Action(TogglePlayerAvailabilityStatus)
