@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { SharedModule } from '@app/@shared/shared.module';
-import { SportsUiModule } from '@app/sports-ui/sports-ui.module';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
 import { EspnLineupCardComponent } from './components/espn-lineup-card/espn-lineup-card.component';
@@ -45,27 +44,6 @@ import { FantasyFootballTeamState } from './nfl/state/fantasy-football-teams.sta
 import { FantasyFootballTransactionState } from './nfl/state/fantasy-football-transaction.state';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 
-const states = [
-  FantasyFootballLeagueState,
-  FantasyFootballScheduleState,
-  FantasyFootballTeamState,
-  FantasyFootballFreeAgentsState,
-  FantasyFootballFreeAgentsFilterState,
-  FantasyFootballPlayerNewsState,
-  FantasyFootballTransactionState,
-  FantasyBaseballLeagueState,
-  FantasyBaseballTeamState,
-  FantasyBaseballTeamsLiveState,
-  FantasyBaseballFreeAgentsState,
-  FantasyBaseballFreeAgentsFilterState,
-  FantasyBaseballPlayerState,
-  FantasyBaseballEventsState,
-];
-
-const imports = [CommonModule, EspnRoutingModule, MaterialModule, SharedModule, SportsUiModule, NgxsModule.forFeature(states)];
-
-const exports = [StandingsComponent, RosterComponent];
-
 @NgModule({
   declarations: [
     EspnHomeComponent,
@@ -94,8 +72,29 @@ const exports = [StandingsComponent, RosterComponent];
     EspnStandingsTableComponent,
     EspnLineupCardComponent,
   ],
-  imports,
-  exports,
+  imports: [
+    NgxsModule.forFeature([
+      FantasyFootballLeagueState,
+      FantasyFootballScheduleState,
+      FantasyFootballTeamState,
+      FantasyFootballFreeAgentsState,
+      FantasyFootballFreeAgentsFilterState,
+      FantasyFootballPlayerNewsState,
+      FantasyFootballTransactionState,
+      FantasyBaseballLeagueState,
+      FantasyBaseballTeamState,
+      FantasyBaseballTeamsLiveState,
+      FantasyBaseballFreeAgentsState,
+      FantasyBaseballFreeAgentsFilterState,
+      FantasyBaseballPlayerState,
+      FantasyBaseballEventsState,
+    ]),
+    CommonModule,
+    EspnRoutingModule,
+    MaterialModule,
+    SharedModule,
+  ],
+  exports: [StandingsComponent, RosterComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class EspnModule {}
