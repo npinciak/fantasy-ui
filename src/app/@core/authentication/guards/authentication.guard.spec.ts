@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AuthenticationGuard } from './authentication.guard';
 
@@ -6,7 +7,9 @@ describe('AuthGuardGuard', () => {
   let guard: AuthenticationGuard;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [MatSnackBarModule],
+    });
     guard = TestBed.inject(AuthenticationGuard);
   });
 

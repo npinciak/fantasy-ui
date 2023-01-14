@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Action, State, StateContext } from '@ngxs/store';
+import { Action, State, StateContext, Store } from '@ngxs/store';
 import { FantasySports } from '../../espn/models/espn-endpoint-builder.model';
 import { SportsUiLeagueForm } from '../actions/sports-ui-league-form.actions';
 import { SportsUiLeagues } from '../actions/sports-ui-leagues.actions';
@@ -24,7 +24,7 @@ export interface SportsUiLeagueFormStateModel {
 })
 @Injectable()
 export class SportsUiLeagueFormState {
-  constructor() {}
+  constructor(private store: Store) {}
 
   @Action(SportsUiLeagueForm.SetLeagueSportValue)
   setSportValue(
@@ -62,8 +62,8 @@ export class SportsUiLeagueFormState {
   }
 
   @Action(SportsUiLeagueForm.Submit)
-  async submit({ dispatch }: StateContext<SportsUiLeagueFormStateModel>) {
-    await dispatch(new SportsUiLeagues.VerifyLeagues()).toPromise();
+  async submit({}: StateContext<SportsUiLeagueFormStateModel>) {
+    await this.store.dispatch(new SportsUiLeagues.VerifyLeagues()).toPromise();
     // dispatch([new CreateLeague()]);
   }
 }

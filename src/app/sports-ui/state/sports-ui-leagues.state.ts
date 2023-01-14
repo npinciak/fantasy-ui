@@ -20,20 +20,20 @@ export class SportsUiLeaguesState extends GenericState({
   }
 
   @Action(SportsUiLeagues.FetchLeagues)
-  async fetchEspnLeagues({ dispatch }: StateContext<GenericStateClass<SportsUiClientLeague>>): Promise<void> {
+  async fetchEspnLeagues({}: StateContext<GenericStateClass<SportsUiClientLeague>>): Promise<void> {
     const leagues = await this.leagueClientService.getAll();
-    dispatch([new SportsUiLeagues.ClearAndAddLeagues(leagues)]);
+    this.store.dispatch([new SportsUiLeagues.ClearAndAddLeagues(leagues)]);
   }
 
   @Action(SportsUiLeagues.DeleteLeague)
   async deleteEspnLeague(
-    { dispatch }: StateContext<GenericStateClass<SportsUiClientLeague>>,
+    {}: StateContext<GenericStateClass<SportsUiClientLeague>>,
     { payload: { leagueId } }: SportsUiLeagues.DeleteLeague
   ): Promise<void> {
     try {
       await this.leagueClientService.delete(leagueId);
     } catch (error) {}
-    dispatch([new SportsUiLeagues.FetchLeagues()]);
+    this.store.dispatch([new SportsUiLeagues.FetchLeagues()]);
   }
 
   @Action(SportsUiLeagues.CreateLeague)

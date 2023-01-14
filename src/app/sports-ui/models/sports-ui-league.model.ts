@@ -3,6 +3,7 @@ export interface SportsUiClientLeague {
   name: string;
   leagueId: string;
   sport: string;
+  season: string;
   createdAt: string;
   ownerId: string;
 }

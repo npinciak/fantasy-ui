@@ -25,7 +25,7 @@ export class AddLeagueFormComponent implements OnInit {
   @Output() sportChange = new EventEmitter<string>();
   @Output() addLeague = new EventEmitter<LeagueStorageMap>();
   @Output() removeLeague = new EventEmitter<string>();
-  @Output() navigateLeague = new EventEmitter<{ sport: SportLeague; leagueId: string }>();
+  @Output() navigateLeague = new EventEmitter<{ sport: SportLeague; leagueId: number }>();
 
   sportOption$ = this.leagueFormFacade.leagueSport$;
   fantasySportOptionList = [
@@ -58,7 +58,7 @@ export class AddLeagueFormComponent implements OnInit {
     this.leagueFormFacade.setLeagueId(val);
   }
 
-  onNavigate(fantasySport: FantasySports, leagueId: string): void {
+  onNavigate(fantasySport: FantasySports, leagueId: number): void {
     const sport = FantasySportToSportLeagueMap[fantasySport];
     this.navigateLeague.emit({ sport, leagueId });
   }

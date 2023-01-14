@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthenticationFormFacade } from '@app/@core/authentication/authentication-form/authentication-form.facade';
+import { AuthenticationService } from '@app/@core/authentication/services/authentication.service';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
-import { SportToUrlFragmentSportMap } from '@app/@core/store/router/url-builder';
 import { AddLeagueFormComponent } from '@app/sports-ui/components/add-league-form/add-league-form.component';
 import { USER_LEAGUE_HEADERS, USER_LEAGUE_ROWS } from '@app/sports-ui/components/leagues-table/leagues-table.const';
 import { SportsUiLeaguesFacade } from '@app/sports-ui/facades/sports-ui-leagues.facade';
@@ -28,7 +28,8 @@ export class MyProfileComponent implements OnInit {
     private sportsUiUserFacade: SportsUiUserFacade,
     private sportsUiLeaguesFacade: SportsUiLeaguesFacade,
     private authenticationFormFacade: AuthenticationFormFacade,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit(): void {}
@@ -46,14 +47,14 @@ export class MyProfileComponent implements OnInit {
   }
 
   onNavigateToLeague(val: SportsUiClientLeague) {
-    this.routerFacade.navigateToLeagueHome(SportToUrlFragmentSportMap[val.sport], val.leagueId);
+    this.routerFacade.navigateToFantasyLeagueHome(val.sport, val.season, val.leagueId);
   }
 
   onAddLeague(): void {
     this.dialog.open(AddLeagueFormComponent, { height: '500px', width: '800px' });
   }
 
-  onRemoveLeague(leagueId: string): void {
+  onRemoveLeague(leagueId: number): void {
     // this.sportsUiLeaguesFacade.deleteLeague(leagueId);
   }
 }

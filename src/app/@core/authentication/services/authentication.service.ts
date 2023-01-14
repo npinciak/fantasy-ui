@@ -27,11 +27,16 @@ export class AuthenticationService {
     this.supabase = createClient<Database>(environment.supaUrl, environment.supaKey);
   }
 
-  get session() {
-    this.supabase.auth.getSession().then(({ data }) => {
+  async getSession() {
+    await this.supabase.auth.getSession().then(({ data }) => {
       this._session = data.session;
     });
+
     return this._session;
+  }
+
+  get isLoggedIn(): boolean {
+    return this._session != null;
   }
 
   get user() {
@@ -39,6 +44,13 @@ export class AuthenticationService {
       this._user = data.user;
     });
     return this._user;
+  }
+
+  fetchUser() {
+    return this.supabase.auth.getUser().then(res => {
+      if (res.error) this.authErrorHandler(res.error);
+      return res.data;
+    });
   }
 
   signIn(email: string, password: string) {

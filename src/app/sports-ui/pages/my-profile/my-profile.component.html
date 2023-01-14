@@ -1,14 +1,31 @@
 <app-page-layout>
-  <div sidebar class="flex-col">
-    <app-login
-      [isFormValid]="isFormValid$ | async"
-      (signInClicked)="onSignIn()"
-      (passwordInputChanged)="passwordInputChange($event)"
-      (emailInputChanged)="emailInputChange($event)"
-    ></app-login>
-    <div>Email: {{ (userEmail$ | async) ?? 'No Email' }}</div>
-    <div>anotherfield</div>
-    <div>field</div>
+  <div sidebar class="flex-col gap-20">
+    <div>
+      <app-login
+        [isFormValid]="isFormValid$ | async"
+        (signInClicked)="onSignIn()"
+        (passwordInputChanged)="passwordInputChange($event)"
+        (emailInputChanged)="emailInputChange($event)"
+      ></app-login>
+    </div>
+    <div>
+      <mat-card>
+        <mat-card-content>
+          <div class="flex-col" style="align-items: center; text-align: center">
+            <!-- <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" style="border-radius: 50%" width="150" /> -->
+            <div class="mt-3">
+              <p>Email: {{ (userEmail$ | async) ?? 'No Email' }}</p>
+
+              <h4>John Doe</h4>
+              <p class="text-secondary mb-1">Full Stack Developer</p>
+              <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+              <button class="btn btn-primary">Follow</button>
+              <button class="btn btn-outline-primary">Message</button>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
   <div main class="flex-col gap-20">
     <app-leagues-table
