@@ -6,18 +6,20 @@ import { ApiService } from '@app/@shared/services/api.service';
 import { SlateMasterMap } from '@dfsClient/daily-fantasy-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DfsSiteToDfsSiteTypeMap } from 'sports-ui-sdk/lib/lib/dfs/site.const';
+import { DfsSiteToDfsSiteTypeMap } from 'sports-ui-sdk';
 import {
   ClientSlateAttributes,
   ClientSlatePlayerAttributesMap,
   ClientSlateStatGroups,
   ClientSlateTeamAttributes,
   ClientSlateTeamAttributesMap,
+  ClientWeather,
 } from '../../../dfs-client-models/daily-fantasy-client-slate-attr.model';
 import { MLBClientTeamAttributes } from '../../../dfs-client-models/mlb-client.model';
 import { DailyFantasyEndpointBuilder } from '../daily-fantasy-endpoint-builder';
 import { SlatePlayer } from '../models/slate-player.model';
 import { SlateTeam } from '../models/slate-team.model';
+import { Weather } from '../models/weather.model';
 import { PlayerProfilerSeasonMap } from '../nfl/models/nfl-profiler.model';
 import { DfsSlateHelpers } from '../slate.helpers';
 
@@ -104,6 +106,13 @@ export class SlateService {
     }));
   }
 
+  static transformWeather(games: Record<string, ClientWeather>): Weather[] {
+    return Object.entries(games).map(([id, game]) => ({
+      id,
+      ...game.weather,
+    }));
+  }
+
   slatesByDate(request: { sport: string }): Observable<SlateMasterMap> {
     this.endpointBuilder.sport = request.sport;
     return this.apiService.get<SlateMasterMap>(this.endpointBuilder.slateMaster);
@@ -121,6 +130,7 @@ export class SlateService {
         teams: SlateService.transformTeamSlateAttributes(res.teams),
         statGroups: SlateService.transformStatGroupsToProfiler(res?.stat_groups),
         players: SlateService.transformPlayerSlateAttributes(res.players, request.site),
+        weather: SlateService.transformWeather(res.games),
       }))
     );
   }
@@ -130,6 +140,7 @@ type SlateAttributes = {
   teams: SlateTeam[];
   players: SlatePlayer[];
   statGroups: PlayerProfilerSeasonMap | null;
+  weather: Weather[];
 };
 
 type DfsQueryParamAttributes = 'date' | 'site' | 'slate_id';

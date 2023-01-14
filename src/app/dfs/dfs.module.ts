@@ -24,6 +24,7 @@ import { DfsSlatePlayersState } from './state/dfs-players.state';
 import { DfsSlateAttributesState } from './state/dfs-slate-attr.state';
 import { DfsSlatesState } from './state/dfs-slates.state';
 import { DfsTeamsState } from './state/dfs-team.state';
+import { DfsWeatherState } from './state/dfs-weather.state';
 
 const states = [
   DfsSlatePlayersState,
@@ -41,6 +42,7 @@ const states = [
   DfsNflSlateTeamDetailsState,
   DfsNflProfilerQbState,
   DfsNflGridIronState,
+  DfsWeatherState,
 ];
 
 const declarations = [

@@ -6,6 +6,7 @@ export interface ClientSlateAttributes {
   stat_groups: ClientSlateStatGroups;
   players: Record<string, NFLClientPlayerAttributes | MLBClientPlayerAttributes>;
   teams: Record<string, NFLClientSlateAttrTeam | MLBClientSlateAttrTeam>;
+  games: Record<string, ClientWeather>;
 }
 
 type PlayerAttributes = 'stack_value' | 'top_value' | 'stack_leverage' | 'stack_field' | 'stack_diff';
@@ -26,6 +27,13 @@ export interface ClientSalaryDiff {
   rank_diff?: number;
   salary: string;
 }
+
+export type ClientWeather = {
+  weather: {
+    color: string;
+    description: string;
+  };
+};
 
 export type AttributesByDfsSite = Partial<{ [site in ClientSite]: string }>;
 

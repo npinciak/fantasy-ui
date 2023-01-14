@@ -3,6 +3,7 @@ import { RouterSelector } from '@app/@core/store/router/router.selectors';
 import { exists } from '@app/@shared/helpers/utils';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { DfsSlateAttributes } from '../actions/dfs-slate-attr.actions';
+import { DfsWeather } from '../actions/dfs-weather.actions';
 import { DfsMlbSlatePlayer } from '../mlb/actions/dfs-mlb-slate-player.actions';
 import { DfsMlbSlateTeamDetails } from '../mlb/actions/dfs-mlb-slate-team.actions';
 import { DfsNflGridIron } from '../nfl/actions/dfs-nfl-grid-iron.actions';
@@ -49,12 +50,14 @@ export class DfsSlateAttributesState {
     const site = queryParams?.site;
     const { slate } = payload;
 
-    const { statGroups, teams, players } = await this.slateService.getGameAttrBySlateId({ sport, site, slate }).toPromise();
+    const { statGroups, teams, players, weather } = await this.slateService.getGameAttrBySlateId({ sport, site, slate }).toPromise();
 
     const qbStatGroup = exists(statGroups) ? statGroups.qb : ([] as PlayerProfiler[]);
     const rbStatGroup = exists(statGroups) ? statGroups.rb : ([] as PlayerProfiler[]);
     const wrStatGroup = exists(statGroups) ? statGroups.wr : ([] as PlayerProfiler[]);
     const teStatGroup = exists(statGroups) ? statGroups.te : ([] as PlayerProfiler[]);
+
+    this.store.dispatch([new DfsWeather.ClearAndAdd(weather)]);
 
     switch (sport) {
       case 'mlb':

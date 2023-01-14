@@ -23,7 +23,6 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
     const teams = existsFilter(list.map(p => p.teamId));
     return uniqueBy(teams, t => t).map(t => Number(t));
   }
-  zz;
 
   @Selector([DfsNflPlayerSelectors.getList])
   static getPlayerPositions(list: SlatePlayer[]) {
@@ -120,9 +119,10 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
         const truePasserRating = playerProfilerQb != null ? playerProfilerQb.truePasserRating : null;
         const pressuredCompletionPercentage = playerProfilerQb != null ? playerProfilerQb.pressuredCompletionPercentage : null;
 
-        const { name, teamId, position } = p;
+        const { id, name, teamId, position } = p;
 
         return {
+          id,
           name,
           teamId,
           position,

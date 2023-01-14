@@ -11,6 +11,8 @@ export class DfsSlatesFacade {
   slatesEmpty$ = select(DailyFantasySlateSelectors.getSlatesEmpty);
   selectSlateByType$ = select(DailyFantasySlateSelectors.getSlateByType);
 
+  slateWeather$ = select(DailyFantasySlateSelectors.getSlateGameWeather);
+
   constructor(private store: Store) {}
 
   fetchSlates(site: string, sport: string): void {

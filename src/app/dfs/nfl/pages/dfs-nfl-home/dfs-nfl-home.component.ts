@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UrlQueryParams } from '@app/@core/store/router/url-builder';
 import { DfsMatchupFacade } from '@app/dfs/facade/dfs-matchup.facade';
 import { DfsPlayersFacade } from '@app/dfs/facade/dfs-players.facade';
 import { DailyFantasySlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
-import { SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
+import { ClientSlateTypes, SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DfsNflTeams } from 'sports-ui-sdk';
@@ -20,7 +20,7 @@ import { NFL_STAT_GROUP_MAP } from '../../models/stat-group.model';
   selector: 'app-dfs-nfl-home',
   templateUrl: './dfs-nfl-home.component.html',
 })
-export class DfsNflHomeComponent implements OnInit {
+export class DfsNflHomeComponent {
   readonly LEAGUE = this.activatedRoute.snapshot.queryParamMap.get(UrlQueryParams.Sport);
   readonly SITE = this.activatedRoute.snapshot.queryParamMap.get(UrlQueryParams.Site);
 
@@ -59,10 +59,17 @@ export class DfsNflHomeComponent implements OnInit {
   yAxisStat$ = new BehaviorSubject<string | null>(null);
 
   selectedSlate$ = new BehaviorSubject<string | null>(null);
+  selectedSlateType$ = new BehaviorSubject<ClientSlateTypes | null>(null);
 
   playerScatterData$ = combineLatest([this.nflPlayerFacade.playerScatterData$, this.xAxisStat$, this.yAxisStat$]).pipe(
     map(([playerScatterData, xAxis, yAxis]) => {
       return playerScatterData(xAxis, yAxis);
+    })
+  );
+
+  slateWeather$ = combineLatest([this.selectedSlateType$, this.dailyFantasySlateFacade.slateWeather$]).pipe(
+    map(([slate, weather]) => {
+      return slate != null ? weather(slate as ClientSlateTypes) : [];
     })
   );
 
@@ -87,7 +94,7 @@ export class DfsNflHomeComponent implements OnInit {
     readonly dailyFantasyMatchupFacade: DfsMatchupFacade
   ) {}
 
-  ngOnInit() {}
+  onRowSelected(data) {}
 
   onAxisXChange(val: string) {
     this.xAxisStat$.next(val);
@@ -113,6 +120,14 @@ export class DfsNflHomeComponent implements OnInit {
   onSelectSlate(event: SiteSlateEntity) {
     this.dailyFantasyPlayersFacade.fetchPlayers(event.slate_path);
     this.selectedSlate$.next(event.name);
+    this.selectedSlateType$.next(event.type);
     this.dailyFantasySlateAttrFacade.fetchSlateAttr(event.importId);
   }
 }
+
+//  Green
+//  Yellow
+//  Orange
+//  Red
+//   Orange/Yellow
+//    Yellow/Orange
