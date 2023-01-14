@@ -34,10 +34,6 @@ export class FootballHomeComponent implements OnInit {
   ngOnInit(): void {}
 
   onNavigateToTeam(teamId: string) {
-    const leagueId = this.routerFacade.leagueId;
-
-    if (!leagueId) return;
-
-    this.routerFacade.navigateToEspnFootballTeam(leagueId, teamId);
+    this.routerFacade.navigateToFantasyTeam(teamId);
   }
 }

@@ -2,7 +2,7 @@ import { camelCase } from 'lodash';
 import { CamelCasedProperties } from '../models/camel-case.model';
 
 export function exists<T>(value: NonNullable<T> | null | undefined): value is NonNullable<T> {
-  return value !== null && value !== undefined;
+  return value != null;
 }
 
 export function existsFilter<T>(value: (NonNullable<T> | null | undefined)[]): NonNullable<T>[] {

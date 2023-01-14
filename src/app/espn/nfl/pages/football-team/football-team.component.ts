@@ -21,6 +21,7 @@ import { FootballPosition, FOOTBALL_POSITION_LIST_FILTER } from '../../models/fo
 export class FootballTeamComponent implements OnInit {
   readonly leagueId$ = this.routerFacade.leagueId$;
   readonly teamId$ = this.routerFacade.teamId$;
+  readonly getSeason$ = this.routerFacade.seasonId$;
 
   readonly FOOTBALL_STATS_MAP = NFL_STATS_MAP;
   readonly FOOTBALL_POSITION_LIST_FILTER = FOOTBALL_POSITION_LIST_FILTER;
@@ -35,7 +36,7 @@ export class FootballTeamComponent implements OnInit {
 
   isLoading$ = this.footballLeagueFacade.isLoading$;
 
-  scoringPeriodId$ = new BehaviorSubject(YearToStatTypePeriod({ periodType: StatTypePeriodId.Season, dateObj: new Date() }));
+  scoringPeriodId$ = new BehaviorSubject('');
   selectedPosition$ = new BehaviorSubject(FootballPosition.QB);
 
   statPeriodFilterOptions$ = this.footballLeagueFacade.scoringPeriodFilterOptions$;

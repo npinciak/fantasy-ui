@@ -5,21 +5,21 @@ import { StatTypePeriodId } from '../models/espn-stats.model';
 
 const BASE_STAT_PERIOD_FILTER_OPTIONS = [
   {
-    value: YearToStatTypePeriod({ periodType: StatTypePeriodId.Season }),
+    value: YearToScoringPeriodId({ periodType: StatTypePeriodId.Season }),
     label: 'Season',
   },
   {
-    value: YearToStatTypePeriod({ periodType: StatTypePeriodId.Projected }),
+    value: YearToScoringPeriodId({ periodType: StatTypePeriodId.Projected }),
     label: 'Season Proj',
   },
-  { value: YearToStatTypePeriod({ periodType: StatTypePeriodId.Season, dateObj: subtractYears(1) }), label: 'Last Season' },
+  { value: YearToScoringPeriodId({ periodType: StatTypePeriodId.Season, dateObj: subtractYears(1) }), label: 'Last Season' },
 ];
 
 export const BASEBALL_STAT_PERIOD_FILTER_OPTIONS: FilterOptions<string>[] = [
   ...BASE_STAT_PERIOD_FILTER_OPTIONS,
-  { value: YearToStatTypePeriod({ periodType: StatTypePeriodId.Last7 }), label: 'Last 7' },
-  { value: YearToStatTypePeriod({ periodType: StatTypePeriodId.Last15 }), label: 'Last 15' },
-  { value: YearToStatTypePeriod({ periodType: StatTypePeriodId.Last30 }), label: 'Last 30' },
+  { value: YearToScoringPeriodId({ periodType: StatTypePeriodId.Last7 }), label: 'Last 7' },
+  { value: YearToScoringPeriodId({ periodType: StatTypePeriodId.Last15 }), label: 'Last 15' },
+  { value: YearToScoringPeriodId({ periodType: StatTypePeriodId.Last30 }), label: 'Last 30' },
 ];
 
 export const FOOTBALL_STAT_PERIOD_FILTER_OPTIONS: FilterOptions<string>[] = BASE_STAT_PERIOD_FILTER_OPTIONS;
@@ -28,9 +28,14 @@ export const FOOTBALL_STAT_PERIOD_FILTER_OPTIONS: FilterOptions<string>[] = BASE
  * Returns transformed statPeriodId
  * @param periodType
  * @param dateObj
- * @returns Ex: 0102022
+ *
+ * @deprecated extend BaseScoringPeriod method instead
+ *
+ * @example
+ * YearToStatTypePeriod({ periodType: StatTypePeriodId.Last7 })
+ * // returns 0102022
  */
-export function YearToStatTypePeriod(opts: { periodType: StatTypePeriodId; dateObj?: Date; week?: number }): string {
+export function YearToScoringPeriodId(opts: { periodType: StatTypePeriodId; dateObj?: Date; week?: string }): string {
   const { periodType, dateObj, week } = opts;
 
   const date = !exists(dateObj) ? new Date() : dateObj;
@@ -48,4 +53,49 @@ export function YearToStatTypePeriod(opts: { periodType: StatTypePeriodId; dateO
 
 export function StatTypePeriodToYear(statTypePeriod: string): string {
   return statTypePeriod.split('').splice(2, 6).join('');
+}
+
+export function BaseScoringPeriod() {
+  class BaseScoringPeriodClass {
+    static season(year: string) {
+      return BaseScoringPeriodClass.seasonToScoringPeriodId(StatTypePeriodId.Season, year);
+    }
+
+    static seasonProjection(year: string) {
+      return BaseScoringPeriodClass.seasonToScoringPeriodId(StatTypePeriodId.Projected, year);
+    }
+
+    static lastSeason(year: string) {
+      const previousSeason = Number(year) - 1;
+      return BaseScoringPeriodClass.seasonToScoringPeriodId(StatTypePeriodId.Season, previousSeason.toString());
+    }
+
+    static filterOptionList(year: string) {
+      return [
+        {
+          value: BaseScoringPeriodClass.season(year),
+          label: 'Season',
+        },
+        {
+          value: BaseScoringPeriodClass.seasonProjection(year),
+          label: 'Season Proj',
+        },
+        { value: BaseScoringPeriodClass.lastSeason(year), label: 'Last Season' },
+      ];
+    }
+
+    static filterOptionMap(year: string) {
+      return BaseScoringPeriodClass.filterOptionList(year).reduce((acc, val) => {
+        acc[val.label] = val;
+        return acc;
+      }, {});
+    }
+
+    private static seasonToScoringPeriodId(statTypePeriodId: StatTypePeriodId, year: string, week?: number): string {
+      if (week) return `${statTypePeriodId}${year}${week}`;
+      if (statTypePeriodId === StatTypePeriodId.Projected) return `${statTypePeriodId}${year}`;
+      return `0${statTypePeriodId}${year}`;
+    }
+  }
+  return BaseScoringPeriodClass;
 }
