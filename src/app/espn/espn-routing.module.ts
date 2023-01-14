@@ -4,7 +4,7 @@ import { UrlPathFragments, UrlPathParams } from '@app/@core/store/router/url-bui
 import { BaseballFreeAgentsComponent } from './mlb/pages/baseball-free-agents/baseball-free-agents.component';
 import { BaseballHomeComponent } from './mlb/pages/baseball-home/baseball-home.component';
 import { BaseballTeamComponent } from './mlb/pages/baseball-team/baseball-team.component';
-import { FantasyBaseballResolver } from './mlb/resolvers/mlb.resolver';
+import { FantasyBaseballLeagueResolver } from './mlb/resolvers/fantasy-baseball-league.resolver';
 import { FootballFreeAgentsComponent } from './nfl/pages/football-free-agents/football-free-agents.component';
 import { FootballHomeComponent } from './nfl/pages/football-home/football-home.component';
 import { FootballTeamComponent } from './nfl/pages/football-team/football-team.component';
@@ -110,36 +110,44 @@ const mlbRoutes = {
   data: { sport: UrlPathFragments.MLB },
   children: [
     {
-      path: UrlPathFragments.Empty,
-      component: BaseballHomeComponent,
-    },
-    {
-      path: UrlPathParams.LeagueId,
-      resolve: [FantasyBaseballResolver],
+      path: UrlPathParams.Year,
       children: [
         {
-          path: UrlPathFragments.Empty,
-          component: BaseballHomeComponent,
-        },
-        {
-          path: UrlPathFragments.FreeAgents,
+          path: UrlPathFragments.League,
           children: [
             {
-              path: UrlPathFragments.Empty,
-              component: BaseballFreeAgentsComponent,
-            },
-          ],
-        },
-        {
-          path: UrlPathFragments.Team,
-          children: [
-            {
-              path: UrlPathFragments.Empty,
-              component: BaseballTeamComponent,
-            },
-            {
-              path: UrlPathParams.TeamId,
-              component: BaseballTeamComponent,
+              path: UrlPathParams.LeagueId,
+              resolve: [FantasyBaseballLeagueResolver],
+              children: [
+                {
+                  path: UrlPathFragments.Empty,
+                  component: BaseballHomeComponent,
+                },
+                {
+                  path: UrlPathFragments.Team,
+                  children: [
+                    {
+                      path: UrlPathParams.TeamId,
+                      children: [
+                        {
+                          path: UrlPathFragments.Empty,
+                          component: BaseballTeamComponent,
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  path: UrlPathFragments.FreeAgents,
+                  resolve: [],
+                  children: [
+                    {
+                      path: UrlPathFragments.Empty,
+                      component: BaseballFreeAgentsComponent,
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },
