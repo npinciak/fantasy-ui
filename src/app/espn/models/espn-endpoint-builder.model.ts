@@ -113,18 +113,25 @@ export const FantasySportToLabelMap: { [key in FantasySports]: string } = {
   [FantasySports.Football]: 'Football',
   [FantasySports.Hockey]: 'Hockey',
   [FantasySports.Basketball]: 'Basketball',
-};
+} as const;
 
 export const FantasySportToSportLeagueMap: { [key in FantasySports]: SportLeague } = {
   [FantasySports.Baseball]: SportLeague.MLB,
   [FantasySports.Football]: SportLeague.NFL,
   [FantasySports.Hockey]: SportLeague.NHL,
   [FantasySports.Basketball]: SportLeague.NBA,
-};
+} as const;
 
 export const LeagueSportToImageLocationMap: { [key in FantasySports]: string } = {
   [FantasySports.Baseball]: '-4px -272px',
   [FantasySports.Basketball]: '-4px -239px',
   [FantasySports.Football]: '-4px -206px',
   [FantasySports.Hockey]: '-4px -304px',
-};
+} as const;
+
+export const SportLeagueToImageLocationMap: { [key in SportLeague]: string } = {
+  [SportLeague.MLB]: '-4px -272px',
+  [SportLeague.NBA]: '-4px -239px',
+  [SportLeague.NFL]: '-4px -206px',
+  [SportLeague.NHL]: '-4px -304px',
+} as const;

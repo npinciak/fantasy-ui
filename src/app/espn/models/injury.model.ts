@@ -16,7 +16,7 @@ export const InjurySeverityColorByInjurySeverity: { [key in InjurySeverity]: Inj
   [InjurySeverity.Serious]: InjurySeverityColor.Serious,
   [InjurySeverity.SemiSerious]: InjurySeverityColor.SemiSerious,
   [InjurySeverity.Positive]: InjurySeverityColor.Positive,
-};
+} as const;
 
 export enum InjuryIcons {
   Healthy = '',
@@ -54,7 +54,7 @@ export const PlayerStatusAbbrevByInjuryStatusType: { [key in EspnClient.PlayerIn
   [EspnClient.PlayerInjuryStatus.Brv]: 'Bereavement',
   [EspnClient.PlayerInjuryStatus.Pat]: 'Paternity',
   [EspnClient.PlayerInjuryStatus.SUS]: 'Suspension',
-};
+} as const;
 
 export const MatIconByEspnPlayerInjuryStatus: { [key in EspnClient.PlayerInjuryStatus]: InjuryIcons } = {
   [EspnClient.PlayerInjuryStatus.Active]: InjuryIcons.Healthy,
@@ -73,7 +73,7 @@ export const MatIconByEspnPlayerInjuryStatus: { [key in EspnClient.PlayerInjuryS
   [EspnClient.PlayerInjuryStatus.Brv]: InjuryIcons.Injured,
   [EspnClient.PlayerInjuryStatus.Pat]: InjuryIcons.Injured,
   [EspnClient.PlayerInjuryStatus.SUS]: InjuryIcons.Injured,
-};
+} as const;
 
 export const InjurySeverityByInjuryStatus: { [key in EspnClient.PlayerInjuryStatus]: InjurySeverity } = {
   [EspnClient.PlayerInjuryStatus.Active]: InjurySeverity.Positive,
@@ -92,4 +92,4 @@ export const InjurySeverityByInjuryStatus: { [key in EspnClient.PlayerInjuryStat
   [EspnClient.PlayerInjuryStatus.Brv]: InjurySeverity.Serious,
   [EspnClient.PlayerInjuryStatus.Pat]: InjurySeverity.Serious,
   [EspnClient.PlayerInjuryStatus.SUS]: InjurySeverity.Serious,
-};
+} as const;
