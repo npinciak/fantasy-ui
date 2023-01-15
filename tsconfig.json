@@ -23,7 +23,10 @@
       "@mlb/*": ["src/app/espn/mlb/*"],
       "@dfsNfl/*": ["src/app/dfs/nfl/*"]
     },
-    "typeRoots": ["./node_modules/sports-ui-sdk", "./node_modules/@types"]
+    "typeRoots": [
+      "./node_modules/sports-ui-sdk/lib/index.d.ts",
+      "./node_modules/@types"
+    ]
   },
   "exclude": ["schematics"]
 }
