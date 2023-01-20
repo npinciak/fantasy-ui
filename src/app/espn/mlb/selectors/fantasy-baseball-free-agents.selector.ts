@@ -7,7 +7,7 @@ import { BaseballStat, MLB_STATS_KEYS, MLB_STATS_MAP } from 'sports-ui-sdk';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
 import { ChartData } from '../models/chart-data.model';
 import { FantasyBaseballFreeAgentsState } from '../state/fantasy-baseball-free-agents.state';
-import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.state';
+import { FantasyBaseballLeagueSelector } from './fantasy-baseball-league.selector';
 import { FantasyBaseballTeamsSelector } from './fantasy-baseball-teams.selector';
 
 export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBaseballFreeAgentsState) {
@@ -28,7 +28,7 @@ export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBa
     };
   }
 
-  @Selector([FantasyBaseballFreeAgentsSelector.getFreeAgentBatterStats, FantasyBaseballLeagueState.getSeasonId])
+  @Selector([FantasyBaseballFreeAgentsSelector.getFreeAgentBatterStats, FantasyBaseballLeagueSelector.getSeasonId])
   static getFreeAgentBatterScatterChartData(
     getTeamBatters: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[]
   ): (teamId: string, statPeriod: string, xAxisFilter: BaseballStat, yAxisFilter: BaseballStat) => any {
@@ -82,7 +82,7 @@ export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBa
   @Selector([
     FantasyBaseballTeamsSelector.getTeamBatterStats,
     FantasyBaseballFreeAgentsSelector.getFreeAgentBatterStats,
-    FantasyBaseballLeagueState.getSeasonId,
+    FantasyBaseballLeagueSelector.getSeasonId,
   ])
   static getCompareTeamAndFreeAgentBatterList(
     getTeamBatterStatsById: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[],
@@ -112,7 +112,7 @@ export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBa
   @Selector([
     FantasyBaseballTeamsSelector.getTeamPitcherStats,
     FantasyBaseballFreeAgentsSelector.getFreeAgentPitcherStats,
-    FantasyBaseballLeagueState.getSeasonId,
+    FantasyBaseballLeagueSelector.getSeasonId,
   ])
   static getCompareTeamAndFreeAgentPitcherList(
     getTeamPitcherStats: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[],

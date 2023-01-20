@@ -5,6 +5,7 @@ import { Action, State, StateContext, Store } from '@ngxs/store';
 import { FantasyBaseballFreeAgents } from '../actions/fantasy-baseball-free-agents.actions';
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { FantasyBaseballFreeAgentsFilterSelector } from '../selectors/fantasy-baseball-free-agents-filter.selector';
+import { FantasyBaseballLeagueSelector } from '../selectors/fantasy-baseball-league.selector';
 import { MlbService } from '../services/mlb.service';
 
 @State({ name: FantasyBaseballFreeAgents.stateName })
@@ -19,17 +20,15 @@ export class FantasyBaseballFreeAgentsState extends GenericState({
   }
 
   @Action(FantasyBaseballFreeAgents.Fetch)
-  async fetchFantasyBaseballFreeAgents(
-    { dispatch }: StateContext<GenericStateModel<BaseballPlayer>>,
-    { payload: { leagueId } }
-  ): Promise<void> {
+  async fetchFantasyBaseballFreeAgents({}: StateContext<GenericStateModel<BaseballPlayer>>, { payload: { leagueId } }): Promise<void> {
     const lineupSlotIds = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedLineupSlotIds).map(id => Number(id));
     const availabilityStatus = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedAvailabilityStatus);
     const topScoringPeriodIds = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedTopScoringPeriodIds);
 
     const pagination = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getPagination);
 
-    const scoringPeriodId = 0; //Number(this.store.selectSnapshot(FantasyBaseballLeagueState.getCurrentScoringPeriodId)) ?? 0;
+    const scoringPeriodId = this.store.selectSnapshot(FantasyBaseballLeagueSelector.getScoringPeriodId);
+    if (!scoringPeriodId) throw new Error('scoringPeriodId cannot be missing');
 
     const filterRanksForScoringPeriodIds = { value: [scoringPeriodId] };
     const filterSlotIds = { value: lineupSlotIds };
@@ -62,7 +61,7 @@ export class FantasyBaseballFreeAgentsState extends GenericState({
       },
     };
     const freeAgents = await this.mlbService.baseballFreeAgents({ leagueId, scoringPeriodId, filter }).toPromise();
-    this.store.dispatch([new FantasyBaseballFreeAgents.AddOrUpdate(freeAgents)]);
+    this.store.dispatch([new FantasyBaseballFreeAgents.ClearAndAdd(freeAgents)]);
   }
 }
 // :{"value":5,"additionalValue":["002022","102022","002021","012022","022022","032022","042022","062022","010002022"]}

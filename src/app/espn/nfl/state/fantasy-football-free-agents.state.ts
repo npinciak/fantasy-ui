@@ -4,11 +4,12 @@ import { GenericState } from '@app/@shared/generic-state/generic.state';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { FantasyFootballFreeAgents } from '../actions/fantasy-football-free-agents.actions';
 import { FootballPlayer } from '../models/football-player.model';
-import { FantasyFootballLeagueSelectors } from '../selectors/fantasy-football-league.selectors';
 import { FantasyFootballService } from '../services/fantasy-football.service';
 import { FantasyFootballFreeAgentsFilterState } from './fantasy-football-free-agents-filter.state';
 
+import { map } from 'rxjs/operators';
 import { EspnClient } from 'sports-ui-sdk';
+import { FantasyFootballLeagueSelector } from '../selectors/fantasy-football-league.selectors';
 
 @State({ name: FantasyFootballFreeAgents.name })
 @Injectable()
@@ -21,15 +22,15 @@ export class FantasyFootballFreeAgentsState extends GenericState({
     super();
   }
 
-  @Action(FantasyFootballFreeAgents.Fetch)
-  async fetchFantasyFootballFreeAgents(
-    { setState }: StateContext<GenericStateModel<FootballPlayer>>,
+  @Action(FantasyFootballFreeAgents.Fetch, { cancelUncompleted: true })
+  fetchFantasyFootballFreeAgents(
+    {}: StateContext<GenericStateModel<FootballPlayer>>,
     { payload: { leagueId, season } }: FantasyFootballFreeAgents.Fetch
-  ): Promise<void> {
-    setState({ map: {} });
-
+  ) {
     // const leagueId = this.store.selectSnapshot(RouterSelector) ?? '';
-    const scoringPeriodId = Number(this.store.selectSnapshot(FantasyFootballLeagueSelectors.getCurrentScoringPeriodId)) ?? 0;
+    const scoringPeriodId = this.store.selectSnapshot(FantasyFootballLeagueSelector.getScoringPeriodId);
+
+    if (!scoringPeriodId) throw new Error('scoringPeriodId cannot be missing');
 
     const lineupSlotId = this.store.selectSnapshot(FantasyFootballFreeAgentsFilterState.getSelectedLineupSlotId);
 
@@ -65,8 +66,8 @@ export class FantasyFootballFreeAgentsState extends GenericState({
         // sortDraftRanks: { sortPriority: 100, sortAsc: pagination.sortDirection === 'asc' ? true : false, value: 'STANDARD' },
       },
     };
-    const freeAgents = await this.service.fetchFreeAgents({ leagueId, scoringPeriodId, filter }).toPromise();
-
-    this.store.dispatch([new FantasyFootballFreeAgents.AddOrUpdate(freeAgents)]);
+    this.service
+      .fetchFreeAgents({ leagueId, scoringPeriodId, filter })
+      .pipe(map(freeAgents => this.store.dispatch([new FantasyFootballFreeAgents.ClearAndAdd(freeAgents)])));
   }
 }

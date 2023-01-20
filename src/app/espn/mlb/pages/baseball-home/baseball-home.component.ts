@@ -16,7 +16,7 @@ export class BaseballHomeComponent implements OnInit {
 
   readonly leagueId = this.routerFacade.leagueId;
 
-  standings$ = this.fantasyBaseballLeagueFacade.standings$;
+  standings$ = this.fantasyBaseballTeamFacade.standings$;
 
   constructor(
     readonly routerFacade: RouterFacade,

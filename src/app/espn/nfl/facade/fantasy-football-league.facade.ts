@@ -1,30 +1,30 @@
 import { Injectable } from '@angular/core';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { FantasyFootballLeague } from '../actions/fantasy-football-league.actions';
-import { FantasyFootballLeagueSelectors } from '../selectors/fantasy-football-league.selectors';
+import { FantasyFootballLeagueSelector } from '../selectors/fantasy-football-league.selectors';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FantasyFootballLeagueFacade {
-  currentScoringPeriodId$ = select(FantasyFootballLeagueSelectors.getCurrentScoringPeriodId);
-  scoringPeriodFilterOptions$ = select(FantasyFootballLeagueSelectors.scoringPeriodFilters);
-  seasonId$ = select(FantasyFootballLeagueSelectors.getSeasonId);
-  standings$ = select(FantasyFootballLeagueSelectors.standings);
-  isLoading$ = select(FantasyFootballLeagueSelectors.isLoading);
+  currentScoringPeriodId$ = select(FantasyFootballLeagueSelector.getScoringPeriodId);
+  scoringPeriodFilterOptions$ = select(FantasyFootballLeagueSelector.scoringPeriodFilters);
+  seasonId$ = select(FantasyFootballLeagueSelector.getSeasonId);
+  standings$ = select(FantasyFootballLeagueSelector.standings);
+  isLoading$ = of(false); // select(FantasyFootballLeagueSelectors.isLoading);
 
   // positionLimits$ = select(FantasyFootballLeagueSelectors.getLineupLimitsWithLabels);
 
   constructor(private store: Store) {}
 
   get seasonId() {
-    return this.store.selectSnapshot(FantasyFootballLeagueSelectors.getSeasonId);
+    return this.store.selectSnapshot(FantasyFootballLeagueSelector.getSeasonId);
   }
 
   get leagueId() {
-    return this.store.selectSnapshot(FantasyFootballLeagueSelectors.getLeagueId);
+    return this.store.selectSnapshot(FantasyFootballLeagueSelector.getLeagueId);
   }
 
   getLeague(leagueId: string, year: string): Observable<void> {
