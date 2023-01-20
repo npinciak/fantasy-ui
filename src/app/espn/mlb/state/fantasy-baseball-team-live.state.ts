@@ -1,22 +1,12 @@
 import { Injectable } from '@angular/core';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
 import { State } from '@ngxs/store';
-import { BaseballTeamLive } from '../models/baseball-team.model';
+import { FantasyBaseballTeamsLive } from '../actions/fantasy-baseball-team-live.actions';
 
-export class SetEspnFantasyLeagueTeamsLive {
-  static readonly type = '[fantasyBaseballTeamsLive] SetEspnFantasyLeagueTeamsLive';
-  constructor(public payload: BaseballTeamLive[]) {}
-}
-
-export class ClearAndAddEspnFantasyLeagueTeamsLive {
-  static readonly type = '[fantasyBaseballTeamsLive] ClearAndAddEspnFantasyLeagueTeamsLive';
-  constructor(public payload: BaseballTeamLive[]) {}
-}
-
-@State({ name: 'fantasyBaseballTeamsLive' })
+@State({ name: FantasyBaseballTeamsLive.stateName })
 @Injectable()
 export class FantasyBaseballTeamsLiveState extends GenericState({
   idProperty: 'id',
-  addOrUpdate: SetEspnFantasyLeagueTeamsLive,
-  clearAndAdd: ClearAndAddEspnFantasyLeagueTeamsLive,
+  addOrUpdate: FantasyBaseballTeamsLive.AddOrUpdate,
+  clearAndAdd: FantasyBaseballTeamsLive.ClearAndAdd,
 }) {}

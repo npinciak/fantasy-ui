@@ -47,11 +47,10 @@ export class MlbService {
    * @param payload
    * @returns
    */
-  baseballPlayerNews(payload: { lookbackDays: string; playerId: string }): Observable<EspnClient.PlayerNewsFeedEntity[]> {
-    const { lookbackDays, playerId } = payload;
-    const data = { sport: FantasySports.Baseball, lookbackDays, playerId };
-
-    return this.espnClient.fetchFantasyPlayerNewsBySport(data).pipe(map(res => res.feed));
+  baseballPlayerNews(playerId: string): Observable<EspnClient.PlayerNewsFeedEntity[]> {
+    return this.espnClient
+      .fetchFantasyPlayerNewsBySport({ sport: FantasySports.Baseball, lookbackDays: '30', playerId })
+      .pipe(map(res => res.feed));
   }
 
   /**
@@ -61,7 +60,7 @@ export class MlbService {
    */
   baseballFreeAgents(payload: {
     leagueId: string;
-    scoringPeriodId: number;
+    scoringPeriodId: string;
     filter: EspnClient.PaginatedFilter;
   }): Observable<BaseballPlayer[]> {
     let headers = new HttpHeaders();

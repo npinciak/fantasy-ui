@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { GenericFacade } from '@app/@shared/generic-state/generic.facade';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { FantasyBaseballPlayerNews } from '../actions/fantasy-baseball-player-news.actions';
 import { FantasyBaseballPlayerSelector } from '../selectors/fantasy-baseball-player.selector';
-import { FetchBaseballPlayerNews } from '../state/fantasy-baseball-player.state';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class FantasyBaseballPlayerFacade extends GenericFacade(FantasyBaseballPl
     super();
   }
 
-  getPlayerNews(playerId: string, lookbackDays = '7'): Observable<void> {
-    return this.store.dispatch(new FetchBaseballPlayerNews({ playerId, lookbackDays }));
+  getPlayerNews(playerId: string): Observable<void> {
+    return this.store.dispatch(new FantasyBaseballPlayerNews.Fetch({ playerId }));
   }
 }

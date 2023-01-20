@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
-import { setMap } from '@app/@shared/operators';
 import { Action, State, StateContext, Store } from '@ngxs/store';
+import { map } from 'rxjs/operators';
 import { EspnClient } from 'sports-ui-sdk';
 import { FantasyFootballPlayerNews } from '../actions/fantasy-football-player-news.actions';
 import { FantasyFootballService } from '../services/fantasy-football.service';
@@ -18,11 +18,10 @@ export class FantasyFootballPlayerNewsState extends GenericState({
     super();
   }
 
-  private static getId = (t: EspnClient.PlayerNewsFeedEntity) => t.id as unknown as string;
-
-  @Action(FantasyFootballPlayerNews.Fetch)
-  async fetchPlayerNews({ setState }: StateContext<GenericStateModel<EspnClient.PlayerNewsFeedEntity>>, { payload: { playerId } }) {
-    const news = await this.fantasyfootballService.fetchPlayerNews(playerId).toPromise();
-    setState(setMap(news, FantasyFootballPlayerNewsState.getId));
+  @Action(FantasyFootballPlayerNews.Fetch, { cancelUncompleted: true })
+  fetchPlayerNews({}: StateContext<GenericStateModel<EspnClient.PlayerNewsFeedEntity>>, { payload: { playerId } }) {
+    return this.fantasyfootballService
+      .fetchPlayerNews(playerId)
+      .pipe(map(news => this.store.dispatch(new FantasyFootballPlayerNews.ClearAndAdd(news))));
   }
 }
