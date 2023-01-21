@@ -9,8 +9,8 @@ const BASE_STATS_COLUMNS: BaseTableColumn<any>[] = [
   { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String },
   { columnDef: 'opp', headerCell: 'opp', headerLabel: 'Opp', dataType: TableColumnDataType.String },
   { columnDef: 'salary', headerCell: 'salary', headerLabel: 'Sal', dataType: TableColumnDataType.Number },
-  { columnDef: 'pown', headerCell: 'pown', headerLabel: 'pOwn', dataType: TableColumnDataType.Number },
-  { columnDef: 'smash', headerCell: 'smash', headerLabel: 'Smash', dataType: TableColumnDataType.Number },
+  { columnDef: 'pown', headerCell: 'pown', headerLabel: 'pOwn', dataType: TableColumnDataType.Percentage },
+  { columnDef: 'smash', headerCell: 'smash', headerLabel: 'Smash', dataType: TableColumnDataType.Percentage },
   { columnDef: 'val', headerCell: 'val', headerLabel: 'Value', dataType: TableColumnDataType.Number },
   { columnDef: 'fpts', headerCell: 'fpts', headerLabel: 'FPts', dataType: TableColumnDataType.Number },
   { columnDef: 'fptsPerK', headerCell: 'fptsPerK', headerLabel: 'FPts/$', dataType: TableColumnDataType.Number },
@@ -25,46 +25,53 @@ export const RECEIVER_STATS_COLUMNS = [
   {
     columnDef: 'productionPremium',
     headerCell: 'productionPremium',
-    headerLabel: 'productionPremium',
+    headerLabel: 'Production Prem',
     dataType: TableColumnDataType.Number,
   },
   {
     columnDef: 'matchupRtg',
     headerCell: 'matchupRtg',
-    headerLabel: 'matchupRtg',
+    headerLabel: 'Matchup',
     dataType: TableColumnDataType.Number,
   },
   {
     columnDef: 'redZoneTargetShare',
     headerCell: 'redZoneTargetShare',
-    headerLabel: 'redZoneTargetShare',
+    headerLabel: 'RZ Target %',
     dataType: TableColumnDataType.Percentage,
   },
   {
     columnDef: 'targetShare',
     headerCell: 'targetShare',
-    headerLabel: 'targetShare',
+    headerLabel: 'Target %',
     dataType: TableColumnDataType.Percentage,
   },
   {
     columnDef: 'dominatorRating',
     headerCell: 'dominatorRating',
-    headerLabel: 'dominatorRating',
+    headerLabel: 'Dom Rating',
     dataType: TableColumnDataType.Number,
   },
 ];
 
 export const RUSH_STATS_COLUMNS = [
-  { columnDef: 'oppRushDefRank', headerCell: 'oppRushDefRank', headerLabel: 'oppRushDefRank', dataType: TableColumnDataType.Number },
+  { columnDef: 'oppRushDefRank', headerCell: 'oppRushDefRank', headerLabel: 'Opp Rush D', dataType: TableColumnDataType.Number },
+  {
+    columnDef: 'goalLineCarriesPerGame',
+    headerCell: 'goalLineCarriesPerGame',
+    headerLabel: 'goalLineCarriesPerGame',
+    dataType: TableColumnDataType.Number,
+  },
+  { columnDef: 'gameScript', headerCell: 'gameScript', headerLabel: 'gameScript', dataType: TableColumnDataType.Number },
 ];
 
 export const PASSING_STATS_COLUMNS = [
-  { columnDef: 'oppPassDefRank', headerCell: 'oppPassDefRank', headerLabel: 'oppPassDefRank', dataType: TableColumnDataType.Number },
+  { columnDef: 'oppPassDefRank', headerCell: 'oppPassDefRank', headerLabel: 'Opp Pass D', dataType: TableColumnDataType.Number },
 
   {
     columnDef: 'protectionRate',
     headerCell: 'protectionRate',
-    headerLabel: 'protectionRate',
+    headerLabel: 'Protect %',
     dataType: TableColumnDataType.Percentage,
   },
   {
@@ -76,7 +83,7 @@ export const PASSING_STATS_COLUMNS = [
   {
     columnDef: 'pressuredCompletionPercentage',
     headerCell: 'pressuredCompletionPercentage',
-    headerLabel: 'pressuredCompletionPercentage',
+    headerLabel: 'Pressure Comp. %',
     dataType: TableColumnDataType.Percentage,
   },
 ];
@@ -85,7 +92,7 @@ export namespace DfsNflTableColumns {
   export const COLUMNS_BY_POS = {
     All: [...BASE_STATS_COLUMNS],
     QB: [...BASE_STATS_COLUMNS, ...PASSING_STATS_COLUMNS],
-    RB: [...BASE_STATS_COLUMNS, ...RUSH_STATS_COLUMNS, ...RECEIVER_STATS_COLUMNS],
+    RB: [...BASE_STATS_COLUMNS, ...RUSH_STATS_COLUMNS],
     WR: [...BASE_STATS_COLUMNS, ...RECEIVER_STATS_COLUMNS],
     TE: [...BASE_STATS_COLUMNS, ...RECEIVER_STATS_COLUMNS],
     DST: [...BASE_STATS_COLUMNS],

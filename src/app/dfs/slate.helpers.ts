@@ -158,6 +158,8 @@ export namespace DfsSlateHelpers {
         protectionRate: normalizeStringToNumber(value['Protection Rate']),
         truePasserRating: normalizeStringToNumber(value['True Passer Rating']),
         pressuredCompletionPercentage: normalizeStringToNumber(value['Pressured Completion Percentage']),
+        gameScript: normalizeStringToNumber(value['Game Script']),
+        goalLineCarriesPerGame: normalizeStringToNumber(value['Goal Line Carries Per Game']),
       };
 
       f.push(transform);

@@ -109,6 +109,9 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
             ? playerProfilerTe.redZoneTargetShare
             : null;
 
+        const gameScript = playerProfilerRb != null ? playerProfilerRb.gameScript : null;
+        const goalLineCarriesPerGame = playerProfilerRb != null ? playerProfilerRb.goalLineCarriesPerGame : null;
+
         const targetShare =
           playerProfilerWr != null ? playerProfilerWr.targetShare : playerProfilerTe != null ? playerProfilerTe.targetShare : null;
 
@@ -132,17 +135,10 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
           truePasserRating,
           pressuredCompletionPercentage,
           targetShare,
+          gameScript,
+          goalLineCarriesPerGame,
           oppRushDefRank: matchup?.outsiders?.oppRuDefRk,
           oppPassDefRank: matchup?.outsiders?.oppPaDefRk,
-          // pown,
-          // opp,
-          // smash,
-          // ceil,
-          // floor,
-          // tar,
-          // fpts,
-          // fptsPerK,
-          // val,
           productionPremium,
           matchupRtg,
           weeklyVolatility,

@@ -75,15 +75,7 @@ export class SlateService {
   }
 
   static transformStatGroupsToProfiler(statGroup: ClientSlateStatGroups): PlayerProfilerSeasonMap | null {
-    // console.log('transformStatGroupsToProfiler', statGroup);
-    if (objectIsEmpty(statGroup) || !exists(statGroup)) {
-      return null;
-    }
-
-    // const qb = DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.qb);
-    // const rb = DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.rb);
-    // const wr = DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.wr);
-    // const te = DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup.te);
+    if (objectIsEmpty(statGroup) || !exists(statGroup)) return null;
 
     return DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup);
   }
