@@ -2,24 +2,6 @@ import { SlateAttrTeamProperties } from '@app/dfs/models/team.model';
 import { ClientSalaryDiff, DfsClientPlayerAttributes } from '@dfsClient/daily-fantasy-client-slate-attr.model';
 import { DfsSiteType } from 'sports-ui-sdk';
 
-export interface PlayerStats {
-  'reyds/tar': string;
-  'reyds/rec': string;
-  'payds/att': string;
-  'ruyds/att': string;
-  reyds: string;
-  ruatt: string;
-  att: string;
-  tar: string;
-  ruyds: string;
-  payds: string;
-  rec: string;
-}
-
-// type t = typeof StatThresholdColorss;
-// type StatThresholdColorssType = keyof t; // 'low' | 'average' | 'high'
-// type StatThresholdColorssValueType = t[keyof t]; // '1' | '2' | '3'
-
 type SafptsAttributes =
   | 'RawQB'
   | 'AdjQB'

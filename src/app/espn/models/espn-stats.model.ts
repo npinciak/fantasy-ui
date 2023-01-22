@@ -22,4 +22,4 @@ export const StatTypePeriodIdMap: { [key in StatTypePeriodId]: string } = {
   [StatTypePeriodId.Projected]: 'Projected',
   [StatTypePeriodId.ProjectedWeek]: 'Projected Week',
   [StatTypePeriodId.BatterVsPitcher]: 'BVP',
-};
+} as const;

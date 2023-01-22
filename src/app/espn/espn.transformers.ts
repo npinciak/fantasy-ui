@@ -25,12 +25,10 @@ export namespace EspnTransformers {
     }
 
     return Object.keys(weeklyOutlook)
-      .map(k => {
-        return {
-          week: Number(k),
-          outlook: weeklyOutlook[k],
-        };
-      })
+      .map(k => ({
+        week: Number(k),
+        outlook: weeklyOutlook[k],
+      }))
       .sort((a, b) => b.week - a.week);
   }
 
@@ -154,9 +152,7 @@ export namespace EspnTransformers {
   }
 
   export function clientCompetitorToFastcastTeam(eventUid: string, data: EspnFastcastClient.CompetitorsEntity): FastcastEventTeam | null {
-    if (!data) {
-      return null;
-    }
+    if (!data) return null;
 
     const { id, uid, score } = data;
 
@@ -179,9 +175,7 @@ export namespace EspnTransformers {
   }
 
   export function clientEventToFastcastEvent(event: EspnFastcastClient.EventsEntity): FastcastEvent | null {
-    if (!event) {
-      return null;
-    }
+    if (!event) return null;
 
     let mlbSituation = {} as MlbSituation;
     // if (
@@ -234,13 +228,15 @@ export namespace EspnTransformers {
 
     const { id, uid, name, status, seasonType, shortName, location, summary, period, link } = event;
 
+    const { state, completed } = event.fullStatus.type;
+
     return {
       id,
       uid,
       leagueId: transformUidToId(event.uid) ?? '',
       timestamp: new Date(event?.date).getTime(),
-      state: event?.fullStatus.type.state,
-      completed: event?.fullStatus.type.completed,
+      state,
+      completed,
       status,
       statusId: event.fullStatus.type.id,
       name,

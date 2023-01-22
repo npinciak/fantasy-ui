@@ -68,8 +68,8 @@ export enum FastcastEventType {
  * ```
  *
  */
-export function transformEventToLiveFastcastEventType(payload: { sport: string; league: string; gameId: string }) {
-  return `${FastcastEventType.LiveGame}-${payload.sport}-${payload.sport}-${payload.gameId}`;
+export function transformEventToLiveFastcastEventType({ sport, league, gameId }: { sport: string; league: string; gameId: string }) {
+  return `${FastcastEventType.LiveGame}-${sport}-${league}-${gameId}`;
 }
 
 /**
@@ -88,13 +88,13 @@ export function transformEventToLiveFastcastEventType(payload: { sport: string; 
  * ```
  *
  */
-export function transformSportToFastcastEventType(payload: { sport: string; league: string }): string;
-export function transformSportToFastcastEventType(payload: { sport: string }): string;
-export function transformSportToFastcastEventType(payload: { sport: string; league?: string }): string {
-  if (!exists(payload.league)) {
-    `${FastcastEventType.Event}-${payload.sport}`;
+export function transformSportToFastcastEventType({ sport }: { sport: string }): string;
+export function transformSportToFastcastEventType({ sport, league }: { sport: string; league: string }): string;
+export function transformSportToFastcastEventType({ sport, league }: { sport: string; league?: string }): string {
+  if (!exists(league)) {
+    `${FastcastEventType.Event}-${sport}`;
   }
-  return `${FastcastEventType.Event}-${payload.sport}-${payload.league}`;
+  return `${FastcastEventType.Event}-${sport}-${league}`;
 }
 
 export class WebSocketBuilder {

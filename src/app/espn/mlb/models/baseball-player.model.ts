@@ -28,5 +28,5 @@ export type BaseballPlayerStatsRow = Pick<PlayerEntity, 'id'> &
     percentChange: number | null;
     percentOwned: number | null;
     highlightedPlayer: boolean;
-    stats: {};
+    stats: EspnClient.PlayerStatsEntity;
   };
