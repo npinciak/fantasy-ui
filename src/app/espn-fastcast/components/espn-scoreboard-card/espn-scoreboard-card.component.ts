@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { tickerDate } from '@app/@shared/helpers/date';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
+import { fastcastEventSummary } from '@app/espn/espn-helpers';
 import { FASTCAST_DATE_SHORT } from '@app/espn/espn.const';
 import { EspnClient } from 'sports-ui-sdk';
 
@@ -39,7 +40,7 @@ export class EspnScoreboardCardComponent implements OnChanges {
   }
 
   get eventPostponed(): boolean {
-    return this.event.status === EspnClient.FastCastGameStatus.Post;
+    return this.event.status === EspnClient.FastCastGameStatus.Postgame;
   }
 
   get eventInProgress(): boolean {
@@ -47,31 +48,11 @@ export class EspnScoreboardCardComponent implements OnChanges {
   }
 
   get isPostseason() {
-    return this.event.seasonType === EspnClient.FastCastSeasonType.Post;
+    return this.event.seasonType === EspnClient.FastCastSeasonType.Postseason;
   }
 
   get eventSummary() {
-    if (this.eventInProgress) {
-      return this.event.summary;
-    }
-
-    if (this.eventPostponed) {
-      return this.event.summary;
-    }
-
-    if (!this.event.completed && this.isPostseason) {
-      return `${this.event.note ? this.event.note : this.event.name} | ${this.tickerDate}`;
-    }
-
-    if (this.event.completed && this.isPostseason) {
-      return `${this.event.note ?? this.event.summary}`;
-    }
-
-    if (this.event.completed && !this.isPostseason) {
-      return `${this.event.summary}`;
-    }
-
-    return this.tickerDate;
+    return fastcastEventSummary(this.event);
   }
 
   get tickerDate() {

@@ -1,4 +1,4 @@
-import { EspnClient, EspnFastcastClient } from 'sports-ui-sdk';
+import { EspnFastcastClient, GameStatusIdType, GameStatusType } from 'sports-ui-sdk';
 
 import { FastcastEventTeam } from './fastcast-team.model';
 
@@ -6,8 +6,8 @@ interface FastcastEventAttributes {
   leagueId: string;
   timestamp: number;
   state: string | null;
-  status: EspnClient.FastCastGameStatus | null;
-  statusId: EspnClient.GameStatusTypeId;
+  status: GameStatusType | null;
+  statusId: GameStatusIdType;
   location: string | null;
   clock: string | null;
   summary: string | null;

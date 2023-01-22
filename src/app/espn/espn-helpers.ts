@@ -1,5 +1,7 @@
+import { tickerDate } from '@app/@shared/helpers/date';
 import { exists } from '@app/@shared/helpers/utils';
-import { EspnClient, EspnFastcastClient, PITCHING_LINEUP_IDS } from 'sports-ui-sdk';
+import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
+import { EspnClient, EspnFastcastClient, GameStatus, PITCHING_LINEUP_IDS, SeasonId } from 'sports-ui-sdk';
 
 import { BaseballPlayer } from './mlb/models/baseball-player.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
@@ -128,4 +130,20 @@ export function startingPlayersFilter<T extends FootballPlayer | BaseballPlayer>
 
 export function injuredReservePlayersFilter<T extends FootballPlayer | BaseballPlayer>(players: T[]): T[] {
   return players.filter(p => p.injuryStatus === EspnClient.PlayerInjuryStatus.IR);
+}
+
+export function fastcastEventSummary(event: FastcastEvent): string | null {
+  const inProgress = event.status === GameStatus.InProgress;
+  const eventPostponed = event.status === GameStatus.Postgame;
+  const isPostseason = event.seasonType === SeasonId.Postseason;
+
+  const date = tickerDate(event.timestamp);
+
+  console.log({ event, inProgress, eventPostponed, isPostseason });
+  if (inProgress || eventPostponed) return event.summary;
+  if (!event.completed && isPostseason) return `${event.note} | ${date}`;
+  if (event.completed && isPostseason) return `${event.note}`;
+  if (event.completed && !isPostseason) return `${event.summary}`;
+
+  return date;
 }
