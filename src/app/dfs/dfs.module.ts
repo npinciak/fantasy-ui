@@ -11,8 +11,7 @@ import { DfsRoutingModule } from './dfs-routing.module';
 import { DailyFantasyMlbPlayerSlateAttributeState } from './mlb/state/dfs-mlb-player-slate-attr.state';
 import { DfsMlbTeamSlateDetailsState } from './mlb/state/dfs-mlb-slate-teams.state';
 import { DfsNbaHomeComponent } from './nba/pages/dfs-nba-home/dfs-nba-home.component';
-import { DfsNbaSlatePlayerState } from './nba/state/dfs-nba-slate-players.state';
-import { PlayerTableRankingColumnComponent } from './nfl/components/player-table-ranking-column/player-table-ranking-column.component';
+import { DfsNbaSlatePlayerAttributesState } from './nba/state/dfs-nba-slate-players-attributes.state';
 import { DfsNflHomeComponent } from './nfl/pages/dfs-nfl-home/dfs-nfl-home.component';
 import { DfsNflGridIronState } from './nfl/state/dfs-nfl-grid-iron.state';
 import { DfsNflProfilerQbState } from './nfl/state/dfs-nfl-profiler-qb.state';
@@ -44,19 +43,12 @@ const states = [
   DfsNflSlateTeamDetailsState,
   DfsNflProfilerQbState,
   DfsNflGridIronState,
-  DfsNbaSlatePlayerState,
+  DfsNbaSlatePlayerAttributesState,
   DfsWeatherState,
 ];
 
 @NgModule({
   imports: [CommonModule, DfsRoutingModule, FormsModule, MaterialModule, SharedModule, NgxsModule.forFeature(states)],
-  declarations: [
-    DfsNbaHomeComponent,
-    DfsTeamMatchupTableComponent,
-    DfsSlateListComponent,
-    PlayerTableRankingColumnComponent,
-    DfsNflHomeComponent,
-    PlayerTableComponent,
-  ],
+  declarations: [DfsNbaHomeComponent, DfsTeamMatchupTableComponent, DfsSlateListComponent, DfsNflHomeComponent, PlayerTableComponent],
 })
 export class DfsModule {}

@@ -1,1 +1,9 @@
 <p>dfs-nba-home works!</p>
+
+<app-player-table
+  [filter]="''"
+  [teamMap]="NBA_TEAM_ID_MAP"
+  [data]="playerList$ | async"
+  [dataRows]="tableConfig.rows"
+  [dataHeaders]="tableConfig.headers"
+></app-player-table>
