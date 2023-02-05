@@ -1,5 +1,4 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
+import { DfsNflSlatePlayerAttributesState } from '../state/dfs-nfl-players-slate-attributes.state';
 
-import { DfsNflSlatePlayerState } from '../state/dfs-nfl-slate-players.state';
-
-export class DfsNflSlatePlayerSelectors extends GenericSelector(DfsNflSlatePlayerState) {}
+export class DfsNflSlatePlayerSelectors extends GenericSelector(DfsNflSlatePlayerAttributesState) {}

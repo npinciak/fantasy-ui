@@ -9,7 +9,9 @@ import { DailyFantasyPlayersSelectors } from '../selectors/daily-fantasy-players
   providedIn: 'root',
 })
 export class DfsPlayersFacade {
+  players$ = select(DailyFantasyPlayersSelectors.getList);
   playersEmpty$ = select(DailyFantasyPlayersSelectors.getSlatesEmpty);
+
   constructor(private store: Store) {}
 
   fetchPlayers(slatePath: string): Observable<void> {

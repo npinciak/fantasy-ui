@@ -11,7 +11,7 @@ import { DfsNflProfilerQb } from '../nfl/actions/dfs-nfl-profiler-qb.actions';
 import { DfsNflProfilerRb } from '../nfl/actions/dfs-nfl-profiler-rb.actions';
 import { DfsNflProfilerTe } from '../nfl/actions/dfs-nfl-profiler-te.actions';
 import { DfsNflProfilerWr } from '../nfl/actions/dfs-nfl-profiler-wr.actions';
-import { DfsNflSlatePlayer } from '../nfl/actions/dfs-nfl-slate-player.actions';
+import { DfsNflSlatePlayerAttributes } from '../nfl/actions/dfs-nfl-slate-player-attributes.actions';
 
 import { DfsNflSlateTeamDetails } from '../nfl/actions/dfs-nfl-slate-team.actions';
 import { PlayerProfiler } from '../nfl/models/nfl-profiler.model';
@@ -65,11 +65,9 @@ export class DfsSlateAttributesState {
 
         break;
       case 'nfl':
-        // await dispatch([new ClearNflPlayerSlateAttributes()]).toPromise();
-
         await this.store
           .dispatch([
-            new DfsNflSlatePlayer.ClearAndAdd(players),
+            new DfsNflSlatePlayerAttributes.ClearAndAdd(players),
             new DfsNflSlateTeamDetails.ClearAndAdd(teams as SlateTeamNfl[]),
             new DfsNflProfilerQb.ClearAndAdd(qbStatGroup),
             new DfsNflProfilerRb.ClearAndAdd(rbStatGroup),

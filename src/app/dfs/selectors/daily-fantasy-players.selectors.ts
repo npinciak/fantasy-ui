@@ -4,10 +4,6 @@ import { SlatePlayer } from '../models/player.model';
 import { DfsSlatePlayersState } from '../state/dfs-players.state';
 
 export class DailyFantasyPlayersSelectors extends GenericSelector(DfsSlatePlayersState) {
-  constructor() {
-    super();
-  }
-
   @Selector([DailyFantasyPlayersSelectors.getList])
   static getSlatesEmpty(arr: SlatePlayer[]): boolean {
     return arr.length <= 0;
