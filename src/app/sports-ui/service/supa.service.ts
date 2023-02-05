@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { exists } from '@app/@shared/helpers/utils';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { createClient, PostgrestResponse, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from 'src/environments/environment';
 
@@ -51,7 +51,7 @@ export class SupaService {
           return exists(res.data) ? res.data : [];
         });
     } catch (e) {
-      console.log({ e });
+      console.error({ e });
     }
   }
 

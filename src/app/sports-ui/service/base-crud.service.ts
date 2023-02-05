@@ -1,5 +1,5 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { exists } from '@app/@shared/helpers/utils';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { AuthError, createClient, PostgrestResponse, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from 'src/environments/environment';
 

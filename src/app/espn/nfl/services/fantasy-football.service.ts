@@ -1,13 +1,13 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EspnTransformers } from '@app/espn/espn.transformers';
 import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
 import { EspnService } from '@app/espn/service/espn.service';
+import { EspnTransformers } from '@app/espn/transformers/espn-transformers.m';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EspnClient } from 'sports-ui-sdk';
-import { FantasyFootballTransformers } from '../fantasy-football.transformers';
 import { FootballLeague } from '../models/fantasy-football-league.model';
+import { FantasyFootballTransformers } from '../transformers/fantasy-football.transformers.m';
 
 @Injectable({
   providedIn: 'root',

@@ -7,7 +7,6 @@ import { EspnClient, EspnFastcastClient } from 'sports-ui-sdk';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from 'src/app/@shared/services/api.service';
-import { EspnTransformers } from '../espn.transformers';
 import {
   EspnEndpointBuilder,
   EspnParamFragment,
@@ -15,6 +14,7 @@ import {
   espnViewParamFragmentList,
   FantasySports,
 } from '../models/espn-endpoint-builder.model';
+import { EspnTransformers } from '../transformers/espn-transformers.m';
 
 @Injectable({
   providedIn: 'root',
