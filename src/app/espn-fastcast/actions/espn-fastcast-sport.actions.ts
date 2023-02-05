@@ -1,11 +1,6 @@
+import { GenericActions } from '@app/@shared/generic-state/generic.actions';
 import { FastcastSport } from '../models/fastcast-sport.model';
 
-export class SetFastcastSports {
-  static readonly type = `[espnFastcastSport] SetFastcastSports`;
-  constructor(public payload: FastcastSport[]) {}
-}
-
-export class ClearAndAddFastcastSports {
-  static readonly type = `[espnFastcastSport] ClearAndAddFastcastSports`;
-  constructor(public payload: FastcastSport[]) {}
-}
+export class FastcastSports extends GenericActions<FastcastSport>({
+  stateName: 'espnFastcastSports',
+}) {}

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
 import { State } from '@ngxs/store';
-import { ClearAndAddFastcastLeague, SetFastcastLeague } from '../actions/espn-fastcast-league.actions';
+import { FastcastLeagues } from '../actions/espn-fastcast-league.actions';
 
-@State({ name: 'espnFastcastLeagues' })
+@State({ name: FastcastLeagues.stateName })
 @Injectable()
 export class EspnFastcastLeagueState extends GenericState({
   idProperty: 'uid',
-  addOrUpdate: SetFastcastLeague,
-  clearAndAdd: ClearAndAddFastcastLeague,
+  addOrUpdate: FastcastLeagues.AddOrUpdate,
+  clearAndAdd: FastcastLeagues.ClearAndAdd,
 }) {}

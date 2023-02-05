@@ -11,10 +11,10 @@ import { fastcastURIBuilder } from '@app/espn/espn.const';
 import { EspnService } from '@app/espn/service/espn.service';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { startWith, tap } from 'rxjs/operators';
-import { SetFastcastEvents } from '../actions/espn-fastcast-event.actions';
-import { SetFastcastLeague } from '../actions/espn-fastcast-league.actions';
-import { SetFastcastSports } from '../actions/espn-fastcast-sport.actions';
-import { SetFastcastTeams } from '../actions/espn-fastcast-team.actions';
+import { FastcastEvents } from '../actions/espn-fastcast-event.actions';
+import { FastcastLeagues } from '../actions/espn-fastcast-league.actions';
+import { FastcastSports } from '../actions/espn-fastcast-sport.actions';
+import { FastcastTeams } from '../actions/espn-fastcast-team.actions';
 import { EspnFastcastConnectionStateModel } from '../models/fastcast-connection-state.model';
 import { EspnFastcastConnectionSelectors } from '../selectors/espn-fastcast-connection.selectors';
 import { EspnFastcastLeagueSelectors } from '../selectors/espn-fastcast-league.selectors';
@@ -37,7 +37,7 @@ import { EspnFastcastService } from '../service/espn-fastcast.service';
 export class EspnFastcastConnectionState {
   constructor(private fastcastService: EspnFastcastService, private espnService: EspnService, private store: Store) {}
 
-  @Action(FastCastConnection.ConnectWebSocket)
+  @Action(FastCastConnection.ConnectWebSocket, { cancelUncompleted: true })
   async connectWebsocket({ getState, patchState }: StateContext<EspnFastcastConnectionStateModel>): Promise<void> {
     const pause = getState().pause;
 
@@ -130,10 +130,10 @@ export class EspnFastcastConnectionState {
     const { sports, leagues, events, teams } = await this.espnService.fetchFastcast(uri).toPromise();
 
     this.store.dispatch([
-      new SetFastcastSports(sports),
-      new SetFastcastLeague(leagues),
-      new SetFastcastEvents(events),
-      new SetFastcastTeams(teams),
+      new FastcastSports.ClearAndAdd(sports),
+      new FastcastLeagues.ClearAndAdd(leagues),
+      new FastcastEvents.ClearAndAdd(events),
+      new FastcastTeams.ClearAndAdd(teams),
       new FastCastConnection.SetSelectedLeague({ leagueSlug: leagues[0].id }),
     ]);
   }
@@ -148,10 +148,10 @@ export class EspnFastcastConnectionState {
       .toPromise();
 
     this.store.dispatch([
-      new SetFastcastSports(sports),
-      new SetFastcastLeague(leagues),
-      new SetFastcastEvents(events),
-      new SetFastcastTeams(teams),
+      new FastcastSports.ClearAndAdd(sports),
+      new FastcastLeagues.ClearAndAdd(leagues),
+      new FastcastEvents.ClearAndAdd(events),
+      new FastcastTeams.ClearAndAdd(teams),
       new FastCastConnection.SetSelectedLeague({ leagueSlug: leagues[0].id }),
     ]);
   }
