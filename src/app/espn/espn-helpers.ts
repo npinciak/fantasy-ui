@@ -1,5 +1,5 @@
 import { tickerDate } from '@app/@shared/helpers/date';
-import { exists } from '@app/@shared/helpers/utils';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
 import { EspnClient, EspnFastcastClient, GameStatus, PITCHING_LINEUP_IDS, SeasonId } from 'sports-ui-sdk';
 

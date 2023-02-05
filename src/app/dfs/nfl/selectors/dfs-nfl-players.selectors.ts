@@ -1,6 +1,6 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { linearRegression, pickData, transformGraphData } from '@app/@shared/helpers/graph.helpers';
-import { exists, existsFilter } from '@app/@shared/helpers/utils';
+import { exists, existsFilter } from '@app/@shared/utilities/utilities.m';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { SlatePlayer } from '@app/dfs/models/player.model';
@@ -20,7 +20,7 @@ import { DfsNflSlateTeamDetailsSelectors } from './dfs-nfl-slate-team.selectors'
 export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState) {
   @Selector([DfsNflPlayerSelectors.getList])
   static getPlayerTeams(list: SlatePlayer[]) {
-    const teams = existsFilter(list.map(p => p.teamId));
+    const teams = existsFilter(list.map(p => p.rgTeamId));
     return uniqueBy(teams, t => t).map(t => Number(t));
   }
 

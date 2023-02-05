@@ -1,7 +1,7 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { linearRegression } from '@app/@shared/helpers/graph.helpers';
-import { exists } from '@app/@shared/helpers/utils';
 import { FilterOptions } from '@app/@shared/models/filter.model';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { Selector } from '@ngxs/store';
 import { BaseballStat, MLB_STATS_KEYS, MLB_STATS_MAP } from 'sports-ui-sdk';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';

@@ -1,8 +1,8 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { currentDate } from '@app/@shared/helpers/date';
-import { exists, normalizeStringToNumber, objectIsEmpty } from '@app/@shared/helpers/utils';
 import { ApiService } from '@app/@shared/services/api.service';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { SlateMasterMap } from '@dfsClient/daily-fantasy-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

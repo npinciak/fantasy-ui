@@ -1,5 +1,5 @@
-import { exists } from '@app/@shared/helpers/utils';
 import { ErrorStatusCode } from '@app/@shared/models/http-errors.model';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { FASTCAST_SERVICE_URI } from '@app/espn/espn.const';
 
 interface WebSocketResponseProps {

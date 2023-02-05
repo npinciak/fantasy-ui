@@ -1,6 +1,6 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { linearRegression } from '@app/@shared/helpers/graph.helpers';
-import { exists } from '@app/@shared/helpers/utils';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
 import { EspnFastcastTeamSelectors } from '@app/espn-fastcast/selectors/espn-fastcast-team.selectors';
 import { benchPlayersFilter, startingPlayersFilter } from '@app/espn/espn-helpers';

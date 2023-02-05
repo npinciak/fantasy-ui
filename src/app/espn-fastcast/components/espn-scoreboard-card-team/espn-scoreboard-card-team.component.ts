@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { exists } from '@app/@shared/helpers/utils';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
 import { GameStatus, GameStatusType } from 'sports-ui-sdk';
 

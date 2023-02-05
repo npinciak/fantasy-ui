@@ -1,7 +1,7 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { exists } from '@app/@shared/helpers/utils';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { EspnClient, unique } from 'sports-ui-sdk';
+import { exists } from '@app/@shared/utilities/utilities.m';
 
 import { Selector } from '@ngxs/store';
 import { FantasyMatchup, FantasyMatchupMap, FantasyMatchupTeam } from '../models/fantasy-schedule.model';

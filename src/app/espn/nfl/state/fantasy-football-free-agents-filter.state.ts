@@ -3,7 +3,7 @@ import { RouterSelector } from '@app/@core/store/router/router.selectors';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { EspnClient, FootballLineupSlot } from 'sports-ui-sdk';
 
-import { exists } from '@app/@shared/helpers/utils';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { SetLineupSlotId, SetPagination, TogglePlayerAvailabilityStatus } from '../actions/fantasy-football-free-agents-filter.actions';
 import { FantasyFootballFreeAgents } from '../actions/fantasy-football-free-agents.actions';

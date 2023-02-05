@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { exists } from '@app/@shared/helpers/utils';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { FastCastConnection } from '@app/espn-fastcast/actions/espn-fastcast-connection.actions';
 import {
   FastcastEventType,

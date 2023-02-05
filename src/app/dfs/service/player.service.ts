@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { exists } from '@app/@shared/helpers/utils';
 import { ApiService } from '@app/@shared/services/api.service';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { DfsSlatePlayer, Schedule as ScheduleImport, ScheduleTeamEntity } from '@dfsClient/daily-fantasy-client.model';
 import { NFLClientGridIronPlayer } from '@dfsClient/nfl-client.model';
 import { camelCase } from 'lodash';

@@ -1,7 +1,7 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { linearRegression } from '@app/@shared/helpers/graph.helpers';
-import { exists, existsFilter } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
+import { exists, existsFilter } from '@app/@shared/utilities/utilities.m';
 import { SlateTeam } from '@app/dfs/models/slate-team.model';
 import { DfsNflTeams } from 'sports-ui-sdk';
 import { DfsNflSlateTeamDetailsState } from '../state/dfs-nfl-slate-teams.state';

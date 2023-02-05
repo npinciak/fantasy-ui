@@ -1,6 +1,6 @@
 import { tickerDate } from '@app/@shared/helpers/date';
-import { exists } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { EspnFastcastConnectionStateModel } from '../models/fastcast-connection-state.model';
 import { EspnFastcastConnectionState } from '../state/espn-fastcast-connection.state';
 import { EspnFastcastEventSelectors } from './espn-fastcast-event.selectors';

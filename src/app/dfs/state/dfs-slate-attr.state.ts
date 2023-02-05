@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RouterSelector } from '@app/@core/store/router/router.selectors';
-import { exists } from '@app/@shared/helpers/utils';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { DfsSlateAttributes } from '../actions/dfs-slate-attr.actions';
 import { DfsWeather } from '../actions/dfs-weather.actions';

@@ -1,4 +1,4 @@
-import { exists } from '@app/@shared/helpers/utils';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { BaseballStat, EspnClient } from 'sports-ui-sdk';
 import { SeasonStatConst } from '../models/adv-stats.model';
 

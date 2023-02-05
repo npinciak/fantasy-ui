@@ -1,6 +1,6 @@
 import { subtractYears } from '@app/@shared/helpers/date';
-import { exists } from '@app/@shared/helpers/utils';
 import { FilterOptions } from '@app/@shared/models/filter.model';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { StatTypePeriodId } from '../models/espn-stats.model';
 
 const BASE_STAT_PERIOD_FILTER_OPTIONS = [

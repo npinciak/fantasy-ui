@@ -1,4 +1,4 @@
-import { exists } from '@app/@shared/helpers/utils';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { environment } from 'src/environments/environment';
 
 export const ESPN_TEXT: Record<string, string> = {

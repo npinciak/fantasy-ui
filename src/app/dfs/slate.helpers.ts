@@ -1,4 +1,5 @@
 import { exists, normalizeStringToNumber, objectIsEmpty } from '@app/@shared/helpers/utils';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { ClientSlateTeamAttributes } from '@dfsClient/daily-fantasy-client-slate-attr.model';
 import { ClientVegas } from '@dfsClient/daily-fantasy-client.model';
 import {
