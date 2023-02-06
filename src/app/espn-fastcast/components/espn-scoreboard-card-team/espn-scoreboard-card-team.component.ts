@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
-import { GameStatus, GameStatusType } from 'sports-ui-sdk';
+import { EspnFastcastClient, EVENT_STATUS } from 'sports-ui-sdk';
+import { EventStatus } from 'sports-ui-sdk/lib/espn/models/espn-client.model';
 
 @Component({
   selector: 'app-espn-scoreboard-card-team',
@@ -11,7 +12,8 @@ import { GameStatus, GameStatusType } from 'sports-ui-sdk';
 export class EspnScoreboardCardTeamComponent {
   @Input() team: FastcastEventTeam;
   @Input() isTournament: boolean;
-  @Input() eventStatus: GameStatusType;
+  @Input() eventStatus: EventStatus;
+  @Input() odds: EspnFastcastClient.EspnClientTeamOddsEntity;
 
   get ariaInfo() {
     return {
@@ -20,9 +22,7 @@ export class EspnScoreboardCardTeamComponent {
   }
 
   get opacity() {
-    if (this.eventStatus === GameStatus.InProgress) {
-      return '100%';
-    }
+    if (this.eventStatus === EVENT_STATUS.InProgress) return '100%';
 
     return !this.team.isWinner ? '50%' : null;
   }
@@ -36,6 +36,6 @@ export class EspnScoreboardCardTeamComponent {
   }
 
   get isPregame() {
-    return this.eventStatus === GameStatus.Pre;
+    return this.eventStatus === EVENT_STATUS.Pre;
   }
 }

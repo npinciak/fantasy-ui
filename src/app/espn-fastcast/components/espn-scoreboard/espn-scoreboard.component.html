@@ -3,7 +3,7 @@
     <mat-card-content>
       <div class="flex-col">
         <div class="flex-row" style="align-items: center; padding: 15px">
-          <div class="scoreboard refresh timestamp" style="display: flex; flex: 1 1 auto">{{ lastRefreshAsTickerDate$ | async }}</div>
+          <div class="scoreboard refresh timestamp" style="display: flex; flex: 1 1 auto"><mat-icon>sensors</mat-icon> {{ lastRefreshAsTickerDate$ | async }}</div>
           <div style="display: flex; align-content: center; flex: 1 1 auto; place-content: center flex-end">
             <button mat-icon-button aria-label="Button to start and pause feed" (click)="onStartFeed()">
               <mat-icon>{{ (paused$ | async) ? 'play_arrow_outline' : 'pause_circle_outline' }}</mat-icon>
@@ -31,9 +31,6 @@
 
 <ng-template #feed>
   <ng-container *ngFor="let event of eventsByLeagueId$ | async; let first = first; let last = last; let i = index">
-    <!-- (toggleExpandedEvent)="onToggleExpandedEvent($event)"
-    (toggleOffExpandedEvent)="onToggleOffExpandedEvent($event)" -->
-
     <app-espn-scoreboard-card
       [ngStyle]="{ 'border-left': !first ? '1px solid #a5a6a7' : '' }"
       [index]="i"

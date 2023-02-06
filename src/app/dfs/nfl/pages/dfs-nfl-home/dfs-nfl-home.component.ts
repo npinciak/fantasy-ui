@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { UrlQueryParams } from '@app/@core/store/router/url-builder';
 import { DfsMatchupFacade } from '@app/dfs/facade/dfs-matchup.facade';
 import { DfsPlayersFacade } from '@app/dfs/facade/dfs-players.facade';
 import { DailyFantasySlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
@@ -21,9 +19,6 @@ import { NFL_STAT_GROUP_MAP } from '../../models/stat-group.model';
   templateUrl: './dfs-nfl-home.component.html',
 })
 export class DfsNflHomeComponent {
-  readonly LEAGUE = this.activatedRoute.snapshot.queryParamMap.get(UrlQueryParams.Sport);
-  readonly SITE = this.activatedRoute.snapshot.queryParamMap.get(UrlQueryParams.Site);
-
   readonly TABLE_HEADERS_BY_POS = DfsNflTableColumns.HEADERS_BY_POS;
   readonly TABLE_ROWS_BY_POS = DfsNflTableColumns.ROWS_BY_POS;
 
@@ -85,7 +80,6 @@ export class DfsNflHomeComponent {
   );
 
   constructor(
-    private activatedRoute: ActivatedRoute,
     readonly nflPlayerFacade: DfsNflPlayerFacade,
     readonly nflTeamSlateAttrFacade: DfsNflSlateTeamDetailsFacade,
     readonly dailyFantasyPlayersFacade: DfsPlayersFacade,
@@ -93,8 +87,6 @@ export class DfsNflHomeComponent {
     readonly dailyFantasySlateAttrFacade: DailyFantasySlateAttrFacade,
     readonly dailyFantasyMatchupFacade: DfsMatchupFacade
   ) {}
-
-  onRowSelected(data) {}
 
   onAxisXChange(val: string) {
     this.xAxisStat$.next(val);

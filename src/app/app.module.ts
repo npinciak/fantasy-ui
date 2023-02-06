@@ -52,7 +52,10 @@ const reduxDevtoolsExtensionOptions = {
     BrowserModule,
     HttpClientModule,
     // NgxsRouterPluginModule.forRoot(),
-    NgxsModule.forRoot([RouterState], { developmentMode: !environment.production, selectorOptions: { injectContainerState: false } }),
+    NgxsModule.forRoot([RouterState], {
+      developmentMode: !environment.production,
+      selectorOptions: { injectContainerState: false, suppressErrors: false },
+    }),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production, actionSanitizer, stateSanitizer }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,

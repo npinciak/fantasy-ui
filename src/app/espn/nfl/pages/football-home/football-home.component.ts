@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { FantasyFootballScheduleFacade } from '../../facade/fantasy-football-sch
   templateUrl: './football-home.component.html',
   styleUrls: ['./football-home.component.scss'],
 })
-export class FootballHomeComponent implements OnInit {
+export class FootballHomeComponent {
   readonly LEAGUE_STANDINGS_ROWS = FOOTBALL_LEAGUE_STANDINGS_ROWS;
   readonly LEAGUE_STANDINGS_HEADERS = FOOTBALL_LEAGUE_STANDINGS_HEADERS;
 
@@ -30,8 +30,6 @@ export class FootballHomeComponent implements OnInit {
     readonly fantasyFootballScheduleFacade: FantasyFootballScheduleFacade,
     readonly fantasyFootballLeagueFacade: FantasyFootballLeagueFacade
   ) {}
-
-  ngOnInit(): void {}
 
   onNavigateToTeam(teamId: string) {
     this.routerFacade.navigateToFantasyTeam(teamId);

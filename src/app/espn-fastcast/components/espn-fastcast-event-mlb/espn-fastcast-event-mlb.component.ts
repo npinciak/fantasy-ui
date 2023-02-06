@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
+import { EVENT_STATUS } from 'sports-ui-sdk';
 
 @Component({
   selector: 'app-espn-fastcast-event-mlb',
@@ -10,6 +11,6 @@ export class EspnFastcastEventMlbComponent {
   @Input() event: FastcastEvent;
 
   get eventInProgress() {
-    return !this.event.completed && this.event.status !== 'pre' && this.event.status !== 'post';
+    return !this.event.completed && this.event.status === EVENT_STATUS.InProgress;
   }
 }

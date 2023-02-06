@@ -9,7 +9,7 @@
           <span style="margin-right: 5px" [hidden]="noTeamRank">{{ team?.rank }}</span
           >{{ team?.name }}
         </div>
-        <div [ngStyle]="{ color: team.color }">
+        <div style="font-size: 12px" [ngStyle]="{ color: team.color }">
           <ng-container *ngIf="!isTournament; else tournamentAggregate"> {{ team?.record }}</ng-container>
         </div>
       </div>
@@ -20,6 +20,10 @@
     <div class="game-score-item" [ngStyle]="{ color: team.color }">
       <span [class.game-score-winner]="team?.isWinner" [hidden]="isPregame"> {{ team?.score }}</span>
     </div>
+
+    <!-- <div *ngIf="isPregame" class="game-score-item" [ngStyle]="{ color: team.color }">
+      <span [class.game-score-winner]="odds.favorite"> {{ odds.moneyLine }}</span>
+    </div> -->
   </div>
 
   <div style="align-content: center; justify-content: center">

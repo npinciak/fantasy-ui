@@ -16,8 +16,19 @@
       <a [title]="ariaInfo.eventGamecast" [href]="event?.link" target="_blank"><mat-icon class="new-tab-icon">open_in_new</mat-icon></a>
     </div>
   </div>
-  <app-espn-scoreboard-card-team [eventStatus]="event.status" [isTournament]="isTournament" [team]="event?.teams?.away"></app-espn-scoreboard-card-team>
-  <app-espn-scoreboard-card-team [eventStatus]="event.status" [isTournament]="isTournament" [team]="event?.teams?.home"></app-espn-scoreboard-card-team>
+
+  <app-espn-scoreboard-card-team
+    [eventStatus]="event.status"
+    [isTournament]="isTournament"
+    [team]="event?.teams?.away"
+    [odds]="event?.odds?.awayTeamOdds"
+  ></app-espn-scoreboard-card-team>
+  <app-espn-scoreboard-card-team
+    [eventStatus]="event.status"
+    [isTournament]="isTournament"
+    [team]="event?.teams?.home"
+    [odds]="event?.odds?.homeTeamOdds"
+  ></app-espn-scoreboard-card-team>
 </article>
 
 <!-- <mat-card-actions style="display: none">

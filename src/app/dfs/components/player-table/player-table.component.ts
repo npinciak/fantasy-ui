@@ -60,8 +60,6 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
     this.dataSource.filterPredicate = this.dataSourceFilter();
   }
 
-  
-
   dataSourceFilter(): (data: NflDfsPlayerTableData, filterJson: string) => boolean {
     return (data, filterJson): boolean => {
       if (filterJson === '') {
@@ -78,8 +76,8 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
           }
           break;
         case FilterType.team:
-          if (data.teamId) {
-            textMatches = data.teamId === filter.value;
+          if (data.rgTeamId) {
+            textMatches = data.rgTeamId === filter.value;
           }
           break;
         case FilterType.pos:

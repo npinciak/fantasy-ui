@@ -6,7 +6,7 @@ import { exists } from '@app/@shared/utilities/utilities.m';
 import { SlateMasterMap } from '@dfsClient/daily-fantasy-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DfsSiteToDfsSiteTypeMap } from 'sports-ui-sdk';
+import { DFS_SITE_TO_DFS_SITETYPE_MAP } from 'sports-ui-sdk';
 import {
   ClientSlateAttributes,
   ClientSlatePlayerAttributesMap,
@@ -34,20 +34,17 @@ export class SlateService {
   }
 
   static transformNbaSlateTeamAttributes(teamAttributes: ClientSlateTeamAttributes) {
-    console.log(teamAttributes);
-
     return null;
   }
 
   static transformNflSlateTeamAttributes(teamAttributes: ClientSlateTeamAttributes) {
-    console.log(teamAttributes);
-
     return null;
   }
 
   static transformMlbSlateTeamAttributes(teamAttributes: ClientSlateTeamAttributes, site: string): MLBClientTeamAttributes {
     const obj = {} as MLBClientTeamAttributes;
 
+    // eslint-disable-next-line guard-for-in
     for (const prop in teamAttributes) {
       switch (prop) {
         case 'pitcher':
@@ -85,7 +82,7 @@ export class SlateService {
       return [];
     }
 
-    const siteMap = DfsSiteToDfsSiteTypeMap[site];
+    const siteMap = DFS_SITE_TO_DFS_SITETYPE_MAP[site];
 
     return Object.entries(players).map(([id, player]) => ({
       id,

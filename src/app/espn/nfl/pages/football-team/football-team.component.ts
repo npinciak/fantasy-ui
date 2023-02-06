@@ -6,13 +6,13 @@ import { FOOTBALL_STAT_PERIOD_FILTER_OPTIONS } from '@app/espn/const/stat-period
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { NFL_POSITION_MAP, NFL_STATS_MAP } from 'sports-ui-sdk';
+import { FootballPosition, NFL_POSITION_MAP, NFL_STATS_MAP } from 'sports-ui-sdk';
 import { FantasyFootballPlayerNews } from '../../actions/fantasy-football-player-news.actions';
 import { FOOTBALL_ROSTER_HEADERS_BY_POS, FOOTBALL_ROSTER_ROWS_BY_POS } from '../../consts/fantasy-football-table.const';
 import { FantasyFootballLeagueFacade } from '../../facade/fantasy-football-league.facade';
 import { FantasyFootballTeamFacade } from '../../facade/fantasy-football-team.facade';
 import { FootballPlayer } from '../../models/football-player.model';
-import { FootballPosition, FOOTBALL_POSITION_LIST_FILTER } from '../../models/football-position.model';
+import { FOOTBALL_POSITION_LIST_FILTER } from '../../models/football-position.model';
 @Component({
   selector: 'app-football-team',
   templateUrl: './football-team.component.html',
@@ -31,8 +31,6 @@ export class FootballTeamComponent implements OnInit {
 
   readonly FOOTBALL_ROSTER_HEADERS_BY_POS = FOOTBALL_ROSTER_HEADERS_BY_POS;
   readonly FOOTBALL_ROSTER_ROWS_BY_POS = FOOTBALL_ROSTER_ROWS_BY_POS;
-
-  readonly FootballPosition = FootballPosition;
 
   isLoading$ = this.footballLeagueFacade.isLoading$;
 

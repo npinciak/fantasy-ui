@@ -19,12 +19,12 @@
                     <div>
                       {{ data?.name }}
                     </div>
-                    <div class="player team-pos">{{ teamMap[data?.teamId] }}, {{ data?.position }}</div>
+                    <div class="player team-pos">{{ teamMap[data?.rgTeamId] }}, {{ data?.position }}</div>
                   </div>
                 </div>
               </ng-template>
               <ng-template [ngSwitchDefault]>
-                {{ col.dataType === TableColumnDataType.Number ? (col?.cellData(data) | statFormat: 'number' | number: '1.0-3') : col?.cellData(data) ?? '-' }}
+                {{ col.dataType === TableColumnDataType.Number ? (col?.cellData(data) | statFormat: 'number' | number: '1.0-3') : col?.cellData(data) }}
               </ng-template>
             </ng-container>
           </app-loading-skeleton>

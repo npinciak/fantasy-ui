@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { EspnClient } from 'sports-ui-sdk';
 
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { EspnClient } from 'sports-ui-sdk';
 import {
   PatchPlayerAvailabilityStatus,
   RemoveLineupSlotIds,
@@ -32,7 +32,7 @@ export class FantasyBaseballFreeAgentsFilterFacade {
     return this.store.dispatch([new ToggleLineupSlotIds({ lineupSlotIds })]);
   }
 
-  togglePlayerAvailabilityStatus(status: EspnClient.FreeAgentAvailabilityStatus): Observable<void> {
+  togglePlayerAvailabilityStatus(status: EspnClient.PlayerAvailabilityStatus): Observable<void> {
     return this.store.dispatch(new PatchPlayerAvailabilityStatus(status));
   }
 

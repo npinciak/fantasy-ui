@@ -3,7 +3,8 @@ import { tickerDate } from '@app/@shared/helpers/date';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
 import { fastcastEventSummary } from '@app/espn/espn-helpers';
 import { FASTCAST_DATE_SHORT } from '@app/espn/espn.const';
-import { EspnClient } from 'sports-ui-sdk';
+import { EVENT_STATUS, SEASON_ID } from 'sports-ui-sdk';
+import { EventAriaInfo } from '../espn-scoreboard/aria-info';
 
 @Component({
   selector: 'app-espn-scoreboard-card',
@@ -14,9 +15,10 @@ export class EspnScoreboardCardComponent implements OnChanges {
   @Input() event: FastcastEvent;
   @Input() isTournament: boolean;
   @Input() isEventToggled: boolean;
+  @Input() ariaAttributes: EventAriaInfo;
   @Input() ariaSetsize: number;
   @Input() ariaPosinset: number;
-  @Input() index: number = 0;
+  @Input() index = 0;
 
   @Output() toggleExpandedEvent = new EventEmitter<string>();
   @Output() toggleOffExpandedEvent = new EventEmitter<string>();
@@ -29,8 +31,6 @@ export class EspnScoreboardCardComponent implements OnChanges {
     this.isEventToggled = changes.isEventToggled.currentValue;
   }
 
-  readonly league = EspnClient.LeagueId;
-
   toggleExpansionPanel(eventId: string): void {
     this.toggleExpandedEvent.emit(eventId);
   }
@@ -39,16 +39,12 @@ export class EspnScoreboardCardComponent implements OnChanges {
     this.toggleOffExpandedEvent.emit(eventId);
   }
 
-  get eventPostponed(): boolean {
-    return this.event.status === EspnClient.FastCastGameStatus.Postgame;
-  }
-
   get eventInProgress(): boolean {
-    return this.event.status === EspnClient.FastCastGameStatus.InProgress;
+    return this.event.status === EVENT_STATUS.InProgress;
   }
 
   get isPostseason() {
-    return this.event.seasonType === EspnClient.FastCastSeasonType.Postseason;
+    return this.event.seasonType === SEASON_ID.Postseason;
   }
 
   get eventSummary() {

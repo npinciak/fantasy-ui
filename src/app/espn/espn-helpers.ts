@@ -1,8 +1,7 @@
 import { tickerDate } from '@app/@shared/helpers/date';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
-import { EspnClient, EspnFastcastClient, GameStatus, PITCHING_LINEUP_IDS, SeasonId } from 'sports-ui-sdk';
-
+import { EspnClient, EspnFastcastClient, EVENT_STATUS, PITCHING_LINEUP_IDS, PLAYER_INJURY_STATUS, SEASON_ID } from 'sports-ui-sdk';
 import { BaseballPlayer } from './mlb/models/baseball-player.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
 
@@ -90,7 +89,7 @@ export function transformUidToId(uid: string | null): string | null {
 }
 
 export function transformIdToUid(
-  sportId: EspnClient.Sport | null,
+  sportId: EspnClient.SportId | null,
   leagueId: EspnClient.LeagueId | null,
   teamId: string | number | null
 ): string {
@@ -129,13 +128,13 @@ export function startingPlayersFilter<T extends FootballPlayer | BaseballPlayer>
 }
 
 export function injuredReservePlayersFilter<T extends FootballPlayer | BaseballPlayer>(players: T[]): T[] {
-  return players.filter(p => p.injuryStatus === EspnClient.PlayerInjuryStatus.IR);
+  return players.filter(p => p.injuryStatus === PLAYER_INJURY_STATUS.IR);
 }
 
 export function fastcastEventSummary(event: FastcastEvent): string | null {
-  const inProgress = event.status === GameStatus.InProgress;
-  const eventPostponed = event.status === GameStatus.Postgame;
-  const isPostseason = event.seasonType === SeasonId.Postseason;
+  const inProgress = event.status === EVENT_STATUS.InProgress;
+  const eventPostponed = event.status === EVENT_STATUS.Postgame;
+  const isPostseason = event.seasonType === SEASON_ID.Postseason;
 
   const date = tickerDate(event.timestamp);
 

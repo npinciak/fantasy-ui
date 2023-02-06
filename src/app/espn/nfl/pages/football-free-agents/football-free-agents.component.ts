@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FOOTBALL_STAT_PERIOD_FILTER_OPTIONS } from '@app/espn/const/stat-period.const';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { BasicFootballLineupSlotFilterOptions, FootballLineupSlot, FOOTBALL_LINEUP_MAP, NFL_STATS_MAP } from 'sports-ui-sdk';
+import { BASIC_FOOTBALL_LINEUP_SLOT_FILTER_OPTIONS, FootballLineupSlot, FOOTBALL_LINEUP_MAP, NFL_STATS_MAP } from 'sports-ui-sdk';
+
 import { FootballTableColumns } from '../../consts/fantasy-football-table.const';
 import { FOOTBALL_STATS_FILTER } from '../../consts/stats-filters.const';
 import { FantasyFootballFreeAgentsFilterFacade } from '../../facade/fantasy-football-free-agents-filter.facade';
@@ -18,7 +19,7 @@ export class FootballFreeAgentsComponent implements OnInit {
   readonly FOOTBALL_STATS_MAP = NFL_STATS_MAP;
   readonly FOOTBALL_STAT_PERIOD_FILTER_OPTIONS = FOOTBALL_STAT_PERIOD_FILTER_OPTIONS;
   readonly FOOTBALL_LINEUP_SLOT_MAP = FOOTBALL_LINEUP_MAP;
-  readonly LINEUP_SLOTS = BasicFootballLineupSlotFilterOptions;
+  readonly LINEUP_SLOTS = BASIC_FOOTBALL_LINEUP_SLOT_FILTER_OPTIONS;
   readonly FOOTBALL_STATS_FILTER = FOOTBALL_STATS_FILTER;
 
   selectedTeamId$ = new BehaviorSubject('10');

@@ -2,7 +2,6 @@ import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { blendColors } from '@app/@shared/helpers/color-blender';
 import { TableColumn } from '@app/@shared/models/table-columns.model';
 
 /**
@@ -45,41 +44,4 @@ export class MatchupTableComponent implements OnInit, AfterViewInit, OnChanges {
   movementTooltip(movement: number, total: number): string {
     return `From ${total - movement}`;
   }
-
-  colorScaleTable = (min: number = 1, max: number = 33, val: number, thresholdType) => {
-    if (thresholdType) {
-      // The colors to use for the gradient starting at the lowest and highest values
-      //let low_hex  = '#00FF66' ;
-      //let high_hex = '#443456' ;
-
-      // ===== Light/bright colors ===== //
-      //let low_hex  = '#FF4545' ; // Red
-      //let low_hex  = '#FFFF45' ; // Yellow
-      //let low_hex  = '#FFE445' ; // Orange
-      //let high_hex = '#45FF45' ; // Green
-
-      // ===== Dark Colors ===== //
-      const highHex = '#d43d51'; // Orange
-      const lowHex = '#00876c'; // Green
-
-      // Get min value in range
-      const minVal = min;
-
-      // Get maximum value in range
-      const maxVal = max;
-
-      // The distance between min_val and max_val
-      const range = maxVal - minVal;
-
-      const percentInRange = val / range;
-
-      //color = blendColors(low_hex, high_hex, 0.5);
-      let color = blendColors(lowHex, highHex, percentInRange);
-
-      // Concatenate an alpha/opacity value onto the hex color. Ex: #00FF00 --> #00FF0084
-      color += '64';
-
-      return color;
-    }
-  };
 }

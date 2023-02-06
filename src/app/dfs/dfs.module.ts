@@ -14,11 +14,11 @@ import { DfsNbaHomeComponent } from './nba/pages/dfs-nba-home/dfs-nba-home.compo
 import { DfsNbaSlatePlayerAttributesState } from './nba/state/dfs-nba-slate-players-attributes.state';
 import { DfsNflHomeComponent } from './nfl/pages/dfs-nfl-home/dfs-nfl-home.component';
 import { DfsNflGridIronState } from './nfl/state/dfs-nfl-grid-iron.state';
+import { DfsNflSlatePlayerAttributesState } from './nfl/state/dfs-nfl-players-slate-attributes.state';
 import { DfsNflProfilerQbState } from './nfl/state/dfs-nfl-profiler-qb.state';
 import { DfsNflProfilerRbState } from './nfl/state/dfs-nfl-profiler-rb.state';
 import { DfsNflProfilerTeState } from './nfl/state/dfs-nfl-profiler-te.state';
 import { DfsNflProfilerWrState } from './nfl/state/dfs-nfl-profiler-wr.state';
-import { DfsNflSlatePlayerState } from './nfl/state/dfs-nfl-slate-players.state';
 import { DfsNflSlateTeamDetailsState } from './nfl/state/dfs-nfl-slate-teams.state';
 import { DfsMatchupsState } from './state/dfs-matchups.state';
 import { DfsSlatePlayersState } from './state/dfs-players.state';
@@ -39,7 +39,7 @@ const states = [
   DfsNflProfilerRbState,
   DfsNflProfilerWrState,
   DfsNflProfilerTeState,
-  DfsNflSlatePlayerState,
+  DfsNflSlatePlayerAttributesState,
   DfsNflSlateTeamDetailsState,
   DfsNflProfilerQbState,
   DfsNflGridIronState,

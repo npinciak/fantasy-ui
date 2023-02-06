@@ -3,7 +3,7 @@ import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { benchPlayersFilter, injuredReservePlayersFilter, startingPlayersFilter } from '@app/espn/espn-helpers';
-import { EspnClient, FOOTBALL_LINEUP_MAP } from 'sports-ui-sdk';
+import { EspnClient, FootballPosition, FOOTBALL_LINEUP_MAP } from 'sports-ui-sdk';
 import { FootballPlayer } from '../models/football-player.model';
 import { FootballTeam } from '../models/football-team.model';
 
@@ -89,7 +89,7 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
 
   @Selector([FantasyFootballTeamSelectors.getTeamStats])
   static getTeamStatsByPositionId(getTeamStats: (id: string | null, statPeriod: string) => FootballPlayer[]) {
-    return (id: string | null, statPeriod: string, positionId: EspnClient.FootballPosition) =>
+    return (id: string | null, statPeriod: string, positionId: FootballPosition) =>
       getTeamStats(id, statPeriod).filter(p => p.defaultPositionId === positionId);
   }
 
