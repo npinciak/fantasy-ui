@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { currentDate } from '@app/@shared/helpers/date';
+import { espnDateFormatter } from '@app/@shared/helpers/date';
 import { normalizeStringToNumber, objectIsEmpty } from '@app/@shared/helpers/utils';
 import { ApiService } from '@app/@shared/services/api.service';
 import { DailyFantasyEndpointBuilder } from '@app/dfs/daily-fantasy-endpoint-builder';
@@ -17,7 +17,7 @@ import { ClientVegas } from '@dfsClient/daily-fantasy-client.model';
 import { MLBClientTeamAttributes } from '@dfsClient/mlb-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DfsSiteToDfsSiteTypeMap } from 'sports-ui-sdk/lib/lib/dfs/site.const';
+import { DFS_SITE_TO_DFS_SITETYPE_MAP } from 'sports-ui-sdk';
 
 @Injectable({
   providedIn: 'root',
@@ -64,7 +64,7 @@ export class MlbSlateService {
       return [];
     }
 
-    const siteMap = DfsSiteToDfsSiteTypeMap[site];
+    const siteMap = DFS_SITE_TO_DFS_SITETYPE_MAP[site];
 
     return Object.entries(players).map(([id, player]) => ({
       id,
@@ -81,13 +81,14 @@ export class MlbSlateService {
 
   /**
    * Fetch Game attributes by slateId
+   *
    * @param request
    * @returns
    */
   getGameAttrBySlateId(request: { sport: string; site: string; slate: string }): Observable<SlateAttributes> {
     const endpoint = new DailyFantasyEndpointBuilder();
     let params = new HttpParams();
-    params = params.append('date', currentDate('-'));
+    params = params.append('date', espnDateFormatter({ delim: '-' }));
     params = params.append('site', request.site);
     params = params.append('slate_id', request.slate);
     return this.apiService.get<ClientSlateAttributes>(endpoint.slateAttr, { params }).pipe(

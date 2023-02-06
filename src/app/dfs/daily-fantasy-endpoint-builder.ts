@@ -1,4 +1,4 @@
-import { currentDate } from '@app/@shared/helpers/date';
+import { espnDateFormatter } from '@app/@shared/helpers/date';
 import { environment } from 'src/environments/environment';
 
 export class DailyFantasyEndpointBuilder {
@@ -36,7 +36,7 @@ export class DailyFantasyEndpointBuilder {
   }
 
   get plateIq() {
-    const date = currentDate('-');
+    const date = espnDateFormatter({ delim: '-', date: new Date().getTime() });
     let url = `${this.awsJson}/plateiq/${date}/${this._gameId}.json`;
     url += `?timestamp=${new Date().getTime()}`;
     return url;
@@ -47,7 +47,7 @@ export class DailyFantasyEndpointBuilder {
   }
 
   get slateMaster() {
-    const date = currentDate('/');
+    const date = espnDateFormatter({ delim: '/', date: new Date().getTime() });
     return `${this.awsJson}/v2.00/${date}/slates/${this._sport}-master.json`;
   }
 

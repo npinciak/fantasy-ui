@@ -1,4 +1,3 @@
-import { subtractYears } from '@app/@shared/helpers/date';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { StatTypePeriodId } from '../models/espn-stats.model';
@@ -12,7 +11,6 @@ const BASE_STAT_PERIOD_FILTER_OPTIONS = [
     value: YearToScoringPeriodId({ periodType: StatTypePeriodId.Projected }),
     label: 'Season Proj',
   },
-  { value: YearToScoringPeriodId({ periodType: StatTypePeriodId.Season, dateObj: subtractYears(1) }), label: 'Last Season' },
 ];
 
 export const BASEBALL_STAT_PERIOD_FILTER_OPTIONS: FilterOptions<string>[] = [
@@ -26,6 +24,7 @@ export const FOOTBALL_STAT_PERIOD_FILTER_OPTIONS: FilterOptions<string>[] = BASE
 
 /**
  * Returns transformed statPeriodId
+ *
  * @param periodType
  * @param dateObj
  *

@@ -54,11 +54,8 @@ export class EspnScoreboardComponent {
     this.fastcastFacade.setPauseState();
   }
 
-  scroll() {
-    document.getElementById('scoreboard-feed')!.scrollLeft += 300;
-  }
 
-  scrollBack() {
-    document.getElementById('scoreboard-feed')!.scrollLeft -= 300;
-  }
+
+
+  
 }

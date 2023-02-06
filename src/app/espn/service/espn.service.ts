@@ -1,11 +1,10 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { currentDate } from '@app/@shared/helpers/date';
+import { espnDateFormatter } from '@app/@shared/helpers/date';
 import { FastcastTransform } from '@app/espn-fastcast/models/fastcast-transform.model';
-import { EspnClient, EspnFastcastClient } from 'sports-ui-sdk';
-
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { EspnClient, EspnFastcastClient } from 'sports-ui-sdk';
 import { ApiService } from 'src/app/@shared/services/api.service';
 import {
   EspnEndpointBuilder,
@@ -42,7 +41,7 @@ export class EspnService {
    *
    * @param leagueId
    * @param sport
-   * @returns EspnClientLeague
+   * @returns EspnLeague
    */
   fetchFantasyLeagueBySport<T>(data: { sport: FantasySports; leagueId: string; year: string; headers?: HttpHeaders }): Observable<T> {
     const endpoint = new EspnEndpointBuilder(data.sport, data.leagueId, data.year);
@@ -54,13 +53,13 @@ export class EspnService {
    *
    * @param leagueId
    * @param sport
-   * @returns EspnClientLeague
+   * @returns EspnLeague
    */
   fetchFantasyLeagueEvents(sport: FantasySports, headers?: HttpHeaders): Observable<EspnClient.EventList> {
     const endpoint = new EspnEndpointBuilder(sport);
     const params = new HttpParams()
       .set(EspnParamFragment.UseMap, true)
-      .set(EspnParamFragment.Dates, currentDate(''))
+      .set(EspnParamFragment.Dates, espnDateFormatter({ delim: '-', date: new Date().getTime() }))
       .set(EspnParamFragment.PbpOnly, true);
     return this.api.get<EspnClient.EventList>(endpoint.espnEvents, { params, headers });
   }
@@ -92,7 +91,7 @@ export class EspnService {
   fetchFantasyFreeAgentsBySport(
     sport: FantasySports,
     leagueId: string,
-    scoringPeriod: number,
+    scoringPeriod: string,
     headers: HttpHeaders
   ): Observable<{ players: EspnClient.FreeAgent[] }> {
     const endpoint = new EspnEndpointBuilder(sport, leagueId);

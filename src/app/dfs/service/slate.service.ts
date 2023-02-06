@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { currentDate } from '@app/@shared/helpers/date';
+import { espnDateFormatter } from '@app/@shared/helpers/date';
 import { ApiService } from '@app/@shared/services/api.service';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { SlateMasterMap } from '@dfsClient/daily-fantasy-client.model';
@@ -114,7 +114,7 @@ export class SlateService {
     this.endpointBuilder.sport = request.sport;
 
     let params = new HttpParams();
-    params = params.append('date', currentDate('-'));
+    params = params.append('date', espnDateFormatter({ delim: '-', date: new Date().getTime() }));
     params = params.append('site', request.site);
     params = params.append('slate_id', request.slate);
     return this.apiService.get<ClientSlateAttributes>(this.endpointBuilder.slateAttr, { params }).pipe(
