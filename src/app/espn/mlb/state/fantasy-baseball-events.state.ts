@@ -10,8 +10,7 @@ import { MlbService } from '../services/mlb.service';
 @Injectable()
 export class FantasyBaseballEventsState extends GenericState({
   idProperty: 'id',
-  addOrUpdate: FantasyBaseballEvents.AddOrUpdate,
-  clearAndAdd: FantasyBaseballEvents.ClearAndAdd,
+  actionHandler: FantasyBaseballEvents,
 }) {
   constructor(private mlbService: MlbService, private store: Store) {
     super();

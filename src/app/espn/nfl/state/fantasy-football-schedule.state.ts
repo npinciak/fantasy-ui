@@ -7,6 +7,5 @@ import { FantasyFootballSchedule } from '../actions/fantasy-football-schedule.ac
 @Injectable()
 export class FantasyFootballScheduleState extends GenericState({
   idProperty: 'id',
-  addOrUpdate: FantasyFootballSchedule.AddOrUpdate,
-  clearAndAdd: FantasyFootballSchedule.ClearAndAdd,
+  actionHandler: FantasyFootballSchedule,
 }) {}

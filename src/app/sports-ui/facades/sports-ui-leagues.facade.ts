@@ -17,7 +17,7 @@ export class SportsUiLeaguesFacade extends GenericFacade(SportsUiLeaguesSelector
   allLeagues$ = select(SportsUiLeaguesSelector.getList);
 
   fetchLeagues(): Observable<void> {
-    return this.store.dispatch(new SportsUiLeagues.FetchLeagues());
+    return this.store.dispatch(new SportsUiLeagues.Fetch());
   }
 
   deleteLeague(leagueId: string): Observable<void> {

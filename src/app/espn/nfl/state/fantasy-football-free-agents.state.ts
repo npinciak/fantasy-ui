@@ -8,25 +8,21 @@ import { FantasyFootballService } from '../services/fantasy-football.service';
 import { FantasyFootballFreeAgentsFilterState } from './fantasy-football-free-agents-filter.state';
 
 import { map } from 'rxjs/operators';
-import { EspnClient } from 'sports-ui-sdk';
+import { PLAYER_AVAILABILITY_STATUS } from 'sports-ui-sdk';
 import { FantasyFootballLeagueSelector } from '../selectors/fantasy-football-league.selectors';
 
 @State({ name: FantasyFootballFreeAgents.name })
 @Injectable()
 export class FantasyFootballFreeAgentsState extends GenericState({
   idProperty: 'id',
-  addOrUpdate: FantasyFootballFreeAgents.AddOrUpdate,
-  clearAndAdd: FantasyFootballFreeAgents.ClearAndAdd,
+  actionHandler: FantasyFootballFreeAgents,
 }) {
   constructor(private service: FantasyFootballService, private store: Store) {
     super();
   }
 
   @Action(FantasyFootballFreeAgents.Fetch, { cancelUncompleted: true })
-  fetchFantasyFootballFreeAgents(
-    {}: StateContext<GenericStateModel<FootballPlayer>>,
-    { payload: { leagueId, season } }: FantasyFootballFreeAgents.Fetch
-  ) {
+  fetchFantasyFootballFreeAgents({}: StateContext<GenericStateModel<FootballPlayer>>, { payload: { leagueId, season } }) {
     // const leagueId = this.store.selectSnapshot(RouterSelector) ?? '';
     const scoringPeriodId = this.store.selectSnapshot(FantasyFootballLeagueSelector.getScoringPeriodId);
 
@@ -35,8 +31,9 @@ export class FantasyFootballFreeAgentsState extends GenericState({
     const lineupSlotId = this.store.selectSnapshot(FantasyFootballFreeAgentsFilterState.getSelectedLineupSlotId);
 
     const filterSlotIds = { value: [lineupSlotId] };
+
     const filterStatus = {
-      value: [EspnClient.FreeAgentAvailabilityStatus.FreeAgent, EspnClient.FreeAgentAvailabilityStatus.Waivers],
+      value: [PLAYER_AVAILABILITY_STATUS.FreeAgent, PLAYER_AVAILABILITY_STATUS.Waivers],
     }; // { value: availabilityStatus };
     //   const filterSlotIds = { value: lineupSlotIds };
     //   const filterStatsForTopScoringPeriodIds = {

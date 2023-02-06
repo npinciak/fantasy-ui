@@ -5,8 +5,4 @@ import { FastcastTeams } from '../actions/espn-fastcast-team.actions';
 
 @State({ name: FastcastTeams.stateName })
 @Injectable()
-export class EspnFastcastTeamState extends GenericState({
-  idProperty: 'uid',
-  addOrUpdate: FastcastTeams.AddOrUpdate,
-  clearAndAdd: FastcastTeams.ClearAndAdd,
-}) {}
+export class EspnFastcastTeamState extends GenericState({ idProperty: 'uid', actionHandler: FastcastTeams }) {}

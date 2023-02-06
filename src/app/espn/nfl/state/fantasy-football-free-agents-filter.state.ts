@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RouterSelector } from '@app/@core/store/router/router.selectors';
 import { Selector } from '@app/@shared/models/typed-selector';
-import { EspnClient, FootballLineupSlot } from 'sports-ui-sdk';
+import { EspnClient, FootballLineupSlot, PLAYER_AVAILABILITY_STATUS } from 'sports-ui-sdk';
 
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { Action, State, StateContext, Store } from '@ngxs/store';
@@ -17,7 +17,7 @@ interface BaseFreeAgentFilterMetaData {
 
 export interface FantasyFootballFreeAgentsFilterStateModel {
   sortDirection: string;
-  availabilityStatus: Record<EspnClient.FreeAgentAvailabilityStatus, boolean>;
+  availabilityStatus: Record<EspnClient.PlayerAvailabilityStatus, boolean>;
   lineupSlotId: FootballLineupSlot;
   topScoringPeriodIds: Record<string, boolean>;
   sortStatId: Record<string, boolean>;
@@ -28,8 +28,8 @@ export interface FantasyFootballFreeAgentsFilterStateModel {
   name: 'fantasyFootballFreeAgentsFilter',
   defaults: {
     availabilityStatus: {
-      [EspnClient.FreeAgentAvailabilityStatus.FreeAgent]: true,
-      [EspnClient.FreeAgentAvailabilityStatus.Waivers]: true,
+      [PLAYER_AVAILABILITY_STATUS.FreeAgent]: true,
+      [PLAYER_AVAILABILITY_STATUS.Waivers]: true,
     },
     lineupSlotId: FootballLineupSlot.QB,
     topScoringPeriodIds: {},

@@ -7,6 +7,5 @@ import { DfsMlbSlateTeamDetails } from '../actions/dfs-mlb-slate-team.actions';
 @Injectable()
 export class DfsMlbTeamSlateDetailsState extends GenericState({
   idProperty: 'id',
-  addOrUpdate: DfsMlbSlateTeamDetails.AddOrUpdate,
-  clearAndAdd: DfsMlbSlateTeamDetails.ClearAndAdd,
+  actionHandler: DfsMlbSlateTeamDetails,
 }) {}

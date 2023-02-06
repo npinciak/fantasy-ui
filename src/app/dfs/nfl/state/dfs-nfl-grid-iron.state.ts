@@ -10,8 +10,7 @@ import { GridIronPlayer } from '../models/nfl-gridIron.model';
 @Injectable()
 export class DfsNflGridIronState extends GenericState({
   idProperty: 'playerId',
-  addOrUpdate: DfsNflGridIron.AddOrUpdate,
-  clearAndAdd: DfsNflGridIron.ClearAndAdd,
+  actionHandler: DfsNflGridIron,
 }) {
   constructor(private playerService: PlayerService, private store: Store) {
     super();

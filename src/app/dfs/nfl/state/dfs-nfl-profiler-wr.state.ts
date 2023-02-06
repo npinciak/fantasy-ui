@@ -7,6 +7,5 @@ import { DfsNflProfilerWr } from '../actions/dfs-nfl-profiler-wr.actions';
 @Injectable()
 export class DfsNflProfilerWrState extends GenericState({
   idProperty: 'rgId',
-  addOrUpdate: DfsNflProfilerWr.AddOrUpdate,
-  clearAndAdd: DfsNflProfilerWr.ClearAndAdd,
+  actionHandler: DfsNflProfilerWr,
 }) {}

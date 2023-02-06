@@ -7,6 +7,5 @@ import { DfsMlbSlatePlayer } from '../actions/dfs-mlb-slate-player.actions';
 @Injectable()
 export class DailyFantasyMlbPlayerSlateAttributeState extends GenericState({
   idProperty: 'id',
-  addOrUpdate: DfsMlbSlatePlayer.AddOrUpdate,
-  clearAndAdd: DfsMlbSlatePlayer.ClearAndAdd,
+  actionHandler: DfsMlbSlatePlayer,
 }) {}

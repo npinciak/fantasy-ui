@@ -4,7 +4,7 @@ const name = 'fantasyFootballFreeAgentsFilter';
 
 export class TogglePlayerAvailabilityStatus {
   static readonly type = `[${name}] SetPlayerAvailabilityStatus`;
-  constructor(public payload: { availabilityStatus: EspnClient.FreeAgentAvailabilityStatus }) {}
+  constructor(public payload: { availabilityStatus: EspnClient.PlayerAvailabilityStatus }) {}
 }
 
 export class SetPagination {

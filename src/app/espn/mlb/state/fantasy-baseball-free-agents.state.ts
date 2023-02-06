@@ -12,8 +12,7 @@ import { MlbService } from '../services/mlb.service';
 @Injectable()
 export class FantasyBaseballFreeAgentsState extends GenericState({
   idProperty: 'id',
-  addOrUpdate: FantasyBaseballFreeAgents.AddOrUpdate,
-  clearAndAdd: FantasyBaseballFreeAgents.ClearAndAdd,
+  actionHandler: FantasyBaseballFreeAgents,
 }) {
   constructor(private mlbService: MlbService, private store: Store) {
     super();

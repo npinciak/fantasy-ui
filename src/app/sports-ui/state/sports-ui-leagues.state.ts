@@ -8,32 +8,29 @@ import { SportsUiClientLeague } from '../models/sports-ui-league.model';
 import { SportsUiLeagueFormSelectors } from '../selectors/sports-ui-league-form.selectors';
 import { LeaguesClientService } from '../service/leagues-client.service';
 
-@State({ name: SportsUiLeagues.name })
+@State({ name: SportsUiLeagues.stateName })
 @Injectable()
 export class SportsUiLeaguesState extends GenericState({
   idProperty: 'leagueId',
-  addOrUpdate: SportsUiLeagues.SetLeagues,
-  clearAndAdd: SportsUiLeagues.ClearAndAddLeagues,
+  actionHandler: SportsUiLeagues,
 }) {
   constructor(private leagueClientService: LeaguesClientService, private store: Store) {
     super();
   }
 
-  @Action(SportsUiLeagues.FetchLeagues)
-  async fetchEspnLeagues({}: StateContext<GenericStateClass<SportsUiClientLeague>>): Promise<void> {
+  @Action(SportsUiLeagues.Fetch)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async fetchEspnLeagues(_: StateContext<GenericStateClass<SportsUiClientLeague>>): Promise<void> {
     const leagues = await this.leagueClientService.getAll();
-    this.store.dispatch([new SportsUiLeagues.ClearAndAddLeagues(leagues)]);
+    this.store.dispatch([new SportsUiLeagues.ClearAndAdd(leagues)]);
   }
 
   @Action(SportsUiLeagues.DeleteLeague)
-  async deleteEspnLeague(
-    {}: StateContext<GenericStateClass<SportsUiClientLeague>>,
-    { payload: { leagueId } }: SportsUiLeagues.DeleteLeague
-  ): Promise<void> {
+  async deleteEspnLeague(_: StateContext<GenericStateClass<SportsUiClientLeague>>, { payload: { leagueId } }): Promise<void> {
     try {
       await this.leagueClientService.delete(leagueId);
     } catch (error) {}
-    this.store.dispatch([new SportsUiLeagues.FetchLeagues()]);
+    this.store.dispatch([new SportsUiLeagues.Fetch()]);
   }
 
   @Action(SportsUiLeagues.CreateLeague)
@@ -42,7 +39,7 @@ export class SportsUiLeaguesState extends GenericState({
 
     if (leagueId && leagueSport && leagueYear) {
       await this.leagueClientService.create({ leagueSport, leagueId, leagueYear, leagueName: leagueSport });
-      this.store.dispatch([new SportsUiLeagues.FetchLeagues(), new SportsUiLeagueForm.Reset()]);
+      this.store.dispatch([new SportsUiLeagues.Fetch(), new SportsUiLeagueForm.Reset()]);
     }
   }
 

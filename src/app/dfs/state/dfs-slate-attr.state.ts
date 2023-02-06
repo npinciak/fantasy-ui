@@ -45,9 +45,10 @@ export class DfsSlateAttributesState {
   @Action(DfsSlateAttributes.Fetch)
   async FetchSlateAttr({ patchState }: StateContext<DfsSlateAttributesStateModel>, { payload }: { payload: { slate } }): Promise<void> {
     const queryParams = this.store.selectSnapshot(RouterSelector.getRouterQueryParams);
+    const routeData = this.store.selectSnapshot(RouterSelector.getRouterData);
 
-    const sport = queryParams?.sport;
-    const site = queryParams?.site;
+    const sport = routeData?.sport as string;
+    const site = queryParams?.site as string;
     const { slate } = payload;
 
     const { statGroups, teams, players, weather } = await this.slateService.getGameAttrBySlateId({ sport, site, slate }).toPromise();

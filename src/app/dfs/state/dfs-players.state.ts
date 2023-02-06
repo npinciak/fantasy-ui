@@ -12,8 +12,7 @@ import { PlayerService } from '../service/player.service';
 @Injectable()
 export class DfsSlatePlayersState extends GenericState({
   idProperty: 'id',
-  addOrUpdate: DfsSlatePlayers.AddOrUpdate,
-  clearAndAdd: DfsSlatePlayers.ClearAndAdd,
+  actionHandler: DfsSlatePlayers,
 }) {
   constructor(private playerService: PlayerService, private store: Store) {
     super();

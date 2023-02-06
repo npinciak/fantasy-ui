@@ -1,6 +1,6 @@
 import { GenericPayloadActionClass, GenericPayloadFetchActionClass, IGenericActionsClass } from './generic.model';
 
-export function GenericActions<T = [], U = {}>({ stateName }: { stateName: string }): IGenericActionsClass<T, U> {
+export function GenericActions<T = [], U = Record<string, unknown>>({ stateName }: { stateName: string }): IGenericActionsClass<T, U> {
   class GenericActionsClass {
     static readonly stateName = stateName;
 

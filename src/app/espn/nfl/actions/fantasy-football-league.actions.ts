@@ -1,17 +1,17 @@
 export namespace FantasyFootballLeague {
-  export const name = 'fantasyFootballLeague';
+  export const stateName = 'fantasyFootballLeague';
 
   export class Fetch {
-    public static readonly type = `[${name}]  FetchFootballLeague`;
+    public static readonly type = `[${stateName}]  FetchFootballLeague`;
     constructor(public payload: { leagueId: string; year: string }) {}
   }
 
   export class Refresh {
-    public static readonly type = `[${name}] Refresh`;
+    public static readonly type = `[${stateName}] Refresh`;
   }
 
   export class SetCurrentScoringPeriodId {
-    public static readonly type = `[${name}] SetCurrentScoringPeriodId`;
+    public static readonly type = `[${stateName}] SetCurrentScoringPeriodId`;
     constructor(public payload: { scoringPeriodId: string | null }) {}
   }
 }

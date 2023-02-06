@@ -11,8 +11,7 @@ import { FantasyFootballService } from '../services/fantasy-football.service';
 @Injectable()
 export class FantasyFootballPlayerNewsState extends GenericState({
   idProperty: 'id',
-  addOrUpdate: FantasyFootballPlayerNews.AddOrUpdate,
-  clearAndAdd: FantasyFootballPlayerNews.ClearAndAdd,
+  actionHandler: FantasyFootballPlayerNews,
 }) {
   constructor(private store: Store, private fantasyfootballService: FantasyFootballService) {
     super();

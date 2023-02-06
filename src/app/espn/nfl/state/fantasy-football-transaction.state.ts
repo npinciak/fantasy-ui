@@ -7,6 +7,5 @@ import { FantasyFootballTransaction } from '../actions/fantasy-football-transact
 @Injectable()
 export class FantasyFootballTransactionState extends GenericState({
   idProperty: 'id',
-  addOrUpdate: FantasyFootballTransaction.AddOrUpdate,
-  clearAndAdd: FantasyFootballTransaction.ClearAndAdd,
+  actionHandler: FantasyFootballTransaction,
 }) {}

@@ -7,6 +7,5 @@ import { DfsTeams } from '../actions/dfs-teams.actions';
 @Injectable()
 export class DfsTeamsState extends GenericState({
   idProperty: 'rgId',
-  addOrUpdate: DfsTeams.AddOrUpdate,
-  clearAndAdd: DfsTeams.ClearAndAdd,
+  actionHandler: DfsTeams,
 }) {}

@@ -44,7 +44,7 @@ export class AuthenticationFormState {
           return;
         }
 
-        this.store.dispatch([new FetchUser(), new SportsUiLeagues.FetchLeagues()]);
+        this.store.dispatch([new FetchUser(), new SportsUiLeagues.Fetch()]);
       } catch (e) {}
     }
   }

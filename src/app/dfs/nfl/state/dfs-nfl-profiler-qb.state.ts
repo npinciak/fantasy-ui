@@ -7,6 +7,5 @@ import { DfsNflProfilerQb } from '../actions/dfs-nfl-profiler-qb.actions';
 @Injectable()
 export class DfsNflProfilerQbState extends GenericState({
   idProperty: 'rgId',
-  addOrUpdate: DfsNflProfilerQb.AddOrUpdate,
-  clearAndAdd: DfsNflProfilerQb.ClearAndAdd,
+  actionHandler: DfsNflProfilerQb,
 }) {}

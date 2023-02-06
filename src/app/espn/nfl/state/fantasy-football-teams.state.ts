@@ -7,6 +7,5 @@ import { FantasyFootballTeams } from '../actions/fantasy-football-teams.actions'
 @Injectable()
 export class FantasyFootballTeamState extends GenericState({
   idProperty: 'id',
-  addOrUpdate: FantasyFootballTeams.AddOrUpdate,
-  clearAndAdd: FantasyFootballTeams.ClearAndAdd,
+  actionHandler: FantasyFootballTeams,
 }) {}

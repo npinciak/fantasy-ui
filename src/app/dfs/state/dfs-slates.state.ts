@@ -13,8 +13,7 @@ import { SlateService } from '../service/slate.service';
 @Injectable()
 export class DfsSlatesState extends GenericState({
   idProperty: 'importId',
-  addOrUpdate: DfsSlates.AddOrUpdate,
-  clearAndAdd: DfsSlates.ClearAndAdd,
+  actionHandler: DfsSlates
 }) {
   constructor(private store: Store, private slateService: SlateService) {
     super();

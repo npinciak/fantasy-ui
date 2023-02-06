@@ -7,6 +7,5 @@ import { DfsWeather } from '../actions/dfs-weather.actions';
 @Injectable()
 export class DfsWeatherState extends GenericState({
   idProperty: 'id',
-  addOrUpdate: DfsWeather.AddOrUpdate,
-  clearAndAdd: DfsWeather.ClearAndAdd,
+  actionHandler: DfsWeather,
 }) {}

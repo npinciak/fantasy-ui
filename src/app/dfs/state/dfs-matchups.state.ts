@@ -7,6 +7,5 @@ import { DfsMatchups } from '../actions/dfs-matchup.actions';
 @Injectable()
 export class DfsMatchupsState extends GenericState({
   idProperty: 'id',
-  addOrUpdate: DfsMatchups.AddOrUpdate,
-  clearAndAdd: DfsMatchups.ClearAndAdd,
+  actionHandler: DfsMatchups,
 }) {}

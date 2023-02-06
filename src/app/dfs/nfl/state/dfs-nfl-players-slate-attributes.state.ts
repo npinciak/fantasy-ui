@@ -7,6 +7,5 @@ import { DfsNflSlatePlayerAttributes } from '../actions/dfs-nfl-slate-player-att
 @Injectable()
 export class DfsNflSlatePlayerAttributesState extends GenericState({
   idProperty: 'id',
-  addOrUpdate: DfsNflSlatePlayerAttributes.AddOrUpdate,
-  clearAndAdd: DfsNflSlatePlayerAttributes.ClearAndAdd,
+  actionHandler: DfsNflSlatePlayerAttributes,
 }) {}
