@@ -134,7 +134,6 @@ export class EspnFastcastConnectionState {
       new FastcastLeagues.ClearAndAdd(leagues),
       new FastcastEvents.ClearAndAdd(events),
       new FastcastTeams.ClearAndAdd(teams),
-      new FastCastConnection.SetSelectedLeague({ leagueSlug: leagues[0].id }),
     ]);
   }
 
