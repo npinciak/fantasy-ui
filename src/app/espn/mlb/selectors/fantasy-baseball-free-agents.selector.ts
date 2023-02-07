@@ -1,5 +1,5 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { linearRegression } from '@app/@shared/helpers/graph.helpers';
+import { linearRegression, pickData } from '@app/@shared/helpers/graph.helpers';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { Selector } from '@ngxs/store';
@@ -35,29 +35,23 @@ export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBa
     return (teamId: string, statPeriod: string, xAxisFilter: BaseballStat, yAxisFilter: BaseballStat) => {
       const batters = getTeamBatters(teamId, statPeriod);
 
-      const x = batters
-        .map(p => (exists(p.stats) ? p.stats[xAxisFilter] : 0))
-        .filter(d => d.data !== 0)
-        .sort((a, b) => b.data - a.data);
-      const y = batters
-        .map(p => (exists(p.stats) ? p.stats[yAxisFilter] : 0))
-        .filter(d => d.data !== 0)
-        .sort((a, b) => b.data - a.data);
+      const x = []; //statAxisTransform(batters, xAxisFilter);
+      const y = []; //statAxisTransform(batters, yAxisFilter);
 
       const lR = linearRegression(x, y);
 
-      const text = batters.map(p => p.name);
+      const text: string[] = pickData(batters, p => p.name);
       const type = 'scatter';
 
       const fitFrom = Math.min(...x);
       const fitTo = Math.max(...x);
 
       const fit = {
-        x: [fitFrom, fitTo],
-        y: [fitFrom * lR.sl + lR.off, fitTo * lR.sl + lR.off],
+        type,
         text,
+        x: [fitFrom, fitTo],
+        y: [fitFrom * lR.slope + lR.yIntercept, fitTo * lR.slope + lR.yIntercept],
         mode: 'lines',
-        type: 'scatter',
         name: 'R2='.concat((Math.round(lR.r2 * 10000) / 10000).toString()),
       };
 

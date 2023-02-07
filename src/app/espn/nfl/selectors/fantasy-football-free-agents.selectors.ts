@@ -1,5 +1,5 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { linearRegression, pickData, transformGraphData } from '@app/@shared/helpers/graph.helpers';
+import { linearRegression, pickData, transformScatterGraphData } from '@app/@shared/helpers/graph.helpers';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { NFL_STATS_MAP } from 'sports-ui-sdk';
@@ -57,75 +57,43 @@ export class FantasyFootballFreeAgentsSelectors extends GenericSelector(FantasyF
     players: (statPeriod: string) => any[]
   ): (statPeriod: string, xAxis: string | null, yAxis: string | null) => any {
     return (statPeriod: string, xAxis: string | null, yAxis: string | null) => {
-      const list = players(statPeriod);
+      const data = players(statPeriod);
 
       if (xAxis == null || yAxis == null) {
         return [];
       }
 
-      const x: number[] = list.map(p => (exists(p.stats) ? p.stats.stats[xAxis] : (0 as number)));
+      const x: number[] = data.map(p => (exists(p.stats) ? p.stats.stats[xAxis] : (0 as number)));
 
-      const y: number[] = list.map(p => (exists(p.stats) ? p.stats.stats[yAxis] : (0 as number)));
+      const y: number[] = data.map(p => (exists(p.stats) ? p.stats.stats[yAxis] : (0 as number)));
 
       const lR = linearRegression(x, y);
 
-      const text: string[] = pickData(list, p => p.name);
+      const text: string[] = pickData(data, p => p.name);
 
       const fitFrom = Math.min(...x);
       const fitTo = Math.max(...x);
 
       const fit = {
         x: [fitFrom, fitTo],
-        y: [fitFrom * lR.sl + lR.off, fitTo * lR.sl + lR.off],
+        y: [fitFrom * lR.slope + lR.yIntercept, fitTo * lR.slope + lR.yIntercept],
         text,
         mode: 'lines',
         type: 'scatter',
-        // name: 'R2='.concat((Math.round(lR.r2 * 10000) / 10000).toString()),
+        name: 'R2='.concat((Math.round(lR.r2 * 10000) / 10000).toString()),
       };
 
-      const points = transformGraphData(list, {
+      const points = transformScatterGraphData({
+        data,
         x,
         y,
         xAxisLabel: NFL_STATS_MAP[Number(xAxis)].abbrev,
         yAxisLabel: NFL_STATS_MAP[Number(yAxis)].abbrev,
-        labels: 'name',
+        dataLabels: 'name',
         graphType: 'scatter',
       });
 
       return [{ ...points }, { ...fit }];
     };
   }
-
-  // @Selector([DailyFantasyNflPlayerSelectors.getPlayerTableData])
-  // static getPlayerScatterData(players: NflDfsPlayerTableData[]): (xAxis: string | null, yAxis: string | null) => any {
-  //   return (xAxis: string | null, yAxis: string | null) => {
-  //     if (xAxis == null || yAxis == null) {
-  //       return [];
-  //     }
-
-  //     const x: number[] = players.map(p => p[xAxis]);
-
-  //     const y: number[] = players.map(p => p[yAxis]);
-
-  //     const lR = linearRegression(x, y);
-
-  //     const text: string[] = pickData(players, p => p.name);
-
-  //     const fitFrom = Math.min(...x);
-  //     const fitTo = Math.max(...x);
-
-  //     const fit = {
-  //       x: [fitFrom, fitTo],
-  //       y: [fitFrom * lR.sl + lR.off, fitTo * lR.sl + lR.off],
-  //       text,
-  //       mode: 'lines',
-  //       type: 'scatter',
-  //       // name: 'R2='.concat((Math.round(lR.r2 * 10000) / 10000).toString()),
-  //     };
-
-  //     const points = transformGraphData(players, { xAxis, yAxis, labels: 'name', graphType: 'scatter' });
-
-  //     return [{ ...points }, { ...fit }];
-  //   };
-  // }
 }

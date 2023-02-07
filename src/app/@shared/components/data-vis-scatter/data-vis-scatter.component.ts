@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ScatterChartDataset } from '@app/@shared/helpers/graph.helpers';
 import { MLB_STATS_MAP } from 'sports-ui-sdk';
 
 @Component({
@@ -7,7 +8,7 @@ import { MLB_STATS_MAP } from 'sports-ui-sdk';
 })
 export class DataVisScatterComponent implements OnInit, OnChanges {
   @Input() title = '';
-  @Input() chartData: any[];
+  @Input() chartData: ScatterChartDataset[];
   @Input() xAxisFilterTitle: string;
   @Input() yAxisFilterTitle: string;
 

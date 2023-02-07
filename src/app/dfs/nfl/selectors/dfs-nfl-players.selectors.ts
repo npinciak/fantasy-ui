@@ -1,5 +1,5 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { linearRegression, pickData, transformGraphData } from '@app/@shared/helpers/graph.helpers';
+import { linearRegression, pickData, transformScatterGraphData } from '@app/@shared/helpers/graph.helpers';
 import { exists, existsFilter } from '@app/@shared/utilities/utilities.m';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
@@ -122,12 +122,12 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
         const truePasserRating = playerProfilerQb != null ? playerProfilerQb.truePasserRating : null;
         const pressuredCompletionPercentage = playerProfilerQb != null ? playerProfilerQb.pressuredCompletionPercentage : null;
 
-        const { id, name, teamId, position } = p;
+        const { id, name, rgTeamId, position } = p;
 
         return {
           id,
           name,
-          teamId,
+          rgTeamId,
           position,
           salary,
           dominatorRating,
@@ -191,38 +191,39 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
   }
 
   @Selector([DfsNflPlayerSelectors.getPlayerTableData])
-  static getPlayerScatterData(players: NflDfsPlayerTableData[]): (xAxis: string | null, yAxis: string | null) => any {
+  static getPlayerScatterData(data: NflDfsPlayerTableData[]): (xAxis: string | null, yAxis: string | null) => any {
     return (xAxis: string | null, yAxis: string | null) => {
       if (xAxis == null || yAxis == null) {
         return [];
       }
 
-      const x: number[] = players.map(p => p[xAxis]);
+      const x: number[] = data.map(p => p[xAxis]);
 
-      const y: number[] = players.map(p => p[yAxis]);
+      const y: number[] = data.map(p => p[yAxis]);
 
       const lR = linearRegression(x, y);
 
-      const text: string[] = pickData(players, p => p.name);
+      const text: string[] = pickData(data, p => p.name);
 
       const fitFrom = Math.min(...x);
       const fitTo = Math.max(...x);
 
       const fit = {
         x: [fitFrom, fitTo],
-        y: [fitFrom * lR.sl + lR.off, fitTo * lR.sl + lR.off],
+        y: [fitFrom * lR.slope + lR.yIntercept, fitTo * lR.slope + lR.yIntercept],
         text,
         mode: 'lines',
         type: 'scatter',
-        // name: 'R2='.concat((Math.round(lR.r2 * 10000) / 10000).toString()),
+        name: 'R2='.concat((Math.round(lR.r2 * 10000) / 10000).toString()),
       };
 
-      const points = transformGraphData(players, {
+      const points = transformScatterGraphData({
+        data,
         x,
         y,
         xAxisLabel: xAxis,
         yAxisLabel: yAxis,
-        labels: 'name',
+        dataLabels: 'name',
         graphType: 'scatter',
       });
 
