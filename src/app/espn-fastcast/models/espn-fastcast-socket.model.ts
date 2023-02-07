@@ -2,6 +2,18 @@ import { ErrorStatusCode } from '@app/@shared/models/http-errors.model';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { FASTCAST_SERVICE_URI } from '@app/espn/espn.const';
 
+export const OPERATION_CODE = {
+  B: 'B',
+  C: 'C',
+  H: 'H',
+  S: 'S',
+  R: 'R',
+  P: 'P',
+  I: 'I',
+  Replace: 'Replace',
+  Error: 'ERROR',
+} as const;
+
 interface WebSocketResponseProps {
   hbi: number;
   op: OperationCode; // operationcode
@@ -28,28 +40,20 @@ export interface EspnWebSocket {
 
 export type SocketRes = Partial<WebSocketResponseProps>;
 export type SocketResSuccess = Pick<WebSocketResponseProps, 'mid' | 'op' | 'pl' | 'tc' | 'useCDN'>;
-export type SocketMsg = Pick<WebSocketResponseProps, 'sid' | 'tc'> & { op: OperationCode.S };
+export type SocketMsg = Pick<WebSocketResponseProps, 'sid' | 'tc'> & { op: OperationCode };
 export type OpCodePRes = Pick<WebSocketResponseProps, 'ts' | '~c' | 'pl'>;
 
-export enum OperationCode {
-  B = 'B',
-  C = 'C',
-  H = 'H',
-  S = 'S', // send?
-  R = 'R', // replace?
-  P = 'P',
-  I = 'I',
-  Replace = 'Replace',
-  Error = 'ERROR',
-}
+export type OperationCode = typeof OPERATION_CODE[keyof typeof OPERATION_CODE];
 
-export enum FastcastEventType {
-  TopEvents = 'event-topevents',
-  Soccer = 'event-topsoccer',
-  Mlb = 'event-baseball-mlb',
-  LiveGame = 'gp',
-  Event = 'event',
-}
+export const FASTCAST_EVENT_TYPE = {
+  TopEvents: 'event-topevents',
+  Soccer: 'event-topsoccer',
+  Mlb: 'event-baseball-mlb',
+  LiveGame: 'gp',
+  Event: 'event',
+} as const;
+
+export type FastcastEventType = typeof FASTCAST_EVENT_TYPE[keyof typeof FASTCAST_EVENT_TYPE];
 
 /**
  *
@@ -69,7 +73,7 @@ export enum FastcastEventType {
  *
  */
 export function transformEventToLiveFastcastEventType({ sport, league, gameId }: { sport: string; league: string; gameId: string }) {
-  return `${FastcastEventType.LiveGame}-${sport}-${league}-${gameId}`;
+  return `${FASTCAST_EVENT_TYPE.LiveGame}-${sport}-${league}-${gameId}`;
 }
 
 /**
@@ -92,9 +96,9 @@ export function transformSportToFastcastEventType({ sport }: { sport: string }):
 export function transformSportToFastcastEventType({ sport, league }: { sport: string; league: string }): string;
 export function transformSportToFastcastEventType({ sport, league }: { sport: string; league?: string }): string {
   if (!exists(league)) {
-    `${FastcastEventType.Event}-${sport}`;
+    `${FASTCAST_EVENT_TYPE.Event}-${sport}`;
   }
-  return `${FastcastEventType.Event}-${sport}-${league}`;
+  return `${FASTCAST_EVENT_TYPE.Event}-${sport}-${league}`;
 }
 
 export class WebSocketBuilder {

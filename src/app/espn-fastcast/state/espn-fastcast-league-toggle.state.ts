@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { State } from '@ngxs/store';
-import { FastcastEventType } from '../models/espn-fastcast-socket.model';
+import { FASTCAST_EVENT_TYPE } from '../models/espn-fastcast-socket.model';
 
 interface EspnFastcastLeagueToggleStateModel {
   eventType: string | null;
@@ -11,7 +11,7 @@ interface EspnFastcastLeagueToggleStateModel {
 @State<EspnFastcastLeagueToggleStateModel>({
   name: 'espnFastcastLeagueToggle',
   defaults: {
-    eventType: FastcastEventType.TopEvents,
+    eventType: FASTCAST_EVENT_TYPE.TopEvents,
     leagueSlug: null,
     sportSlug: null,
   },

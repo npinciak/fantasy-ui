@@ -1,13 +1,12 @@
-import { EspnFastcastClient, GameStatusIdType, GameStatusType } from 'sports-ui-sdk';
-
+import { EspnClient, EspnFastcastClient } from 'sports-ui-sdk';
 import { FastcastEventTeam } from './fastcast-team.model';
 
 interface FastcastEventAttributes {
   leagueId: string;
   timestamp: number;
   state: string | null;
-  status: GameStatusType | null;
-  statusId: GameStatusIdType;
+  status: EspnClient.EventStatus | null;
+  statusId: EspnClient.EventStatusId;
   location: string | null;
   clock: string | null;
   summary: string | null;
@@ -22,6 +21,7 @@ export type FastcastEvent = FastcastEventAttributes &
   Partial<EspnFastcastClient.Situation> &
   Pick<EspnFastcastClient.EventsEntity, 'id' | 'uid' | 'name' | 'shortName' | 'note' | 'seriesSummary' | 'link' | 'seasonType'> &
   Pick<EspnFastcastClient.FullStatusType, 'completed'> & { odds: EspnFastcastClient.EspnClientOddsEntity | null };
+
 export type FastcastEventMap = Record<string, FastcastEvent>;
 
 export type MlbSituation = Pick<
