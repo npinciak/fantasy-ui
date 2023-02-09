@@ -83,7 +83,7 @@ export const PASSING_ROSTER_COLUMNS = [
     headerLabel: 'Pass Yds/G',
     dataType: TableColumnDataType.Number,
   },
-];
+] as const;
 
 export const RUSHING_ROSTER_COLUMNS = [
   {
@@ -104,7 +104,7 @@ export const RUSHING_ROSTER_COLUMNS = [
     headerLabel: 'Rush TDs',
     dataType: TableColumnDataType.Number,
   },
-];
+] as const;
 
 export const RECEIVING_ROSTER_COLUMNS = [
   {
@@ -143,7 +143,7 @@ export const RECEIVING_ROSTER_COLUMNS = [
     headerLabel: 'Yards Per Catch',
     dataType: TableColumnDataType.Number,
   },
-];
+] as const;
 
 export const DST_ROSTER_COLUMNS = [
   {
@@ -158,39 +158,37 @@ export const DST_ROSTER_COLUMNS = [
     headerLabel: NFL_STATS_MAP[FootballStat.INT].abbrev,
     dataType: TableColumnDataType.Number,
   },
-];
+] as const;
 
-export namespace FootballTableColumns {
-  export const RosterColumnsByLineupSlot = {
-    [FootballLineupSlot.QB]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...PASSING_ROSTER_COLUMNS],
-    [FootballLineupSlot.RB]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...RUSHING_ROSTER_COLUMNS, ...RECEIVING_ROSTER_COLUMNS],
-    [FootballLineupSlot.WR]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...RECEIVING_ROSTER_COLUMNS],
-    [FootballLineupSlot.TE]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...RECEIVING_ROSTER_COLUMNS],
-    [FootballLineupSlot.FLEX]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...RUSHING_ROSTER_COLUMNS, ...RECEIVING_ROSTER_COLUMNS],
-    [FootballLineupSlot.K]: DEFAULT_FOOTBALL_ROSTER_COLUMNS,
-    [FootballLineupSlot.DST]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...DST_ROSTER_COLUMNS],
-  };
+export const FOOTBALL_ROSTER_COLUMNS_BY_LINEUP_SLOT = {
+  [FootballLineupSlot.QB]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...PASSING_ROSTER_COLUMNS],
+  [FootballLineupSlot.RB]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...RUSHING_ROSTER_COLUMNS, ...RECEIVING_ROSTER_COLUMNS],
+  [FootballLineupSlot.WR]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...RECEIVING_ROSTER_COLUMNS],
+  [FootballLineupSlot.TE]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...RECEIVING_ROSTER_COLUMNS],
+  [FootballLineupSlot.FLEX]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...RUSHING_ROSTER_COLUMNS, ...RECEIVING_ROSTER_COLUMNS],
+  [FootballLineupSlot.K]: DEFAULT_FOOTBALL_ROSTER_COLUMNS,
+  [FootballLineupSlot.DST]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...DST_ROSTER_COLUMNS],
+};
 
-  export const RosterRowsByLineupSlot = {
-    [FootballLineupSlot.QB]: transformTableColumnsToTableRows(RosterColumnsByLineupSlot[FootballLineupSlot.QB]),
-    [FootballLineupSlot.RB]: transformTableColumnsToTableRows(RosterColumnsByLineupSlot[FootballLineupSlot.RB]),
-    [FootballLineupSlot.WR]: transformTableColumnsToTableRows(RosterColumnsByLineupSlot[FootballLineupSlot.WR]),
-    [FootballLineupSlot.TE]: transformTableColumnsToTableRows(RosterColumnsByLineupSlot[FootballLineupSlot.TE]),
-    [FootballLineupSlot.FLEX]: transformTableColumnsToTableRows(RosterColumnsByLineupSlot[FootballLineupSlot.FLEX]),
-    [FootballLineupSlot.K]: transformTableColumnsToTableRows(RosterColumnsByLineupSlot[FootballLineupSlot.K]),
-    [FootballLineupSlot.DST]: transformTableColumnsToTableRows(RosterColumnsByLineupSlot[FootballLineupSlot.DST]),
-  };
+export const FOOTBALL_ROSTER_ROWS_BY_LINEUP_SLOT = {
+  [FootballLineupSlot.QB]: transformTableColumnsToTableRows(FOOTBALL_ROSTER_COLUMNS_BY_LINEUP_SLOT[FootballLineupSlot.QB]),
+  [FootballLineupSlot.RB]: transformTableColumnsToTableRows(FOOTBALL_ROSTER_COLUMNS_BY_LINEUP_SLOT[FootballLineupSlot.RB]),
+  [FootballLineupSlot.WR]: transformTableColumnsToTableRows(FOOTBALL_ROSTER_COLUMNS_BY_LINEUP_SLOT[FootballLineupSlot.WR]),
+  [FootballLineupSlot.TE]: transformTableColumnsToTableRows(FOOTBALL_ROSTER_COLUMNS_BY_LINEUP_SLOT[FootballLineupSlot.TE]),
+  [FootballLineupSlot.FLEX]: transformTableColumnsToTableRows(FOOTBALL_ROSTER_COLUMNS_BY_LINEUP_SLOT[FootballLineupSlot.FLEX]),
+  [FootballLineupSlot.K]: transformTableColumnsToTableRows(FOOTBALL_ROSTER_COLUMNS_BY_LINEUP_SLOT[FootballLineupSlot.K]),
+  [FootballLineupSlot.DST]: transformTableColumnsToTableRows(FOOTBALL_ROSTER_COLUMNS_BY_LINEUP_SLOT[FootballLineupSlot.DST]),
+};
 
-  export const RosterHeadersByLineupSlot = {
-    [FootballLineupSlot.QB]: getTableHeaders(RosterRowsByLineupSlot[FootballLineupSlot.QB]),
-    [FootballLineupSlot.RB]: getTableHeaders(RosterRowsByLineupSlot[FootballLineupSlot.RB]),
-    [FootballLineupSlot.WR]: getTableHeaders(RosterRowsByLineupSlot[FootballLineupSlot.WR]),
-    [FootballLineupSlot.TE]: getTableHeaders(RosterRowsByLineupSlot[FootballLineupSlot.TE]),
-    [FootballLineupSlot.FLEX]: getTableHeaders(RosterRowsByLineupSlot[FootballLineupSlot.FLEX]),
-    [FootballLineupSlot.K]: getTableHeaders(RosterRowsByLineupSlot[FootballLineupSlot.K]),
-    [FootballLineupSlot.DST]: getTableHeaders(RosterRowsByLineupSlot[FootballLineupSlot.DST]),
-  };
-}
+export const FOOTBALL_ROSTER_HEADERS_BY_LINEUP_SLOT = {
+  [FootballLineupSlot.QB]: getTableHeaders(FOOTBALL_ROSTER_ROWS_BY_LINEUP_SLOT[FootballLineupSlot.QB]),
+  [FootballLineupSlot.RB]: getTableHeaders(FOOTBALL_ROSTER_ROWS_BY_LINEUP_SLOT[FootballLineupSlot.RB]),
+  [FootballLineupSlot.WR]: getTableHeaders(FOOTBALL_ROSTER_ROWS_BY_LINEUP_SLOT[FootballLineupSlot.WR]),
+  [FootballLineupSlot.TE]: getTableHeaders(FOOTBALL_ROSTER_ROWS_BY_LINEUP_SLOT[FootballLineupSlot.TE]),
+  [FootballLineupSlot.FLEX]: getTableHeaders(FOOTBALL_ROSTER_ROWS_BY_LINEUP_SLOT[FootballLineupSlot.FLEX]),
+  [FootballLineupSlot.K]: getTableHeaders(FOOTBALL_ROSTER_ROWS_BY_LINEUP_SLOT[FootballLineupSlot.K]),
+  [FootballLineupSlot.DST]: getTableHeaders(FOOTBALL_ROSTER_ROWS_BY_LINEUP_SLOT[FootballLineupSlot.DST]),
+} as const;
 
 export const FOOTBALL_ROSTER_COLUMNS_BY_POS = {
   [FootballPosition.QB]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...PASSING_ROSTER_COLUMNS],
@@ -217,7 +215,7 @@ export const FOOTBALL_ROSTER_HEADERS_BY_POS = {
   [FootballPosition.TE]: FOOTBALL_ROSTER_ROWS_BY_POS[FootballPosition.TE].map(r => r.columnDef),
   [FootballPosition.K]: FOOTBALL_ROSTER_ROWS_BY_POS[FootballPosition.K].map(r => r.columnDef),
   [FootballPosition.DST]: FOOTBALL_ROSTER_ROWS_BY_POS[FootballPosition.DST].map(r => r.columnDef),
-};
+} as const;
 
 export const FOOTBALL_LEAGUE_STANDINGS_ROWS = transformTableColumnsToTableRows(LEAGUE_STANDINGS_COLUMNS);
 export const FOOTBALL_LEAGUE_STANDINGS_HEADERS = FOOTBALL_LEAGUE_STANDINGS_ROWS.map(r => r.columnDef);
