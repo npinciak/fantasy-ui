@@ -1,7 +1,6 @@
 <mat-paginator class="ml-1 my-1" [length]="tableData.length" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons> </mat-paginator>
 <mat-card *ngIf="dataSource">
   <table class="ui-w-100" mat-table [dataSource]="dataSource" matSort>
-    <app-scrollable-table>
       <ng-container *ngFor="let col of dataColumns; let colIndex = index" [matColumnDef]="col?.columnDef">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ col?.headerLabel }}</th>
         <td
@@ -20,6 +19,5 @@
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
       <tr mat-row *matRowDef="let rowData; columns: displayColumns"></tr>
-    </app-scrollable-table>
   </table>
 </mat-card>

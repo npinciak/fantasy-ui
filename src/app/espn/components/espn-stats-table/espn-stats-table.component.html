@@ -2,7 +2,6 @@
   <mat-card-content>
     <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons> </mat-paginator>
 
-    <app-scrollable-table>
       <table [attr.aria-label]="ariaLabel" class="ui-w-100" mat-table [dataSource]="dataSource" matSortDirection="asc" matSort>
         <ng-container *ngFor="let col of dataColumns">
           <ng-container [matColumnDef]="col?.columnDef" [sticky]="col.columnDef === 'name'">
@@ -28,6 +27,5 @@
         <tr mat-header-row *matHeaderRowDef="headers; sticky: true"></tr>
         <tr mat-row *matRowDef="let player; columns: headers" [ngStyle]="{ 'background-color': player.highlightedPlayer ? '#f4e8bc' : '' }"></tr>
       </table>
-    </app-scrollable-table>
   </mat-card-content>
 </mat-card>
