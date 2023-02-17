@@ -18,6 +18,7 @@
         </button>
       </div>
       <app-dropdown-filter
+        ariaLabel="fastcast leagues"
         [disabled]="!(showFeed$ | async)"
         [selectedOption]="selectedLeagueId$ | async"
         [filterItems]="leagueList$ | async"

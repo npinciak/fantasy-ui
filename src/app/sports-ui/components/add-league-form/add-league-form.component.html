@@ -1,6 +1,11 @@
 <div class="flex-col">
   <div>
-    <app-dropdown-filter [selectedOption]="sportOption$ | async" [filterItems]="fantasySportOptionList" (filterUpdate)="fantasySportChange($event)"></app-dropdown-filter>
+    <app-dropdown-filter
+      ariaLabel="sport options"
+      [selectedOption]="sportOption$ | async"
+      [filterItems]="fantasySportOptionList"
+      (filterUpdate)="fantasySportChange($event)"
+    ></app-dropdown-filter>
   </div>
   <div>
     <mat-form-field>

@@ -1,6 +1,7 @@
 <app-page-layout>
   <div sidebar>
     <app-dropdown-filter
+      ariaLabel="week selection options"
       [selectedOption]="currentScoringPeriod$ | async"
       title="Week"
       [filterItems]="matchupPeriodIdFilterOptions$ | async"

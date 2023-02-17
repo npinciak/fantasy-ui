@@ -1,56 +1,39 @@
-<ng-container *ngIf="!(isMobile$ | async); else nativeDropdown">
-  <!-- <mat-form-field>
-    <mat-label>{{ title }}</mat-label>
-    <mat-select [disabled]="disabled" [(value)]="selectedOption" (selectionChange)="filterUpdate.emit($event.value)">
-      <mat-option *ngFor="let item of filterItems" [value]="item.value">{{ item.label }}</mat-option>
-    </mat-select>
-  </mat-form-field> -->
-  <div class="flex justify-center">
-    <div class="mb-3 xl:w-96">
-      <select
-        class="
-          form-select
-          m-0
-          block
-          w-full
-          appearance-none
-          rounded
-          border border-solid border-gray-300
-          bg-white bg-clip-padding bg-no-repeat
-          px-3
-          py-1.5
-          text-base
-          font-normal
-          text-gray-700
-          transition
-          ease-in-out
-          focus:border-blue-600 focus:bg-white focus:text-gray-700 focus:outline-none
-        "
-        aria-label="Default select example"
-        (change)="filterUpdate.emit($event.target.value)"
+<div class="flex justify-center">
+  <div class="mb-3 w-full xl:w-96">
+    <label for="filterItems" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">{{ title }}</label>
+    <select
+      id="filterItems"
+      class="
+        form-select
+        m-0
+        block
+        w-full
+        appearance-none
+        rounded
+        border border-solid border-gray-300
+        bg-white bg-clip-padding bg-no-repeat
+        px-3
+        py-1.5
+        text-base
+        font-normal
+        text-gray-700
+        transition
+        ease-in-out
+        focus:border-blue-600 focus:bg-white focus:text-gray-700 focus:outline-none
+      "
+      [attr.aria-label]="ariaLabel"
+      (change)="filterUpdate.emit($event.target.value)"
+    >
+      <option
+        *ngFor="let item of filterItems; let i = index"
+        [value]="item.value"
+        tabindex="-1"
+        role="listbox"
+        aria-labelledby="listbox-label"
+        [attr.aria-activedescendant]="'listbox-option-' + i"
       >
-        <option
-          *ngFor="let item of filterItems"
-          [value]="item.value"
-          tabindex="-1"
-          role="listbox"
-          aria-labelledby="listbox-label"
-          aria-activedescendant="listbox-option-3"
-        >
-          {{ item.label }}
-        </option>
-      </select>
-    </div>
-  </div>
-</ng-container>
-
-<ng-template #nativeDropdown>
-  <mat-form-field>
-    <mat-label>{{ title }}</mat-label>
-    <select [disabled]="disabled" matNativeControl class="text-center" [(value)]="selectedOption" (change)="filterUpdate.emit($event.target.value)">
-      <option *ngFor="let item of filterItems" [value]="item.value">
         {{ item.label }}
       </option>
     </select>
-  </mat-form-field>
-</ng-template>
+  </div>
+</div>

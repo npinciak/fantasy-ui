@@ -30,6 +30,7 @@
   <div main>
     <div>
       <app-dropdown-filter
+        ariaLabel="position options"
         [selectedOption]="selectedPosition$ | async"
         title="Position"
         [filterItems]="FOOTBALL_POSITION_LIST_FILTER"
@@ -38,6 +39,7 @@
     </div>
     <div>
       <app-dropdown-filter
+        ariaLabel="scoring period options"
         [selectedOption]="scoringPeriodId$ | async"
         title="Stat Period"
         [filterItems]="statPeriodFilterOptions$ | async"

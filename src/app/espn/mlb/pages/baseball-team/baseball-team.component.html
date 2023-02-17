@@ -34,9 +34,10 @@
       <div>
         <div>
           <app-dropdown-filter
+            ariaLabel="scoring period options"
             [selectedOption]="scoringPeriodId"
             title="Stat Period"
-            [filterItems]="STAT_PERIOD_FILTER_OPTIONS"
+            [filterItems]="scoringPeriodFilters$ | async"
             (filterUpdate)="onScoringPeriodIdChange($event)"
           ></app-dropdown-filter>
         </div>
