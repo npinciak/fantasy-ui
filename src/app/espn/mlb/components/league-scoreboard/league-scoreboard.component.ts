@@ -6,7 +6,6 @@ import { BaseballTeam } from '../../models/baseball-team.model';
 @Component({
   selector: 'app-league-scoreboard',
   templateUrl: './league-scoreboard.component.html',
-  styleUrls: ['./league-scoreboard.component.scss'],
 })
 export class LeagueScoreboardComponent {
   @Input() teams: BaseballTeam[];

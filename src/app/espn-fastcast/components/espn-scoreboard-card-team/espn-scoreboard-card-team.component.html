@@ -1,24 +1,24 @@
-<div class="flex-row" [ngStyle]="{ opacity: opacity }">
-  <div style="flex: 75%">
-    <div class="flex-row gap-5">
-      <div>
-        <img class="game-team-logo" [alt]="team?.name" [src]="team?.logo" />
+<div class="flex flex-row py-2" [ngStyle]="{ opacity: opacity }">
+  <div class="basis-3/4">
+    <div class="flex flex-row">
+      <div class="mr-3 flex">
+        <img class="inline-block h-10 w-10 rounded-full ring-2" [alt]="team?.name" [src]="team?.logo" />
       </div>
-      <div class="flex-col gap-5">
-        <div class="ui-font-weight-bold" [ngStyle]="{ color: team.color }">
-          <span style="margin-right: 5px" [hidden]="noTeamRank">{{ team?.rank }}</span
+      <div class="flex flex-col content-start">
+        <div class="text-base font-semibold" [ngStyle]="{ color: team.color }">
+          <span class="mr-1" [hidden]="noTeamRank">{{ team?.rank }}</span
           >{{ team?.name }}
         </div>
-        <div style="font-size: 12px" [ngStyle]="{ color: team.color }">
+        <div class="text-xs font-semibold" [ngStyle]="{ color: team.color }">
           <ng-container *ngIf="!isTournament; else tournamentAggregate"> {{ team?.record }}</ng-container>
         </div>
       </div>
     </div>
   </div>
 
-  <div style="flex: auto; place-content: center flex-end; align-items: center">
-    <div class="game-score-item" [ngStyle]="{ color: team.color }">
-      <span [class.game-score-winner]="team?.isWinner" [hidden]="isPregame"> {{ team?.score }}</span>
+  <div class="flex-auto basis-1/4 content-center items-center">
+    <div class="text-base font-semibold" [ngStyle]="{ color: team.color }">
+      <span [hidden]="isPregame"> {{ team?.score }}</span>
     </div>
 
     <!-- <div *ngIf="isPregame" class="game-score-item" [ngStyle]="{ color: team.color }">
@@ -26,8 +26,16 @@
     </div> -->
   </div>
 
-  <div style="align-content: center; justify-content: center">
-    <mat-icon>{{ team?.isWinner ? 'arrow_left' : '' }}</mat-icon>
+  <div class="content-center justify-center">
+    <ng-container *ngIf="team?.isWinner">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
+        <path
+          fill-rule="evenodd"
+          d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </ng-container>
   </div>
 </div>
 

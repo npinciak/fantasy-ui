@@ -1,5 +1,5 @@
 <app-page-layout>
-  <div sidebar class="flex-col gap-20">
+  <div sidebar class="flex flex-col">
     <div>
       <app-login
         [isFormValid]="isFormValid$ | async"
@@ -11,7 +11,7 @@
     <div>
       <mat-card>
         <mat-card-content>
-          <div class="flex-col" style="align-items: center; text-align: center">
+          <div class="flex flex-col text-center" style="align-items: center">
             <!-- <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" style="border-radius: 50%" width="150" /> -->
             <div class="mt-3">
               <p>Email: {{ (userEmail$ | async) ?? 'No Email' }}</p>
@@ -27,7 +27,7 @@
       </mat-card>
     </div>
   </div>
-  <div main class="flex-col gap-20">
+  <div main class="flex flex-col gap-20">
     <app-leagues-table
       [data]="allLeagues$ | async"
       [rows]="LEAGUE_ROWS"

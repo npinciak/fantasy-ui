@@ -67,7 +67,15 @@ export class ShellComponent implements OnInit {
     this.routerFacade.navigateToFantasyFreeAgents();
   }
 
-  navigateDfs(sport: UrlPathFragments) {
-    this.routerFacade.navigateDfs(sport, 'draftkings');
+  navigateDraftkingsNfl() {
+    this.routerFacade.navigateToDraftkingsBySport('nfl');
+  }
+
+  navigateDraftkingsMlb() {
+    this.routerFacade.navigateToDraftkingsBySport('mlb');
+  }
+
+  navigateDraftkingsNba() {
+    this.routerFacade.navigateToDraftkingsBySport('nba');
   }
 }

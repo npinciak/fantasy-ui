@@ -15,7 +15,6 @@ const NBA_DKTEAM_ID_MAP = {
 @Component({
   selector: 'app-dfs-nba-home',
   templateUrl: './dfs-nba-home.component.html',
-  styleUrls: ['./dfs-nba-home.component.scss'],
 })
 export class DfsNbaHomeComponent implements OnInit {
   readonly NBA_TEAM_ID_MAP = NBA_RG_TEAM_ID_MAP;
