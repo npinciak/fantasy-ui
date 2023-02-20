@@ -1,15 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-espn-player-trending-col',
   templateUrl: './espn-player-trending-col.component.html',
 })
-export class EspnPlayerTrendingColComponent implements OnInit {
+export class EspnPlayerTrendingColComponent {
   @Input() data: number;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   get trendingPositive() {
     return this.data >= 10;

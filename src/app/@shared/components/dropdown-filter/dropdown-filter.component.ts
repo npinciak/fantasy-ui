@@ -19,4 +19,10 @@ export class DropdownFilterComponent {
   isMobile$ = this.layoutService.isMobile$;
 
   constructor(private layoutService: LayoutService) {}
+
+  get customElementId() {
+    const label = this.ariaLabel.split(' ').join('-');
+
+    return 'filterItems'.concat('-', label);
+  }
 }

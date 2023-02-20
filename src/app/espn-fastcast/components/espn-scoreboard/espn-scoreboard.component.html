@@ -1,21 +1,30 @@
-<section class="mb-0">
-  <div class="flex  flex-row">
+<section class="mb-0 max-w-full">
+  <div class="flex flex-col sm:flex-row">
     <div class="basis-1/5 p-6 align-middle">
-      <div class="scoreboard refresh timestamp flex flex-auto">
-        <svg [class.text-green-600]="(paused$ | async) === false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
-          <path
-            d="M16.364 3.636a.75.75 0 00-1.06 1.06 7.5 7.5 0 010 10.607.75.75 0 001.06 1.061 9 9 0 000-12.728zM4.697 4.697a.75.75 0 00-1.061-1.06 9 9 0 000 12.727.75.75 0 101.06-1.06 7.5 7.5 0 010-10.607z"
-          />
-          <path
-            d="M12.475 6.465a.75.75 0 011.06 0 5 5 0 010 7.07.75.75 0 11-1.06-1.06 3.5 3.5 0 000-4.95.75.75 0 010-1.06zM7.525 6.465a.75.75 0 010 1.06 3.5 3.5 0 000 4.95.75.75 0 01-1.06 1.06 5 5 0 010-7.07.75.75 0 011.06 0zM11 10a1 1 0 11-2 0 1 1 0 012 0z"
-          />
-        </svg>
-        {{ lastRefreshAsTickerDate$ | async }}
-      </div>
-      <div class="flex flex-auto place-content-end content-center">
-        <button mat-icon-button aria-label="Button to start and pause feed" (click)="onStartFeed()">
-          <mat-icon>{{ (paused$ | async) ? 'play_arrow_outline' : 'pause_circle_outline' }}</mat-icon>
-        </button>
+      <div class="flex flex-row">
+        <div class="scoreboard refresh timestamp flex basis-1/2">
+          <svg
+            aria-label="active feed"
+            [class.text-green-600]="(paused$ | async) === false"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            class="h-5 w-5"
+          >
+            <path
+              d="M16.364 3.636a.75.75 0 00-1.06 1.06 7.5 7.5 0 010 10.607.75.75 0 001.06 1.061 9 9 0 000-12.728zM4.697 4.697a.75.75 0 00-1.061-1.06 9 9 0 000 12.727.75.75 0 101.06-1.06 7.5 7.5 0 010-10.607z"
+            />
+            <path
+              d="M12.475 6.465a.75.75 0 011.06 0 5 5 0 010 7.07.75.75 0 11-1.06-1.06 3.5 3.5 0 000-4.95.75.75 0 010-1.06zM7.525 6.465a.75.75 0 010 1.06 3.5 3.5 0 000 4.95.75.75 0 01-1.06 1.06 5 5 0 010-7.07.75.75 0 011.06 0zM11 10a1 1 0 11-2 0 1 1 0 012 0z"
+            />
+          </svg>
+          {{ lastRefreshAsTickerDate$ | async }}
+        </div>
+        <div class="flex basis-1/2 justify-end">
+          <button mat-icon-button aria-label="Button to start and pause feed" (click)="onStartFeed()">
+            <mat-icon>{{ (paused$ | async) ? 'play_arrow_outline' : 'pause_circle_outline' }}</mat-icon>
+          </button>
+        </div>
       </div>
       <app-dropdown-filter
         ariaLabel="fastcast leagues"
@@ -25,36 +34,23 @@
         (filterUpdate)="onLeagueSelectChange($event)"
       ></app-dropdown-filter>
     </div>
-    <div class="flex basis-4/5 px-6 align-middle">
-      <div class="flex max-w-screen-lg flex-nowrap overflow-x-auto" id="scoreboard-feed" role="feed" aria-live="polite">
-        <ng-container *ngIf="showFeed$ | async; then feed; else noEventsMessage"> </ng-container>
-      </div>
-    </div>
-  </div>
 
-  <!-- <div class="flex flex-col">
-    <div class="flex flex-row p-4 align-middle">
-      <div class="scoreboard refresh timestamp flex flex-auto"><mat-icon>sensors</mat-icon> {{ lastRefreshAsTickerDate$ | async }}</div>
-      <div class="flex flex-auto place-content-end content-center">
-        <button mat-icon-button aria-label="Button to start and pause feed" (click)="onStartFeed()">
-          <mat-icon>{{ (paused$ | async) ? 'play_arrow_outline' : 'pause_circle_outline' }}</mat-icon>
-        </button>
+    <div class="flex basis-4/5 overflow-x-auto px-6 align-middle">
+      <div class="flex flex-nowrap" id="scoreboard-feed" role="feed" aria-live="polite">
+        <ng-container *ngFor="let event of eventsByLeagueId$ | async; let first = first; let last = last; let i = index">
+          <app-espn-scoreboard-card
+            [index]="i"
+            [ariaSetsize]="(eventsByLeagueId$ | async).length"
+            [ariaPosinset]="i + 1"
+            [isEventToggled]="(isIdToggled$ | async)!(event.id)"
+            [isTournament]="event.isTournament"
+            [event]="event"
+          ></app-espn-scoreboard-card>
+        </ng-container>
+        <!-- <ng-container *ngIf="showFeed$ | async; then feed; else noEventsMessage"> </ng-container> -->
       </div>
     </div>
-    <div class="p-4">
-      <app-dropdown-filter
-        [disabled]="!(showFeed$ | async)"
-        [selectedOption]="selectedLeagueId$ | async"
-        [filterItems]="leagueList$ | async"
-        (filterUpdate)="onLeagueSelectChange($event)"
-      ></app-dropdown-filter>
-    </div>
   </div>
-  <div>
-    <div class="scoreboard container" id="scoreboard-feed" role="feed" aria-live="polite">
-      <ng-container *ngIf="showFeed$ | async; then feed; else noEventsMessage"> </ng-container>
-    </div>
-  </div> -->
 </section>
 
 <ng-template #feed>

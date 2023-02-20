@@ -5,7 +5,6 @@ import { headshotImgBuilder } from '@app/espn/espn.const';
 @Component({
   selector: 'app-espn-player-dialog',
   templateUrl: './espn-player-dialog.component.html',
-  styleUrls: ['./espn-player-dialog.component.scss'],
 })
 export class EspnPlayerDialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: { player: any }, public dialogRef: MatDialogRef<EspnPlayerDialogComponent>) {

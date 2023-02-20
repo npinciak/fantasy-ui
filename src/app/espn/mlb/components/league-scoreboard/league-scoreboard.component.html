@@ -1,16 +1,17 @@
-<div class="bg-white shadow">
-  <div class="mx-auto p-4">
-    <div class="flex h-14 cursor-pointer flex-row justify-center hover:bg-gray-100 focus:bg-gray-100" *ngFor="let team of teams">
-      <div class="basis-3/4">
-        <img class="inline-block h-10 w-10 rounded-full ring-2" [src]="team?.logo" [alt]="team?.name" />
-        <span class="text-base">{{ team?.name }}</span>
-      </div>
-      <div class="basis-1/4 content-center items-center font-bold">
-        <span class="mr-3 text-xs" [title]="getTooltipText(team)" [matTooltip]="getTooltipText(team)" [ngStyle]="{ color: getColor(team) }">
-          {{ team?.liveScore - team?.totalPoints > 0 ? '+' : '' }}{{ team?.liveScore - team?.totalPoints === 0 ? '' : team?.liveScore - team?.totalPoints }}
-        </span>
-        {{ team?.liveScore }}
-      </div>
-    </div>
+<div class="w-full max-w-md rounded-lg border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-800">
+  <div class="flow-root">
+    <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700" *ngFor="let team of teams">
+      <li class="cursor-pointer py-3" (click)="viewTeam(team.id)">
+        <div class="flex items-center space-x-4">
+          <div class="flex-shrink-0">
+            <img class="h-8 w-8 rounded-full" role="img" [src]="team?.logo" [alt]="team?.name" />
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="truncate text-sm font-medium text-gray-900 dark:text-white">{{ team?.name }}</p>
+          </div>
+          <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">{{ team?.liveScore }}</div>
+        </div>
+      </li>
+    </ul>
   </div>
 </div>

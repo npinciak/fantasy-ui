@@ -1,27 +1,15 @@
-<div class="flex-row" [ngStyle]="{ opacity: opacity }">
-  <div style="flex: 70%">
-    <div class="flex-row gap-5">
-      <div>
-        <img class="game-team-logo" height="40px" [alt]="team?.name" [src]="team?.logo" />
-      </div>
-      <div class="flex-col gap-5" style="font-size: 12px">
-        <div class="ui-font-weight-bold">
-          <span style="margin-right: 5px">{{ team?.currentRank }}</span
-          >{{ team?.name }}
-        </div>
-        <div>{{ team?.wins ?? 0 }}-{{ team?.losses ?? 0 }}-{{ team?.ties ?? 0 }}</div>
-      </div>
-    </div>
+<div class="flex items-center space-x-4" [ngClass]="opacity">
+  <div class="flex-shrink-0">
+    <img width="48" height="35" role="presentation" class="h-10 w-10 rounded-full" [alt]="team?.name" [src]="team?.logo" />
   </div>
-  <div style="flex: auto; text-align: right">
-    <div class="flex-col gap-5">
-      <div class="game-score-item">
-        {{ team?.totalPoints }}
-      </div>
-      <div style="font-size: 12px" *ngIf="team?.totalProjectedPointsLive">Proj: {{ team?.totalProjectedPointsLive | number }}</div>
-    </div>
+  <div class="min-w-0 flex-1">
+    <p class="truncate text-sm font-medium">
+      <span style="margin-right: 5px">{{ team?.currentRank }}</span
+      >{{ team?.name }}
+    </p>
+    <p class="truncate text-xs">{{ team?.wins ?? 0 }}-{{ team?.losses ?? 0 }}-{{ team?.ties ?? 0 }}</p>
   </div>
-  <div style="flex: 5%; align-content: center">
-    <mat-icon>{{ team?.isWinner ? 'arrow_left' : '' }}</mat-icon>
+  <div class="inline-flex items-center text-base font-semibold">
+    {{ team?.totalPoints }}
   </div>
 </div>

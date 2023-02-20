@@ -5,7 +5,6 @@ import { MatSelectChange } from '@angular/material/select';
 import { Sort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 import { UrlBuilder } from '@app/@core/store/router/url-builder';
-import { BASEBALL_STAT_PERIOD_FILTER_OPTIONS } from '@app/espn/const/stat-period.const';
 import {
   BaseballStat,
   BATTER_STATS_LIST,
@@ -29,11 +28,10 @@ enum PositionTabGroup {
 @Component({
   selector: `app-baseball-free-agents`,
   templateUrl: './baseball-free-agents.component.html',
-  styleUrls: ['./baseball-free-agents.component.scss'],
 })
 export class BaseballFreeAgentsComponent implements OnInit {
   readonly leagueId = this.activatedRoute.snapshot.params.leagueId;
-  readonly BASEBALL_STAT_PERIOD_FILTER_OPTIONS = BASEBALL_STAT_PERIOD_FILTER_OPTIONS;
+  readonly BASEBALL_STAT_PERIOD_FILTER_OPTIONS = [];
 
   readonly BATTER_STATS_LIST = BATTER_STATS_LIST;
   readonly PITCHER_STATS_LIST = PITCHER_STATS_LIST;
@@ -50,7 +48,7 @@ export class BaseballFreeAgentsComponent implements OnInit {
 
   readonly MLB_LINEUP_MAP = MLB_LINEUP_MAP;
 
-  scoringPeriodId: string = '002022';
+  scoringPeriodId = '002022';
 
   selectedPitcherStat = BaseballStat.ERA;
   selectedBatterStat = BaseballStat.AVG;

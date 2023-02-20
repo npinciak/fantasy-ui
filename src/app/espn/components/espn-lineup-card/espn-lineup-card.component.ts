@@ -4,7 +4,6 @@ import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
 @Component({
   selector: 'app-espn-lineup-card',
   templateUrl: './espn-lineup-card.component.html',
-  styleUrls: ['./espn-lineup-card.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class EspnLineupCardComponent<T extends PlayerEntity> {

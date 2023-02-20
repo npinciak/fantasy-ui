@@ -12,11 +12,11 @@ import {
 @Component({
   selector: 'app-espn-player',
   templateUrl: './espn-player.component.html',
-  styleUrls: ['./espn-player.component.scss'],
 })
 export class EspnPlayerComponent<T extends PlayerEntity> {
   @Input() player: T;
-  @Input() hideLineupSlot: false;
+  @Input() isLoading = false;
+  @Input() hideLineupSlot = false;
 
   readonly MatIconByEspnPlayerInjuryStatus = MAT_ICON_BY_INJURY_STATUS;
   readonly InjurySeverityByInjuryStatus = INJURY_SEVERITY_BY_INJURY_STATUS;

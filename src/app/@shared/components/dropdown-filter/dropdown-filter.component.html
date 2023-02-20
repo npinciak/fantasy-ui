@@ -1,8 +1,8 @@
 <div class="flex justify-center">
   <div class="mb-3 w-full xl:w-96">
-    <label for="filterItems" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">{{ title }}</label>
+    <label [for]="customElementId" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">{{ title }}</label>
     <select
-      id="filterItems"
+      [id]="customElementId"
       class="
         form-select
         m-0
@@ -19,6 +19,7 @@
         text-gray-700
         transition
         ease-in-out
+        hover:cursor-pointer
         focus:border-blue-600 focus:bg-white focus:text-gray-700 focus:outline-none
       "
       [attr.aria-label]="ariaLabel"
@@ -29,6 +30,7 @@
         [value]="item.value"
         tabindex="-1"
         role="listbox"
+        class="hover:cursor-pointer"
         aria-labelledby="listbox-label"
         [attr.aria-activedescendant]="'listbox-option-' + i"
       >
