@@ -4,7 +4,7 @@ import { MLB_STATS_MAP } from 'sports-ui-sdk';
 
 @Component({
   selector: `app-data-vis-scatter`,
-  templateUrl: './data-vis-scatter.component.html',
+  template: '<plotly-plot [useResizeHandler]="true" [config]="graph.config" [data]="graph.data" [layout]="graph.layout"></plotly-plot>',
 })
 export class DataVisScatterComponent implements OnInit, OnChanges {
   @Input() title = '';

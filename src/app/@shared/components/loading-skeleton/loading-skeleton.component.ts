@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'app-loading-skeleton',
   template: `
-    <ngx-skeleton-loader *ngIf="isLoading"></ngx-skeleton-loader>
+    <div class="mb-2.5 h-2 rounded-full bg-gray-200 dark:bg-gray-700" *ngIf="isLoading"></div>
     <ng-content *ngIf="!isLoading"></ng-content>
   `,
 })

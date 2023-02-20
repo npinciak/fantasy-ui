@@ -11,7 +11,7 @@ import { BaseballStat, MLB_STATS_MAP } from 'sports-ui-sdk';
 
 @Component({
   selector: `app-data-vis`,
-  templateUrl: './data-vis.component.html',
+  template: '<plotly-plot [useResizeHandler]="true" [config]="{ responsive: true }" [data]="test" [layout]="graph?.layout"></plotly-plot>',
 })
 export class DataVisComponent implements OnInit, OnChanges {
   @Input() title = '';
@@ -32,6 +32,7 @@ export class DataVisComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     for (const propName in changes) {
+      // eslint-disable-next-line no-prototype-builtins
       if (changes.hasOwnProperty(propName)) {
         switch (propName) {
           case 'chartData':

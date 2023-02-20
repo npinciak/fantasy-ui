@@ -1,13 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-no-data',
-  templateUrl: './no-data.component.html',
-  styleUrls: ['./no-data.component.scss'],
+  template: `
+    <div class="px-2 text-center">
+      <div class="text-5xl font-bold">{{ title }}</div>
+    </div>
+  `,
 })
-export class NoDataComponent implements OnInit {
+export class NoDataComponent {
   @Input() title = 'No Data';
-  constructor() {}
-
-  ngOnInit(): void {}
 }
