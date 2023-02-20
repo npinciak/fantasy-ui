@@ -41,7 +41,6 @@
     "lodash": "^4.17.21",
     "material-design-icons-iconfont": "^6.1.0",
     "ngx-build-plus": "^13.0.1",
-    "ngx-skeleton-loader": "^6.0.0",
     "plotly.js-dist-min": "^2.11.1",
     "rxjs": "^6.6.6",
     "sports-ui-sdk": "file:../sports-ui-sdk",
