@@ -28,31 +28,34 @@
     </ng-container>
   </div>
   <div main>
-    <div>
-      <app-dropdown-filter
-        ariaLabel="position options"
-        [selectedOption]="selectedPosition$ | async"
-        title="Position"
-        [filterItems]="FOOTBALL_POSITION_LIST_FILTER"
-        (filterUpdate)="onSelectedPositionChange($event)"
-      ></app-dropdown-filter>
+    <div class="flex w-full flex-row gap-6">
+      <div>
+        <app-dropdown-filter
+          ariaLabel="position options"
+          [selectedOption]="selectedPosition$ | async"
+          title="Position"
+          [filterItems]="FOOTBALL_POSITION_LIST_FILTER"
+          (filterUpdate)="onSelectedPositionChange($event)"
+        ></app-dropdown-filter>
+      </div>
+      <div>
+        <app-dropdown-filter
+          ariaLabel="scoring period options"
+          [selectedOption]="scoringPeriodId$ | async"
+          title="Stat Period"
+          [filterItems]="statPeriodFilterOptions$ | async"
+          (filterUpdate)="scoringPeriodIdChange($event)"
+        ></app-dropdown-filter>
+      </div>
     </div>
-    <div>
-      <app-dropdown-filter
-        ariaLabel="scoring period options"
-        [selectedOption]="scoringPeriodId$ | async"
-        title="Stat Period"
-        [filterItems]="statPeriodFilterOptions$ | async"
-        (filterUpdate)="scoringPeriodIdChange($event)"
-      ></app-dropdown-filter>
+    <div class="flex flex-row">
+      <app-espn-stats-table
+        [data]="tableData$ | async"
+        [dataColumns]="(tableConfig$ | async).rows"
+        [headers]="(tableConfig$ | async).headers"
+        [statsMap]="FOOTBALL_STATS_MAP"
+      >
+      </app-espn-stats-table>
     </div>
-
-    <app-espn-stats-table
-      [data]="tableData$ | async"
-      [dataColumns]="(tableConfig$ | async).rows"
-      [headers]="(tableConfig$ | async).headers"
-      [statsMap]="FOOTBALL_STATS_MAP"
-    >
-    </app-espn-stats-table>
   </div>
 </app-page-layout>

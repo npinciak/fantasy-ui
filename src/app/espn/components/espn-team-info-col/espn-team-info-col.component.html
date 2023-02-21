@@ -1,8 +1,10 @@
-<div class="flex-row gap-5" style="cursor: pointer; margin-right: 10px; justify-content: center" [attr.id]="teamTableLabel">
-  <div class="flex-col" style="flex: 10%" [attr.aria-label]="team?.name" [attr.aria-labelledby]="teamTableLabel">
-    <img width="48" height="35" [title]="team?.name" [alt]="team?.name" [src]="team?.logo" [alt]="team?.name" />
+<div class="flex items-center space-x-4" [attr.id]="teamTableLabel">
+  <div class="flex-shrink-0" [attr.aria-label]="team?.name" [attr.aria-labelledby]="teamTableLabel">
+    <img width="48" height="35" role="presentation" class="h-10 w-10 rounded-full" [title]="team?.name" [alt]="team?.name" [src]="team?.logo" />
   </div>
-  <div class="flex-col" style="display: flex; flex: 90%">
-    <a (click)="navigateToTeam()" tabindex="0">{{ team?.name }}</a>
+  <div class="min-w-0 flex-1">
+    <p class="truncate text-sm font-medium hover:cursor-pointer">
+      <a [title]="team?.name" (click)="navigateToTeam()" tabindex="-1">{{ team?.name }}</a>
+    </p>
   </div>
 </div>

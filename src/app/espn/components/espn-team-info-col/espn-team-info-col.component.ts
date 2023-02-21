@@ -4,7 +4,6 @@ import { TeamEntity } from '@app/@shared/base-models/base-team.model';
 @Component({
   selector: 'app-espn-team-info-col',
   templateUrl: './espn-team-info-col.component.html',
-  styleUrls: ['./espn-team-info-col.component.scss'],
 })
 export class EspnTeamInfoColComponent<T extends TeamEntity> {
   @Input() team: T;

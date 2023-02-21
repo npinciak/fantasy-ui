@@ -1,28 +1,25 @@
 <mat-dialog-content *ngIf="data.player as player">
-  <div class="flex-col gap-10">
-    <div class="flex-row gap-10">
-      <div style="flex: 40">
-        <img height="94px" width="125px" role="presentation" [src]="playerImg" [alt]="player?.name" />
-      </div>
-      <div style="flex: 60">
-        <div class="flex-col gap-10">
-          <div>
-            <div class="player name">
-              {{ player?.name }}
-            </div>
-            <div class="player team-pos">{{ player?.team }}, {{ player?.position }}</div>
-          </div>
-          <div>
-            <div>Own %</div>
-            <div>{{ player?.percentOwned | number: '1.0-2' }} ({{ player?.percentChange | number: '1.0-2' }})</div>
-          </div>
-        </div>
-      </div>
+  <div class="flex items-center space-x-4">
+    <div class="flex-shrink-0" [attr.aria-label]="player?.name">
+      <img role="presentation" class="h-32 w-44 rounded-full" [title]="player?.name" [alt]="player?.name" [src]="playerImg" />
+    </div>
+    <div class="min-w-0 flex-1">
+      <p [title]="player?.name" class="truncate text-2xl font-medium">{{ player?.name }}</p>
+      <p class="text-md truncate">{{ player?.team }}, {{ player?.position }}</p>
     </div>
   </div>
-  <div class="flex-col gap-5">
+  <div class="flex-col">
+    <div class="ui-font-weight-bold">Feed</div>
+
+    <div class="flex-col" *ngFor="let item of data.news">
+      <div>{{ item.headline }}</div>
+      <p>{{ item.story }}</p>
+    </div>
+  </div>
+
+  <div class="flex-col">
     <div class="ui-font-weight-bold">Outlook By Week</div>
-    <div class="flex-col gap-10" *ngFor="let c of data.player.outlookByWeek">
+    <div class="flex-col" *ngFor="let c of data.player.outlookByWeek">
       <div class="ui-font-weight-bold">Week {{ c.week }}</div>
       <div>{{ c.outlook }}</div>
       <mat-divider></mat-divider>
