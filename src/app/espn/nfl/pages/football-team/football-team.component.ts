@@ -79,7 +79,6 @@ export class FootballTeamComponent implements OnInit {
     readonly footballTeamFacade: FantasyFootballTeamFacade,
     readonly routerFacade: RouterFacade,
     private dialog: MatDialog,
-
     private store: Store
   ) {}
 
@@ -102,6 +101,7 @@ export class FootballTeamComponent implements OnInit {
     this.dialog.open(EspnPlayerDialogComponent, {
       data: {
         player,
+        sport: 'nfl',
       },
       height: '500px',
       width: '800px',

@@ -1,36 +1,20 @@
-<div class="flex-row" [ngStyle]="{ opacity: opacity }">
-  <div style="flex: 75%">
-    <div class="flex-row gap-5">
-      <div>
-        <img class="game-team-logo" [alt]="team?.name" [src]="team?.logo" />
-      </div>
-      <div class="flex-col gap-5">
-        <div class="ui-font-weight-bold" [ngStyle]="{ color: team.color }">
-          <span style="margin-right: 5px" [hidden]="noTeamRank">{{ team?.rank }}</span
-          >{{ team?.name }}
-        </div>
-        <div style="font-size: 12px" [ngStyle]="{ color: team.color }">
-          <ng-container *ngIf="!isTournament; else tournamentAggregate"> {{ team?.record }}</ng-container>
-        </div>
-      </div>
-    </div>
+<div class="flex items-center space-x-4" [ngClass]="opacity">
+  <div class="flex-shrink-0">
+    <img width="48" height="35" role="presentation" class="h-10 w-10 rounded-full" [alt]="team?.name" [src]="team?.logo" />
   </div>
-
-  <div style="flex: auto; place-content: center flex-end; align-items: center">
-    <div class="game-score-item" [ngStyle]="{ color: team.color }">
-      <span [class.game-score-winner]="team?.isWinner" [hidden]="isPregame"> {{ team?.score }}</span>
-    </div>
-
-    <!-- <div *ngIf="isPregame" class="game-score-item" [ngStyle]="{ color: team.color }">
-      <span [class.game-score-winner]="odds.favorite"> {{ odds.moneyLine }}</span>
-    </div> -->
+  <div class="min-w-0 flex-1" [ngStyle]="{ color: team.color }">
+    <p class="truncate text-sm font-medium">
+      {{ team?.name }}
+    </p>
+    <p [ngStyle]="{ color: team.color }" class="truncate text-xs">
+      <ng-container *ngIf="!isTournament; else tournamentAggregate">{{ team?.record }}</ng-container>
+    </p>
   </div>
-
-  <div style="align-content: center; justify-content: center">
-    <mat-icon>{{ team?.isWinner ? 'arrow_left' : '' }}</mat-icon>
+  <div [ngStyle]="{ color: team.color }" class="inline-flex items-center text-base font-semibold">
+    <span [hidden]="isPregame">{{ team?.score }}</span>
   </div>
 </div>
 
 <ng-template #tournamentAggregate>
-  <small>Aggregate: {{ team?.aggregateScore }}</small>
+  <p class="text-xs">Aggregate: {{ team?.aggregateScore }}</p>
 </ng-template>

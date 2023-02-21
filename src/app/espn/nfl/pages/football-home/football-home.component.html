@@ -1,23 +1,28 @@
 <app-page-layout>
   <div sidebar>
-    <app-dropdown-filter
-      [selectedOption]="currentScoringPeriod$ | async"
-      title="Week"
-      [filterItems]="matchupPeriodIdFilterOptions$ | async"
-      (filterUpdate)="fantasyFootballLeagueFacade.updateCurrentScoringPeriodId($event)"
-    ></app-dropdown-filter>
-
-    <div class="flex-col gap-10">
-      <ng-container *ngFor="let matchup of matchups$ | async">
-        <div>
-          <mat-card>
-            <mat-card-content class="flex-row">
+    <div class="w-full max-w-md rounded-lg border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-800">
+      <!-- <div class="mb-4 flex items-center justify-between">
+        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white"></h5>
+        <div class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+          <app-refresh-btn (refreshButtonClicked)="onRefreshClick()"></app-refresh-btn>
+        </div>
+      </div> -->
+      <div class="flow-root">
+        <app-dropdown-filter
+          ariaLabel="week selection options"
+          [selectedOption]="currentScoringPeriod$ | async"
+          [filterItems]="matchupPeriodIdFilterOptions$ | async"
+          (filterUpdate)="fantasyFootballLeagueFacade.updateCurrentScoringPeriodId($event)"
+        ></app-dropdown-filter>
+        <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+          <li class="py-3 sm:py-4" *ngFor="let matchup of matchups$ | async; let i = index" [attr.data-index]="i" tabindex="-1" (click)="onPlayerClick(player)">
+            <div>
               <app-football-scoreboard-card-team [team]="matchup.awayTeam"></app-football-scoreboard-card-team>
               <app-football-scoreboard-card-team [team]="matchup.homeTeam"></app-football-scoreboard-card-team>
-            </mat-card-content>
-          </mat-card>
-        </div>
-      </ng-container>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
   <div main>

@@ -7,7 +7,7 @@
   <div nav>
     <h4>{{ selectedSlate$ | async }}</h4>
   </div>
-  <div main class="flex-col gap-25">
+  <div main class="gap-25 flex-col">
     <!-- <div>
       <div class="flex-col ui-w-100 gap-5" style="text-align: center" *ngFor="let matchup of matchups$ | async">
         <div class="flex-row" style="margin-top: 10px">
@@ -59,6 +59,7 @@
           <div class="flex-row gap-15">
             <div>
               <app-dropdown-filter
+                ariaLabel=""
                 [selectedOption]="xAxisStat$ | async"
                 title="xAxis"
                 [filterItems]="playerScatterAxisOptions$ | async"
@@ -67,6 +68,7 @@
             </div>
             <div>
               <app-dropdown-filter
+                ariaLabel=""
                 [selectedOption]="yAxisStat$ | async"
                 title="yAxis"
                 [filterItems]="playerScatterAxisOptions$ | async"
@@ -89,12 +91,18 @@
     <div>
       <mat-card>
         <mat-card-content>
-          <div class="flex-row gap-15">
+          <div class="gap-15 flex-row">
             <div>
-              <app-dropdown-filter title="Teams" [filterItems]="playerTeamsFilterOptions$ | async" (filterUpdate)="teamFilterChange($event)"></app-dropdown-filter>
+              <app-dropdown-filter
+                ariaLabel="team options"
+                title="Teams"
+                [filterItems]="playerTeamsFilterOptions$ | async"
+                (filterUpdate)="teamFilterChange($event)"
+              ></app-dropdown-filter>
             </div>
             <div>
               <app-dropdown-filter
+                ariaLabel="position options"
                 title="Position"
                 [filterItems]="playerPositionFilterOptions$ | async"
                 (filterUpdate)="positionFilterChange($event)"

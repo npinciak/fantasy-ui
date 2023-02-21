@@ -23,7 +23,6 @@ import { BaseballPlayer } from '../../models/baseball-player.model';
 @Component({
   selector: 'app-baseball-team',
   templateUrl: './baseball-team.component.html',
-  styleUrls: ['./baseball-team.component.scss'],
 })
 export class BaseballTeamComponent {
   teamLineup: BaseballPlayer[];

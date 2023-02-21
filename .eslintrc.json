@@ -18,6 +18,7 @@
         "project": ["tsconfig.json"],
         "createDefaultProgram": true
       },
+      "files": ["*.js,*.ts"],
       "extends": [
         "prettier",
         "plugin:@angular-eslint/ng-cli-compat",

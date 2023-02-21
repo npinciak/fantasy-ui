@@ -1,32 +1,31 @@
-<app-scrollable-table>
-  <table class="ui-w-100" mat-table [dataSource]="dataSource" matSortDirection="asc" matSort>
+<div class="overflow-x-auto overflow-y-hidden">
+  <table class="w-full" mat-table [dataSource]="dataSource" matSortDirection="asc" matSort>
     <ng-container *ngFor="let col of dataRows">
       <ng-container [matColumnDef]="col?.columnDef" [sticky]="col.columnDef === 'name'">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        <th mat-header-cell class="first-of-type:min-w-36 first-of-type:w-36 first-of-type:bg-slate-100" *matHeaderCellDef mat-sort-header>
           {{ col?.headerLabel }}
         </th>
         <td
+          class="first-of-type:min-w-36 first-of-type:w-36 first-of-type:bg-slate-100"
           mat-cell
           *matCellDef="let data"
-          [class.table-col]="col.columnDef !== 'name'"
           [ngClass]="col.columnDef === 'oppPassDefRank' || col.columnDef === 'oppRushDefRank' ? matchupThresholdInverse(col?.cellData(data)) : null"
         >
           <app-loading-skeleton [isLoading]="isLoading$ | async">
-            <ng-container [ngSwitch]="col.columnDef">
-              <ng-template [ngSwitchCase]="'name'">
-                <div class="flex-row gap-5" style="margin-right: 10px">
-                  <div class="flex-col" style="flex: 90%">
-                    <div>
-                      {{ data?.name }}
-                    </div>
-                    <div class="player team-pos">{{ teamMap[data?.rgTeamId] }}, {{ data?.position }}</div>
+            <ng-container *ngIf="col?.columnDef === 'name'; else defaultCell">
+              <div class="flex-row gap-5" class="mr-2">
+                <div class="flex-col">
+                  <div class="text-xs sm:text-sm">
+                    {{ data?.name }}
                   </div>
+                  <div class="text-xs sm:text-sm">{{ teamMap[data?.rgTeamId] }}, {{ data?.position }}</div>
                 </div>
-              </ng-template>
-              <ng-template [ngSwitchDefault]>
-                {{ col.dataType === TableColumnDataType.Number ? (col?.cellData(data) | statFormat: 'number' | number: '1.0-3') : col?.cellData(data) }}
-              </ng-template>
+              </div>
             </ng-container>
+
+            <ng-template #defaultCell>
+              {{ col.dataType === TableColumnDataType.Number ? (col?.cellData(data) | statFormat: 'number' | number: '1.0-3') : col?.cellData(data) }}
+            </ng-template>
           </app-loading-skeleton>
         </td>
       </ng-container>
@@ -34,5 +33,6 @@
     <tr mat-header-row *matHeaderRowDef="dataHeaders; sticky: true"></tr>
     <tr mat-row *matRowDef="let team; columns: dataHeaders"></tr>
   </table>
-</app-scrollable-table>
-<mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons> </mat-paginator>
+
+  <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons> </mat-paginator>
+</div>

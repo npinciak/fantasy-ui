@@ -31,7 +31,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     StatPipe,
     RefreshBtnComponent,
   ],
-  imports: [PlotlyModule, RouterModule, MaterialModule, CommonModule, NgxSkeletonLoaderModule],
+  imports: [PlotlyModule, RouterModule, MaterialModule, CommonModule],
   exports: [
     StatPipe,
     DataVisComponent,

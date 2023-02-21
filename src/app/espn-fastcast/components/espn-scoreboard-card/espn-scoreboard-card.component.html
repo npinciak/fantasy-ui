@@ -1,34 +1,40 @@
 <article
-  class="game-card"
+  class="min-w-80 mr-3 w-80 p-3"
   [attr.aria-labelledby]="ariaInfo.eventName"
   [attr.aria-describedby]="ariaInfo.eventDescription"
   [attr.aria-setsize]="ariaSetsize"
   [attr.aria-posinset]="ariaPosinset"
-  style="padding: 10px"
 >
-  <div [id]="ariaInfo.eventSummary" class="event-summary flex-row">
-    <div style="flex: auto">
-      <span [id]="ariaInfo.eventName" class="meta-data">{{ event.name }}</span>
-      <span [id]="ariaInfo.eventLocation" class="meta-data">{{ event.location }}</span>
+  <div [id]="ariaInfo.eventSummary" class="mb-2 flex flex-row text-xs text-gray-400">
+    <div class="flex flex-auto">
+      <span [id]="ariaInfo.eventName" class="hidden">{{ event.name }}</span>
+      <span [id]="ariaInfo.eventLocation" class="hidden">{{ event.location }}</span>
       {{ eventSummary }}
     </div>
-    <div style="flex: auto">
-      <a [title]="ariaInfo.eventGamecast" [href]="event?.link" target="_blank"><mat-icon class="new-tab-icon">open_in_new</mat-icon></a>
+    <div class="flex flex-auto">
+      <a [title]="ariaInfo.eventGamecast" [href]="event?.link" target="_blank">
+        <mat-icon class="text-sm">open_in_new</mat-icon>
+      </a>
     </div>
   </div>
-
-  <app-espn-scoreboard-card-team
-    [eventStatus]="event.status"
-    [isTournament]="isTournament"
-    [team]="event?.teams?.away"
-    [odds]="event?.odds?.awayTeamOdds"
-  ></app-espn-scoreboard-card-team>
-  <app-espn-scoreboard-card-team
-    [eventStatus]="event.status"
-    [isTournament]="isTournament"
-    [team]="event?.teams?.home"
-    [odds]="event?.odds?.homeTeamOdds"
-  ></app-espn-scoreboard-card-team>
+  <div class="divide-y">
+    <div class="py-2">
+      <app-espn-scoreboard-card-team
+        [eventStatus]="event.status"
+        [isTournament]="isTournament"
+        [team]="event?.teams?.away"
+        [odds]="event?.odds?.awayTeamOdds"
+      ></app-espn-scoreboard-card-team>
+    </div>
+    <div class="py-2">
+      <app-espn-scoreboard-card-team
+        [eventStatus]="event.status"
+        [isTournament]="isTournament"
+        [team]="event?.teams?.home"
+        [odds]="event?.odds?.homeTeamOdds"
+      ></app-espn-scoreboard-card-team>
+    </div>
+  </div>
 </article>
 
 <!-- <mat-card-actions style="display: none">

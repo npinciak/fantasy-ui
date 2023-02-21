@@ -1,22 +1,28 @@
-<div class="flex-row gap-10" [title]="playerLabel" [attr.id]="playerLabel">
-  <div>
-    <img
-      role="presentation"
-      [src]="player?.img"
-      [alt]="player?.name"
-      onerror="this.src='https://a.espncdn.com/combiner/i?img=/games/lm-static/flb/images/nomug.png&w=55&h=40&cb=1'"
-    />
+<div class="flex items-center space-x-4" [title]="playerLabel" [attr.id]="playerLabel">
+  <div class="flex-shrink-0">
+    <img width="48" height="35" role="presentation" class="w-13 h-9 rounded-full" [src]="player?.img" [alt]="player?.name" />
   </div>
-  <div class="flex-col">
-    <div class="player name">
-      {{ player?.name }}
+  <div class="min-w-0 flex-1">
+    <p class="truncate text-sm font-medium text-gray-900 dark:text-white">
+      <ng-container *ngIf="!isLoading; else loading">
+        {{ player?.name }}
+      </ng-container>
       <mat-icon
         *ngIf="player?.injuryStatus"
         [ngStyle]="{ color: playerInjuryStatusColor(player.injuryStatus) }"
         [title]="PlayerStatusAbbrevByInjuryStatusType[player?.injuryStatus]"
         >{{ MatIconByEspnPlayerInjuryStatus[player?.injuryStatus] }}</mat-icon
       >
-    </div>
-    <div class="player team-pos">{{ player?.team }}, {{ player?.position }}</div>
+    </p>
+    <p class="truncate text-sm text-gray-500 dark:text-gray-400">
+      <ng-container *ngIf="!isLoading; else loading"> {{ player?.team }}, {{ player?.position }} </ng-container>
+    </p>
   </div>
+  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">{{ player?.points | number: '1.0' }}</div>
 </div>
+
+<ng-template #loading>
+  <div role="status" class="max-w-sm animate-pulse">
+    <div class="h-2.5 w-48 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+  </div>
+</ng-template>

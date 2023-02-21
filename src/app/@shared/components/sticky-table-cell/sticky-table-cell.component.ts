@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-sticky-table-cell',
-  templateUrl: './sticky-table-cell.component.html',
-  styles: ['.sticky-cell { min-width: 150px; }'],
+  template: `
+    <div class="min-w-[150px]">
+      <ng-content></ng-content>
+    </div>
+  `,
 })
-export class StickyTableCellComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class StickyTableCellComponent {}

@@ -1,26 +1,33 @@
+<ng-container *ngIf="seasonConcluded$ | async">
+  <mat-card>
+    <mat-card-content class="text-center">Season has concluded</mat-card-content>
+  </mat-card>
+  <div class="mx-3"></div>
+</ng-container>
+
 <app-page-layout>
   <div sidebar>
     <app-baseball-lineup-card
       title="Starting Lineup"
       [isLoading]="isLoading$ | async"
-      [lineup]="(startingBatters$ | async)!(teamId)"
+      [lineup]="startingBatters$ | async"
       (playerClicked)="onPlayerClick($event)"
       (refreshClicked)="onRefreshClick()"
     ></app-baseball-lineup-card>
-    <div style="margin: 10px 0"></div>
+    <div class="mx-3"></div>
     <app-baseball-lineup-card
       title="Bench"
       [isLoading]="isLoading$ | async"
-      [lineup]="(benchBatters$ | async)!(teamId)"
+      [lineup]="benchBatters$ | async"
       (playerClicked)="onPlayerClick($event)"
       (refreshClicked)="onRefreshClick()"
     ></app-baseball-lineup-card>
-    <div style="margin: 10px 0"></div>
+    <div class="mx-3"></div>
 
     <app-baseball-lineup-card
       title="Starting Pitchers"
       [isLoading]="isLoading$ | async"
-      [lineup]="(startingPitchers$ | async)!(teamId)"
+      [lineup]="startingPitchers$ | async"
       (playerClicked)="onPlayerClick($event)"
       (refreshClicked)="onRefreshClick()"
     ></app-baseball-lineup-card>
@@ -29,14 +36,15 @@
     <div>
       <mat-slide-toggle (change)="onBatterGraphSelectChange($event)" color="primary">Scatter</mat-slide-toggle>
 
-      <div style="margin: 10px 0"></div>
+      <div class="mx-3"></div>
 
       <div>
         <div>
           <app-dropdown-filter
+            ariaLabel="scoring period options"
             [selectedOption]="scoringPeriodId"
             title="Stat Period"
-            [filterItems]="STAT_PERIOD_FILTER_OPTIONS"
+            [filterItems]="scoringPeriodFilters$ | async"
             (filterUpdate)="onScoringPeriodIdChange($event)"
           ></app-dropdown-filter>
         </div>
@@ -63,34 +71,24 @@
             [title]="batterScatterChartTitle"
             [xAxisFilterTitle]="MLB_STAT_MAP[selectedBatterStatXAxis].description"
             [yAxisFilterTitle]="MLB_STAT_MAP[selectedBatterStatYAxis].description"
-            [chartData]="(fantasyBaseballTeamFacade.batterStatsScatterChartData$ | async)!(teamId, scoringPeriodId, selectedBatterStatXAxis, selectedBatterStatYAxis)"
+            [chartData]="batterScatterData$ | async"
           ></app-data-vis-scatter>
         </ng-container>
-        <div style="margin: 10px 0"></div>
+        <div class="mx-3"></div>
         <ng-template #defaultChart>
-          <app-data-vis
-            [title]="barChartTitle"
-            [statFilter]="selectedBatterStatXAxis"
-            [chartData]="(fantasyBaseballTeamFacade.batterChartData$ | async)!(teamId, scoringPeriodId, selectedBatterStatXAxis)"
-          ></app-data-vis>
+          <app-data-vis [title]="barChartTitle" [statFilter]="selectedBatterStatXAxis" [chartData]="batterBarData$ | async"></app-data-vis>
         </ng-template>
       </div>
       <h3>Batting</h3>
-      <mat-slide-toggle (change)="onLiveScoringSelectChange($event)" color="primary"> Live Scoring </mat-slide-toggle>
+      <!-- <mat-slide-toggle (change)="onLiveScoringSelectChange($event)" color="primary"> Live Scoring </mat-slide-toggle>
       <ng-container *ngIf="isLiveScore; else default">
-        <app-roster [data]="(fantasyBaseballTeamFacade.liveBattingStats$ | async)!(teamId)" [dataColumns]="BATTER_STATS_LIVE_ROWS" [headers]="BATTER_STATS_LIVE_HEADERS">
-        </app-roster>
-      </ng-container>
+        <app-roster [data]="liveBattingStats$ | async" [dataColumns]="BATTER_STATS_LIVE_ROWS" [headers]="BATTER_STATS_LIVE_HEADERS"> </app-roster>
+      </ng-container> -->
 
       <ng-template #default>
-        <app-roster
-          [data]="(fantasyBaseballTeamFacade.battingStats$ | async)!(teamId, scoringPeriodId)"
-          [dataColumns]="BATTER_STATS_ROWS"
-          [headers]="BATTER_STATS_HEADERS"
-        >
-        </app-roster>
+        <app-roster [data]="battingStats$ | async" [dataColumns]="BATTER_STATS_ROWS" [headers]="BATTER_STATS_HEADERS"> </app-roster>
       </ng-template>
-      <div style="margin: 10px 0"></div>
+      <div class="mx-3"></div>
 
       <h3>Pitching</h3>
       <mat-slide-toggle (change)="onPitcherGraphSelectChange($event)" color="primary">Scatter</mat-slide-toggle>
@@ -112,35 +110,30 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div style="margin: 10px 0"></div>
+      <div class="mx-3"></div>
 
       <div *ngIf="isPitcherScatterChart; else defaultPitcher">
         <app-data-vis-scatter
           [title]="pitcherScatterChartTitle"
           [xAxisFilterTitle]="MLB_STAT_MAP[selectedPitcherStatXAxis].description"
           [yAxisFilterTitle]="MLB_STAT_MAP[selectedPitcherStatYAxis].description"
-          [chartData]="(fantasyBaseballTeamFacade.pitcherStatsScatterChartData$ | async)!(teamId, scoringPeriodId, selectedPitcherStatXAxis, selectedPitcherStatYAxis)"
+          [chartData]="pitcherStatsScatterChartData$ | async"
         ></app-data-vis-scatter>
       </div>
 
-      <div style="margin: 10px 0"></div>
+      <div class="mx-3"></div>
 
       <ng-template #defaultPitcher>
         <div>
           <app-data-vis
             [title]="MLB_STAT_MAP[selectedPitcherStatXAxis].description"
             [statFilter]="selectedPitcherStatXAxis"
-            [chartData]="(fantasyBaseballTeamFacade.pitcherStatsChartData$ | async)!(teamId, scoringPeriodId, selectedPitcherStatXAxis)"
+            [chartData]="pitcherStatsChartData$ | async"
           ></app-data-vis>
         </div>
       </ng-template>
 
-      <app-roster
-        [data]="(fantasyBaseballTeamFacade.pitcherStats$ | async)!(teamId, scoringPeriodId)"
-        [dataColumns]="PITCHER_STATS_ROWS"
-        [headers]="PITCHER_STATS_HEADERS"
-      >
-      </app-roster>
+      <app-roster [data]="pitcherStats$ | async" [dataColumns]="PITCHER_STATS_ROWS" [headers]="PITCHER_STATS_HEADERS"> </app-roster>
     </div>
   </div>
 </app-page-layout>

@@ -22,9 +22,9 @@ export class EspnScoreboardCardTeamComponent {
   }
 
   get opacity() {
-    if (this.eventStatus === EVENT_STATUS.InProgress) return '100%';
+    if (this.eventStatus === EVENT_STATUS.InProgress) return 'opacity-100';
 
-    return !this.team.isWinner ? '50%' : null;
+    return !this.team.isWinner ? 'opacity-50' : null;
   }
 
   get isGameUndecided() {
@@ -37,5 +37,9 @@ export class EspnScoreboardCardTeamComponent {
 
   get isPregame() {
     return this.eventStatus === EVENT_STATUS.Pre;
+  }
+
+  get inProgress() {
+    return this.eventStatus === EVENT_STATUS.InProgress;
   }
 }

@@ -1,24 +1,15 @@
-<mat-card>
-  <mat-card-content>
-    <div class="flex-row ui-w-100">
-      <div style="flex-basis: 100%">
-        {{ title }}
-      </div>
-      <div class="flex" style="flex-basis: 100%; justify-content: end">
-        <app-refresh-btn [isLoading]="isLoading" (refreshButtonClicked)="onRefreshClick()"></app-refresh-btn>
-      </div>
+<div class="w-full max-w-md rounded-lg border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-800">
+  <div class="mb-4 flex items-center justify-between">
+    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">{{ title }}</h5>
+    <div class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+      <app-refresh-btn [isLoading]="isLoading" (refreshButtonClicked)="onRefreshClick()"></app-refresh-btn>
     </div>
-
-    <mat-nav-list>
-      <a style="padding: 0px" *ngFor="let player of lineup; let i = index" [attr.data-index]="i" tabindex="0" mat-list-item (click)="onPlayerClick(player)">
-        <div class="flex-row">
-          <div class="flex-col" style="flex-basis: 100%">
-            <app-loading-skeleton [isLoading]="isLoading">
-              <app-espn-player [player]="player"></app-espn-player>
-            </app-loading-skeleton>
-          </div>
-        </div>
-      </a>
-    </mat-nav-list>
-  </mat-card-content>
-</mat-card>
+  </div>
+  <div class="flow-root">
+    <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+      <li class="py-3 hover:cursor-pointer sm:py-4" *ngFor="let player of lineup; let i = index" [attr.data-index]="i" tabindex="-1" (click)="onPlayerClick(player)">
+        <app-espn-player [player]="player" [isLoading]="isLoading"></app-espn-player>
+      </li>
+    </ul>
+  </div>
+</div>

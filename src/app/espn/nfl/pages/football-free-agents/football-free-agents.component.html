@@ -3,6 +3,7 @@
     <mat-card>
       <mat-card-content>
         <app-dropdown-filter
+          ariaLabel="scpring period options"
           [selectedOption]="scoringPeriodId$ | async"
           title="Stat Period"
           [filterItems]="scoringPeriodFilterOptions$ | async"
@@ -12,6 +13,7 @@
         <div style="margin: 10px 0"></div>
 
         <app-dropdown-filter
+          ariaLabel="position options"
           [selectedOption]="selectedLineupSlotId$ | async"
           title="Position"
           [filterItems]="LINEUP_SLOTS"
@@ -21,6 +23,7 @@
         <div style="margin: 10px 0"></div>
 
         <app-dropdown-filter
+          ariaLabel="team options"
           [selectedOption]="selectedTeamId$ | async"
           title="Teams"
           [filterItems]="teamFilterOptions$ | async"
@@ -33,10 +36,17 @@
     <div class="flex-col">
       <mat-card>
         <mat-card-content>
-          <app-dropdown-filter [selectedOption]="xAxisStat$ | async" title="xAxis" [filterItems]="FOOTBALL_STATS_FILTER" (filterUpdate)="onAxisXChange($event)">
+          <app-dropdown-filter
+            ariaLabel="xAxis stat options"
+            [selectedOption]="xAxisStat$ | async"
+            title="xAxis"
+            [filterItems]="FOOTBALL_STATS_FILTER"
+            (filterUpdate)="onAxisXChange($event)"
+          >
           </app-dropdown-filter>
 
           <app-dropdown-filter
+            ariaLabel="yAxis stat options"
             [selectedOption]="yAxisStat$ | async"
             title="yAxis"
             [filterItems]="FOOTBALL_STATS_FILTER"
