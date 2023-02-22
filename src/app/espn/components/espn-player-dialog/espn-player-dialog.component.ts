@@ -1,7 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { headshotImgBuilder } from '@app/espn/espn.const';
-import { PlayerNewsFeedEntity } from 'sports-ui-sdk/lib/espn/models/espn-client.model';
+import { BaseballPlayer } from '@app/espn/mlb/models/baseball-player.model';
+import { PlayerDialog } from '@app/espn/models/player-dialog-component.model';
+import { FootballPlayer } from '@app/espn/nfl/models/football-player.model';
 
 @Component({
   selector: 'app-espn-player-dialog',
@@ -9,7 +11,7 @@ import { PlayerNewsFeedEntity } from 'sports-ui-sdk/lib/espn/models/espn-client.
 })
 export class EspnPlayerDialogComponent {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { player: any; sport: string; news: PlayerNewsFeedEntity[] },
+    @Inject(MAT_DIALOG_DATA) public data: PlayerDialog<BaseballPlayer | FootballPlayer>,
     public dialogRef: MatDialogRef<EspnPlayerDialogComponent>
   ) {}
 

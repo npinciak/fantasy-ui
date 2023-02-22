@@ -1,6 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
+import { PlayerNews } from '@app/espn/models/player-news.model';
 import { EspnService } from '@app/espn/service/espn.service';
 import { EspnTransformers } from '@app/espn/transformers/espn-transformers.m';
 import { Observable } from 'rxjs';
@@ -50,10 +51,10 @@ export class MlbService {
    * @param payload
    * @returns
    */
-  baseballPlayerNews(playerId: string): Observable<EspnClient.PlayerNewsFeedEntity[]> {
+  baseballPlayerNews(playerId: string): Observable<PlayerNews[]> {
     return this.client
       .fetchFantasyPlayerNewsBySport({ sport: FantasySports.Baseball, lookbackDays: '30', playerId })
-      .pipe(map(res => res.feed));
+      .pipe(map(res => [{ id: playerId, news: res.feed }]));
   }
 
   /**

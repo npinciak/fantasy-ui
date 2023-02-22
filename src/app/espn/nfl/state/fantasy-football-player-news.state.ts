@@ -18,7 +18,7 @@ export class FantasyFootballPlayerNewsState extends GenericState({
   }
 
   @Action(FantasyFootballPlayerNews.Fetch, { cancelUncompleted: true })
-  fetchPlayerNews({}: StateContext<GenericStateModel<EspnClient.PlayerNewsFeedEntity>>, { payload: { playerId } }) {
+  fetchPlayerNews(_: StateContext<GenericStateModel<EspnClient.PlayerNewsFeedEntity>>, { payload: { playerId } }) {
     return this.fantasyfootballService
       .fetchPlayerNews(playerId)
       .pipe(map(news => this.store.dispatch(new FantasyFootballPlayerNews.ClearAndAdd(news))));

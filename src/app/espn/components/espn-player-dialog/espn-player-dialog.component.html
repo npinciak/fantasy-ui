@@ -12,8 +12,9 @@
     <div class="ui-font-weight-bold">Feed</div>
 
     <div class="flex-col" *ngFor="let item of data.news">
-      <div>{{ item.headline }}</div>
-      <p>{{ item.story }}</p>
+      <div>{{ item.headline }} - {{ news.
+        lastModified }}</div>
+      <p [innerHtml]="item.story"></p>
     </div>
   </div>
 

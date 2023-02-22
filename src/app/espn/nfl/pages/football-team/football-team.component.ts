@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { EspnPlayerDialogComponent } from '@app/espn/components/espn-player-dialog/espn-player-dialog.component';
-import { FOOTBALL_STAT_PERIOD_FILTER_OPTIONS } from '@app/espn/const/stat-period.const';
+import { PlayerDialog } from '@app/espn/models/player-dialog-component.model';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -10,6 +10,7 @@ import { FootballPosition, NFL_POSITION_MAP, NFL_STATS_MAP } from 'sports-ui-sdk
 import { FantasyFootballPlayerNews } from '../../actions/fantasy-football-player-news.actions';
 import { FOOTBALL_ROSTER_HEADERS_BY_POS, FOOTBALL_ROSTER_ROWS_BY_POS } from '../../consts/fantasy-football-table.const';
 import { FantasyFootballLeagueFacade } from '../../facade/fantasy-football-league.facade';
+import { FantasyFootballPlayerNewsFacade } from '../../facade/fantasy-football-player-news.facade';
 import { FantasyFootballTeamFacade } from '../../facade/fantasy-football-team.facade';
 import { FootballPlayer } from '../../models/football-player.model';
 import { FOOTBALL_POSITION_LIST_FILTER } from '../../models/football-position.model';
@@ -27,7 +28,7 @@ export class FootballTeamComponent implements OnInit {
   readonly FOOTBALL_POSITION_LIST_FILTER = FOOTBALL_POSITION_LIST_FILTER;
   readonly NFL_POSITION_MAP = NFL_POSITION_MAP;
 
-  readonly FOOTBALL_STAT_PERIOD_FILTER_OPTIONS = FOOTBALL_STAT_PERIOD_FILTER_OPTIONS;
+  readonly FOOTBALL_STAT_PERIOD_FILTER_OPTIONS = [];
 
   readonly FOOTBALL_ROSTER_HEADERS_BY_POS = FOOTBALL_ROSTER_HEADERS_BY_POS;
   readonly FOOTBALL_ROSTER_ROWS_BY_POS = FOOTBALL_ROSTER_ROWS_BY_POS;
@@ -75,6 +76,8 @@ export class FootballTeamComponent implements OnInit {
   );
 
   constructor(
+    readonly footballPlayerNewsFacade: FantasyFootballPlayerNewsFacade,
+
     readonly footballLeagueFacade: FantasyFootballLeagueFacade,
     readonly footballTeamFacade: FantasyFootballTeamFacade,
     readonly routerFacade: RouterFacade,
@@ -96,13 +99,14 @@ export class FootballTeamComponent implements OnInit {
     this.footballLeagueFacade.refreshCurrentLeague();
   }
 
-  onPlayerClick(player: FootballPlayer) {
-    this.store.dispatch([new FantasyFootballPlayerNews.Fetch({ playerId: player.id })]);
+  async onPlayerClick(player: FootballPlayer) {
+    await this.store.dispatch([new FantasyFootballPlayerNews.Fetch({ playerId: player.id })]).toPromise();
+    const news = this.footballPlayerNewsFacade.getById(player.id)?.news;
+
+    const data = { player, news, sport: 'nfl' } as PlayerDialog<FootballPlayer>;
+
     this.dialog.open(EspnPlayerDialogComponent, {
-      data: {
-        player,
-        sport: 'nfl',
-      },
+      data,
       height: '500px',
       width: '800px',
     });

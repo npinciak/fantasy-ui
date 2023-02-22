@@ -3,12 +3,12 @@ import { GenericFacade } from '@app/@shared/generic-state/generic.facade';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { FantasyBaseballPlayerNews } from '../actions/fantasy-baseball-player-news.actions';
-import { FantasyBaseballPlayerSelector } from '../selectors/fantasy-baseball-player.selector';
+import { FantasyBaseballPlayerNewsSelector } from '../selectors/fantasy-baseball-player-news.selector';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FantasyBaseballPlayerFacade extends GenericFacade(FantasyBaseballPlayerSelector) {
+export class FantasyBaseballPlayerNewsFacade extends GenericFacade(FantasyBaseballPlayerNewsSelector) {
   constructor(private store: Store) {
     super();
   }

@@ -8,7 +8,6 @@ import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.fa
 @Component({
   selector: 'app-baseball-home',
   templateUrl: './baseball-home.component.html',
-  styleUrls: ['./baseball-home.component.scss'],
 })
 export class BaseballHomeComponent implements OnInit {
   readonly LEAGUE_STANDINGS_ROWS = LEAGUE_STANDINGS_ROWS;

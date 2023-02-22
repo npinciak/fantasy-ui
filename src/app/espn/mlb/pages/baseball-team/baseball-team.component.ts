@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { ActivatedRoute, Router } from '@angular/router';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
-import { UrlBuilder } from '@app/@core/store/router/url-builder';
-import { BASEBALL_STAT_PERIOD_FILTER_OPTIONS, StatTypePeriodToYear } from '@app/espn/const/stat-period.const';
+import { EspnPlayerDialogComponent } from '@app/espn/components/espn-player-dialog/espn-player-dialog.component';
 import { Store } from '@ngxs/store';
+import { BehaviorSubject, combineLatest, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { BaseballStat, BATTER_STATS_LIST, MLB_STATS_MAP, PITCHER_STATS_LIST } from 'sports-ui-sdk';
-import { SetSeasonId } from '../../actions/mlb.actions';
+import { FantasyBaseballPlayerNews } from '../../actions/fantasy-baseball-player-news.actions';
 import {
   BATTER_STATS_HEADERS,
   BATTER_STATS_LIVE_HEADERS,
@@ -16,7 +17,7 @@ import {
   PITCHER_STATS_ROWS,
 } from '../../consts/tables.const';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
-import { FantasyBaseballPlayerFacade } from '../../facade/fantasy-baseball-player.facade';
+import { FantasyBaseballPlayerNewsFacade } from '../../facade/fantasy-baseball-player-news.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
 import { BaseballPlayer } from '../../models/baseball-player.model';
 
@@ -27,9 +28,8 @@ import { BaseballPlayer } from '../../models/baseball-player.model';
 export class BaseballTeamComponent {
   teamLineup: BaseballPlayer[];
 
-  readonly STAT_PERIOD_FILTER_OPTIONS = BASEBALL_STAT_PERIOD_FILTER_OPTIONS;
-  readonly teamId = this.routerFacade.teamId;
-  readonly leagueId = this.routerFacade.leagueId;
+  readonly teamId$ = this.routerFacade.teamId$;
+  readonly leagueId$ = this.routerFacade.leagueId$;
 
   readonly BATTER_STATS_LIST = BATTER_STATS_LIST;
   readonly PITCHER_STATS_LIST = PITCHER_STATS_LIST;
@@ -52,27 +52,50 @@ export class BaseballTeamComponent {
 
   scoringPeriodId = '002022';
 
+  statPeriod$ = new BehaviorSubject<string>('002022');
+  selectedBatterStatXAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.wOBA);
+  selectedBatterStatYAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.AB);
+
   isLiveScore: boolean;
   isBatterScatterChart: boolean;
   isPitcherScatterChart: boolean;
 
   isLoading$ = this.fantasyBaseballLeagueFacade.isLoading$;
+  seasonConcluded$ = this.fantasyBaseballLeagueFacade.seasonConcluded$;
+  scoringPeriodFilters$ = this.fantasyBaseballLeagueFacade.scoringPeriodFilters$;
 
   startingBatters$ = this.fantasyBaseballTeamFacade.startingBatters$;
   benchBatters$ = this.fantasyBaseballTeamFacade.benchBatters$;
+
   startingPitchers$ = this.fantasyBaseballTeamFacade.startingPitchers$;
+
+  newRoster$ = this.fantasyBaseballTeamFacade.currentRoster$;
+
+  batterScatterData$ = combineLatest([
+    this.fantasyBaseballTeamFacade.batterStatsScatterChartData$,
+    this.statPeriod$,
+    this.selectedBatterStatXAxis$,
+    this.selectedBatterStatYAxis$,
+  ]).pipe(map(([chartData, statPeriod, xAxis, yAxis]) => chartData(statPeriod, xAxis, yAxis)));
+
+  batterBarData$ = of([]); //(fantasyBaseballTeamFacade.batterChartData$ | async)!(teamId, scoringPeriodId, selectedBatterStatXAxis)
+  liveBattingStats$ = combineLatest([this.fantasyBaseballTeamFacade.liveBattingStats$, this.teamId$]).pipe(
+    map(([liveStats, teamId]) => (teamId ? liveStats(teamId) : []))
+  );
+  battingStats$ = of([]);
+
+  pitcherStatsScatterChartData$ = of([]);
+  pitcherStatsChartData$ = of([]);
+  pitcherStats$ = of([]);
 
   constructor(
     private store: Store,
     readonly routerFacade: RouterFacade,
     readonly fantasyBaseballTeamFacade: FantasyBaseballTeamFacade,
     readonly fantasyBaseballLeagueFacade: FantasyBaseballLeagueFacade,
-    readonly fantasyBaseballPlayerFacade: FantasyBaseballPlayerFacade,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
+    readonly fantasyBaseballPlayerNewsFacade: FantasyBaseballPlayerNewsFacade,
+    private dialog: MatDialog
   ) {}
-
-  onPlayerClick(event) {}
 
   onRefreshClick() {
     // this.fantasyBaseballLeagueFacade.getLeague(this.leagueId);
@@ -91,17 +114,15 @@ export class BaseballTeamComponent {
   }
 
   onScoringPeriodIdChange(val: string): void {
-    this.scoringPeriodId = val;
-    const seasonId = StatTypePeriodToYear(this.scoringPeriodId);
-    this.store.dispatch(new SetSeasonId({ seasonId }));
+    this.statPeriod$.next(val);
   }
 
   onBatterStatXAxisChange(val: any): void {
-    this.selectedBatterStatXAxis = val;
+    this.selectedBatterStatXAxis$.next(val);
   }
 
   onBatterStatYAxisChange(val: any): void {
-    this.selectedBatterStatYAxis = val;
+    this.selectedBatterStatYAxis$.next(val);
   }
 
   onPitcherStatXAxisChange(val: any): void {
@@ -110,14 +131,6 @@ export class BaseballTeamComponent {
 
   onPitcherStatYAxisChange(val: any): void {
     this.selectedPitcherStatYAxis = val;
-  }
-
-  navigateHome(): void {
-    this.router.navigate(this.homeRoute);
-  }
-
-  get homeRoute(): string[] {
-    return [UrlBuilder.espnMlbBase, `${this.leagueId}`];
   }
 
   get batterScatterChartTitle(): string {
@@ -134,5 +147,21 @@ export class BaseballTeamComponent {
 
   get barChartTitle(): string {
     return this.MLB_STAT_MAP[this.selectedBatterStatXAxis].description;
+  }
+
+  async onPlayerClick(player: BaseballPlayer) {
+    try {
+      await this.store.dispatch([new FantasyBaseballPlayerNews.Fetch({ playerId: player.id })]).toPromise();
+
+      this.dialog.open(EspnPlayerDialogComponent, {
+        data: {
+          player,
+          news: this.fantasyBaseballPlayerNewsFacade.getById(player.id),
+          sport: 'mlb',
+        },
+        height: '500px',
+        width: '800px',
+      });
+    } catch (error) {}
   }
 }

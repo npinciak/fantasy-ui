@@ -14,15 +14,11 @@ import { FantasyLeague } from '../models/fantasy-league.model';
 import { LEAGUE_ABBREV_BY_ID } from '../models/league.model';
 
 export function clientPlayerOutlook(outlooks?: EspnClient.PlayerOutlooksMap) {
-  if (!exists(outlooks)) {
-    return [];
-  }
+  if (!exists(outlooks)) return [];
 
   const weeklyOutlook = outlooks.outlooksByWeek;
 
-  if (!exists(weeklyOutlook)) {
-    return [];
-  }
+  if (!exists(weeklyOutlook)) return [];
 
   return Object.keys(weeklyOutlook)
     .map(k => ({

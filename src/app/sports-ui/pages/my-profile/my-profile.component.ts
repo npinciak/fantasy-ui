@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthenticationFormFacade } from '@app/@core/authentication/authentication-form/authentication-form.facade';
-import { AuthenticationService } from '@app/@core/authentication/services/authentication.service';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { AddLeagueFormComponent } from '@app/sports-ui/components/add-league-form/add-league-form.component';
 import { USER_LEAGUE_HEADERS, USER_LEAGUE_ROWS } from '@app/sports-ui/components/leagues-table/leagues-table.const';
@@ -28,8 +27,7 @@ export class MyProfileComponent implements OnInit {
     private sportsUiUserFacade: SportsUiUserFacade,
     private sportsUiLeaguesFacade: SportsUiLeaguesFacade,
     private authenticationFormFacade: AuthenticationFormFacade,
-    private dialog: MatDialog,
-    private authService: AuthenticationService
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {}

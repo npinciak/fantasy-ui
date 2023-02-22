@@ -1,7 +1,7 @@
 import { GenericActions } from '@app/@shared/generic-state/generic.actions';
-import { EspnClient } from 'sports-ui-sdk';
+import { PlayerNews } from '@app/espn/models/player-news.model';
 
-export class FantasyFootballPlayerNews extends GenericActions<EspnClient.PlayerNewsFeedEntity>({
+export class FantasyFootballPlayerNews extends GenericActions<PlayerNews>({
   stateName: 'fantasyFootballPlayerNews',
 }) {
   constructor() {
