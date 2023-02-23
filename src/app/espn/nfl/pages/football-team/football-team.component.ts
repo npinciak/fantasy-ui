@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { EspnPlayerDialogComponent } from '@app/espn/components/espn-player-dialog/espn-player-dialog.component';
@@ -17,9 +17,8 @@ import { FOOTBALL_POSITION_LIST_FILTER } from '../../models/football-position.mo
 @Component({
   selector: 'app-football-team',
   templateUrl: './football-team.component.html',
-  styleUrls: ['./football-team.component.scss'],
 })
-export class FootballTeamComponent implements OnInit {
+export class FootballTeamComponent {
   readonly leagueId$ = this.routerFacade.leagueId$;
   readonly teamId$ = this.routerFacade.teamId$;
   readonly getSeason$ = this.routerFacade.seasonId$;
@@ -77,7 +76,6 @@ export class FootballTeamComponent implements OnInit {
 
   constructor(
     readonly footballPlayerNewsFacade: FantasyFootballPlayerNewsFacade,
-
     readonly footballLeagueFacade: FantasyFootballLeagueFacade,
     readonly footballTeamFacade: FantasyFootballTeamFacade,
     readonly routerFacade: RouterFacade,
@@ -85,30 +83,24 @@ export class FootballTeamComponent implements OnInit {
     private store: Store
   ) {}
 
-  ngOnInit(): void {}
-
-  onSelectedPositionChange(val) {
+  onSelectedPositionChange(val): void {
     this.selectedPosition$.next(Number(val));
   }
 
-  scoringPeriodIdChange(val) {
+  scoringPeriodIdChange(val): void {
     this.scoringPeriodId$.next(val);
   }
 
-  refreshLeague() {
+  refreshLeague(): void {
     this.footballLeagueFacade.refreshCurrentLeague();
   }
 
-  async onPlayerClick(player: FootballPlayer) {
+  async onPlayerClick(player: FootballPlayer): Promise<void> {
     await this.store.dispatch([new FantasyFootballPlayerNews.Fetch({ playerId: player.id })]).toPromise();
-    const news = this.footballPlayerNewsFacade.getById(player.id)?.news;
+    const news = this.footballPlayerNewsFacade.getById(player.id)?.news ?? [];
 
     const data = { player, news, sport: 'nfl' } as PlayerDialog<FootballPlayer>;
 
-    this.dialog.open(EspnPlayerDialogComponent, {
-      data,
-      height: '500px',
-      width: '800px',
-    });
+    this.dialog.open(EspnPlayerDialogComponent, { data, height: '500px', width: '800px' });
   }
 }
