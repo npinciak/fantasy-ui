@@ -1,8 +1,7 @@
-import { EspnClient } from 'sports-ui-sdk/lib/espn/espn.m';
+import { ArticleEntity } from '@app/@shared/base-models/base-article.model';
+import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
+import { ImagesEntity } from 'sports-ui-sdk/lib/espn/models/espn-client.model';
 
-export type PlayerNewsEntity = Pick<EspnClient.PlayerNewsFeedEntity, 'id' | 'headline' | 'story' | 'lastModified'>;
+export type PlayerNewsEntity = ArticleEntity & { storyImages: ImagesEntity[]; type: string };
 
-export type PlayerNews = {
-  id: string;
-  news: PlayerNewsEntity[];
-};
+export type PlayerNews = Pick<PlayerEntity, 'id'> & { news: PlayerNewsEntity[] };

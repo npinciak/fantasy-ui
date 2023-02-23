@@ -1,5 +1,5 @@
 import { exists } from '@app/@shared/utilities/utilities.m';
-import { EspnClient, MLB_LINEUP_MAP, MLB_POSITION_MAP, MLB_TEAM_MAP, SPORT_ID } from 'sports-ui-sdk';
+import { BaseballStat, EspnClient, MLB_LINEUP_MAP, MLB_POSITION_MAP, MLB_TEAM_MAP, SPORT_ID } from 'sports-ui-sdk';
 
 import { isPitcher } from '../../espn-helpers';
 import { FantasyLeague } from '../../models/fantasy-league.model';

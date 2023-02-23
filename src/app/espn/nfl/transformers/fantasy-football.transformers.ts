@@ -1,5 +1,5 @@
 import { exists } from '@app/@shared/utilities/utilities.m';
-import { EspnClient, FOOTBALL_LINEUP_MAP, NFL_POSITION_MAP, NFL_TEAM_MAP, SPORT_ID } from 'sports-ui-sdk';
+import { EspnClient, FOOTBALL_LINEUP_MAP, NFL_POSITION_MAP, NFL_TEAM_MAP, SPORT_ID } from 'sports-ui-sdk/lib/espn/espn.m';
 import { headshotImgBuilder, logoImgBuilder } from '../../espn.const';
 import { FantasyLeague } from '../../models/fantasy-league.model';
 import { EspnTransformers } from '../../transformers/espn-transformers.m';

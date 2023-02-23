@@ -1,7 +1,8 @@
 import { tickerDate } from '@app/@shared/helpers/date';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
-import { EspnClient, EspnFastcastClient, EVENT_STATUS, PITCHING_LINEUP_IDS, PLAYER_INJURY_STATUS, SEASON_ID } from 'sports-ui-sdk';
+import { PITCHING_LINEUP_IDS } from 'sports-ui-sdk/lib/espn/baseball/lineup/lineup.m';
+import { EspnClient, EspnFastcastClient, EVENT_STATUS, PLAYER_INJURY_STATUS, SEASON_ID } from 'sports-ui-sdk/lib/espn/espn.m';
 import { BaseballPlayer } from './mlb/models/baseball-player.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
 

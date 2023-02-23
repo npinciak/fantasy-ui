@@ -1,8 +1,8 @@
 import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
-import { PlayerNewsFeedEntity } from 'sports-ui-sdk/lib/espn/models/espn-client.model';
+import { PlayerNewsEntity } from './player-news.model';
 
 export type PlayerDialog<T extends PlayerEntity> = {
   player: T;
-  news: PlayerNewsFeedEntity[];
+  news: PlayerNewsEntity[];
   sport: 'nfl' | 'mlb';
 };

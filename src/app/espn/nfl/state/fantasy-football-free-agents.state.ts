@@ -8,7 +8,7 @@ import { FantasyFootballService } from '../services/fantasy-football.service';
 import { FantasyFootballFreeAgentsFilterState } from './fantasy-football-free-agents-filter.state';
 
 import { map } from 'rxjs/operators';
-import { PLAYER_AVAILABILITY_STATUS } from 'sports-ui-sdk';
+import { PLAYER_AVAILABILITY_STATUS } from 'sports-ui-sdk/lib/espn/models/espn-client.const';
 import { FantasyFootballLeagueSelector } from '../selectors/fantasy-football-league.selectors';
 
 @State({ name: FantasyFootballFreeAgents.name })

@@ -1,5 +1,5 @@
 import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
-import { EspnClient } from 'sports-ui-sdk';
+import { EspnClient } from 'sports-ui-sdk/lib/espn/espn.m';
 
 export interface FootballPlayerAttributes {
   injuryStatus: EspnClient.PlayerInjuryStatus | null;

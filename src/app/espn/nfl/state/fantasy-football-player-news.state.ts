@@ -3,7 +3,7 @@ import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { map } from 'rxjs/operators';
-import { EspnClient } from 'sports-ui-sdk';
+import { EspnClient } from 'sports-ui-sdk/lib/espn/espn.m';
 import { FantasyFootballPlayerNews } from '../actions/fantasy-football-player-news.actions';
 import { FantasyFootballService } from '../services/fantasy-football.service';
 

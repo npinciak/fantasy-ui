@@ -4,7 +4,7 @@ import { espnDateFormatter } from '@app/@shared/helpers/date';
 import { FastcastTransform } from '@app/espn-fastcast/models/fastcast-transform.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { EspnClient, EspnFastcastClient } from 'sports-ui-sdk';
+import { EspnClient, EspnFastcastClient } from 'sports-ui-sdk/lib/espn/espn.m';
 import { ApiService } from 'src/app/@shared/services/api.service';
 import {
   EspnEndpointBuilder,

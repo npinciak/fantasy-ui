@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
-import { EspnFastcastClient, EVENT_STATUS } from 'sports-ui-sdk';
+import { EspnFastcastClient, EVENT_STATUS } from 'sports-ui-sdk/lib/espn/espn.m';
 import { EventStatus } from 'sports-ui-sdk/lib/espn/models/espn-client.model';
 
 @Component({
