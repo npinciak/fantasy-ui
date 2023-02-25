@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { EspnPlayerDialogComponent } from '@app/espn/components/espn-player-dialog/espn-player-dialog.component';
+import { PlayerDialog } from '@app/espn/models/player-dialog-component.model';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -150,18 +151,11 @@ export class BaseballTeamComponent {
   }
 
   async onPlayerClick(player: BaseballPlayer) {
-    try {
       await this.store.dispatch([new FantasyBaseballPlayerNews.Fetch({ playerId: player.id })]).toPromise();
+    const news = this.fantasyBaseballPlayerNewsFacade.getById(player.id)?.news ?? [];
 
-      this.dialog.open(EspnPlayerDialogComponent, {
-        data: {
-          player,
-          news: this.fantasyBaseballPlayerNewsFacade.getById(player.id),
-          sport: 'mlb',
-        },
-        height: '500px',
-        width: '800px',
-      });
-    } catch (error) {}
+    const data = { player, news, sport: 'mlb' } as PlayerDialog<BaseballPlayer>;
+
+    this.dialog.open(EspnPlayerDialogComponent, { data, height: '500px', width: '800px' });
   }
 }

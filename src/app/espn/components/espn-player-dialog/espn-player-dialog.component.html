@@ -8,24 +8,24 @@
       <p class="text-md truncate">{{ player?.team }}, {{ player?.position }}</p>
     </div>
   </div>
-  <div class="flex-col">
-    <div class="ui-font-weight-bold">Feed</div>
-
-    <div class="flex-col" *ngFor="let item of data.news">
-      <div>{{ item.headline }} - {{ news.
-        lastModified }}</div>
-      <p [innerHtml]="item.story"></p>
+  <ng-container *ngIf="data.news.length > 0">
+    <div class="flex-col" class="divide-y">
+      <ng-container *ngFor="let item of data.news">
+        <article class="py-5">
+          <h2 class="text-base font-bold">{{ item?.headline }}</h2>
+          <section>
+            <p class="mt-3 text-sm" [innerHtml]="item?.story"></p>
+          </section>
+          <footer>
+            <p class="mt-3 text-xs">
+              Posted on <time [attr.datetime]="item?.published">{{ item?.published | date: 'short' }}</time>
+              <ng-container *ngIf="item.author"> by {{ item?.author }}</ng-container>
+            </p>
+          </footer>
+        </article>
+      </ng-container>
     </div>
-  </div>
-
-  <div class="flex-col">
-    <div class="ui-font-weight-bold">Outlook By Week</div>
-    <div class="flex-col" *ngFor="let c of data.player.outlookByWeek">
-      <div class="ui-font-weight-bold">Week {{ c.week }}</div>
-      <div>{{ c.outlook }}</div>
-      <mat-divider></mat-divider>
-    </div>
-  </div>
+  </ng-container>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>Close</button>

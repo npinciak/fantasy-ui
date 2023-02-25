@@ -13,7 +13,18 @@ import {
   espnViewParamFragmentList,
   FantasySports,
 } from '../models/espn-endpoint-builder.model';
+import { PlayerNews } from '../models/player-news.model';
 import { EspnTransformers } from '../transformers/espn-transformers.m';
+import { clientPlayerNewsFeed } from '../transformers/espn.transformers';
+
+export type FantasyLeagueBySportRequest = {
+  sport: FantasySports;
+  leagueId: string;
+  year: string;
+  headers?: HttpHeaders;
+};
+
+export type FantasyPlayerNewsRequest = Pick<FantasyLeagueBySportRequest, 'sport'> & { lookbackDays: string; playerId: string };
 
 @Injectable({
   providedIn: 'root',
@@ -72,10 +83,12 @@ export class EspnService {
    * @param sport
    * @returns Player news
    */
-  fetchFantasyPlayerNewsBySport(data: { sport: FantasySports; lookbackDays: string; playerId: string }): Observable<EspnClient.PlayerNews> {
-    const endpoint = new EspnEndpointBuilder(data.sport);
-    const params = new HttpParams().set(EspnParamFragment.Days, data.lookbackDays).set(EspnParamFragment.PlayerId, data.playerId);
-    return this.api.get<EspnClient.PlayerNews>(endpoint.fantasyPlayerNews, { params });
+  fetchFantasyPlayerNewsBySport({ sport, lookbackDays, playerId }: FantasyPlayerNewsRequest): Observable<PlayerNews[]> {
+    const endpoint = new EspnEndpointBuilder(sport);
+    const params = new HttpParams().set(EspnParamFragment.Days, lookbackDays).set(EspnParamFragment.PlayerId, playerId);
+    return this.api
+      .get<EspnClient.PlayerNewsFeed>(endpoint.fantasyPlayerNews, { params })
+      .pipe(map(res => clientPlayerNewsFeed(playerId, res)));
   }
 
   /**

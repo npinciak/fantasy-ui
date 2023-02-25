@@ -36,12 +36,10 @@ export class FantasyFootballService {
    * Return player news by Id
    *
    * @param playerId
-   * @returns
+   * @returns PlayerNews[]
    */
-  fetchPlayerNews(playerId): Observable<PlayerNews[]> {
-    return this.client
-      .fetchFantasyPlayerNewsBySport({ sport: FantasySports.Football, lookbackDays: '30', playerId })
-      .pipe(map(res => [{ id: playerId, news: res.feed }]));
+  fetchPlayerNews(playerId: string): Observable<PlayerNews[]> {
+    return this.client.fetchFantasyPlayerNewsBySport({ sport: this.sport, lookbackDays: '30', playerId }).pipe(map(res => res));
   }
 
   /**

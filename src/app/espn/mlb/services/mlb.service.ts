@@ -52,9 +52,7 @@ export class MlbService {
    * @returns
    */
   baseballPlayerNews(playerId: string): Observable<PlayerNews[]> {
-    return this.client
-      .fetchFantasyPlayerNewsBySport({ sport: FantasySports.Baseball, lookbackDays: '30', playerId })
-      .pipe(map(res => [{ id: playerId, news: res.feed }]));
+    return this.client.fetchFantasyPlayerNewsBySport({ sport: this.sport, lookbackDays: '30', playerId }).pipe(map(res => res));
   }
 
   /**

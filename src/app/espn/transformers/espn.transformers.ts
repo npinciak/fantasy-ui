@@ -11,6 +11,7 @@ import { excludeLeagues, flattenPlayerStats, includeSports, teamColorHandler, tr
 import { headshotImgBuilder, NO_LOGO } from '../espn.const';
 import { FantasyLeague } from '../models/fantasy-league.model';
 import { LEAGUE_ABBREV_BY_ID } from '../models/league.model';
+import { PlayerNews } from '../models/player-news.model';
 
 export function clientPlayerOutlook(outlooks?: EspnClient.PlayerOutlooksMap) {
   if (!exists(outlooks)) return [];
@@ -25,6 +26,24 @@ export function clientPlayerOutlook(outlooks?: EspnClient.PlayerOutlooksMap) {
       outlook: weeklyOutlook[k],
     }))
     .sort((a, b) => b.week - a.week);
+}
+
+export function clientPlayerNewsFeed(playerId: string, playerNewsFeed: EspnClient.PlayerNewsFeed): PlayerNews[] {
+  const news = {
+    id: playerId,
+    news: playerNewsFeed.feed.map(article => {
+      const { id, published, headline, story, byline, images, type } = article;
+
+      const author = exists(byline) ? byline : null;
+
+      const storyImages = exists(images) ? images : [];
+
+      const heroImage = '';
+
+      return { id: id.toString(), author, type, headline, heroImage, story, storyImages, published };
+    }),
+  } as PlayerNews;
+  return [news];
 }
 
 export function clientLeagueToLeague(league: EspnClient.League): FantasyLeague {
