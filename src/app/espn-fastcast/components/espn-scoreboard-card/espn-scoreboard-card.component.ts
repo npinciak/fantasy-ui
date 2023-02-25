@@ -4,7 +4,6 @@ import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
 import { fastcastEventSummary } from '@app/espn/espn-helpers';
 import { FASTCAST_DATE_SHORT } from '@app/espn/espn.const';
 import { EVENT_STATUS, SEASON_ID } from 'sports-ui-sdk/lib/espn/espn.m';
-import { EventAriaInfo } from '../espn-scoreboard/aria-info';
 
 @Component({
   selector: 'app-espn-scoreboard-card',
@@ -15,7 +14,6 @@ export class EspnScoreboardCardComponent implements OnChanges {
   @Input() event: FastcastEvent;
   @Input() isTournament: boolean;
   @Input() isEventToggled: boolean;
-  @Input() ariaAttributes: EventAriaInfo;
   @Input() ariaSetsize: number;
   @Input() ariaPosinset: number;
   @Input() index = 0;

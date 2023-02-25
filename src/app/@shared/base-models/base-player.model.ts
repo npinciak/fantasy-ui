@@ -5,4 +5,4 @@
  */
 type BasePlayerEntityProps = 'id' | 'name' | 'img' | 'team' | 'teamId' | 'teamUid' | 'position';
 
-export type PlayerEntity = Required<{ [prop in BasePlayerEntityProps]: string }>;
+export type PlayerEntity = { [prop in BasePlayerEntityProps]: string };

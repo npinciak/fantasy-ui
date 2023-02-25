@@ -24,7 +24,9 @@ export type TableColumn = {
 };
 
 export enum TableColumnDataType {
+  // eslint-disable-next-line id-blacklist
   Number,
+  // eslint-disable-next-line id-blacklist
   String,
   Percentage,
 }
