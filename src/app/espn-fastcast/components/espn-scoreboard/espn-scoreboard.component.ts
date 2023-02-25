@@ -53,9 +53,4 @@ export class EspnScoreboardComponent {
   onStartFeed() {
     this.fastcastFacade.setPauseState();
   }
-
-
-
-
-  
 }

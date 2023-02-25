@@ -1,22 +1,34 @@
 <article
-  class="min-w-80 mr-3 w-80 p-3"
+  class="min-w-60 mr-3 w-60 p-3"
   [attr.aria-labelledby]="ariaInfo.eventName"
   [attr.aria-describedby]="ariaInfo.eventDescription"
   [attr.aria-setsize]="ariaSetsize"
   [attr.aria-posinset]="ariaPosinset"
 >
-  <div [id]="ariaInfo.eventSummary" class="mb-2 flex flex-row text-xs text-gray-400">
-    <div class="flex flex-auto">
+  <div class="flex items-center text-gray-400">
+    <div class="min-w-0 flex-1">
+      <p class="truncate text-xs font-medium">{{ eventSummary }}</p>
       <span [id]="ariaInfo.eventName" class="hidden">{{ event.name }}</span>
       <span [id]="ariaInfo.eventLocation" class="hidden">{{ event.location }}</span>
-      {{ eventSummary }}
     </div>
-    <div class="flex flex-auto">
+    <div class="inline-flex items-center text-base font-semibold">
       <a [title]="ariaInfo.eventGamecast" [href]="event?.link" target="_blank">
-        <mat-icon class="text-sm">open_in_new</mat-icon>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+          <path
+            fill-rule="evenodd"
+            d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z"
+            clip-rule="evenodd"
+          />
+          <path
+            fill-rule="evenodd"
+            d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z"
+            clip-rule="evenodd"
+          />
+        </svg>
       </a>
     </div>
   </div>
+
   <div class="divide-y">
     <div class="py-2">
       <app-espn-scoreboard-card-team

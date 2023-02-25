@@ -1,13 +1,14 @@
-<div class="flex items-center space-x-4" [ngClass]="opacity">
-  <div class="flex-shrink-0">
+<div class="flex items-center" [ngClass]="opacity">
+  <div class="mr-2 flex-shrink-0">
     <img width="48" height="35" role="presentation" class="h-10 w-10 rounded-full" [alt]="team?.name" [src]="team?.logo" />
   </div>
   <div class="min-w-0 flex-1" [ngStyle]="{ color: team.color }">
-    <p class="truncate text-sm font-medium">
+    <p class="truncate text-xs font-bold">
+      <span class="text-xs" [class.hidden]="noTeamRank">{{ team?.rank }}</span>
       {{ team?.name }}
     </p>
     <p [ngStyle]="{ color: team.color }" class="truncate text-xs">
-      <ng-container *ngIf="!isTournament; else tournamentAggregate">{{ team?.record }}</ng-container>
+      <ng-container *ngIf="!isTournament; else tournamentAggregate"> {{ team?.record }}</ng-container>
     </p>
   </div>
   <div [ngStyle]="{ color: team.color }" class="inline-flex items-center text-base font-semibold">
