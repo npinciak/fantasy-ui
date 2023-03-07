@@ -14,8 +14,6 @@ import { EspnTeamInfoColComponent } from './components/espn-team-info-col/espn-t
 import { EspnRoutingModule } from './espn-routing.module';
 import { BaseballLineupCardComponent } from './mlb/components/baseball-lineup-card/baseball-lineup-card.component';
 import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
-import { PlayerComponent } from './mlb/components/player/player.component';
-import { StandingsComponent } from './mlb/components/standings/standings.component';
 import { BaseballFreeAgentsComponent } from './mlb/pages/baseball-free-agents/baseball-free-agents.component';
 import { BaseballHomeComponent } from './mlb/pages/baseball-home/baseball-home.component';
 import { BaseballTeamComponent } from './mlb/pages/baseball-team/baseball-team.component';
@@ -55,8 +53,6 @@ import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
     EspnPlayerComponent,
     EspnPlayerTrendingColComponent,
     EspnPlayerInfoColComponent,
-    StandingsComponent,
-    PlayerComponent,
     EspnTeamInfoColComponent,
     LeagueScoreboardComponent,
     BaseballLineupCardComponent,
@@ -86,7 +82,7 @@ import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
     MaterialModule,
     SharedModule,
   ],
-  exports: [StandingsComponent],
+
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class EspnModule {}

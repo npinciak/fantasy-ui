@@ -10,7 +10,6 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-espn-scoreboard',
   templateUrl: './espn-scoreboard.component.html',
-  styleUrls: ['./espn-scoreboard.component.scss'],
 })
 export class EspnScoreboardComponent {
   selectedLeagueId$ = this.fastcastFacade.selectedLeagueId$;

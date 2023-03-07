@@ -7,7 +7,6 @@ import { TableColumnDataType } from '@app/@shared/models/table-columns.model';
 @Component({
   selector: 'app-espn-standings-table',
   templateUrl: './espn-standings-table.component.html',
-  styleUrls: ['./espn-standings-table.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class EspnStandingsTableComponent<T> {

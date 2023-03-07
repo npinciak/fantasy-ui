@@ -22,7 +22,6 @@ import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-espn-stats-table',
   templateUrl: './espn-stats-table.component.html',
-  styleUrls: ['./espn-stats-table.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class EspnStatsTableComponent implements OnChanges, AfterViewInit {
@@ -42,6 +41,7 @@ export class EspnStatsTableComponent implements OnChanges, AfterViewInit {
   readonly TableColumnDataType = TableColumnDataType;
 
   dataSource: MatTableDataSource<BaseballPlayer>;
+
   isLoading$ = new BehaviorSubject(false);
 
   constructor() {
@@ -49,8 +49,11 @@ export class EspnStatsTableComponent implements OnChanges, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.isLoading$.next(true);
+
     if (changes.data) {
       this.dataSource.data = changes.data.currentValue;
+      this.isLoading$.next(false);
     }
   }
 

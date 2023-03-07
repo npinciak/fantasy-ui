@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { UrlBuilder, UrlPathFragments, UrlQueryParams } from '@app/@core/store/router/url-builder';
 import { EspnFastcastConnectionFacade } from '@app/espn-fastcast/facade/espn-fastcast-connection.facade';
 import { combineLatest } from 'rxjs';
@@ -9,7 +8,6 @@ import { RouterFacade } from '../store/router/router.facade';
 @Component({
   selector: 'app-shell',
   templateUrl: './shell.component.html',
-  styleUrls: ['./shell.component.scss'],
 })
 export class ShellComponent implements OnInit {
   @Input() pageTitle = 'SportsUi';
@@ -35,11 +33,7 @@ export class ShellComponent implements OnInit {
     }))
   );
 
-  constructor(
-    private fastcastFacade: EspnFastcastConnectionFacade,
-    readonly routerFacade: RouterFacade,
-    private activatedRoute: ActivatedRoute
-  ) {}
+  constructor(private fastcastFacade: EspnFastcastConnectionFacade, readonly routerFacade: RouterFacade) {}
 
   ngOnInit(): void {
     this.fastcastFacade.fetchStaticFastcast({
@@ -48,7 +42,6 @@ export class ShellComponent implements OnInit {
       weeks: null,
       seasontype: null,
     });
-    // this.fastcastFacade.connectWebSocket();
   }
 
   onNavigateToMyProfile() {

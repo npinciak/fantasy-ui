@@ -1,11 +1,7 @@
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
 
-@Component({
-  selector: 'app-espn-lineup-card',
-  templateUrl: './espn-lineup-card.component.html',
-  encapsulation: ViewEncapsulation.None,
-})
+@Component({ template: '' })
 export class EspnLineupCardComponent<T extends PlayerEntity> {
   @Input() title = 'Lineup';
   @Input() lineup: T[];
