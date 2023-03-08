@@ -1,14 +1,6 @@
 import { PlotData } from 'plotly.js-dist-min';
 import { PropertyOfType } from '../generic-state/generic.state';
-
-export function pickData<T, U>(data: T[], getter: (t: T) => any): U[] {
-  return data.map(d => {
-    if (getter(d) !== undefined) {
-      return getter(d);
-    }
-    return [];
-  });
-}
+import { pickData } from '../utilities/utilities.m';
 
 export function transformDataToScatterGraph<DataEntityType, DataLabelProperty extends PropertyOfType<DataEntityType, string | number>>({
   data,

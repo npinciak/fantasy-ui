@@ -1,4 +1,4 @@
-import { exists, normalizeStringToNumber, objectIsEmpty } from '@app/@shared/helpers/utils';
+import { normalizeStringToNumber, objectIsEmpty } from '@app/@shared/helpers/utils';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { ClientSlateTeamAttributes } from '@dfsClient/daily-fantasy-client-slate-attr.model';
 import { ClientVegas } from '@dfsClient/daily-fantasy-client.model';
@@ -16,19 +16,21 @@ import { Vegas } from './models/vegas.model';
 import { ProfilerQB, ProfilerRB, ProfilerReceiver } from './nfl/models/nfl-profiler.model';
 import { Outsiders, SaFpts, SlateTeamNfl } from './nfl/models/nfl-slate-attr.model';
 
-export namespace DfsSlateHelpers {
-  function transformClientVegasToVegas(client: ClientVegas | null | undefined): Vegas | null {
+export class DfsSlateHelpers {
+  static transformClientVegasToVegas(client: ClientVegas | null | undefined): Vegas | null {
     if (!exists(client)) return null;
+
+    const { total, line, movement } = client;
     return {
       overUnder: client['o/u'],
       oppTotal: client.opp_total,
-      total: client.total,
-      line: client.line,
-      movement: client.movement,
+      total,
+      line,
+      movement,
     };
   }
 
-  function transformClientSafptsToSafpts(client: NFLClientSafptsProperties | null | undefined): SaFpts | null {
+  static transformClientSafptsToSafpts(client: NFLClientSafptsProperties | null | undefined): SaFpts | null {
     if (!exists(client)) return null;
 
     const obj = {
@@ -44,21 +46,22 @@ export namespace DfsSlateHelpers {
       rawTE: client.RawTE,
       adjTE: client.AdjTE,
       difTE: client.DifTE,
-    };
+    } as Record<string, string>;
 
-    return convertIntObj(obj);
+    return DfsSlateHelpers.convertIntObj(obj);
   }
 
-  function convertIntObj<T>(obj: Object) {
-    const res = {};
+  static convertIntObj<T>(obj: Record<string, string>): T {
+    const res = {} as T;
+    // eslint-disable-next-line guard-for-in
     for (const key in obj) {
-      const parsed = Number(obj[key].replace(/(\%)|(\-+)/, ''));
+      const parsed = Number(obj[key].replace(/(%)|(-+)/, ''));
       res[key] = parsed;
     }
-    return res as T;
+    return res;
   }
 
-  function transformClientOutsidersToOutsiders(client: NFLClientOutsidersProperties | null | undefined): Outsiders | null {
+  static transformClientOutsidersToOutsiders(client: NFLClientOutsidersProperties | null | undefined): Outsiders | null {
     if (!exists(client)) return null;
     const obj = {
       dPower: client['D Power'],
@@ -81,55 +84,43 @@ export namespace DfsSlateHelpers {
       paOffRk: client['PaOff Rk'],
       ruOff: client.RuOff,
       ruOffRk: client['RuOff Rk'],
-    };
+    } as Record<string, string>;
 
-    return convertIntObj(obj);
+    return DfsSlateHelpers.convertIntObj(obj);
   }
 
-  export function normalizeSlateTeamAttributes(teamAttributes: ClientSlateTeamAttributes | null | undefined): SlateTeamNfl {
+  static normalizeSlateTeamAttributes(teamAttributes: ClientSlateTeamAttributes | null | undefined): SlateTeamNfl {
     const final = { outsiders: null, safpts: null, vegas: null } as SlateTeamNfl;
 
     if (!exists(teamAttributes)) return final;
 
-    const outsiders = transformClientOutsidersToOutsiders(teamAttributes.outsiders);
-    final['outsiders'] = outsiders;
+    final.outsiders = DfsSlateHelpers.transformClientOutsidersToOutsiders(teamAttributes.outsiders);
 
-    const safpts = transformClientSafptsToSafpts(teamAttributes.safpts);
-    final['safpts'] = safpts;
+    final.safpts = DfsSlateHelpers.transformClientSafptsToSafpts(teamAttributes.safpts);
 
-    const vegas = transformClientVegasToVegas(teamAttributes.vegas);
-    final['vegas'] = vegas;
+    final.vegas = DfsSlateHelpers.transformClientVegasToVegas(teamAttributes.vegas);
 
     return final;
   }
 
-  function camelCaseObjProps(obj: Object) {
+  static camelCaseObjProps(obj: Record<string, unknown>) {
     return Object.keys(obj).map(k => camelCase(k));
   }
 
-  export function normalizeStatGroupToProfiler(pos: NFLClientStatGroup): {
-    qb: ProfilerQB[];
-    rb: ProfilerRB[];
-    te: ProfilerReceiver[];
-    wr: ProfilerReceiver[];
-  };
-  export function normalizeStatGroupToProfiler(pos: undefined): null;
-  export function normalizeStatGroupToProfiler(
-    statGroup: NFLClientStatGroup | undefined
-  ): { qb: ProfilerQB[]; rb: ProfilerRB[]; te: ProfilerReceiver[]; wr: ProfilerReceiver[] } | null {
-    if (!exists(statGroup) || objectIsEmpty(statGroup)) {
-      return null;
-    }
+  static normalizeStatGroupToProfiler(pos: NFLClientStatGroup): NormalizedProfiler;
+  static normalizeStatGroupToProfiler(pos: undefined): null;
+  static normalizeStatGroupToProfiler(statGroup: NFLClientStatGroup | undefined): NormalizedProfiler | null {
+    if (!exists(statGroup) || objectIsEmpty(statGroup)) return null;
 
     const statGroupQb = statGroup.qb.profiler.season;
     const statGroupRb = statGroup.rb.profiler.season;
     const statGroupWr = statGroup.wr.profiler.season;
     const statGroupTe = statGroup.te.profiler.season;
 
-    const qb = transformStatGroup<ProfilerQB>(statGroupQb);
-    const rb = transformStatGroup<ProfilerRB>(statGroupRb);
-    const te = transformStatGroup<ProfilerReceiver>(statGroupTe);
-    const wr = transformStatGroup<ProfilerReceiver>(statGroupWr);
+    const qb = DfsSlateHelpers.transformStatGroup<ProfilerQB>(statGroupQb);
+    const rb = DfsSlateHelpers.transformStatGroup<ProfilerRB>(statGroupRb);
+    const te = DfsSlateHelpers.transformStatGroup<ProfilerReceiver>(statGroupTe);
+    const wr = DfsSlateHelpers.transformStatGroup<ProfilerReceiver>(statGroupWr);
 
     return {
       qb,
@@ -139,19 +130,16 @@ export namespace DfsSlateHelpers {
     };
   }
 
-  function transformStatGroup<T>(obj: NFLClientProfilerTimeFrameEntity | undefined): T[] {
-    if (!obj) {
-      return [];
-    }
+  static transformStatGroup<T>(obj: NFLClientProfilerTimeFrameEntity | undefined): T[] {
+    if (!obj) return [];
 
-    const f = [] as any[];
+    const players = [] as any[];
 
-    for (const [key, value] of Object.entries(obj)) {
-      const rgId = key;
+    for (const [rgId, value] of Object.entries(obj)) {
       const transform = {
         rgId,
         productionPremium: normalizeStringToNumber(value['Production Premium']),
-        matchupRtg: isNFLClientProfilerReceiver(value) ? normalizeStringToNumber(value['Matchup Rtg']) : null,
+        matchupRtg: DfsSlateHelpers.isNFLClientProfilerReceiver(value) ? normalizeStringToNumber(value['Matchup Rtg']) : null,
         weeklyVolatility: normalizeStringToNumber(value['Weekly Volatility']),
         redZoneTargetShare: normalizeStringToNumber(value['Red Zone Target Share']),
         targetShare: normalizeStringToNumber(value['Target Share']),
@@ -163,27 +151,37 @@ export namespace DfsSlateHelpers {
         goalLineCarriesPerGame: normalizeStringToNumber(value['Goal Line Carries Per Game']),
       };
 
-      f.push(transform);
+      players.push(transform);
     }
 
-    return f;
+    return players;
   }
 
-  export function isNFLClientProfilerQB(
+  static isNFLClientProfilerQB(
     value: NFLClientProfilerQBProperties | NFLClientProfilerRBProperties | NFLClientProfilerReceiverProperties
   ): value is NFLClientProfilerQBProperties {
+    // eslint-disable-next-line no-prototype-builtins
     return value.hasOwnProperty('Total QBR');
   }
 
-  export function isNFLClientProfilerRB(
+  static isNFLClientProfilerRB(
     value: NFLClientProfilerQBProperties | NFLClientProfilerRBProperties | NFLClientProfilerReceiverProperties
   ): value is NFLClientProfilerRBProperties {
+    // eslint-disable-next-line no-prototype-builtins
     return value.hasOwnProperty('passEpa');
   }
 
-  export function isNFLClientProfilerReceiver(
+  static isNFLClientProfilerReceiver(
     value: NFLClientProfilerQBProperties | NFLClientProfilerRBProperties | NFLClientProfilerReceiverProperties
   ): value is NFLClientProfilerReceiverProperties {
+    // eslint-disable-next-line no-prototype-builtins
     return value.hasOwnProperty('Matchup Rtg');
   }
+}
+
+interface NormalizedProfiler {
+  qb: ProfilerQB[];
+  rb: ProfilerRB[];
+  te: ProfilerReceiver[];
+  wr: ProfilerReceiver[];
 }

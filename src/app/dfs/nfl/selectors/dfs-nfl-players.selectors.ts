@@ -1,11 +1,12 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { linearRegression, pickData, transformScatterGraphData } from '@app/@shared/helpers/graph.helpers';
-import { exists, existsFilter } from '@app/@shared/utilities/utilities.m';
+import { linearRegression, transformScatterGraphData } from '@app/@shared/helpers/graph.helpers';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
+import { exists, existsFilter, pickData } from '@app/@shared/utilities/utilities.m';
 import { SlatePlayer } from '@app/dfs/models/player.model';
 import { DfsSlatePlayersState } from '@app/dfs/state/dfs-players.state';
-import { DfsNflTeams, uniqueBy } from 'sports-ui-sdk';
+import { uniqueBy } from 'sports-ui-sdk';
+import { NFL_RG_TEAM_ID_MAP } from 'sports-ui-sdk/lib/dfs/football/team/team.const';
 import { GridIronPlayer } from '../models/nfl-gridIron.model';
 import { NflDfsPlayerTableData } from '../models/nfl-player.model';
 import { ProfilerQB, ProfilerRB, ProfilerReceiver } from '../models/nfl-profiler.model';
@@ -33,9 +34,7 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
   @Selector([DfsNflPlayerSelectors.getPlayerTeams])
   static getPlayerTeamsFilterOptions(list: number[]): FilterOptions<number | null>[] {
     const reset = [{ value: null, label: 'All' }];
-    const teams = list
-      .map(t => ({ value: t, label: DfsNflTeams.NFL_TEAM_ID_MAP[t] as string }))
-      .sort((a, b) => a.label.localeCompare(b.label));
+    const teams = list.map(t => ({ value: t, label: NFL_RG_TEAM_ID_MAP[t] as string })).sort((a, b) => a.label.localeCompare(b.label));
 
     return [...reset, ...teams];
   }
@@ -154,7 +153,8 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
           val: exists(gridIron) ? gridIron.value : null,
         };
       })
-      .filter(p => p.opp != null);
+      .filter(p => p.opp != null)
+      .sort((a, b) => b.salary - a.salary);
   }
 
   // @Selector([DfsNflPlayerSelectors.getPlayerTableData])
@@ -193,9 +193,7 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
   @Selector([DfsNflPlayerSelectors.getPlayerTableData])
   static getPlayerScatterData(data: NflDfsPlayerTableData[]): (xAxis: string | null, yAxis: string | null) => any {
     return (xAxis: string | null, yAxis: string | null) => {
-      if (xAxis == null || yAxis == null) {
-        return [];
-      }
+      if (xAxis == null || yAxis == null) return [];
 
       const x: number[] = data.map(p => p[xAxis]);
 

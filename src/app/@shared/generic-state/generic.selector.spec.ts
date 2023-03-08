@@ -13,11 +13,11 @@ describe('GenericSelector', () => {
 
   const state: GenericStateModel<EntityType> = {
     map: {
-      '1': {
+      1: {
         id: '1',
         name: 'name1',
       },
-      '2': {
+      2: {
         id: '2',
         name: 'name2',
       },
@@ -27,8 +27,7 @@ describe('GenericSelector', () => {
   beforeEach(() => {
     stateClass = GenericState({
       idProperty: 'id',
-      addOrUpdate: TestActions.AddOrUpdate,
-      clearAndAdd: TestActions.ClearAndAdd,
+      actionHandler: TestActions,
     });
     selector = GenericSelector(stateClass);
   });

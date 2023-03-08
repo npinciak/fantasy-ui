@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '@app/@shared/services/api.service';
 import { DfsSlatePlayer } from '@dfsClient/daily-fantasy-client.model';
 import { NFLClientGridIronPlayer } from '@dfsClient/nfl-client.model';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { uniqueBy } from 'sports-ui-sdk';
 import { DailyFantasyEndpointBuilder } from '../daily-fantasy-endpoint-builder';

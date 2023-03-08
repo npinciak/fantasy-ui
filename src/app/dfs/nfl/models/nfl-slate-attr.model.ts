@@ -20,7 +20,7 @@ type SaFptsAttributes =
   | 'adjTE'
   | 'difTE';
 
-type OutsidersAttributes =
+export type OutsidersAttributes =
   | 'dPower'
   | 'dPowerRk'
   | 'dStuffed'

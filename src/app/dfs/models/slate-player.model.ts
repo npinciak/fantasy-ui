@@ -14,4 +14,10 @@ type SlatePlayerAttributes = {
   slateOwn: Record<number, string> | null;
 };
 
+/**
+ *
+ * @deprecated use import below
+ *
+ * @example import { SlatePlayer } from '@app/dfs/models/player.model';
+ */
 export type SlatePlayer = Pick<Player, 'id'> & SlatePlayerAttributes;

@@ -70,8 +70,8 @@ export class DfsNflHomeComponent {
 
   tableConfig$ = combineLatest([this.position$]).pipe(
     map(([position]) => {
-      const headers = position != null ? DfsNflTableColumns.HEADERS_BY_POS[position] : DfsNflTableColumns.HEADERS_BY_POS['All'];
-      const rows = position != null ? DfsNflTableColumns.ROWS_BY_POS[position] : DfsNflTableColumns.ROWS_BY_POS['All'];
+      const headers = position != null ? DfsNflTableColumns.HEADERS_BY_POS[position] : DfsNflTableColumns.HEADERS_BY_POS.All;
+      const rows = position != null ? DfsNflTableColumns.ROWS_BY_POS[position] : DfsNflTableColumns.ROWS_BY_POS.All;
       return {
         headers,
         rows,

@@ -76,19 +76,17 @@ export const PITCHER_STATS_COLUMNS = [
   // { columnDef: `stats.${statLine}.xwoba`, headerCell: '', headerLabel: '', dataType: TableColumnDataType.Number }
 ];
 
-export namespace DfsMlbTableColumns {
-  export const COLUMNS_BY_POS = {
-    B: [...BASE_STATS_COLUMNS, ...BATTER_PLATEIQ_COLUMNS],
-    P: [...BASE_STATS_COLUMNS, ...PITCHER_STATS_COLUMNS],
-  };
+export const COLUMNS_BY_POS = {
+  B: [...BASE_STATS_COLUMNS, ...BATTER_PLATEIQ_COLUMNS],
+  P: [...BASE_STATS_COLUMNS, ...PITCHER_STATS_COLUMNS],
+};
 
-  export const ROWS_BY_POS = {
-    B: transformTableColumnsToTableRows(COLUMNS_BY_POS['B']),
-    P: transformTableColumnsToTableRows(COLUMNS_BY_POS['P']),
-  };
+export const ROWS_BY_POS = {
+  B: transformTableColumnsToTableRows(COLUMNS_BY_POS.B),
+  P: transformTableColumnsToTableRows(COLUMNS_BY_POS.P),
+};
 
-  export const HEADERS_BY_POS = {
-    B: getTableHeaders(ROWS_BY_POS['B']),
-    P: getTableHeaders(ROWS_BY_POS['P']),
-  };
-}
+export const HEADERS_BY_POS = {
+  B: getTableHeaders(ROWS_BY_POS.B),
+  P: getTableHeaders(ROWS_BY_POS.P),
+};

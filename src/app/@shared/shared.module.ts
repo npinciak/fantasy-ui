@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '@app/material.module';
 import { PlotlyModule } from 'angular-plotly.js';
 import * as PlotlyJS from 'plotly.js-dist-min';
+import { BaseChartDirective } from './base-chart.directive';
 import { DataVisScatterComponent } from './components/data-vis-scatter/data-vis-scatter.component';
 import { DropdownFilterComponent } from './components/dropdown-filter/dropdown-filter.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
@@ -19,6 +20,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
   declarations: [
+    BaseChartDirective,
     NoDataComponent,
     PageLayoutComponent,
     StickyTableCellComponent,

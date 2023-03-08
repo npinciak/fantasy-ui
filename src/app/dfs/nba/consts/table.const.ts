@@ -18,10 +18,8 @@ const BASE_STATS_COLUMNS: BaseTableColumn<any>[] = [
   { columnDef: 'floor', headerCell: 'floor', headerLabel: 'Floor', dataType: TableColumnDataType.Number },
 ];
 
-export namespace DfsNBATableColumns {
-  export const COLUMNS_BY_POS = BASE_STATS_COLUMNS;
+export const COLUMNS_BY_POS = BASE_STATS_COLUMNS;
 
-  export const ROWS_BY_POS = transformTableColumnsToTableRows(COLUMNS_BY_POS);
+export const ROWS_BY_POS = transformTableColumnsToTableRows(COLUMNS_BY_POS);
 
-  export const HEADERS_BY_POS = getTableHeaders(ROWS_BY_POS);
-}
+export const HEADERS_BY_POS = getTableHeaders(ROWS_BY_POS);

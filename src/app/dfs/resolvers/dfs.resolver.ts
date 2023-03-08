@@ -13,7 +13,8 @@ export class DfsResolver implements Resolve<void> {
 
   async resolve(route: ActivatedRouteSnapshot): Promise<void> {
     const site = route.queryParamMap.get(UrlQueryParams.Site);
-    const sport = route.queryParamMap.get(UrlQueryParams.Sport);
+
+    const sport = route.data.sport;
 
     if (exists(site) && exists(sport)) {
       this.store.dispatch(new DfsSlates.Fetch({ site, sport })).toPromise();

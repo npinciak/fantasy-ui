@@ -17,8 +17,11 @@ export interface GenericFacade<T> {
   getById$: Observable<(id: string | null) => T | null>;
   getIdList$: Observable<string[]>;
   getIdSet$: Observable<Set<string>>;
-  patchAction(entities: T[]): Observable<void>;
+  addOrUpdate(entities: T[]): Observable<void>;
+  clearAndAdd(entities: T[]): Observable<void>;
+  fetch(): Observable<void>;
   getById(id: string | null): T | null;
+  getList(): T[];
 }
 
 export interface GenericSelectorClass<T> {

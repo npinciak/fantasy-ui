@@ -18,7 +18,7 @@ export class DfsNflGridIronState extends GenericState({
 
   @Action(DfsNflGridIron.Fetch)
   async fetchGridIronPlayers(
-    {}: StateContext<GenericStateModel<GridIronPlayer>>,
+    _: StateContext<GenericStateModel<GridIronPlayer>>,
     { payload }: { payload: { site: string } }
   ): Promise<void> {
     const { site } = payload;
