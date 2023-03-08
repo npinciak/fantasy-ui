@@ -5,13 +5,13 @@ import { EspnFastcastTeamState } from '../state/espn-fastcast-team.state';
 
 export class EspnFastcastTeamSelectors extends GenericSelector(EspnFastcastTeamState) {
   @Selector([EspnFastcastTeamSelectors.getList])
-  static getTeamsByEventUid(list: FastcastEventTeam[]): (eventUid: string) => { [id: string]: FastcastEventTeam } {
+  static getTeamsByEventUid(list: FastcastEventTeam[]): (eventUid: string) => Record<string, FastcastEventTeam> {
     return (eventUid: string) =>
       list
         .filter(l => l?.eventUid === eventUid)
         .reduce((obj, val) => {
           obj[val.isHome] = val;
           return obj;
-        }, {});
+        }, {} as Record<string, FastcastEventTeam>);
   }
 }

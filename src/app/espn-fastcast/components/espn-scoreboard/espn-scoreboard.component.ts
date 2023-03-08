@@ -12,18 +12,14 @@ import { map } from 'rxjs/operators';
   templateUrl: './espn-scoreboard.component.html',
 })
 export class EspnScoreboardComponent {
-  selectedLeagueId$ = this.fastcastFacade.selectedLeagueId$;
-
   showNoEventsMessage$ = this.fastcastFacade.showNoEventsMessage$;
   feedLoadingValue$ = this.fastcastFacade.feedLoadingValue$;
   showFeed$ = of(true); //this.fastcastFacade.showFeed$;
   showLoader$ = this.fastcastFacade.showLoader$;
-  lastRefreshAsTickerDate$ = this.fastcastFacade.lastRefreshAsTickerDate$;
-  paused$ = this.fastcastFacade.paused$;
 
   leagueList$ = this.fastcastLeagueFacade.leagueList$;
 
-  eventsByLeagueId$ = combineLatest([this.fastcastEventFacade.eventsByLeagueId$, this.selectedLeagueId$]).pipe(
+  eventsByLeagueId$ = combineLatest([this.fastcastEventFacade.eventsByLeagueId$, this.fastcastFacade.selectedLeagueId$]).pipe(
     map(([events, selectedLeague]) => events(selectedLeague))
   );
 

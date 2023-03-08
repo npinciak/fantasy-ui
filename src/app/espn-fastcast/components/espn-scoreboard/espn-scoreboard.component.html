@@ -2,14 +2,14 @@
   <div class="flex flex-col sm:flex-row">
     <div class="basis-1/5 p-6 align-middle">
       <div class="flex flex-row">
-        <div class="scoreboard refresh timestamp flex basis-1/2">
+        <div class="scoreboard refresh timestamp flex basis-1/2 text-xs text-gray-500">
           <svg
             aria-label="active feed"
-            [class.text-green-600]="(paused$ | async) === false"
+            [class.text-green-600]="(fastcastFacade.paused$ | async) === false"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             fill="currentColor"
-            class="h-5 w-5"
+            class="mr-1 h-5 w-5"
           >
             <path
               d="M16.364 3.636a.75.75 0 00-1.06 1.06 7.5 7.5 0 010 10.607.75.75 0 001.06 1.061 9 9 0 000-12.728zM4.697 4.697a.75.75 0 00-1.061-1.06 9 9 0 000 12.727.75.75 0 101.06-1.06 7.5 7.5 0 010-10.607z"
@@ -18,18 +18,37 @@
               d="M12.475 6.465a.75.75 0 011.06 0 5 5 0 010 7.07.75.75 0 11-1.06-1.06 3.5 3.5 0 000-4.95.75.75 0 010-1.06zM7.525 6.465a.75.75 0 010 1.06 3.5 3.5 0 000 4.95.75.75 0 01-1.06 1.06 5 5 0 010-7.07.75.75 0 011.06 0zM11 10a1 1 0 11-2 0 1 1 0 012 0z"
             />
           </svg>
-          {{ lastRefreshAsTickerDate$ | async }}
+          {{ fastcastFacade.lastRefreshAsTickerDate$ | async }}
         </div>
         <div class="flex basis-1/2 justify-end">
-          <button mat-icon-button aria-label="Button to start and pause feed" (click)="onStartFeed()">
-            <mat-icon>{{ (paused$ | async) ? 'play_arrow_outline' : 'pause_circle_outline' }}</mat-icon>
+          <button
+            type="button"
+            class="mr-2 inline-flex items-center rounded-full p-1 text-center text-sm font-medium hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-100"
+            aria-label="Button to start and pause feed"
+            (click)="onStartFeed()"
+          >
+            <ng-container *ngIf="fastcastFacade.paused$ | async; else paused">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="h-4 w-4">
+                <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+              </svg>
+              <span class="sr-only">Icon description</span>
+            </ng-container>
+
+            <ng-template #paused>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                <path
+                  d="M5.75 3a.75.75 0 00-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 00.75-.75V3.75A.75.75 0 007.25 3h-1.5zM12.75 3a.75.75 0 00-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 00.75-.75V3.75a.75.75 0 00-.75-.75h-1.5z"
+                />
+              </svg>
+              <span class="sr-only">Icon description</span>
+            </ng-template>
           </button>
         </div>
       </div>
       <app-dropdown-filter
         ariaLabel="fastcast leagues"
         [disabled]="!(showFeed$ | async)"
-        [selectedOption]="selectedLeagueId$ | async"
+        [selectedOption]="fastcastFacade.selectedLeagueId$ | async"
         [filterItems]="leagueList$ | async"
         (filterUpdate)="onLeagueSelectChange($event)"
       ></app-dropdown-filter>
