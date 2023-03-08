@@ -3,7 +3,7 @@ import { NavigationCancel, NavigationEnd, NavigationExtras, Router } from '@angu
 import { UrlBuilder, UrlPathFragments } from '@app/@core/store/router/url-builder';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
-import { EspnRouteBuilder } from './route-builder';
+import { DfsRouteBuilder, EspnRouteBuilder } from './route-builder';
 import { RouterSelector } from './router.selectors';
 
 type NavigationComplete = NavigationEnd | NavigationCancel;
@@ -18,7 +18,6 @@ export class RouterFacade {
 
   teamId$ = select(RouterSelector.getTeamId);
   dfsSite$ = select(RouterSelector.getDfsSite);
-  dfsSport$ = select(RouterSelector.getDfsSport);
 
   isEspn$ = select(RouterSelector.showEspnNavigation);
 
@@ -44,19 +43,8 @@ export class RouterFacade {
     return this.store.selectSnapshot(RouterSelector.getDfsSite);
   }
 
-  get dfsSport(): UrlPathFragments {
-    return this.store.selectSnapshot(RouterSelector.getDfsSport);
-  }
-
   navigateToMyProfile() {
     this.navigate([UrlPathFragments.MyProfile]);
-  }
-
-  /**
-   * @deprecated
-   */
-  navigateToEspnHome() {
-    this.navigate([UrlBuilder.espnBaseUrl]);
   }
 
   navigateToFantasyLeagueHome(sport: string, season: string, leagueId: string) {
@@ -69,6 +57,17 @@ export class RouterFacade {
 
   navigateToFantasyFreeAgents() {
     this.navigate(EspnRouteBuilder.freeAgentsPathFragments(this.sport, this.season, this.leagueId));
+  }
+
+  navigateToDraftkingsBySport(sport: string) {
+    this.navigate(DfsRouteBuilder.sportPathFragments(sport), { queryParams: { site: 'draftkings' } });
+  }
+
+  /**
+   * @deprecated
+   */
+  navigateToEspnHome() {
+    this.navigate([UrlBuilder.espnBaseUrl]);
   }
 
   /**

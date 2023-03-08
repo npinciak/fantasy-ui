@@ -72,6 +72,7 @@ export enum UrlPathFragments {
   League = 'league',
   MLB = 'mlb',
   NFL = 'nfl',
+  NBA = 'nba',
   Team = 'team',
   FreeAgents = 'free-agents',
   MyProfile = 'my-profile',

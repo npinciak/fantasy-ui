@@ -1,8 +1,6 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ErrorStatusCode, statusCodeToEspnMessage, statusCodeToMessage } from '@app/@shared/models/http-errors.model';
-import { FANTASY_BASE_V3, FASTCAST_BASE } from '@app/espn/espn.const';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { RouterFacade } from '../store/router/router.facade';
@@ -16,22 +14,9 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   }
 
   private errorHandler(response: HttpErrorResponse): Observable<HttpEvent<any>> {
-    const { url } = response;
-    const isEspnFantasy = url ? url.includes(FANTASY_BASE_V3) : false;
-    const isEspnFastcast = url ? url.includes(FASTCAST_BASE) : false;
+    const { status, error } = response;
 
-    if (isEspnFastcast) {
-      // this.store.dispatch(DisconnectWebSocket);
-    }
-
-    const code = response.status || 0;
-    const message = isEspnFantasy ? statusCodeToEspnMessage[code] : statusCodeToMessage[code];
-
-    if (isEspnFantasy && code === ErrorStatusCode.NotFound) {
-      this.routerFacade.navigateToEspnHome();
-    }
-
-    this.snackBar.open(`${code}: ${message}`, 'x', {
+    this.snackBar.open(`${status || 0}: ${error.message as string}`, 'Close', {
       panelClass: ['mat-toolbar', 'mat-warn'],
       duration: 3000,
     });

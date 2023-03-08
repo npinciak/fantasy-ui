@@ -1,4 +1,5 @@
 import { ActivatedRouteSnapshot, Params } from '@angular/router';
+import { objectIsEmpty } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { exists } from '@app/@shared/utilities/utilities.m';
 // import { RouterState, RouterStateModel as RouterStateOuterModel } from '@ngxs/router-plugin';
@@ -95,15 +96,6 @@ export class RouterSelector {
   @Selector([RouterSelector.getRouterParams])
   static getSeason(params: Params | undefined) {
     return objectIsEmpty(params) ? null : (params?.year as string);
-  }
-
-  @Selector([RouterSelector.getRouterQueryParams])
-  static getDfsSport(queryParams: Params | undefined) {
-    if (!exists(queryParams) || !exists(queryParams.sport)) {
-      return;
-    }
-
-    return queryParams.sport;
   }
 
   @Selector([RouterSelector.getRouterQueryParams])
