@@ -7,6 +7,8 @@ import { FantasyBaseballTeamsSelector } from '../selectors/fantasy-baseball-team
   providedIn: 'root',
 })
 export class FantasyBaseballTeamFacade extends GenericFacade(FantasyBaseballTeamsSelector) {
+  teamInfo$ = select(FantasyBaseballTeamsSelector.getTeamInfoByTeamId);
+
   standings$ = select(FantasyBaseballTeamsSelector.standings);
 
   currentRoster$ = select(FantasyBaseballTeamsSelector.getCurrentRosterByTeamId);
@@ -16,11 +18,15 @@ export class FantasyBaseballTeamFacade extends GenericFacade(FantasyBaseballTeam
 
   teamList$ = select(FantasyBaseballTeamsSelector.getList);
   liveScore$ = select(FantasyBaseballTeamsSelector.getTeamListLive);
-  batterChartData$ = select(FantasyBaseballTeamsSelector.getBatterStatsChartData);
+
+  batterChartData$ = select(FantasyBaseballTeamsSelector.getBatterStatsLineChartData);
+
   batterStatsScatterChartData$ = select(FantasyBaseballTeamsSelector.getBatterStatsScatterChartData);
 
   liveBattingStats$ = select(FantasyBaseballTeamsSelector.getLiveTeamBatterStats);
+
   battingStats$ = select(FantasyBaseballTeamsSelector.getTeamBatterStats);
+
   pitchers$ = select(FantasyBaseballTeamsSelector.getTeamPitchers);
   startingPitchers$ = select(FantasyBaseballTeamsSelector.getTeamStartingPitchers);
 

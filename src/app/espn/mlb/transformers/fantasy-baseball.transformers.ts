@@ -1,13 +1,16 @@
 import { exists } from '@app/@shared/utilities/utilities.m';
+import { FantasyPlayer } from '@app/espn/models/fantasy-player.model';
 import { BaseballStat, EspnClient, MLB_LINEUP_MAP, MLB_POSITION_MAP, MLB_TEAM_MAP, SPORT_ID } from 'sports-ui-sdk';
 
 import { isPitcher } from '../../espn-helpers';
 import { FantasyLeague } from '../../models/fantasy-league.model';
 import { EspnTransformers } from '../../transformers/espn-transformers.m';
+import { AdvStats } from '../class/advStats.class';
+import { MLB_WEIGHTED_STATS } from '../consts/weighted-stats.const';
 
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballLeague } from '../models/baseball-league.model';
-import { BaseballPlayer } from '../models/baseball-player.model';
+import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
 import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
 
 export function clientEventToBaseballEvent(event: EspnClient.EventEntity): BaseballEvent {
@@ -48,24 +51,27 @@ export function clientScheduleTeamListToTeamList(team: EspnClient.ScheduleTeam):
 
 export function clientPlayerToBaseballPlayer(players: EspnClient.TeamRosterEntry[]): BaseballPlayer[] {
   return players.map(player => {
-    if (!exists(player.playerPoolEntry)) {
-      throw new Error('player.playerPoolEntry must be defined');
-    }
+    if (!exists(player.playerPoolEntry)) throw new Error('player.playerPoolEntry must be defined');
 
-    const playerInfo = EspnTransformers.clientPlayerToPlayer(player.playerPoolEntry.player, {
+    const playerInfo: FantasyPlayer = EspnTransformers.clientPlayerToFantasyPlayer(player.playerPoolEntry.player, {
       sport: SPORT_ID.Baseball,
       leagueId: EspnClient.LeagueId.MLB,
       teamMap: MLB_TEAM_MAP,
       positionMap: MLB_POSITION_MAP,
     });
 
-    const { starterStatusByProGame, lastNewsDate } = player.playerPoolEntry.player;
+    const {
+      lineupSlotId,
+      playerPoolEntry: {
+        player: { starterStatusByProGame, lastNewsDate },
+      },
+    } = player;
 
     return {
       ...playerInfo,
       playerRatings: player.playerPoolEntry.ratings,
       isPitcher: isPitcher(player.playerPoolEntry.player.eligibleSlots),
-      lineupSlotId: player.lineupSlotId,
+      lineupSlotId,
       isStarting: false,
       startingStatus: null,
       lineupSlot: MLB_LINEUP_MAP[player.lineupSlotId].abbrev,
@@ -81,7 +87,7 @@ export function transformEspnFreeAgentToBaseballPlayer(players: EspnClient.FreeA
       throw new Error('player.player must be defined');
     }
 
-    const playerInfo = EspnTransformers.clientPlayerToPlayer(player.player, {
+    const playerInfo = EspnTransformers.clientPlayerToFantasyPlayer(player.player, {
       sport: SPORT_ID.Baseball,
       leagueId: EspnClient.LeagueId.MLB,
       teamMap: MLB_TEAM_MAP,
@@ -115,5 +121,50 @@ export function clientLeagueToBaseballLeague(res: EspnClient.BaseballLeague, gen
     teams,
     teamsLive,
     freeAgents: transformEspnFreeAgentToBaseballPlayer(res.players),
+  };
+}
+
+export function transformToBaseballPlayerBatterStatsRow(
+  player: BaseballPlayer,
+  statPeriod: string,
+  seasonId: string
+): BaseballPlayerStatsRow | null {
+  const { id, name, injured, injuryStatus, img, team, position, lineupSlotId, percentChange, percentOwned } = player;
+
+  if (!exists(player.stats)) return null;
+  if (!exists(player.stats[statPeriod])) return null;
+
+  const statsEntity = player.stats[statPeriod]!.stats;
+  const seasonConst = MLB_WEIGHTED_STATS[seasonId];
+  const { fip, wOBA, wRAA, babip, iso, leftOnBasePercent } = new AdvStats({ seasonConst, statsEntity });
+
+  const adv = {} as Record<BaseballStat, number>;
+
+  adv[BaseballStat.fip] = fip;
+  adv[BaseballStat.wOBA] = wOBA;
+  adv[BaseballStat.wRAA] = wRAA;
+  adv[BaseballStat.BABIP] = babip;
+  adv[BaseballStat.ISO] = iso;
+  adv[BaseballStat.LOB_PCT] = leftOnBasePercent;
+
+  const tableStats = {
+    ...adv,
+    ...statsEntity,
+    [BaseballStat.IP]: exists(statsEntity[BaseballStat.IP]) ? statsEntity[BaseballStat.IP] * 0.333 : 0,
+  };
+
+  return {
+    id,
+    name,
+    injured,
+    injuryStatus,
+    img,
+    team,
+    position,
+    lineupSlotId,
+    percentChange,
+    percentOwned,
+    highlightedPlayer: false,
+    tableStats,
   };
 }

@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 import { PLAYER_AVAILABILITY_STATUS } from 'sports-ui-sdk/lib/espn/models/espn-client.const';
 import { FantasyFootballLeagueSelector } from '../selectors/fantasy-football-league.selectors';
 
-@State({ name: FantasyFootballFreeAgents.name })
+@State({ name: FantasyFootballFreeAgents.stateName })
 @Injectable()
 export class FantasyFootballFreeAgentsState extends GenericState({
   idProperty: 'id',
@@ -22,7 +22,7 @@ export class FantasyFootballFreeAgentsState extends GenericState({
   }
 
   @Action(FantasyFootballFreeAgents.Fetch, { cancelUncompleted: true })
-  fetchFantasyFootballFreeAgents({}: StateContext<GenericStateModel<FootballPlayer>>, { payload: { leagueId, season } }) {
+  fetchFantasyFootballFreeAgents(_: StateContext<GenericStateModel<FootballPlayer>>, { payload: { leagueId, season } }) {
     // const leagueId = this.store.selectSnapshot(RouterSelector) ?? '';
     const scoringPeriodId = this.store.selectSnapshot(FantasyFootballLeagueSelector.getScoringPeriodId);
 

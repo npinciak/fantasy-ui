@@ -19,7 +19,7 @@ export class FantasyBaseballFreeAgentsState extends GenericState({
   }
 
   @Action(FantasyBaseballFreeAgents.Fetch)
-  async fetchFantasyBaseballFreeAgents({}: StateContext<GenericStateModel<BaseballPlayer>>, { payload: { leagueId } }): Promise<void> {
+  async fetchFantasyBaseballFreeAgents(_: StateContext<GenericStateModel<BaseballPlayer>>, { payload: { leagueId } }): Promise<void> {
     const lineupSlotIds = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedLineupSlotIds).map(id => Number(id));
     const availabilityStatus = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedAvailabilityStatus);
     const topScoringPeriodIds = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedTopScoringPeriodIds);

@@ -1,32 +1,8 @@
-<!-- <div>
-  <div>
-    <div>
-      <ng-container *ngIf="fantasyBaseballLeagueFacade.isLoading$ | async; else refreshBtn">
-        <mat-spinner diameter="20"></mat-spinner>
-      </ng-container>
-      <ng-template #refreshBtn>
-        <mat-icon class="cursor-pointer" (click)="fantasyBaseballLeagueFacade.getLeague(leagueId)">refresh</mat-icon>
-      </ng-template>
-    </div>
-    <div style="margin: 10px 0"></div>
-    <app-league-scoreboard [teams]="standings$ | async"></app-league-scoreboard>
-  </div>
-  <div>
-    <app-standings [data]="fantasyBaseballTeamFacade.teamList$ | async" [rows]="LEAGUE_STANDINGS_ROWS" [headers]="LEAGUE_STANDINGS_HEADERS"></app-standings>
-  </div>
-</div> -->
-
 <app-page-layout>
   <div sidebar>
     <app-league-scoreboard [teams]="standings$ | async"></app-league-scoreboard>
   </div>
   <div main>
-    <!-- <app-standings
-      [data]="standings$ | async"
-      [rows]="LEAGUE_STANDINGS_ROWS"
-      [headers]="LEAGUE_STANDINGS_HEADERS"
-    ></app-standings> -->
-
     <app-espn-standings-table [data]="standings$ | async" [rows]="LEAGUE_STANDINGS_ROWS" [headers]="LEAGUE_STANDINGS_HEADERS"></app-espn-standings-table>
   </div>
 </app-page-layout>

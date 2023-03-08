@@ -1,59 +1,54 @@
 <app-page-layout>
   <div sidebar>
-    <mat-card>
-      <mat-card-content>
-        <app-dropdown-filter
-          ariaLabel="scpring period options"
-          [selectedOption]="scoringPeriodId$ | async"
-          title="Stat Period"
-          [filterItems]="scoringPeriodFilterOptions$ | async"
-          (filterUpdate)="scoringPeriodIdChange($event)"
-        ></app-dropdown-filter>
+    <app-dropdown-filter
+      ariaLabel="scpring period options"
+      [selectedOption]="scoringPeriodId$ | async"
+      title="Stat Period"
+      [filterItems]="scoringPeriodFilterOptions$ | async"
+      (filterUpdate)="scoringPeriodIdChange($event)"
+    ></app-dropdown-filter>
 
-        <div style="margin: 10px 0"></div>
+    <div class="mt-2"></div>
 
-        <app-dropdown-filter
-          ariaLabel="position options"
-          [selectedOption]="selectedLineupSlotId$ | async"
-          title="Position"
-          [filterItems]="LINEUP_SLOTS"
-          (filterUpdate)="onLineupFilterSlotIdChange($event)"
-        ></app-dropdown-filter>
+    <app-dropdown-filter
+      ariaLabel="position options"
+      [selectedOption]="selectedLineupSlotId$ | async"
+      title="Position"
+      [filterItems]="LINEUP_SLOTS"
+      (filterUpdate)="onLineupFilterSlotIdChange($event)"
+    ></app-dropdown-filter>
 
-        <div style="margin: 10px 0"></div>
+    <div class="mt-2"></div>
 
-        <app-dropdown-filter
-          ariaLabel="team options"
-          [selectedOption]="selectedTeamId$ | async"
-          title="Teams"
-          [filterItems]="teamFilterOptions$ | async"
-          (filterUpdate)="onTeamFilterOptionChange($event)"
-        ></app-dropdown-filter>
-      </mat-card-content>
-    </mat-card>
+    <app-dropdown-filter
+      ariaLabel="team options"
+      [selectedOption]="selectedTeamId$ | async"
+      title="Teams"
+      [filterItems]="teamFilterOptions$ | async"
+      (filterUpdate)="onTeamFilterOptionChange($event)"
+    ></app-dropdown-filter>
   </div>
   <div main class="flex-col gap-20">
     <div class="flex-col">
-      <mat-card>
-        <mat-card-content>
-          <app-dropdown-filter
-            ariaLabel="xAxis stat options"
-            [selectedOption]="xAxisStat$ | async"
-            title="xAxis"
-            [filterItems]="FOOTBALL_STATS_FILTER"
-            (filterUpdate)="onAxisXChange($event)"
-          >
-          </app-dropdown-filter>
-
-          <app-dropdown-filter
-            ariaLabel="yAxis stat options"
-            [selectedOption]="yAxisStat$ | async"
-            title="yAxis"
-            [filterItems]="FOOTBALL_STATS_FILTER"
-            (filterUpdate)="onAxisYChange($event)"
-          ></app-dropdown-filter>
-        </mat-card-content>
-      </mat-card>
+      <div class="basis-1/2">
+        <app-dropdown-filter
+          ariaLabel="xAxis stat options"
+          [selectedOption]="xAxisStat$ | async"
+          title="xAxis"
+          [filterItems]="FOOTBALL_STATS_FILTER"
+          (filterUpdate)="onAxisXChange($event)"
+        >
+        </app-dropdown-filter>
+      </div>
+      <div class="basis-1/2">
+        <app-dropdown-filter
+          ariaLabel="yAxis stat options"
+          [selectedOption]="yAxisStat$ | async"
+          title="yAxis"
+          [filterItems]="FOOTBALL_STATS_FILTER"
+          (filterUpdate)="onAxisYChange($event)"
+        ></app-dropdown-filter>
+      </div>
     </div>
     <div>
       <app-data-vis-scatter

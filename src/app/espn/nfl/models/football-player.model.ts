@@ -1,19 +1,13 @@
-import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
+import { FantasyPlayer } from '@app/espn/models/fantasy-player.model';
 import { EspnClient } from 'sports-ui-sdk/lib/espn/espn.m';
 
-export interface FootballPlayerAttributes {
-  injuryStatus: EspnClient.PlayerInjuryStatus | null;
+export type FootballPlayerAttributes = {
   lineupSlot: string | null;
   points: number;
-  stats: EspnClient.PlayerStatsByYearMap | null;
   outlookByWeek: PlayerOutlookByWeek[];
-}
+};
 
-export type FootballPlayer = PlayerEntity &
-  FootballPlayerAttributes &
-  Pick<EspnClient.TeamRosterEntry, 'lineupSlotId'> &
-  Pick<EspnClient.PlayerInfo, 'defaultPositionId' | 'injured'> &
-  Pick<EspnClient.PlayerOwnership, 'percentChange' | 'percentOwned' | 'percentStarted'>;
+export type FootballPlayer = FantasyPlayer & FootballPlayerAttributes & Pick<EspnClient.TeamRosterEntry, 'lineupSlotId'>;
 
 export type FootballPlayerFreeAgent = FootballPlayer & Omit<FootballPlayer, 'lineupSlotId'>;
 

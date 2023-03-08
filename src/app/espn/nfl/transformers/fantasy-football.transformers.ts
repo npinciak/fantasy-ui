@@ -1,4 +1,5 @@
 import { exists } from '@app/@shared/utilities/utilities.m';
+import { FantasyPlayer } from '@app/espn/models/fantasy-player.model';
 import { EspnClient, FOOTBALL_LINEUP_MAP, NFL_POSITION_MAP, NFL_TEAM_MAP, SPORT_ID } from 'sports-ui-sdk/lib/espn/espn.m';
 import { headshotImgBuilder, logoImgBuilder } from '../../espn.const';
 import { FantasyLeague } from '../../models/fantasy-league.model';
@@ -10,23 +11,22 @@ import { FootballTeam } from '../models/football-team.model';
 export function clientLeagueToFootballLeague(res: EspnClient.FootballLeague, genericLeagueSettings: FantasyLeague): FootballLeague {
   const { schedule } = res;
   const teams = res.teams.map(t => clientTeamListToTeamList(t));
+  const freeAgents = clientFreeAgentToFootballPlayer(res.players);
 
   return {
     ...genericLeagueSettings,
     teams,
     schedule,
-    freeAgents: clientFreeAgentToFootballPlayer(res.players),
+    freeAgents,
   };
 }
 
 export function clientPlayerToFootballPlayer(player: EspnClient.TeamRosterEntry): FootballPlayer {
-  if (!exists(player.playerPoolEntry)) {
-    throw new Error('player.playerPoolEntry must be defined');
-  }
+  if (!exists(player.playerPoolEntry)) throw new Error('player.playerPoolEntry must be defined');
 
   const { lineupSlotId } = player;
 
-  const playerInfo = EspnTransformers.clientPlayerToPlayer(player.playerPoolEntry.player, {
+  const playerInfo: FantasyPlayer = EspnTransformers.clientPlayerToFantasyPlayer(player.playerPoolEntry.player, {
     sport: SPORT_ID.Football,
     leagueId: EspnClient.LeagueId.NFL,
     teamMap: NFL_TEAM_MAP,
@@ -49,9 +49,14 @@ export function clientPlayerToFootballPlayer(player: EspnClient.TeamRosterEntry)
 export function clientTeamListToTeamList(team: EspnClient.FootballTeam): FootballTeam {
   const roster = team.roster.entries.map(p => clientPlayerToFootballPlayer(p));
 
-  const { abbrev, logo, record, playoffSeed: currentRank } = team;
-
-  const { wins, losses, ties, pointsAgainst, percentage, pointsFor } = record.overall;
+  const {
+    abbrev,
+    logo,
+    playoffSeed: currentRank,
+    record: {
+      overall: { wins, losses, ties, pointsAgainst, percentage, pointsFor },
+    },
+  } = team;
 
   return {
     id: team.id.toString(),
@@ -71,11 +76,9 @@ export function clientTeamListToTeamList(team: EspnClient.FootballTeam): Footbal
 
 export function clientFreeAgentToFootballPlayer(data: EspnClient.FreeAgentEntry[]): FootballPlayerFreeAgent[] {
   return data.map(p => {
-    if (!exists(p)) {
-      throw new Error('player must be defined');
-    }
+    if (!exists(p)) throw new Error('player must be defined');
 
-    const playerInfo = EspnTransformers.clientPlayerToPlayer(p.player, {
+    const playerInfo = EspnTransformers.clientPlayerToFantasyPlayer(p.player, {
       sport: SPORT_ID.Football,
       leagueId: EspnClient.LeagueId.NFL,
       teamMap: NFL_TEAM_MAP,

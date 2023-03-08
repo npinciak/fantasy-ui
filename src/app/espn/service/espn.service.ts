@@ -24,6 +24,7 @@ export type FantasyLeagueBySportRequest = {
   headers?: HttpHeaders;
 };
 
+export type FantasyLeagueEventsRequest = Pick<FantasyLeagueBySportRequest, 'sport' | 'headers'>;
 export type FantasyPlayerNewsRequest = Pick<FantasyLeagueBySportRequest, 'sport'> & { lookbackDays: string; playerId: string };
 
 @Injectable({
@@ -54,9 +55,9 @@ export class EspnService {
    * @param sport
    * @returns EspnLeague
    */
-  fetchFantasyLeagueBySport<T>(data: { sport: FantasySports; leagueId: string; year: string; headers?: HttpHeaders }): Observable<T> {
-    const endpoint = new EspnEndpointBuilder(data.sport, data.leagueId, data.year);
-    return this.api.get<T>(endpoint.fantasyLeague, { params: this.params, headers: data.headers });
+  fetchFantasyLeagueBySport<T>({ sport, leagueId, year, headers }: FantasyLeagueBySportRequest): Observable<T> {
+    const endpoint = new EspnEndpointBuilder(sport, leagueId, year);
+    return this.api.get<T>(endpoint.fantasyLeague, { params: this.params, headers });
   }
 
   /**
@@ -66,7 +67,7 @@ export class EspnService {
    * @param sport
    * @returns EspnLeague
    */
-  fetchFantasyLeagueEvents(sport: FantasySports, headers?: HttpHeaders): Observable<EspnClient.EventList> {
+  fetchFantasyLeagueEvents({ sport, headers }: FantasyLeagueEventsRequest): Observable<EspnClient.EventList> {
     const endpoint = new EspnEndpointBuilder(sport);
     const params = new HttpParams()
       .set(EspnParamFragment.UseMap, true)
@@ -111,7 +112,6 @@ export class EspnService {
     const params = new HttpParams()
       .set(EspnParamFragment.ScoringPeriod, scoringPeriod.toString())
       .set(EspnParamFragment.View, EspnViewParamFragment.PlayerInfo);
-
     return this.api.get<{ players: EspnClient.FreeAgent[] }>(endpoint.fantasyLeague, { params, headers });
   }
 
@@ -137,7 +137,6 @@ export class EspnService {
     seasontype: number | null;
   }): Observable<FastcastTransform> {
     const endpoint = new EspnEndpointBuilder();
-
     return this.api
       .get<EspnFastcastClient.EspnClientFastcast>(endpoint.staticScoreboard)
       .pipe(map(res => EspnTransformers.clientFastcastToFastcast(res)));

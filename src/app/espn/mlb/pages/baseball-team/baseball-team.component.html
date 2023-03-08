@@ -1,9 +1,12 @@
 <ng-container *ngIf="seasonConcluded$ | async">
-  <mat-card>
-    <mat-card-content class="text-center">Season has concluded</mat-card-content>
-  </mat-card>
-  <div class="mx-3"></div>
+  <div class="mb-5 w-full bg-white text-center">
+    <p>Season has concluded</p>
+  </div>
 </ng-container>
+
+<div class="mb-5 w-full bg-white text-center">
+  <p>{{ (fantasyBaseballTeamFacade.teamInfo$ | async).name }}</p>
+</div>
 
 <app-page-layout>
   <div sidebar>
@@ -15,6 +18,7 @@
       (refreshClicked)="onRefreshClick()"
     ></app-baseball-lineup-card>
     <div class="mx-3"></div>
+
     <app-baseball-lineup-card
       title="Bench"
       [isLoading]="isLoading$ | async"
@@ -33,107 +37,38 @@
     ></app-baseball-lineup-card>
   </div>
   <div main>
-    <div>
-      <mat-slide-toggle (change)="onBatterGraphSelectChange($event)" color="primary">Scatter</mat-slide-toggle>
-
-      <div class="mx-3"></div>
-
-      <div>
-        <div>
-          <app-dropdown-filter
-            ariaLabel="scoring period options"
-            [selectedOption]="scoringPeriodId"
-            title="Stat Period"
-            [filterItems]="scoringPeriodFilters$ | async"
-            (filterUpdate)="onScoringPeriodIdChange($event)"
-          ></app-dropdown-filter>
-        </div>
-        <div>
-          <mat-form-field>
-            <mat-label>Batter Stats X</mat-label>
-            <mat-select [(value)]="selectedBatterStatXAxis" (selectionChange)="onBatterStatXAxisChange($event.value)">
-              <mat-option *ngFor="let stat of BATTER_STATS_LIST" [value]="stat.id">{{ stat.abbrev }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div *ngIf="isBatterScatterChart">
-          <mat-form-field>
-            <mat-label>Batter Stats Y</mat-label>
-            <mat-select [(value)]="selectedBatterStatYAxis" (selectionChange)="onBatterStatYAxisChange($event.value)">
-              <mat-option *ngFor="let stat of BATTER_STATS_LIST" [value]="stat.id">{{ stat.abbrev }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
+    <div class="flex flex-1 flex-col gap-5 sm:flex-row">
+      <div class="basis-1/3">
+        <app-dropdown-filter
+          ariaLabel="scoring period options"
+          [selectedOption]="scoringPeriodId"
+          title="Stat Period"
+          [filterItems]="scoringPeriodFilters$ | async"
+          (filterUpdate)="onScoringPeriodIdChange($event)"
+        ></app-dropdown-filter>
       </div>
-      <div>
-        <ng-container *ngIf="isBatterScatterChart; else defaultChart">
-          <app-data-vis-scatter
-            [title]="batterScatterChartTitle"
-            [xAxisFilterTitle]="MLB_STAT_MAP[selectedBatterStatXAxis].description"
-            [yAxisFilterTitle]="MLB_STAT_MAP[selectedBatterStatYAxis].description"
-            [chartData]="batterScatterData$ | async"
-          ></app-data-vis-scatter>
-        </ng-container>
-        <div class="mx-3"></div>
-        <ng-template #defaultChart>
-          <app-data-vis [title]="barChartTitle" [statFilter]="selectedBatterStatXAxis" [chartData]="batterBarData$ | async"></app-data-vis>
-        </ng-template>
-      </div>
-      <h3>Batting</h3>
-      <!-- <mat-slide-toggle (change)="onLiveScoringSelectChange($event)" color="primary"> Live Scoring </mat-slide-toggle>
-      <ng-container *ngIf="isLiveScore; else default">
-        <app-roster [data]="liveBattingStats$ | async" [dataColumns]="BATTER_STATS_LIVE_ROWS" [headers]="BATTER_STATS_LIVE_HEADERS"> </app-roster>
-      </ng-container> -->
-
-      <ng-template #default>
-        <app-roster [data]="battingStats$ | async" [dataColumns]="BATTER_STATS_ROWS" [headers]="BATTER_STATS_HEADERS"> </app-roster>
-      </ng-template>
-      <div class="mx-3"></div>
-
-      <h3>Pitching</h3>
-      <mat-slide-toggle (change)="onPitcherGraphSelectChange($event)" color="primary">Scatter</mat-slide-toggle>
-
-      <div>
-        <mat-form-field>
-          <mat-label>Pitcher Stats X</mat-label>
-          <mat-select [(value)]="selectedPitcherStatXAxis" (selectionChange)="onPitcherStatXAxisChange($event.value)">
-            <mat-option *ngFor="let stat of PITCHER_STATS_LIST" [value]="stat.id">{{ stat.abbrev }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div *ngIf="isPitcherScatterChart">
-        <mat-form-field>
-          <mat-label>Pitcher Stats Y</mat-label>
-          <mat-select [(value)]="selectedPitcherStatYAxis" (selectionChange)="onPitcherStatYAxisChange($event.value)">
-            <mat-option *ngFor="let stat of PITCHER_STATS_LIST" [value]="stat.id">{{ stat.abbrev }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="mx-3"></div>
-
-      <div *ngIf="isPitcherScatterChart; else defaultPitcher">
-        <app-data-vis-scatter
-          [title]="pitcherScatterChartTitle"
-          [xAxisFilterTitle]="MLB_STAT_MAP[selectedPitcherStatXAxis].description"
-          [yAxisFilterTitle]="MLB_STAT_MAP[selectedPitcherStatYAxis].description"
-          [chartData]="pitcherStatsScatterChartData$ | async"
-        ></app-data-vis-scatter>
-      </div>
-
-      <div class="mx-3"></div>
-
-      <ng-template #defaultPitcher>
-        <div>
-          <app-data-vis
-            [title]="MLB_STAT_MAP[selectedPitcherStatXAxis].description"
-            [statFilter]="selectedPitcherStatXAxis"
-            [chartData]="pitcherStatsChartData$ | async"
-          ></app-data-vis>
-        </div>
-      </ng-template>
-
-      <app-roster [data]="pitcherStats$ | async" [dataColumns]="PITCHER_STATS_ROWS" [headers]="PITCHER_STATS_HEADERS"> </app-roster>
     </div>
+
+    <h3>Batting</h3>
+
+    <div>
+      <app-espn-stats-table
+        [data]="tableDataBatters$ | async"
+        [dataColumns]="(tableConfig$ | async).rows"
+        [headers]="(tableConfig$ | async).headers"
+        [statsMap]="MLB_STAT_MAP"
+      >
+      </app-espn-stats-table>
+    </div>
+
+    <h3>Pitching</h3>
+
+    <app-espn-stats-table
+      [data]="tableDataPitchers$ | async"
+      [dataColumns]="(tableConfig$ | async).rows"
+      [headers]="(tableConfig$ | async).headers"
+      [statsMap]="MLB_STAT_MAP"
+    >
+    </app-espn-stats-table>
   </div>
 </app-page-layout>

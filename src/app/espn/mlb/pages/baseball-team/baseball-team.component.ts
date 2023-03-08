@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { EspnPlayerDialogComponent } from '@app/espn/components/espn-player-dialog/espn-player-dialog.component';
 import { PlayerDialog } from '@app/espn/models/player-dialog-component.model';
@@ -32,7 +31,11 @@ export class BaseballTeamComponent {
   readonly teamId$ = this.routerFacade.teamId$;
   readonly leagueId$ = this.routerFacade.leagueId$;
 
-  readonly BATTER_STATS_LIST = BATTER_STATS_LIST;
+  readonly BATTER_STATS_LIST = BATTER_STATS_LIST.map(p => ({
+    label: p.abbrev,
+    value: p.id,
+  }));
+
   readonly PITCHER_STATS_LIST = PITCHER_STATS_LIST;
 
   readonly MLB_STAT_MAP = MLB_STATS_MAP;
@@ -57,11 +60,12 @@ export class BaseballTeamComponent {
   selectedBatterStatXAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.wOBA);
   selectedBatterStatYAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.AB);
 
-  isLiveScore: boolean;
-  isBatterScatterChart: boolean;
-  isPitcherScatterChart: boolean;
+  isLiveScore$ = new BehaviorSubject<boolean>(false);
+  isBatterScatterChart$ = new BehaviorSubject<boolean>(false);
+  isPitcherScatterChart$ = new BehaviorSubject<boolean>(false);
 
-  isLoading$ = this.fantasyBaseballLeagueFacade.isLoading$;
+  isLoading$ = new BehaviorSubject<boolean>(false);
+
   seasonConcluded$ = this.fantasyBaseballLeagueFacade.seasonConcluded$;
   scoringPeriodFilters$ = this.fantasyBaseballLeagueFacade.scoringPeriodFilters$;
 
@@ -79,7 +83,10 @@ export class BaseballTeamComponent {
     this.selectedBatterStatYAxis$,
   ]).pipe(map(([chartData, statPeriod, xAxis, yAxis]) => chartData(statPeriod, xAxis, yAxis)));
 
-  batterBarData$ = of([]); //(fantasyBaseballTeamFacade.batterChartData$ | async)!(teamId, scoringPeriodId, selectedBatterStatXAxis)
+  batterBarData$ = combineLatest([this.fantasyBaseballTeamFacade.batterChartData$, this.statPeriod$, this.selectedBatterStatXAxis$]).pipe(
+    map(([chartData, statPeriod, xAxis]) => chartData(statPeriod, xAxis))
+  );
+
   liveBattingStats$ = combineLatest([this.fantasyBaseballTeamFacade.liveBattingStats$, this.teamId$]).pipe(
     map(([liveStats, teamId]) => (teamId ? liveStats(teamId) : []))
   );
@@ -87,7 +94,24 @@ export class BaseballTeamComponent {
 
   pitcherStatsScatterChartData$ = of([]);
   pitcherStatsChartData$ = of([]);
-  pitcherStats$ = of([]);
+
+  tableDataBatters$ = combineLatest([this.fantasyBaseballTeamFacade.battingStats$, this.statPeriod$]).pipe(
+    map(([batterStats, statPeriod]) => batterStats(statPeriod))
+  );
+
+  tableDataPitchers$ = combineLatest([this.fantasyBaseballTeamFacade.pitcherStats$, this.statPeriod$]).pipe(
+    map(([pitcherStats, statPeriod]) => pitcherStats(statPeriod))
+  );
+
+  pitcherTableConfig$ = of({
+    rows: PITCHER_STATS_ROWS,
+    headers: PITCHER_STATS_HEADERS,
+  });
+
+  tableConfig$ = of({
+    rows: BATTER_STATS_ROWS,
+    headers: BATTER_STATS_HEADERS,
+  });
 
   constructor(
     private store: Store,
@@ -98,20 +122,26 @@ export class BaseballTeamComponent {
     private dialog: MatDialog
   ) {}
 
-  onRefreshClick() {
-    // this.fantasyBaseballLeagueFacade.getLeague(this.leagueId);
+  async onRefreshClick() {
+    try {
+      this.isLoading$.next(true);
+      await this.fantasyBaseballLeagueFacade.refreshCurrentLeague().toPromise();
+      this.isLoading$.next(false);
+    } catch (e) {
+      this.isLoading$.next(false);
+    }
   }
 
-  onLiveScoringSelectChange(event: MatSlideToggleChange) {
-    this.isLiveScore = event.checked;
+  onLiveScoringSelectChange(isChecked: boolean) {
+    this.isLiveScore$.next(isChecked);
   }
 
-  onBatterGraphSelectChange(event: MatSlideToggleChange) {
-    this.isBatterScatterChart = event.checked;
+  onBatterGraphSelectChange(isChecked: boolean) {
+    this.isBatterScatterChart$.next(isChecked);
   }
 
-  onPitcherGraphSelectChange(event: MatSlideToggleChange) {
-    this.isPitcherScatterChart = event.checked;
+  onPitcherGraphSelectChange(isChecked: boolean) {
+    this.isPitcherScatterChart$.next(isChecked);
   }
 
   onScoringPeriodIdChange(val: string): void {
@@ -151,7 +181,7 @@ export class BaseballTeamComponent {
   }
 
   async onPlayerClick(player: BaseballPlayer) {
-      await this.store.dispatch([new FantasyBaseballPlayerNews.Fetch({ playerId: player.id })]).toPromise();
+    await this.store.dispatch([new FantasyBaseballPlayerNews.Fetch({ playerId: player.id })]).toPromise();
     const news = this.fantasyBaseballPlayerNewsFacade.getById(player.id)?.news ?? [];
 
     const data = { player, news, sport: 'mlb' } as PlayerDialog<BaseballPlayer>;

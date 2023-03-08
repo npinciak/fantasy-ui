@@ -1,5 +1,4 @@
-<span [class.text-green-600]="trendingPositive" [class.text-red-600]="trendingNegative">
-  {{ data | statFormat: 'number' | number: '1.2' }}
+<span class="text-sm" [class.text-green-600]="trendingPositive" [class.text-red-600]="trendingNegative">
   <ng-container *ngIf="trendingPositive; else trendDown">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5 text-green-600">
       <path
@@ -9,6 +8,7 @@
       />
     </svg>
   </ng-container>
+  {{ data | statFormat: 'number' | number: '1.2' }}
 </span>
 
 <ng-template #trendDown>

@@ -6,9 +6,9 @@ export class AdvStats {
   private _stats: EspnClient.PlayerStatsEntity;
   private _seasonConst: SeasonStatConst;
 
-  constructor(configs: { seasonConst: SeasonStatConst; statsEntity: EspnClient.PlayerStatsEntity }) {
-    this._stats = exists(configs.statsEntity) ? configs.statsEntity : [];
-    this._seasonConst = configs.seasonConst;
+  constructor({ seasonConst, statsEntity }: { seasonConst: SeasonStatConst; statsEntity: EspnClient.PlayerStatsEntity | null }) {
+    this._stats = exists(statsEntity) ? statsEntity : [];
+    this._seasonConst = seasonConst;
   }
 
   get wOBA(): number {
@@ -18,20 +18,22 @@ export class AdvStats {
 
   get wRAA(): number {
     if (!this.wRAAValid) return 0;
-    return ((this.wOBA - this._seasonConst.wOBA) / this._seasonConst.wOBAScale) * this._stats[BaseballStat.PA];
+    const { wOBA, wOBAScale } = this._seasonConst;
+    return ((this.wOBA - wOBA) / wOBAScale) * this._stats[BaseballStat.PA];
   }
 
   get wRC(): number {
     if (!this.wRCValid) return 0;
-    return ((this.wOBA - this._seasonConst.wOBA) / this._seasonConst.wOBAScale + this._seasonConst['r/PA']) * this._stats[BaseballStat.PA];
+    return this.wRAA + this._seasonConst['r/PA'] * this._stats[BaseballStat.PA];
   }
 
   get fip(): number {
     if (!this.fipValid) return 0;
+    const { cFIP } = this._seasonConst;
     // prettier-ignore
     return (
       (13 * this._stats[BaseballStat.HRA] + 3 * (this._stats[BaseballStat.BBI] + this._stats[BaseballStat.HB]) - 2 * this._stats[BaseballStat.K]) / (this._stats[BaseballStat.IP]* 0.333) +
-      this._seasonConst.cFIP
+     cFIP
     );
   }
 
@@ -51,13 +53,15 @@ export class AdvStats {
 
   get weightedHits(): number {
     if (!this.weightedHitsValid) return 0;
+    const { wBB, wHBP, w1B, w2B, w3B, wHR } = this._seasonConst;
+
     return (
-      this._seasonConst.wBB * this.unintentionalBB +
-      this._seasonConst.wHBP * this._stats[BaseballStat.HBP] +
-      this._seasonConst.w1B * this._stats[BaseballStat.SINGLE] +
-      this._seasonConst.w2B * this._stats[BaseballStat.DOUBLE] +
-      this._seasonConst.w3B * this._stats[BaseballStat.TRIPLE] +
-      this._seasonConst.wHR * this._stats[BaseballStat.HR]
+      wBB * this.unintentionalBB +
+      wHBP * this._stats[BaseballStat.HBP] +
+      w1B * this._stats[BaseballStat.SINGLE] +
+      w2B * this._stats[BaseballStat.DOUBLE] +
+      w3B * this._stats[BaseballStat.TRIPLE] +
+      wHR * this._stats[BaseballStat.HR]
     );
   }
 
@@ -83,8 +87,7 @@ export class AdvStats {
   }
 
   private get babipValid(): boolean {
-    const statConstraints = [BaseballStat.HA, BaseballStat.HRA, BaseballStat.BF, BaseballStat.K, BaseballStat.SFA];
-    return this.validate(statConstraints);
+    return this.validate([BaseballStat.HA, BaseballStat.HRA, BaseballStat.BF, BaseballStat.K, BaseballStat.SFA]);
   }
 
   private get wRCValid(): boolean {
@@ -100,25 +103,19 @@ export class AdvStats {
   }
 
   private get fipValid(): boolean {
-    const statConstraints = [BaseballStat.HRA, BaseballStat.BBI, BaseballStat.HB, BaseballStat.K, BaseballStat.IP];
-
-    return this.validate(statConstraints);
+    return this.validate([BaseballStat.HRA, BaseballStat.BBI, BaseballStat.HB, BaseballStat.K, BaseballStat.IP]);
   }
 
   private get unintentionalBBValid(): boolean {
-    const statConstraints = [BaseballStat.BB, BaseballStat.IBB];
-    return this.validate(statConstraints);
+    return this.validate([BaseballStat.BB, BaseballStat.IBB]);
   }
 
   private get weightedHitsValid(): boolean {
-    const statConstraints = [BaseballStat.HBP, BaseballStat.SINGLE, BaseballStat.DOUBLE, BaseballStat.TRIPLE, BaseballStat.HR];
-
-    return this.validate(statConstraints);
+    return this.validate([BaseballStat.HBP, BaseballStat.SINGLE, BaseballStat.DOUBLE, BaseballStat.TRIPLE, BaseballStat.HR]);
   }
 
   private get nonHitsValid(): boolean {
-    const statConstraints = [BaseballStat.AB, BaseballStat.BB, BaseballStat.IBB, BaseballStat.SF, BaseballStat.HBP];
-    return this.validate(statConstraints);
+    return this.validate([BaseballStat.AB, BaseballStat.BB, BaseballStat.IBB, BaseballStat.SF, BaseballStat.HBP]);
   }
 
   private get isoValid(): boolean {
@@ -126,8 +123,7 @@ export class AdvStats {
   }
 
   private get lobPercentValid(): boolean {
-    const statConstraints = [BaseballStat.HA, BaseballStat.BBI, BaseballStat.HB, BaseballStat.RA, BaseballStat.HRA];
-    return this.validate(statConstraints);
+    return this.validate([BaseballStat.HA, BaseballStat.BBI, BaseballStat.HB, BaseballStat.RA, BaseballStat.HRA]);
   }
 
   private validate(stats: BaseballStat[]) {

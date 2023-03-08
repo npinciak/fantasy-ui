@@ -25,7 +25,7 @@ export const ONE_FEED_BASE: string = environment.espnOneFeed;
 
 export const ICON_PATH = `${CDN_REDESIGN_IMG}/sprites/transitional-secondary-navigation-icons-v4.png`;
 
-export const NO_LOGO: string = `${CDN_COMBINER}?img=/i/teamlogos/default-team-logo-500.png&h=100&scale=crop&w=100&location=origin`;
+export const NO_LOGO = `${CDN_COMBINER}?img=/i/teamlogos/default-team-logo-500.png&h=100&scale=crop&w=100&location=origin`;
 
 export function fastcastURIBuilder(eventType: string | null, messageId: string): string {
   return `${FASTCAST_BASE}/${eventType}/message/${messageId}/checkpoint`;

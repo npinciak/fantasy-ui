@@ -16,6 +16,8 @@ import { FantasyBaseballTransformers } from '../transformers/fantasy-baseball.tr
   providedIn: 'root',
 })
 export class MlbService {
+  private sport = FantasySports.Baseball;
+
   constructor(private client: EspnService) {}
 
   /**
@@ -26,7 +28,7 @@ export class MlbService {
    * @returns
    */
   baseballLeague(leagueId: string, year: string): Observable<BaseballLeague> {
-    return this.client.fetchFantasyLeagueBySport<EspnClient.BaseballLeague>({ sport: FantasySports.Baseball, leagueId, year }).pipe(
+    return this.client.fetchFantasyLeagueBySport<EspnClient.BaseballLeague>({ sport: this.sport, leagueId, year }).pipe(
       map(res => {
         const genericLeagueSettings = EspnTransformers.clientLeagueToLeague(res);
         return FantasyBaseballTransformers.clientLeagueToBaseballLeague(res, genericLeagueSettings);
@@ -41,7 +43,7 @@ export class MlbService {
    */
   baseballEvents(): Observable<BaseballEvent[]> {
     return this.client
-      .fetchFantasyLeagueEvents(FantasySports.Baseball)
+      .fetchFantasyLeagueEvents({ sport: this.sport })
       .pipe(map(res => res.events.map(e => FantasyBaseballTransformers.clientEventToBaseballEvent(e))));
   }
 
@@ -69,7 +71,7 @@ export class MlbService {
     let headers = new HttpHeaders();
     headers = headers.append('X-Fantasy-Filter', JSON.stringify(payload.filter));
     return this.client
-      .fetchFantasyFreeAgentsBySport(FantasySports.Baseball, payload.leagueId, payload.scoringPeriodId, headers)
+      .fetchFantasyFreeAgentsBySport(this.sport, payload.leagueId, payload.scoringPeriodId, headers)
       .pipe(map(res => FantasyBaseballTransformers.transformEspnFreeAgentToBaseballPlayer(res.players)));
   }
 }

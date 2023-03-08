@@ -9,7 +9,7 @@
       (playerClicked)="onPlayerClick($event)"
       (refreshClicked)="refreshLeague()"
     ></app-football-lineup-card>
-    <div style="margin: 25px 0"></div>
+    <div class="my-6"></div>
     <app-football-lineup-card
       title="Bench"
       [lineup]="bench$ | async"
@@ -17,7 +17,7 @@
       [scoringPeriodId]="currentScoringPeriodId$ | async"
       (playerClicked)="onPlayerClick($event)"
     ></app-football-lineup-card>
-    <div style="margin: 25px 0"></div>
+    <div class="my-6"></div>
     <ng-container *ngIf="(injuredReserve$ | async).length > 0">
       <app-football-lineup-card
         title="Injured Reserve"
@@ -29,7 +29,7 @@
   </div>
   <div main>
     <div class="flex w-full flex-row gap-6">
-      <div>
+      <div class="basis-1/2">
         <app-dropdown-filter
           ariaLabel="position options"
           [selectedOption]="selectedPosition$ | async"
@@ -38,7 +38,7 @@
           (filterUpdate)="onSelectedPositionChange($event)"
         ></app-dropdown-filter>
       </div>
-      <div>
+      <div class="basis-1/2">
         <app-dropdown-filter
           ariaLabel="scoring period options"
           [selectedOption]="scoringPeriodId$ | async"
@@ -48,7 +48,7 @@
         ></app-dropdown-filter>
       </div>
     </div>
-    <div class="flex flex-row">
+    <div>
       <app-espn-stats-table
         [data]="tableData$ | async"
         [dataColumns]="(tableConfig$ | async).rows"

@@ -114,10 +114,13 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
   }
 }
 
-function statsValidator(stats: EspnClient.PlayerStatsByYearMap | null, statPeriod: string | null) {
-  if (exists(stats) && exists(statPeriod)) {
-    return stats[statPeriod];
-  }
+function statsValidator(
+  stats: {
+    [year: string]: EspnClient.PlayerStatsYear | null;
+  } | null,
+  statPeriod: string | null
+) {
+  if (exists(stats) && exists(statPeriod)) return stats;
 
-  return {};
+  return null;
 }

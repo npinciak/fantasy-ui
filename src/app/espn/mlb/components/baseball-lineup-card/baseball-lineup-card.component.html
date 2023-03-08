@@ -8,7 +8,7 @@
   <div class="flow-root">
     <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
       <li class="py-3 hover:cursor-pointer sm:py-4" *ngFor="let player of lineup; let i = index" [attr.data-index]="i" tabindex="-1" (click)="onPlayerClick(player)">
-        <app-espn-player [player]="player"></app-espn-player>
+        <app-espn-player [player]="player" [isLoading]="isLoading"></app-espn-player>
       </li>
     </ul>
   </div>

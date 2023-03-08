@@ -8,12 +8,14 @@
         </div>
       </div> -->
       <div class="flow-root">
-        <app-dropdown-filter
-          ariaLabel="week selection options"
-          [selectedOption]="currentScoringPeriod$ | async"
-          [filterItems]="matchupPeriodIdFilterOptions$ | async"
-          (filterUpdate)="fantasyFootballLeagueFacade.updateCurrentScoringPeriodId($event)"
-        ></app-dropdown-filter>
+        <div>
+          <app-dropdown-filter
+            ariaLabel="week selection options"
+            [selectedOption]="currentScoringPeriod$ | async"
+            [filterItems]="matchupPeriodIdFilterOptions$ | async"
+            (filterUpdate)="fantasyFootballLeagueFacade.updateCurrentScoringPeriodId($event)"
+          ></app-dropdown-filter>
+        </div>
         <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
           <li class="py-3 sm:py-4" *ngFor="let matchup of matchups$ | async; let i = index" [attr.data-index]="i" tabindex="-1" (click)="onPlayerClick(player)">
             <div>

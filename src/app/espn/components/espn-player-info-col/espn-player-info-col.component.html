@@ -3,7 +3,7 @@
     <img width="48" height="35" role="presentation" class="w-13 h-9 rounded-full" [title]="player?.name" [alt]="player?.name" [src]="player?.img" />
   </div>
   <div class="min-w-0 flex-1">
-    <p [title]="player?.name" class="truncate text-sm font-medium">{{ player?.name }}</p>
+    <p [title]="player?.name" class="truncate text-xs font-medium sm:text-sm">{{ player?.name }}</p>
     <p class="truncate text-xs">{{ player?.team }}, {{ player?.position }}</p>
   </div>
 </div>

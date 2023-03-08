@@ -14,6 +14,8 @@ import { FantasyFootballTransformers } from '../transformers/fantasy-football.tr
   providedIn: 'root',
 })
 export class FantasyFootballService {
+  private sport = FantasySports.Football;
+
   constructor(private client: EspnService) {}
 
   /**
@@ -24,7 +26,7 @@ export class FantasyFootballService {
    * @returns
    */
   fetchLeague(leagueId: string, year: string): Observable<FootballLeague> {
-    return this.client.fetchFantasyLeagueBySport<EspnClient.FootballLeague>({ sport: FantasySports.Football, leagueId, year }).pipe(
+    return this.client.fetchFantasyLeagueBySport<EspnClient.FootballLeague>({ sport: this.sport, leagueId, year }).pipe(
       map(res => {
         const genericLeagueSettings = EspnTransformers.clientLeagueToLeague(res);
         return FantasyFootballTransformers.clientLeagueToFootballLeague(res, genericLeagueSettings);

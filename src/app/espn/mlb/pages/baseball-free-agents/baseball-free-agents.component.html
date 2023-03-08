@@ -80,7 +80,7 @@
 
         <div style="margin: 10px 0"></div>
 
-        <app-roster
+        <!-- <app-roster
           #freeAgentBatters
           [data]="(fantasyBaseballFreeAgentsFacade.compareTeamAndFreeAgentBatterList$ | async)!(selectedLeagueTeam, scoringPeriodId, '2022')"
           [dataColumns]="BATTER_STATS_ROWS"
@@ -88,7 +88,8 @@
           (sortChanged)="onSortChanged($event)"
           (paginatorChanged)="onPaginatorChanged($event)"
         ></app-roster
-      ></mat-tab>
+      > -->
+      </mat-tab>
       <mat-tab label="Pitchers">
         <h4>{{ MLB_STAT_MAP[selectedPitcherStat].description }}</h4>
         <div style="margin: 10px 0"></div>
@@ -99,13 +100,14 @@
         ></app-data-vis>
         <div style="margin: 10px 0"></div>
 
-        <app-roster
+        <!-- <app-roster
           #freeAgentPitchers
           [data]="(fantasyBaseballFreeAgentsFacade.compareTeamAndFreeAgentPitcherList$ | async)!(selectedLeagueTeam, scoringPeriodId, '2022')"
           [dataColumns]="PITCHER_STATS_ROWS"
           [headers]="PITCHER_STATS_HEADERS"
         ></app-roster
-      ></mat-tab>
+      > -->
+      </mat-tab>
     </mat-tab-group>
   </div>
 </div>

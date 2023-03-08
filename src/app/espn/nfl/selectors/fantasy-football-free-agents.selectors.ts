@@ -1,7 +1,7 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { linearRegression, pickData, transformScatterGraphData } from '@app/@shared/helpers/graph.helpers';
+import { linearRegression, transformScatterGraphData } from '@app/@shared/helpers/graph.helpers';
 import { Selector } from '@app/@shared/models/typed-selector';
-import { exists } from '@app/@shared/utilities/utilities.m';
+import { exists, pickData } from '@app/@shared/utilities/utilities.m';
 import { NFL_STATS_MAP } from 'sports-ui-sdk';
 import { FootballPlayer, FootballPlayerFreeAgent } from '../models/football-player.model';
 import { FantasyFootballFreeAgentsState } from '../state/fantasy-football-free-agents.state';
@@ -59,9 +59,7 @@ export class FantasyFootballFreeAgentsSelectors extends GenericSelector(FantasyF
     return (statPeriod: string, xAxis: string | null, yAxis: string | null) => {
       const data = players(statPeriod);
 
-      if (xAxis == null || yAxis == null) {
-        return [];
-      }
+      if (xAxis == null || yAxis == null) return [];
 
       const x: number[] = data.map(p => (exists(p.stats) ? p.stats.stats[xAxis] : (0 as number)));
 

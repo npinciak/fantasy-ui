@@ -4,25 +4,19 @@
   </div>
   <div class="min-w-0 flex-1">
     <p class="truncate text-sm font-medium text-gray-900 dark:text-white">
-      <ng-container *ngIf="!isLoading; else loading">
+      <app-loading-skeleton [sm]="true" [isLoading]="isLoading">
         {{ player?.name }}
-      </ng-container>
-      <mat-icon
-        *ngIf="player?.injuryStatus"
-        [ngStyle]="{ color: playerInjuryStatusColor(player.injuryStatus) }"
-        [title]="PlayerStatusAbbrevByInjuryStatusType[player?.injuryStatus]"
-        >{{ MatIconByEspnPlayerInjuryStatus[player?.injuryStatus] }}</mat-icon
-      >
+        <mat-icon
+          *ngIf="player?.injuryStatus"
+          [ngStyle]="{ color: playerInjuryStatusColor(player.injuryStatus) }"
+          [title]="PlayerStatusAbbrevByInjuryStatusType[player?.injuryStatus]"
+          >{{ MatIconByEspnPlayerInjuryStatus[player?.injuryStatus] }}</mat-icon
+        >
+      </app-loading-skeleton>
     </p>
     <p class="truncate text-sm text-gray-500 dark:text-gray-400">
-      <ng-container *ngIf="!isLoading; else loading"> {{ player?.team }}, {{ player?.position }} </ng-container>
+      <app-loading-skeleton [xs]="true" [isLoading]="isLoading">{{ player?.team }}, {{ player?.position }}</app-loading-skeleton>
     </p>
   </div>
   <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">{{ player?.points | number: '1.0' }}</div>
 </div>
-
-<ng-template #loading>
-  <div role="status" class="max-w-sm animate-pulse">
-    <div class="h-2.5 w-48 rounded-full bg-gray-200 dark:bg-gray-700"></div>
-  </div>
-</ng-template>

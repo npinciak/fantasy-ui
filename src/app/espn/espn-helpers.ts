@@ -3,13 +3,15 @@ import { exists } from '@app/@shared/utilities/utilities.m';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
 import { PITCHING_LINEUP_IDS } from 'sports-ui-sdk/lib/espn/baseball/lineup/lineup.m';
 import { EspnClient, EspnFastcastClient, EVENT_STATUS, PLAYER_INJURY_STATUS, SEASON_ID } from 'sports-ui-sdk/lib/espn/espn.m';
+import { PlayerStatsYear } from 'sports-ui-sdk/lib/espn/models/espn-client.model';
 import { BaseballPlayer } from './mlb/models/baseball-player.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
 
 /**
  * Sports to include in Fastcast
+ *
  * @param id
- * @returns boolean
+ * @returns
  */
 export function includeSports(id: string): boolean {
   return new Set(['1', '20', '40', '70', '600']).has(id);
@@ -17,6 +19,7 @@ export function includeSports(id: string): boolean {
 
 /**
  * Leagues to include in Fastcast
+ *
  * @param id
  * @returns boolean
  */
@@ -26,55 +29,68 @@ export function includeLeagues(id: string): boolean {
 
 /**
  * Leagues to exclude in Fastcast
+ *
  * @param id
  * @returns boolean
  */
 export function excludeLeagues(id: string): boolean {
-  return new Set(['3923', '8097', '20226', '54', '19834', '19483']).has(id);
+  return new Set(['14', '102', '3923', '8097', '20226', '54', '19834', '19483', '19728']).has(id);
 }
 
 /**
  * Find if player is eligible pitcher
  *
  * @param eligiblePos
- * @returns
+ * @returns boolean
  */
 export function isPitcher(eligiblePos: number[]): boolean {
   return eligiblePos.some(posId => PITCHING_LINEUP_IDS.has(posId));
 }
 
+/**
+ * Removes and replaces poor contrast team colors
+ *
+ * @param val
+ * @returns string | null
+ *
+ * @example teamColor()
+ */
 export function teamColorHandler(val: EspnFastcastClient.CompetitorsEntity): string | null {
-  const color = val.color;
-  const altColor = val.alternateColor;
+  if (!val.color || !val.alternateColor) return null;
 
-  if (!color || !altColor) {
-    return null;
-  }
+  const negativeColors = new Set([
+    '80fed2',
+    'ffffff',
+    'ffc600',
+    'ffff00',
+    'fcee33',
+    'fafafc',
+    'cccccc',
+    'ffdc02',
+    'fdba31',
+    'f7aa25',
+    'ffc72c',
+    'd1d3d4',
+    'eaaa00',
+  ]);
 
-  const negativeColors = new Set(['ffffff', 'ffff00', 'fcee33', 'fafafc', 'cccccc', 'ffdc02']);
+  if (negativeColors.has(val.color.toLowerCase()) && negativeColors.has(val.alternateColor.toLowerCase())) return '#445058';
 
-  if (negativeColors.has(color.toLowerCase()) && negativeColors.has(altColor.toLowerCase())) {
-    return '#445058';
-  }
-
-  return negativeColors.has(color.toLowerCase()) ? `#${altColor}` : `#${color}`;
+  return negativeColors.has(val.color.toLowerCase()) ? `#${val.alternateColor}` : `#${val.color}`;
 }
 
 /**
  * Simple string concat to format football situation
  *
- * @param {string | null} downDistanceText
- * @param {string | null} possessionText
+ * @param downDistanceText
+ * @param possessionText
  *
- * @returns {string | null}
- *
- * @example transformDownDistancePositionText('1st and 10', 'NE 25') // returns 1st and 10, NE 25
+ * @example transformDownDistancePositionText('1st and 10', 'NE 25') // 1st and 10, NE 25
  *
  */
 export function transformDownDistancePositionText(downDistanceText: string | null, possessionText: string | null): string | null {
-  if (!downDistanceText || !possessionText) {
-    return null;
-  }
+  if (!downDistanceText || !possessionText) return null;
+
   return `${downDistanceText}, ${possessionText}`;
 }
 
@@ -83,6 +99,8 @@ export function transformDownDistancePositionText(downDistanceText: string | nul
  *
  * @param uid
  * @returns
+ *
+ * @example transformUidToId('s:6~l:1~s:4~t:5') // '1'
  */
 export function transformUidToId(uid: string | null): string | null {
   if (!uid) return null;
@@ -98,17 +116,27 @@ export function transformIdToUid(
   return `s:${sportId}~l:${leagueId}~t:${teamId}`;
 }
 
-export function flattenPlayerStats(stats: EspnClient.PlayerStatsYear[]): EspnClient.PlayerStatsByYearMap;
-export function flattenPlayerStats(stats: EspnClient.PlayerStatsYear[] | null): EspnClient.PlayerStatsByYearMap | null;
-export function flattenPlayerStats(stats: EspnClient.PlayerStatsYear[] | undefined): EspnClient.PlayerStatsByYearMap | null;
-export function flattenPlayerStats(stats: EspnClient.PlayerStatsYear[] | null | undefined): EspnClient.PlayerStatsByYearMap | null {
-  if (!exists(stats)) {
-    return null;
-  }
-  return stats.reduce((obj, val) => {
-    obj[val.id] = val;
-    return obj;
-  }, {} as EspnClient.PlayerStatsByYearMap);
+// eslint-disable-next-line @typescript-eslint/unified-signatures
+export function flattenPlayerStats(stats: EspnClient.PlayerStatsYear[]): {
+  [year: string]: PlayerStatsYear | null;
+} | null;
+export function flattenPlayerStats(stats: EspnClient.PlayerStatsYear[] | undefined | EspnClient.PlayerStatsYear[] | null): {
+  [year: string]: PlayerStatsYear | null;
+} | null;
+export function flattenPlayerStats(stats?: EspnClient.PlayerStatsYear[] | null | undefined): {
+  [year: string]: PlayerStatsYear | null;
+} | null {
+  if (!exists(stats)) return null;
+
+  return stats.reduce(
+    (obj, val) => {
+      obj[val.id] = val;
+      return obj;
+    },
+    {} as {
+      [year: string]: PlayerStatsYear | null;
+    }
+  );
 }
 
 /**
@@ -139,11 +167,10 @@ export function fastcastEventSummary(event: FastcastEvent): string | null {
 
   const date = tickerDate(event.timestamp);
 
-  console.log({ event, inProgress, eventPostponed, isPostseason });
   if (inProgress || eventPostponed) return event.summary;
-  if (!event.completed && isPostseason) return `${event.note} | ${date}`;
-  if (event.completed && isPostseason) return `${event.note}`;
-  if (event.completed && !isPostseason) return `${event.summary}`;
+  if (!event.completed && isPostseason) return exists(event.note) ? `${event.note} | ${date}` : date;
+  if (event.completed && isPostseason) return exists(event.note) ? event.note : event.summary;
+  if (event.completed && !isPostseason) return event.summary;
 
   return date;
 }

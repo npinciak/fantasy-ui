@@ -10,6 +10,7 @@ import { EspnClient, EspnFastcastClient, EVENT_STATUS_ID } from 'sports-ui-sdk/l
 import { excludeLeagues, flattenPlayerStats, includeSports, teamColorHandler, transformIdToUid, transformUidToId } from '../espn-helpers';
 import { headshotImgBuilder, NO_LOGO } from '../espn.const';
 import { FantasyLeague } from '../models/fantasy-league.model';
+import { FantasyPlayer } from '../models/fantasy-player.model';
 import { LEAGUE_ABBREV_BY_ID } from '../models/league.model';
 import { PlayerNews } from '../models/player-news.model';
 
@@ -62,35 +63,20 @@ export function clientLeagueToLeague(league: EspnClient.League): FantasyLeague {
   };
 }
 
-export function clientPlayerToPlayer(
+export function clientPlayerToFantasyPlayer(
   playerInfo: EspnClient.PlayerInfo,
-  opts: { sport: EspnClient.SportId; leagueId: EspnClient.LeagueId; teamMap: Record<string, string>; positionMap: PositionEntityMap }
-): {
-  id: string;
-  name: string;
-  img: string;
-  teamId: string;
-  teamUid: string;
-  position: string;
-  injured: boolean;
-  team: string;
-  injuryStatus: EspnClient.PlayerInjuryStatus;
-  defaultPositionId: number;
-  percentOwned: number;
-  percentChange: number;
-  percentStarted: number;
-  stats: EspnClient.PlayerStatsByYearMap | null;
-  outlookByWeek: {
-    week: number;
-    outlook: string;
-  }[];
-} {
-  const { sport, leagueId, teamMap, positionMap } = opts;
-  const { proTeamId, defaultPositionId, injuryStatus, injured, outlooks, id, fullName, stats, ownership } = playerInfo;
+  {
+    sport,
+    leagueId,
+    teamMap,
+    positionMap,
+  }: { sport: EspnClient.SportId; leagueId: EspnClient.LeagueId; teamMap: Record<string, string>; positionMap: PositionEntityMap }
+): FantasyPlayer {
+  const { proTeamId, defaultPositionId, injuryStatus, injured, outlooks, id, fullName, ownership, lastNewsDate } = playerInfo;
 
   const league = LEAGUE_ABBREV_BY_ID[leagueId];
   const team = teamMap[proTeamId] as string;
-  const flatStats = flattenPlayerStats(stats);
+  const stats = flattenPlayerStats(playerInfo.stats);
   const outlookByWeek = clientPlayerOutlook(outlooks);
 
   return {
@@ -100,8 +86,9 @@ export function clientPlayerToPlayer(
     teamUid: transformIdToUid(sport, leagueId, proTeamId),
     position: positionMap[defaultPositionId].abbrev,
     img: headshotImgBuilder(id, { league }),
+    lastNewsDate,
     injured,
-    stats: flatStats,
+    stats,
     team,
     injuryStatus,
     defaultPositionId,
@@ -188,30 +175,15 @@ export function clientEventToFastcastEvent(event: EspnFastcastClient.EventsEntit
   if (!event) return null;
 
   const mlbSituation = {} as MlbSituation;
-  // if (
-  //   event?.situation?.batter == null ||
-  //   event?.situation?.pitcher == null ||
-  //   event?.situation?.balls == null ||
-  //   event?.situation?.strikes == null ||
-  //   event?.situation?.outs == null ||
-  //   event?.situation?.onFirst == null ||
-  //   event?.situation?.onSecond == null ||
-  //   event?.situation?.onThird == null
-  // ) {
-  //   mlbSituation = null;
-  // } else {
 
-  Object.assign(mlbSituation, {
-    batter: event?.situation?.batter,
-    pitcher: event?.situation?.pitcher,
-    balls: event?.situation?.balls,
-    strikes: event?.situation?.strikes,
-    outs: event?.situation?.outs,
-    onFirst: event?.situation?.onFirst,
-    onSecond: event?.situation?.onSecond,
-    onThird: event?.situation?.onThird,
-  });
-  // }
+  // mlbSituation.batter = event?.situation?.batter;
+  // mlbSituation.pitcher = event?.situation?.pitcher;
+  // mlbSituation.balls = event?.situation?.balls;
+  // mlbSituation.strikes = event?.situation?.strikes;
+  // mlbSituation.outs = event?.situation?.outs;
+  // mlbSituation.onFirst = event?.situation?.onFirst;
+  // mlbSituation.onSecond = event?.situation?.onSecond;
+  // mlbSituation.onThird = event?.situation?.onThird;
 
   const footballSituation = {} as FootballSituation;
   // if (
