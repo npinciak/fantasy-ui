@@ -62,7 +62,7 @@ export class SportsUiLeagueFormState {
   }
 
   @Action(SportsUiLeagueForm.Submit)
-  async submit({}: StateContext<SportsUiLeagueFormStateModel>) {
+  async submit(_: StateContext<SportsUiLeagueFormStateModel>) {
     await this.store.dispatch(new SportsUiLeagues.VerifyLeagues()).toPromise();
     // dispatch([new CreateLeague()]);
   }

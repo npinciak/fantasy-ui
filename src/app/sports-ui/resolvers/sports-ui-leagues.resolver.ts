@@ -10,6 +10,6 @@ export class SportsUiLeaguesResolver implements Resolve<void> {
   constructor(private sportsUiLeaguesFacade: SportsUiLeaguesFacade, private sportsUiUsersFacade: SportsUiUserFacade) {}
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     await this.sportsUiLeaguesFacade.fetchLeagues().toPromise();
-    await this.sportsUiUsersFacade.fetchUser().toPromise();
+    this.sportsUiUsersFacade.fetchUser();
   }
 }

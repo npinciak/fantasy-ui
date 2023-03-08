@@ -10,11 +10,11 @@ import { SportsUiLeaguesSelector } from '../selectors/sports-ui-leagues.selector
   providedIn: 'root',
 })
 export class SportsUiLeaguesFacade extends GenericFacade(SportsUiLeaguesSelector) {
+  allLeagues$ = select(SportsUiLeaguesSelector.getList);
+
   constructor(private store: Store) {
     super();
   }
-
-  allLeagues$ = select(SportsUiLeaguesSelector.getList);
 
   fetchLeagues(): Observable<void> {
     return this.store.dispatch(new SportsUiLeagues.Fetch());

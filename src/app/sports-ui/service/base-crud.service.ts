@@ -8,8 +8,8 @@ interface Database {
     Tables: {
       Leagues: {
         Row: any[]; // The data expected to be returned from a "select" statement.
-        Insert: {}; // The data expected passed to an "insert" statement.
-        Update: {}; // The data expected passed to an "update" statement.
+        Insert: Record<string, unknown>; // The data expected passed to an "insert" statement.
+        Update: Record<string, unknown>; // The data expected passed to an "update" statement.
       };
     };
   };
@@ -71,10 +71,10 @@ export function BaseCrudService<T>({ table }: { table: string }) {
     private errorHandler(res: PostgrestResponse<any>) {
       const code = res.status || 0;
 
-      this.snackBar.open(`${code}: ${res.error?.message}`, 'x', {
-        panelClass: ['mat-toolbar', 'mat-warn'],
-        duration: 3000,
-      });
+      // this.snackBar.open(`${code}: ${res.error?.message}`, 'x', {
+      //   panelClass: ['mat-toolbar', 'mat-warn'],
+      //   duration: 3000,
+      // });
 
       throw res;
     }

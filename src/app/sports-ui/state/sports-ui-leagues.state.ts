@@ -19,7 +19,6 @@ export class SportsUiLeaguesState extends GenericState({
   }
 
   @Action(SportsUiLeagues.Fetch)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async fetchEspnLeagues(_: StateContext<GenericStateClass<SportsUiClientLeague>>): Promise<void> {
     const leagues = await this.leagueClientService.getAll();
     this.store.dispatch([new SportsUiLeagues.ClearAndAdd(leagues)]);

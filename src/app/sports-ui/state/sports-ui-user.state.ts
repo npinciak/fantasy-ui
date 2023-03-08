@@ -25,6 +25,7 @@ export class SportsUiUserState {
   @Action(FetchUser)
   async fetchUser({ patchState }: StateContext<SportsUiUserStateModel>) {
     const { user } = await this.supaService.fetchUser();
-    patchState({ email: user?.email });
+    if (!user) return;
+    patchState({ email: user.email });
   }
 }
