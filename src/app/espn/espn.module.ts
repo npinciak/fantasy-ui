@@ -3,7 +3,6 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { SharedModule } from '@app/@shared/shared.module';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
-import { EspnLineupCardComponent } from './components/espn-lineup-card/espn-lineup-card.component';
 import { EspnPlayerDialogComponent } from './components/espn-player-dialog/espn-player-dialog.component';
 import { EspnPlayerInfoColComponent } from './components/espn-player-info-col/espn-player-info-col.component';
 import { EspnPlayerTrendingColComponent } from './components/espn-player-trending-col/espn-player-trending-col.component';
@@ -14,6 +13,7 @@ import { EspnTeamInfoColComponent } from './components/espn-team-info-col/espn-t
 import { EspnRoutingModule } from './espn-routing.module';
 import { BaseballLineupCardComponent } from './mlb/components/baseball-lineup-card/baseball-lineup-card.component';
 import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
+import { FantasyBaseballLeagueActionHandler } from './mlb/handlers/fantasy-baseball-league.handler';
 import { BaseballFreeAgentsComponent } from './mlb/pages/baseball-free-agents/baseball-free-agents.component';
 import { BaseballHomeComponent } from './mlb/pages/baseball-home/baseball-home.component';
 import { BaseballTeamComponent } from './mlb/pages/baseball-team/baseball-team.component';
@@ -26,6 +26,7 @@ import { FantasyBaseballTeamsLiveState } from './mlb/state/fantasy-baseball-team
 import { FantasyBaseballTeamState } from './mlb/state/fantasy-baseball-team.state';
 import { FootballLineupCardComponent } from './nfl/components/football-lineup-card/football-lineup-card.component';
 import { FootballScoreboardCardTeamComponent } from './nfl/components/football-scoreboard-card-team/football-scoreboard-card-team.component';
+import { FantasyFootballLeagueActionHandler } from './nfl/handlers/fantasy-football-league.handler';
 import { FootballFreeAgentsComponent } from './nfl/pages/football-free-agents/football-free-agents.component';
 import { FootballHomeComponent } from './nfl/pages/football-home/football-home.component';
 import { FootballTeamComponent } from './nfl/pages/football-team/football-team.component';
