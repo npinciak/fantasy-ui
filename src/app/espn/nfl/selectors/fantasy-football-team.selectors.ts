@@ -11,6 +11,11 @@ import { FantasyFootballTeamState } from '../state/fantasy-football-teams.state'
 
 export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootballTeamState) {
   @Selector([FantasyFootballTeamSelectors.getList])
+  static standings(teamList: FootballTeam[]): FootballTeam[] {
+    return teamList.sort((a, b) => b.wins - a.wins);
+  }
+
+  @Selector([FantasyFootballTeamSelectors.getList])
   static getTeamFilterOptions(teams: FootballTeam[]): FilterOptions<string>[] {
     return teams.map(t => ({ value: t.id, label: t.name }));
   }

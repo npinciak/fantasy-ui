@@ -7,6 +7,8 @@ import { FantasyFootballTeamSelectors } from '../selectors/fantasy-football-team
   providedIn: 'root',
 })
 export class FantasyFootballTeamFacade extends GenericFacade(FantasyFootballTeamSelectors) {
+  standings$ = select(FantasyFootballTeamSelectors.standings);
+
   teamPositions$ = select(FantasyFootballTeamSelectors.getTeamPositionsCount);
 
   teamFilterOptions$ = select(FantasyFootballTeamSelectors.getTeamFilterOptions);
