@@ -23,6 +23,9 @@
         focus:border-blue-600 focus:bg-white focus:text-gray-700 focus:outline-none
       "
       [attr.aria-label]="ariaLabel"
+      [disabled]="disabled"
+      [class.disabled:opacity-50]="disabled"
+      [class.hover:cursor-not-allowed]="disabled"
       (change)="filterUpdate.emit($event.target.value)"
     >
       <option
