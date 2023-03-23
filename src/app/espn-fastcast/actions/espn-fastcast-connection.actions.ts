@@ -34,6 +34,11 @@ export class FastCastConnection {
     constructor(public payload: { leagueSlug: string | null }) {}
   };
 
+  static SetSelectedDate = class {
+    static readonly type = `[${FastCastConnection.stateName}] SetSelectedDate`;
+    constructor(public payload: { date: string | null }) {}
+  };
+
   static SetSelectedEventType = class {
     static readonly type = `[${FastCastConnection.stateName}] SetSelectedEventType`;
     constructor(public payload: { eventType: string | null }) {}

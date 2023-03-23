@@ -53,4 +53,8 @@ export class EspnFastcastConnectionFacade {
   setSelectedLeague(leagueSlug: string) {
     this.store.dispatch(new FastCastConnection.SetSelectedLeague({ leagueSlug }));
   }
+
+  setSelectedDate(date: string) {
+    this.store.dispatch(new FastCastConnection.SetSelectedDate({ date }));
+  }
 }

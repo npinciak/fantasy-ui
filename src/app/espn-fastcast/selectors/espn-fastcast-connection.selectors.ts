@@ -39,6 +39,11 @@ export class EspnFastcastConnectionSelectors {
   }
 
   @Selector([EspnFastcastConnectionState])
+  static getSelectedDate(state: EspnFastcastConnectionStateModel) {
+    return state.date;
+  }
+
+  @Selector([EspnFastcastConnectionState])
   static getConnectionClosed(state: EspnFastcastConnectionStateModel) {
     return state.connectionClosed;
   }

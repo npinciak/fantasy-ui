@@ -18,6 +18,7 @@ export class EspnScoreboardComponent {
   showLoader$ = this.fastcastFacade.showLoader$;
 
   leagueList$ = this.fastcastLeagueFacade.leagueList$;
+  dateFilterList$ = this.fastcastLeagueFacade.dateFilterList$;
 
   eventsByLeagueId$ = combineLatest([this.fastcastEventFacade.eventsByLeagueId$, this.fastcastFacade.selectedLeagueId$]).pipe(
     map(([events, selectedLeague]) => events(selectedLeague))
@@ -35,6 +36,10 @@ export class EspnScoreboardComponent {
 
   onLeagueSelectChange(val: string) {
     this.fastcastFacade.setSelectedLeague(val);
+  }
+
+  onDateSelectChange(val: string) {
+    this.fastcastFacade.setSelectedDate(val);
   }
 
   onToggleExpandedEvent(val: string) {

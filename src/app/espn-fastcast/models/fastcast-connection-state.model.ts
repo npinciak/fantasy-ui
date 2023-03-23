@@ -7,6 +7,7 @@ export interface EspnFastcastConnectionStateModel {
   pause: boolean;
   eventType: string | null;
   league: string | null;
+  date: string | null;
   connectionClosed: boolean;
 }
 
@@ -15,7 +16,8 @@ export const INITIAL_STATE: EspnFastcastConnectionStateModel = {
   connect: null,
   lastRefresh: null,
   eventType: FASTCAST_EVENT_TYPE.TopEvents,
-  league: null,
+  league: '90',
   connectionClosed: true,
-  pause: false,
+  pause: true,
+  date: null,
 };

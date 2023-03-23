@@ -52,6 +52,14 @@
         [filterItems]="leagueList$ | async"
         (filterUpdate)="onLeagueSelectChange($event)"
       ></app-dropdown-filter>
+
+      <app-dropdown-filter
+        ariaLabel="fastcast date filter"
+        [disabled]="true"
+        [selectedOption]=""
+        [filterItems]="dateFilterList$ | async"
+        (filterUpdate)="onDateSelectChange($event)"
+      ></app-dropdown-filter>
     </div>
 
     <div class="flex basis-4/5 overflow-x-auto px-6 align-middle">
