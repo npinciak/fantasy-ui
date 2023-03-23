@@ -1,3 +1,5 @@
+import { GenericPayloadClearActionClass, GenericPayloadFetchActionClass } from '@app/@shared/generic-state/generic.model';
+
 export interface FantasyLeagueBaseStateClass {
   // eslint-disable-next-line @typescript-eslint/prefer-function-type
   new (...args: any[]): any;
@@ -20,3 +22,11 @@ export const INITIAL_STATE = {
   finalScoringPeriod: null,
   matchupPeriodCount: null,
 };
+
+export interface IBaseLeagueActionsClass {
+  new (...args: any[]): any;
+  stateName: string;
+  SetLeague: GenericPayloadFetchActionClass<{ state: FantasyLeagueBaseStateModel }>;
+  Fetch: GenericPayloadFetchActionClass<{ leagueId: string; year: string }>;
+  Refresh: GenericPayloadClearActionClass;
+}
