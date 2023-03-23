@@ -98,3 +98,27 @@ export function clientFreeAgentToFootballPlayer(data: EspnClient.FreeAgentEntry[
     };
   });
 }
+
+export function transformToFootballPlayerStatsRow(player: FootballPlayer, statPeriod: string): any | null {
+  const { id, name, injured, injuryStatus, img, team, position, lineupSlotId, percentChange, percentOwned } = player;
+
+  if (!exists(player.stats)) return null;
+  if (!exists(player.stats[statPeriod])) return null;
+
+  const stats = player.stats[statPeriod]!.stats;
+
+  return {
+    id,
+    name,
+    injured,
+    injuryStatus,
+    img,
+    team,
+    position,
+    lineupSlotId,
+    percentChange,
+    percentOwned,
+    highlightedPlayer: false,
+    stats,
+  };
+}

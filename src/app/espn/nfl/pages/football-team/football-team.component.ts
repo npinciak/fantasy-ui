@@ -6,14 +6,15 @@ import { PlayerDialog } from '@app/espn/models/player-dialog-component.model';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FootballPosition, NFL_POSITION_MAP, NFL_STATS_MAP } from 'sports-ui-sdk';
+import { FootballPosition, FootballStat, NFL_POSITION_MAP, NFL_STATS_MAP } from 'sports-ui-sdk';
 import { FantasyFootballPlayerNews } from '../../actions/fantasy-football-player-news.actions';
+import { FOOTBALL_POSITION_LIST_FILTER } from '../../consts/fantasy-football-position.const';
 import { FOOTBALL_ROSTER_HEADERS_BY_POS, FOOTBALL_ROSTER_ROWS_BY_POS } from '../../consts/fantasy-football-table.const';
+import { FOOTBALL_STATS_QB } from '../../consts/stats-filters.const';
 import { FantasyFootballLeagueFacade } from '../../facade/fantasy-football-league.facade';
 import { FantasyFootballPlayerNewsFacade } from '../../facade/fantasy-football-player-news.facade';
 import { FantasyFootballTeamFacade } from '../../facade/fantasy-football-team.facade';
 import { FootballPlayer } from '../../models/football-player.model';
-import { FOOTBALL_POSITION_LIST_FILTER } from '../../models/football-position.model';
 @Component({
   selector: 'app-football-team',
   templateUrl: './football-team.component.html',
@@ -27,7 +28,7 @@ export class FootballTeamComponent {
   readonly FOOTBALL_POSITION_LIST_FILTER = FOOTBALL_POSITION_LIST_FILTER;
   readonly NFL_POSITION_MAP = NFL_POSITION_MAP;
 
-  readonly FOOTBALL_STAT_PERIOD_FILTER_OPTIONS = [];
+  readonly FOOTBALL_STAT_PERIOD_FILTER_OPTIONS = FOOTBALL_STATS_QB;
 
   readonly FOOTBALL_ROSTER_HEADERS_BY_POS = FOOTBALL_ROSTER_HEADERS_BY_POS;
   readonly FOOTBALL_ROSTER_ROWS_BY_POS = FOOTBALL_ROSTER_ROWS_BY_POS;
@@ -36,6 +37,7 @@ export class FootballTeamComponent {
 
   scoringPeriodId$ = new BehaviorSubject('');
   selectedPosition$ = new BehaviorSubject(FootballPosition.QB);
+  selectedStats$ = new BehaviorSubject(FootballStat.GP);
 
   statPeriodFilterOptions$ = this.footballLeagueFacade.scoringPeriodFilterOptions$;
 
@@ -46,6 +48,7 @@ export class FootballTeamComponent {
   );
 
   bench$ = combineLatest([this.footballTeamFacade.bench$, this.teamId$]).pipe(map(([bench, teamId]) => bench(teamId)));
+
   benchPoints$ = combineLatest([this.footballTeamFacade.benchPoints$, this.teamId$]).pipe(
     map(([benchPoints, teamId]) => benchPoints(teamId))
   );
@@ -85,6 +88,10 @@ export class FootballTeamComponent {
 
   onSelectedPositionChange(val): void {
     this.selectedPosition$.next(Number(val));
+  }
+
+  onSelectedStatChange(val): void {
+    this.selectedStats$.next(val);
   }
 
   scoringPeriodIdChange(val): void {

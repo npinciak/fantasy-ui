@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GenericFacade } from '@app/@shared/generic-state/generic.facade';
 import { select } from '@app/@shared/models/typed-select';
+import { of } from 'rxjs';
 import { FantasyFootballTeamSelectors } from '../selectors/fantasy-football-team.selectors';
 
 @Injectable({
@@ -16,6 +17,8 @@ export class FantasyFootballTeamFacade extends GenericFacade(FantasyFootballTeam
   starters$ = select(FantasyFootballTeamSelectors.getTeamStarters);
   startersPoints$ = select(FantasyFootballTeamSelectors.getTeamStartersPoints);
   // startersLineupCard$ = select(FantasyFootballTeamSelectors.getTeamStartersLineupCard);
+
+  playerStatsChartData$ = of(); // select(FantasyFootballTeamSelectors.getPlayerStatsChartData);
 
   starterStats$ = select(FantasyFootballTeamSelectors.getTeamStats);
   teamStatsByPositionId$ = select(FantasyFootballTeamSelectors.getTeamStatsByPositionId);

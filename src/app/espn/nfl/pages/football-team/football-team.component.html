@@ -29,7 +29,7 @@
   </div>
   <div main>
     <div class="flex w-full flex-row gap-6">
-      <div class="basis-1/2">
+      <div class="basis-1/3">
         <app-dropdown-filter
           ariaLabel="position options"
           [selectedOption]="selectedPosition$ | async"
@@ -38,7 +38,18 @@
           (filterUpdate)="onSelectedPositionChange($event)"
         ></app-dropdown-filter>
       </div>
-      <div class="basis-1/2">
+
+      <div class="basis-1/3">
+        <app-dropdown-filter
+          ariaLabel="stats options"
+          [selectedOption]="selectedStats$ | async"
+          title="Stats"
+          [filterItems]="FOOTBALL_STAT_PERIOD_FILTER_OPTIONS"
+          (filterUpdate)="onSelectedStatChange($event)"
+        ></app-dropdown-filter>
+      </div>
+
+      <div class="basis-1/3">
         <app-dropdown-filter
           ariaLabel="scoring period options"
           [selectedOption]="scoringPeriodId$ | async"

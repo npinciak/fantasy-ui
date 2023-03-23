@@ -7,7 +7,7 @@ import { EspnClient, FootballPosition, FOOTBALL_LINEUP_MAP } from 'sports-ui-sdk
 import { FootballPlayer } from '../models/football-player.model';
 import { FootballTeam } from '../models/football-team.model';
 
-import { FantasyFootballTeamState } from '../state/fantasy-football-teams.state';
+import { FantasyFootballTeamState } from '../state/fantasy-football-team.state';
 
 export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootballTeamState) {
   @Selector([FantasyFootballTeamSelectors.getList])
