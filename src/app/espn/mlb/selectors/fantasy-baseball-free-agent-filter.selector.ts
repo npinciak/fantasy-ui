@@ -4,43 +4,43 @@ import {
   FantasyBaseballFreeAgentsFilterStateModel,
 } from '../state/fantasy-baseball-free-agents-filter.state';
 
-export class FantasyBaseballFreeAgentsFilterSelector {
+export class FantasyBaseballFreeAgentFilterSelector {
   @Selector([FantasyBaseballFreeAgentsFilterState])
   static getState(state: FantasyBaseballFreeAgentsFilterStateModel) {
     return state;
   }
 
-  @Selector([FantasyBaseballFreeAgentsFilterSelector.getState])
+  @Selector([FantasyBaseballFreeAgentFilterSelector.getState])
   static getLineupSlotIds(state: FantasyBaseballFreeAgentsFilterStateModel) {
     return state.lineupSlotIds;
   }
 
-  @Selector([FantasyBaseballFreeAgentsFilterSelector.getLineupSlotIds])
+  @Selector([FantasyBaseballFreeAgentFilterSelector.getLineupSlotIds])
   static getSelectedLineupSlotIds(ids: { [id: number]: boolean }): string[] {
     return Object.keys(ids).filter(id => ids[id]);
   }
 
-  @Selector([FantasyBaseballFreeAgentsFilterSelector.getState])
+  @Selector([FantasyBaseballFreeAgentFilterSelector.getState])
   static getAvailabilityStatus(state: FantasyBaseballFreeAgentsFilterStateModel) {
     return state.availabilityStatus;
   }
 
-  @Selector([FantasyBaseballFreeAgentsFilterSelector.getAvailabilityStatus])
+  @Selector([FantasyBaseballFreeAgentFilterSelector.getAvailabilityStatus])
   static getSelectedAvailabilityStatus(ids: { [id: string]: boolean }): string[] {
     return Object.keys(ids).filter(id => ids[id]);
   }
 
-  @Selector([FantasyBaseballFreeAgentsFilterSelector.getState])
+  @Selector([FantasyBaseballFreeAgentFilterSelector.getState])
   static getTopScoringPeriodIds(state: FantasyBaseballFreeAgentsFilterStateModel) {
     return state.topScoringPeriodIds;
   }
 
-  @Selector([FantasyBaseballFreeAgentsFilterSelector.getTopScoringPeriodIds])
+  @Selector([FantasyBaseballFreeAgentFilterSelector.getTopScoringPeriodIds])
   static getSelectedTopScoringPeriodIds(ids: { [id: string]: boolean }): string[] {
     return Object.keys(ids).filter(id => ids[id]);
   }
 
-  @Selector([FantasyBaseballFreeAgentsFilterSelector.getState])
+  @Selector([FantasyBaseballFreeAgentFilterSelector.getState])
   static getPagination(state: FantasyBaseballFreeAgentsFilterStateModel) {
     return state.metaData;
   }

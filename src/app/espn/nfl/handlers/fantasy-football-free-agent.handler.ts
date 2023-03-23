@@ -1,34 +1,26 @@
 import { Injectable } from '@angular/core';
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
-import { GenericState } from '@app/@shared/generic-state/generic.state';
 import { Action, State, StateContext, Store } from '@ngxs/store';
-import { FantasyFootballFreeAgents } from '../actions/fantasy-football-free-agents.actions';
+import { PLAYER_AVAILABILITY_STATUS } from 'sports-ui-sdk';
+import { FantasyFootballFreeAgent } from '../actions/fantasy-football-free-agent.actions';
 import { FootballPlayer } from '../models/football-player.model';
-import { FantasyFootballService } from '../services/fantasy-football.service';
-import { FantasyFootballFreeAgentsFilterState } from './fantasy-football-free-agents-filter.state';
-
-import { map } from 'rxjs/operators';
-import { PLAYER_AVAILABILITY_STATUS } from 'sports-ui-sdk/lib/espn/models/espn-client.const';
 import { FantasyFootballLeagueSelector } from '../selectors/fantasy-football-league.selectors';
+import { FantasyFootballService } from '../services/fantasy-football.service';
+import { FantasyFootballFreeAgentFilterState } from '../state/fantasy-football-free-agent-filter.state';
 
-@State({ name: FantasyFootballFreeAgents.stateName })
+@State({ name: FantasyFootballFreeAgent.stateName + 'ActionHandler' })
 @Injectable()
-export class FantasyFootballFreeAgentsState extends GenericState({
-  idProperty: 'id',
-  actionHandler: FantasyFootballFreeAgents,
-}) {
-  constructor(private service: FantasyFootballService, private store: Store) {
-    super();
-  }
+export class FantasyFootballFreeAgentActionHandler {
+  constructor(private service: FantasyFootballService, private store: Store) {}
 
-  @Action(FantasyFootballFreeAgents.Fetch, { cancelUncompleted: true })
+  @Action(FantasyFootballFreeAgent.Fetch, { cancelUncompleted: true })
   fetchFantasyFootballFreeAgents(_: StateContext<GenericStateModel<FootballPlayer>>, { payload: { leagueId, season } }) {
     // const leagueId = this.store.selectSnapshot(RouterSelector) ?? '';
     const scoringPeriodId = this.store.selectSnapshot(FantasyFootballLeagueSelector.getScoringPeriodId);
 
     if (!scoringPeriodId) throw new Error('scoringPeriodId cannot be missing');
 
-    const lineupSlotId = this.store.selectSnapshot(FantasyFootballFreeAgentsFilterState.getSelectedLineupSlotId);
+    const lineupSlotId = this.store.selectSnapshot(FantasyFootballFreeAgentFilterState.getSelectedLineupSlotId);
 
     const filterSlotIds = { value: [lineupSlotId] };
 
@@ -63,8 +55,8 @@ export class FantasyFootballFreeAgentsState extends GenericState({
         // sortDraftRanks: { sortPriority: 100, sortAsc: pagination.sortDirection === 'asc' ? true : false, value: 'STANDARD' },
       },
     };
-    this.service
-      .fetchFreeAgents({ leagueId, scoringPeriodId, filter })
-      .pipe(map(freeAgents => this.store.dispatch([new FantasyFootballFreeAgents.ClearAndAdd(freeAgents)])));
+    // this.service
+    //   .fetchFreeAgents({ leagueId, scoringPeriodId, filter })
+    //   .pipe(map(freeAgents => this.store.dispatch([new FantasyFootballFreeAgent.ClearAndAdd(freeAgents)])));
   }
 }

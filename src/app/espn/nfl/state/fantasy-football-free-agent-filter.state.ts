@@ -7,8 +7,8 @@ import { Action, State, StateContext, Store } from '@ngxs/store';
 import { EspnClient } from 'sports-ui-sdk/lib/espn/espn.m';
 import { FootballLineupSlot } from 'sports-ui-sdk/lib/espn/football/lineup/lineup.m';
 import { PLAYER_AVAILABILITY_STATUS } from 'sports-ui-sdk/lib/espn/models/espn-client.const';
-import { SetLineupSlotId, SetPagination, TogglePlayerAvailabilityStatus } from '../actions/fantasy-football-free-agents-filter.actions';
-import { FantasyFootballFreeAgents } from '../actions/fantasy-football-free-agents.actions';
+import { SetLineupSlotId, SetPagination, TogglePlayerAvailabilityStatus } from '../actions/fantasy-football-free-agent-filter.actions';
+import { FantasyFootballFreeAgent } from '../actions/fantasy-football-free-agent.actions';
 
 interface BaseFreeAgentFilterMetaData {
   sortStatId: string;
@@ -17,7 +17,7 @@ interface BaseFreeAgentFilterMetaData {
   currentPageIndex: number;
 }
 
-export interface FantasyFootballFreeAgentsFilterStateModel {
+export interface FantasyFootballFreeAgentFilterStateModel {
   sortDirection: string;
   availabilityStatus: Record<EspnClient.PlayerAvailabilityStatus, boolean>;
   lineupSlotId: FootballLineupSlot;
@@ -27,7 +27,7 @@ export interface FantasyFootballFreeAgentsFilterStateModel {
 }
 
 @State({
-  name: 'fantasyFootballFreeAgentsFilter',
+  name: 'fantasyFootballFreeAgentFilter',
   defaults: {
     availabilityStatus: {
       [PLAYER_AVAILABILITY_STATUS.FreeAgent]: true,
@@ -43,14 +43,14 @@ export interface FantasyFootballFreeAgentsFilterStateModel {
   },
 })
 @Injectable()
-export class FantasyFootballFreeAgentsFilterState {
-  @Selector([FantasyFootballFreeAgentsFilterState])
-  static getSelectedLineupSlotId(state: FantasyFootballFreeAgentsFilterStateModel) {
+export class FantasyFootballFreeAgentFilterState {
+  @Selector([FantasyFootballFreeAgentFilterState])
+  static getSelectedLineupSlotId(state: FantasyFootballFreeAgentFilterStateModel) {
     return state.lineupSlotId;
   }
 
-  @Selector([FantasyFootballFreeAgentsFilterState])
-  static getAvailabilityStatus(state: FantasyFootballFreeAgentsFilterStateModel) {
+  @Selector([FantasyFootballFreeAgentFilterState])
+  static getAvailabilityStatus(state: FantasyFootballFreeAgentFilterStateModel) {
     return state.availabilityStatus;
   }
 
@@ -58,14 +58,14 @@ export class FantasyFootballFreeAgentsFilterState {
 
   @Action(SetPagination)
   setSortDirection(
-    { patchState }: StateContext<FantasyFootballFreeAgentsFilterStateModel>,
+    { patchState }: StateContext<FantasyFootballFreeAgentFilterStateModel>,
     { payload: { sortStatId, sortDirection, currentPageSize, currentPageIndex } }: SetPagination
   ) {
     patchState({ metaData: { sortStatId, sortDirection, currentPageSize, currentPageIndex } });
   }
 
   @Action(SetLineupSlotId)
-  setLineupSlotId({ patchState }: StateContext<FantasyFootballFreeAgentsFilterStateModel>, { payload: { lineupSlotId } }: SetLineupSlotId) {
+  setLineupSlotId({ patchState }: StateContext<FantasyFootballFreeAgentFilterStateModel>, { payload: { lineupSlotId } }: SetLineupSlotId) {
     patchState({ lineupSlotId });
     const leagueId = this.store.selectSnapshot(RouterSelector.getLeagueId);
     const season = this.store.selectSnapshot(RouterSelector.getSeason);
@@ -73,12 +73,12 @@ export class FantasyFootballFreeAgentsFilterState {
     if (!exists(leagueId)) throw new Error('leagueId cannot be null');
     if (!exists(season)) throw new Error('season cannot be null');
 
-    this.store.dispatch(new FantasyFootballFreeAgents.Fetch({ leagueId, season }));
+    this.store.dispatch(new FantasyFootballFreeAgent.Fetch({ leagueId, season }));
   }
 
   @Action(TogglePlayerAvailabilityStatus)
   togglePlayerAvailabilityStatus(
-    { patchState }: StateContext<FantasyFootballFreeAgentsFilterStateModel>,
+    { patchState }: StateContext<FantasyFootballFreeAgentFilterStateModel>,
     { payload: { availabilityStatus } }: TogglePlayerAvailabilityStatus
   ) {
     // patchState({ availabilityStatus });

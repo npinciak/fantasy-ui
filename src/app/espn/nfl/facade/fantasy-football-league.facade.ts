@@ -10,6 +10,7 @@ import { FantasyFootballLeagueSelector } from '../selectors/fantasy-football-lea
 })
 export class FantasyFootballLeagueFacade {
   currentScoringPeriodId$ = select(FantasyFootballLeagueSelector.getScoringPeriodId);
+  finalScoringPeriodId$ = select(FantasyFootballLeagueSelector.getFinalScoringPeriod);
   scoringPeriodFilterOptions$ = select(FantasyFootballLeagueSelector.scoringPeriodFilters);
   seasonId$ = select(FantasyFootballLeagueSelector.getSeasonId);
   isLoading$ = of(false); // select(FantasyFootballLeagueSelectors.isLoading);

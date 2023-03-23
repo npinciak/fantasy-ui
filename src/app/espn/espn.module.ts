@@ -26,16 +26,15 @@ import { FantasyBaseballTeamsLiveState } from './mlb/state/fantasy-baseball-team
 import { FantasyBaseballTeamState } from './mlb/state/fantasy-baseball-team.state';
 import { FootballLineupCardComponent } from './nfl/components/football-lineup-card/football-lineup-card.component';
 import { FootballScoreboardCardTeamComponent } from './nfl/components/football-scoreboard-card-team/football-scoreboard-card-team.component';
-import { FantasyFootballLeagueActionHandler } from './nfl/handlers/fantasy-football-league.handler';
 import { FootballFreeAgentsComponent } from './nfl/pages/football-free-agents/football-free-agents.component';
 import { FootballHomeComponent } from './nfl/pages/football-home/football-home.component';
 import { FootballTeamComponent } from './nfl/pages/football-team/football-team.component';
-import { FantasyFootballFreeAgentsFilterState } from './nfl/state/fantasy-football-free-agents-filter.state';
-import { FantasyFootballFreeAgentsState } from './nfl/state/fantasy-football-free-agents.state';
+import { FantasyFootballFreeAgentFilterState } from './nfl/state/fantasy-football-free-agent-filter.state';
+import { FantasyFootballFreeAgentState } from './nfl/state/fantasy-football-free-agent.state';
 import { FantasyFootballLeagueState } from './nfl/state/fantasy-football-league.state';
 import { FantasyFootballPlayerNewsState } from './nfl/state/fantasy-football-player-news.state';
 import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-schedule.state';
-import { FantasyFootballTeamState } from './nfl/state/fantasy-football-teams.state';
+import { FantasyFootballTeamState } from './nfl/state/fantasy-football-team.state';
 import { FantasyFootballTransactionState } from './nfl/state/fantasy-football-transaction.state';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 
@@ -59,15 +58,15 @@ import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
     BaseballLineupCardComponent,
     EspnPlayerDialogComponent,
     EspnStandingsTableComponent,
-    EspnLineupCardComponent,
   ],
   imports: [
     NgxsModule.forFeature([
+      FantasyBaseballLeagueActionHandler,
       FantasyFootballLeagueState,
       FantasyFootballScheduleState,
       FantasyFootballTeamState,
-      FantasyFootballFreeAgentsState,
-      FantasyFootballFreeAgentsFilterState,
+      FantasyFootballFreeAgentState,
+      FantasyFootballFreeAgentFilterState,
       FantasyFootballPlayerNewsState,
       FantasyFootballTransactionState,
       FantasyBaseballLeagueState,

@@ -3,7 +3,7 @@ import { GenericFacade } from '@app/@shared/generic-state/generic.facade';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { FantasyFootballFreeAgents } from '../actions/fantasy-football-free-agents.actions';
+import { FantasyFootballFreeAgent } from '../actions/fantasy-football-free-agent.actions';
 import { FantasyFootballFreeAgentsSelectors } from '../selectors/fantasy-football-free-agents.selectors';
 
 @Injectable({
@@ -19,6 +19,6 @@ export class FantasyFootballFreeAgentsFacade extends GenericFacade(FantasyFootba
   }
 
   fetchFreeAgents(leagueId: string, season: string): Observable<void> {
-    return this.store.dispatch(new FantasyFootballFreeAgents.Fetch({ leagueId, season }));
+    return this.store.dispatch(new FantasyFootballFreeAgent.Fetch({ leagueId, season }));
   }
 }

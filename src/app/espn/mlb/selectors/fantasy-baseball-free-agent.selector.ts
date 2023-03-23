@@ -7,27 +7,27 @@ import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-playe
 import { FantasyBaseballFreeAgentsState } from '../state/fantasy-baseball-free-agents.state';
 import { FantasyBaseballTransformers } from '../transformers/fantasy-baseball.transformers.m';
 import { FantasyBaseballLeagueSelector } from './fantasy-baseball-league.selector';
-import { FantasyBaseballTeamsSelector } from './fantasy-baseball-teams.selector';
+import { FantasyBaseballTeamSelector } from './fantasy-baseball-team.selector';
 
-export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBaseballFreeAgentsState) {
-  @Selector([FantasyBaseballFreeAgentsSelector.getList])
+export class FantasyBaseballFreeAgentSelector extends GenericSelector(FantasyBaseballFreeAgentsState) {
+  @Selector([FantasyBaseballFreeAgentSelector.getList])
   static getFreeAgentBatterList(players: BaseballPlayer[]): BaseballPlayer[] {
     return players.filter(p => !p.isPitcher);
   }
 
-  @Selector([FantasyBaseballFreeAgentsSelector.getList])
+  @Selector([FantasyBaseballFreeAgentSelector.getList])
   static getFreeAgentPitcherList(players: BaseballPlayer[]): BaseballPlayer[] {
     return players.filter(p => p.isPitcher);
   }
 
-  @Selector([FantasyBaseballFreeAgentsSelector.getFreeAgentBatterList])
+  @Selector([FantasyBaseballFreeAgentSelector.getFreeAgentBatterList])
   static getFreeAgentBatterStats(players: BaseballPlayer[]): (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[] {
     return (statPeriod: string, seasonId: string) => {
       return existsFilter(players.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId)));
     };
   }
 
-  @Selector([FantasyBaseballFreeAgentsSelector.getFreeAgentBatterStats, FantasyBaseballLeagueSelector.getSeasonId])
+  @Selector([FantasyBaseballFreeAgentSelector.getFreeAgentBatterStats, FantasyBaseballLeagueSelector.getSeasonId])
   static getFreeAgentBatterScatterChartData(
     getTeamBatters: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[]
   ): (teamId: string, statPeriod: string, xAxis: BaseballStat | null, yAxis: BaseballStat | null) => any {
@@ -36,8 +36,8 @@ export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBa
 
       if (xAxis == null || yAxis == null) return [];
 
-      const x: number[] = data.map(p => (exists(p.tableStats) ? p.tableStats[xAxis] : (0 as number)));
-      const y: number[] = data.map(p => (exists(p.tableStats) ? p.tableStats[yAxis] : (0 as number)));
+      const x: number[] = data.map(p => (exists(p.stats) ? p.stats[xAxis] : (0 as number)));
+      const y: number[] = data.map(p => (exists(p.stats) ? p.stats[yAxis] : (0 as number)));
 
       const lR = linearRegression(x, y);
 
@@ -70,8 +70,8 @@ export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBa
   }
 
   @Selector([
-    FantasyBaseballTeamsSelector.getTeamBatterStats,
-    FantasyBaseballFreeAgentsSelector.getFreeAgentBatterStats,
+    FantasyBaseballTeamSelector.getTeamBatterStats,
+    FantasyBaseballFreeAgentSelector.getFreeAgentBatterStats,
     FantasyBaseballLeagueSelector.getSeasonId,
   ])
   static getCompareTeamAndFreeAgentBatterList(
@@ -90,7 +90,7 @@ export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBa
     };
   }
 
-  @Selector([FantasyBaseballFreeAgentsSelector.getFreeAgentPitcherList])
+  @Selector([FantasyBaseballFreeAgentSelector.getFreeAgentPitcherList])
   static getFreeAgentPitcherStats(players: BaseballPlayer[]): (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[] {
     return (statPeriod: string, seasonId: string) => {
       return existsFilter(players.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId)));
@@ -98,8 +98,8 @@ export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBa
   }
 
   @Selector([
-    FantasyBaseballTeamsSelector.getTeamPitcherStats,
-    FantasyBaseballFreeAgentsSelector.getFreeAgentPitcherStats,
+    FantasyBaseballTeamSelector.getTeamPitcherStats,
+    FantasyBaseballFreeAgentSelector.getFreeAgentPitcherStats,
     FantasyBaseballLeagueSelector.getSeasonId,
   ])
   static getCompareTeamAndFreeAgentPitcherList(
@@ -120,7 +120,7 @@ export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBa
     };
   }
 
-  @Selector([FantasyBaseballFreeAgentsSelector.getCompareTeamAndFreeAgentBatterList])
+  @Selector([FantasyBaseballFreeAgentSelector.getCompareTeamAndFreeAgentBatterList])
   static getCompareTeamAndFreeAgentBatterChartData(
     getCompareTeamAndFreeAgentBatterList: (teamId: string | null, statPeriod: string) => (BaseballPlayer | BaseballPlayerStatsRow)[]
   ): (teamId: string | null, statPeriod: string) => any[] {
@@ -128,7 +128,7 @@ export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBa
     // getCompareTeamAndFreeAgentBatterList(teamId, statPeriod)
     //   .map(p => {
     //     return {
-    //       data: exists(p.tableStats) ? p.tableStats[statPeriod] : 0,
+    //       data: exists(p.stats) ? p.stats[statPeriod] : 0,
     //       label: p.name,
     //       color: '#000000',
     //     };
@@ -136,7 +136,7 @@ export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBa
     //   .sort((a, b) => b.data - a.data);
   }
 
-  @Selector([FantasyBaseballFreeAgentsSelector.getFreeAgentBatterStats])
+  @Selector([FantasyBaseballFreeAgentSelector.getFreeAgentBatterStats])
   static getFreeAgentBatterChartData(
     getFreeAgentBatterStats: (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[]
   ): (statPeriod: string, seasonId: string, statFilter: BaseballStat) => any[] {
@@ -144,14 +144,14 @@ export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBa
       getFreeAgentBatterStats(statPeriod, seasonId)
         .map(p => {
           return {
-            data: exists(p.tableStats) ? p.tableStats[statFilter] : 0,
+            data: exists(p.stats) ? p.stats[statFilter] : 0,
             label: p.name,
           };
         })
         .sort((a, b) => b.data - a.data);
   }
 
-  @Selector([FantasyBaseballFreeAgentsSelector.getFreeAgentPitcherStats])
+  @Selector([FantasyBaseballFreeAgentSelector.getFreeAgentPitcherStats])
   static getFreeAgentPitcherChartData(
     getFreeAgentPitcherStats: (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[]
   ): (statPeriod: string, seasonId: string, statFilter: BaseballStat) => any[] {
@@ -159,7 +159,7 @@ export class FantasyBaseballFreeAgentsSelector extends GenericSelector(FantasyBa
       getFreeAgentPitcherStats(statPeriod, seasonId)
         .map(p => {
           return {
-            data: exists(p.tableStats) ? p.tableStats[statFilter] : 0,
+            data: exists(p.stats) ? p.stats[statFilter] : 0,
             label: p.name,
           };
         })

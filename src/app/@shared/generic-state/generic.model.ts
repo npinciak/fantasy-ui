@@ -4,10 +4,9 @@ export interface GenericStateModel<T> {
   map: { [id: string]: T };
 }
 
-export interface GenericStateClass<T, U = Record<string, unknown>> {
+export interface GenericStateClass<T> {
   addOrUpdate: GenericPayloadActionClass<T>;
   clearAndAdd: GenericPayloadActionClass<T>;
-  actionHandler?: IGenericActionsClass<T, U>;
   new (...args: any[]): any;
 }
 

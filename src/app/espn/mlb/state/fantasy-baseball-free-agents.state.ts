@@ -4,7 +4,7 @@ import { GenericState } from '@app/@shared/generic-state/generic.state';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { FantasyBaseballFreeAgents } from '../actions/fantasy-baseball-free-agents.actions';
 import { BaseballPlayer } from '../models/baseball-player.model';
-import { FantasyBaseballFreeAgentsFilterSelector } from '../selectors/fantasy-baseball-free-agents-filter.selector';
+import { FantasyBaseballFreeAgentFilterSelector } from '../selectors/fantasy-baseball-free-agent-filter.selector';
 import { FantasyBaseballLeagueSelector } from '../selectors/fantasy-baseball-league.selector';
 import { MlbService } from '../services/mlb.service';
 
@@ -20,11 +20,11 @@ export class FantasyBaseballFreeAgentsState extends GenericState({
 
   @Action(FantasyBaseballFreeAgents.Fetch)
   async fetchFantasyBaseballFreeAgents(_: StateContext<GenericStateModel<BaseballPlayer>>, { payload: { leagueId } }): Promise<void> {
-    const lineupSlotIds = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedLineupSlotIds).map(id => Number(id));
-    const availabilityStatus = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedAvailabilityStatus);
-    const topScoringPeriodIds = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getSelectedTopScoringPeriodIds);
+    const lineupSlotIds = this.store.selectSnapshot(FantasyBaseballFreeAgentFilterSelector.getSelectedLineupSlotIds).map(id => Number(id));
+    const availabilityStatus = this.store.selectSnapshot(FantasyBaseballFreeAgentFilterSelector.getSelectedAvailabilityStatus);
+    const topScoringPeriodIds = this.store.selectSnapshot(FantasyBaseballFreeAgentFilterSelector.getSelectedTopScoringPeriodIds);
 
-    const pagination = this.store.selectSnapshot(FantasyBaseballFreeAgentsFilterSelector.getPagination);
+    const pagination = this.store.selectSnapshot(FantasyBaseballFreeAgentFilterSelector.getPagination);
 
     const scoringPeriodId = this.store.selectSnapshot(FantasyBaseballLeagueSelector.getScoringPeriodId);
     if (!scoringPeriodId) throw new Error('scoringPeriodId cannot be missing');

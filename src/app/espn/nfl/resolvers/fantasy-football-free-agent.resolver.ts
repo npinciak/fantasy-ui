@@ -5,7 +5,7 @@ import { FantasyFootballFreeAgentsFacade } from '../facade/fantasy-football-free
 @Injectable({
   providedIn: 'root',
 })
-export class FantasyFootballFreeAgentsResolver implements Resolve<void> {
+export class FantasyFootballFreeAgentResolver implements Resolve<void> {
   constructor(private freeAgentsFacade: FantasyFootballFreeAgentsFacade) {}
 
   async resolve(route: ActivatedRouteSnapshot): Promise<void> {

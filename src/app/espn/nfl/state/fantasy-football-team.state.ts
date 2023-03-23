@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
 import { State } from '@ngxs/store';
-import { FantasyFootballTeams } from '../actions/fantasy-football-teams.actions';
+import { FantasyFootballTeam } from '../actions/fantasy-football-team.actions';
 
-@State({ name: FantasyFootballTeams.stateName })
+@State({ name: FantasyFootballTeam.stateName })
 @Injectable()
 export class FantasyFootballTeamState extends GenericState({
   idProperty: 'id',
-  actionHandler: FantasyFootballTeams,
+  actionHandler: FantasyFootballTeam,
 }) {}

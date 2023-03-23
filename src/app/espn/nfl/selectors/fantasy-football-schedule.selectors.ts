@@ -7,6 +7,7 @@ import { Selector } from '@ngxs/store';
 import { FantasyMatchup, FantasyMatchupMap, FantasyMatchupTeam } from '../models/fantasy-schedule.model';
 import { FootballTeam } from '../models/football-team.model';
 import { FantasyFootballScheduleState } from '../state/fantasy-football-schedule.state';
+import { FantasyFootballLeagueSelector } from './fantasy-football-league.selectors';
 import { FantasyFootballTeamSelectors } from './fantasy-football-team.selectors';
 
 export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFootballScheduleState) {
@@ -89,8 +90,20 @@ export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFoo
     return FantasyFootballScheduleSelectors.matchupListToMatchupMap(matchupList);
   }
 
-  @Selector([FantasyFootballScheduleSelectors.matchupListByMatchupPeriodId])
-  static getMatchupListByMatchupPeriodId(matchupListByMatchupPeriodId: FantasyMatchupMap): (id: string | null) => FantasyMatchup[] {
-    return (id: string | null) => (exists(id) ? matchupListByMatchupPeriodId[id] : []);
+  @Selector([
+    FantasyFootballScheduleSelectors.matchupListByMatchupPeriodId,
+    FantasyFootballLeagueSelector.getFinalScoringPeriod,
+    FantasyFootballLeagueSelector.getScoringPeriodId,
+  ])
+  static getMatchupListByMatchupPeriodId(
+    matchupListByMatchupPeriodId: FantasyMatchupMap,
+    finalScoringPeriod: string | null,
+    currentScoringPeriod: string | null
+  ): FantasyMatchup[] {
+    if (!exists(currentScoringPeriod) || !exists(finalScoringPeriod)) return [];
+
+    return Number(currentScoringPeriod) > Number(finalScoringPeriod)
+      ? matchupListByMatchupPeriodId[16]
+      : matchupListByMatchupPeriodId[currentScoringPeriod];
   }
 }
