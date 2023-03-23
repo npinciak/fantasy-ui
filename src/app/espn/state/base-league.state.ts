@@ -1,13 +1,23 @@
 import { Injectable } from '@angular/core';
-import { State } from '@ngxs/store';
-import { FantasyLeagueBaseStateClass, FantasyLeagueBaseStateModel, INITIAL_STATE } from './base-league.model';
+import { Action, State, StateContext } from '@ngxs/store';
+import { FantasyLeagueBaseStateModel, IBaseLeagueActionsClass, INITIAL_STATE } from './base-league.model';
 
-export function FantasyLeagueBaseState(): FantasyLeagueBaseStateClass {
+export function FantasyLeagueBaseState({ actionHandler }: { actionHandler: IBaseLeagueActionsClass }) {
   @State<FantasyLeagueBaseStateModel>({
     name: 'espnLeagueBaseState',
     defaults: INITIAL_STATE,
   })
   @Injectable()
-  class EspnLeagueStateBase {}
+  class EspnLeagueStateBase {
+    static setLeague = actionHandler.SetLeague;
+
+    @Action(actionHandler.SetLeague)
+    setFantasyLeague(
+      { setState }: StateContext<FantasyLeagueBaseStateModel>,
+      { payload: { state } }: { payload: { state: FantasyLeagueBaseStateModel } }
+    ) {
+      setState({ ...state });
+    }
+  }
   return EspnLeagueStateBase;
 }

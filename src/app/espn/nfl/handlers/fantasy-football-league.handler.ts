@@ -4,7 +4,7 @@ import { FantasyLeagueBaseStateModel } from '@app/espn/state/base-league.model';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { FantasyFootballLeague } from '../actions/fantasy-football-league.actions';
 import { FantasyFootballSchedule } from '../actions/fantasy-football-schedule.actions';
-import { FantasyFootballTeams } from '../actions/fantasy-football-teams.actions';
+import { FantasyFootballTeam } from '../actions/fantasy-football-team.actions';
 import { FantasyFootballLeagueFacade } from '../facade/fantasy-football-league.facade';
 import { FantasyFootballService } from '../services/fantasy-football.service';
 
@@ -18,26 +18,20 @@ export class FantasyFootballLeagueActionHandler {
   ) {}
 
   @Action(FantasyFootballLeague.Fetch)
-  async footballLeague(
-    { setState }: StateContext<FantasyLeagueBaseStateModel>,
-    { payload: { leagueId, year } }: FantasyFootballLeague.Fetch
-  ) {
+  async footballLeague(_: StateContext<FantasyLeagueBaseStateModel>, { payload: { leagueId, year } }) {
     try {
       const { id, seasonId, scoringPeriodId, firstScoringPeriod, finalScoringPeriod, teams, matchupPeriodCount, schedule } =
         await this.nflService.fetchLeague(leagueId, year).toPromise();
 
-      await this.store
-        .dispatch([new FantasyFootballTeams.ClearAndAdd(teams), new FantasyFootballSchedule.ClearAndAdd(schedule)])
-        .toPromise();
+      const state = { id, scoringPeriodId, matchupPeriodCount, firstScoringPeriod, finalScoringPeriod, seasonId };
 
-      setState({
-        seasonId,
-        firstScoringPeriod,
-        finalScoringPeriod,
-        scoringPeriodId,
-        matchupPeriodCount,
-        id,
-      });
+      await this.store
+        .dispatch([
+          new FantasyFootballTeam.ClearAndAdd(teams),
+          new FantasyFootballSchedule.ClearAndAdd(schedule),
+          new FantasyFootballLeague.SetLeague({ state }),
+        ])
+        .toPromise();
     } catch (error) {}
   }
 
@@ -53,10 +47,7 @@ export class FantasyFootballLeagueActionHandler {
   }
 
   @Action(FantasyFootballLeague.SetCurrentScoringPeriodId)
-  setCurrentScoringPeriodId(
-    { patchState }: StateContext<FantasyLeagueBaseStateModel>,
-    { payload: { scoringPeriodId } }: FantasyFootballLeague.SetCurrentScoringPeriodId
-  ) {
+  setCurrentScoringPeriodId({ patchState }: StateContext<FantasyLeagueBaseStateModel>, { payload: { scoringPeriodId } }) {
     patchState({ scoringPeriodId });
   }
 }

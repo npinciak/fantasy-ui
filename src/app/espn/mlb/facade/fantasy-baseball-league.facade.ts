@@ -3,7 +3,6 @@ import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
 import { Observable, of } from 'rxjs';
 import { FantasyBaseballLeague } from '../actions/fantasy-baseball-league.actions';
-import { FetchBaseballLeague, SetCurrentScoringPeriodId } from '../actions/mlb.actions';
 import { FantasyBaseballLeagueSelector } from '../selectors/fantasy-baseball-league.selector';
 
 @Injectable({
@@ -31,10 +30,10 @@ export class FantasyBaseballLeagueFacade {
   }
 
   getLeague(leagueId: string, year: string): Observable<void> {
-    return this.store.dispatch(new FetchBaseballLeague({ leagueId, year }));
+    return this.store.dispatch(new FantasyBaseballLeague.Fetch({ leagueId, year }));
   }
 
-  setScoringPeriodId(currentScoringPeriodId: string | null): Observable<void> {
-    return this.store.dispatch(new SetCurrentScoringPeriodId({ currentScoringPeriodId }));
+  setScoringPeriodId(scoringPeriodId: string | null): Observable<void> {
+    return this.store.dispatch(new FantasyBaseballLeague.SetCurrentScoringPeriodId({ scoringPeriodId }));
   }
 }

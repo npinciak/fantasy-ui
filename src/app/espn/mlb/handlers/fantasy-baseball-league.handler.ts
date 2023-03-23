@@ -16,27 +16,19 @@ export class FantasyBaseballLeagueActionHandler {
   @Action(FantasyBaseballLeague.Fetch)
   async baseballLeague(
     { setState }: StateContext<FantasyLeagueBaseStateModel>,
-    { payload: { leagueId, year } }: FantasyBaseballLeague.Fetch
+    { payload: { leagueId, year } } //: FantasyBaseballLeague.Fetch
   ): Promise<void> {
     if (!exists(leagueId)) throw new Error('LeagueId cannot be null');
     try {
       const { id, scoringPeriodId, matchupPeriodCount, firstScoringPeriod, finalScoringPeriod, seasonId, teams, teamsLive } =
         await this.mlbService.baseballLeague(leagueId, year).toPromise();
 
+      const state = { id, scoringPeriodId, matchupPeriodCount, firstScoringPeriod, finalScoringPeriod, seasonId };
       this.store.dispatch([
         new FantasyBaseballTeamsLive.ClearAndAdd(teamsLive),
         new FantasyBaseballTeams.ClearAndAdd(teams),
-        // new FantasyBaseballEvents.Fetch(),
+        new FantasyBaseballLeague.SetLeague({ state }),
       ]);
-
-      setState({
-        id,
-        scoringPeriodId,
-        matchupPeriodCount,
-        seasonId,
-        finalScoringPeriod,
-        firstScoringPeriod,
-      });
     } catch (e) {}
   }
 

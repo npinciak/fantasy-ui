@@ -1,17 +1,10 @@
-export namespace FantasyBaseballLeague {
-  export const stateName = 'fantasyBaseballLeague';
+import { BaseLeagueActions } from '@app/espn/state/base-league.actions';
 
-  export class Fetch {
-    public static readonly type = `[${stateName}] FetchBaseballLeague`;
-    constructor(public payload: { leagueId: string; year: string }) {}
-  }
-
-  export class Refresh {
-    public static readonly type = `[${stateName}] Refresh`;
-  }
-
-  export class SetCurrentScoringPeriodId {
-    public static readonly type = `[${stateName}] SetCurrentScoringPeriodId`;
+export class FantasyBaseballLeague extends BaseLeagueActions({
+  stateName: 'fantasyBaseballLeague',
+}) {
+  static SetCurrentScoringPeriodId = class {
+    public static readonly type = `[${FantasyBaseballLeague.stateName}] SetCurrentScoringPeriodId`;
     constructor(public payload: { scoringPeriodId: string | null }) {}
-  }
+  };
 }
