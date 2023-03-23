@@ -44,6 +44,15 @@ export class ShellComponent implements OnInit {
     });
   }
 
+  get menu() {
+    return [
+      { action: () => this.navigateDraftkingsMlb(), label: 'DK MLB' },
+      // { action: () => this.navigateDraftkingsNfl(), label: 'DK NFL' },
+      { action: () => this.navigateDraftkingsNba(), label: 'DK NBA' },
+      { action: () => this.onNavigateToMyProfile(), label: 'Profile' },
+    ];
+  }
+
   onNavigateToMyProfile() {
     this.routerFacade.navigateToMyProfile();
   }
