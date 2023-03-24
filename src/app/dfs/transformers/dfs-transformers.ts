@@ -43,8 +43,9 @@ export function normalizeNFLClientGridIronPlayer(gridIronPlayer: NFLClientGridIr
 
 export function transformDfsClientPlayerToPlayer(dfsClientPlayer: DfsSlatePlayer): SlatePlayer {
   const {
+    schedule,
     schedule: { salaries },
-    player: { id, position, first_name, last_name },
+    player: { id, position, first_name, last_name, rg_id, team_id, rg_team_id },
   } = dfsClientPlayer;
 
   const name = last_name.length <= 0 ? first_name : `${first_name} ${last_name}`;
@@ -54,34 +55,35 @@ export function transformDfsClientPlayerToPlayer(dfsClientPlayer: DfsSlatePlayer
     name,
     position,
     salaries,
-    rgId: dfsClientPlayer.player.rg_id,
-    teamId: dfsClientPlayer.player.team_id,
-    rgTeamId: dfsClientPlayer.player.rg_team_id,
-    gameId: dfsClientPlayer.schedule.id,
+    rgId: rg_id,
+    teamId: team_id,
+    rgTeamId: rg_team_id,
+    gameId: schedule.id,
   };
 }
 
 export function transformDfsClientScheduleToSchedule(dfsClientSchedule: ScheduleImport): Schedule {
-  const awayTeam = transformScheduleTeamEntityToTeam(dfsClientSchedule.team_away);
-  const homeTeam = transformScheduleTeamEntityToTeam(dfsClientSchedule.team_home);
-  const { id, date } = dfsClientSchedule;
+  const { id, date, rg_id, team_away, team_home } = dfsClientSchedule;
+
+  const awayTeam = transformScheduleTeamEntityToTeam(team_away);
+  const homeTeam = transformScheduleTeamEntityToTeam(team_home);
 
   return {
     id,
     date,
-    rgId: dfsClientSchedule.rg_id,
+    rgId: rg_id,
     awayTeam,
     homeTeam,
   };
 }
 
 export function transformScheduleTeamEntityToTeam(scheduleTeamEntity: ScheduleTeamEntity): Team {
-  const { id, name } = scheduleTeamEntity;
+  const { id, name, rg_id, hashtag } = scheduleTeamEntity;
 
   return {
     id,
     name,
-    rgId: scheduleTeamEntity.rg_id,
-    shortName: scheduleTeamEntity.hashtag,
+    rgId: rg_id,
+    shortName: hashtag,
   };
 }

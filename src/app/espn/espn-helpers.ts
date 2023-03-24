@@ -56,7 +56,9 @@ export function isPitcher(eligiblePos: number[]): boolean {
  * @example teamColor()
  */
 export function teamColorHandler(val: EspnFastcastClient.CompetitorsEntity): string | null {
-  if (!val.color || !val.alternateColor) return null;
+  const { color, alternateColor } = val;
+
+  if (!color || !alternateColor) return null;
 
   const negativeColors = new Set([
     '80fed2',
@@ -74,9 +76,9 @@ export function teamColorHandler(val: EspnFastcastClient.CompetitorsEntity): str
     'eaaa00',
   ]);
 
-  if (negativeColors.has(val.color.toLowerCase()) && negativeColors.has(val.alternateColor.toLowerCase())) return '#445058';
+  if (negativeColors.has(color.toLowerCase()) && negativeColors.has(alternateColor.toLowerCase())) return '#445058';
 
-  return negativeColors.has(val.color.toLowerCase()) ? `#${val.alternateColor}` : `#${val.color}`;
+  return negativeColors.has(color.toLowerCase()) ? `#${alternateColor}` : `#${color}`;
 }
 
 /**
@@ -161,16 +163,18 @@ export function injuredReservePlayersFilter<T extends FootballPlayer | BaseballP
 }
 
 export function fastcastEventSummary(event: FastcastEvent): string | null {
-  const inProgress = event.status === EVENT_STATUS.InProgress;
-  const eventPostponed = event.status === EVENT_STATUS.Postgame;
-  const isPostseason = event.seasonType === SEASON_ID.Postseason;
+  const { status, seasonType, note, timestamp, completed, summary } = event;
 
-  const date = tickerDate(event.timestamp);
+  const inProgress = status === EVENT_STATUS.InProgress;
+  const eventPostponed = status === EVENT_STATUS.Postgame;
+  const isPostseason = seasonType === SEASON_ID.Postseason;
 
-  if (inProgress || eventPostponed) return event.summary;
-  if (!event.completed && isPostseason) return exists(event.note) ? `${event.note} | ${date}` : date;
-  if (event.completed && isPostseason) return exists(event.note) ? event.note : event.summary;
-  if (event.completed && !isPostseason) return event.summary;
+  const date = tickerDate(timestamp);
+
+  if (inProgress || eventPostponed) return summary;
+  if (!completed && isPostseason) return exists(note) ? `${note} | ${date}` : date;
+  if (completed && isPostseason) return exists(note) ? note : summary;
+  if (completed && !isPostseason) return summary;
 
   return date;
 }

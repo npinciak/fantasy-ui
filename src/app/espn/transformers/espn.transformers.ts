@@ -48,9 +48,16 @@ export function clientPlayerNewsFeed(playerId: string, playerNewsFeed: EspnClien
 }
 
 export function clientLeagueToLeague(league: EspnClient.League): FantasyLeague {
-  const { id, seasonId, scoringPeriodId, status, settings, transactions } = league;
-  const { matchupPeriodCount } = settings.scheduleSettings;
-  const { firstScoringPeriod, finalScoringPeriod } = status;
+  const {
+    id,
+    seasonId,
+    scoringPeriodId,
+    status: { firstScoringPeriod, finalScoringPeriod },
+    settings: {
+      scheduleSettings: { matchupPeriodCount },
+    },
+    transactions,
+  } = league;
 
   return {
     id: id.toString(),
@@ -63,20 +70,24 @@ export function clientLeagueToLeague(league: EspnClient.League): FantasyLeague {
   };
 }
 
-export function clientPlayerToFantasyPlayer(
-  playerInfo: EspnClient.PlayerInfo,
-  {
-    sport,
-    leagueId,
-    teamMap,
-    positionMap,
-  }: { sport: EspnClient.SportId; leagueId: EspnClient.LeagueId; teamMap: Record<string, string>; positionMap: PositionEntityMap }
-): FantasyPlayer {
-  const { proTeamId, defaultPositionId, injuryStatus, injured, outlooks, id, fullName, ownership, lastNewsDate } = playerInfo;
+export function clientPlayerToFantasyPlayer({
+  clientPlayer,
+  sport,
+  leagueId,
+  teamMap,
+  positionMap,
+}: {
+  clientPlayer: EspnClient.PlayerInfo;
+  sport: EspnClient.SportId;
+  leagueId: EspnClient.LeagueId;
+  teamMap: Record<string, string>;
+  positionMap: PositionEntityMap;
+}): FantasyPlayer {
+  const { proTeamId, defaultPositionId, injuryStatus, injured, outlooks, id, fullName, ownership, lastNewsDate } = clientPlayer;
 
   const league = LEAGUE_ABBREV_BY_ID[leagueId];
   const team = teamMap[proTeamId] as string;
-  const stats = flattenPlayerStats(playerInfo.stats);
+  const stats = flattenPlayerStats(clientPlayer.stats);
   const outlookByWeek = clientPlayerOutlook(outlooks);
 
   return {
@@ -85,7 +96,7 @@ export function clientPlayerToFantasyPlayer(
     teamId: proTeamId.toString(),
     teamUid: transformIdToUid(sport, leagueId, proTeamId),
     position: positionMap[defaultPositionId].abbrev,
-    img: headshotImgBuilder(id, { league }),
+    img: headshotImgBuilder({ id, league }),
     lastNewsDate,
     injured,
     stats,
@@ -136,37 +147,38 @@ export function clientSportsEntityToSport(sportsEntity: EspnFastcastClient.Sport
 }
 
 export function clientLeagueImportToFastcastLeague(leagueImport: EspnFastcastClient.LeaguesEntity): FastcastLeague {
-  const { id, uid, name, isTournament, slug } = leagueImport;
+  const { id, uid, name, isTournament, slug, abbreviation, shortName } = leagueImport;
   return {
     id,
     uid,
     name,
-    abbrev: leagueImport.abbreviation ?? leagueImport.name,
-    shortName: leagueImport.shortName ?? leagueImport.name,
+    abbrev: abbreviation ?? name,
+    shortName: shortName ?? name,
     isTournament,
     slug,
+    sport: '',
   };
 }
 
 export function clientCompetitorToFastcastTeam(eventUid: string, data: EspnFastcastClient.CompetitorsEntity): FastcastEventTeam | null {
   if (!data) return null;
 
-  const { id, uid, score } = data;
+  const { id, uid, name, winner, score, logo, abbreviation, homeAway, alternateColor, record, rank } = data;
 
   return {
     id,
     uid,
     eventUid,
     score,
-    abbrev: data.abbreviation,
-    isHome: data.homeAway,
-    logo: data.logo.length > 0 ? data.logo : NO_LOGO,
-    isWinner: data.winner,
-    name: data.name ?? data.abbreviation,
+    abbrev: abbreviation,
+    isHome: homeAway,
+    logo: logo.length > 0 ? logo : NO_LOGO,
+    isWinner: winner,
+    name: name ?? abbreviation,
     color: teamColorHandler(data),
-    altColor: `#${data.alternateColor}` ?? null,
-    record: typeof data.record === 'string' ? data.record : data.record[0].displayValue,
-    rank: data.rank ?? null,
+    altColor: `#${alternateColor}` ?? null,
+    record: typeof record === 'string' ? record : record[0].displayValue,
+    rank: rank ?? null,
     winPct: null,
   };
 }
@@ -203,20 +215,39 @@ export function clientEventToFastcastEvent(event: EspnFastcastClient.EventsEntit
 
   const teams = exists(event.competitors)
     ? event.competitors.reduce((obj, val) => {
-        obj[val.homeAway] = clientCompetitorToFastcastTeam(event.uid, val);
+        const { homeAway } = val;
+        obj[homeAway] = clientCompetitorToFastcastTeam(event.uid, val);
         return obj;
       }, {})
     : null;
 
-  const { id, uid, name, status, seasonType, shortName, location, summary, period, link } = event;
-
-  const { state, completed } = event.fullStatus.type;
+  const {
+    id,
+    uid,
+    name,
+    status,
+    seasonType,
+    shortName,
+    location,
+    summary,
+    period,
+    link,
+    date,
+    fullStatus: {
+      type: { state, completed },
+    },
+    odds,
+    note,
+    clock,
+    seriesSummary,
+    situation,
+  } = event;
 
   return {
     id,
     uid,
-    leagueId: transformUidToId(event.uid) ?? '',
-    timestamp: new Date(event?.date).getTime(),
+    leagueId: transformUidToId(uid) ?? '',
+    timestamp: new Date(date).getTime(),
     state,
     completed,
     status,
@@ -225,15 +256,15 @@ export function clientEventToFastcastEvent(event: EspnFastcastClient.EventsEntit
     seasonType,
     shortName,
     location,
-    clock: event?.clock ?? null,
-    seriesSummary: event?.seriesSummary ?? null,
+    clock: clock ?? null,
+    seriesSummary: seriesSummary ?? null,
     summary,
     period,
-    note: event?.note ?? null,
+    note: note ?? null,
     isHalftime: event?.fullStatus.type?.id ? event?.fullStatus.type.id === EVENT_STATUS_ID.Halftime : false,
-    lastPlay: event?.situation?.lastPlay ?? null,
+    lastPlay: situation?.lastPlay ?? null,
     link,
-    odds: event.odds ? event.odds : null,
+    odds: odds ?? null,
     mlbSituation,
     footballSituation,
     teams,

@@ -53,53 +53,58 @@ export function clientPlayerToBaseballPlayer(players: EspnClient.TeamRosterEntry
   return players.map(player => {
     if (!exists(player.playerPoolEntry)) throw new Error('player.playerPoolEntry must be defined');
 
-    const playerInfo: FantasyPlayer = EspnTransformers.clientPlayerToFantasyPlayer(player.playerPoolEntry.player, {
+    const {
+      lineupSlotId,
+      playerPoolEntry: {
+        player: { starterStatusByProGame, lastNewsDate, eligibleSlots },
+        ratings,
+      },
+    } = player;
+
+    const playerInfo: FantasyPlayer = EspnTransformers.clientPlayerToFantasyPlayer({
+      clientPlayer: player.playerPoolEntry.player,
       sport: SPORT_ID.Baseball,
       leagueId: EspnClient.LeagueId.MLB,
       teamMap: MLB_TEAM_MAP,
       positionMap: MLB_POSITION_MAP,
     });
 
-    const {
-      lineupSlotId,
-      playerPoolEntry: {
-        player: { starterStatusByProGame, lastNewsDate },
-      },
-    } = player;
-
     return {
       ...playerInfo,
-      playerRatings: player.playerPoolEntry.ratings,
-      isPitcher: isPitcher(player.playerPoolEntry.player.eligibleSlots),
+      playerRatings: ratings,
+      isPitcher: isPitcher(eligibleSlots),
       lineupSlotId,
       isStarting: false,
       startingStatus: null,
-      lineupSlot: MLB_LINEUP_MAP[player.lineupSlotId].abbrev,
+      lineupSlot: MLB_LINEUP_MAP[lineupSlotId].abbrev,
       starterStatusByProGame,
       lastNewsDate,
     };
   });
 }
 
-export function transformEspnFreeAgentToBaseballPlayer(players: EspnClient.FreeAgent[]): BaseballPlayer[] {
-  return players.map(player => {
-    if (!exists(player.player)) {
-      throw new Error('player.player must be defined');
-    }
+export function transformEspnFreeAgentToBaseballPlayer(freeAgents: EspnClient.FreeAgent[]): BaseballPlayer[] {
+  return freeAgents.map(freeAgent => {
+    if (!exists(freeAgent.player)) throw new Error('player.player must be defined');
 
-    const playerInfo = EspnTransformers.clientPlayerToFantasyPlayer(player.player, {
+    const {
+      player,
+      player: { eligibleSlots, lastNewsDate },
+      ratings,
+    } = freeAgent;
+
+    const playerInfo = EspnTransformers.clientPlayerToFantasyPlayer({
+      clientPlayer: player,
       sport: SPORT_ID.Baseball,
       leagueId: EspnClient.LeagueId.MLB,
       teamMap: MLB_TEAM_MAP,
       positionMap: MLB_POSITION_MAP,
     });
 
-    const { lastNewsDate } = player.player;
-
     return {
       ...playerInfo,
-      playerRatings: player.ratings,
-      isPitcher: isPitcher(player.player.eligibleSlots),
+      playerRatings: ratings,
+      isPitcher: isPitcher(eligibleSlots),
       lineupSlotId: 0,
       isStarting: false,
       startingStatus: null,
@@ -136,6 +141,7 @@ export function transformToBaseballPlayerBatterStatsRow(
 
   const statsEntity = player.stats[statPeriod]!.stats;
   const seasonConst = MLB_WEIGHTED_STATS[seasonId];
+
   const { fip, wOBA, wRAA, babip, iso, leftOnBasePercent } = new AdvStats({ seasonConst, statsEntity });
 
   const adv = {} as Record<BaseballStat, number>;
@@ -147,7 +153,7 @@ export function transformToBaseballPlayerBatterStatsRow(
   adv[BaseballStat.ISO] = iso;
   adv[BaseballStat.LOB_PCT] = leftOnBasePercent;
 
-  const tableStats = {
+  const stats = {
     ...adv,
     ...statsEntity,
     [BaseballStat.IP]: exists(statsEntity[BaseballStat.IP]) ? statsEntity[BaseballStat.IP] * 0.333 : 0,
@@ -165,6 +171,6 @@ export function transformToBaseballPlayerBatterStatsRow(
     percentChange,
     percentOwned,
     highlightedPlayer: false,
-    tableStats,
+    stats,
   };
 }

@@ -1,5 +1,6 @@
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { environment } from 'src/environments/environment';
+import { ImageBuilderInput } from './espn.const.model';
 
 export const ESPN_TEXT: Record<string, string> = {
   NO_GAMES_TEXT: `No games scheduled for today`,
@@ -31,25 +32,26 @@ export function fastcastURIBuilder(eventType: string | null, messageId: string):
   return `${FASTCAST_BASE}/${eventType}/message/${messageId}/checkpoint`;
 }
 
-export function logoImgBuilder(id: number | string, opts: { league: string; width?: number; height?: number }): string {
-  const w = exists(opts.width) ? opts.width : 100;
-  const h = exists(opts.height) ? opts.height : 100;
 
-  return `${CDN_COMBINER}?img=/i/teamlogos/${opts.league}/500/${id}.png&w=${w}&h=${h}&cb=1`;
+export function logoImgBuilder({ id, league, width, height }: ImageBuilderInput): string {
+  const w = exists(width) ? width : 100;
+  const h = exists(height) ? height : 100;
+
+  return `${CDN_COMBINER}?img=/i/teamlogos/${league}/500/${id}.png&w=${w}&h=${h}&cb=1`;
 }
 
 export function fieldImgBuilder(id: number): string {
   return `${CDN_REDESIGN_IMG}/mlb/fields/${id}.png`;
 }
 
-export function headshotImgBuilder(id: number | string, opts: { league: string; width?: number; height?: number }): string {
-  const w = exists(opts.width) ? opts.width : 55;
-  const h = exists(opts.height) ? opts.height : 40;
+export function headshotImgBuilder({ id, league, width, height }: ImageBuilderInput): string {
+  const w = exists(width) ? width : 55;
+  const h = exists(height) ? height : 40;
 
-  const mediumW = exists(opts.width) ? opts.width : 426;
-  const mediumH = exists(opts.height) ? opts.height : 320;
+  const mediumW = exists(width) ? width : 426;
+  const mediumH = exists(height) ? height : 320;
 
-  return `${CDN_COMBINER}?img=/i/headshots/${opts.league}/players/full/${id}.png&w=${w}&h=${h}&cb=1`;
+  return `${CDN_COMBINER}?img=/i/headshots/${league}/players/full/${id}.png&w=${w}&h=${h}&cb=1`;
 }
 
 export function sportIconImgBuilder(sport: string): string {

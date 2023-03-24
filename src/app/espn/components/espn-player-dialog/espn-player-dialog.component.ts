@@ -16,7 +16,8 @@ export class EspnPlayerDialogComponent {
   ) {}
 
   get playerImg() {
-    return headshotImgBuilder(this.data.player.id, { league: this.data.sport, width: 800, height: 500 });
+    const id = this.data.player.id;
+    return headshotImgBuilder({ id, league: this.data.sport, width: 800, height: 500 });
   }
 
   closeDialog() {
