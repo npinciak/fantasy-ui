@@ -5,6 +5,8 @@ import { MatSelectChange } from '@angular/material/select';
 import { Sort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 import { UrlBuilder } from '@app/@core/store/router/url-builder';
+import { BehaviorSubject, combineLatest, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {
   BaseballStat,
   BATTER_STATS_LIST,
@@ -33,8 +35,8 @@ export class BaseballFreeAgentsComponent implements OnInit {
   readonly leagueId = this.activatedRoute.snapshot.params.leagueId;
   readonly BASEBALL_STAT_PERIOD_FILTER_OPTIONS = [];
 
-  readonly BATTER_STATS_LIST = BATTER_STATS_LIST;
-  readonly PITCHER_STATS_LIST = PITCHER_STATS_LIST;
+  readonly BATTER_STATS_LIST = BATTER_STATS_LIST.map(s => ({ label: s.description, value: s.id }));
+  readonly PITCHER_STATS_LIST = PITCHER_STATS_LIST.map(s => ({ label: s.description, value: s.id }));
 
   readonly MLB_STAT_MAP = MLB_STATS_MAP;
 
@@ -48,12 +50,29 @@ export class BaseballFreeAgentsComponent implements OnInit {
 
   readonly MLB_LINEUP_MAP = MLB_LINEUP_MAP;
 
-  scoringPeriodId = '002022';
+  scoringPeriodId$ = new BehaviorSubject<string>('002022');
+  scoringPeriodFilters$ = this.fantasyBaseballLeagueFacade.scoringPeriodFilters$;
 
-  selectedPitcherStat = BaseballStat.ERA;
-  selectedBatterStat = BaseballStat.AVG;
+  selectedPitcherStat$ = new BehaviorSubject<BaseballStat>(BaseballStat.ERA);
+  selectedBatterStat$ = new BehaviorSubject<BaseballStat>(BaseballStat.AVG);
+  selectedLeagueTeam$ = new BehaviorSubject<string | null>(null);
 
-  selectedLeagueTeam = '1';
+  tableConfig$ = of({
+    rows: BATTER_STATS_ROWS,
+    headers: BATTER_STATS_HEADERS,
+  });
+
+  compareTeamAndFreeAgentBatterList$ = combineLatest([
+    this.fantasyBaseballFreeAgentsFacade.compareTeamAndFreeAgentBatterList$,
+    this.selectedLeagueTeam$,
+    this.scoringPeriodId$,
+  ]).pipe(
+    map(([compareTeamAndFreeAgentBatterList, selectedTeam, scoringPeriodId]) =>
+      compareTeamAndFreeAgentBatterList(selectedTeam, scoringPeriodId)
+    )
+  );
+
+  // (fantasyBaseballFreeAgentsFacade.compareTeamAndFreeAgentBatterList$ | async)!(selectedLeagueTeam, scoringPeriodId, '2022')"
 
   selectedPlayerAvailabilityStatus: SelectionModel<string>;
   tabGroup = PositionTabGroup.Batters;
@@ -76,19 +95,19 @@ export class BaseballFreeAgentsComponent implements OnInit {
   ngOnInit(): void {}
 
   onSelectedLeagueTeamChange(val: string): void {
-    this.selectedLeagueTeam = val;
+    this.selectedLeagueTeam$.next(val);
   }
 
   scoringPeriodIdChange(change: string): void {
-    this.scoringPeriodId = change;
+    this.scoringPeriodId$.next(change);
   }
 
   onBatterStatChange(val: BaseballStat): void {
-    this.selectedBatterStat = val;
+    this.selectedBatterStat$.next(val);
   }
 
   onPitcherStatChange(val: BaseballStat): void {
-    this.selectedPitcherStat = val;
+    this.selectedPitcherStat$.next(val);
   }
 
   onTabChange(val: number): void {

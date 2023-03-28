@@ -112,9 +112,10 @@ export class FantasyBaseballFreeAgentSelector extends GenericSelector(FantasyBas
 
       if (!exists(teamId)) return freeAgents;
 
-      const teamBatterStats = getTeamPitcherStats(teamId, statPeriod).map(b => {
-        return { ...b, highlightedPlayer: true };
-      });
+      const teamBatterStats = getTeamPitcherStats(teamId, statPeriod).map(b => ({
+        ...b,
+        highlightedPlayer: true,
+      }));
 
       return [...teamBatterStats, ...freeAgents];
     };

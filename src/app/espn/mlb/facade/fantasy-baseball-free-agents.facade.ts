@@ -1,22 +1,27 @@
 import { Injectable } from '@angular/core';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
-import { FantasyBaseballFreeAgentsSelector } from '../selectors/fantasy-baseball-free-agents.selector';
+import { FantasyBaseballFreeAgents } from '../actions/fantasy-baseball-free-agents.actions';
+import { FantasyBaseballFreeAgentSelector } from '../selectors/fantasy-baseball-free-agent.selector';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FantasyBaseballFreeAgentsFacade {
-  playerList$ = select(FantasyBaseballFreeAgentsSelector.getIdList);
-  freeAgentBatterStats$ = select(FantasyBaseballFreeAgentsSelector.getFreeAgentBatterStats);
-  freeAgentBatterChartData$ = select(FantasyBaseballFreeAgentsSelector.getFreeAgentBatterChartData);
-  freeAgentBatterScatterChartData$ = select(FantasyBaseballFreeAgentsSelector.getFreeAgentBatterScatterChartData);
+  playerList$ = select(FantasyBaseballFreeAgentSelector.getIdList);
+  freeAgentBatterStats$ = select(FantasyBaseballFreeAgentSelector.getFreeAgentBatterStats);
+  freeAgentBatterChartData$ = select(FantasyBaseballFreeAgentSelector.getFreeAgentBatterChartData);
+  freeAgentBatterScatterChartData$ = select(FantasyBaseballFreeAgentSelector.getFreeAgentBatterScatterChartData);
 
-  freeAgentPitcherStats$ = select(FantasyBaseballFreeAgentsSelector.getFreeAgentPitcherStats);
-  freeAgentPitcherChartData$ = select(FantasyBaseballFreeAgentsSelector.getFreeAgentPitcherChartData);
+  freeAgentPitcherStats$ = select(FantasyBaseballFreeAgentSelector.getFreeAgentPitcherStats);
+  freeAgentPitcherChartData$ = select(FantasyBaseballFreeAgentSelector.getFreeAgentPitcherChartData);
 
-  compareTeamAndFreeAgentBatterList$ = select(FantasyBaseballFreeAgentsSelector.getCompareTeamAndFreeAgentBatterList);
-  compareTeamAndFreeAgentPitcherList$ = select(FantasyBaseballFreeAgentsSelector.getCompareTeamAndFreeAgentPitcherList);
+  compareTeamAndFreeAgentBatterList$ = select(FantasyBaseballFreeAgentSelector.getCompareTeamAndFreeAgentBatterList);
+  compareTeamAndFreeAgentPitcherList$ = select(FantasyBaseballFreeAgentSelector.getCompareTeamAndFreeAgentPitcherList);
 
   constructor(private store: Store) {}
+
+  fetch(leagueId: string) {
+    this.store.dispatch([new FantasyBaseballFreeAgents.Fetch({ leagueId })]);
+  }
 }

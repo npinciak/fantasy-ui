@@ -1,3 +1,103 @@
+<app-page-layout>
+  <div sidebar>
+    <div>
+      <app-dropdown-filter
+        ariaLabel="scoring period options"
+        [selectedOption]="scoringPeriodId$ | async"
+        title="Stat Period"
+        [filterItems]="scoringPeriodFilters$ | async"
+        (filterUpdate)="scoringPeriodIdChange($event)"
+      ></app-dropdown-filter>
+    </div>
+    <div>
+      <app-dropdown-filter
+        ariaLabel="league rosters options"
+        [selectedOption]="selectedLeagueTeam$ | async"
+        title="League Rosters"
+        [filterItems]="fantasyBaseballTeamFacade.teamListFilterOptions$ | async"
+        (filterUpdate)="onSelectedLeagueTeamChange($event)"
+      ></app-dropdown-filter>
+    </div>
+    <div>
+      <app-dropdown-filter
+        ariaLabel="batter stat options"
+        [selectedOption]="selectedBatterStat$ | async"
+        title="Batter Stats"
+        [filterItems]="BATTER_STATS_LIST"
+        (filterUpdate)="onBatterStatChange($event)"
+      ></app-dropdown-filter>
+    </div>
+    <div>
+      <app-dropdown-filter
+        ariaLabel="pitcher stat options"
+        [selectedOption]="selectedPitcherStat$ | async"
+        title="Pitcher Stats"
+        [filterItems]="PITCHER_STATS_LIST"
+        (filterUpdate)="onPitcherStatChange($event)"
+      ></app-dropdown-filter>
+    </div>
+  </div>
+  <div main>
+    <mat-tab-group mat-align-tabs="start" (selectedTabChange)="onTabChange($event.index)">
+      <mat-tab label="Batters">
+        <h4>{{ MLB_STAT_MAP[selectedBatterStat$ | async].description }}</h4>
+
+        <div style="margin: 10px 0"></div>
+
+        <app-espn-stats-table
+          [data]="compareTeamAndFreeAgentBatterList$ | async"
+          [dataColumns]="(tableConfig$ | async).rows"
+          [headers]="(tableConfig$ | async).headers"
+          [statsMap]="MLB_STAT_MAP"
+        >
+        </app-espn-stats-table>
+
+        <!-- 
+      <app-data-vis-scatter
+      [title]=""
+      [xAxisFilterTitle]="MLB_STAT_MAP[selectedBatterStatXAxis].description"
+      [yAxisFilterTitle]="MLB_STAT_MAP[selectedBatterStatYAxis].description"
+      [chartData]="(fantasyBaseballTeamFacade.batterStatsScatterChartData$ | async)!(teamId, scoringPeriodId, selectedBatterStatXAxis, selectedBatterStatYAxis)"
+    ></app-data-vis-scatter> -->
+        <!-- <app-data-vis
+        [statFilter]="selectedBatterStat$ | async"
+        [chartData]="(fantasyBaseballFreeAgentsFacade.freeAgentBatterChartData$ | async)!(scoringPeriodId, '2022', selectedBatterStat | async)"
+      ></app-data-vis> -->
+
+        <div style="margin: 10px 0"></div>
+
+        <!-- <app-roster
+        #freeAgentBatters
+        [data]="(fantasyBaseballFreeAgentsFacade.compareTeamAndFreeAgentBatterList$ | async)!(selectedLeagueTeam, scoringPeriodId, '2022')"
+        [dataColumns]="BATTER_STATS_ROWS"
+        [headers]="BATTER_STATS_HEADERS"
+        (sortChanged)="onSortChanged($event)"
+        (paginatorChanged)="onPaginatorChanged($event)"
+      ></app-roster
+    > -->
+      </mat-tab>
+      <mat-tab label="Pitchers">
+        <h4>{{ MLB_STAT_MAP[selectedPitcherStat$ | async].description }}</h4>
+        <div style="margin: 10px 0"></div>
+
+        <!-- <app-line-chart
+          [statFilter]="selectedPitcherStat$ | async"
+          [chartData]="(fantasyBaseballFreeAgentsFacade.freeAgentPitcherChartData$ | async)!(scoringPeriodId, '2022', selectedPitcherStat$ | async)"
+        ></app-line-chart> -->
+        <div style="margin: 10px 0"></div>
+
+        <!-- <app-roster
+        #freeAgentPitchers
+        [data]="(fantasyBaseballFreeAgentsFacade.compareTeamAndFreeAgentPitcherList$ | async)!(selectedLeagueTeam, scoringPeriodId, '2022')"
+        [dataColumns]="PITCHER_STATS_ROWS"
+        [headers]="PITCHER_STATS_HEADERS"
+      ></app-roster
+    > -->
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</app-page-layout>
+
 <div>
   <div>
     <div>
@@ -9,33 +109,7 @@
       </ng-template>
     </div>
     <mat-card>
-      <mat-card-content>
-        <div>
-          <app-dropdown-filter
-            ariaLabel="scoring period options"
-            [selectedOption]="scoringPeriodId"
-            title="Stat Period"
-            [filterItems]="BASEBALL_STAT_PERIOD_FILTER_OPTIONS"
-            (filterUpdate)="scoringPeriodIdChange($event)"
-          ></app-dropdown-filter>
-        </div>
-        <div>
-          <mat-form-field>
-            <mat-label>League Rosters</mat-label>
-            <mat-select [(value)]="selectedLeagueTeam" (selectionChange)="onSelectedLeagueTeamChange($event.value)">
-              <mat-option *ngFor="let team of fantasyBaseballTeamFacade.teamList$ | async" [value]="team.id">{{ team.name }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field *ngIf="viewingBatters; else pitchingStats">
-            <mat-label>Batter Stats</mat-label>
-            <mat-select [(value)]="selectedBatterStat" (selectionChange)="onBatterStatChange($event.value)">
-              <mat-option *ngFor="let stat of BATTER_STATS_LIST" [value]="stat.id">{{ stat.abbrev }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </mat-card-content>
+      <mat-card-content> </mat-card-content>
     </mat-card>
     <div style="margin: 10px 0"></div>
     <mat-card>
@@ -60,56 +134,7 @@
       </mat-card-content>
     </mat-card>
   </div>
-  <div>
-    <mat-tab-group mat-align-tabs="start" (selectedTabChange)="onTabChange($event.index)">
-      <mat-tab label="Batters">
-        <h4>{{ MLB_STAT_MAP[selectedBatterStat].description }}</h4>
-
-        <div style="margin: 10px 0"></div>
-        <!-- 
-        <app-data-vis-scatter
-        [title]=""
-        [xAxisFilterTitle]="MLB_STAT_MAP[selectedBatterStatXAxis].description"
-        [yAxisFilterTitle]="MLB_STAT_MAP[selectedBatterStatYAxis].description"
-        [chartData]="(fantasyBaseballTeamFacade.batterStatsScatterChartData$ | async)!(teamId, scoringPeriodId, selectedBatterStatXAxis, selectedBatterStatYAxis)"
-      ></app-data-vis-scatter> -->
-        <app-data-vis
-          [statFilter]="selectedBatterStat"
-          [chartData]="(fantasyBaseballFreeAgentsFacade.freeAgentBatterChartData$ | async)!(scoringPeriodId, '2022', selectedBatterStat)"
-        ></app-data-vis>
-
-        <div style="margin: 10px 0"></div>
-
-        <!-- <app-roster
-          #freeAgentBatters
-          [data]="(fantasyBaseballFreeAgentsFacade.compareTeamAndFreeAgentBatterList$ | async)!(selectedLeagueTeam, scoringPeriodId, '2022')"
-          [dataColumns]="BATTER_STATS_ROWS"
-          [headers]="BATTER_STATS_HEADERS"
-          (sortChanged)="onSortChanged($event)"
-          (paginatorChanged)="onPaginatorChanged($event)"
-        ></app-roster
-      > -->
-      </mat-tab>
-      <mat-tab label="Pitchers">
-        <h4>{{ MLB_STAT_MAP[selectedPitcherStat].description }}</h4>
-        <div style="margin: 10px 0"></div>
-
-        <app-data-vis
-          [statFilter]="selectedPitcherStat"
-          [chartData]="(fantasyBaseballFreeAgentsFacade.freeAgentPitcherChartData$ | async)!(scoringPeriodId, '2022', selectedPitcherStat)"
-        ></app-data-vis>
-        <div style="margin: 10px 0"></div>
-
-        <!-- <app-roster
-          #freeAgentPitchers
-          [data]="(fantasyBaseballFreeAgentsFacade.compareTeamAndFreeAgentPitcherList$ | async)!(selectedLeagueTeam, scoringPeriodId, '2022')"
-          [dataColumns]="PITCHER_STATS_ROWS"
-          [headers]="PITCHER_STATS_HEADERS"
-        ></app-roster
-      > -->
-      </mat-tab>
-    </mat-tab-group>
-  </div>
+  <div></div>
 </div>
 
 <ng-template #pitchingSlots>
@@ -120,12 +145,3 @@
     </mat-select>
   </mat-form-field>
 </ng-template>
-
-<ng-template #pitchingStats>
-  <mat-form-field>
-    <mat-label>Pitcher Stats</mat-label>
-    <mat-select [(value)]="selectedPitcherStat" (selectionChange)="onPitcherStatChange($event.value)">
-      <mat-option *ngFor="let stat of PITCHER_STATS_LIST" [value]="stat.id">{{ stat.abbrev }}</mat-option>
-    </mat-select>
-  </mat-form-field></ng-template
->
