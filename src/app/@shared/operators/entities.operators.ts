@@ -24,13 +24,12 @@ export function patchMap<W extends EntitiesStateModel<U>, U>(
 export function setMap<W extends EntitiesStateModel<U>, U>(
   entities: EntitiesStateModelType<W>[],
   getId?: (t: EntitiesStateModelType<W>) => number | string
-): StateOperator<W> {
+): StateOperator<EntitiesStateModel<U>> {
   return patch<EntitiesStateModel<U>>({
     map: map(entities, getId),
   });
 }
-
-export function clearMap<W extends EntitiesStateModel<U>, U>(): StateOperator<W> {
+export function clearMap<U>(): StateOperator<EntitiesStateModel<U>> {
   return patch<EntitiesStateModel<U>>({
     map: {},
   });
