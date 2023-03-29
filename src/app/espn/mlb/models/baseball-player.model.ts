@@ -22,5 +22,5 @@ export type BaseballPlayerStatsRow = Omit<PlayerEntity, 'teamId' | 'teamUid'> &
   Pick<FantasyPlayer, 'injured' | 'injuryStatus' | 'percentChange' | 'percentOwned'> &
   Pick<EspnClient.TeamRosterEntry, 'lineupSlotId'> & {
     highlightedPlayer: boolean;
-    tableStats: Record<number, number>;
+    stats: Record<number, number>;
   };

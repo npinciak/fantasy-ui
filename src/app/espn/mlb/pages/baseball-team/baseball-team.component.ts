@@ -18,6 +18,7 @@ import {
 } from '../../consts/tables.const';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
 import { FantasyBaseballPlayerNewsFacade } from '../../facade/fantasy-baseball-player-news.facade';
+import { FantasyBaseballTeamLiveFacade } from '../../facade/fantasy-baseball-team-live.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
 import { BaseballPlayer } from '../../models/baseball-player.model';
 
@@ -87,7 +88,7 @@ export class BaseballTeamComponent {
     map(([chartData, statPeriod, xAxis]) => chartData(statPeriod, xAxis))
   );
 
-  liveBattingStats$ = combineLatest([this.fantasyBaseballTeamFacade.liveBattingStats$, this.teamId$]).pipe(
+  liveBattingStats$ = combineLatest([this.fantasyBaseballTeamLiveFacade.liveBattingStats$, this.teamId$]).pipe(
     map(([liveStats, teamId]) => (teamId ? liveStats(teamId) : []))
   );
   battingStats$ = of([]);
@@ -117,6 +118,7 @@ export class BaseballTeamComponent {
     private store: Store,
     readonly routerFacade: RouterFacade,
     readonly fantasyBaseballTeamFacade: FantasyBaseballTeamFacade,
+    readonly fantasyBaseballTeamLiveFacade: FantasyBaseballTeamLiveFacade,
     readonly fantasyBaseballLeagueFacade: FantasyBaseballLeagueFacade,
     readonly fantasyBaseballPlayerNewsFacade: FantasyBaseballPlayerNewsFacade,
     private dialog: MatDialog

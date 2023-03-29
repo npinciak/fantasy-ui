@@ -2,32 +2,21 @@ import { RouterSelector } from '@app/@core/store/router/router.selectors';
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { ScatterChartDataset, transformDataToScatterGraph } from '@app/@shared/helpers/graph.helpers';
 import { exists, existsFilter } from '@app/@shared/utilities/utilities.m';
-import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
-import { EspnFastcastTeamSelectors } from '@app/espn-fastcast/selectors/espn-fastcast-team.selectors';
 import { benchPlayersFilter, startingPlayersFilter } from '@app/espn/espn-helpers';
 import { Selector } from '@ngxs/store';
 import { BaseballStat, MLB_LINEUP_MAP, MLB_STATS_MAP } from 'sports-ui-sdk';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
-import { BaseballTeam, BaseballTeamLive, BaseballTeamMap, BaseballTeamTableRow } from '../models/baseball-team.model';
+import { BaseballTeam, BaseballTeamTableRow } from '../models/baseball-team.model';
 import { FantasyBaseballTeamState } from '../state/fantasy-baseball-team.state';
 import { FantasyBaseballTransformers } from '../transformers/fantasy-baseball.transformers.m';
 import { FantasyBaseballEventSelector } from './fantasy-baseball-event.selector';
 import { FantasyBaseballLeagueSelector } from './fantasy-baseball-league.selector';
-import { FantasyBaseballTeamLiveSelector } from './fantasy-baseball-team-live.selector';
 
 export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseballTeamState) {
-  @Selector([FantasyBaseballTeamSelector.getList, FantasyBaseballTeamLiveSelector.getById])
-  static standings(teamList: BaseballTeam[], getById: (id: string | null) => BaseballTeamLive): BaseballTeam[] {
-    return teamList.map(t => ({ ...t, liveScore: getById(t.id).liveScore })).sort((a, b) => b.liveScore - a.liveScore);
-  }
-
-  @Selector([FantasyBaseballTeamSelector.getMap, FantasyBaseballTeamLiveSelector.getById])
-  static getTeamListLive(teams: BaseballTeamMap, liveTeams: (id: string) => BaseballTeamLive): Partial<BaseballTeamLive[]> {
-    return Object.values(teams).map(t => {
-      const liveTeam = liveTeams(t.id);
-      return { ...t, liveTeams };
-    });
+  @Selector([FantasyBaseballTeamSelector.getList])
+  static teamListFilterOptions(teamList: BaseballTeam[]) {
+    return teamList.map(t => ({ label: t.name, value: t.id }));
   }
 
   @Selector([RouterSelector.getTeamId, FantasyBaseballTeamSelector.getById])
@@ -67,11 +56,6 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
   @Selector([RouterSelector.getTeamId, FantasyBaseballTeamSelector.getRosterByTeamId])
   static getTeamBatters(teamId: string | null | null, selectRosterByTeamId: (id: string) => BaseballPlayer[]): BaseballPlayer[] {
     return teamId ? selectRosterByTeamId(teamId).filter(p => !p.isPitcher) : [];
-  }
-
-  @Selector([RouterSelector.getTeamId, FantasyBaseballTeamLiveSelector.getById])
-  static getLiveTeamBatters(teamId: string | null | null, getLiveTeamById: (id: string) => BaseballTeamLive): BaseballPlayer[] {
-    return teamId ? getLiveTeamById(teamId).roster.filter(p => !p.isPitcher) : [];
   }
 
   @Selector([FantasyBaseballTeamSelector.getTeamBatters])
@@ -139,37 +123,6 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
       });
 
       return graph;
-    };
-  }
-
-  @Selector([FantasyBaseballTeamSelector.getLiveTeamBatters, EspnFastcastTeamSelectors.getById])
-  static getLiveTeamBatterStats(
-    getLiveTeamBatters: (id: string) => BaseballPlayer[],
-    selectFastcastTeamById: (id: string) => FastcastEventTeam | null
-  ) {
-    return (id: string) => {
-      const batters = startingPlayersFilter(getLiveTeamBatters(id), MLB_LINEUP_MAP);
-      return batters.map(p => {
-        const eventUid = selectFastcastTeamById(p?.teamUid)?.eventUid;
-
-        const stats = {};
-        if (eventUid) {
-          // const event = YearToStatTypePeriod(StatTypePeriodId.Live `${eventUid.split('~')[3].replace('c:', '')}`);
-          // stats = exists(p.stats) ? p.stats[event] : {};
-        }
-
-        const { name, img, team, position, percentChange, percentOwned } = p;
-
-        return {
-          name,
-          img,
-          team,
-          position,
-          percentChange,
-          percentOwned,
-          stats,
-        };
-      });
     };
   }
 

@@ -6,7 +6,7 @@ interface BaseballTeamProps {
   roster: BaseballPlayer[];
   totalPoints: number;
   currentRank: number;
-  rotoStats: Record<number, number>;
+  rotoStats: Record<number, number | string>;
   liveScore: number;
 }
 

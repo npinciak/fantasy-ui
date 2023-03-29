@@ -1,36 +1,34 @@
 import { Injectable } from '@angular/core';
 import { GenericFacade } from '@app/@shared/generic-state/generic.facade';
 import { select } from '@app/@shared/models/typed-select';
-import { FantasyBaseballTeamsSelector } from '../selectors/fantasy-baseball-teams.selector';
+import { FantasyBaseballTeamSelector } from '../selectors/fantasy-baseball-team.selector';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FantasyBaseballTeamFacade extends GenericFacade(FantasyBaseballTeamsSelector) {
-  teamInfo$ = select(FantasyBaseballTeamsSelector.getTeamInfoByTeamId);
+export class FantasyBaseballTeamFacade extends GenericFacade(FantasyBaseballTeamSelector) {
+  teamInfo$ = select(FantasyBaseballTeamSelector.getTeamInfoByTeamId);
 
-  standings$ = select(FantasyBaseballTeamsSelector.standings);
+  currentRoster$ = select(FantasyBaseballTeamSelector.getCurrentRosterByTeamId);
 
-  currentRoster$ = select(FantasyBaseballTeamsSelector.getCurrentRosterByTeamId);
+  startingBatters$ = select(FantasyBaseballTeamSelector.getTeamStartingBatters);
+  benchBatters$ = select(FantasyBaseballTeamSelector.getTeamBenchBatters);
 
-  startingBatters$ = select(FantasyBaseballTeamsSelector.getTeamStartingBatters);
-  benchBatters$ = select(FantasyBaseballTeamsSelector.getTeamBenchBatters);
+  teamList$ = select(FantasyBaseballTeamSelector.getList);
+  teamListFilterOptions$ = select(FantasyBaseballTeamSelector.teamListFilterOptions);
 
-  teamList$ = select(FantasyBaseballTeamsSelector.getList);
-  liveScore$ = select(FantasyBaseballTeamsSelector.getTeamListLive);
+  batterChartData$ = select(FantasyBaseballTeamSelector.getBatterStatsLineChartData);
 
-  batterChartData$ = select(FantasyBaseballTeamsSelector.getBatterStatsLineChartData);
+  batterStatsScatterChartData$ = select(FantasyBaseballTeamSelector.getBatterStatsScatterChartData);
 
-  batterStatsScatterChartData$ = select(FantasyBaseballTeamsSelector.getBatterStatsScatterChartData);
 
-  liveBattingStats$ = select(FantasyBaseballTeamsSelector.getLiveTeamBatterStats);
 
-  battingStats$ = select(FantasyBaseballTeamsSelector.getTeamBatterStats);
+  battingStats$ = select(FantasyBaseballTeamSelector.getTeamBatterStats);
 
-  pitchers$ = select(FantasyBaseballTeamsSelector.getTeamPitchers);
-  startingPitchers$ = select(FantasyBaseballTeamsSelector.getTeamStartingPitchers);
+  pitchers$ = select(FantasyBaseballTeamSelector.getTeamPitchers);
+  startingPitchers$ = select(FantasyBaseballTeamSelector.getTeamStartingPitchers);
 
-  pitcherStats$ = select(FantasyBaseballTeamsSelector.getTeamPitcherStats);
-  pitcherStatsChartData$ = select(FantasyBaseballTeamsSelector.getPitcherStatsChartData);
-  pitcherStatsScatterChartData$ = select(FantasyBaseballTeamsSelector.getPitcherStatsScatterChartData);
+  pitcherStats$ = select(FantasyBaseballTeamSelector.getTeamPitcherStats);
+  pitcherStatsChartData$ = select(FantasyBaseballTeamSelector.getPitcherStatsChartData);
+  pitcherStatsScatterChartData$ = select(FantasyBaseballTeamSelector.getPitcherStatsScatterChartData);
 }
