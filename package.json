@@ -32,7 +32,7 @@
     "@angular/service-worker": "~13.3.11",
     "@ngxs/router-plugin": "^3.7.4",
     "@ngxs/schematics": "0.0.1-alpha.5",
-    "@ngxs/store": "^3.7.5",
+    "@ngxs/store": "^3.8.0",
     "@supabase/supabase-js": "^2.2.0",
     "angular-plotly.js": "^4.0.4",
     "chart.js": "^4.2.1",
