@@ -6,13 +6,23 @@ import { startingPlayersFilter } from '@app/espn/espn-helpers';
 import { Selector } from '@ngxs/store';
 import { MLB_LINEUP_MAP } from 'sports-ui-sdk';
 import { BaseballPlayer } from '../models/baseball-player.model';
-import { BaseballTeamLive } from '../models/baseball-team.model';
+import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
 import { FantasyBaseballTeamsLiveState } from '../state/fantasy-baseball-team-live.state';
+import { FantasyBaseballTeamSelector } from './fantasy-baseball-team.selector';
 
 export class FantasyBaseballTeamLiveSelector extends GenericSelector(FantasyBaseballTeamsLiveState) {
-  @Selector([FantasyBaseballTeamLiveSelector.getList])
-  static standings(teamList: BaseballTeamLive[]) {
-    return teamList.sort((a, b) => b.liveScore - a.liveScore);
+  @Selector([FantasyBaseballTeamLiveSelector.getList, FantasyBaseballTeamSelector.getById])
+  static standings(teamList: BaseballTeamLive[], getTeamByTeamId: (id: string | null) => BaseballTeam | null): BaseballTeam[] {
+    return teamList
+      .map(t => {
+        const team = getTeamByTeamId(t.id);
+        if (!team) throw new Error('Team cannot be null');
+        return {
+          ...team,
+          ...t,
+        };
+      })
+      .sort((a, b) => b.liveScore - a.liveScore);
   }
 
   @Selector([RouterSelector.getTeamId, FantasyBaseballTeamLiveSelector.getById])
