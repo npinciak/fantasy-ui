@@ -100,11 +100,11 @@ export const MOCK_BASEBALL_PLAYER_P_1: BaseballPlayer = {
   lineupSlotId: BaseballLineupSlot.BE,
 };
 
-export const MOCK_BASEBALL_PLAYER_STATS_ROW = transformToBaseballPlayerBatterStatsRow(
-  MOCK_BASEBALL_PLAYER_B,
-  FantasyBaseballScoringPeriod.season('2023'),
-  '2023'
-);
-
 export const MOCK_BASEBALL_PLAYER_BATTER_LIST = [MOCK_BASEBALL_PLAYER_B, MOCK_BASEBALL_PLAYER_B_1];
 export const MOCK_BASEBALL_PLAYER_PITCHER_LIST = [MOCK_BASEBALL_PLAYER_P, MOCK_BASEBALL_PLAYER_P_1];
+export const MOCK_BASEBALL_PLAYER_BATTER_STATS_ROW_LIST = MOCK_BASEBALL_PLAYER_BATTER_LIST.map(p =>
+  transformToBaseballPlayerBatterStatsRow(p, FantasyBaseballScoringPeriod.season('2023'), '2023')
+);
+export const MOCK_BASEBALL_PLAYER_PITCHER_STATS_ROW_LIST = MOCK_BASEBALL_PLAYER_PITCHER_LIST.map(p =>
+  transformToBaseballPlayerBatterStatsRow(p, FantasyBaseballScoringPeriod.season('2023'), '2023')
+);

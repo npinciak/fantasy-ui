@@ -33,7 +33,7 @@ export class BaseballTeamComponent {
   readonly leagueId$ = this.routerFacade.leagueId$;
 
   readonly BATTER_STATS_LIST = BATTER_STATS_LIST.map(p => ({
-    label: p.abbrev,
+    label: p.description,
     value: p.id,
   }));
 
@@ -49,11 +49,9 @@ export class BaseballTeamComponent {
   readonly BATTER_STATS_LIVE_HEADERS = BATTER_STATS_LIVE_HEADERS;
 
   selectedPitcherStat = BaseballStat.fip;
-  selectedBatterStatXAxis = BaseballStat.wOBA;
-  selectedBatterStatYAxis = BaseballStat.AB;
 
-  selectedPitcherStatXAxis = BaseballStat.SO;
-  selectedPitcherStatYAxis = BaseballStat.APP;
+  selectedPitcherStatXAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.SO);
+  selectedPitcherStatYAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.APP);
 
   scoringPeriodId = '002022';
 
@@ -159,27 +157,31 @@ export class BaseballTeamComponent {
   }
 
   onPitcherStatXAxisChange(val: any): void {
-    this.selectedPitcherStatXAxis = val;
+    this.selectedPitcherStatXAxis$.next(val);
   }
 
   onPitcherStatYAxisChange(val: any): void {
-    this.selectedPitcherStatYAxis = val;
+    this.selectedPitcherStatYAxis$.next(val);
   }
 
   get batterScatterChartTitle(): string {
-    return `${this.MLB_STAT_MAP[this.selectedBatterStatXAxis].description} vs ${
-      this.MLB_STAT_MAP[this.selectedBatterStatYAxis].description
-    }`;
+    return '';
+
+    // `${this.MLB_STAT_MAP[this.selectedBatterStatXAxis].description} vs ${
+    //   this.MLB_STAT_MAP[this.selectedBatterStatYAxis].description
+    // }`;
   }
 
   get pitcherScatterChartTitle(): string {
-    return `${this.MLB_STAT_MAP[this.selectedPitcherStatXAxis].description} vs ${
-      this.MLB_STAT_MAP[this.selectedPitcherStatYAxis].description
-    }`;
+    return '';
+    //  `${this.MLB_STAT_MAP[this.selectedPitcherStatXAxis$].description} vs ${
+    //   this.MLB_STAT_MAP[this.selectedPitcherStatYAxis$].description
+    // }`;
   }
 
   get barChartTitle(): string {
-    return this.MLB_STAT_MAP[this.selectedBatterStatXAxis].description;
+    return '';
+    //  this.MLB_STAT_MAP[this.selectedBatterStatXAxis].description;
   }
 
   async onPlayerClick(player: BaseballPlayer) {

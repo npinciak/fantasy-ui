@@ -1,8 +1,15 @@
 <app-page-layout>
   <div sidebar>
-    <app-league-scoreboard [teams]="standings$ | async"></app-league-scoreboard>
+    <app-league-scoreboard
+      [teams]="fantasyBaseballTeamLiveFacade.standings$ | async"
+      (refreshClicked)="fantasyBaseballLeagueFacade.refreshCurrentLeague()"
+    ></app-league-scoreboard>
   </div>
   <div main>
-    <app-espn-standings-table [data]="standings$ | async" [rows]="LEAGUE_STANDINGS_ROWS" [headers]="LEAGUE_STANDINGS_HEADERS"></app-espn-standings-table>
+    <app-espn-standings-table
+      [data]="fantasyBaseballTeamLiveFacade.standings$ | async"
+      [rows]="LEAGUE_STANDINGS_ROWS"
+      [headers]="LEAGUE_STANDINGS_HEADERS"
+    ></app-espn-standings-table>
   </div>
 </app-page-layout>

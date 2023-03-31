@@ -1,4 +1,10 @@
 <div class="w-full rounded-lg border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-800">
+  <div class="mb-4 flex items-center justify-between">
+    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">{{ title }}</h5>
+    <div class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+      <app-refresh-btn [isLoading]="isLoading" (refreshButtonClicked)="onRefreshClick()"></app-refresh-btn>
+    </div>
+  </div>
   <div class="flow-root">
     <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700" *ngFor="let team of teams">
       <li class="cursor-pointer py-3" (click)="viewTeam(team.id)">

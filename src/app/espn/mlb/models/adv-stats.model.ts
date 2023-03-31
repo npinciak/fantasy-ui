@@ -14,3 +14,4 @@ type SeasonStatConstantsProps =
   | 'cFIP';
 
 export type SeasonStatConst = { [key in SeasonStatConstantsProps]: number };
+
