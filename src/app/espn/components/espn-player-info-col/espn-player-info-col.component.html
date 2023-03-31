@@ -1,6 +1,14 @@
-<div class="flex items-center space-x-4">
+<div class="ml-3 flex items-center space-x-4">
   <div class="flex-shrink-0" [attr.aria-label]="player?.name">
-    <img width="48" height="35" role="presentation" class="w-13 h-9 rounded-full" [title]="player?.name" [alt]="player?.name" [src]="player?.img" />
+    <img
+      width="48"
+      height="35"
+      role="presentation"
+      class="w-13 h-9 rounded-full text-center text-xs text-gray-500"
+      [title]="player?.name"
+      [alt]="player?.name"
+      [src]="player?.img"
+    />
   </div>
   <div class="min-w-0 flex-1">
     <p [title]="player?.name" class="truncate text-xs font-medium sm:text-sm">{{ player?.name }}</p>
