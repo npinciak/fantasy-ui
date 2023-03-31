@@ -15,14 +15,14 @@ export class AuthenticationFormFacade {
   constructor(private store: Store) {}
 
   setEmail(email: string | null) {
-    return this.store.dispatch(new AuthenticationForm.SetEmail({ email }));
+    this.store.dispatch(new AuthenticationForm.SetEmail({ email }));
   }
 
   setPassword(password: string | null) {
-    return this.store.dispatch(new AuthenticationForm.SetPassword({ password }));
+    this.store.dispatch(new AuthenticationForm.SetPassword({ password }));
   }
 
   signIn() {
-    return this.store.dispatch(new AuthenticationForm.SignIn());
+    this.store.dispatch(new AuthenticationForm.SignIn());
   }
 }

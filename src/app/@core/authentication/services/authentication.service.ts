@@ -27,7 +27,7 @@ export class AuthenticationService {
     this.supabase = createClient<Database>(environment.supaUrl, environment.supaKey);
   }
 
-  async getSession() {
+  async getSession(): Promise<AuthSession | null> {
     await this.supabase.auth.getSession().then(({ data }) => {
       this._session = data.session;
     });
@@ -39,7 +39,7 @@ export class AuthenticationService {
     return this._session != null;
   }
 
-  get user() {
+  get user(): User | null {
     this.supabase.auth.getUser().then(({ data }) => {
       this._user = data.user;
     });
@@ -60,7 +60,7 @@ export class AuthenticationService {
     });
   }
 
-  updateUser(email?: string, password?: string): Promise<UserResponse> {
+  updateUser(email: string, password: string): Promise<UserResponse> {
     return this.supabase.auth.updateUser({ email, password }).then(res => {
       if (res.error) this.authErrorHandler(res.error);
       return res;

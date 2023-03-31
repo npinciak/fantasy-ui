@@ -39,14 +39,19 @@ export class AuthenticationFormState {
       try {
         const res = await this.supaService.signIn(email, password);
 
-        if (res.error) {
-          console.error(res.error);
-          return;
-        }
+        if (res.error) console.error(res.error);
 
-        this.store.dispatch([new FetchUser(), new SportsUiLeagues.Fetch()]);
+        this.store.dispatch([new FetchUser()]);
+        this.store.dispatch([new SportsUiLeagues.Fetch()]);
       } catch (e) {}
     }
+
+    this.store.dispatch([new AuthenticationForm.Reset()]);
+  }
+
+  @Action(AuthenticationForm.Reset)
+  reset({ setState }: StateContext<AuthenticationFormStateModel>): void {
+    setState({ email: null, password: null });
   }
 
   @Action(AuthenticationForm.UpdateUser)
@@ -54,6 +59,7 @@ export class AuthenticationFormState {
     _: StateContext<AuthenticationFormStateModel>,
     { payload: { email, password } }: AuthenticationForm.UpdateUser
   ): Promise<void> {
-    await this.supaService.updateUser(email, password);
+    // await this.supaService.updateUser(email, password);
+    // this.store.dispatch([new FetchUser()]);
   }
 }
