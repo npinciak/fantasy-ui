@@ -8,6 +8,7 @@ import { PlayerTableComponent } from './components/player-table/player-table.com
 import { DfsSlateListComponent } from './components/slate-list/slate-list.component';
 import { DfsTeamMatchupTableComponent } from './components/team-matchup-table/team-matchup-table.component';
 import { DfsRoutingModule } from './dfs-routing.module';
+import { DfsMlbHomeComponent } from './mlb/pages/dfs-mlb-home/dfs-mlb-home.component';
 import { DailyFantasyMlbPlayerSlateAttributeState } from './mlb/state/dfs-mlb-player-slate-attr.state';
 import { DfsMlbTeamSlateDetailsState } from './mlb/state/dfs-mlb-slate-teams.state';
 import { DfsNbaHomeComponent } from './nba/pages/dfs-nba-home/dfs-nba-home.component';
@@ -49,6 +50,13 @@ const states = [
 
 @NgModule({
   imports: [CommonModule, DfsRoutingModule, FormsModule, MaterialModule, SharedModule, NgxsModule.forFeature(states)],
-  declarations: [DfsNbaHomeComponent, DfsTeamMatchupTableComponent, DfsSlateListComponent, DfsNflHomeComponent, PlayerTableComponent],
+  declarations: [
+    DfsNbaHomeComponent,
+    DfsTeamMatchupTableComponent,
+    DfsSlateListComponent,
+    DfsNflHomeComponent,
+    DfsMlbHomeComponent,
+    PlayerTableComponent,
+  ],
 })
 export class DfsModule {}
