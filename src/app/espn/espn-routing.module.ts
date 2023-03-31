@@ -4,11 +4,12 @@ import { UrlPathFragments, UrlPathParams } from '@app/@core/store/router/url-bui
 import { BaseballFreeAgentsComponent } from './mlb/pages/baseball-free-agents/baseball-free-agents.component';
 import { BaseballHomeComponent } from './mlb/pages/baseball-home/baseball-home.component';
 import { BaseballTeamComponent } from './mlb/pages/baseball-team/baseball-team.component';
+import { FantasyBaseballFreeAgentsResolver } from './mlb/resolvers/fantasy-baseball-free-agents.resolver';
 import { FantasyBaseballLeagueResolver } from './mlb/resolvers/fantasy-baseball-league.resolver';
 import { FootballFreeAgentsComponent } from './nfl/pages/football-free-agents/football-free-agents.component';
 import { FootballHomeComponent } from './nfl/pages/football-home/football-home.component';
 import { FootballTeamComponent } from './nfl/pages/football-team/football-team.component';
-import { FantasyFootballFreeAgentsResolver } from './nfl/resolvers/fantasy-football-free-agents.resolver';
+import { FantasyFootballFreeAgentResolver } from './nfl/resolvers/fantasy-football-free-agent.resolver';
 import { FantasyFootballLeagueResolver } from './nfl/resolvers/fantasy-football-league.resolver';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 
@@ -46,7 +47,7 @@ const nflRoutes = {
                 },
                 {
                   path: UrlPathFragments.FreeAgents,
-                  resolve: [FantasyFootballFreeAgentsResolver],
+                  resolve: [FantasyFootballFreeAgentResolver],
                   children: [
                     {
                       path: UrlPathFragments.Empty,
@@ -139,7 +140,7 @@ const mlbRoutes = {
                 },
                 {
                   path: UrlPathFragments.FreeAgents,
-                  resolve: [],
+                  resolve: [FantasyBaseballFreeAgentsResolver],
                   children: [
                     {
                       path: UrlPathFragments.Empty,
