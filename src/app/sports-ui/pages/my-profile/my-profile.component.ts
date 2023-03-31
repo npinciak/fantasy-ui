@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthenticationFormFacade } from '@app/@core/authentication/authentication-form/authentication-form.facade';
+import { AuthenticationFacade } from '@app/@core/authentication/facade/authentication.facade';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { AddLeagueFormComponent } from '@app/sports-ui/components/add-league-form/add-league-form.component';
 import { USER_LEAGUE_HEADERS, USER_LEAGUE_ROWS } from '@app/sports-ui/components/leagues-table/leagues-table.const';
@@ -19,10 +20,14 @@ export class MyProfileComponent implements OnInit {
   allLeagues$ = this.sportsUiLeaguesFacade.allLeagues$;
   isFormValid$ = this.authenticationFormFacade.isFormValid$;
 
+  email$ = this.authenticationFormFacade.email$;
+  password$ = this.authenticationFormFacade.password$;
+
   readonly LEAGUE_ROWS = USER_LEAGUE_ROWS;
   readonly LEAGUE_HEADERS = USER_LEAGUE_HEADERS;
 
   constructor(
+    readonly authenticationFacade: AuthenticationFacade,
     private routerFacade: RouterFacade,
     private sportsUiUserFacade: SportsUiUserFacade,
     private sportsUiLeaguesFacade: SportsUiLeaguesFacade,

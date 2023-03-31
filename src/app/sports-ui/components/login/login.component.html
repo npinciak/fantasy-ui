@@ -1,21 +1,97 @@
-<mat-card>
-  <mat-card-content>
-    <div class="flex-col">
-      <div>
-        <mat-form-field>
-          <input matInput #emailInput placeholder="me@example.com" (change)="onEmailInputChange(emailInput.value)" />
-          <mat-label>email</mat-label>
-        </mat-form-field>
+<div class="mb-5 rounded-lg border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-800">
+  <div class="flex-col">
+    <form>
+      <div class="mb-6">
+        <label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+
+        <input
+          type="email"
+          id="email"
+          class="
+            block
+            w-full
+            rounded-lg
+            border border-gray-300
+            bg-gray-50
+            p-2.5
+            text-sm text-gray-900
+            focus:border-blue-500 focus:ring-blue-500
+            dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500
+          "
+          placeholder="name@flowbite.com"
+          required
+          #emailInput
+          [value]="email"
+          placeholder="me@example.com"
+          (change)="onEmailInputChange(emailInput.value)"
+        />
       </div>
-      <div>
-        <mat-form-field>
-          <input matInput #passwordInput (change)="onPasswordInputChange(passwordInput.value)" type="password" />
-          <mat-label>password</mat-label>
-        </mat-form-field>
+      <div class="mb-6">
+        <label for="password" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Your password</label>
+        <input
+          type="password"
+          id="password"
+          class="
+            block
+            w-full
+            rounded-lg
+            border border-gray-300
+            bg-gray-50
+            p-2.5
+            text-sm text-gray-900
+            focus:border-blue-500 focus:ring-blue-500
+            dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500
+          "
+          required
+          #passwordInput
+          [value]="password"
+          (change)="onPasswordInputChange(passwordInput.value)"
+        />
       </div>
-      <div>
-        <button mat-flat-button color="primary" [disabled]="isFormValid" (click)="onSignIn()">Sign In</button>
+      <div class="mb-6 flex items-start">
+        <div class="flex h-5 items-center">
+          <input
+            id="remember"
+            type="checkbox"
+            value=""
+            class="
+              focus:ring-3
+              h-4
+              w-4
+              rounded
+              border border-gray-300
+              bg-gray-50
+              focus:ring-blue-300
+              dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600 dark:focus:ring-offset-gray-800
+            "
+            required
+          />
+        </div>
+        <label for="remember" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
       </div>
-    </div>
-  </mat-card-content>
-</mat-card>
+      <button
+        [disabled]="!isFormValid"
+        [class.disabled:opacity-50]="!isFormValid"
+        [class.hover:cursor-not-allowed]="!isFormValid"
+        (click)="!isFormValid ? null : onSignIn()"
+        type="button"
+        class="
+          w-full
+          rounded-lg
+          bg-blue-700
+          px-5
+          py-2.5
+          text-center text-sm
+          font-medium
+          text-white
+          hover:bg-blue-800
+          focus:outline-none focus:ring-4 focus:ring-blue-300
+          dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+          sm:w-auto
+        "
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>

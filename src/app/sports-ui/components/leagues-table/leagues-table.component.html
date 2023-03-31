@@ -1,6 +1,29 @@
 <div class="flex-col gap-20">
   <div>
-    <button mat-flat-button color="primary" (click)="onAddNewLeague()"><mat-icon>add</mat-icon>Add</button>
+    <button
+      class="
+        mr-2
+        mb-2
+        cursor-pointer
+        rounded-lg
+        bg-blue-700
+        px-5
+        py-2.5
+        text-sm
+        font-medium
+        text-white
+        hover:bg-blue-800
+        focus:outline-none focus:ring-4 focus:ring-blue-300
+        dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+      "
+      type="button"
+      [disabled]="disableAdd"
+      [class.disabled:opacity-50]="disableAdd"
+      [class.hover:cursor-not-allowed]="disableAdd"
+      (click)="disableAdd ? null : onAddNewLeague()"
+    >
+      Add League
+    </button>
   </div>
 
   <div>
@@ -23,7 +46,7 @@
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="onRemoveLeague(data.id)">
+                    <button mat-menu-item [disabled]="disableAdd" (click)="disableAdd ? null : onRemoveLeague(data.id)">
                       <span>Remove</span>
                     </button>
                   </mat-menu>

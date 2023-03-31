@@ -6,7 +6,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
   @Input() isFormValid: boolean = false;
-
+  @Input() email: string | null = null;
+  @Input() password: string | null = null;
   @Output() signInClicked = new EventEmitter();
   @Output() passwordInputChanged = new EventEmitter();
   @Output() emailInputChanged = new EventEmitter();

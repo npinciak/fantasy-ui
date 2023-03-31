@@ -39,13 +39,15 @@ export class LeaguesTableComponent implements AfterViewInit, OnChanges {
 
   dataSource: MatTableDataSource<SportsUiClientLeague>;
 
+  disableAdd = true;
+
   constructor(private cdr: ChangeDetectorRef) {
     this.dataSource = new MatTableDataSource<SportsUiClientLeague>();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.data) {
-      this.dataSource.data;
+      this.dataSource.data = changes.data.currentValue;
     }
   }
 
