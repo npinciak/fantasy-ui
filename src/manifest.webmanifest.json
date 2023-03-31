@@ -12,7 +12,7 @@
   "categories": ["sports", "news", "entertainment"],
   "icons": [
     {
-      "src": "./src/assets/icons/icon.png",
+      "src": "./src/assets/icons/sports.svg",
       "sizes": "48x48 72x72 96x96 128x128 256x256 512x512",
       "type": "image/png",
       "purpose": "any"
