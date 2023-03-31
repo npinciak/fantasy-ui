@@ -9,32 +9,23 @@ interface StatsChart {
 
 Chart.register(...registerables);
 @Component({
-  selector: `app-line-chart`,
+  selector: `app-pie-chart`,
   template: `<div class="block">
-    <canvas
-      baseChart
-      width="600"
-      height="400"
-      [type]="'line'"
-      [data]="lineChartData"
-      [options]="lineChartOptions"
-      [legend]="lineChartLegend"
-    >
+    <canvas baseChart width="300" height="300" [type]="'pie'" [data]="pieChartData" [options]="pieChartOptions" [legend]="pieChartLegend">
     </canvas>
   </div> `,
 })
-export class LineChartComponent implements OnChanges {
+export class PieChartComponent implements OnChanges {
   @Input() title = '';
   @Input() statsMap = {};
   @Input() chartData: StatsChart;
   @Input() statFilter: BaseballStat = BaseballStat.AB;
 
+  pieChartData: ChartConfiguration<'polarArea'>['data'];
+  pieChartOptions: ChartOptions<'polarArea'> = { responsive: true };
+  pieChartLegend = false;
+
   constructor() {}
-
-  lineChartData: ChartConfiguration<'line'>['data'];
-
-  lineChartOptions: ChartOptions<'line'> = { responsive: true };
-  lineChartLegend = false;
 
   ngOnChanges(changes: SimpleChanges): void {
     const requireRender = ['type'];
@@ -51,17 +42,14 @@ export class LineChartComponent implements OnChanges {
     if (graphData.data.length === 0) return;
     if (graphData.label.length === 0) return;
 
-    this.lineChartData = {
+    this.pieChartData = {
       labels: graphData.label,
       datasets: [
         {
           data: graphData.data,
           label: '',
-          fill: true,
-          tension: 0.5,
-          borderColor: '#0284c7',
-          backgroundColor: '#bae6fd',
-          type: 'line',
+          backgroundColor: ['#0C4A6E', '#075985', '#0369A1', '#0284C7', '#0EA5E9', '#38BDF8', '#7DD3FC', '#BAE6FD', '#E0F2FE', '#F0F9FF'],
+          type: 'polarArea',
         },
       ],
     };

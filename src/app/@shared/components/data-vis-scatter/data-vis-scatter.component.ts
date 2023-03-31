@@ -3,8 +3,8 @@ import { ScatterChartDataset } from '@app/@shared/helpers/graph.helpers';
 import { MLB_STATS_MAP } from 'sports-ui-sdk';
 
 @Component({
-  selector: `app-data-vis-scatter`,
-  template: '<plotly-plot [useResizeHandler]="true" [config]="graph.config" [data]="graph.data" [layout]="graph.layout"></plotly-plot>',
+  selector: `app-line-chart-scatter`,
+  template: '',
 })
 export class DataVisScatterComponent implements OnInit, OnChanges {
   @Input() title = '';

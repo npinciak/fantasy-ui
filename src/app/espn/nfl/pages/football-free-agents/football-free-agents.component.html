@@ -51,11 +51,11 @@
       </div>
     </div>
     <div>
-      <app-data-vis-scatter
+      <app-line-chart-scatter
         [xAxisFilterTitle]="xAxisStat$ | async"
         [yAxisFilterTitle]="yAxisStat$ | async"
         [chartData]="freeAgentsScatter$ | async"
-      ></app-data-vis-scatter>
+      ></app-line-chart-scatter>
     </div>
     <div>
       <app-espn-stats-table

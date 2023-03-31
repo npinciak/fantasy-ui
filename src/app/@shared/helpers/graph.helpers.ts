@@ -1,4 +1,3 @@
-import { PlotData } from 'plotly.js-dist-min';
 import { PropertyOfType } from '../generic-state/generic.state';
 import { pickData } from '../utilities/utilities.m';
 
@@ -161,6 +160,4 @@ type SlopeInputs = Pick<LinearRegressionAttr, 'sumX' | 'sumY' | 'sumXY' | 'sumXX
 type YInterceptInputs = Pick<LinearRegressionAttr, 'sumX' | 'sumY' | 'slope' | 'dataSetLength'>;
 type R2Inputs = Pick<LinearRegressionAttr, 'sumX' | 'sumY' | 'sumXX' | 'sumXY' | 'sumYY' | 'dataSetLength'>;
 
-export type ScatterChartDataset = Partial<
-  Pick<PlotData, 'x' | 'y' | 'text' | 'type' | 'hovertemplate' | 'textposition' | 'mode' | 'textfont' | 'marker' | 'name'>
->;
+export type ScatterChartDataset = any;
