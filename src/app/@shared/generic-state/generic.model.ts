@@ -1,3 +1,4 @@
+import { PropertySelectors } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
 export interface GenericStateModel<T> {
@@ -26,6 +27,7 @@ export interface GenericFacade<T> {
 export interface GenericSelectorClass<T> {
   stateClass: GenericStateClass<T>;
   new (...args: any[]): any;
+  slices: PropertySelectors<GenericStateModel<T>>;
   getMap(state: GenericStateModel<T>): Record<string, T>;
   getById(map: Record<string, T>): (id: string | null) => T | null;
   getList(map: Record<string, T>): T[];

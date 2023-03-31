@@ -14,6 +14,7 @@ export type SelectorReturnType<T extends SelectorDef<any>> = T extends StateToke
   : never;
 
 export function Selector<T extends SelectorDefTuple>(selectors?: T): SelectorTypedPropertyDescriptor<T> {
+  if (selectors == undefined) return SelectorNGXS() as unknown as SelectorTypedPropertyDescriptor<T>;
   return SelectorNGXS(selectors) as unknown as SelectorTypedPropertyDescriptor<T>;
 }
 
