@@ -9,10 +9,10 @@ import { FantasyFootballLeagueSelector } from '../selectors/fantasy-football-lea
   providedIn: 'root',
 })
 export class FantasyFootballLeagueFacade {
-  currentScoringPeriodId$ = select(FantasyFootballLeagueSelector.getScoringPeriodId);
-  finalScoringPeriodId$ = select(FantasyFootballLeagueSelector.getFinalScoringPeriod);
+  currentScoringPeriodId$ = select(FantasyFootballLeagueSelector.slices.scoringPeriodId);
+  finalScoringPeriodId$ = select(FantasyFootballLeagueSelector.slices.finalScoringPeriod);
   scoringPeriodFilterOptions$ = select(FantasyFootballLeagueSelector.scoringPeriodFilters);
-  seasonId$ = select(FantasyFootballLeagueSelector.getSeasonId);
+  seasonId$ = select(FantasyFootballLeagueSelector.slices.seasonId);
   isLoading$ = of(false); // select(FantasyFootballLeagueSelectors.isLoading);
 
   // positionLimits$ = select(FantasyFootballLeagueSelectors.getLineupLimitsWithLabels);
@@ -20,11 +20,11 @@ export class FantasyFootballLeagueFacade {
   constructor(private store: Store) {}
 
   get seasonId() {
-    return this.store.selectSnapshot(FantasyFootballLeagueSelector.getSeasonId);
+    return this.store.selectSnapshot(FantasyFootballLeagueSelector.slices.seasonId);
   }
 
   get leagueId() {
-    return this.store.selectSnapshot(FantasyFootballLeagueSelector.getLeagueId);
+    return this.store.selectSnapshot(FantasyFootballLeagueSelector.slices.id);
   }
 
   getLeague(leagueId: string, year: string): Observable<void> {

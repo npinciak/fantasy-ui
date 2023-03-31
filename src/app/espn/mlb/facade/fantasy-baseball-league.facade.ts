@@ -10,7 +10,7 @@ import { FantasyBaseballLeagueSelector } from '../selectors/fantasy-baseball-lea
 })
 export class FantasyBaseballLeagueFacade {
   isLoading$ = of(false); //select(FantasyBaseballLeagueState.getIsLoading);
-  scoringPeriod$ = select(FantasyBaseballLeagueSelector.getScoringPeriodId);
+  scoringPeriod$ = select(FantasyBaseballLeagueSelector.slices.scoringPeriodId);
   seasonConcluded$ = of(FantasyBaseballLeagueSelector.getSeasonConcluded);
 
   scoringPeriodFilters$ = select(FantasyBaseballLeagueSelector.scoringPeriodFilters);
@@ -18,11 +18,11 @@ export class FantasyBaseballLeagueFacade {
   constructor(private store: Store) {}
 
   get seasonId() {
-    return this.store.selectSnapshot(FantasyBaseballLeagueSelector.getSeasonId);
+    return this.store.selectSnapshot(FantasyBaseballLeagueSelector.slices.seasonId);
   }
 
   get leagueId() {
-    return this.store.selectSnapshot(FantasyBaseballLeagueSelector.getLeagueId);
+    return this.store.selectSnapshot(FantasyBaseballLeagueSelector.slices.id);
   }
 
   refreshCurrentLeague(): Observable<void> {

@@ -1,15 +1,26 @@
-import { Selector } from '@ngxs/store';
+import { Selector } from '@app/@shared/models/typed-selector';
+import { createPropertySelectors } from '@ngxs/store';
 import { FantasyLeagueBaseStateClass, FantasyLeagueBaseStateModel } from './base-league.model';
 
 export function FantasyLeagueBaseSelector(stateClass: FantasyLeagueBaseStateClass) {
   class EspnLeagueSelectorBase {
     static stateClass = stateClass;
 
+    static slices = createPropertySelectors<FantasyLeagueBaseStateModel>(stateClass);
+
+    /**
+     * @deprecated
+     * use slices.id
+     */
     @Selector([stateClass])
     static getLeagueId(state: FantasyLeagueBaseStateModel) {
       return state.id;
     }
 
+    /**
+     * @deprecated
+     * use slices.id
+     */
     @Selector([stateClass])
     static getSeasonId(state: FantasyLeagueBaseStateModel) {
       return state.seasonId;

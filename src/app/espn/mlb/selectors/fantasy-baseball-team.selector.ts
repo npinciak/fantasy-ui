@@ -83,7 +83,7 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
     return benchPlayersFilter(pitchers, MLB_LINEUP_MAP);
   }
 
-  @Selector([FantasyBaseballTeamSelector.getTeamBatters, FantasyBaseballLeagueSelector.getSeasonId])
+  @Selector([FantasyBaseballTeamSelector.getTeamBatters, FantasyBaseballLeagueSelector.slices.seasonId])
   static getTeamBatterStats(batters: BaseballPlayer[], seasonId: string): (statPeriod: string) => BaseballPlayerStatsRow[] {
     return (statPeriod: string) =>
       existsFilter(batters.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId))).sort(
@@ -91,7 +91,7 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
       );
   }
 
-  @Selector([FantasyBaseballTeamSelector.getTeamBatterStats, FantasyBaseballLeagueSelector.getSeasonId])
+  @Selector([FantasyBaseballTeamSelector.getTeamBatterStats, FantasyBaseballLeagueSelector.slices.seasonId])
   static getBatterStatsLineChartData(batters: (statPeriod: string) => BaseballPlayerStatsRow[]) {
     return (statPeriod: string, statFilter: BaseballStat) => {
       const data = batters(statPeriod)
@@ -105,7 +105,7 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
     };
   }
 
-  @Selector([FantasyBaseballTeamSelector.getTeamBatterStats, FantasyBaseballLeagueSelector.getSeasonId])
+  @Selector([FantasyBaseballTeamSelector.getTeamBatterStats, FantasyBaseballLeagueSelector.slices.seasonId])
   static getBatterStatsScatterChartData(
     players: (statPeriod: string) => BaseballPlayerStatsRow[]
   ): (statPeriod: string, xAxisFilter: BaseballStat, yAxisFilter: BaseballStat) => ScatterChartDataset[] {
@@ -126,13 +126,13 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
     };
   }
 
-  @Selector([FantasyBaseballTeamSelector.getTeamPitchers, FantasyBaseballLeagueSelector.getSeasonId])
+  @Selector([FantasyBaseballTeamSelector.getTeamPitchers, FantasyBaseballLeagueSelector.slices.seasonId])
   static getTeamPitcherStats(pitchers: BaseballPlayer[], seasonId: string): (statPeriod: string) => BaseballPlayerStatsRow[] {
     return (statPeriod: string) =>
       existsFilter(pitchers.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId)));
   }
 
-  @Selector([FantasyBaseballTeamSelector.getTeamPitcherStats, FantasyBaseballLeagueSelector.getSeasonId])
+  @Selector([FantasyBaseballTeamSelector.getTeamPitcherStats, FantasyBaseballLeagueSelector.slices.seasonId])
   static getPitcherStatsChartData(
     getTeamPitchers: (teamId: string | null, statPeriod: string) => BaseballPlayerStatsRow[]
   ): (teamId: string | null, statPeriod: string, statFilter: BaseballStat) => any[] {
@@ -150,7 +150,7 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
     };
   }
 
-  @Selector([FantasyBaseballTeamSelector.getTeamPitcherStats, FantasyBaseballLeagueSelector.getSeasonId])
+  @Selector([FantasyBaseballTeamSelector.getTeamPitcherStats, FantasyBaseballLeagueSelector.slices.seasonId])
   static getPitcherStatsScatterChartData(
     getTeamPitchers: (teamId: string | null, statPeriod: string) => BaseballPlayerStatsRow[]
   ): (teamId: string | null, statPeriod: string, xAxisFilter: BaseballStat, yAxisFilter: BaseballStat) => ScatterChartDataset[] {

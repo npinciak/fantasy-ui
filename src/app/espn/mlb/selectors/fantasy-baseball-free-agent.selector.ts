@@ -27,7 +27,7 @@ export class FantasyBaseballFreeAgentSelector extends GenericSelector(FantasyBas
     };
   }
 
-  @Selector([FantasyBaseballFreeAgentSelector.getFreeAgentBatterStats, FantasyBaseballLeagueSelector.getSeasonId])
+  @Selector([FantasyBaseballFreeAgentSelector.getFreeAgentBatterStats, FantasyBaseballLeagueSelector.slices.seasonId])
   static getFreeAgentBatterScatterChartData(
     getTeamBatters: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[]
   ): (teamId: string, statPeriod: string, xAxis: BaseballStat | null, yAxis: BaseballStat | null) => any {
@@ -72,7 +72,7 @@ export class FantasyBaseballFreeAgentSelector extends GenericSelector(FantasyBas
   @Selector([
     FantasyBaseballTeamSelector.getTeamBatterStats,
     FantasyBaseballFreeAgentSelector.getFreeAgentBatterStats,
-    FantasyBaseballLeagueSelector.getSeasonId,
+    FantasyBaseballLeagueSelector.slices.seasonId,
   ])
   static getCompareTeamAndFreeAgentBatterList(
     getTeamBatterStatsById: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[],
@@ -100,7 +100,7 @@ export class FantasyBaseballFreeAgentSelector extends GenericSelector(FantasyBas
   @Selector([
     FantasyBaseballTeamSelector.getTeamPitcherStats,
     FantasyBaseballFreeAgentSelector.getFreeAgentPitcherStats,
-    FantasyBaseballLeagueSelector.getSeasonId,
+    FantasyBaseballLeagueSelector.slices.seasonId,
   ])
   static getCompareTeamAndFreeAgentPitcherList(
     getTeamPitcherStats: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[],
