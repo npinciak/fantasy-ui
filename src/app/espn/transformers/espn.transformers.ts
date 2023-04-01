@@ -85,7 +85,7 @@ export function clientPlayerToFantasyPlayer({
 }): FantasyPlayer {
   const { proTeamId, defaultPositionId, injuryStatus, injured, outlooks, id, fullName, ownership, lastNewsDate } = clientPlayer;
 
-  const league = LEAGUE_ABBREV_BY_ID[leagueId];
+  const league = LEAGUE_ABBREV_BY_ID[leagueId].toLowerCase();
   const team = teamMap[proTeamId] as string;
   const stats = flattenPlayerStats(clientPlayer.stats);
   const outlookByWeek = clientPlayerOutlook(outlooks);
