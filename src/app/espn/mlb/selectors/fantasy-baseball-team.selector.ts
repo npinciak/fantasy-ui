@@ -92,16 +92,20 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
   }
 
   @Selector([FantasyBaseballTeamSelector.getTeamBatterStats, FantasyBaseballLeagueSelector.slices.seasonId])
-  static getBatterStatsLineChartData(batters: (statPeriod: string) => BaseballPlayerStatsRow[]) {
+  static getBatterStatsLineChartData(batters: (statPeriod: string) => BaseballPlayerStatsRow[]): (
+    statPeriod: string,
+    statFilter: BaseballStat
+  ) => {
+    label: string[];
+    data: number[];
+  } {
     return (statPeriod: string, statFilter: BaseballStat) => {
-      const data = batters(statPeriod)
-        .map(p => (exists(p.stats) ? p.stats[statFilter] : 0))
-        .filter(d => d !== 0)
-        .sort((a, b) => b - a);
+      const batterStats = batters(statPeriod)
+        .map(p => ({ statValue: exists(p.stats) ? p.stats[statFilter] : 0, name: p.name }))
+        .filter(d => d.statValue !== 0)
+        .sort((a, b) => b.statValue - a.statValue);
 
-      const label = batters(statPeriod).map(p => p.name);
-
-      return { label, data };
+      return { label: batterStats.map(p => p.name), data: batterStats.map(p => p.statValue) };
     };
   }
 
