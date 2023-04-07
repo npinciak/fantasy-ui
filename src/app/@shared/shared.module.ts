@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '@app/material.module';
 import { BaseChartDirective } from './chart.directive';
 import { BaseCardComponent } from './components/base-card/base-card.component';
+import { BaseChartComponent } from './components/base-chart/base-chart.component';
 import { DataVisScatterComponent } from './components/data-vis-scatter/data-vis-scatter.component';
 import { DropdownFilterComponent } from './components/dropdown-filter/dropdown-filter.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
@@ -31,6 +32,7 @@ import { StatPipe } from './pipes/stat-format.pipe';
     RefreshBtnComponent,
     ToggleComponent,
     BaseCardComponent,
+    BaseChartComponent,
   ],
   imports: [RouterModule, MaterialModule, CommonModule],
   exports: [
@@ -47,6 +49,7 @@ import { StatPipe } from './pipes/stat-format.pipe';
     RefreshBtnComponent,
     ToggleComponent,
     BaseCardComponent,
+    BaseChartComponent,
   ],
 })
 export class SharedModule {}
