@@ -58,10 +58,11 @@ import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
     BaseballLineupCardComponent,
     EspnPlayerDialogComponent,
     EspnStandingsTableComponent,
+    FantasyTeamHeaderComponent,
   ],
   imports: [
     NgxsModule.forFeature([
-      FantasyBaseballLeagueActionHandler,
+      FantasyFootballLeagueActionHandler,
       FantasyFootballLeagueState,
       FantasyFootballScheduleState,
       FantasyFootballTeamState,
@@ -69,6 +70,7 @@ import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
       FantasyFootballFreeAgentFilterState,
       FantasyFootballPlayerNewsState,
       FantasyFootballTransactionState,
+      FantasyBaseballLeagueActionHandler,
       FantasyBaseballLeagueState,
       FantasyBaseballTeamState,
       FantasyBaseballTeamsLiveState,
