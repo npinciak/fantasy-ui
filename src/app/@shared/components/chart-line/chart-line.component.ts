@@ -1,39 +1,23 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { Chart, ChartConfiguration, ChartOptions, registerables } from 'chart.js';
-import { BaseballStat } from 'sports-ui-sdk';
+import { BaseChartComponent, StatsChart } from '../base-chart/base-chart.component';
 
-interface StatsChart {
-  data: any[];
-  label: any[];
-}
 
 Chart.register(...registerables);
 @Component({
-  selector: `app-line-chart`,
-  template: `<div class="block">
-    <canvas
-      baseChart
-      width="600"
-      height="400"
-      [type]="'line'"
-      [data]="lineChartData"
-      [options]="lineChartOptions"
-      [legend]="lineChartLegend"
-    >
-    </canvas>
-  </div> `,
+  selector: `app-chart-line`,
+  template: `
+    <app-base-card [title]="title" [subtitle]="subtitle">
+      <canvas baseChart [type]="'line'" [data]="lineChartData" [options]="lineChartOptions" [legend]="lineChartLegend"> </canvas>
+    </app-base-card>
+  `,
 })
-export class LineChartComponent implements OnChanges {
-  @Input() title = '';
-  @Input() statsMap = {};
-  @Input() chartData: StatsChart;
-  @Input() statFilter: BaseballStat = BaseballStat.AB;
-
-  constructor() {}
+export class ChartLineComponent extends BaseChartComponent implements OnChanges {
+  chartType = 'line';
 
   lineChartData: ChartConfiguration<'line'>['data'];
 
-  lineChartOptions: ChartOptions<'line'> = { responsive: true };
+  lineChartOptions: ChartOptions<'line'> = { maintainAspectRatio: false, responsive: true };
   lineChartLegend = false;
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -47,7 +31,7 @@ export class LineChartComponent implements OnChanges {
     }
   }
 
-  generateGraph<T>(graphData: StatsChart) {
+  generateGraph(graphData: StatsChart) {
     if (graphData.data.length === 0) return;
     if (graphData.label.length === 0) return;
 

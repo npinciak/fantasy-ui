@@ -1,31 +1,21 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { Chart, ChartConfiguration, ChartOptions, registerables } from 'chart.js';
-import { BaseballStat } from 'sports-ui-sdk';
-
-interface StatsChart {
-  data: any[];
-  label: any[];
-}
+import { BaseChartComponent, StatsChart } from '../base-chart/base-chart.component';
 
 Chart.register(...registerables);
+
 @Component({
-  selector: `app-pie-chart`,
-  template: `<div class="block">
-    <canvas baseChart width="300" height="300" [type]="'pie'" [data]="pieChartData" [options]="pieChartOptions" [legend]="pieChartLegend">
-    </canvas>
-  </div> `,
+  selector: `app-chart-pie`,
+  template: `
+    <app-base-card [title]="title" [subtitle]="subtitle">
+      <canvas baseChart [type]="'pie'" [data]="pieChartData" [options]="pieChartOptions" [legend]="pieChartLegend"> </canvas>
+    </app-base-card>
+  `,
 })
-export class PieChartComponent implements OnChanges {
-  @Input() title = '';
-  @Input() statsMap = {};
-  @Input() chartData: StatsChart;
-  @Input() statFilter: BaseballStat = BaseballStat.AB;
-
+export class ChartPieComponent extends BaseChartComponent implements OnChanges {
   pieChartData: ChartConfiguration<'polarArea'>['data'];
-  pieChartOptions: ChartOptions<'polarArea'> = { responsive: true };
+  pieChartOptions: ChartOptions<'polarArea'> = { maintainAspectRatio: false, responsive: true };
   pieChartLegend = false;
-
-  constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     const requireRender = ['type'];
@@ -38,7 +28,7 @@ export class PieChartComponent implements OnChanges {
     }
   }
 
-  generateGraph<T>(graphData: StatsChart) {
+  generateGraph(graphData: StatsChart) {
     if (graphData.data.length === 0) return;
     if (graphData.label.length === 0) return;
 
