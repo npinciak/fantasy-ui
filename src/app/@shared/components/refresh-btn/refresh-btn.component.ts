@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-refresh-btn',
-  templateUrl: './refresh-btn.component.html',
+  template: `<i title="refresh" class="fad fa-sync-alt cursor-pointer" [ngClass]="isLoading ? 'fa-spin' : ''" (click)="onClick()"></i>`,
 })
 export class RefreshBtnComponent {
   @Input() isLoading = false;

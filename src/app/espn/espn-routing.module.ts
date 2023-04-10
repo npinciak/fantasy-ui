@@ -62,48 +62,6 @@ const nflRoutes = {
       ],
     },
   ],
-
-  //   data: { sport: UrlPathFragments.NFL },
-  //   // canActivate: [AuthenticationGuard],
-  //   children: [
-  //     {
-  //       path: UrlPathFragments.Empty,
-  //       component: FootballHomeComponent,
-  //     },
-  //     {
-  //       path: UrlPathParams.LeagueId,
-  //       resolve: [FantasyFootballLeagueResolver],
-  //       children: [
-  //         {
-  //           path: UrlPathFragments.Empty,
-  //           component: FootballHomeComponent,
-  //         },
-  //         {
-  //           path: UrlPathFragments.FreeAgents,
-  //           resolve: [FantasyFootballFreeAgentsResolver],
-  //           children: [
-  //             {
-  //               path: UrlPathFragments.Empty,
-  //               component: FootballFreeAgentsComponent,
-  //             },
-  //           ],
-  //         },
-  //         {
-  //           path: UrlPathFragments.Team,
-  //           children: [
-  //             {
-  //               path: UrlPathFragments.Empty,
-  //               component: FootballHomeComponent,
-  //             },
-  //             {
-  //               path: UrlPathParams.TeamId,
-  //               component: FootballTeamComponent,
-  //             },
-  //           ],
-  //         },
-  //       ],
-  //     },
-  //   ],
 };
 
 const mlbRoutes = {

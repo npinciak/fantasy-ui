@@ -1,7 +1,7 @@
-<div class="w-full max-w-md rounded-lg border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-800">
+<!-- <div class="w-full max-w-md rounded-lg border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-800">
   <div class="mb-4 flex items-center justify-between">
     <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">{{ title }}</h5>
-    <div class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+    <div class="text-sm font-medium text-sky-600 hover:underline dark:text-sky-500">
       <app-refresh-btn [isLoading]="isLoading" (refreshButtonClicked)="onRefreshClick()"></app-refresh-btn>
     </div>
   </div>
@@ -11,5 +11,120 @@
         <app-espn-player [player]="player" [isLoading]="isLoading"></app-espn-player>
       </li>
     </ul>
+  </div>
+</div> -->
+
+<div class="relative mb-6 flex w-full min-w-0 flex-col break-words rounded bg-white shadow-lg">
+  <div class="mb-0 rounded-t border-0 px-4 py-3">
+    <div class="flex flex-wrap items-center">
+      <div class="relative w-full max-w-full flex-1 flex-grow px-4">
+        <h3 class="text-base font-semibold text-sky-700">{{ title }}</h3>
+      </div>
+      <div class="relative w-full max-w-full flex-1 flex-grow px-4 text-right">
+        <app-refresh-btn [isLoading]="isLoading" (refreshButtonClicked)="onRefreshClick()"></app-refresh-btn>
+
+        <!-- <button
+          class="
+            mr-1
+            mb-1
+            rounded
+            bg-sky-500
+            px-3
+            py-1
+            text-xs
+            font-bold
+            uppercase
+            text-white
+            outline-none
+            transition-all
+            duration-150
+            ease-linear
+            focus:outline-none
+            active:bg-sky-600
+          "
+          type="button"
+          (refreshButtonClicked)="onRefreshClick()"
+        >
+          Refresh
+        </button> -->
+      </div>
+    </div>
+  </div>
+  <div class="block w-full overflow-x-auto">
+    <!-- Projects table -->
+    <table class="w-full border-collapse items-center bg-transparent">
+      <!-- <thead class="thead-light">
+        <tr>
+          <th
+            class="
+              whitespace-nowrap
+              border border-l-0 border-r-0 border-solid border-sky-100
+              bg-sky-50
+              px-6
+              py-3
+              text-left
+              align-middle
+              text-xs
+              font-semibold
+              uppercase
+              text-sky-500
+            "
+          >
+            Referral
+          </th>
+          <th
+            class="
+              whitespace-nowrap
+              border border-l-0 border-r-0 border-solid border-sky-100
+              bg-sky-50
+              px-6
+              py-3
+              text-left
+              align-middle
+              text-xs
+              font-semibold
+              uppercase
+              text-sky-500
+            "
+          >
+            Visitors
+          </th>
+          <th
+            class="
+              min-w-140-px
+              whitespace-nowrap
+              border border-l-0 border-r-0 border-solid border-sky-100
+              bg-sky-50
+              px-6
+              py-3
+              text-left
+              align-middle
+              text-xs
+              font-semibold
+              uppercase
+              text-sky-500
+            "
+          ></th>
+        </tr>
+      </thead> -->
+      <tbody>
+        <tr *ngFor="let player of lineup; let i = index" [attr.data-index]="i" tabindex="-1" (click)="onPlayerClick(player)">
+          <th class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-left align-middle text-xs">
+            <img width="48" height="35" role="presentation" class="w-13 h-9 rounded-full text-center text-xs text-gray-500" [src]="player?.img" [alt]="player?.name" />
+          </th>
+          <td class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 align-middle text-xs">{{ player.name }}</td>
+          <td class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 align-middle text-xs">
+            <!-- <div class="flex items-center">
+              <span class="mr-2">60%</span>
+              <div class="relative w-full">
+                <div class="flex h-2 overflow-hidden rounded bg-red-200 text-xs">
+                  <div style="width: 60%" class="flex flex-col justify-center whitespace-nowrap bg-red-500 text-center text-white shadow-none"></div>
+                </div>
+              </div>
+            </div> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

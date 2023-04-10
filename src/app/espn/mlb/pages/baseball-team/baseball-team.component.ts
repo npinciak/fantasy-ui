@@ -6,7 +6,7 @@ import { PlayerDialog } from '@app/espn/models/player-dialog-component.model';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { BaseballStat, BATTER_STATS_LIST, MLB_STATS_MAP, PITCHER_STATS_LIST } from 'sports-ui-sdk';
+import { BATTER_STATS_LIST, BaseballStat, MLB_STATS_MAP, PITCHER_STATS_LIST } from 'sports-ui-sdk';
 import { FantasyBaseballPlayerNews } from '../../actions/fantasy-baseball-player-news.actions';
 import {
   BATTER_STATS_HEADERS,
@@ -20,6 +20,7 @@ import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-leagu
 import { FantasyBaseballPlayerNewsFacade } from '../../facade/fantasy-baseball-player-news.facade';
 import { FantasyBaseballTeamLiveFacade } from '../../facade/fantasy-baseball-team-live.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
+import { FantasyBaseballScoringPeriod } from '../../fantasy-baseball-scoring-period';
 import { BaseballPlayer } from '../../models/baseball-player.model';
 
 @Component({
@@ -53,9 +54,7 @@ export class BaseballTeamComponent {
   selectedPitcherStatXAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.SO);
   selectedPitcherStatYAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.APP);
 
-  scoringPeriodId = '002022';
-
-  statPeriod$ = new BehaviorSubject<string>('002022');
+  statPeriod$ = new BehaviorSubject<string>(FantasyBaseballScoringPeriod.season('2023'));
   selectedBatterStatXAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.wOBA);
   selectedBatterStatYAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.AB);
 
@@ -122,25 +121,28 @@ export class BaseballTeamComponent {
     private dialog: MatDialog
   ) {}
 
-  async onRefreshClick() {
+  async onRefreshClick(): Promise<void> {
     try {
       this.isLoading$.next(true);
+
       await this.fantasyBaseballLeagueFacade.refreshCurrentLeague().toPromise();
-      this.isLoading$.next(false);
+      setTimeout(async () => {
+        this.isLoading$.next(false);
+      }, 2000);
     } catch (e) {
       this.isLoading$.next(false);
     }
   }
 
-  onLiveScoringSelectChange(isChecked: boolean) {
+  onLiveScoringSelectChange(isChecked: boolean): void {
     this.isLiveScore$.next(isChecked);
   }
 
-  onBatterGraphSelectChange(isChecked: boolean) {
+  onBatterGraphSelectChange(isChecked: boolean): void {
     this.isBatterScatterChart$.next(isChecked);
   }
 
-  onPitcherGraphSelectChange(isChecked: boolean) {
+  onPitcherGraphSelectChange(isChecked: boolean): void {
     this.isPitcherScatterChart$.next(isChecked);
   }
 

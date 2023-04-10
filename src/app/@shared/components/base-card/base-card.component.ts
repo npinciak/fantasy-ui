@@ -9,7 +9,7 @@ export class BaseCardComponent implements OnInit {
   @Input() subtitle = 'Subtitle';
   @Input() titleColor = 'text-orange-400';
   @Input() subTitleColor = 'text-orange-700';
-  @Input() height = 'height: 350px';
+  @Input() height = null;
 
   constructor() {}
 

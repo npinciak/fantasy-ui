@@ -1,15 +1,37 @@
 <app-page-layout>
-  <div sidebar>
-    <app-league-scoreboard
-      [teams]="fantasyBaseballTeamLiveFacade.standings$ | async"
-      (refreshClicked)="fantasyBaseballLeagueFacade.refreshCurrentLeague()"
-    ></app-league-scoreboard>
+  <div statsHeader>
+    <div class="relative bg-sky-700 pb-32 pt-12 md:pt-32">
+      <div class="mx-auto w-full px-4 md:px-10">
+        <div>
+          <!-- Card stats -->
+          <div class="flex flex-wrap">
+            <div class="w-full px-4 lg:w-6/12 xl:w-3/12"><app-base-card></app-base-card></div>
+            <div class="w-full px-4 lg:w-6/12 xl:w-3/12"><app-base-card></app-base-card></div>
+            <div class="w-full px-4 lg:w-6/12 xl:w-3/12"><app-base-card></app-base-card></div>
+            <div class="w-full px-4 lg:w-6/12 xl:w-3/12"><app-base-card></app-base-card></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div main>
-    <app-espn-standings-table
-      [data]="fantasyBaseballTeamLiveFacade.standings$ | async"
-      [rows]="LEAGUE_STANDINGS_ROWS"
-      [headers]="LEAGUE_STANDINGS_HEADERS"
-    ></app-espn-standings-table>
+    <div class="flex flex-wrap">
+      <div class="mb-12 w-full px-4 xl:mb-0 xl:w-8/12">
+        <app-base-card>
+          <app-espn-standings-table
+            [data]="fantasyBaseballTeamLiveFacade.standings$ | async"
+            [rows]="LEAGUE_STANDINGS_ROWS"
+            [headers]="LEAGUE_STANDINGS_HEADERS"
+            (navigateToTeam)="onNavigateToTeam($event)"
+          ></app-espn-standings-table>
+        </app-base-card>
+      </div>
+      <div class="w-full px-4 xl:w-4/12">
+        <app-league-scoreboard
+          [teams]="fantasyBaseballTeamLiveFacade.standings$ | async"
+          (refreshClicked)="fantasyBaseballLeagueFacade.refreshCurrentLeague()"
+        ></app-league-scoreboard>
+      </div>
+    </div>
   </div>
 </app-page-layout>

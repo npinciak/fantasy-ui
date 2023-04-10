@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { LEAGUE_STANDINGS_HEADERS, LEAGUE_STANDINGS_ROWS } from '../../consts/tables.const';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
 import { FantasyBaseballTeamLiveFacade } from '../../facade/fantasy-baseball-team-live.facade';
@@ -12,9 +13,14 @@ export class BaseballHomeComponent implements OnInit {
   readonly LEAGUE_STANDINGS_HEADERS = LEAGUE_STANDINGS_HEADERS;
 
   constructor(
+    readonly routerFacade: RouterFacade,
     readonly fantasyBaseballTeamLiveFacade: FantasyBaseballTeamLiveFacade,
     readonly fantasyBaseballLeagueFacade: FantasyBaseballLeagueFacade
   ) {}
 
   ngOnInit(): void {}
+
+  onNavigateToTeam(teamId: string) {
+    this.routerFacade.navigateToFantasyTeam(teamId);
+  }
 }

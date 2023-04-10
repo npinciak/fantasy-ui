@@ -1,88 +1,112 @@
 <app-page-layout>
-  <div sidebar>
-    <div *ngIf="(userEmail$ | async) == null">
-      <app-login
-        [email]="email$ | async"
-        [password]="password$ | async"
-        [isFormValid]="isFormValid$ | async"
-        (signInClicked)="onSignIn()"
-        (passwordInputChanged)="passwordInputChange($event)"
-        (emailInputChanged)="emailInputChange($event)"
-      ></app-login>
-    </div>
-    <div>
-      <div *ngIf="userEmail$ | async" class="rounded-lg border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-800">
-        <div class="flex flex-col text-center" style="align-items: center">
-          <!-- <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" style="border-radius: 50%" width="150" /> -->
-          <div class="mt-3">
-            <!-- <p>Email: {{ (userEmail$ | async) ?? 'No Email' }}</p> -->
-            <div>
-              <div class="mb-5">
-                <h4>{{ (userEmail$ | async) ?? 'No Email' }}</h4>
-              </div>
-
-              <!-- <p class="text-secondary mb-1">Full Stack Developer</p>
-              <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p> -->
-
-              <button
-                *ngIf="userEmail$ | async"
-                type="button"
-                class="
-                  mr-2
-                  mb-2
-                  rounded-lg
-                  border border-gray-200
-                  bg-white
-                  py-2.5
-                  px-5
-                  text-sm
-                  font-medium
-                  text-gray-900
-                  hover:bg-gray-100 hover:text-blue-700
-                  focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200
-                  dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700
-                "
-                (click)="authenticationFacade.logout()"
-              >
-                Logout
-              </button>
-              <button
-                [disabled]="true"
-                [class.disabled:opacity-50]="true"
-                [class.hover:cursor-not-allowed]="true"
-                type="button"
-                class="
-                  mr-2
-                  mb-2
-                  rounded-lg
-                  border border-gray-200
-                  bg-white
-                  py-2.5
-                  px-5
-                  text-sm
-                  font-medium
-                  text-gray-900
-                  hover:bg-gray-100 hover:text-blue-700
-                  focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200
-                  dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700
-                "
-              >
-                Message
-              </button>
-            </div>
+  <div statsHeader>
+    <!-- Header -->
+    <div class="relative bg-sky-800 pb-32 pt-12 md:pt-32">
+      <div class="mx-auto w-full px-4 md:px-10">
+        <div>
+          <!-- Card stats -->
+          <div class="flex flex-wrap">
+            <div class="w-full px-4 lg:w-6/12 xl:w-3/12"><app-base-card></app-base-card></div>
+            <div class="w-full px-4 lg:w-6/12 xl:w-3/12"><app-base-card></app-base-card></div>
+            <div class="w-full px-4 lg:w-6/12 xl:w-3/12"><app-base-card></app-base-card></div>
+            <div class="w-full px-4 lg:w-6/12 xl:w-3/12"><app-base-card></app-base-card></div>
           </div>
         </div>
       </div>
     </div>
+    <div></div>
   </div>
-  <div main class="flex flex-col gap-20">
-    <app-leagues-table
-      [data]="allLeagues$ | async"
-      [rows]="LEAGUE_ROWS"
-      [headers]="LEAGUE_HEADERS"
-      (addLeague)="onAddLeague()"
-      (removeLeague)="onRemoveLeague($event)"
-      (navigateToLeague)="onNavigateToLeague($event)"
-    ></app-leagues-table>
+
+  <div main>
+    <div class="flex flex-wrap">
+      <div class="mb-12 w-full px-4 xl:mb-0 xl:w-8/12">
+        <app-base-card>
+          <app-leagues-table
+            [data]="allLeagues$ | async"
+            [rows]="LEAGUE_ROWS"
+            [headers]="LEAGUE_HEADERS"
+            (addLeague)="onAddLeague()"
+            (removeLeague)="onRemoveLeague($event)"
+            (navigateToLeague)="onNavigateToLeague($event)"
+          ></app-leagues-table>
+        </app-base-card>
+      </div>
+      <div class="w-full px-4 xl:w-4/12">
+        <app-base-card>
+          <app-login
+            *ngIf="(userEmail$ | async) == null; else profile"
+            [email]="email$ | async"
+            [password]="password$ | async"
+            [isFormValid]="isFormValid$ | async"
+            (signInClicked)="onSignIn()"
+            (passwordInputChanged)="passwordInputChange($event)"
+            (emailInputChanged)="emailInputChange($event)"
+          ></app-login>
+        </app-base-card>
+
+        <ng-template #profile>
+          <div class="flex flex-col text-center" style="align-items: center">
+            <!-- <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" style="border-radius: 50%" width="150" /> -->
+            <div class="mt-3">
+              <!-- <p>Email: {{ (userEmail$ | async) ?? 'No Email' }}</p> -->
+              <div>
+                <div class="mb-5">
+                  <h4>{{ (userEmail$ | async) ?? 'No Email' }}</h4>
+                </div>
+
+                <!-- <p class="text-secondary mb-1">Full Stack Developer</p>
+                  <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p> -->
+
+                <button
+                  *ngIf="userEmail$ | async"
+                  type="button"
+                  class="
+                    mr-2
+                    mb-2
+                    rounded-lg
+                    border border-gray-200
+                    bg-white
+                    py-2.5
+                    px-5
+                    text-sm
+                    font-medium
+                    text-gray-900
+                    hover:bg-gray-100 hover:text-blue-700
+                    focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200
+                    dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700
+                  "
+                  (click)="authenticationFacade.logout()"
+                >
+                  Logout
+                </button>
+                <button
+                  [disabled]="true"
+                  [class.disabled:opacity-50]="true"
+                  [class.hover:cursor-not-allowed]="true"
+                  type="button"
+                  class="
+                    mr-2
+                    mb-2
+                    rounded-lg
+                    border border-gray-200
+                    bg-white
+                    py-2.5
+                    px-5
+                    text-sm
+                    font-medium
+                    text-gray-900
+                    hover:bg-gray-100 hover:text-blue-700
+                    focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200
+                    dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700
+                  "
+                >
+                  Message
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
   </div>
 </app-page-layout>
