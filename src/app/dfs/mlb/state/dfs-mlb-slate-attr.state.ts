@@ -38,7 +38,7 @@ export class DailyFantasyMlbSlateAttrState {
   ): Promise<void> {
     const { teams, players } = await this.slateService.getGameAttrBySlateId({ sport, site, slate }).toPromise();
 
-    this.store.dispatch([new DfsMlbSlatePlayer.ClearAndAdd(players)]);
+    this.store.dispatch([new DfsMlbSlatePlayer.AddOrUpdate(players)]);
 
     setState({ slate, site });
   }

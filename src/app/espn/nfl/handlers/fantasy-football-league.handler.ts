@@ -27,8 +27,8 @@ export class FantasyFootballLeagueActionHandler {
 
       await this.store
         .dispatch([
-          new FantasyFootballTeam.ClearAndAdd(teams),
-          new FantasyFootballSchedule.ClearAndAdd(schedule),
+          new FantasyFootballTeam.AddOrUpdate(teams),
+          new FantasyFootballSchedule.AddOrUpdate(schedule),
           new FantasyFootballLeague.SetLeague({ state }),
         ])
         .toPromise();

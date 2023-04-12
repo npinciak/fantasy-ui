@@ -8,7 +8,10 @@ import { FantasyBaseballPlayerNewsSelector } from '../selectors/fantasy-baseball
 @Injectable({
   providedIn: 'root',
 })
-export class FantasyBaseballPlayerNewsFacade extends GenericFacade(FantasyBaseballPlayerNewsSelector) {
+export class FantasyBaseballPlayerNewsFacade extends GenericFacade({
+  selectorClass: FantasyBaseballPlayerNewsSelector,
+  actionHandler: FantasyBaseballPlayerNews,
+}) {
   constructor(private store: Store) {
     super();
   }

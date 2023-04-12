@@ -58,22 +58,22 @@ export class DfsSlateAttributesState {
     const wrStatGroup = exists(statGroups) ? statGroups.wr : ([] as PlayerProfiler[]);
     const teStatGroup = exists(statGroups) ? statGroups.te : ([] as PlayerProfiler[]);
 
-    this.store.dispatch([new DfsWeather.ClearAndAdd(weather)]);
+    this.store.dispatch([new DfsWeather.AddOrUpdate(weather)]);
 
     switch (sport) {
       case 'mlb':
-        this.store.dispatch([new DfsMlbSlatePlayer.ClearAndAdd(players), new DfsMlbSlateTeamDetails.ClearAndAdd(teams)]);
+        this.store.dispatch([new DfsMlbSlatePlayer.AddOrUpdate(players), new DfsMlbSlateTeamDetails.AddOrUpdate(teams)]);
 
         break;
       case 'nfl':
         await this.store
           .dispatch([
-            new DfsNflSlatePlayerAttributes.ClearAndAdd(players),
-            new DfsNflSlateTeamDetails.ClearAndAdd(teams as SlateTeamNfl[]),
-            new DfsNflProfilerQb.ClearAndAdd(qbStatGroup),
-            new DfsNflProfilerRb.ClearAndAdd(rbStatGroup),
-            new DfsNflProfilerWr.ClearAndAdd(wrStatGroup),
-            new DfsNflProfilerTe.ClearAndAdd(teStatGroup),
+            new DfsNflSlatePlayerAttributes.AddOrUpdate(players),
+            new DfsNflSlateTeamDetails.AddOrUpdate(teams as SlateTeamNfl[]),
+            new DfsNflProfilerQb.AddOrUpdate(qbStatGroup),
+            new DfsNflProfilerRb.AddOrUpdate(rbStatGroup),
+            new DfsNflProfilerWr.AddOrUpdate(wrStatGroup),
+            new DfsNflProfilerTe.AddOrUpdate(teStatGroup),
             new DfsNflGridIron.Fetch({ site }),
           ])
           .toPromise();

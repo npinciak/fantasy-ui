@@ -9,7 +9,7 @@ import { SportsUiLeaguesSelector } from '../selectors/sports-ui-leagues.selector
 @Injectable({
   providedIn: 'root',
 })
-export class SportsUiLeaguesFacade extends GenericFacade(SportsUiLeaguesSelector) {
+export class SportsUiLeaguesFacade extends GenericFacade({ selectorClass: SportsUiLeaguesSelector, actionHandler: SportsUiLeagues }) {
   allLeagues$ = select(SportsUiLeaguesSelector.getList);
 
   constructor(private store: Store) {

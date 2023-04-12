@@ -30,7 +30,7 @@ export class DfsSlatesState extends GenericState({
 
     const slates = Object.values(map[site]) as SiteSlateEntity[];
 
-    await this.store.dispatch([new DfsSlates.ClearAndAdd(slates)]).toPromise();
+    await this.store.dispatch([new DfsSlates.AddOrUpdate(slates)]).toPromise();
 
     if (slates.length <= 0) return;
 

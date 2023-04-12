@@ -9,11 +9,6 @@ export function GenericActions<T = [], U = Record<string, unknown>>({ stateName 
       constructor(public payload: T[]) {}
     };
 
-    static ClearAndAdd: GenericPayloadActionClass<T> = class {
-      public static readonly type = `[${stateName}] ClearAndAdd`;
-      constructor(public payload: T[]) {}
-    };
-
     static Fetch: GenericPayloadFetchActionClass<U> = class {
       public static readonly type = `[${stateName}] Fetch`;
       constructor(public payload: U) {}

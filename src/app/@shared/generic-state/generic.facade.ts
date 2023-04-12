@@ -1,14 +1,18 @@
+import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { GenericFacade, GenericSelectorClass, IGenericActionsClass } from './generic.model';
 
-export function GenericFacade<T, U = Record<string, unknown>>(
-  selectorClass: GenericSelectorClass<T>,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  actionHandler?: IGenericActionsClass<T, U>
-): {
+export function GenericFacade<T, U = Record<string, unknown>>({
+  selectorClass,
+  actionHandler,
+}: {
+  selectorClass: GenericSelectorClass<T>;
+  actionHandler: IGenericActionsClass<T, U>;
+}): {
   new (...args: any[]): GenericFacade<T>;
 } {
+  @Injectable()
   class GenericFacadeBase implements GenericFacade<T> {
     getMap$: Observable<Record<string, T>>;
     getList$: Observable<T[]>;
@@ -16,18 +20,17 @@ export function GenericFacade<T, U = Record<string, unknown>>(
     getIdList$: Observable<string[]>;
     getIdSet$: Observable<Set<string>>;
 
+    static fetch = actionHandler.Fetch;
+    static addOrUpdate = actionHandler.AddOrUpdate;
+
     constructor(private store: Store) {}
 
     addOrUpdate(entities: T[]): Observable<void> {
-      throw new Error('Method not implemented.');
-    }
-
-    clearAndAdd(entities: T[]): Observable<void> {
-      throw new Error('Method not implemented.');
+      return this.store.dispatch([new GenericFacadeBase.addOrUpdate(entities)]);
     }
 
     fetch(): Observable<void> {
-      throw new Error('Method not implemented.');
+      return this.store.dispatch([new GenericFacadeBase.fetch()]);
     }
 
     getList(): T[] {

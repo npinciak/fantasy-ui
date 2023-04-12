@@ -21,7 +21,7 @@ export class SportsUiLeaguesState extends GenericState({
   @Action(SportsUiLeagues.Fetch)
   async fetchEspnLeagues(_: StateContext<GenericStateClass<SportsUiClientLeague>>): Promise<void> {
     const leagues = await this.leagueClientService.getAll();
-    this.store.dispatch([new SportsUiLeagues.ClearAndAdd(leagues)]);
+    this.store.dispatch([new SportsUiLeagues.AddOrUpdate(leagues)]);
   }
 
   @Action(SportsUiLeagues.DeleteLeague)

@@ -21,7 +21,7 @@ export function GenericState<EntityType, IdProperty extends PropertyOfType<Entit
   @Injectable()
   class GenericStateBase {
     static addOrUpdate = actionHandler.AddOrUpdate;
-    static clearAndAdd = actionHandler.ClearAndAdd;
+    static AddOrUpdate = actionHandler.AddOrUpdate;
 
     private static getId = (t: EntityType) => t[idProperty] as string;
 
@@ -30,8 +30,8 @@ export function GenericState<EntityType, IdProperty extends PropertyOfType<Entit
       setState(patchMap(payload, GenericStateBase.getId));
     }
 
-    @Action(GenericStateBase.clearAndAdd)
-    clearAndAdd({ setState }: StateContext<GenericStateModel<EntityType>>, { payload }: { payload: EntityType[] }): void {
+    @Action(GenericStateBase.AddOrUpdate)
+    AddOrUpdate({ setState }: StateContext<GenericStateModel<EntityType>>, { payload }: { payload: EntityType[] }): void {
       setState(setMap(payload, GenericStateBase.getId));
     }
   }

@@ -20,7 +20,7 @@ export class FantasyBaseballEventsState extends GenericState({
   fetchBaseballEvents(): Observable<void> {
     return this.mlbService.baseballEvents().pipe(
       map(events => {
-        this.store.dispatch(new FantasyBaseballEvents.ClearAndAdd(events));
+        this.store.dispatch(new FantasyBaseballEvents.AddOrUpdate(events));
       })
     );
   }

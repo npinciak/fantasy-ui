@@ -7,7 +7,7 @@ export interface GenericStateModel<T> {
 
 export interface GenericStateClass<T> {
   addOrUpdate: GenericPayloadActionClass<T>;
-  clearAndAdd: GenericPayloadActionClass<T>;
+  AddOrUpdate: GenericPayloadActionClass<T>;
   new (...args: any[]): any;
 }
 
@@ -18,7 +18,6 @@ export interface GenericFacade<T> {
   getIdList$: Observable<string[]>;
   getIdSet$: Observable<Set<string>>;
   addOrUpdate(entities: T[]): Observable<void>;
-  clearAndAdd(entities: T[]): Observable<void>;
   fetch(): Observable<void>;
   getById(id: string | null): T | null;
   getList(): T[];
@@ -38,7 +37,6 @@ export interface GenericSelectorClass<T> {
 export interface IGenericActionsClass<T, U> {
   stateName: string;
   AddOrUpdate: GenericPayloadActionClass<T>;
-  ClearAndAdd: GenericPayloadActionClass<T>;
   Fetch: GenericPayloadFetchActionClass<U>;
   new (...args: any[]): any;
 }

@@ -22,6 +22,6 @@ export class DfsSlatePlayersState extends GenericState({
   async fetchPlayers(_: StateContext<GenericStateModel<SlatePlayer>>, { payload }: { payload: { slatePath: string } }): Promise<void> {
     const { slatePath } = payload;
     const { players, schedule, teams } = await this.playerService.playersBySlate({ slatePath }).toPromise();
-    this.store.dispatch([new DfsSlatePlayers.ClearAndAdd(players), new DfsMatchups.ClearAndAdd(schedule), new DfsTeams.ClearAndAdd(teams)]);
+    this.store.dispatch([new DfsSlatePlayers.AddOrUpdate(players), new DfsMatchups.AddOrUpdate(schedule), new DfsTeams.AddOrUpdate(teams)]);
   }
 }

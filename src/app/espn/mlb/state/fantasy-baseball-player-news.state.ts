@@ -21,7 +21,7 @@ export class FantasyBaseballPlayerNewsState extends GenericState({
   fetchBaseballPlayerNews(_: StateContext<GenericStateClass<EspnClient.PlayerNewsFeedEntity>>, { payload: { playerId } }) {
     return this.mlbService.baseballPlayerNews(playerId).pipe(
       map(news => {
-        this.store.dispatch([new FantasyBaseballPlayerNews.ClearAndAdd(news)]);
+        this.store.dispatch([new FantasyBaseballPlayerNews.AddOrUpdate(news)]);
       })
     );
   }

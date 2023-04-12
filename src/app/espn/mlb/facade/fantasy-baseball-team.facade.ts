@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { GenericFacade } from '@app/@shared/generic-state/generic.facade';
 import { select } from '@app/@shared/models/typed-select';
+import { FantasyBaseballTeams } from '../actions/fantasy-baseball-team.actions';
 import { FantasyBaseballTeamSelector } from '../selectors/fantasy-baseball-team.selector';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FantasyBaseballTeamFacade extends GenericFacade(FantasyBaseballTeamSelector) {
+export class FantasyBaseballTeamFacade extends GenericFacade({
+  selectorClass: FantasyBaseballTeamSelector,
+  actionHandler: FantasyBaseballTeams,
+}) {
   teamInfo$ = select(FantasyBaseballTeamSelector.getTeamInfoByTeamId);
 
   currentRoster$ = select(FantasyBaseballTeamSelector.getCurrentRosterByTeamId);
@@ -20,8 +24,6 @@ export class FantasyBaseballTeamFacade extends GenericFacade(FantasyBaseballTeam
   batterChartData$ = select(FantasyBaseballTeamSelector.getBatterStatsLineChartData);
 
   batterStatsScatterChartData$ = select(FantasyBaseballTeamSelector.getBatterStatsScatterChartData);
-
-
 
   battingStats$ = select(FantasyBaseballTeamSelector.getTeamBatterStats);
 

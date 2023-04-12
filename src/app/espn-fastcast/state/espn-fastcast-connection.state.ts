@@ -109,10 +109,10 @@ export class EspnFastcastConnectionState {
     const { sports, leagues, events, teams } = await this.espnService.fetchFastcast(uri).toPromise();
 
     this.store.dispatch([
-      new FastcastSports.ClearAndAdd(sports),
-      new FastcastLeagues.ClearAndAdd(leagues),
-      new FastcastEvents.ClearAndAdd(events),
-      new FastcastTeams.ClearAndAdd(teams),
+      new FastcastSports.AddOrUpdate(sports),
+      new FastcastLeagues.AddOrUpdate(leagues),
+      new FastcastEvents.AddOrUpdate(events),
+      new FastcastTeams.AddOrUpdate(teams),
     ]);
   }
 
@@ -126,10 +126,10 @@ export class EspnFastcastConnectionState {
       .toPromise();
 
     this.store.dispatch([
-      new FastcastSports.ClearAndAdd(sports),
-      new FastcastLeagues.ClearAndAdd(leagues),
-      new FastcastEvents.ClearAndAdd(events),
-      new FastcastTeams.ClearAndAdd(teams),
+      new FastcastSports.AddOrUpdate(sports),
+      new FastcastLeagues.AddOrUpdate(leagues),
+      new FastcastEvents.AddOrUpdate(events),
+      new FastcastTeams.AddOrUpdate(teams),
       new FastCastConnection.SetSelectedLeague({ leagueSlug: leagues[0].id }),
     ]);
   }

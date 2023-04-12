@@ -57,6 +57,6 @@ export class FantasyFootballFreeAgentActionHandler {
     };
     // this.service
     //   .fetchFreeAgents({ leagueId, scoringPeriodId, filter })
-    //   .pipe(map(freeAgents => this.store.dispatch([new FantasyFootballFreeAgent.ClearAndAdd(freeAgents)])));
+    //   .pipe(map(freeAgents => this.store.dispatch([new FantasyFootballFreeAgent.AddOrUpdate(freeAgents)])));
   }
 }

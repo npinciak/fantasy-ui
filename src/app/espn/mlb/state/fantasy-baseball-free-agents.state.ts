@@ -60,7 +60,7 @@ export class FantasyBaseballFreeAgentsState extends GenericState({
       },
     };
     const freeAgents = await this.mlbService.baseballFreeAgents({ leagueId, scoringPeriodId, filter }).toPromise();
-    this.store.dispatch([new FantasyBaseballFreeAgents.ClearAndAdd(freeAgents)]);
+    this.store.dispatch([new FantasyBaseballFreeAgents.AddOrUpdate(freeAgents)]);
   }
 }
 // :{"value":5,"additionalValue":["002022","102022","002021","012022","022022","032022","042022","062022","010002022"]}

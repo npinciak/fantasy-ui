@@ -25,8 +25,8 @@ export class FantasyBaseballLeagueActionHandler {
 
       const state = { id, scoringPeriodId, matchupPeriodCount, firstScoringPeriod, finalScoringPeriod, seasonId };
       this.store.dispatch([
-        new FantasyBaseballTeamsLive.ClearAndAdd(teamsLive),
-        new FantasyBaseballTeams.ClearAndAdd(teams),
+        new FantasyBaseballTeamsLive.AddOrUpdate(teamsLive),
+        new FantasyBaseballTeams.AddOrUpdate(teams),
         new FantasyBaseballLeague.SetLeague({ state }),
       ]);
     } catch (e) {}

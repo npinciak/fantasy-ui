@@ -23,6 +23,6 @@ export class DfsNflGridIronState extends GenericState({
   ): Promise<void> {
     const { site } = payload;
     const players = await this.playerService.getGridIronPlayers({ site }).toPromise();
-    this.store.dispatch([new DfsNflGridIron.ClearAndAdd(players)]);
+    this.store.dispatch([new DfsNflGridIron.AddOrUpdate(players)]);
   }
 }

@@ -9,7 +9,10 @@ import { FantasyFootballFreeAgentsSelectors } from '../selectors/fantasy-footbal
 @Injectable({
   providedIn: 'root',
 })
-export class FantasyFootballFreeAgentsFacade extends GenericFacade(FantasyFootballFreeAgentsSelectors) {
+export class FantasyFootballFreeAgentsFacade extends GenericFacade({
+  selectorClass: FantasyFootballFreeAgentsSelectors,
+  actionHandler: FantasyFootballFreeAgent,
+}) {
   freeAgentsScatter$ = select(FantasyFootballFreeAgentsSelectors.getFreeAgentsScatter);
   freeAgentsStats$ = select(FantasyFootballFreeAgentsSelectors.getFreeAgentsStats);
   compareTeamAndFreeAgentList$ = select(FantasyFootballFreeAgentsSelectors.getCompareTeamAndFreeAgentList);

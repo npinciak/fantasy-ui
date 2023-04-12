@@ -7,7 +7,10 @@ import { DailyFantasyMlbPlayerSlateAttributeSelectors } from '../selectors/daily
 @Injectable({
   providedIn: 'root',
 })
-export class DailyFantasyMlbPlayerSlateAttrFacade extends GenericFacade(DailyFantasyMlbPlayerSlateAttributeSelectors) {
+export class DailyFantasyMlbPlayerSlateAttrFacade extends GenericFacade({
+  selectorClass: DailyFantasyMlbPlayerSlateAttributeSelectors,
+  actionHandler: DfsMlbSlatePlayer,
+}) {
   constructor(private store: Store) {
     super();
   }
