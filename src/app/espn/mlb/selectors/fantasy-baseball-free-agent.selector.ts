@@ -1,3 +1,5 @@
+import { FangraphsWobaFipConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
+import { FangraphsConstantsSelector } from '@app/@shared/fangraphs/fangraphs-const.selector';
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { linearRegression, transformScatterGraphData } from '@app/@shared/helpers/graph.helpers';
 import { exists, existsFilter, pickData } from '@app/@shared/utilities/utilities.m';
@@ -20,10 +22,16 @@ export class FantasyBaseballFreeAgentSelector extends GenericSelector(FantasyBas
     return players.filter(p => p.isPitcher);
   }
 
-  @Selector([FantasyBaseballFreeAgentSelector.getFreeAgentBatterList])
-  static getFreeAgentBatterStats(players: BaseballPlayer[]): (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[] {
+  @Selector([FantasyBaseballFreeAgentSelector.getFreeAgentBatterList, FangraphsConstantsSelector.getById])
+  static getFreeAgentBatterStats(
+    players: BaseballPlayer[],
+    getSeasonConsts: (id: string | null) => FangraphsWobaFipConstants
+  ): (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[] {
     return (statPeriod: string, seasonId: string) => {
-      return existsFilter(players.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId)));
+      const seasonConst = getSeasonConsts(seasonId);
+      return existsFilter(
+        players.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonConst))
+      );
     };
   }
 
@@ -90,10 +98,16 @@ export class FantasyBaseballFreeAgentSelector extends GenericSelector(FantasyBas
     };
   }
 
-  @Selector([FantasyBaseballFreeAgentSelector.getFreeAgentPitcherList])
-  static getFreeAgentPitcherStats(players: BaseballPlayer[]): (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[] {
+  @Selector([FantasyBaseballFreeAgentSelector.getFreeAgentPitcherList, FangraphsConstantsSelector.getById])
+  static getFreeAgentPitcherStats(
+    players: BaseballPlayer[],
+    getSeasonConsts: (id: string | null) => FangraphsWobaFipConstants
+  ): (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[] {
     return (statPeriod: string, seasonId: string) => {
-      return existsFilter(players.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId)));
+      const seasonConst = getSeasonConsts(seasonId);
+      return existsFilter(
+        players.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonConst))
+      );
     };
   }
 

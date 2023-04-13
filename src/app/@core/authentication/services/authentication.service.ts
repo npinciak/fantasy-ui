@@ -1,30 +1,17 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthError, AuthResponse, AuthSession, createClient, SupabaseClient, User, UserResponse } from '@supabase/supabase-js';
-import { environment } from 'src/environments/environment';
-
-interface Database {
-  public: {
-    Tables: {
-      Leagues: {
-        Row: any[]; // The data expected to be returned from a "select" statement.
-        Insert: {}; // The data expected passed to an "insert" statement.
-        Update: {}; // The data expected passed to an "update" statement.
-      };
-    };
-  };
-}
+import { SupaClientService } from '@app/@shared/supa/supa-client.service';
+import { AuthError, AuthResponse, AuthSession, User, UserResponse } from '@supabase/supabase-js';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthenticationService {
-  private supabase: SupabaseClient<Database>;
+export class AuthenticationService extends SupaClientService {
   private _session: AuthSession | null = null;
   private _user: User | null = null;
 
   constructor(private snackBar: MatSnackBar) {
-    this.supabase = createClient<Database>(environment.supaUrl, environment.supaKey);
+    super();
   }
 
   async getSession(): Promise<AuthSession | null> {

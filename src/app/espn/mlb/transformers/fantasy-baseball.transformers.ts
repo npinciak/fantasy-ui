@@ -6,8 +6,8 @@ import { isPitcher } from '../../espn-helpers';
 import { FantasyLeague } from '../../models/fantasy-league.model';
 import { EspnTransformers } from '../../transformers/espn-transformers.m';
 import { AdvStats } from '../class/advStats.class';
-import { MLB_WEIGHTED_STATS } from '../consts/weighted-stats.const';
 
+import { FangraphsWobaFipConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballLeague } from '../models/baseball-league.model';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
@@ -132,7 +132,7 @@ export function clientLeagueToBaseballLeague(res: EspnClient.BaseballLeague, gen
 export function transformToBaseballPlayerBatterStatsRow(
   player: BaseballPlayer,
   statPeriod: string,
-  seasonId: string
+  seasonConst: FangraphsWobaFipConstants
 ): BaseballPlayerStatsRow | null {
   const { id, name, injured, injuryStatus, img, team, position, lineupSlotId, percentChange, percentOwned } = player;
 
@@ -140,7 +140,6 @@ export function transformToBaseballPlayerBatterStatsRow(
   if (!exists(player.stats[statPeriod])) return null;
 
   const statsEntity = player.stats[statPeriod]!.stats;
-  const seasonConst = MLB_WEIGHTED_STATS[seasonId];
 
   const { fip, wOBA, wRAA, babip, iso, leftOnBasePercent } = new AdvStats({ seasonConst, statsEntity });
 

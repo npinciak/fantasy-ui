@@ -1,8 +1,10 @@
 import { RouterSelector } from '@app/@core/store/router/router.selectors';
+import { FangraphsWobaFipConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
+import { FangraphsConstantsSelector } from '@app/@shared/fangraphs/fangraphs-const.selector';
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { ScatterChartDataset, transformDataToScatterGraph } from '@app/@shared/helpers/graph.helpers';
 import { exists, existsFilter } from '@app/@shared/utilities/utilities.m';
-import { benchPlayersFilter, startingPlayersFilter } from '@app/espn/espn-helpers';
+import { benchPlayersFilter, injuredPlayersFilter, startingPlayersFilter } from '@app/espn/espn-helpers';
 import { Selector } from '@ngxs/store';
 import { BaseballStat, MLB_LINEUP_MAP, MLB_STATS_MAP } from 'sports-ui-sdk';
 import { BaseballEvent } from '../models/baseball-event.model';
@@ -83,12 +85,23 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
     return benchPlayersFilter(pitchers, MLB_LINEUP_MAP);
   }
 
-  @Selector([FantasyBaseballTeamSelector.getTeamBatters, FantasyBaseballLeagueSelector.slices.seasonId])
-  static getTeamBatterStats(batters: BaseballPlayer[], seasonId: string): (statPeriod: string) => BaseballPlayerStatsRow[] {
-    return (statPeriod: string) =>
-      existsFilter(batters.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId))).sort(
-        (a, b) => MLB_LINEUP_MAP[a.lineupSlotId].displayOrder - MLB_LINEUP_MAP[b.lineupSlotId].displayOrder
-      );
+  @Selector([FantasyBaseballTeamSelector.getTeamPitchers])
+  static getTeamInjuredReservePitchers(pitchers: BaseballPlayer[]): BaseballPlayer[] {
+    return injuredPlayersFilter(pitchers);
+  }
+
+  @Selector([FantasyBaseballTeamSelector.getTeamBatters, FantasyBaseballLeagueSelector.slices.seasonId, FangraphsConstantsSelector.getById])
+  static getTeamBatterStats(
+    batters: BaseballPlayer[],
+    seasonId: string,
+    getSeasonConsts: (id: string | null) => FangraphsWobaFipConstants
+  ): (statPeriod: string) => BaseballPlayerStatsRow[] {
+    return (statPeriod: string) => {
+      const seasonConst = getSeasonConsts(seasonId);
+      return existsFilter(
+        batters.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonConst))
+      ).sort((a, b) => MLB_LINEUP_MAP[a.lineupSlotId].displayOrder - MLB_LINEUP_MAP[b.lineupSlotId].displayOrder);
+    };
   }
 
   @Selector([FantasyBaseballTeamSelector.getTeamBatterStats, FantasyBaseballLeagueSelector.slices.seasonId])
@@ -130,10 +143,23 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
     };
   }
 
-  @Selector([FantasyBaseballTeamSelector.getTeamPitchers, FantasyBaseballLeagueSelector.slices.seasonId])
-  static getTeamPitcherStats(pitchers: BaseballPlayer[], seasonId: string): (statPeriod: string) => BaseballPlayerStatsRow[] {
-    return (statPeriod: string) =>
-      existsFilter(pitchers.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonId)));
+  @Selector([
+    FantasyBaseballTeamSelector.getTeamPitchers,
+    FantasyBaseballLeagueSelector.slices.seasonId,
+    FangraphsConstantsSelector.getById,
+  ])
+  static getTeamPitcherStats(
+    pitchers: BaseballPlayer[],
+    seasonId: string,
+    getSeasonConsts: (id: string | null) => FangraphsWobaFipConstants
+  ): (statPeriod: string) => BaseballPlayerStatsRow[] {
+    return (statPeriod: string) => {
+      const seasonConst = getSeasonConsts(seasonId);
+
+      return existsFilter(
+        pitchers.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonConst))
+      );
+    };
   }
 
   @Selector([FantasyBaseballTeamSelector.getTeamPitcherStats, FantasyBaseballLeagueSelector.slices.seasonId])
