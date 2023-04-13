@@ -12,6 +12,8 @@ import { httpInterceptorProviders } from './@core/interceptors';
 import { ShellModule } from './@core/shell/shell.module';
 import { CustomRouterStateSerializer } from './@core/store/router/router-state.serializer';
 import { RouterState } from './@core/store/router/router.state';
+import { FangraphsConstantsActionHandler } from './@shared/fangraphs/fangraphs-const.handler';
+import { FangraphsConstantsState } from './@shared/fangraphs/fangraphs-const.state';
 import { SharedModule } from './@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -52,7 +54,7 @@ const reduxDevtoolsExtensionOptions = {
     BrowserModule,
     HttpClientModule,
     // NgxsRouterPluginModule.forRoot(),
-    NgxsModule.forRoot([RouterState], {
+    NgxsModule.forRoot([RouterState, FangraphsConstantsState, FangraphsConstantsActionHandler], {
       developmentMode: !environment.production,
       selectorOptions: { injectContainerState: false, suppressErrors: false },
     }),
