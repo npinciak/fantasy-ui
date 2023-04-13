@@ -43,41 +43,4 @@ export class ShellComponent implements OnInit {
       seasontype: null,
     });
   }
-
-  get menu() {
-    return [
-      { action: () => this.navigateDraftkingsMlb(), label: 'DK MLB' },
-      // { action: () => this.navigateDraftkingsNfl(), label: 'DK NFL' },
-      { action: () => this.navigateDraftkingsNba(), label: 'DK NBA' },
-      { action: () => this.onNavigateToMyProfile(), label: 'Profile' },
-    ];
-  }
-
-  onNavigateToMyProfile() {
-    this.routerFacade.navigateToMyProfile();
-  }
-
-  onNavigateToEspnHome() {
-    this.routerFacade.navigateToEspnHome();
-  }
-
-  onNavigateToEspnLeagueHome() {
-    // this.routerFacade.navigateToLeagueHome(this.routerFacade.sport, this.routerFacade.leagueId,2022);
-  }
-
-  onNavigateToEspnFreeAgents() {
-    this.routerFacade.navigateToFantasyFreeAgents();
-  }
-
-  navigateDraftkingsNfl() {
-    this.routerFacade.navigateToDraftkingsBySport('nfl');
-  }
-
-  navigateDraftkingsMlb() {
-    this.routerFacade.navigateToDraftkingsBySport('mlb');
-  }
-
-  navigateDraftkingsNba() {
-    this.routerFacade.navigateToDraftkingsBySport('nba');
-  }
 }

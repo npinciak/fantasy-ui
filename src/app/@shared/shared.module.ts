@@ -14,6 +14,7 @@ import { LoadingSkeletonComponent } from './components/loading-skeleton/loading-
 import { NoDataComponent } from './components/no-data/no-data.component';
 import { PageLayoutComponent } from './components/page-layout/page-layout.component';
 import { RefreshBtnComponent } from './components/refresh-btn/refresh-btn.component';
+import { ShellNavComponent } from './components/shell-nav/shell-nav.component';
 import { StickyTableCellComponent } from './components/sticky-table-cell/sticky-table-cell.component';
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { StatPipe } from './pipes/stat-format.pipe';
@@ -33,6 +34,7 @@ import { StatPipe } from './pipes/stat-format.pipe';
     StatPipe,
     RefreshBtnComponent,
     ToggleComponent,
+    ShellNavComponent,
     BaseCardComponent,
     BaseChartComponent,
   ],
@@ -51,6 +53,7 @@ import { StatPipe } from './pipes/stat-format.pipe';
     PageLayoutComponent,
     RefreshBtnComponent,
     ToggleComponent,
+    ShellNavComponent,
     BaseCardComponent,
     BaseChartComponent,
   ],
