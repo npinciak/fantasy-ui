@@ -154,11 +154,17 @@ export function benchPlayersFilter<T extends FootballPlayer | BaseballPlayer>(pl
 
 export function startingPlayersFilter<T extends FootballPlayer | BaseballPlayer>(players: T[], lineupMap: EspnClient.LineupEntityMap): T[] {
   return players
-    .filter(p => lineupMap[p.lineupSlotId].starter)
+    .filter(
+      p =>
+        !lineupMap[p.lineupSlotId].bench &&
+        (p.injuryStatus === PLAYER_INJURY_STATUS.Active ||
+          p.injuryStatus === PLAYER_INJURY_STATUS.Probable ||
+          p.injuryStatus === PLAYER_INJURY_STATUS.Ques)
+    )
     .sort((a, b) => lineupMap[a.lineupSlotId].displayOrder - lineupMap[b.lineupSlotId].displayOrder);
 }
 
-export function injuredReservePlayersFilter<T extends FootballPlayer | BaseballPlayer>(players: T[]): T[] {
+export function injuredPlayersFilter<T extends FootballPlayer | BaseballPlayer>(players: T[]): T[] {
   return players.filter(p => p.injuryStatus === PLAYER_INJURY_STATUS.IR);
 }
 
