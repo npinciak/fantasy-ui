@@ -2,14 +2,13 @@
   <div class="mb-0 rounded-t bg-transparent px-4 py-3">
     <div class="flex flex-wrap items-center">
       <div class="relative w-full max-w-full flex-1 flex-grow">
-        <h6 class="mb-1 text-xs font-semibold uppercase" [ngClass]="titleColor">{{ title }}</h6>
-        <h2 class="text-xl font-semibold" [ngClass]="subTitleColor">{{ subtitle }}</h2>
+        <h6 *ngIf="title" class="mb-1 text-xs font-semibold uppercase" [ngClass]="titleColor">{{ title }}</h6>
+        <h2 *ngIf="subtitle" class="text-xl font-semibold" [ngClass]="subTitleColor">{{ subtitle }}</h2>
       </div>
     </div>
   </div>
   <div class="flex-auto p-4">
-
-    <div class="relative" [ngStyle]="{ 'height': height }">
+    <div class="relative" [ngStyle]="{ height: height }">
       <ng-content></ng-content>
     </div>
   </div>
