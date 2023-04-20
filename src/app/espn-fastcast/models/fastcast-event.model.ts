@@ -1,8 +1,8 @@
+import { ParsedUid } from '@app/espn/espn-helpers';
 import { EspnClient, EspnFastcastClient } from 'sports-ui-sdk/lib/espn/espn.m';
 import { FastcastEventTeam } from './fastcast-team.model';
 
 interface FastcastEventAttributes {
-  leagueId: string;
   timestamp: number;
   state: string | null;
   status: EspnClient.EventStatus | null;
@@ -15,12 +15,16 @@ interface FastcastEventAttributes {
   isHalftime: boolean;
   mlbSituation: MlbSituation | null;
   footballSituation: FootballSituation | null;
+  isTournament: boolean;
 }
 
 export type FastcastEvent = FastcastEventAttributes &
   Partial<EspnFastcastClient.Situation> &
   Pick<EspnFastcastClient.EventsEntity, 'id' | 'uid' | 'name' | 'shortName' | 'note' | 'seriesSummary' | 'link' | 'seasonType'> &
-  Pick<EspnFastcastClient.FullStatusType, 'completed'> & { odds: EspnFastcastClient.EspnClientOddsEntity | null };
+  Pick<EspnFastcastClient.FullStatusType, 'completed'> & {
+    odds: EspnFastcastClient.EspnClientOddsEntity | null;
+    eventIds: ParsedUid | null;
+  };
 
 export type FastcastEventMap = Record<string, FastcastEvent>;
 

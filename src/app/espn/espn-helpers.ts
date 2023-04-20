@@ -34,7 +34,7 @@ export function includeLeagues(id: string): boolean {
  * @returns boolean
  */
 export function excludeLeagues(id: string): boolean {
-  return new Set(['14', '102', '3923', '8097', '20226', '54', '19834', '19483', '19728']).has(id);
+  return new Set(['14', '102', '3923', '8097', '20226', '54', '19834', '19483', '19868', '19728']).has(id);
 }
 
 /**
@@ -97,14 +97,14 @@ export function transformDownDistancePositionText(downDistanceText: string | nul
 }
 
 /**
- * Transforms uid string to id
+ * Transforms uid string to league id
  *
  * @param uid
  * @returns
  *
- * @example transformUidToId('s:6~l:1~s:4~t:5') // '1'
+ * @example transformUidToLeagueId('s:6~l:1~s:4~t:5') // '1'
  */
-export function transformUidToId(uid: string | null): string | null {
+export function transformUidToLeagueId(uid: string | null): string | null {
   if (!uid) return null;
   return uid.split('~')[1].replace('l:', '');
 }
@@ -118,27 +118,48 @@ export function transformIdToUid(
   return `s:${sportId}~l:${leagueId}~t:${teamId}`;
 }
 
-// eslint-disable-next-line @typescript-eslint/unified-signatures
-export function flattenPlayerStats(stats: EspnClient.PlayerStatsYear[]): {
-  [year: string]: PlayerStatsYear | null;
-} | null;
-export function flattenPlayerStats(stats: EspnClient.PlayerStatsYear[] | undefined | EspnClient.PlayerStatsYear[] | null): {
-  [year: string]: PlayerStatsYear | null;
-} | null;
-export function flattenPlayerStats(stats?: EspnClient.PlayerStatsYear[] | null | undefined): {
-  [year: string]: PlayerStatsYear | null;
-} | null {
-  if (!exists(stats)) return null;
+/**
+ *
+ *
+ * @param str
+ * @returns
+ */
+export function parseUidStringToId(str: string): ParsedUid | null {
+  const tokens = str.split('~');
 
-  return stats.reduce(
-    (obj, val) => {
-      obj[val.id] = val;
-      return obj;
-    },
-    {} as {
-      [year: string]: PlayerStatsYear | null;
-    }
-  );
+  if (tokens.length !== 4) return null;
+
+  const [s, l, e, c] = tokens.map(token => {
+    const [key, value] = token.split(':');
+    if (key && value) return value;
+    return null;
+  });
+
+  if (s && l && e && c) return { sportId: s, leagueId: l, eventId: e, competitionId: c };
+
+  return null;
+}
+
+export type ParsedUid = {
+  sportId: string;
+  leagueId: string;
+  eventId: string;
+  competitionId: string;
+};
+
+/**
+ * Flatten player stats
+ *
+ * @param stats
+ * @returns
+ */
+export function flattenPlayerStats(stats?: EspnClient.PlayerStatsYear[] | null): Record<string, PlayerStatsYear | null> | null {
+  if (!stats) return null;
+
+  return stats.reduce<Record<string, PlayerStatsYear | null>>((result, stat) => {
+    result[stat.id] = stat;
+    return result;
+  }, {});
 }
 
 /**
