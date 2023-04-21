@@ -9,19 +9,14 @@ import { EspnFastcastConnectionSelectors } from '../selectors/espn-fastcast-conn
   providedIn: 'root',
 })
 export class EspnFastcastConnectionFacade {
-  paused$ = select(EspnFastcastConnectionSelectors.getPaused);
-  connected$ = select(EspnFastcastConnectionSelectors.getConnected);
-  eventType$ = select(EspnFastcastConnectionSelectors.getEventType);
-  lastDisconnect$ = select(EspnFastcastConnectionSelectors.getLastDisconnect);
-  lastRefresh$ = select(EspnFastcastConnectionSelectors.getLastRefresh);
+  paused$ = select(EspnFastcastConnectionSelectors.slices.pause);
+  connected$ = select(EspnFastcastConnectionSelectors.slices.connect);
+  eventType$ = select(EspnFastcastConnectionSelectors.slices.eventType);
+  lastDisconnect$ = select(EspnFastcastConnectionSelectors.slices.disconnect);
+  lastRefresh$ = select(EspnFastcastConnectionSelectors.slices.lastRefresh);
   lastRefreshAsTickerDate$ = select(EspnFastcastConnectionSelectors.getLastRefreshAsTickerDate);
-
-  isFeedValid$ = select(EspnFastcastConnectionSelectors.getIsFeedValid);
-  feedLoadingValue$ = select(EspnFastcastConnectionSelectors.getFeedLoadingValue);
-  showFeed$ = select(EspnFastcastConnectionSelectors.getShowFeed);
-  showLoader$ = select(EspnFastcastConnectionSelectors.getShowLoader);
   showNoEventsMessage$ = select(EspnFastcastConnectionSelectors.showNoEventsMessage);
-  selectedLeagueId$ = select(EspnFastcastConnectionSelectors.getSelectedLeagueId);
+  selectedLeagueId$ = select(EspnFastcastConnectionSelectors.slices.league);
 
   constructor(private store: Store) {}
 

@@ -47,7 +47,7 @@ export class EspnFastcastConnectionState {
 
   @Action(FastCastConnection.HandleWebSocketMessage)
   handleWebSocketMessage({ getState, patchState }: StateContext<EspnFastcastConnectionStateModel>, { payload: { message } }): void {
-    const eventType = this.store.selectSnapshot(EspnFastcastConnectionSelectors.getEventType);
+    const eventType = this.store.selectSnapshot(EspnFastcastConnectionSelectors.slices.eventType);
 
     const pause = getState().pause;
 
