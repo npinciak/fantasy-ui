@@ -1,6 +1,6 @@
-<div class="flex items-center" [ngClass]="opacity">
+<div class="flex items-center">
   <div class="mr-2 flex-shrink-0">
-    <img width="48" height="35" role="presentation" class="h-10 w-10 rounded-full" [alt]="team?.name" [src]="team?.logo" />
+    <img width="48" height="35" role="presentation" class="h-10 w-10 rounded-full" [title]="team?.name" [alt]="team?.name" [src]="team?.logo" />
   </div>
   <div class="min-w-0 flex-1" [ngStyle]="{ color: team.color }">
     <p class="truncate text-xs font-bold">
@@ -12,7 +12,7 @@
     </p>
   </div>
   <div [ngStyle]="{ color: team.color }" class="inline-flex items-center text-base font-semibold">
-    <span [hidden]="isPregame">{{ team?.score }}</span>
+    <span [class.hidden]="isPregame">{{ team?.score }}</span>
   </div>
 </div>
 

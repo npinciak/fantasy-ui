@@ -8,7 +8,6 @@ import { EVENT_STATUS, SEASON_ID } from 'sports-ui-sdk/lib/espn/espn.m';
 @Component({
   selector: 'app-espn-scoreboard-card',
   templateUrl: './espn-scoreboard-card.component.html',
-  styleUrls: ['./espn-scoreboard-card.component.scss'],
 })
 export class EspnScoreboardCardComponent implements OnChanges {
   @Input() event: FastcastEvent;

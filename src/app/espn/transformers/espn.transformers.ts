@@ -260,6 +260,7 @@ export function clientEventToFastcastEvent(event: EspnFastcastClient.EventsEntit
     seriesSummary: seriesSummary ?? null,
     summary,
     period,
+    isTournament: false,
     note: note ?? null,
     isHalftime: event?.fullStatus.type?.id ? event?.fullStatus.type.id === EVENT_STATUS_ID.Halftime : false,
     lastPlay: situation?.lastPlay ?? null,

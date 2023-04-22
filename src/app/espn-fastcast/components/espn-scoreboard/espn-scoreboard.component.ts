@@ -13,9 +13,7 @@ import { map } from 'rxjs/operators';
 })
 export class EspnScoreboardComponent {
   showNoEventsMessage$ = this.fastcastFacade.showNoEventsMessage$;
-  feedLoadingValue$ = this.fastcastFacade.feedLoadingValue$;
-  showFeed$ = of(true); //this.fastcastFacade.showFeed$;
-  showLoader$ = this.fastcastFacade.showLoader$;
+  showFeed$ = of(true);
 
   leagueList$ = this.fastcastLeagueFacade.leagueList$;
   dateFilterList$ = this.fastcastLeagueFacade.dateFilterList$;

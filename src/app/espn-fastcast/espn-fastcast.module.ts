@@ -14,18 +14,21 @@ import { EspnFastcastLeagueState } from './state/espn-fastcast-league.state';
 import { EspnFastcastSportState } from './state/espn-fastcast-sport.state';
 import { EspnFastcastTeamState } from './state/espn-fastcast-team.state';
 
-const components = [EspnScoreboardComponent, EspnScoreboardCardComponent, EspnScoreboardCardTeamComponent, EspnFastcastEventMlbComponent];
-const states = [
-  EspnFastcastConnectionState,
-  EspnFastcastEventsState,
-  EspnFastcastLeagueState,
-  EspnFastcastTeamState,
-  EspnFastcastSportState,
-  EspnFastcastEventToggleState,
-];
 @NgModule({
-  declarations: components,
-  exports: components,
-  imports: [SharedModule, MaterialModule, CommonModule, NgxsModule.forFeature(states)],
+  declarations: [EspnScoreboardComponent, EspnScoreboardCardComponent, EspnScoreboardCardTeamComponent, EspnFastcastEventMlbComponent],
+  exports: [EspnScoreboardComponent, EspnScoreboardCardComponent, EspnScoreboardCardTeamComponent, EspnFastcastEventMlbComponent],
+  imports: [
+    SharedModule,
+    MaterialModule,
+    CommonModule,
+    NgxsModule.forFeature([
+      EspnFastcastConnectionState,
+      EspnFastcastEventsState,
+      EspnFastcastLeagueState,
+      EspnFastcastTeamState,
+      EspnFastcastSportState,
+      EspnFastcastEventToggleState,
+    ]),
+  ],
 })
 export class EspnFastcastModule {}
