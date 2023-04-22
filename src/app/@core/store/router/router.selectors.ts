@@ -3,9 +3,11 @@ import { objectIsEmpty } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { exists } from '@app/@shared/utilities/utilities.m';
 // import { RouterState, RouterStateModel as RouterStateOuterModel } from '@ngxs/router-plugin';
+import { DfsSite } from 'sports-ui-sdk';
+import { EspnRouteBuilder } from './route-builder';
 import { RouterStateModel } from './router-state.model';
 import { RouterState } from './router.state';
-import { UrlPathFragments } from './url-builder';
+import { UrlBuilder, UrlPathFragments } from './url-builder';
 
 export class RouterSelector {
   constructor() {}
@@ -87,9 +89,7 @@ export class RouterSelector {
 
   @Selector([RouterSelector.getRouterData])
   static getSport(data: { reuse: boolean; sport: UrlPathFragments } | undefined) {
-    if (!exists(data) || !exists(data.sport)) {
-      return null;
-    }
+    if (!exists(data) || !exists(data.sport)) return null;
     return data.sport;
   }
 
@@ -100,9 +100,8 @@ export class RouterSelector {
 
   @Selector([RouterSelector.getRouterQueryParams])
   static getDfsSite(queryParams: Params | undefined) {
-    if (!exists(queryParams) || !exists(queryParams.site)) {
-      return;
-    }
+    if (!exists(queryParams) || !exists(queryParams.site)) return;
+
     return queryParams.site;
   }
 
@@ -114,5 +113,23 @@ export class RouterSelector {
   @Selector([RouterSelector.getRouterUrl, RouterSelector.getLeagueId])
   static showEspnNavigation(url: string, leagueId: string | null) {
     return url.split('/')[1] === UrlPathFragments.Espn && exists(leagueId);
+  }
+
+  @Selector()
+  static dailyFantasyMenu() {
+    return [
+      { id: '1', routerLink: UrlBuilder.dfsMlbBase, queryParams: { site: DfsSite.Draftkings }, label: 'DK MLB' },
+      // { routerLink: UrlBuilder.dfsNbaBase, queryParams: { site:  site:DfsSite.Draftkings }, label: 'DK NFL' },
+      // { routerLink: UrlBuilder.dfsNflBase, queryParams: { site: DfsSite.Draftkings }, label: 'DK NFL' },
+    ];
+  }
+
+  @Selector([RouterSelector.getSport, RouterSelector.getSeason, RouterSelector.getLeagueId])
+  static espnFantasyMenu(sport: UrlPathFragments, season: string | null, leagueId: string | null) {
+    return [
+      { id: '1', routerLink: ['/espn'], label: 'Home' },
+      { id: '2', routerLink: EspnRouteBuilder.leaguePathFragments(sport, season, leagueId), label: 'League Home' },
+      { id: '3', routerLink: EspnRouteBuilder.freeAgentsPathFragments(sport, season, leagueId), label: 'Free Agents' },
+    ].filter(m => (!sport ? m.id === '1' : m));
   }
 }

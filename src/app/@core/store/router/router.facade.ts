@@ -12,6 +12,9 @@ type NavigationComplete = NavigationEnd | NavigationCancel;
   providedIn: 'root',
 })
 export class RouterFacade {
+  dailyFantasyMenu$ = select(RouterSelector.dailyFantasyMenu);
+  espnFantasyMenu$ = select(RouterSelector.espnFantasyMenu);
+
   sport$ = select(RouterSelector.getSport);
   leagueId$ = select(RouterSelector.getLeagueId);
   seasonId$ = select(RouterSelector.getSeason);
