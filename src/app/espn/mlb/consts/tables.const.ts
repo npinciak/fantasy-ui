@@ -54,6 +54,12 @@ export const LEAGUE_STANDINGS_COLUMNS = [
     dataType: TableColumnDataType.Number,
   },
   {
+    columnDef: `rotoStats.${BaseballStat.HD}`,
+    headerCell: `rotoStats.${BaseballStat.HD}`,
+    headerLabel: MLB_STATS_MAP[BaseballStat.HD].abbrev,
+    dataType: TableColumnDataType.Number,
+  },
+  {
     columnDef: `rotoStats.${BaseballStat.ERA}`,
     headerCell: `rotoStats.${BaseballStat.ERA}`,
     headerLabel: MLB_STATS_MAP[BaseballStat.ERA].abbrev,
