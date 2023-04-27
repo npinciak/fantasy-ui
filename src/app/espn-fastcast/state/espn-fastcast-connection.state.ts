@@ -11,7 +11,6 @@ import { FastcastLeagues } from '../actions/espn-fastcast-league.actions';
 import { FastcastSports } from '../actions/espn-fastcast-sport.actions';
 import { FastcastTeams } from '../actions/espn-fastcast-team.actions';
 import { EspnFastcastConnectionStateModel, INITIAL_STATE } from '../models/fastcast-connection-state.model';
-import { EspnFastcastConnectionSelectors } from '../selectors/espn-fastcast-connection.selectors';
 import { EspnFastcastLeagueSelectors } from '../selectors/espn-fastcast-league.selectors';
 import { EspnFastcastSportSelectors } from '../selectors/espn-fastcast-sport.selectors';
 import { EspnFastcastService } from '../service/espn-fastcast.service';
@@ -47,7 +46,7 @@ export class EspnFastcastConnectionState {
 
   @Action(FastCastConnection.HandleWebSocketMessage)
   handleWebSocketMessage({ getState, patchState }: StateContext<EspnFastcastConnectionStateModel>, { payload: { message } }): void {
-    const eventType = this.store.selectSnapshot(EspnFastcastConnectionSelectors.slices.eventType);
+    const eventType = getState().eventType;
 
     const pause = getState().pause;
 
