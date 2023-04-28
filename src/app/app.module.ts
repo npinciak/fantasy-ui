@@ -17,6 +17,7 @@ import { FangraphsConstantsState } from './@shared/fangraphs/fangraphs-const.sta
 import { SharedModule } from './@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SportsBookModule } from './sportsbook/sportsbook.module';
 
 const actionSanitizer = (action: { action: any; payload: any; type: string; addedStates?: any }) => {
   const uiRouterActions = /router+/g;
@@ -42,9 +43,15 @@ const sanitizeUIRouterTransition = (routerState: any): any => {
     url,
   };
 };
+
 const reduxDevtoolsExtensionOptions = {
   actionSanitizer,
   stateSanitizer,
+};
+
+const ngxsConfig = {
+  developmentMode: !environment.production,
+  selectorOptions: { injectContainerState: false, suppressErrors: false },
 };
 
 @NgModule({
@@ -53,21 +60,16 @@ const reduxDevtoolsExtensionOptions = {
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
-    // NgxsRouterPluginModule.forRoot(),
-    NgxsModule.forRoot([RouterState, FangraphsConstantsState, FangraphsConstantsActionHandler], {
-      developmentMode: !environment.production,
-      selectorOptions: { injectContainerState: false, suppressErrors: false },
-    }),
-    NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production, actionSanitizer, stateSanitizer }),
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
-      // Register the ServiceWorker as soon as the app is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000',
-    }),
     AuthenticationModule,
     SharedModule,
     ShellModule,
+    SportsBookModule,
+    NgxsModule.forRoot([RouterState, FangraphsConstantsState, FangraphsConstantsActionHandler], ngxsConfig),
+    NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production, actionSanitizer, stateSanitizer }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
     AppRoutingModule,
   ],
   providers: [httpInterceptorProviders, { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer }],
