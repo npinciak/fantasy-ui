@@ -1,13 +1,13 @@
 import { RouterSelector } from '@app/@core/store/router/router.selectors';
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
-import { EspnFastcastTeamSelectors } from '@app/espn-fastcast/selectors/espn-fastcast-team.selectors';
 import { startingPlayersFilter } from '@app/espn/espn-helpers';
 import { Selector } from '@ngxs/store';
 import { MLB_LINEUP_MAP } from 'sports-ui-sdk';
+import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
 import { FantasyBaseballTeamsLiveState } from '../state/fantasy-baseball-team-live.state';
+import { FantasyBaseballEventSelector } from './fantasy-baseball-event.selector';
 import { FantasyBaseballTeamSelector } from './fantasy-baseball-team.selector';
 
 export class FantasyBaseballTeamLiveSelector extends GenericSelector(FantasyBaseballTeamsLiveState) {
@@ -30,15 +30,21 @@ export class FantasyBaseballTeamLiveSelector extends GenericSelector(FantasyBase
     return teamId ? getLiveTeamById(teamId).roster.filter(p => !p.isPitcher) : [];
   }
 
-  @Selector([FantasyBaseballTeamLiveSelector.getLiveTeamBatters, EspnFastcastTeamSelectors.getById])
+  @Selector([FantasyBaseballTeamLiveSelector.getLiveTeamBatters, FantasyBaseballEventSelector.getById])
   static getLiveTeamBatterStats(
     getLiveTeamBatters: (id: string) => BaseballPlayer[],
-    selectFastcastTeamById: (id: string) => FastcastEventTeam | null
+    getLiveBaseballEventById: (id: string | null) => BaseballEvent | null
   ) {
     return (id: string) => {
       const batters = startingPlayersFilter(getLiveTeamBatters(id), MLB_LINEUP_MAP);
       return batters.map(p => {
-        const eventUid = selectFastcastTeamById(p?.teamUid)?.eventUid;
+        const games = Object.keys(p.starterStatusByProGame);
+
+        const gameList = games.map(g => getLiveBaseballEventById(g));
+
+        console.log(gameList);
+
+        const eventUid = true; //getLiveBaseballEventById()
 
         const stats = {};
         if (eventUid) {

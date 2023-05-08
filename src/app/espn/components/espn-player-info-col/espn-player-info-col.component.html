@@ -11,7 +11,13 @@
     />
   </div>
   <div class="min-w-0 flex-1">
-    <p [title]="player?.name" class="truncate text-xs font-medium sm:text-sm">{{ player?.name }}</p>
+    <p [title]="player?.name" class="truncate text-xs font-medium sm:text-sm">
+      {{ player?.name }}
+      <i
+        [ngClass]="[FaIconByEspnPlayerInjuryStatus[player?.injuryStatus], InjurySeverityClassByInjurySeverity[InjurySeverityByInjuryStatus[player?.injuryStatus]]]"
+        [title]="InjuryLabelByInjuryStatus[player?.injuryStatus]"
+      ></i>
+    </p>
     <p class="truncate text-xs">{{ player?.team }}, {{ player?.position }}</p>
   </div>
 </div>

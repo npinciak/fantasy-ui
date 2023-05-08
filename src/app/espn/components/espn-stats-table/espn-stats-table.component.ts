@@ -30,6 +30,7 @@ export class EspnStatsTableComponent implements OnChanges, AfterViewInit {
   @Input() headers: string[];
   @Input() ariaLabel: string | null = null;
   @Input() statsMap: Record<string, StatEntity>;
+  @Input() hidePaginator = false;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;

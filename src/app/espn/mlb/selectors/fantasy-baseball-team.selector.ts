@@ -4,7 +4,12 @@ import { FangraphsConstantsSelector } from '@app/@shared/fangraphs/fangraphs-con
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { ScatterChartDataset, transformDataToScatterGraph } from '@app/@shared/helpers/graph.helpers';
 import { exists, existsFilter } from '@app/@shared/utilities/utilities.m';
-import { benchPlayersFilter, injuredPlayersFilter, startingPlayersFilter } from '@app/espn/espn-helpers';
+import {
+  benchPlayersFilter,
+  injuredPlayersFilter,
+  sortPlayersByLineupSlotDisplayOrder,
+  startingPlayersFilter,
+} from '@app/espn/espn-helpers';
 import { Selector } from '@ngxs/store';
 import { BaseballStat, MLB_LINEUP_MAP, MLB_STATS_MAP } from 'sports-ui-sdk';
 import { BaseballEvent } from '../models/baseball-event.model';
@@ -39,12 +44,12 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
 
         const playerObj = {} as BaseballPlayer;
 
-        // Object.entries(playerGames).map(([k, g]) => {
-        //   if (!gameIdSet.has(k)) return;
+        Object.entries(playerGames).map(([k, g]) => {
+          if (!gameIdSet.has(k)) return;
 
-        //   playerObj['injuryStatus'] = g;
-        //   playerObj[opponent] = getEventById(k).competitors;
-        // });
+          playerObj['injuryStatus'] = g;
+          // playerObj[opponent] = getEventById(k).competitors;
+        });
 
         return { ...p, ...playerObj };
       });
@@ -81,7 +86,7 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
   }
 
   @Selector([FantasyBaseballTeamSelector.getTeamPitchers])
-  static getTeamPitchersBench(pitchers: BaseballPlayer[]): BaseballPlayer[] {
+  static getTeamBenchPitchers(pitchers: BaseballPlayer[]): BaseballPlayer[] {
     return benchPlayersFilter(pitchers, MLB_LINEUP_MAP);
   }
 
@@ -98,13 +103,39 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
   ): (statPeriod: string) => BaseballPlayerStatsRow[] {
     return (statPeriod: string) => {
       const seasonConst = getSeasonConsts(seasonId);
-      return existsFilter(
+
+      const playerList = existsFilter(
         batters.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonConst))
-      ).sort((a, b) => MLB_LINEUP_MAP[a.lineupSlotId].displayOrder - MLB_LINEUP_MAP[b.lineupSlotId].displayOrder);
+      );
+
+      return sortPlayersByLineupSlotDisplayOrder(playerList, MLB_LINEUP_MAP);
     };
   }
 
-  @Selector([FantasyBaseballTeamSelector.getTeamBatterStats, FantasyBaseballLeagueSelector.slices.seasonId])
+  @Selector([
+    FantasyBaseballTeamSelector.getRosterByTeamId,
+    FantasyBaseballLeagueSelector.slices.seasonId,
+    FangraphsConstantsSelector.getById,
+  ])
+  static getBatterStatsByTeamId(
+    selectRosterByTeamId: (teamId: string) => BaseballPlayer[],
+    seasonId: string,
+    getSeasonConsts: (id: string | null) => FangraphsWobaFipConstants
+  ) {
+    return (teamId: string, statPeriod: string) => {
+      const seasonConst = getSeasonConsts(seasonId);
+
+      const playerList = existsFilter(
+        selectRosterByTeamId(teamId)
+          .filter(p => !p.isPitcher)
+          .map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonConst))
+      );
+
+      return sortPlayersByLineupSlotDisplayOrder(playerList, MLB_LINEUP_MAP);
+    };
+  }
+
+  @Selector([FantasyBaseballTeamSelector.getTeamBatterStats])
   static getBatterStatsLineChartData(batters: (statPeriod: string) => BaseballPlayerStatsRow[]): (
     statPeriod: string,
     statFilter: BaseballStat
@@ -149,16 +180,40 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
     FangraphsConstantsSelector.getById,
   ])
   static getTeamPitcherStats(
-    pitchers: BaseballPlayer[],
+    getTeamPitchers: BaseballPlayer[],
     seasonId: string,
     getSeasonConsts: (id: string | null) => FangraphsWobaFipConstants
   ): (statPeriod: string) => BaseballPlayerStatsRow[] {
     return (statPeriod: string) => {
       const seasonConst = getSeasonConsts(seasonId);
 
-      return existsFilter(
-        pitchers.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonConst))
+      const playerList = existsFilter(
+        getTeamPitchers.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonConst))
       );
+      return sortPlayersByLineupSlotDisplayOrder(playerList, MLB_LINEUP_MAP);
+    };
+  }
+
+  @Selector([
+    FantasyBaseballTeamSelector.getRosterByTeamId,
+    FantasyBaseballLeagueSelector.slices.seasonId,
+    FangraphsConstantsSelector.getById,
+  ])
+  static getPitcherStatsByTeamId(
+    selectRosterByTeamId: (id: string) => BaseballPlayer[],
+    seasonId: string,
+    getSeasonConsts: (id: string | null) => FangraphsWobaFipConstants
+  ): (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[] {
+    return (teamId: string, statPeriod: string) => {
+      const seasonConst = getSeasonConsts(seasonId);
+
+      const playerList = existsFilter(
+        selectRosterByTeamId(teamId)
+          .filter(p => p.isPitcher)
+          .map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonConst))
+      );
+
+      return sortPlayersByLineupSlotDisplayOrder(playerList, MLB_LINEUP_MAP);
     };
   }
 

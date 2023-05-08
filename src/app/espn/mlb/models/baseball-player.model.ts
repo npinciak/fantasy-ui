@@ -1,6 +1,7 @@
 import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
 import { FantasyPlayer } from '@app/espn/models/fantasy-player.model';
 import { EspnClient } from 'sports-ui-sdk/lib/espn/espn.m';
+import { PlayerInjuryStatus } from 'sports-ui-sdk/lib/espn/models/espn-client.model';
 
 export interface BaseballPlayerProps {
   isStarting: boolean;
@@ -8,13 +9,11 @@ export interface BaseballPlayerProps {
   percentChange: number | null;
   percentOwned: number | null;
   isPitcher: boolean;
-  lineupSlot: string;
+  lineupSlot: string | null;
+  starterStatusByProGame: Record<number, PlayerInjuryStatus>;
 }
 
-export type BaseballPlayer = FantasyPlayer &
-  BaseballPlayerProps &
-  Pick<EspnClient.PlayerInfo, 'starterStatusByProGame'> &
-  Pick<EspnClient.TeamRosterEntry, 'lineupSlotId'>;
+export type BaseballPlayer = FantasyPlayer & BaseballPlayerProps & Pick<EspnClient.TeamRosterEntry, 'lineupSlotId'>;
 
 export type BaseballPlayerMap = Record<string, BaseballPlayer>;
 

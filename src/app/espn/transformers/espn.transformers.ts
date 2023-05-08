@@ -197,21 +197,12 @@ export function clientEventToFastcastEvent(event: EspnFastcastClient.EventsEntit
   // mlbSituation.onSecond = event?.situation?.onSecond;
   // mlbSituation.onThird = event?.situation?.onThird;
 
-  const footballSituation = {} as FootballSituation;
-  // if (
-  //   event?.situation?.shortDownDistanceText == null ||
-  //   event?.situation?.possessionText == null ||
-  //   event?.situation?.possession == null
-  // ) {
-  //   footballSituation = null;
-  // } else {
-  Object.assign(footballSituation, {
-    shortDownDistanceText: event?.situation?.shortDownDistanceText,
-    possessionText: event?.situation?.possessionText,
-    isRedZone: null,
-    possession: event?.situation?.possession,
-  });
-  // }
+  let footballSituation = {} as FootballSituation;
+
+  footballSituation['shortDownDistanceText'] = event?.situation?.shortDownDistanceText ?? '';
+  footballSituation['possessionText'] = event?.situation?.possessionText ?? '';
+  footballSituation['isRedZone'] = false;
+  footballSituation['possession'] = event?.situation?.possession ?? '';
 
   const teams = exists(event.competitors)
     ? event.competitors.reduce((obj, val) => {

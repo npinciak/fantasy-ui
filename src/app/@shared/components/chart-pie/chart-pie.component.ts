@@ -7,7 +7,7 @@ Chart.register(...registerables);
 @Component({
   selector: `app-chart-pie`,
   template: `
-    <app-base-card [title]="title" [subtitle]="subtitle">
+    <app-base-card [title]="title" [subtitle]="subtitle" [height]="height">
       <canvas baseChart [type]="'pie'" [data]="pieChartData" [options]="pieChartOptions" [legend]="pieChartLegend"> </canvas>
     </app-base-card>
   `,

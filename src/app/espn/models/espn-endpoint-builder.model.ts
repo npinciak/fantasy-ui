@@ -50,12 +50,20 @@ export class EspnEndpointBuilder {
     return `${EspnEndpointBuilder.apiBaseV2}/scoreboard/header`;
   }
 
+  get baseballStatsBatterVsPitcher() {
+    return `${this.fantasyBaseV2WithStatsFragments}/${EspnPathFragment.BatterVsPitcher}`;
+  }
+
   private get fantasyBaseV3WithFragments(): string {
     return `${EspnEndpointBuilder.fantasyBaseV3}/games/${this._sport}/seasons/${this._year}`;
   }
 
   private get fantasyBaseV2WithFragments(): string {
     return `${EspnEndpointBuilder.fantasyBaseV2}/games/${this._sport}`;
+  }
+
+  private get fantasyBaseV2WithStatsFragments(): string {
+    return `${this.fantasyBaseV2WithFragments}/${EspnPathFragment.Stats}`;
   }
 }
 
@@ -83,14 +91,21 @@ export enum FantasySports {
   Hockey = 'fhl',
 }
 
+export const EspnPathFragment = {
+  Stats: 'stats',
+  BatterVsPitcher: 'bvp',
+} as const;
+
 export enum EspnParamFragment {
   ScoringPeriod = 'scoringPeriodId',
   View = 'view',
   UseMap = 'useMap',
   Dates = 'dates',
+  Date = 'date',
   Days = 'days',
   PlayerId = 'playerId',
   PbpOnly = 'pbpOnly',
+  BatterId = 'batterId',
 }
 
 export enum EspnViewParamFragment {

@@ -10,8 +10,8 @@ import {
   EspnEndpointBuilder,
   EspnParamFragment,
   EspnViewParamFragment,
-  espnViewParamFragmentList,
   FantasySports,
+  espnViewParamFragmentList,
 } from '../models/espn-endpoint-builder.model';
 import { PlayerNews } from '../models/player-news.model';
 import { EspnTransformers } from '../transformers/espn-transformers.m';
@@ -71,7 +71,7 @@ export class EspnService {
     const endpoint = new EspnEndpointBuilder(sport);
     const params = new HttpParams()
       .set(EspnParamFragment.UseMap, true)
-      .set(EspnParamFragment.Dates, espnDateFormatter({ delim: '-', date: new Date().getTime() }))
+      .set(EspnParamFragment.Dates, espnDateFormatter({ date: new Date().getTime() }))
       .set(EspnParamFragment.PbpOnly, true);
     return this.api.get<EspnClient.EventList>(endpoint.espnEvents, { params, headers });
   }

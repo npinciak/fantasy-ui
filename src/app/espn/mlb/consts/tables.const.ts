@@ -88,18 +88,6 @@ export const BATTER_STATS_COLUMNS = [
     dataType: TableColumnDataType.Number,
   },
   {
-    columnDef: `${[statsKey]}.${BaseballStat.GP}`,
-    headerCell: `${[statsKey]}.${BaseballStat.GP}`,
-    headerLabel: MLB_STATS_MAP[BaseballStat.GP].abbrev,
-    dataType: TableColumnDataType.Number,
-  },
-  {
-    columnDef: `${[statsKey]}.${BaseballStat.KO}`,
-    headerCell: `${[statsKey]}.${BaseballStat.KO}`,
-    headerLabel: MLB_STATS_MAP[BaseballStat.KO].abbrev,
-    dataType: TableColumnDataType.Number,
-  },
-  {
     columnDef: `${[statsKey]}.${BaseballStat.R}`,
     headerCell: `${[statsKey]}.${BaseballStat.R}`,
     headerLabel: MLB_STATS_MAP[BaseballStat.R].abbrev,
@@ -129,12 +117,7 @@ export const BATTER_STATS_COLUMNS = [
     headerLabel: MLB_STATS_MAP[BaseballStat.AVG].abbrev,
     dataType: TableColumnDataType.Number,
   },
-  {
-    columnDef: `break`,
-    headerCell: `break`,
-    headerLabel: '',
-    dataType: TableColumnDataType.Number,
-  },
+
   {
     columnDef: `${[statsKey]}.${BaseballStat.OBP}`,
     headerCell: `${[statsKey]}.${BaseballStat.OBP}`,

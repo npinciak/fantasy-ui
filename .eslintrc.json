@@ -1,70 +1,58 @@
 {
   "root": true,
   "ignorePatterns": [
-    "projects/**/*",
-    "schematics",
     ".vscode",
     "node_modules",
     "dist",
     "build",
+    "scripts/*",
     "src/assets",
     "schematics/*/files/**",
-    "schematics/*/src/index.js"
+    "schematics/*/src/index.js",
+    "coverage",
+    "sports-ui-eslint/*",
+    "test.ts"
   ],
   "overrides": [
     {
-      "files": ["*.ts"],
-      "parserOptions": {
-        "project": ["tsconfig.json"],
-        "createDefaultProgram": true
-      },
       "files": ["*.js,*.ts"],
       "extends": [
-        "prettier",
+        // "prettier",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
         "plugin:@angular-eslint/ng-cli-compat",
         "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": { "project": ["./tsconfig.json"] },
+      "plugins": ["sports-ui", "@typescript-eslint"],
       "rules": {
+        "eqeqeq": "off",
+        "curly": "off",
+        "allowNamedFunctions": "off",
+        "arrow-body-style": "off",
         "prefer-arrow/prefer-arrow-functions": "off",
-        "allowNamedFunctions": true,
         "no-underscore-dangle": "off",
         "no-shadow": "off",
+        "prefer-rest-params": "off",
+        "space-before-function-paren": "off",
+        "no-console": ["error", { "allow": ["warn", "error"] }],
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/prefer-function-type": "off",
         "@typescript-eslint/prefer-for-of": "off",
-        "@typescript-eslint/no-shadow": ["error"],
+        "@typescript-eslint/ban-types": "warn",
+        "@typescript-eslint/no-shadow": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/naming-convention": [
-          "error",
-          {
-            "selector": "enumMember",
-            "format": ["PascalCase", "camelCase"]
-          },
+          "off",
           {
             "selector": "variable",
-            "format": ["camelCase", "UPPER_CASE"]
-          }
-        ],
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "type": "element",
-            "prefix": "app",
-            "style": "kebab-case"
-          }
-        ],
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "type": "attribute",
-            "prefix": "app",
-            "style": "camelCase"
+            "modifiers": ["exported", "const"],
+            "format": ["UPPER_CASE"]
           }
         ]
       }
-    },
-    {
-      "files": ["*.html"],
-      "extends": ["plugin:@angular-eslint/template/recommended"],
-      "rules": {}
     }
   ]
 }

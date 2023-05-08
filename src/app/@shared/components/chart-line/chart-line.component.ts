@@ -2,12 +2,11 @@ import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { Chart, ChartConfiguration, ChartOptions, registerables } from 'chart.js';
 import { BaseChartComponent, StatsChart } from '../base-chart/base-chart.component';
 
-
 Chart.register(...registerables);
 @Component({
   selector: `app-chart-line`,
   template: `
-    <app-base-card [title]="title" [subtitle]="subtitle">
+    <app-base-card [title]="title" [subtitle]="subtitle" [height]="height">
       <canvas baseChart [type]="'line'" [data]="lineChartData" [options]="lineChartOptions" [legend]="lineChartLegend"> </canvas>
     </app-base-card>
   `,

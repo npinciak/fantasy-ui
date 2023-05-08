@@ -21,99 +21,31 @@
         <h3 class="text-base font-semibold text-sky-700">{{ title }}</h3>
       </div>
       <div class="relative w-full max-w-full flex-1 flex-grow px-4 text-right">
-        <app-refresh-btn [isLoading]="isLoading" (refreshButtonClicked)="onRefreshClick()"></app-refresh-btn>
-
-        <!-- <button
-          class="
-            mr-1
-            mb-1
-            rounded
-            bg-sky-500
-            px-3
-            py-1
-            text-xs
-            font-bold
-            uppercase
-            text-white
-            outline-none
-            transition-all
-            duration-150
-            ease-linear
-            focus:outline-none
-            active:bg-sky-600
-          "
-          type="button"
-          (refreshButtonClicked)="onRefreshClick()"
-        >
-          Refresh
-        </button> -->
+        <app-refresh-btn (refreshButtonClicked)="onRefreshClick()"></app-refresh-btn>
       </div>
     </div>
   </div>
   <div class="block w-full overflow-x-auto">
-    <!-- Projects table -->
     <table class="w-full border-collapse items-center bg-transparent">
-      <!-- <thead class="thead-light">
-        <tr>
-          <th
-            class="
-              whitespace-nowrap
-              border border-l-0 border-r-0 border-solid border-sky-100
-              bg-sky-50
-              px-6
-              py-3
-              text-left
-              align-middle
-              text-xs
-              font-semibold
-              uppercase
-              text-sky-500
-            "
-          >
-            Referral
-          </th>
-          <th
-            class="
-              whitespace-nowrap
-              border border-l-0 border-r-0 border-solid border-sky-100
-              bg-sky-50
-              px-6
-              py-3
-              text-left
-              align-middle
-              text-xs
-              font-semibold
-              uppercase
-              text-sky-500
-            "
-          >
-            Visitors
-          </th>
-          <th
-            class="
-              min-w-140-px
-              whitespace-nowrap
-              border border-l-0 border-r-0 border-solid border-sky-100
-              bg-sky-50
-              px-6
-              py-3
-              text-left
-              align-middle
-              text-xs
-              font-semibold
-              uppercase
-              text-sky-500
-            "
-          ></th>
-        </tr>
-      </thead> -->
       <tbody>
-        <tr *ngFor="let player of lineup; let i = index" [attr.data-index]="i" tabindex="-1" (click)="onPlayerClick(player)">
-          <th class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 text-left align-middle text-xs">
+        <tr class="cursor-pointer" *ngFor="let player of lineup; let i = index" [attr.data-index]="i" tabindex="-1" (click)="onPlayerClick(player)">
+          <th class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-2 px-6 text-left align-middle text-xs">
             <img width="48" height="35" role="presentation" class="w-13 h-9 rounded-full text-center text-xs text-gray-500" [src]="player?.img" [alt]="player?.name" />
           </th>
-          <td class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 align-middle text-xs">{{ player.name }}</td>
-          <td class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-6 align-middle text-xs">
+          <td class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-2 px-6 align-middle text-xs">
+            {{ player.name }}
+            <i
+              [ngClass]="[FaIconByEspnPlayerInjuryStatus[player?.injuryStatus], InjurySeverityClassByInjurySeverity[InjurySeverityByInjuryStatus[player?.injuryStatus]]]"
+              [title]="InjuryLabelByInjuryStatus[player?.injuryStatus]"
+            ></i>
+          </td>
+          <td class="text-md whitespace-nowrap border-t-0 border-l-0 border-r-0 p-2 px-6 align-middle">
+            <!-- <mat-icon
+              *ngIf="player?.injuryStatus"
+              [ngStyle]="{ color: playerInjuryStatusColor(player.injuryStatus) }"
+              [title]="PlayerStatusAbbrevByInjuryStatusType[player?.injuryStatus]"
+              >{{ MatIconByEspnPlayerInjuryStatus[player?.injuryStatus] }}</mat-icon
+            > -->
             <!-- <div class="flex items-center">
               <span class="mr-2">60%</span>
               <div class="relative w-full">

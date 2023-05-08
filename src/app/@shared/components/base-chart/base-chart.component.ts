@@ -14,9 +14,10 @@ Chart.register(...registerables);
   template: ``,
 })
 export class BaseChartComponent {
-  @Input() title = 'Title';
-  @Input() subtitle = 'Subtitle';
+  @Input() title = null;
+  @Input() subtitle = null;
   @Input() statsMap = {};
   @Input() chartData: StatsChart;
   @Input() statFilter: BaseballStat = BaseballStat.AB;
+  @Input() height = null;
 }

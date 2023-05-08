@@ -29,6 +29,7 @@ export class FantasyBaseballTeamFacade extends GenericFacade({
 
   pitchers$ = select(FantasyBaseballTeamSelector.getTeamPitchers);
   startingPitchers$ = select(FantasyBaseballTeamSelector.getTeamStartingPitchers);
+  benchPitchers$ = select(FantasyBaseballTeamSelector.getTeamBenchPitchers);
 
   pitcherStats$ = select(FantasyBaseballTeamSelector.getTeamPitcherStats);
   pitcherStatsChartData$ = select(FantasyBaseballTeamSelector.getPitcherStatsChartData);

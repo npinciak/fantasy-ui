@@ -9,5 +9,7 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "explorer.autoRevealExclude": {
     "*.angular/cache": true
-  }
+  },
+  "scss.validate": false,
+  "css.validate": false
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { FantasyLeagueBaseStateModel } from '@app/espn/state/base-league.model';
 import { Action, State, StateContext, Store } from '@ngxs/store';
+import { FantasyBaseballEvents } from '../actions/fantasy-baseball-events.actions';
 import { FantasyBaseballLeague } from '../actions/fantasy-baseball-league.actions';
 import { FantasyBaseballTeamsLive } from '../actions/fantasy-baseball-team-live.actions';
 import { FantasyBaseballTeams } from '../actions/fantasy-baseball-team.actions';
@@ -25,6 +26,7 @@ export class FantasyBaseballLeagueActionHandler {
 
       const state = { id, scoringPeriodId, matchupPeriodCount, firstScoringPeriod, finalScoringPeriod, seasonId };
       this.store.dispatch([
+        new FantasyBaseballEvents.Fetch(),
         new FantasyBaseballTeamsLive.AddOrUpdate(teamsLive),
         new FantasyBaseballTeams.AddOrUpdate(teams),
         new FantasyBaseballLeague.SetLeague({ state }),

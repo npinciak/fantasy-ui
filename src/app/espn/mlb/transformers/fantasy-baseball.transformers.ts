@@ -1,5 +1,4 @@
 import { exists } from '@app/@shared/utilities/utilities.m';
-import { FantasyPlayer } from '@app/espn/models/fantasy-player.model';
 import { BaseballStat, EspnClient, MLB_LINEUP_MAP, MLB_POSITION_MAP, MLB_TEAM_MAP, SPORT_ID } from 'sports-ui-sdk';
 
 import { isPitcher } from '../../espn-helpers';
@@ -61,7 +60,7 @@ export function clientPlayerToBaseballPlayer(players: EspnClient.TeamRosterEntry
       },
     } = player;
 
-    const playerInfo: FantasyPlayer = EspnTransformers.clientPlayerToFantasyPlayer({
+    const playerInfo = EspnTransformers.clientPlayerToFantasyPlayer({
       clientPlayer: player.playerPoolEntry.player,
       sport: SPORT_ID.Baseball,
       leagueId: EspnClient.LeagueId.MLB,
@@ -89,7 +88,7 @@ export function transformEspnFreeAgentToBaseballPlayer(freeAgents: EspnClient.Fr
 
     const {
       player,
-      player: { eligibleSlots, lastNewsDate },
+      player: { starterStatusByProGame, eligibleSlots, lastNewsDate },
       ratings,
     } = freeAgent;
 
@@ -108,8 +107,8 @@ export function transformEspnFreeAgentToBaseballPlayer(freeAgents: EspnClient.Fr
       lineupSlotId: 0,
       isStarting: false,
       startingStatus: null,
-      lineupSlot: '',
-      starterStatusByProGame: {},
+      lineupSlot: null,
+      starterStatusByProGame,
       lastNewsDate,
     };
   });

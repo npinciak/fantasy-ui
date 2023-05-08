@@ -78,22 +78,19 @@ export class FantasyBaseballFreeAgentSelector extends GenericSelector(FantasyBas
   }
 
   @Selector([
-    FantasyBaseballTeamSelector.getTeamBatterStats,
+    FantasyBaseballTeamSelector.getBatterStatsByTeamId,
     FantasyBaseballFreeAgentSelector.getFreeAgentBatterStats,
     FantasyBaseballLeagueSelector.slices.seasonId,
   ])
   static getCompareTeamAndFreeAgentBatterList(
-    getTeamBatterStatsById: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[],
+    getBatterStatsByTeamId: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[],
     getFreeAgentBatterStats: (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[],
     seasonId: string | null
   ): (teamId: string | null, statPeriod: string) => (BaseballPlayer | BaseballPlayerStatsRow)[] {
     return (teamId: string | null, statPeriod: string) => {
       const freeAgents = getFreeAgentBatterStats(statPeriod, exists(seasonId) ? seasonId : new Date().getFullYear().toString());
-
       if (!exists(teamId)) return freeAgents;
-
-      const teamBatterStats = getTeamBatterStatsById(teamId, statPeriod).map(b => ({ ...b, highlightedPlayer: true }));
-
+      const teamBatterStats = getBatterStatsByTeamId(teamId, statPeriod).map(b => ({ ...b, highlightedPlayer: true }));
       return [...teamBatterStats, ...freeAgents];
     };
   }
@@ -112,12 +109,12 @@ export class FantasyBaseballFreeAgentSelector extends GenericSelector(FantasyBas
   }
 
   @Selector([
-    FantasyBaseballTeamSelector.getTeamPitcherStats,
+    FantasyBaseballTeamSelector.getPitcherStatsByTeamId,
     FantasyBaseballFreeAgentSelector.getFreeAgentPitcherStats,
     FantasyBaseballLeagueSelector.slices.seasonId,
   ])
   static getCompareTeamAndFreeAgentPitcherList(
-    getTeamPitcherStats: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[],
+    getPitcherStatsByTeamId: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[],
     getFreeAgentPitcherStats: (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[],
     seasonId: string | null
   ): (teamId: string | null, statPeriod: string) => (BaseballPlayer | BaseballPlayerStatsRow)[] {
@@ -126,12 +123,12 @@ export class FantasyBaseballFreeAgentSelector extends GenericSelector(FantasyBas
 
       if (!exists(teamId)) return freeAgents;
 
-      const teamBatterStats = getTeamPitcherStats(teamId, statPeriod).map(b => ({
+      const teamPitcherStats = getPitcherStatsByTeamId(teamId, statPeriod).map(b => ({
         ...b,
         highlightedPlayer: true,
       }));
 
-      return [...teamBatterStats, ...freeAgents];
+      return [...teamPitcherStats, ...freeAgents];
     };
   }
 
@@ -152,18 +149,22 @@ export class FantasyBaseballFreeAgentSelector extends GenericSelector(FantasyBas
   }
 
   @Selector([FantasyBaseballFreeAgentSelector.getFreeAgentBatterStats])
-  static getFreeAgentBatterChartData(
-    getFreeAgentBatterStats: (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[]
-  ): (statPeriod: string, seasonId: string, statFilter: BaseballStat) => any[] {
-    return (statPeriod: string, seasonId: string, statFilter: BaseballStat) =>
-      getFreeAgentBatterStats(statPeriod, seasonId)
-        .map(p => {
-          return {
-            data: exists(p.stats) ? p.stats[statFilter] : 0,
-            label: p.name,
-          };
-        })
-        .sort((a, b) => b.data - a.data);
+  static getFreeAgentBatterChartData(getFreeAgentBatterStats: (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[]): (
+    statPeriod: string,
+    seasonId: string,
+    statFilter: BaseballStat
+  ) => {
+    label: string[];
+    data: number[];
+  } {
+    return (statPeriod: string, seasonId: string, statFilter: BaseballStat) => {
+      const batterStats = getFreeAgentBatterStats(statPeriod, seasonId)
+        .map(p => ({ statValue: exists(p.stats) ? p.stats[statFilter] : 0, name: p.name }))
+        .filter(d => d.statValue !== 0)
+        .sort((a, b) => b.statValue - a.statValue);
+
+      return { label: batterStats.map(p => p.name), data: batterStats.map(p => p.statValue) };
+    };
   }
 
   @Selector([FantasyBaseballFreeAgentSelector.getFreeAgentPitcherStats])

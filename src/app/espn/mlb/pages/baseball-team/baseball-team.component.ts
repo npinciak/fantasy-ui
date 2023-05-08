@@ -55,7 +55,7 @@ export class BaseballTeamComponent {
   selectedPitcherStatYAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.APP);
 
   statPeriod$ = new BehaviorSubject<string>(FantasyBaseballScoringPeriod.season('2023'));
-  selectedBatterStatXAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.wOBA);
+  selectedBatterStatXAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.wRAA);
   selectedBatterStatYAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.AB);
 
   isLiveScore$ = new BehaviorSubject<boolean>(false);
@@ -71,6 +71,7 @@ export class BaseballTeamComponent {
   benchBatters$ = this.fantasyBaseballTeamFacade.benchBatters$;
 
   startingPitchers$ = this.fantasyBaseballTeamFacade.startingPitchers$;
+  benchPitchers$ = this.fantasyBaseballTeamFacade.benchPitchers$;
 
   newRoster$ = this.fantasyBaseballTeamFacade.currentRoster$;
 

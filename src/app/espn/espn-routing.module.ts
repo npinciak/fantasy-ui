@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UrlPathFragments, UrlPathParams } from '@app/@core/store/router/url-builder';
-import { BaseballFreeAgentsComponent } from './mlb/pages/baseball-free-agents/baseball-free-agents.component';
-import { BaseballHomeComponent } from './mlb/pages/baseball-home/baseball-home.component';
-import { BaseballTeamComponent } from './mlb/pages/baseball-team/baseball-team.component';
-import { FantasyBaseballFreeAgentsResolver } from './mlb/resolvers/fantasy-baseball-free-agents.resolver';
-import { FantasyBaseballLeagueResolver } from './mlb/resolvers/fantasy-baseball-league.resolver';
+import { BaseballRoutes } from './mlb/baseball.routes';
 import { FootballFreeAgentsComponent } from './nfl/pages/football-free-agents/football-free-agents.component';
 import { FootballHomeComponent } from './nfl/pages/football-home/football-home.component';
 import { FootballTeamComponent } from './nfl/pages/football-team/football-team.component';
@@ -64,64 +60,13 @@ const nflRoutes = {
   ],
 };
 
-const mlbRoutes = {
-  path: UrlPathFragments.MLB,
-  data: { sport: UrlPathFragments.MLB },
-  children: [
-    {
-      path: UrlPathParams.Year,
-      children: [
-        {
-          path: UrlPathFragments.League,
-          children: [
-            {
-              path: UrlPathParams.LeagueId,
-              resolve: [FantasyBaseballLeagueResolver],
-              children: [
-                {
-                  path: UrlPathFragments.Empty,
-                  component: BaseballHomeComponent,
-                },
-                {
-                  path: UrlPathFragments.Team,
-                  children: [
-                    {
-                      path: UrlPathParams.TeamId,
-                      children: [
-                        {
-                          path: UrlPathFragments.Empty,
-                          component: BaseballTeamComponent,
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  path: UrlPathFragments.FreeAgents,
-                  resolve: [FantasyBaseballFreeAgentsResolver],
-                  children: [
-                    {
-                      path: UrlPathFragments.Empty,
-                      component: BaseballFreeAgentsComponent,
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ],
-};
-
 export const routes: Routes = [
   {
     path: UrlPathFragments.Empty,
     component: EspnHomeComponent,
   },
   nflRoutes,
-  mlbRoutes,
+  BaseballRoutes,
   // { path: '**', redirectTo: UrlPathFragments.Empty, pathMatch: 'full' },
 ];
 

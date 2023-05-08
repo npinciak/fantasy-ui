@@ -77,6 +77,8 @@ export enum UrlPathFragments {
   FreeAgents = 'free-agents',
   MyProfile = 'my-profile',
   Year = 'year',
+  Batters = 'batters',
+  Pitchers = 'pitchers',
 }
 
 export enum UrlPathParams {

@@ -5,7 +5,7 @@ import { BaseChartComponent, StatsChart } from '../base-chart/base-chart.compone
 @Component({
   selector: `app-chart-bar`,
   template: `
-    <app-base-card [title]="title" [subtitle]="subtitle">
+    <app-base-card [title]="title" [subtitle]="subtitle" [height]="height">
       <canvas baseChart [type]="chartType" [data]="barChartData" [options]="barChartOptions" [legend]="lineChartLegend"> </canvas>
     </app-base-card>
   `,

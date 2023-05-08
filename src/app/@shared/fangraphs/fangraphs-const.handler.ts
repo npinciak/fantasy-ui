@@ -11,7 +11,7 @@ export class FangraphsConstantsActionHandler {
 
   @Action(FangraphsConstants.Fetch)
   async fetchFangraphsConstants() {
-    const seasonConstants = await this.fangraphsService.getFangraphsConstantsBySeason(2023);
+    const seasonConstants = await this.fangraphsService.getFangraphsConstants();
     this.fangraphsConstantsFacade.addOrUpdate(seasonConstants);
   }
 }

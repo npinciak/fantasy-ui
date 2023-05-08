@@ -5,22 +5,26 @@ import { MatSelectChange } from '@angular/material/select';
 import { Sort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 import { UrlBuilder } from '@app/@core/store/router/url-builder';
+import { FilterOptions } from '@app/@shared/models/filter.model';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
-  BaseballStat,
   BATTER_STATS_LIST,
   BATTING_LINEUP_SLOTS,
+  BaseballLineupSlot,
+  BaseballStat,
   MLB_LINEUP_MAP,
   MLB_STATS_MAP,
   PITCHER_STATS_LIST,
   PITCHING_LINEUP_SLOTS,
+  PLAYER_AVAILABILITY_STATUS,
 } from 'sports-ui-sdk';
 import { BATTER_STATS_HEADERS, BATTER_STATS_ROWS, PITCHER_STATS_HEADERS, PITCHER_STATS_ROWS } from '../../consts/tables.const';
 import { FantasyBaseballFreeAgentsFilterFacade } from '../../facade/fantasy-baseball-free-agents-filter.facade';
 import { FantasyBaseballFreeAgentsFacade } from '../../facade/fantasy-baseball-free-agents.facade';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
+import { FantasyBaseballScoringPeriod } from '../../fantasy-baseball-scoring-period';
 
 enum PositionTabGroup {
   Batters,
@@ -45,12 +49,22 @@ export class BaseballFreeAgentsComponent implements OnInit {
   readonly PITCHER_STATS_ROWS = PITCHER_STATS_ROWS;
   readonly PITCHER_STATS_HEADERS = PITCHER_STATS_HEADERS;
 
-  readonly BATTING_LINEUP_SLOTS = BATTING_LINEUP_SLOTS;
-  readonly PITCHING_LINEUP_SLOTS = PITCHING_LINEUP_SLOTS;
+  readonly BATTING_LINEUP_SLOTS = BATTING_LINEUP_SLOTS.map(s => ({ label: MLB_LINEUP_MAP[s].name, value: s }));
+  readonly PITCHING_LINEUP_SLOTS = PITCHING_LINEUP_SLOTS.map(s => ({ label: MLB_LINEUP_MAP[s].name, value: s }));
 
   readonly MLB_LINEUP_MAP = MLB_LINEUP_MAP;
 
-  scoringPeriodId$ = new BehaviorSubject<string>('002022');
+  readonly PLAYER_AVAILABILITY_FILTER: FilterOptions<string>[] = [
+    { value: PLAYER_AVAILABILITY_STATUS.FreeAgent, label: 'Free Agents' },
+    { value: PLAYER_AVAILABILITY_STATUS.Waivers, label: 'Waivers' },
+    { value: PLAYER_AVAILABILITY_STATUS.OnTeam, label: 'On Team' },
+  ];
+
+  scoringPeriodId$ = new BehaviorSubject<string>(FantasyBaseballScoringPeriod.season('2023'));
+  selectedPlayerAvailability$ = new BehaviorSubject<string>(PLAYER_AVAILABILITY_STATUS.FreeAgent);
+  selectedBattingSlots$ = new BehaviorSubject<BaseballLineupSlot | null>(null);
+  selectedPitchingSlots$ = new BehaviorSubject<BaseballLineupSlot | null>(null);
+
   scoringPeriodFilters$ = this.fantasyBaseballLeagueFacade.scoringPeriodFilters$;
 
   selectedPitcherStat$ = new BehaviorSubject<BaseballStat>(BaseballStat.ERA);
@@ -71,6 +85,27 @@ export class BaseballFreeAgentsComponent implements OnInit {
       compareTeamAndFreeAgentBatterList(selectedTeam, scoringPeriodId)
     )
   );
+
+  compareTeamAndFreeAgentPitcherList$ = combineLatest([
+    this.fantasyBaseballFreeAgentsFacade.compareTeamAndFreeAgentPitcherList$,
+    this.selectedLeagueTeam$,
+    this.scoringPeriodId$,
+  ]).pipe(
+    map(([compareTeamAndFreeAgentPitcherList, selectedTeam, scoringPeriodId]) =>
+      compareTeamAndFreeAgentPitcherList(selectedTeam, scoringPeriodId)
+    )
+  );
+
+  pitcherTableConfig$ = of({
+    rows: PITCHER_STATS_ROWS,
+    headers: PITCHER_STATS_HEADERS,
+  });
+
+  batterBarData$ = combineLatest([
+    this.fantasyBaseballFreeAgentsFacade.freeAgentBatterChartData$,
+    this.scoringPeriodId$,
+    this.selectedBatterStat$,
+  ]).pipe(map(([chartData, statPeriod, xAxis]) => chartData(statPeriod, '2023', xAxis)));
 
   // (fantasyBaseballFreeAgentsFacade.compareTeamAndFreeAgentBatterList$ | async)!(selectedLeagueTeam, scoringPeriodId, '2022')"
 
@@ -94,6 +129,12 @@ export class BaseballFreeAgentsComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  async onRefreshClick(): Promise<void> {
+    try {
+      await this.fantasyBaseballLeagueFacade.refreshCurrentLeague().toPromise();
+    } catch (e) {}
+  }
+
   onSelectedLeagueTeamChange(val: string): void {
     this.selectedLeagueTeam$.next(val);
   }
@@ -110,14 +151,22 @@ export class BaseballFreeAgentsComponent implements OnInit {
     this.selectedPitcherStat$.next(val);
   }
 
+  onPlayerAvailabilityChange(val: string): void {
+    this.selectedPlayerAvailability$.next(val);
+  }
+
   onTabChange(val: number): void {
     this.tabGroup = val;
   }
 
   onPlayerAvailabilityStatusChange(event: MatSelectChange): void {}
 
-  onLineupFilterSlotIdChange(val: number[]): void {
-    this.fantasyBaseballFreeAgentsFilterFacade.toggleFilterSlotIds(val);
+  onBattingSlotIdChange(val: number): void {
+    this.selectedBattingSlots$.next(val);
+  }
+
+  onPitchingSlotIdChange(val: number): void {
+    this.selectedPitchingSlots$.next(val);
   }
 
   onSortChanged(event: Sort): void {
