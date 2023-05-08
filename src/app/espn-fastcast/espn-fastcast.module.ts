@@ -16,7 +16,7 @@ import { EspnFastcastTeamState } from './state/espn-fastcast-team.state';
 
 @NgModule({
   declarations: [EspnScoreboardComponent, EspnScoreboardCardComponent, EspnScoreboardCardTeamComponent, EspnFastcastEventMlbComponent],
-  exports: [EspnScoreboardComponent, EspnScoreboardCardComponent, EspnScoreboardCardTeamComponent, EspnFastcastEventMlbComponent],
+  exports: [EspnScoreboardComponent],
   imports: [
     SharedModule,
     MaterialModule,

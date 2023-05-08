@@ -20,6 +20,14 @@ export class EspnFastcastConnectionFacade {
 
   constructor(private store: Store) {}
 
+  get pause(): boolean {
+    return this.store.selectSnapshot(EspnFastcastConnectionSelectors.slices.pause);
+  }
+
+  get eventType(): string | null {
+    return this.store.selectSnapshot(EspnFastcastConnectionSelectors.slices.eventType);
+  }
+
   fetchStaticFastcast(opts: {
     sport: string | null;
     league: string | null;
@@ -27,6 +35,30 @@ export class EspnFastcastConnectionFacade {
     seasontype: number | null;
   }): Observable<void> {
     return this.store.dispatch(new FastCastConnection.FetchStaticFastcast(opts));
+  }
+
+  sendWebSocketMessage(message: any): Observable<void> {
+    return this.store.dispatch(
+      new FastCastConnection.SendWebSocketMessage({
+        message,
+      })
+    );
+  }
+
+  handleWebSocketMessage(message: any): Observable<void> {
+    return this.store.dispatch(
+      new FastCastConnection.HandleWebSocketMessage({
+        message,
+      })
+    );
+  }
+
+  fetchFastcast(uri: string): Observable<void> {
+    return this.store.dispatch(
+      new FastCastConnection.FetchFastcast({
+        uri,
+      })
+    );
   }
 
   connectWebSocket(): Observable<void> {

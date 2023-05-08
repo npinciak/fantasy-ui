@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { SharedModule } from '@app/@shared/shared.module';
+import { EspnFastcastModule } from '@app/espn-fastcast/espn-fastcast.module';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
 import { EspnPlayerDialogComponent } from './components/espn-player-dialog/espn-player-dialog.component';
@@ -27,6 +28,7 @@ import { FantasyBaseballTeamsLiveState } from './mlb/state/fantasy-baseball-team
 import { FantasyBaseballTeamState } from './mlb/state/fantasy-baseball-team.state';
 import { FootballLineupCardComponent } from './nfl/components/football-lineup-card/football-lineup-card.component';
 import { FootballScoreboardCardTeamComponent } from './nfl/components/football-scoreboard-card-team/football-scoreboard-card-team.component';
+import { FantasyFootballLeagueActionHandler } from './nfl/handlers/fantasy-football-league.handler';
 import { FootballFreeAgentsComponent } from './nfl/pages/football-free-agents/football-free-agents.component';
 import { FootballHomeComponent } from './nfl/pages/football-home/football-home.component';
 import { FootballTeamComponent } from './nfl/pages/football-team/football-team.component';
@@ -62,6 +64,11 @@ import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
     FantasyTeamHeaderComponent,
   ],
   imports: [
+    EspnRoutingModule,
+    EspnFastcastModule,
+    CommonModule,
+    MaterialModule,
+    SharedModule,
     NgxsModule.forFeature([
       FantasyFootballLeagueActionHandler,
       FantasyFootballLeagueState,
@@ -80,12 +87,7 @@ import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
       FantasyBaseballPlayerNewsState,
       FantasyBaseballEventsState,
     ]),
-    CommonModule,
-    EspnRoutingModule,
-    MaterialModule,
-    SharedModule,
   ],
-
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class EspnModule {}

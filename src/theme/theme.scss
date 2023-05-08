@@ -2,128 +2,64 @@
  * Global application theme.
  * Framework overrides and customization goes here.
  */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-// stylelint-disable-next-line selector-max-universal
-* {
-  box-sizing: border-box;
-}
-
-a:hover,
-a:active,
-a:focus {
-  color: #0e67b3;
-}
-
-// .gap {
-//   display: flex;
-
-//   &-5 {
-//     gap: 5px;
-//   }
-
-//   &-10 {
-//     gap: 10px;
-//   }
-
-//   &-15 {
-//     gap: 15px;
-//   }
-
-//   &-20 {
-//     gap: 20px;
-//   }
-
-//   &-25 {
-//     gap: 25px;
-//   }
-// }
-
-// .flex {
-//   display: flex;
-
-//   &-col {
-//     @extend .flex;
-//     flex-direction: column;
-//     justify-content: center;
-//   }
-
-//   &-row {
-//     @extend .flex;
-//     flex-direction: row;
-//     width: 100%;
-//   }
-
-//   &-100 {
-//     flex-basis: 100%;
-//   }
-// }
-
-#global-scoreboard .wrap {
-  margin: 0 auto;
-  max-width: 1400px;
-}
-
-html,
-body {
-  margin: 0;
-  height: 100%;
-  background-color: #f5f6f6;
-}
-
-.ui-font-weight-bold {
-  font-weight: bold;
-}
-
-.ui-margin-auto {
-  margin: auto;
-}
-
-.ui-w-100 {
-  width: 100%;
-}
-
-.mat-simple-snackbar-action {
-  color: #ffffff;
-}
-
-.cursor-pointer {
-  cursor: pointer;
-}
-
-// @link https://vega.github.io/vega/docs/schemes/#redyellowblue
-.status-indicator {
-  font-weight: bold;
-  &.excellent {
-    background-color: #5c8cc0;
-    color: whitesmoke;
+@layer base {
+  * {
+    @apply box-border;
   }
 
-  &.great {
-    background-color: #a3d0e5;
-    color: whitesmoke;
+  html,
+  body {
+    @apply m-0 h-full bg-slate-200;
   }
 
-  &.above-avg {
-    background-color: #e5f3e0;
-    color: black;
-  }
-  &.avg {
-    background-color: #faf8c1;
-    color: black;
+  a:hover,
+  a:active,
+  a:focus {
+    @apply text-sky-700;
   }
 
-  &.below-avg {
-    background-color: #fed185;
-    color: black;
-  }
+  /*
+  * @link https://vega.github.io/vega/docs/schemes/#redyellowblue
+  */
+  .status-indicator {
+    @apply font-bold;
 
-  &.poor {
-    background-color: #f78d54;
-    color: whitesmoke;
-  }
+    &.excellent {
+      background-color: #5c8cc0;
+      @apply text-white;
+    }
 
-  &.awful {
-    background-color: #db4132;
-    color: whitesmoke;
+    &.great {
+      background-color: #a3d0e5;
+      @apply text-white;
+    }
+
+    &.above-avg {
+      background-color: #e5f3e0;
+      @apply text-black;
+    }
+    &.avg {
+      background-color: #faf8c1;
+      @apply text-black;
+    }
+
+    &.below-avg {
+      background-color: #fed185;
+      @apply text-black;
+    }
+
+    &.poor {
+      background-color: #f78d54;
+      @apply text-white;
+    }
+
+    &.awful {
+      background-color: #db4132;
+      @apply text-white;
+    }
   }
 }
