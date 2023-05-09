@@ -10,9 +10,10 @@ import { EventStatus } from 'sports-ui-sdk/lib/espn/models/espn-client.model';
 })
 export class EspnScoreboardCardTeamComponent {
   @Input() team: FastcastEventTeam;
-  @Input() isTournament: boolean;
+  @Input() isTournament = false;
   @Input() eventStatus: EventStatus;
   @Input() odds: EspnFastcastClient.EspnClientTeamOddsEntity;
+  @Input() isPostseason = false;
 
   get ariaInfo() {
     return {
@@ -38,7 +39,10 @@ export class EspnScoreboardCardTeamComponent {
     return this.eventStatus === EVENT_STATUS.Pre;
   }
 
-  get inProgress() {
-    return this.eventStatus === EVENT_STATUS.InProgress;
+  get teamRecord() {
+    if (!this.isTournament && !this.isPostseason) return this.team.record;
+    if (this.isPostseason && this.team.eventIds?.leagueId === '90') return this.team.record;
+    if (this.isPostseason) return this.team.seriesRecord;
+    if (this.isTournament) return `Aggregate: ${this.team?.aggregateScore} `;
   }
 }

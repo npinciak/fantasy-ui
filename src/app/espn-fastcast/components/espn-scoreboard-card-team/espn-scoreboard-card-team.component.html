@@ -8,14 +8,10 @@
       {{ team?.name }}
     </p>
     <p [ngStyle]="{ color: team.color }" class="truncate text-xs">
-      <ng-container *ngIf="!isTournament; else tournamentAggregate"> {{ team?.record }}</ng-container>
+      {{ teamRecord }}
     </p>
   </div>
   <div [ngStyle]="{ color: team.color }" class="inline-flex items-center text-base font-semibold">
     <span [class.hidden]="isPregame">{{ team?.score }}</span>
   </div>
 </div>
-
-<ng-template #tournamentAggregate>
-  <p class="text-xs">Aggregate: {{ team?.aggregateScore }}</p>
-</ng-template>

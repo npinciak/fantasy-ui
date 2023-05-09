@@ -7,7 +7,15 @@ import { FastcastSport } from '@app/espn-fastcast/models/fastcast-sport.model';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
 import { FastcastTransform } from '@app/espn-fastcast/models/fastcast-transform.model';
 import { EVENT_STATUS_ID, EspnClient, EspnFastcastClient } from 'sports-ui-sdk/lib/espn/espn.m';
-import { excludeLeagues, flattenPlayerStats, includeSports, parseUidStringToId, teamColorHandler, transformIdToUid } from '../espn-helpers';
+import {
+  excludeLeagues,
+  flattenPlayerStats,
+  includeSports,
+  parseEventUidStringToId,
+  parseTeamUidStringToId,
+  teamColorHandler,
+  transformIdToUid,
+} from '../espn-helpers';
 import { NO_LOGO, headshotImgBuilder } from '../espn.const';
 import { FantasyLeague } from '../models/fantasy-league.model';
 import { FantasyPlayer } from '../models/fantasy-player.model';
@@ -163,12 +171,12 @@ export function clientLeagueImportToFastcastLeague(leagueImport: EspnFastcastCli
 export function clientCompetitorToFastcastTeam(eventUid: string, data: EspnFastcastClient.CompetitorsEntity): FastcastEventTeam | null {
   if (!data) return null;
 
-  const { id, uid, name, winner, score, logo, abbreviation, homeAway, alternateColor, record, rank } = data;
+  const { id, uid, name, winner, score, logo, abbreviation, homeAway, alternateColor, record, rank, seriesRecord } = data;
 
   return {
     id,
     uid,
-    eventUid,
+    eventIds: parseTeamUidStringToId(uid),
     score,
     abbrev: abbreviation,
     isHome: homeAway,
@@ -180,6 +188,7 @@ export function clientCompetitorToFastcastTeam(eventUid: string, data: EspnFastc
     record: typeof record === 'string' ? record : record[0].displayValue,
     rank: rank ?? null,
     winPct: null,
+    seriesRecord,
   };
 }
 
@@ -237,7 +246,7 @@ export function clientEventToFastcastEvent(event: EspnFastcastClient.EventsEntit
   return {
     id,
     uid,
-    eventIds: parseUidStringToId(uid),
+    eventIds: parseEventUidStringToId(uid),
     timestamp: new Date(date).getTime(),
     state,
     completed,

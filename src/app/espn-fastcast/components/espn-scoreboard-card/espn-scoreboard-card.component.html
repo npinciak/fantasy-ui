@@ -27,6 +27,7 @@
         [isTournament]="isTournament"
         [team]="event?.teams?.away"
         [odds]="event?.odds?.awayTeamOdds"
+        [isPostseason]="isPostseason"
       ></app-espn-scoreboard-card-team>
     </div>
     <div class="py-2">
@@ -35,6 +36,7 @@
         [isTournament]="isTournament"
         [team]="event?.teams?.home"
         [odds]="event?.odds?.homeTeamOdds"
+        [isPostseason]="isPostseason"
       ></app-espn-scoreboard-card-team>
     </div>
   </div>

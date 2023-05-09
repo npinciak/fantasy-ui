@@ -74,6 +74,10 @@ export function teamColorHandler(val: EspnFastcastClient.CompetitorsEntity): str
     'ffc72c',
     'd1d3d4',
     'eaaa00',
+    'f7f316',
+    'aed6f1',
+    'e8d035',
+    'c9c7c8',
   ]);
 
   if (negativeColors.has(color.toLowerCase()) && negativeColors.has(alternateColor.toLowerCase())) return '#445058';
@@ -124,7 +128,7 @@ export function transformIdToUid(
  * @param str
  * @returns
  */
-export function parseUidStringToId(str: string): ParsedUid | null {
+export function parseEventUidStringToId(str: string): ParsedUid | null {
   const tokens = str.split('~');
 
   if (tokens.length !== 4) return null;
@@ -140,11 +144,28 @@ export function parseUidStringToId(str: string): ParsedUid | null {
   return null;
 }
 
+export function parseTeamUidStringToId(str: string): ParsedUid | null {
+  const tokens = str.split('~');
+
+  if (tokens.length !== 3) return null;
+
+  const [s, l, t] = tokens.map(token => {
+    const [key, value] = token.split(':');
+    if (key && value) return value;
+    return null;
+  });
+
+  if (s && l && t) return { sportId: s, leagueId: l, teamId: t };
+
+  return null;
+}
+
 export type ParsedUid = {
   sportId: string;
   leagueId: string;
-  eventId: string;
-  competitionId: string;
+  eventId?: string;
+  competitionId?: string;
+  teamId?: string;
 };
 
 /**
@@ -174,11 +195,25 @@ export function benchPlayersFilter<T extends FootballPlayer | BaseballPlayer>(pl
   return sortPlayersByLineupSlotDisplayOrder(playerList, lineupMap);
 }
 
+/**
+ * Filters starting players
+ *
+ * @param players
+ * @param lineupMap
+ * @returns
+ */
 export function startingPlayersFilter<T extends FootballPlayer | BaseballPlayer>(players: T[], lineupMap: EspnClient.LineupEntityMap): T[] {
   const playerList = players.filter(p => !lineupMap[p.lineupSlotId].bench);
   return sortPlayersByLineupSlotDisplayOrder(playerList, lineupMap);
 }
 
+/**
+ * Sort players by lineupSlotId
+ *
+ * @param players
+ * @param lineupMap
+ * @returns
+ */
 export function sortPlayersByLineupSlotDisplayOrder<T extends FootballPlayer | BaseballPlayer | BaseballPlayerStatsRow>(
   players: T[],
   lineupMap: EspnClient.LineupEntityMap
@@ -186,10 +221,22 @@ export function sortPlayersByLineupSlotDisplayOrder<T extends FootballPlayer | B
   return players.sort((a, b) => lineupMap[a.lineupSlotId].displayOrder - lineupMap[b.lineupSlotId].displayOrder);
 }
 
+/**
+ * Filters players on IR
+ *
+ * @param players
+ * @returns
+ */
 export function injuredPlayersFilter<T extends FootballPlayer | BaseballPlayer>(players: T[]): T[] {
   return players.filter(p => p.injuryStatus === PLAYER_INJURY_STATUS.IR);
 }
 
+/**
+ * Returns fastcast event summary
+ *
+ * @param event
+ * @returns
+ */
 export function fastcastEventSummary(event: FastcastEvent): string | null {
   const { status, seasonType, note, timestamp, completed, summary } = event;
 
