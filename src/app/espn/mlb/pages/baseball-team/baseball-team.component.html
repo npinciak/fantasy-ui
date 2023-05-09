@@ -47,6 +47,7 @@
         ></app-baseball-lineup-card>
         <div class="my-3"></div>
         <app-baseball-lineup-card
+          *ngIf="(benchBatters$ | async).length > 0"
           title="Bench"
           [isLoading]="isLoading$ | async"
           [lineup]="benchBatters$ | async"
@@ -87,6 +88,7 @@
         ></app-baseball-lineup-card>
         <div class="my-3"></div>
         <app-baseball-lineup-card
+          *ngIf="(benchPitchers$ | async).length > 0"
           title="Bench"
           [isLoading]="isLoading$ | async"
           [lineup]="benchPitchers$ | async"

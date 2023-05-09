@@ -1,11 +1,14 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
-import { MatSelectChange } from '@angular/material/select';
 import { Sort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 import { UrlBuilder } from '@app/@core/store/router/url-builder';
 import { FilterOptions } from '@app/@shared/models/filter.model';
+import { EspnPlayerDialogComponent } from '@app/espn/components/espn-player-dialog/espn-player-dialog.component';
+import { PlayerDialog } from '@app/espn/models/player-dialog-component.model';
+import { Store } from '@ngxs/store';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
@@ -19,12 +22,16 @@ import {
   PITCHING_LINEUP_SLOTS,
   PLAYER_AVAILABILITY_STATUS,
 } from 'sports-ui-sdk';
+import { PlayerAvailabilityStatus } from 'sports-ui-sdk/lib/espn/models/espn-client.model';
+import { FantasyBaseballPlayerNews } from '../../actions/fantasy-baseball-player-news.actions';
 import { BATTER_STATS_HEADERS, BATTER_STATS_ROWS, PITCHER_STATS_HEADERS, PITCHER_STATS_ROWS } from '../../consts/tables.const';
 import { FantasyBaseballFreeAgentsFilterFacade } from '../../facade/fantasy-baseball-free-agents-filter.facade';
 import { FantasyBaseballFreeAgentsFacade } from '../../facade/fantasy-baseball-free-agents.facade';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
+import { FantasyBaseballPlayerNewsFacade } from '../../facade/fantasy-baseball-player-news.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
 import { FantasyBaseballScoringPeriod } from '../../fantasy-baseball-scoring-period';
+import { BaseballPlayer } from '../../models/baseball-player.model';
 
 enum PositionTabGroup {
   Batters,
@@ -118,7 +125,10 @@ export class BaseballFreeAgentsComponent implements OnInit {
   pageIndex: any;
 
   constructor(
+    private store: Store,
     private activatedRoute: ActivatedRoute,
+    private dialog: MatDialog,
+    readonly fantasyBaseballPlayerNewsFacade: FantasyBaseballPlayerNewsFacade,
     readonly fantasyBaseballFreeAgentsFilterFacade: FantasyBaseballFreeAgentsFilterFacade,
     readonly fantasyBaseballFreeAgentsFacade: FantasyBaseballFreeAgentsFacade,
     readonly fantasyBaseballLeagueFacade: FantasyBaseballLeagueFacade,
@@ -151,15 +161,15 @@ export class BaseballFreeAgentsComponent implements OnInit {
     this.selectedPitcherStat$.next(val);
   }
 
-  onPlayerAvailabilityChange(val: string): void {
+  onPlayerAvailabilityChange(val: PlayerAvailabilityStatus): void {
     this.selectedPlayerAvailability$.next(val);
+
+    this.fantasyBaseballFreeAgentsFilterFacade.togglePlayerAvailabilityStatus(val);
   }
 
   onTabChange(val: number): void {
     this.tabGroup = val;
   }
-
-  onPlayerAvailabilityStatusChange(event: MatSelectChange): void {}
 
   onBattingSlotIdChange(val: number): void {
     this.selectedBattingSlots$.next(val);
@@ -180,6 +190,15 @@ export class BaseballFreeAgentsComponent implements OnInit {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.fantasyBaseballFreeAgentsFilterFacade.setPagination(this.paginationMeta);
+  }
+
+  async onPlayerClick(player: BaseballPlayer) {
+    await this.store.dispatch([new FantasyBaseballPlayerNews.Fetch({ playerId: player.id })]).toPromise();
+    const news = this.fantasyBaseballPlayerNewsFacade.getById(player.id)?.news ?? [];
+
+    const data = { player, news, sport: 'mlb' } as PlayerDialog<BaseballPlayer>;
+
+    this.dialog.open(EspnPlayerDialogComponent, { data, height: '500px', width: '800px' });
   }
 
   get viewingBatters(): boolean {

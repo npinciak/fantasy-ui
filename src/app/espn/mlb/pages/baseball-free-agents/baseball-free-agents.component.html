@@ -1,7 +1,5 @@
 <app-page-layout>
-  <div statsHeader>
-   
-  </div>
+  <div statsHeader></div>
 
   <div main>
     <div class="flex flex-wrap">
@@ -60,7 +58,7 @@
               [selectedOption]="selectedPlayerAvailability$ | async"
               title="Player Availability"
               [filterItems]="PLAYER_AVAILABILITY_FILTER"
-              (filterUpdate)="onPlayerAvailabilityStatusChange($event)"
+              (filterUpdate)="onPlayerAvailabilityChange($event)"
             ></app-dropdown-filter>
           </div>
 
@@ -90,6 +88,7 @@
           [dataColumns]="(tableConfig$ | async).rows"
           [headers]="(tableConfig$ | async).headers"
           [statsMap]="MLB_STAT_MAP"
+          (playerClicked)="onPlayerClick($event)"
         >
         </app-espn-stats-table>
 
@@ -98,6 +97,7 @@
           [dataColumns]="(pitcherTableConfig$ | async).rows"
           [headers]="(pitcherTableConfig$ | async).headers"
           [statsMap]="MLB_STAT_MAP"
+          (playerClicked)="onPlayerClick($event)"
         >
         </app-espn-stats-table>
       </div>

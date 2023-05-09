@@ -9,17 +9,15 @@
           </th>
           <td mat-cell class="first-of-type:min-w-41 first-of-type:w-41 first-of-type:pl-0" *matCellDef="let data">
             <ng-container [ngSwitch]="col.columnDef">
-              <app-loading-skeleton [isLoading]="isLoading$ | async">
-                <ng-template [ngSwitchCase]="'name'">
-                  <app-espn-player-info-col [player]="data" [hideLineupSlot]="true"></app-espn-player-info-col>
-                </ng-template>
-                <ng-template [ngSwitchCase]="'percentChange'">
-                  <app-espn-player-trending-col [data]="col?.cellData(data)"></app-espn-player-trending-col>
-                </ng-template>
-                <ng-template [ngSwitchDefault]>
-                  {{ (col?.cellData(data) | statFormat: 'number' | number: '1.0-2') ?? '-' }}
-                </ng-template>
-              </app-loading-skeleton>
+              <ng-template [ngSwitchCase]="'name'">
+                <app-espn-player-info-col [player]="data" [hideLineupSlot]="true" (playerClicked)="onPlayerClicked($event)"></app-espn-player-info-col>
+              </ng-template>
+              <ng-template [ngSwitchCase]="'percentChange'">
+                <app-espn-player-trending-col [data]="col?.cellData(data)"></app-espn-player-trending-col>
+              </ng-template>
+              <ng-template [ngSwitchDefault]>
+                {{ (col?.cellData(data) | statFormat: 'number' | number: '1.0-2') ?? '-' }}
+              </ng-template>
             </ng-container>
           </td>
         </ng-container>

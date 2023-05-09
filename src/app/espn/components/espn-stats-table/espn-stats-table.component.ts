@@ -12,6 +12,7 @@ import {
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
 import { StatEntity } from '@app/@shared/base-models/base-stats.model';
 import { cellDataAccessor } from '@app/@shared/helpers/utils';
 import { TableColumnDataType } from '@app/@shared/models/table-columns.model';
@@ -24,7 +25,7 @@ import { BehaviorSubject } from 'rxjs';
   templateUrl: './espn-stats-table.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class EspnStatsTableComponent implements OnChanges, AfterViewInit {
+export class EspnStatsTableComponent<T extends PlayerEntity> implements OnChanges, AfterViewInit {
   @Input() data: any[];
   @Input() dataColumns: any[];
   @Input() headers: string[];
@@ -37,6 +38,7 @@ export class EspnStatsTableComponent implements OnChanges, AfterViewInit {
 
   @Output() sortChanged = new EventEmitter<Sort>();
   @Output() paginatorChanged = new EventEmitter<PageEvent>();
+  @Output() playerClicked = new EventEmitter<T>();
 
   readonly StatType = StatTypePeriodId;
   readonly TableColumnDataType = TableColumnDataType;
@@ -56,6 +58,10 @@ export class EspnStatsTableComponent implements OnChanges, AfterViewInit {
       this.dataSource.data = changes.data.currentValue;
       this.isLoading$.next(false);
     }
+  }
+
+  onPlayerClicked(player: T): void {
+    this.playerClicked.emit(player);
   }
 
   ngAfterViewInit(): void {
