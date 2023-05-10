@@ -24,7 +24,11 @@ export class AdvStats {
 
   get wRC(): number {
     if (!this.wRCValid) return 0;
-    return this.wRAA + this._seasonConst['r/PA'] * this._stats[BaseballStat.PA];
+
+    const { wOBA, wOBAScale } = this._seasonConst;
+
+    // prettier-ignore
+    return  (((this.wOBA - wOBA) / wOBAScale) + (this._seasonConst['R/PA'])) * this._stats[BaseballStat.PA]
   }
 
   get fip(): number {
@@ -77,7 +81,9 @@ export class AdvStats {
     return (
       this._stats[BaseballStat.AB] +
       this._stats[BaseballStat.BB] -
-      (this._stats[BaseballStat.IBB] + this._stats[BaseballStat.SF] + this._stats[BaseballStat.HBP])
+      this._stats[BaseballStat.IBB] + 
+      this._stats[BaseballStat.SF] + 
+      this._stats[BaseballStat.HBP]
     );
   }
 

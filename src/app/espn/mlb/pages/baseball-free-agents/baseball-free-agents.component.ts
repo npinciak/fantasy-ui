@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
-import { UrlBuilder } from '@app/@core/store/router/url-builder';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { EspnPlayerDialogComponent } from '@app/espn/components/espn-player-dialog/espn-player-dialog.component';
 import { PlayerDialog } from '@app/espn/models/player-dialog-component.model';
@@ -199,14 +198,6 @@ export class BaseballFreeAgentsComponent implements OnInit {
     const data = { player, news, sport: 'mlb' } as PlayerDialog<BaseballPlayer>;
 
     this.dialog.open(EspnPlayerDialogComponent, { data, height: '500px', width: '800px' });
-  }
-
-  get viewingBatters(): boolean {
-    return this.tabGroup === PositionTabGroup.Batters;
-  }
-
-  get homeRoute(): string[] {
-    return [UrlBuilder.espnMlbBase, `${this.leagueId}`];
   }
 
   private get paginationMeta() {

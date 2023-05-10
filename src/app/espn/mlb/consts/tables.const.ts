@@ -143,6 +143,12 @@ export const BATTER_STATS_COLUMNS = [
     dataType: TableColumnDataType.Number,
   },
   {
+    columnDef: `${[statsKey]}.${BaseballStat.wRC}`,
+    headerCell: `${[statsKey]}.${BaseballStat.wRC}`,
+    headerLabel: 'wRC',
+    dataType: TableColumnDataType.Number,
+  },
+  {
     columnDef: `${[statsKey]}.${BaseballStat.wRAA}`,
     headerCell: `${[statsKey]}.${BaseballStat.wRAA}`,
     headerLabel: MLB_STATS_MAP[BaseballStat.wRAA].abbrev,
