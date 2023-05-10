@@ -1,3 +1,3 @@
-import * as MlbThresholds from './stats-threshold.conts';
+import * as MlbThresholds from './stats-threshold.const';
 
 export { MlbThresholds };
