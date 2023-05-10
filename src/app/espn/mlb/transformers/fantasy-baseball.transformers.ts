@@ -1,17 +1,20 @@
+import { FangraphsWobaFipConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { BaseballStat, EspnClient, MLB_LINEUP_MAP, MLB_POSITION_MAP, MLB_TEAM_MAP, SPORT_ID } from 'sports-ui-sdk';
-
 import { isPitcher } from '../../espn-helpers';
 import { FantasyLeague } from '../../models/fantasy-league.model';
 import { EspnTransformers } from '../../transformers/espn-transformers.m';
 import { AdvStats } from '../class/advStats.class';
-
-import { FangraphsWobaFipConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballLeague } from '../models/baseball-league.model';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
 import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
 
+/**
+ *
+ * @param event
+ * @returns
+ */
 export function clientEventToBaseballEvent(event: EspnClient.EventEntity): BaseballEvent {
   const { id, uid, competitors } = event;
   return {
@@ -21,6 +24,11 @@ export function clientEventToBaseballEvent(event: EspnClient.EventEntity): Baseb
   };
 }
 
+/**
+ *
+ * @param team
+ * @returns
+ */
 export function clientTeamListToTeamList(team: EspnClient.Team): BaseballTeam {
   const { abbrev, logo } = team;
 
@@ -37,6 +45,11 @@ export function clientTeamListToTeamList(team: EspnClient.Team): BaseballTeam {
   };
 }
 
+/**
+ *
+ * @param team
+ * @returns
+ */
 export function clientScheduleTeamListToTeamList(team: EspnClient.ScheduleTeam): BaseballTeamLive {
   const { totalPoints, teamId, totalPointsLive, rosterForCurrentScoringPeriod } = team;
 
@@ -48,6 +61,11 @@ export function clientScheduleTeamListToTeamList(team: EspnClient.ScheduleTeam):
   };
 }
 
+/**
+ *
+ * @param players
+ * @returns
+ */
 export function clientPlayerToBaseballPlayer(players: EspnClient.TeamRosterEntry[]): BaseballPlayer[] {
   return players.map(player => {
     if (!exists(player.playerPoolEntry)) throw new Error('player.playerPoolEntry must be defined');
@@ -82,6 +100,11 @@ export function clientPlayerToBaseballPlayer(players: EspnClient.TeamRosterEntry
   });
 }
 
+/**
+ *
+ * @param freeAgents
+ * @returns
+ */
 export function transformEspnFreeAgentToBaseballPlayer(freeAgents: EspnClient.FreeAgent[]): BaseballPlayer[] {
   return freeAgents.map(freeAgent => {
     if (!exists(freeAgent.player)) throw new Error('player.player must be defined');
@@ -114,6 +137,12 @@ export function transformEspnFreeAgentToBaseballPlayer(freeAgents: EspnClient.Fr
   });
 }
 
+/**
+ *
+ * @param res
+ * @param genericLeagueSettings
+ * @returns
+ */
 export function clientLeagueToBaseballLeague(res: EspnClient.BaseballLeague, genericLeagueSettings: FantasyLeague): BaseballLeague {
   const schedule = res.schedule[0];
 
@@ -128,6 +157,13 @@ export function clientLeagueToBaseballLeague(res: EspnClient.BaseballLeague, gen
   };
 }
 
+/**
+ *
+ * @param player
+ * @param statPeriod
+ * @param seasonConst
+ * @returns
+ */
 export function transformToBaseballPlayerBatterStatsRow(
   player: BaseballPlayer,
   statPeriod: string,
@@ -140,7 +176,7 @@ export function transformToBaseballPlayerBatterStatsRow(
 
   const statsEntity = player.stats[statPeriod]!.stats;
 
-  const { fip, wOBA, wRAA, babip, iso, leftOnBasePercent } = new AdvStats({ seasonConst, statsEntity });
+  const { fip, wOBA, wRAA, babip, iso, leftOnBasePercent, wRC } = new AdvStats({ seasonConst, statsEntity });
 
   const adv = {} as Record<BaseballStat, number>;
 
@@ -150,6 +186,7 @@ export function transformToBaseballPlayerBatterStatsRow(
   adv[BaseballStat.BABIP] = babip;
   adv[BaseballStat.ISO] = iso;
   adv[BaseballStat.LOB_PCT] = leftOnBasePercent;
+  adv[BaseballStat.wRC] = wRC;
 
   const stats = {
     ...adv,
