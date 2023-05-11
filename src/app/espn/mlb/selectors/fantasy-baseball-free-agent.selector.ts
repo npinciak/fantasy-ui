@@ -159,7 +159,12 @@ export class FantasyBaseballFreeAgentSelector extends GenericSelector(FantasyBas
   } {
     return (statPeriod: string, seasonId: string, statFilter: BaseballStat) => {
       const batterStats = getFreeAgentBatterStats(statPeriod, seasonId)
-        .map(p => ({ statValue: exists(p.stats) ? p.stats[statFilter] : 0, name: p.name }))
+        .map(p => {
+          return {
+            statValue: exists(p.stats) && exists(p.stats[statFilter]) ? p.stats[statFilter] : 0,
+            name: p.name,
+          };
+        })
         .filter(d => d.statValue !== 0)
         .sort((a, b) => b.statValue - a.statValue);
 
