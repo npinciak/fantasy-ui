@@ -145,7 +145,7 @@ export const BATTER_STATS_COLUMNS = [
   {
     columnDef: `${[statsKey]}.${BaseballStat.wRC}`,
     headerCell: `${[statsKey]}.${BaseballStat.wRC}`,
-    headerLabel: 'wRC',
+    headerLabel: MLB_STATS_MAP[BaseballStat.wRC].abbrev,
     dataType: TableColumnDataType.Number,
   },
   {
@@ -158,6 +158,12 @@ export const BATTER_STATS_COLUMNS = [
     columnDef: 'percentChange',
     headerCell: 'percentChange',
     headerLabel: 'Trending',
+    dataType: TableColumnDataType.Number,
+  },
+  {
+    columnDef: 'percentStarted',
+    headerCell: 'percentStarted',
+    headerLabel: '% Started',
     dataType: TableColumnDataType.Number,
   },
   {
@@ -259,6 +265,12 @@ export const PITCHER_STATS_COLUMNS = [
     columnDef: 'percentChange',
     headerCell: 'percentChange',
     headerLabel: 'Trending',
+    dataType: TableColumnDataType.Number,
+  },
+  {
+    columnDef: 'percentStarted',
+    headerCell: 'percentStarted',
+    headerLabel: '% Started',
     dataType: TableColumnDataType.Number,
   },
   {

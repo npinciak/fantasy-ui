@@ -169,7 +169,7 @@ export function transformToBaseballPlayerBatterStatsRow(
   statPeriod: string,
   seasonConst: FangraphsWobaFipConstants
 ): BaseballPlayerStatsRow | null {
-  const { id, name, injured, injuryStatus, img, team, position, lineupSlotId, percentChange, percentOwned } = player;
+  const { id, name, injured, injuryStatus, img, team, position, lineupSlotId, percentChange, percentOwned, percentStarted } = player;
 
   if (!exists(player.stats)) return null;
   if (!exists(player.stats[statPeriod])) return null;
@@ -205,6 +205,7 @@ export function transformToBaseballPlayerBatterStatsRow(
     lineupSlotId,
     percentChange,
     percentOwned,
+    percentStarted,
     highlightedPlayer: false,
     stats,
   };

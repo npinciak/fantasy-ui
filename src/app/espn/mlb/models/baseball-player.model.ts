@@ -18,7 +18,7 @@ export type BaseballPlayer = FantasyPlayer & BaseballPlayerProps & Pick<EspnClie
 export type BaseballPlayerMap = Record<string, BaseballPlayer>;
 
 export type BaseballPlayerStatsRow = Omit<PlayerEntity, 'teamId' | 'teamUid'> &
-  Pick<FantasyPlayer, 'injured' | 'injuryStatus' | 'percentChange' | 'percentOwned'> &
+  Pick<FantasyPlayer, 'injured' | 'injuryStatus' | 'percentChange' | 'percentOwned' | 'percentStarted'> &
   Pick<EspnClient.TeamRosterEntry, 'lineupSlotId'> & {
     highlightedPlayer: boolean;
     stats: Record<number, number>;
