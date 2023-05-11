@@ -6,6 +6,6 @@ import { FantasyBaseballLeagueState } from '../state/fantasy-baseball-league.sta
 export class FantasyBaseballLeagueSelector extends FantasyLeagueBaseSelector(FantasyBaseballLeagueState) {
   @Selector([FantasyBaseballLeagueSelector.slices.seasonId])
   static scoringPeriodFilters(seasonId: string | null) {
-    return FantasyBaseballScoringPeriod.filterOptionList(seasonId);
+    return FantasyBaseballScoringPeriod.filterOptionListWithWeeks(seasonId);
   }
 }

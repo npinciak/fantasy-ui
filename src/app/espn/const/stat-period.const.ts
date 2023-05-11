@@ -2,6 +2,15 @@ import { FilterOptions } from '@app/@shared/models/filter.model';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { StatTypePeriodId } from '../models/espn-stats.model';
 
+/**
+ * Base function that returns stat scoring periods
+ *
+ * @example ```typescript
+ *
+ * BaseScoringPeriodTest.season('2022'); // returns '002022';
+ *
+ * ```
+ */
 export function BaseScoringPeriod() {
   class BaseScoringPeriodClass {
     static season(year: string | null) {
@@ -42,7 +51,7 @@ export function BaseScoringPeriod() {
       return BaseScoringPeriodClass.seasonToScoringPeriodId(StatTypePeriodId.ProjectedWeek, year, week);
     }
 
-    private static seasonToScoringPeriodId(statTypePeriodId: StatTypePeriodId, year?: string | null, week?: string | null): string {
+    protected static seasonToScoringPeriodId(statTypePeriodId: StatTypePeriodId, year?: string | null, week?: string | null): string {
       const isProjected = statTypePeriodId === StatTypePeriodId.Projected;
 
       const season = year ?? new Date().getFullYear();
