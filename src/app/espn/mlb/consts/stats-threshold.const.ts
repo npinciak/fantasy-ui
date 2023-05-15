@@ -11,6 +11,16 @@ export const OpsThreshold = {
   [StatThreshold.Awful]: 0.57,
 } as const;
 
+export const wRCThreshold = {
+  [StatThreshold.Excellent]: 2105,
+  [StatThreshold.Great]: 90,
+  [StatThreshold.AboveAvg]: 75,
+  [StatThreshold.Avg]: 65,
+  [StatThreshold.BelowAvg]: 60,
+  [StatThreshold.Poor]: 50,
+  [StatThreshold.Awful]: 40,
+} as const;
+
 export const WraaThreshold = {
   [StatThreshold.Excellent]: 40,
   [StatThreshold.Great]: 20,
@@ -82,6 +92,7 @@ export const lobPctThreshold = {
 } as const;
 
 export const THRESHOLD_MAP = {
+  [BaseballStat.wRC]: wRCThreshold,
   [BaseballStat.wRAA]: WraaThreshold,
   [BaseballStat.wOBA]: wobaThreshold,
   [BaseballStat.OPS]: OpsThreshold,
