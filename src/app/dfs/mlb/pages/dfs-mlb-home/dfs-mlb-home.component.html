@@ -1,40 +1,24 @@
 <app-page-layout>
-  <div sidebar>
-    <ng-container *ngIf="!(slatesEmpty$ | async)">
-      <app-slate-list [slateList]="selectSlateByType$ | async" (selectSlate)="onSelectSlate($event)"></app-slate-list>
-    </ng-container>
-  </div>
-  <div nav>
-    <!-- <h4>{{ selectedSlate$ | async }}</h4> -->
-  </div>
-  <div main class="gap-25 flex-col bg-white shadow">
-    <div>
-      <div class="gap-15 flex-row">
-        <div>
-          <!-- <app-dropdown-filter
-            ariaLabel=""
-            title="Teams"
-            [filterItems]="playerTeamsFilterOptions$ | async"
-            (filterUpdate)="teamFilterChange($event)"
-          ></app-dropdown-filter> -->
-        </div>
-        <div>
-          <!-- <app-dropdown-filter
-            ariaLabel=""
-            title="Position"
-            [filterItems]="playerPositionFilterOptions$ | async"
-            (filterUpdate)="positionFilterChange($event)"
-          ></app-dropdown-filter> -->
-        </div>
+  <div main>
+    <div class="flex flex-wrap">
+      <div class="w-full px-4 xl:w-3/12">
+        <app-base-card>
+          <ng-container *ngIf="!(slatesEmpty$ | async)">
+            <app-slate-list [slateList]="selectSlateByType$ | async" (selectSlate)="onSelectSlate($event)"></app-slate-list>
+          </ng-container>
+        </app-base-card>
       </div>
-
-      <app-player-table
-        [filter]="''"
-        [teamMap]="MLB_TEAM_ID_MAP"
-        [data]="playerList$ | async"
-        [dataRows]="tableConfig.rows"
-        [dataHeaders]="tableConfig.headers"
-      ></app-player-table>
+      <div class="mb-12 w-full px-4 xl:mb-0 xl:w-9/12">
+        <app-base-card>
+          <app-player-table
+            [filter]="''"
+            [teamMap]="MLB_TEAM_ID_MAP"
+            [data]="playerList$ | async"
+            [dataRows]="tableConfig.rows"
+            [dataHeaders]="tableConfig.headers"
+          ></app-player-table
+        ></app-base-card>
+      </div>
     </div>
   </div>
 </app-page-layout>

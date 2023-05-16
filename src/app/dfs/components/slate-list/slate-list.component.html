@@ -1,24 +1,22 @@
-<div class="bg-white shadow">
-  <div class="mx-auto py-6 px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col gap-10">
-      <ng-container *ngFor="let slate of slateList | keyvalue">
-        <ng-container *ngIf="slate.value.length > 0">
-          <ul class="divide-y divide-dashed">
-            <li>
-              <span class="text-lg font-bold">{{ slate.key | titlecase }}</span>
-              <ul>
-                <li
-                  *ngFor="let item of slate.value"
-                  class="flex h-14 cursor-pointer flex-col justify-center px-2 text-sm hover:bg-gray-100 focus:bg-gray-100"
-                  (click)="selectSlate.emit(item)"
-                >
-                  {{ item.name }}
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </ng-container>
+<div class="mx-auto py-6 px-4 sm:px-6 lg:px-8">
+  <div class="flex flex-col gap-10">
+    <ng-container *ngFor="let slate of slateList | keyvalue">
+      <ng-container *ngIf="slate.value.length > 0">
+        <ul class="divide-y divide-dashed">
+          <li>
+            <span class="text-lg font-bold">{{ slate.key | titlecase }}</span>
+            <ul>
+              <li
+                *ngFor="let item of slate.value"
+                class="flex h-14 cursor-pointer flex-col justify-center px-2 text-sm hover:bg-gray-100 focus:bg-gray-100"
+                (click)="selectSlate.emit(item)"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </li>
+        </ul>
       </ng-container>
-    </div>
+    </ng-container>
   </div>
 </div>
