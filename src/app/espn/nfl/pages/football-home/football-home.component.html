@@ -1,46 +1,44 @@
 <app-page-layout>
-  <div sidebar>
-    <div class="w-full max-w-md rounded-lg border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-800">
-      <!-- <div class="mb-4 flex items-center justify-between">
-        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white"></h5>
-        <div class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
-          <app-refresh-btn (refreshButtonClicked)="onRefreshClick()"></app-refresh-btn>
-        </div>
-      </div> -->
-      <div class="flow-root">
-        <div>
-          <app-dropdown-filter
-            [disabled]="false"
-            ariaLabel="week selection options"
-            [selectedOption]="currentScoringPeriod$ | async"
-            [filterItems]="matchupPeriodIdFilterOptions$ | async"
-            (filterUpdate)="fantasyFootballLeagueFacade.updateCurrentScoringPeriodId($event)"
-          ></app-dropdown-filter>
-        </div>
+  <div main>
+    <div class="flex flex-wrap">
+      <div class="w-full px-4 xl:w-4/12">
+        <app-base-card>
+          <div>
+            <app-dropdown-filter
+              [disabled]="false"
+              ariaLabel="week selection options"
+              [selectedOption]="currentScoringPeriod$ | async"
+              [filterItems]="matchupPeriodIdFilterOptions$ | async"
+              (filterUpdate)="fantasyFootballLeagueFacade.updateCurrentScoringPeriodId($event)"
+            ></app-dropdown-filter>
+          </div>
+          <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+            <li
+              class="py-3 sm:py-4"
+              *ngFor="let matchup of matchupListByMatchupPeriodId$ | async; let i = index"
+              [attr.data-index]="i"
+              tabindex="-1"
+              (click)="onPlayerClick(player)"
+            >
+              <div>
+                <app-football-scoreboard-card-team [team]="matchup.awayTeam"></app-football-scoreboard-card-team>
+                <app-football-scoreboard-card-team [team]="matchup.homeTeam"></app-football-scoreboard-card-team>
+              </div>
+            </li>
+          </ul>
+        </app-base-card>
+      </div>
 
-        <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-          <li
-            class="py-3 sm:py-4"
-            *ngFor="let matchup of matchupListByMatchupPeriodId$ | async; let i = index"
-            [attr.data-index]="i"
-            tabindex="-1"
-            (click)="onPlayerClick(player)"
-          >
-            <div>
-              <app-football-scoreboard-card-team [team]="matchup.awayTeam"></app-football-scoreboard-card-team>
-              <app-football-scoreboard-card-team [team]="matchup.homeTeam"></app-football-scoreboard-card-team>
-            </div>
-          </li>
-        </ul>
+      <div class="mb-12 w-full px-4 xl:mb-0 xl:w-8/12">
+        <app-base-card>
+          <app-espn-standings-table
+            [data]="standings$ | async"
+            [rows]="LEAGUE_STANDINGS_ROWS"
+            [headers]="LEAGUE_STANDINGS_HEADERS"
+            (navigateToTeam)="onNavigateToTeam($event)"
+          ></app-espn-standings-table>
+        </app-base-card>
       </div>
     </div>
-  </div>
-  <div main>
-    <app-espn-standings-table
-      [data]="standings$ | async"
-      [rows]="LEAGUE_STANDINGS_ROWS"
-      [headers]="LEAGUE_STANDINGS_HEADERS"
-      (navigateToTeam)="onNavigateToTeam($event)"
-    ></app-espn-standings-table>
   </div>
 </app-page-layout>
