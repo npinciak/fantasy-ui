@@ -40,6 +40,7 @@ import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-sched
 import { FantasyFootballTeamState } from './nfl/state/fantasy-football-team.state';
 import { FantasyFootballTransactionState } from './nfl/state/fantasy-football-transaction.state';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
+import { FreeAgentsAvailabilitySelectedState } from './state/free-agent-availability-selected.state';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
       FantasyBaseballFreeAgentsFilterState,
       FantasyBaseballPlayerNewsState,
       FantasyBaseballEventsState,
+      FreeAgentsAvailabilitySelectedState,
     ]),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
