@@ -1,22 +1,31 @@
 import { Injectable } from '@angular/core';
 
+import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { EspnClient } from 'sports-ui-sdk';
+import { FantasyBaseballFreeAgentFilterSelector } from '../selectors/fantasy-baseball-free-agent-filter.selector';
 import {
-  PatchPlayerAvailabilityStatus,
   RemoveLineupSlotIds,
   RemovePlayerAvailabilityStatus,
   RemoveScoringPeriodIds,
+  SetLineupSlotIds,
   SetPagination,
-  ToggleLineupSlotIds,
-  ToggleScoringPeriodIds,
+  SetPlayerAvailabilityStatus,
+  SetScoringPeriodIds,
 } from '../state/fantasy-baseball-free-agents-filter.state';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FantasyBaseballFreeAgentsFilterFacade {
+  isSelectedAvailabilityStatusToggled$ = select(FantasyBaseballFreeAgentFilterSelector.isSelectedAvailabilityStatusToggled);
+  isSelectedAvailabilityStatusSelected$ = select(FantasyBaseballFreeAgentFilterSelector.isSelectedAvailabilityStatusSelected);
+  isSelectedLineupSlotIdToggled$ = select(FantasyBaseballFreeAgentFilterSelector.isSelectedLineupSlotIdToggled);
+  isSelectedLineupSlotIdSelected$ = select(FantasyBaseballFreeAgentFilterSelector.isSelectedLineupSlotIdSelected);
+  toggledLineupSlotIds$ = select(FantasyBaseballFreeAgentFilterSelector.getToggledLineupSlotIds);
+  toggledAvailabilityStatusIds$ = select(FantasyBaseballFreeAgentFilterSelector.getToggledAvailabilityStatusIds);
+
   constructor(private store: Store) {}
 
   setPagination(paginationMeta: {
@@ -28,16 +37,16 @@ export class FantasyBaseballFreeAgentsFilterFacade {
     return this.store.dispatch([new SetPagination(paginationMeta)]);
   }
 
-  toggleFilterSlotIds(lineupSlotIds: number[]): Observable<void> {
-    return this.store.dispatch([new ToggleLineupSlotIds({ lineupSlotIds })]);
+  toggleFilterSlotIds(lineupSlotIds: number): Observable<void> {
+    return this.store.dispatch([new SetLineupSlotIds([lineupSlotIds])]);
   }
 
   togglePlayerAvailabilityStatus(status: EspnClient.PlayerAvailabilityStatus): Observable<void> {
-    return this.store.dispatch(new PatchPlayerAvailabilityStatus(status));
+    return this.store.dispatch(new SetPlayerAvailabilityStatus([status]));
   }
 
-  patchScoringPeriodIds(scoringPeriodIds: string[]): Observable<void> {
-    return this.store.dispatch(new ToggleScoringPeriodIds({ scoringPeriodIds }));
+  setScoringPeriodIds(scoringPeriodIds: string[]): Observable<void> {
+    return this.store.dispatch(new SetScoringPeriodIds(scoringPeriodIds));
   }
 
   removeFilterSlotIds(lineupSlotIds: number[]): Observable<void> {

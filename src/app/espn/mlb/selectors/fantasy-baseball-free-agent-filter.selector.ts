@@ -1,18 +1,17 @@
 import { Selector } from '@app/@shared/models/typed-selector';
+import { createPropertySelectors } from '@ngxs/store';
+import { EspnClient } from 'sports-ui-sdk';
 import {
   FantasyBaseballFreeAgentsFilterState,
   FantasyBaseballFreeAgentsFilterStateModel,
 } from '../state/fantasy-baseball-free-agents-filter.state';
 
 export class FantasyBaseballFreeAgentFilterSelector {
-  @Selector([FantasyBaseballFreeAgentsFilterState])
-  static getState(state: FantasyBaseballFreeAgentsFilterStateModel) {
-    return state;
-  }
+  static slices = createPropertySelectors<FantasyBaseballFreeAgentsFilterStateModel>(FantasyBaseballFreeAgentsFilterState);
 
-  @Selector([FantasyBaseballFreeAgentFilterSelector.getState])
-  static getLineupSlotIds(state: FantasyBaseballFreeAgentsFilterStateModel) {
-    return state.lineupSlotIds;
+  @Selector([FantasyBaseballFreeAgentFilterSelector.slices.lineupSlotIds])
+  static getLineupSlotIds(lineupSlotIds) {
+    return lineupSlotIds;
   }
 
   @Selector([FantasyBaseballFreeAgentFilterSelector.getLineupSlotIds])
@@ -20,28 +19,52 @@ export class FantasyBaseballFreeAgentFilterSelector {
     return Object.keys(ids).filter(id => ids[id]);
   }
 
-  @Selector([FantasyBaseballFreeAgentFilterSelector.getState])
-  static getAvailabilityStatus(state: FantasyBaseballFreeAgentsFilterStateModel) {
-    return state.availabilityStatus;
-  }
-
-  @Selector([FantasyBaseballFreeAgentFilterSelector.getAvailabilityStatus])
-  static getSelectedAvailabilityStatus(ids: { [id: string]: boolean }): string[] {
+  @Selector([FantasyBaseballFreeAgentFilterSelector.slices.availabilityStatus])
+  static getSelectedAvailabilityStatus(ids: { [key in EspnClient.PlayerAvailabilityStatus]: boolean }): string[] {
     return Object.keys(ids).filter(id => ids[id]);
   }
 
-  @Selector([FantasyBaseballFreeAgentFilterSelector.getState])
-  static getTopScoringPeriodIds(state: FantasyBaseballFreeAgentsFilterStateModel) {
-    return state.topScoringPeriodIds;
-  }
-
-  @Selector([FantasyBaseballFreeAgentFilterSelector.getTopScoringPeriodIds])
+  @Selector([FantasyBaseballFreeAgentFilterSelector.slices.topScoringPeriodIds])
   static getSelectedTopScoringPeriodIds(ids: { [id: string]: boolean }): string[] {
     return Object.keys(ids).filter(id => ids[id]);
   }
 
-  @Selector([FantasyBaseballFreeAgentFilterSelector.getState])
-  static getPagination(state: FantasyBaseballFreeAgentsFilterStateModel) {
-    return state.metaData;
+  @Selector([FantasyBaseballFreeAgentFilterSelector.slices.availabilityStatus])
+  static getToggledAvailabilityStatusIds(ids: { [key in EspnClient.PlayerAvailabilityStatus]: boolean }): string[] {
+    return Object.keys(ids);
+  }
+
+  @Selector([FantasyBaseballFreeAgentFilterSelector.getToggledAvailabilityStatusIds])
+  static getToggledIdsAvailabilityStatusSet(ids: string[]): Set<string> {
+    return new Set(ids);
+  }
+
+  @Selector([FantasyBaseballFreeAgentFilterSelector.slices.lineupSlotIds])
+  static getToggledLineupSlotIds(ids: { [id: number]: boolean }): string[] {
+    return Object.keys(ids);
+  }
+
+  @Selector([FantasyBaseballFreeAgentFilterSelector.getToggledLineupSlotIds])
+  static getToggledLineupSlotIdsSet(ids: string[]): Set<string> {
+    return new Set(ids);
+  }
+
+  @Selector([FantasyBaseballFreeAgentFilterSelector.slices.availabilityStatus])
+  static isSelectedAvailabilityStatusSelected(ids: { [key in EspnClient.PlayerAvailabilityStatus]: boolean }): (id: string) => boolean {
+    return (id: string) => !!ids[id];
+  }
+
+  @Selector([FantasyBaseballFreeAgentFilterSelector.slices.availabilityStatus])
+  static isSelectedAvailabilityStatusToggled(ids: { [key in EspnClient.PlayerAvailabilityStatus]: boolean }): (id: string) => boolean {
+    return (id: string) => id in ids;
+  }
+  @Selector([FantasyBaseballFreeAgentFilterSelector.slices.lineupSlotIds])
+  static isSelectedLineupSlotIdSelected(ids: { [id: number]: boolean }): (id: string) => boolean {
+    return (id: string) => !!ids[id];
+  }
+
+  @Selector([FantasyBaseballFreeAgentFilterSelector.slices.lineupSlotIds])
+  static isSelectedLineupSlotIdToggled(ids: { [id: number]: boolean }): (id: string) => boolean {
+    return (id: string) => id in ids;
   }
 }

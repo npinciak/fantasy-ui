@@ -24,7 +24,7 @@ export class FantasyBaseballFreeAgentsState extends GenericState({
     const availabilityStatus = this.store.selectSnapshot(FantasyBaseballFreeAgentFilterSelector.getSelectedAvailabilityStatus);
     const topScoringPeriodIds = this.store.selectSnapshot(FantasyBaseballFreeAgentFilterSelector.getSelectedTopScoringPeriodIds);
 
-    const pagination = this.store.selectSnapshot(FantasyBaseballFreeAgentFilterSelector.getPagination);
+    const pagination = this.store.selectSnapshot(FantasyBaseballFreeAgentFilterSelector.slices.metaData);
 
     const scoringPeriodId = this.store.selectSnapshot(FantasyBaseballLeagueSelector.getScoringPeriodId);
     if (!scoringPeriodId) throw new Error('scoringPeriodId cannot be missing');
@@ -34,7 +34,7 @@ export class FantasyBaseballFreeAgentsState extends GenericState({
     const filterStatus = { value: availabilityStatus };
     const filterStatsForTopScoringPeriodIds = {
       value: 5,
-      additionalValue: ['002022', '102022', '002021', '012022', '022022', '032022', '042022', '062022', '010002022'],
+      additionalValue: topScoringPeriodIds,
     };
 
     const sortStatId = { sortPriority: 1, sortAsc: pagination.sortDirection === 'asc' ? true : false, value: null, additionalValue: '' };
@@ -50,7 +50,7 @@ export class FantasyBaseballFreeAgentsState extends GenericState({
         ...players,
         // sortStatId,
         filterStatus,
-        // filterSlotIds,
+        filterSlotIds,
         // filterStatsForTopScoringPeriodIds,
         // filterRanksForScoringPeriodIds,
         limit: pagination.currentPageSize,

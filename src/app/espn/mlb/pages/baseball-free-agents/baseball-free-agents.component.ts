@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { EspnPlayerDialogComponent } from '@app/espn/components/espn-player-dialog/espn-player-dialog.component';
 import { PlayerDialog } from '@app/espn/models/player-dialog-component.model';
+import { FreeAgentAvailabilityStatusSelectedFacade } from '@app/espn/state/free-agent-availability-selected.facade';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -65,6 +66,12 @@ export class BaseballFreeAgentsComponent implements OnInit {
     { value: PLAYER_AVAILABILITY_STATUS.Waivers, label: 'Waivers' },
     { value: PLAYER_AVAILABILITY_STATUS.OnTeam, label: 'On Team' },
   ];
+
+  isSelectedAvailabilityStatusToggled$ = this.freeAgentAvailabilityStatusSelectedFacade.isSelected$;
+  isSelectedLineupSlotIdToggled$ = this.fantasyBaseballFreeAgentsFilterFacade.isSelectedLineupSlotIdToggled$;
+
+  toggledAvailabilityStatusIds$ = this.freeAgentAvailabilityStatusSelectedFacade.isToggled$;
+  toggledLineupSlotIds$ = this.fantasyBaseballFreeAgentsFilterFacade.toggledLineupSlotIds$;
 
   scoringPeriodId$ = new BehaviorSubject<string>(FantasyBaseballScoringPeriod.season('2023'));
   selectedPlayerAvailability$ = new BehaviorSubject<string>(PLAYER_AVAILABILITY_STATUS.FreeAgent);
@@ -127,6 +134,7 @@ export class BaseballFreeAgentsComponent implements OnInit {
     private store: Store,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
+    readonly freeAgentAvailabilityStatusSelectedFacade: FreeAgentAvailabilityStatusSelectedFacade,
     readonly fantasyBaseballPlayerNewsFacade: FantasyBaseballPlayerNewsFacade,
     readonly fantasyBaseballFreeAgentsFilterFacade: FantasyBaseballFreeAgentsFilterFacade,
     readonly fantasyBaseballFreeAgentsFacade: FantasyBaseballFreeAgentsFacade,
@@ -148,8 +156,9 @@ export class BaseballFreeAgentsComponent implements OnInit {
     this.selectedLeagueTeam$.next(val);
   }
 
-  scoringPeriodIdChange(change: string): void {
-    this.scoringPeriodId$.next(change);
+  scoringPeriodIdChange(val: string): void {
+    this.scoringPeriodId$.next(val);
+    this.fantasyBaseballFreeAgentsFilterFacade.setScoringPeriodIds([val]);
   }
 
   onBatterStatChange(val: BaseballStat): void {
@@ -162,8 +171,7 @@ export class BaseballFreeAgentsComponent implements OnInit {
 
   onPlayerAvailabilityChange(val: PlayerAvailabilityStatus): void {
     this.selectedPlayerAvailability$.next(val);
-
-    this.fantasyBaseballFreeAgentsFilterFacade.togglePlayerAvailabilityStatus(val);
+    this.freeAgentAvailabilityStatusSelectedFacade.toggle([val]);
   }
 
   onTabChange(val: number): void {
@@ -172,6 +180,8 @@ export class BaseballFreeAgentsComponent implements OnInit {
 
   onBattingSlotIdChange(val: number): void {
     this.selectedBattingSlots$.next(val);
+
+    this.fantasyBaseballFreeAgentsFilterFacade.toggleFilterSlotIds(val);
   }
 
   onPitchingSlotIdChange(val: number): void {

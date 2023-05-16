@@ -149,7 +149,11 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
         .filter(d => d.statValue !== 0)
         .sort((a, b) => b.statValue - a.statValue);
 
-      return { label: batterStats.map(p => p.name), data: batterStats.map(p => p.statValue) };
+
+      return { 
+        label: batterStats.map(p => p.name), 
+        data: batterStats.map(p => p.statValue) 
+      };
     };
   }
 

@@ -53,16 +53,26 @@
           </div>
 
           <div>
-            <app-dropdown-filter
-              ariaLabel="player availability options"
-              [selectedOption]="selectedPlayerAvailability$ | async"
+            <app-multi-select
+              ariaLabel="player-availability-options-"
               title="Player Availability"
+              [selectedOption]="toggledAvailabilityStatusIds$ | async"
               [filterItems]="PLAYER_AVAILABILITY_FILTER"
               (filterUpdate)="onPlayerAvailabilityChange($event)"
-            ></app-dropdown-filter>
+            >
+            </app-multi-select>
           </div>
-
           <div>
+            <app-multi-select
+              ariaLabel="batter-lineup-slots-"
+              title="Batter Lineup Slot"
+              [selectedOption]="toggledLineupSlotIds$ | async"
+              [filterItems]="BATTING_LINEUP_SLOTS"
+              (filterUpdate)="onBattingSlotIdChange($event)"
+            >
+            </app-multi-select>
+          </div>
+          <!-- <div>
             <app-dropdown-filter
               ariaLabel="batter lineup slots"
               [selectedOption]="selectedBattingSlots$ | async"
@@ -70,7 +80,7 @@
               [filterItems]="BATTING_LINEUP_SLOTS"
               (filterUpdate)="onBattingSlotIdChange($event)"
             ></app-dropdown-filter>
-          </div>
+          </div> -->
           <div>
             <app-dropdown-filter
               ariaLabel="pitcher lineup slots"
