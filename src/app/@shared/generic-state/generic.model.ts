@@ -7,7 +7,6 @@ export interface GenericStateModel<T> {
 
 export interface GenericStateClass<T> {
   addOrUpdate: GenericPayloadActionClass<T>;
-  AddOrUpdate: GenericPayloadActionClass<T>;
   new (...args: any[]): any;
 }
 

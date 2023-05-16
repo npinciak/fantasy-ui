@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
-import { patchMap, setMap } from '../operators';
+import { patchMap } from '../operators';
 import { GenericStateClass, GenericStateModel, IGenericActionsClass } from './generic.model';
 
 export type PropertyOfType<T, U> = { [K in keyof T]: T[K] extends U ? K : never }[keyof T];
@@ -21,18 +21,12 @@ export function GenericState<EntityType, IdProperty extends PropertyOfType<Entit
   @Injectable()
   class GenericStateBase {
     static addOrUpdate = actionHandler.AddOrUpdate;
-    static AddOrUpdate = actionHandler.AddOrUpdate;
 
     private static getId = (t: EntityType) => t[idProperty] as string;
 
     @Action(GenericStateBase.addOrUpdate)
     addOrUpdate({ setState }: StateContext<GenericStateModel<EntityType>>, { payload }: { payload: EntityType[] }): void {
       setState(patchMap(payload, GenericStateBase.getId));
-    }
-
-    @Action(GenericStateBase.AddOrUpdate)
-    AddOrUpdate({ setState }: StateContext<GenericStateModel<EntityType>>, { payload }: { payload: EntityType[] }): void {
-      setState(setMap(payload, GenericStateBase.getId));
     }
   }
   return GenericStateBase;
