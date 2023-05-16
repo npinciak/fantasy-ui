@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve --port=4400 --proxy-config proxy.conf.json",
     "build": "ng build --configuration=production",
+    "build": "ng build --configuration=production --show-circular-dependencies",
     "build:patch": "npm run bump:patch && npm run build",
     "build:minor": "npm run bump:minor && npm run build",
     "build:major": "npm run bump:major && npm run build",
@@ -16,6 +17,7 @@
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
     "install:sdk": "npm i ../sports-ui-sdk"
+    "circular-dependency": "node ./scripts/circular-dependency.ts"
   },
   "private": true,
   "dependencies": {
@@ -80,6 +82,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "madge": "^6.0.0",
     "postcss-scss": "^4.0.6",
     "prettier": "^2.3.2",
     "prettier-plugin-tailwindcss": "^0.2.2",
