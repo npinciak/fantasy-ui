@@ -11,6 +11,7 @@ import { ChartPieComponent } from './components/chart-pie/chart-pie.component';
 import { DataVisScatterComponent } from './components/data-vis-scatter/data-vis-scatter.component';
 import { DropdownFilterComponent } from './components/dropdown-filter/dropdown-filter.component';
 import { LoadingSkeletonComponent } from './components/loading-skeleton/loading-skeleton.component';
+import { MultiSelectComponent } from './components/multi-select/multi-select.component';
 import { NoDataComponent } from './components/no-data/no-data.component';
 import { PageLayoutComponent } from './components/page-layout/page-layout.component';
 import { RefreshBtnComponent } from './components/refresh-btn/refresh-btn.component';
@@ -35,6 +36,7 @@ import { StatPipe } from './pipes/stat-format.pipe';
     RefreshBtnComponent,
     ToggleComponent,
     ShellNavComponent,
+    MultiSelectComponent,
     BaseCardComponent,
     BaseChartComponent,
   ],
@@ -50,6 +52,7 @@ import { StatPipe } from './pipes/stat-format.pipe';
     DropdownFilterComponent,
     DataVisScatterComponent,
     LoadingSkeletonComponent,
+    MultiSelectComponent,
     PageLayoutComponent,
     RefreshBtnComponent,
     ToggleComponent,

@@ -1,0 +1,23 @@
+<div class="flex justify-center">
+  <div class="mb-3 w-full">
+    <ng-container *ngFor="let item of filterItems; let i = index">
+      <div class="flex items-center">
+        <input
+          #multiSelect
+          [id]="ariaLabel + i"
+          [name]="item.value"
+          [value]="item.value"
+          type="checkbox"
+          role="option"
+          class="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-500"
+          [checked]="selectionList.isSelected(multiSelect.value)"
+          (change)="onSelectionChange($event.target.value)"
+        />
+
+        <label [attr.aria-label]="ariaLabel + i" [for]="ariaLabel + i" class="ml-3 min-w-0 flex-1 text-gray-500" (change)="onSelectionChange(multiSelect.value)">{{
+          item.label
+        }}</label>
+      </div>
+    </ng-container>
+  </div>
+</div>
