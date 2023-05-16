@@ -8,8 +8,8 @@ import { SportsUiUserFacade } from '../facades/sports-ui-user.facade';
 })
 export class SportsUiLeaguesResolver implements Resolve<void> {
   constructor(private sportsUiLeaguesFacade: SportsUiLeaguesFacade, private sportsUiUsersFacade: SportsUiUserFacade) {}
-  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    await this.sportsUiLeaguesFacade.fetchLeagues().toPromise();
+   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+     this.sportsUiLeaguesFacade.fetchLeagues()
     this.sportsUiUsersFacade.fetchUser();
   }
 }
