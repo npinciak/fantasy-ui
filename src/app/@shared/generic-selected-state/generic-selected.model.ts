@@ -18,6 +18,7 @@ export interface EmptyPayloadActionClass {
 
 export interface ISelectedActionClass {
   new (...args: any[]): any;
+  stateName: string;
   selectAction: IdsPayloadActionClass;
   deselectAction: IdsPayloadActionClass;
   toggleAction: IdsPayloadActionClass;
