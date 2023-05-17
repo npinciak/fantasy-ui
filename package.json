@@ -15,7 +15,10 @@
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
     "install:sdk": "npm i ../sports-ui-sdk",
-    "circular-dependency": "node ./scripts/circular-dependency.ts"
+    "circular-dependency": "node ./scripts/circular-dependency.ts",
+    "fresh:install": "rm -rf .angular && rm -rf node_modules && npm i",
+    "postinstall": "node ./decorate-angular-cli.js",
+    "ignored": "exit 1"
   },
   "private": true,
   "dependencies": {
@@ -33,6 +36,7 @@
     "@ngxs/router-plugin": "^3.8.0",
     "@ngxs/schematics": "0.0.1-alpha.5",
     "@ngxs/store": "^3.8.0",
+    "@nrwl/angular": "14.1.11",
     "@supabase/supabase-js": "^2.2.0",
     "chart.js": "^3.8.0",
     "clone": "^2.1.2",
@@ -59,6 +63,7 @@
     "@angular/cli": "~13.3.9",
     "@angular/compiler-cli": "~13.3.11",
     "@ngxs/devtools-plugin": "^3.7.1",
+    "@nrwl/workspace": "14.1.11",
     "@types/clone": "^2.1.1",
     "@types/jasmine": "~3.6.0",
     "@types/lodash": "^4.14.173",
@@ -72,7 +77,6 @@
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsdoc": "30.7.6",
     "eslint-plugin-prefer-arrow": "1.2.2",
-    "eslint-plugin-sports-ui": "file:sports-ui-eslint",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~6.3.16",
@@ -81,6 +85,7 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
     "madge": "^6.0.0",
+    "nx": "14.1.11",
     "postcss-scss": "^4.0.6",
     "prettier": "^2.3.2",
     "prettier-plugin-tailwindcss": "^0.2.2",
