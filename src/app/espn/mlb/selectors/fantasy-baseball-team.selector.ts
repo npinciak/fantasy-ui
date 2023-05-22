@@ -11,7 +11,7 @@ import {
   startingPlayersFilter,
 } from '@app/espn/espn-helpers';
 import { Selector } from '@ngxs/store';
-import { BaseballStat, MLB_LINEUP_MAP, MLB_STATS_MAP } from 'sports-ui-sdk';
+import { BASEBALL_LINEUP_MAP, BaseballStat, MLB_STATS_MAP } from 'sports-ui-sdk';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
 import { BaseballTeam, BaseballTeamTableRow } from '../models/baseball-team.model';
@@ -67,12 +67,12 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
 
   @Selector([FantasyBaseballTeamSelector.getTeamBatters])
   static getTeamStartingBatters(batters: BaseballPlayer[]): BaseballPlayer[] {
-    return startingPlayersFilter(batters, MLB_LINEUP_MAP);
+    return startingPlayersFilter(batters, BASEBALL_LINEUP_MAP);
   }
 
   @Selector([FantasyBaseballTeamSelector.getTeamBatters])
   static getTeamBenchBatters(batters: BaseballPlayer[]): BaseballPlayer[] {
-    return benchPlayersFilter(batters, MLB_LINEUP_MAP);
+    return benchPlayersFilter(batters, BASEBALL_LINEUP_MAP);
   }
 
   @Selector([RouterSelector.getTeamId, FantasyBaseballTeamSelector.getRosterByTeamId])
@@ -82,12 +82,12 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
 
   @Selector([FantasyBaseballTeamSelector.getTeamPitchers])
   static getTeamStartingPitchers(pitchers: BaseballPlayer[]): BaseballPlayer[] {
-    return startingPlayersFilter(pitchers, MLB_LINEUP_MAP);
+    return startingPlayersFilter(pitchers, BASEBALL_LINEUP_MAP);
   }
 
   @Selector([FantasyBaseballTeamSelector.getTeamPitchers])
   static getTeamBenchPitchers(pitchers: BaseballPlayer[]): BaseballPlayer[] {
-    return benchPlayersFilter(pitchers, MLB_LINEUP_MAP);
+    return benchPlayersFilter(pitchers, BASEBALL_LINEUP_MAP);
   }
 
   @Selector([FantasyBaseballTeamSelector.getTeamPitchers])
@@ -108,7 +108,7 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
         batters.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonConst))
       );
 
-      return sortPlayersByLineupSlotDisplayOrder(playerList, MLB_LINEUP_MAP);
+      return sortPlayersByLineupSlotDisplayOrder(playerList, BASEBALL_LINEUP_MAP);
     };
   }
 
@@ -131,7 +131,7 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
           .map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonConst))
       );
 
-      return sortPlayersByLineupSlotDisplayOrder(playerList, MLB_LINEUP_MAP);
+      return sortPlayersByLineupSlotDisplayOrder(playerList, BASEBALL_LINEUP_MAP);
     };
   }
 
@@ -149,10 +149,9 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
         .filter(d => d.statValue !== 0)
         .sort((a, b) => b.statValue - a.statValue);
 
-
-      return { 
-        label: batterStats.map(p => p.name), 
-        data: batterStats.map(p => p.statValue) 
+      return {
+        label: batterStats.map(p => p.name),
+        data: batterStats.map(p => p.statValue),
       };
     };
   }
@@ -194,7 +193,7 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
       const playerList = existsFilter(
         getTeamPitchers.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonConst))
       );
-      return sortPlayersByLineupSlotDisplayOrder(playerList, MLB_LINEUP_MAP);
+      return sortPlayersByLineupSlotDisplayOrder(playerList, BASEBALL_LINEUP_MAP);
     };
   }
 
@@ -217,7 +216,7 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
           .map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonConst))
       );
 
-      return sortPlayersByLineupSlotDisplayOrder(playerList, MLB_LINEUP_MAP);
+      return sortPlayersByLineupSlotDisplayOrder(playerList, BASEBALL_LINEUP_MAP);
     };
   }
 

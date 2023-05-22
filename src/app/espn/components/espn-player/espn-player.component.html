@@ -15,7 +15,7 @@
       </app-loading-skeleton>
     </p>
     <p class="truncate text-sm text-gray-500 dark:text-gray-400">
-      <app-loading-skeleton [xs]="true" [isLoading]="isLoading">{{ player?.team }}, {{ player?.position }}</app-loading-skeleton>
+      <app-loading-skeleton [xs]="true" [isLoading]="isLoading">{{ player?.team }} - {{ player?.eligibleLineupSlots }}</app-loading-skeleton>
     </p>
   </div>
   <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">{{ player?.points | number: '1.0' }}</div>

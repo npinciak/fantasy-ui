@@ -1,6 +1,6 @@
 import { FangraphsWobaFipConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
 import { exists } from '@app/@shared/utilities/utilities.m';
-import { BaseballStat, EspnClient, MLB_LINEUP_MAP, MLB_POSITION_MAP, MLB_TEAM_MAP, SPORT_ID } from 'sports-ui-sdk';
+import { BASEBALL_LINEUP_MAP, BaseballLineupSlot, BaseballStat, EspnClient, MLB_POSITION_MAP, MLB_TEAM_MAP, SPORT_ID } from 'sports-ui-sdk';
 import { isPitcher } from '../../espn-helpers';
 import { FantasyLeague } from '../../models/fantasy-league.model';
 import { EspnTransformers } from '../../transformers/espn-transformers.m';
@@ -9,6 +9,25 @@ import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballLeague } from '../models/baseball-league.model';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
 import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
+
+export function playerEligibleLineupSlotDisplay(val: BaseballLineupSlot[]) {
+  return val
+    .filter(slot =>
+      [
+        BaseballLineupSlot.FirstBase,
+        BaseballLineupSlot.SecondBase,
+        BaseballLineupSlot.SS,
+        BaseballLineupSlot.ThirdBase,
+        BaseballLineupSlot.C,
+        BaseballLineupSlot.OF,
+        BaseballLineupSlot.DH,
+        BaseballLineupSlot.SP,
+        BaseballLineupSlot.RP,
+      ].includes(slot)
+    )
+    .map(slot => BASEBALL_LINEUP_MAP[slot].abbrev)
+    .join(', ');
+}
 
 /**
  *
@@ -86,6 +105,8 @@ export function clientPlayerToBaseballPlayer(players: EspnClient.TeamRosterEntry
       positionMap: MLB_POSITION_MAP,
     });
 
+    const eligibleLineupSlots = playerEligibleLineupSlotDisplay(eligibleSlots);
+
     return {
       ...playerInfo,
       playerRatings: ratings,
@@ -93,8 +114,9 @@ export function clientPlayerToBaseballPlayer(players: EspnClient.TeamRosterEntry
       lineupSlotId,
       isStarting: false,
       startingStatus: null,
-      lineupSlot: MLB_LINEUP_MAP[lineupSlotId].abbrev,
+      lineupSlot: BASEBALL_LINEUP_MAP[lineupSlotId].abbrev,
       starterStatusByProGame,
+      eligibleLineupSlots,
       lastNewsDate,
     };
   });
@@ -123,6 +145,8 @@ export function transformEspnFreeAgentToBaseballPlayer(freeAgents: EspnClient.Fr
       positionMap: MLB_POSITION_MAP,
     });
 
+    const eligibleLineupSlots = playerEligibleLineupSlotDisplay(eligibleSlots);
+
     return {
       ...playerInfo,
       playerRatings: ratings,
@@ -132,6 +156,7 @@ export function transformEspnFreeAgentToBaseballPlayer(freeAgents: EspnClient.Fr
       startingStatus: null,
       lineupSlot: null,
       starterStatusByProGame,
+      eligibleLineupSlots,
       lastNewsDate,
     };
   });
@@ -169,7 +194,20 @@ export function transformToBaseballPlayerBatterStatsRow(
   statPeriod: string,
   seasonConst: FangraphsWobaFipConstants
 ): BaseballPlayerStatsRow | null {
-  const { id, name, injured, injuryStatus, img, team, position, lineupSlotId, percentChange, percentOwned, percentStarted } = player;
+  const {
+    id,
+    name,
+    injured,
+    injuryStatus,
+    img,
+    team,
+    position,
+    lineupSlotId,
+    percentChange,
+    percentOwned,
+    percentStarted,
+    eligibleLineupSlots,
+  } = player;
 
   if (!exists(player.stats)) return null;
   if (!exists(player.stats[statPeriod])) return null;
@@ -207,6 +245,7 @@ export function transformToBaseballPlayerBatterStatsRow(
     percentOwned,
     percentStarted,
     highlightedPlayer: false,
+    eligibleLineupSlots,
     stats,
   };
 }

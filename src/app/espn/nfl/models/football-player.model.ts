@@ -5,6 +5,7 @@ export type FootballPlayerAttributes = {
   lineupSlot: string | null;
   points: number;
   outlookByWeek: PlayerOutlookByWeek[];
+  eligibleLineupSlots?: string;
 };
 
 export type FootballPlayer = FantasyPlayer & FootballPlayerAttributes & Pick<EspnClient.TeamRosterEntry, 'lineupSlotId'>;

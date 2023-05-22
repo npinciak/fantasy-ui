@@ -11,6 +11,7 @@ export interface BaseballPlayerProps {
   isPitcher: boolean;
   lineupSlot: string | null;
   starterStatusByProGame: Record<number, PlayerInjuryStatus>;
+  eligibleLineupSlots: string;
 }
 
 export type BaseballPlayer = FantasyPlayer & BaseballPlayerProps & Pick<EspnClient.TeamRosterEntry, 'lineupSlotId'>;
@@ -18,7 +19,7 @@ export type BaseballPlayer = FantasyPlayer & BaseballPlayerProps & Pick<EspnClie
 export type BaseballPlayerMap = Record<string, BaseballPlayer>;
 
 export type BaseballPlayerStatsRow = Omit<PlayerEntity, 'teamId' | 'teamUid'> &
-  Pick<FantasyPlayer, 'injured' | 'injuryStatus' | 'percentChange' | 'percentOwned' | 'percentStarted'> &
+  Pick<BaseballPlayer, 'eligibleLineupSlots' | 'injured' | 'injuryStatus' | 'percentChange' | 'percentOwned' | 'percentStarted'> &
   Pick<EspnClient.TeamRosterEntry, 'lineupSlotId'> & {
     highlightedPlayer: boolean;
     stats: Record<number, number>;

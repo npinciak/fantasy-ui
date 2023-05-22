@@ -29,15 +29,17 @@
     <table class="w-full border-collapse items-center bg-transparent">
       <tbody>
         <tr class="cursor-pointer" *ngFor="let player of lineup; let i = index" [attr.data-index]="i" tabindex="-1" (click)="onPlayerClick(player)">
-          <th class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-2 px-6 text-left align-middle text-xs">
+          <th class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-2 px-6 align-middle text-xs">{{ player?.lineupSlot }}</th>
+          <td class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-2 px-6 text-left align-middle text-xs">
             <img width="48" height="35" role="presentation" class="w-13 h-9 rounded-full text-center text-xs text-gray-500" [src]="player?.img" [alt]="player?.name" />
-          </th>
+          </td>
           <td class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-2 px-6 align-middle text-xs">
             {{ player.name }}
             <i
               [ngClass]="[FaIconByEspnPlayerInjuryStatus[player?.injuryStatus], InjurySeverityClassByInjurySeverity[InjurySeverityByInjuryStatus[player?.injuryStatus]]]"
               [title]="InjuryLabelByInjuryStatus[player?.injuryStatus]"
             ></i>
+            <p class="truncate text-xs hover:cursor-pointer">{{ player?.team }} - {{ player?.eligibleLineupSlots }}</p>
           </td>
           <td class="text-md whitespace-nowrap border-t-0 border-l-0 border-r-0 p-2 px-6 align-middle">
             <!-- <mat-icon

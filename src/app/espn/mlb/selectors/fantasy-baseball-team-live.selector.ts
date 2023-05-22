@@ -2,7 +2,7 @@ import { RouterSelector } from '@app/@core/store/router/router.selectors';
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { startingPlayersFilter } from '@app/espn/espn-helpers';
 import { Selector } from '@ngxs/store';
-import { MLB_LINEUP_MAP } from 'sports-ui-sdk';
+import { BASEBALL_LINEUP_MAP } from 'sports-ui-sdk';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
@@ -36,7 +36,7 @@ export class FantasyBaseballTeamLiveSelector extends GenericSelector(FantasyBase
     getLiveBaseballEventById: (id: string | null) => BaseballEvent | null
   ) {
     return (id: string) => {
-      const batters = startingPlayersFilter(getLiveTeamBatters(id), MLB_LINEUP_MAP);
+      const batters = startingPlayersFilter(getLiveTeamBatters(id), BASEBALL_LINEUP_MAP);
       return batters.map(p => {
         const games = Object.keys(p.starterStatusByProGame);
 

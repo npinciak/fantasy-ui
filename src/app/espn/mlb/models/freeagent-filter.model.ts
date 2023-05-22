@@ -1,4 +1,4 @@
-import { MLB_LINEUP_MAP } from 'sports-ui-sdk';
+import { BASEBALL_LINEUP_MAP } from 'sports-ui-sdk';
 
 export class FreeAgentFilter {
   private _playerStatus: string[] = [];
@@ -31,7 +31,7 @@ export class FreeAgentFilter {
     const slotMap = new Map();
 
     for (const id of lineupSlots) {
-      slotMap.set(id, MLB_LINEUP_MAP[id].abbrev);
+      slotMap.set(id, BASEBALL_LINEUP_MAP[id].abbrev);
     }
 
     return slotMap;

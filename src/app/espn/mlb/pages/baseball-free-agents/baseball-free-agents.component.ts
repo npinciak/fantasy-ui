@@ -12,11 +12,11 @@ import { Store } from '@ngxs/store';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
+  BASEBALL_LINEUP_MAP,
   BATTER_STATS_LIST,
   BATTING_LINEUP_SLOTS,
   BaseballLineupSlot,
   BaseballStat,
-  MLB_LINEUP_MAP,
   MLB_STATS_MAP,
   PITCHER_STATS_LIST,
   PITCHING_LINEUP_SLOTS,
@@ -56,10 +56,10 @@ export class BaseballFreeAgentsComponent implements OnInit {
   readonly PITCHER_STATS_ROWS = PITCHER_STATS_ROWS;
   readonly PITCHER_STATS_HEADERS = PITCHER_STATS_HEADERS;
 
-  readonly BATTING_LINEUP_SLOTS = BATTING_LINEUP_SLOTS.map(s => ({ label: MLB_LINEUP_MAP[s].name, value: s }));
-  readonly PITCHING_LINEUP_SLOTS = PITCHING_LINEUP_SLOTS.map(s => ({ label: MLB_LINEUP_MAP[s].name, value: s }));
+  readonly BATTING_LINEUP_SLOTS = BATTING_LINEUP_SLOTS.map(s => ({ label: BASEBALL_LINEUP_MAP[s].name, value: s }));
+  readonly PITCHING_LINEUP_SLOTS = PITCHING_LINEUP_SLOTS.map(s => ({ label: BASEBALL_LINEUP_MAP[s].name, value: s }));
 
-  readonly MLB_LINEUP_MAP = MLB_LINEUP_MAP;
+  readonly BASEBALL_LINEUP_MAP = BASEBALL_LINEUP_MAP;
 
   readonly PLAYER_AVAILABILITY_FILTER: FilterOptions<string>[] = [
     { value: PLAYER_AVAILABILITY_STATUS.FreeAgent, label: 'Free Agents' },
