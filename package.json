@@ -36,7 +36,7 @@
     "@ngxs/router-plugin": "^3.8.0",
     "@ngxs/schematics": "0.0.1-alpha.5",
     "@ngxs/store": "^3.8.0",
-    "@nrwl/angular": "14.1.11",
+    "@nrwl/angular": "14.8.8",
     "@supabase/supabase-js": "^2.2.0",
     "chart.js": "^3.8.0",
     "clone": "^2.1.2",
