@@ -14,12 +14,10 @@ import { map } from 'rxjs/operators';
 import {
   BASEBALL_LINEUP_MAP,
   BATTER_STATS_LIST,
-  BATTING_LINEUP_SLOTS,
   BaseballLineupSlot,
   BaseballStat,
   MLB_STATS_MAP,
   PITCHER_STATS_LIST,
-  PITCHING_LINEUP_SLOTS,
   PLAYER_AVAILABILITY_STATUS,
 } from 'sports-ui-sdk';
 import { PlayerAvailabilityStatus } from 'sports-ui-sdk/lib/espn/models/espn-client.model';
@@ -56,10 +54,28 @@ export class BaseballFreeAgentsComponent implements OnInit {
   readonly PITCHER_STATS_ROWS = PITCHER_STATS_ROWS;
   readonly PITCHER_STATS_HEADERS = PITCHER_STATS_HEADERS;
 
-  readonly BATTING_LINEUP_SLOTS = BATTING_LINEUP_SLOTS.map(s => ({ label: BASEBALL_LINEUP_MAP[s].name, value: s }));
-  readonly PITCHING_LINEUP_SLOTS = PITCHING_LINEUP_SLOTS.map(s => ({ label: BASEBALL_LINEUP_MAP[s].name, value: s }));
+  readonly BATTING_LINEUP_SLOTS = [
+    BaseballLineupSlot.FirstBase,
+    BaseballLineupSlot.SecondBase,
+    BaseballLineupSlot.SS,
+    BaseballLineupSlot.ThirdBase,
+    BaseballLineupSlot.C,
+    BaseballLineupSlot.OF,
+    BaseballLineupSlot.DH,
+  ].map(s => ({ label: BASEBALL_LINEUP_MAP[s].name, value: s }));
+
+  readonly PITCHING_LINEUP_SLOTS = [BaseballLineupSlot.SP, BaseballLineupSlot.RP].map(s => ({
+    label: BASEBALL_LINEUP_MAP[s].name,
+    value: s,
+  }));
 
   readonly BASEBALL_LINEUP_MAP = BASEBALL_LINEUP_MAP;
+
+  readonly PLAYER_HEALTH_FILTER: FilterOptions<boolean | null>[] = [
+    { value: null, label: 'All' },
+    { value: false, label: 'Healthy' },
+    { value: true, label: 'IL-Eligibile' },
+  ];
 
   readonly PLAYER_AVAILABILITY_FILTER: FilterOptions<string>[] = [
     { value: PLAYER_AVAILABILITY_STATUS.FreeAgent, label: 'Free Agents' },
@@ -80,6 +96,7 @@ export class BaseballFreeAgentsComponent implements OnInit {
 
   scoringPeriodFilters$ = this.fantasyBaseballLeagueFacade.scoringPeriodFilters$;
 
+  selectedPlayerHealth$ = new BehaviorSubject<boolean | null>(null);
   selectedPitcherStat$ = new BehaviorSubject<BaseballStat>(BaseballStat.ERA);
   selectedBatterStat$ = new BehaviorSubject<BaseballStat>(BaseballStat.AVG);
   selectedLeagueTeam$ = new BehaviorSubject<string | null>(null);
@@ -161,6 +178,10 @@ export class BaseballFreeAgentsComponent implements OnInit {
     this.fantasyBaseballFreeAgentsFilterFacade.setScoringPeriodIds([val]);
   }
 
+  onPlayerHealthChange(val: boolean | null) {
+    this.selectedPlayerHealth$.next(val);
+  }
+
   onBatterStatChange(val: BaseballStat): void {
     this.selectedBatterStat$.next(val);
   }
@@ -180,7 +201,6 @@ export class BaseballFreeAgentsComponent implements OnInit {
 
   onBattingSlotIdChange(val: number): void {
     this.selectedBattingSlots$.next(val);
-
     this.fantasyBaseballFreeAgentsFilterFacade.toggleFilterSlotIds(val);
   }
 

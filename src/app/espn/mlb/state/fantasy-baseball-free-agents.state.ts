@@ -29,6 +29,8 @@ export class FantasyBaseballFreeAgentsState extends GenericState({
     const scoringPeriodId = this.store.selectSnapshot(FantasyBaseballLeagueSelector.getScoringPeriodId);
     if (!scoringPeriodId) throw new Error('scoringPeriodId cannot be missing');
 
+    const filterInjured = { value: this.store.selectSnapshot(FantasyBaseballFreeAgentFilterSelector.slices.filterInjured) };
+
     const filterRanksForScoringPeriodIds = { value: [scoringPeriodId] };
     const filterSlotIds = { value: lineupSlotIds };
     const filterStatus = { value: availabilityStatus };
@@ -39,15 +41,16 @@ export class FantasyBaseballFreeAgentsState extends GenericState({
 
     const sortStatId = { sortPriority: 1, sortAsc: pagination.sortDirection === 'asc' ? true : false, value: null, additionalValue: '' };
 
-    const players = {};
+    // const players = {};
 
-    if (lineupSlotIds.length > 0) {
-      Object.assign(players, { filterSlotIds });
-    }
+    // if (lineupSlotIds.length > 0) {
+    //   players['filterSlotIds'] = filterSlotIds;
+    // }
 
     const filter = {
       players: {
-        ...players,
+        // ...players,
+        filterInjured,
         // sortStatId,
         filterStatus,
         filterSlotIds,

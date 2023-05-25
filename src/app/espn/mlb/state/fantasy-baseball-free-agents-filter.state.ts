@@ -48,6 +48,7 @@ export class RemoveLineupSlotIds {
 }
 
 export interface FantasyBaseballFreeAgentsFilterStateModel {
+  filterInjured: boolean;
   availabilityStatus: { [key in EspnClient.PlayerAvailabilityStatus]: boolean };
   lineupSlotIds: { [key in BaseballLineupSlot]: boolean };
   topScoringPeriodIds: { [id: string]: boolean };
@@ -64,6 +65,7 @@ export interface FantasyBaseballFreeAgentsFilterStateModel {
 @State({
   name: FantasyBaseballFreeAgentFilter.stateName,
   defaults: {
+    filterInjured: false,
     availabilityStatus: {
       [PLAYER_AVAILABILITY_STATUS.FreeAgent]: true,
     },
