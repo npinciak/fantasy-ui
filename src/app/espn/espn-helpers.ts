@@ -79,6 +79,8 @@ export function teamColorHandler(val: EspnFastcastClient.CompetitorsEntity): str
     'e8d035',
     'c9c7c8',
     'f3f31e',
+    'f5b6cd',
+    'b7d0e9',
   ]);
 
   if (negativeColors.has(color.toLowerCase()) && negativeColors.has(alternateColor.toLowerCase())) return '#445058';

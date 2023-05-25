@@ -4,10 +4,17 @@
     <table [attr.aria-label]="ariaLabel" class="xs:text-xs w-full text-sm" mat-table [dataSource]="dataSource" matSortDirection="asc" matSort>
       <ng-container *ngFor="let col of dataColumns">
         <ng-container [matColumnDef]="col?.columnDef" [sticky]="col.columnDef === 'name'">
-          <th mat-header-cell class="first-of-type:min-w-41 first-of-type:w-41 pr-2 first-of-type:pl-0" *matHeaderCellDef mat-sort-header tabindex="0">
+          <th
+            mat-header-cell
+            class="px-2 text-right first-of-type:w-[200px] first-of-type:min-w-[200px] first-of-type:pl-0 first-of-type:text-left"
+            *matHeaderCellDef
+            mat-sort-header
+            [arrowPosition]="'before'"
+            tabindex="0"
+          >
             {{ col?.headerLabel }}
           </th>
-          <td mat-cell class="first-of-type:min-w-41 first-of-type:w-41 pr-2 first-of-type:pl-0" *matCellDef="let data">
+          <td mat-cell class="px-2 text-right first-of-type:w-[200px] first-of-type:min-w-[200px] first-of-type:pl-0 first-of-type:text-left" *matCellDef="let data">
             <ng-container [ngSwitch]="col.columnDef">
               <ng-template [ngSwitchCase]="'name'">
                 <app-espn-player-info-col [player]="data" [hideLineupSlot]="true" (playerClicked)="onPlayerClicked($event)"></app-espn-player-info-col>

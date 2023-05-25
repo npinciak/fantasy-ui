@@ -31,8 +31,6 @@ export class MultiSelectComponent implements OnInit {
   }
 
   onSelectionChange(value: number | string) {
-    console.log(this.selectionList.isSelected(value));
-
     this.filterUpdate.emit(value);
     this.selectionList.toggle(value);
   }
