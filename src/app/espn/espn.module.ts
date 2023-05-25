@@ -41,6 +41,7 @@ import { FantasyFootballTeamState } from './nfl/state/fantasy-football-team.stat
 import { FantasyFootballTransactionState } from './nfl/state/fantasy-football-transaction.state';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 import { FreeAgentsAvailabilitySelectedState } from './state/free-agent-availability-selected.state';
+import { EspnFreeAgentFilterComponentComponent } from './components/espn-free-agent-filter-component/espn-free-agent-filter-component.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { FreeAgentsAvailabilitySelectedState } from './state/free-agent-availabi
     EspnPlayerDialogComponent,
     EspnStandingsTableComponent,
     FantasyTeamHeaderComponent,
+    EspnFreeAgentFilterComponentComponent,
   ],
   imports: [
     EspnRoutingModule,
