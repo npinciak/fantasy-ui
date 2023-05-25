@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "start": "ng serve --port=4401",
-    "build": "ng build --configuration=production --show-circular-dependencies",
+    "build": "nx run build --configuration=production --skip-nx-cache ",
     "build:patch": "npm run bump:patch && npm run build",
     "build:minor": "npm run bump:minor && npm run build",
     "build:major": "npm run bump:major && npm run build",
