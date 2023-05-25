@@ -28,6 +28,25 @@
   },
   "workspaceLayout": {
     "appsDir": "projects",
-    "libsDir": "projects"
+    "libsDir": "libs"
+  },
+  "generators": {
+    "@nrwl/angular:application": {
+      "style": "css",
+      "linter": "eslint",
+      "unitTestRunner": "karma",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "karma"
+    },
+    "@nrwl/angular:component": {
+      "style": "css"
+    }
+  },
+  "defaultProject": "sports-ui",
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
   }
 }

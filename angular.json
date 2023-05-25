@@ -155,7 +155,32 @@
           }
         }
       }
+    },
+    "sports-ui-sdk": {
+      "projectType": "library",
+      "root": "libs/sports-ui-sdk",
+      "sourceRoot": "libs/sports-ui-sdk/src",
+      "prefix": "sports-ui",
+      "targets": {
+        "test": {
+          "executor": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/sports-ui-sdk/src/test.ts",
+            "tsConfig": "libs/sports-ui-sdk/tsconfig.spec.json",
+            "karmaConfig": "libs/sports-ui-sdk/karma.conf.js"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/sports-ui-sdk/**/*.ts",
+              "libs/sports-ui-sdk/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": []
     }
-  },
-  "defaultProject": "sports-ui"
+  }
 }
