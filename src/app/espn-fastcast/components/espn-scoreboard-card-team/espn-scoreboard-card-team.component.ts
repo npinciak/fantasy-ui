@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
-import { EVENT_STATUS, EspnFastcastClient } from 'sports-ui-sdk/lib/espn/espn.m';
-import { EventStatus } from 'sports-ui-sdk/lib/espn/models/espn-client.model';
+import { EVENT_STATUS, EspnClient, EspnFastcastClient } from 'sports-ui-sdk';
 
 @Component({
   selector: 'app-espn-scoreboard-card-team',
@@ -11,7 +10,7 @@ import { EventStatus } from 'sports-ui-sdk/lib/espn/models/espn-client.model';
 export class EspnScoreboardCardTeamComponent {
   @Input() team: FastcastEventTeam;
   @Input() isTournament = false;
-  @Input() eventStatus: EventStatus;
+  @Input() eventStatus: EspnClient.EventStatus;
   @Input() odds: EspnFastcastClient.EspnClientTeamOddsEntity;
   @Input() isPostseason = false;
 

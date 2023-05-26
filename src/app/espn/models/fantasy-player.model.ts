@@ -1,5 +1,5 @@
 import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
-import { EspnClient } from 'sports-ui-sdk/lib/espn/espn.m';
+import { EspnClient } from 'sports-ui-sdk';
 
 export type FantasyPlayer = PlayerEntity & {
   lastNewsDate: number;

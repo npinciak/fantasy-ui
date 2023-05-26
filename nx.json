@@ -14,7 +14,7 @@
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": ["lint", "test"]
       }
     }
   },
@@ -32,7 +32,7 @@
   },
   "generators": {
     "@nrwl/angular:application": {
-      "style": "css",
+      "style": "scss",
       "linter": "eslint",
       "unitTestRunner": "karma",
       "e2eTestRunner": "cypress"
@@ -42,7 +42,7 @@
       "unitTestRunner": "karma"
     },
     "@nrwl/angular:component": {
-      "style": "css"
+      "style": "scss"
     }
   },
   "defaultProject": "sports-ui",

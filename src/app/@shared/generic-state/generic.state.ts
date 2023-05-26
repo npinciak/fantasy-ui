@@ -22,7 +22,7 @@ export function GenericState<EntityType, IdProperty extends PropertyOfType<Entit
   class GenericStateBase {
     static addOrUpdate = actionHandler.AddOrUpdate;
 
-    private static getId = (t: EntityType) => t[idProperty] as string;
+    private static getId = (t: EntityType) => t[idProperty] as unknown as string;
 
     @Action(GenericStateBase.addOrUpdate)
     addOrUpdate({ setState }: StateContext<GenericStateModel<EntityType>>, { payload }: { payload: EntityType[] }): void {
