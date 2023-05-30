@@ -1,5 +1,5 @@
 import { ParsedUid } from '@app/espn/espn-helpers';
-import { EspnClient, EspnFastcastClient } from 'sports-ui-sdk/lib/espn/espn.m';
+import { EspnClient, EspnFastcastClient } from 'sports-ui-sdk';
 import { FastcastEventTeam } from './fastcast-team.model';
 
 interface FastcastEventAttributes {

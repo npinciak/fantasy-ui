@@ -1,0 +1,16 @@
+export const enum MlbPosition {
+  POS0,
+  SP,
+  C,
+  First,
+  Second,
+  Third,
+  SS,
+  LF,
+  CF,
+  RF,
+  DH,
+  RP,
+  PH,
+  PR,
+}

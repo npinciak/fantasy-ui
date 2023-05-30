@@ -116,12 +116,6 @@
             }
           }
         },
-        "extract-i18n": {
-          "executor": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "sports-ui:build"
-          }
-        },
         "test": {
           "executor": "@angular-devkit/build-angular:karma",
           "options": {
@@ -173,10 +167,7 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/sports-ui-sdk/**/*.ts",
-              "libs/sports-ui-sdk/**/*.html"
-            ]
+            "lintFilePatterns": ["libs/sports-ui-sdk/**/*.ts"]
           }
         }
       },

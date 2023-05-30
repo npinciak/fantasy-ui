@@ -21,7 +21,7 @@
       "@espn/*": ["src/app/espn/*"],
       "@espnClient/*": ["src/espn-client-models/*"],
       "@mlb/*": ["src/app/espn/mlb/*"],
-      "@sports-ui/sports-ui-sdk": ["libs/sports-ui-sdk/src/index.ts"]
+      "sports-ui-sdk": ["libs/sports-ui-sdk/src/index.ts"]
     },
     "typeRoots": [
       "./node_modules/sports-ui-sdk/lib/index.d.ts",

@@ -1,0 +1,31 @@
+export const SLATE_TYPES = {
+  Classic: 'classic',
+  Showdown: 'showdown',
+  Pickem: 'pickem',
+  Short: 'short',
+} as const;
+
+export const DFS_SPORTS = {
+  afl: 'afl',
+  bball: 'bball',
+  cbb: 'cbb',
+  cfb: 'cfb',
+  cod: 'cod',
+  csgo: 'csgo',
+  el: 'el',
+  golf: 'golf',
+  kbo: 'kbo',
+  lol: 'lol',
+  madden: 'madden',
+  mlb: 'mlb',
+  mma: 'mma',
+  nas: 'nas',
+  nba: 'nba',
+  nfl: 'nfl',
+  nhl: 'nhl',
+  npb: 'npb',
+  rl: 'rl',
+  soc: 'soc',
+  ten: 'ten',
+  wnba: 'wnba',
+} as const;

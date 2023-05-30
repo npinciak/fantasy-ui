@@ -1,6 +1,6 @@
 import { TeamEntity } from '@app/@shared/base-models/base-team.model';
 import { ParsedUid } from '@app/espn/espn-helpers';
-import { EspnFastcastClient } from 'sports-ui-sdk/lib/espn/espn.m';
+import { EspnFastcastClient } from 'sports-ui-sdk';
 
 type FastcastEventTeamAttr = 'score' | 'color' | 'altColor';
 

@@ -15,7 +15,7 @@ type NavigationComplete = NavigationEnd | NavigationCancel;
 export class AppComponent implements OnInit, OnDestroy {
   constructor(private store: Store, private router: Router, private customRouteStateSerializer: CustomRouterStateSerializer) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.router.events.pipe(untilDestroyed(this), filter(this.navigationComplete.bind(this))).subscribe(e => this.onNavigationComplete(e));
   }
 

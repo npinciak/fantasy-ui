@@ -16,11 +16,11 @@ import {
   BATTER_STATS_LIST,
   BaseballLineupSlot,
   BaseballStat,
+  EspnClient,
   MLB_STATS_MAP,
   PITCHER_STATS_LIST,
   PLAYER_AVAILABILITY_STATUS,
 } from 'sports-ui-sdk';
-import { PlayerAvailabilityStatus } from 'sports-ui-sdk/lib/espn/models/espn-client.model';
 import { FantasyBaseballPlayerNews } from '../../actions/fantasy-baseball-player-news.actions';
 import { BATTER_STATS_HEADERS, BATTER_STATS_ROWS, PITCHER_STATS_HEADERS, PITCHER_STATS_ROWS } from '../../consts/tables.const';
 import { FantasyBaseballFreeAgentsFilterFacade } from '../../facade/fantasy-baseball-free-agents-filter.facade';
@@ -190,7 +190,7 @@ export class BaseballFreeAgentsComponent implements OnInit {
     this.selectedPitcherStat$.next(val);
   }
 
-  onPlayerAvailabilityChange(val: PlayerAvailabilityStatus): void {
+  onPlayerAvailabilityChange(val: EspnClient.PlayerAvailabilityStatus): void {
     this.selectedPlayerAvailability$.next(val);
     this.freeAgentAvailabilityStatusSelectedFacade.toggle([val]);
   }
