@@ -32,7 +32,7 @@ export function includeLeagues(id: string): boolean {
  * @returns boolean
  */
 export function excludeLeagues(id: string): boolean {
-  return new Set(['14', '102', '3923', '8097', '20226', '54', '19834', '19483', '19868', '19728']).has(id);
+  return new Set(['14', '102', '3923', '8097', '20226', '54', '59', '19834', '8301', '19483', '19868', '19728']).has(id);
 }
 
 /**
