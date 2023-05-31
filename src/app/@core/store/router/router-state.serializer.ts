@@ -32,6 +32,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
   private serializeRoute(route: ActivatedRouteSnapshot, omitPathFromRoot = false): ActivatedRouteSnapshot {
     const children = route.children.map(c => this.serializeRoute(c, omitPathFromRoot));
     return {
+      title: route.title,
       url: route.url,
       params: route.params,
       queryParams: route.queryParams,
