@@ -1,10 +1,10 @@
 import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
-import { EspnClient } from 'sports-ui-sdk';
+import { EspnClient, PlayerInjuryStatus } from 'sports-ui-sdk';
 
 export type FantasyPlayer = PlayerEntity & {
   lastNewsDate: number;
   injured: boolean;
-  injuryStatus: EspnClient.PlayerInjuryStatus;
+  injuryStatus: PlayerInjuryStatus;
   defaultPositionId: number;
   percentOwned: number;
   percentChange: number;

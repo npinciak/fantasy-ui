@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { EspnClient } from 'sports-ui-sdk';
+import { PlayerAvailabilityStatus } from 'sports-ui-sdk';
 import { FantasyBaseballFreeAgentFilterSelector } from '../selectors/fantasy-baseball-free-agent-filter.selector';
 import {
   RemoveLineupSlotIds,
@@ -41,7 +41,7 @@ export class FantasyBaseballFreeAgentsFilterFacade {
     return this.store.dispatch([new SetLineupSlotIds([lineupSlotIds])]);
   }
 
-  togglePlayerAvailabilityStatus(status: EspnClient.PlayerAvailabilityStatus): Observable<void> {
+  togglePlayerAvailabilityStatus(status: PlayerAvailabilityStatus): Observable<void> {
     return this.store.dispatch(new SetPlayerAvailabilityStatus([status]));
   }
 

@@ -1,6 +1,6 @@
 import { Selector } from '@app/@shared/models/typed-selector';
 import { createPropertySelectors } from '@ngxs/store';
-import { EspnClient } from 'sports-ui-sdk';
+import { PlayerAvailabilityStatus } from 'sports-ui-sdk';
 import {
   FantasyBaseballFreeAgentsFilterState,
   FantasyBaseballFreeAgentsFilterStateModel,
@@ -20,7 +20,7 @@ export class FantasyBaseballFreeAgentFilterSelector {
   }
 
   @Selector([FantasyBaseballFreeAgentFilterSelector.slices.availabilityStatus])
-  static getSelectedAvailabilityStatus(ids: { [key in EspnClient.PlayerAvailabilityStatus]: boolean }): string[] {
+  static getSelectedAvailabilityStatus(ids: { [key in PlayerAvailabilityStatus]: boolean }): string[] {
     return Object.keys(ids).filter(id => ids[id]);
   }
 
@@ -30,7 +30,7 @@ export class FantasyBaseballFreeAgentFilterSelector {
   }
 
   @Selector([FantasyBaseballFreeAgentFilterSelector.slices.availabilityStatus])
-  static getToggledAvailabilityStatusIds(ids: { [key in EspnClient.PlayerAvailabilityStatus]: boolean }): string[] {
+  static getToggledAvailabilityStatusIds(ids: { [key in PlayerAvailabilityStatus]: boolean }): string[] {
     return Object.keys(ids);
   }
 
@@ -50,12 +50,12 @@ export class FantasyBaseballFreeAgentFilterSelector {
   }
 
   @Selector([FantasyBaseballFreeAgentFilterSelector.slices.availabilityStatus])
-  static isSelectedAvailabilityStatusSelected(ids: { [key in EspnClient.PlayerAvailabilityStatus]: boolean }): (id: string) => boolean {
+  static isSelectedAvailabilityStatusSelected(ids: { [key in PlayerAvailabilityStatus]: boolean }): (id: string) => boolean {
     return (id: string) => !!ids[id];
   }
 
   @Selector([FantasyBaseballFreeAgentFilterSelector.slices.availabilityStatus])
-  static isSelectedAvailabilityStatusToggled(ids: { [key in EspnClient.PlayerAvailabilityStatus]: boolean }): (id: string) => boolean {
+  static isSelectedAvailabilityStatusToggled(ids: { [key in PlayerAvailabilityStatus]: boolean }): (id: string) => boolean {
     return (id: string) => id in ids;
   }
   @Selector([FantasyBaseballFreeAgentFilterSelector.slices.lineupSlotIds])

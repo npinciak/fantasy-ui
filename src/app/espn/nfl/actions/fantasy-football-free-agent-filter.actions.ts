@@ -1,10 +1,10 @@
-import { EspnClient, FootballLineupSlot } from 'sports-ui-sdk';
+import { FootballLineupSlot, PlayerAvailabilityStatus } from 'sports-ui-sdk';
 
 const name = 'fantasyFootballFreeAgentFilter';
 
 export class TogglePlayerAvailabilityStatus {
   static readonly type = `[${name}] SetPlayerAvailabilityStatus`;
-  constructor(public payload: { availabilityStatus: EspnClient.PlayerAvailabilityStatus }) {}
+  constructor(public payload: { availabilityStatus: PlayerAvailabilityStatus }) {}
 }
 
 export class SetPagination {

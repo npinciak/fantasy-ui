@@ -1,38 +1,15 @@
-import {
-  ARTICLE_TYPE,
-  EVENT_STATUS,
-  EVENT_STATUS_ID,
-  EVENT_STATUS_NAME,
-  LEAGUE_COMMUNICATION_TOPIC,
-  PLAYER_AVAILABILITY_STATUS,
-  PLAYER_INJURY_STATUS,
-  SCHEDULE_WINNER,
-  SEASON_ID,
-  SPORT_ID,
-  TRANSACTION,
-} from './espn-client.const';
+import { PlayerInjuryStatus } from '../injury/injury-status.model';
+import { ARTICLE_TYPE, LEAGUE_COMMUNICATION_TOPIC, SCHEDULE_WINNER, SPORT_ID, TRANSACTION } from './espn-client.const';
 
-export type Article = typeof ARTICLE_TYPE[keyof typeof ARTICLE_TYPE];
+export type Article = (typeof ARTICLE_TYPE)[keyof typeof ARTICLE_TYPE];
 
-export type EventStatus = typeof EVENT_STATUS[keyof typeof EVENT_STATUS];
+export type LeagueCommunicationTopic = (typeof LEAGUE_COMMUNICATION_TOPIC)[keyof typeof LEAGUE_COMMUNICATION_TOPIC];
 
-export type EventStatusId = typeof EVENT_STATUS_ID[keyof typeof EVENT_STATUS_ID];
+export type SportId = (typeof SPORT_ID)[keyof typeof SPORT_ID];
 
-export type EventStatusName = typeof EVENT_STATUS_NAME[keyof typeof EVENT_STATUS_NAME];
+export type ScheduleWinnerType = (typeof SCHEDULE_WINNER)[keyof typeof SCHEDULE_WINNER];
 
-export type LeagueCommunicationTopic = typeof LEAGUE_COMMUNICATION_TOPIC[keyof typeof LEAGUE_COMMUNICATION_TOPIC];
-
-export type PlayerInjuryStatus = typeof PLAYER_INJURY_STATUS[keyof typeof PLAYER_INJURY_STATUS];
-
-export type PlayerAvailabilityStatus = typeof PLAYER_AVAILABILITY_STATUS[keyof typeof PLAYER_AVAILABILITY_STATUS];
-
-export type SeasonId = typeof SEASON_ID[keyof typeof SEASON_ID];
-
-export type SportId = typeof SPORT_ID[keyof typeof SPORT_ID];
-
-export type ScheduleWinnerType = typeof SCHEDULE_WINNER[keyof typeof SCHEDULE_WINNER];
-
-export type TransactionType = typeof TRANSACTION[keyof typeof TRANSACTION];
+export type TransactionType = (typeof TRANSACTION)[keyof typeof TRANSACTION];
 
 export const enum LeagueId {
   MLB = 10,

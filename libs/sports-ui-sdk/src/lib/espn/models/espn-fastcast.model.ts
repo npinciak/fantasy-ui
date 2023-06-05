@@ -1,6 +1,6 @@
 ﻿/* eslint-disable @typescript-eslint/no-namespace */
+import { EventStatus, SeasonType } from '../../espn-client/espn-client.m';
 import { LegacyEspnClient } from './espn-client-legacy.model';
-import { EventStatus, SeasonId } from './espn-client.model';
 
 export namespace LegacyEspnFastcastClient {
   interface EntityBaseAttributes<T> {
@@ -32,7 +32,7 @@ export namespace LegacyEspnFastcastClient {
     date: string;
     location: string;
     season: number;
-    seasonType: SeasonId;
+    seasonType: SeasonType;
     period: number;
     clock: string;
     status: EventStatus;

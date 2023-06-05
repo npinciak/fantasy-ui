@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
 import {
-  EspnClient,
-  InjurySeverityColor,
+  FA_ICON_BY_INJURY_STATUS,
   INJURY_LABEL_BY_INJURY_STATUS,
   INJURY_SEVERITY_BY_INJURY_STATUS,
   INJURY_SEVERITY_COLOR_BY_INJURY_SEVERITY,
-  MAT_ICON_BY_INJURY_STATUS,
+  InjurySeverityColor,
+  PlayerInjuryStatus,
 } from 'sports-ui-sdk';
 
 @Component({
@@ -18,7 +18,7 @@ export class EspnPlayerComponent<T extends PlayerEntity> {
   @Input() isLoading = false;
   @Input() hideLineupSlot = false;
 
-  readonly MatIconByEspnPlayerInjuryStatus = MAT_ICON_BY_INJURY_STATUS;
+  readonly MatIconByEspnPlayerInjuryStatus = FA_ICON_BY_INJURY_STATUS;
   readonly InjurySeverityByInjuryStatus = INJURY_SEVERITY_BY_INJURY_STATUS;
   readonly InjurySeverityColorByInjurySeverity = INJURY_SEVERITY_COLOR_BY_INJURY_SEVERITY;
   readonly PlayerStatusAbbrevByInjuryStatusType = INJURY_LABEL_BY_INJURY_STATUS;
@@ -27,7 +27,7 @@ export class EspnPlayerComponent<T extends PlayerEntity> {
     return `${this.player.name}, ${this.player.team}, ${this.player.position}`;
   }
 
-  playerInjuryStatusColor(injuryStatus: EspnClient.PlayerInjuryStatus): InjurySeverityColor {
+  playerInjuryStatusColor(injuryStatus: PlayerInjuryStatus): InjurySeverityColor {
     return INJURY_SEVERITY_COLOR_BY_INJURY_SEVERITY[INJURY_SEVERITY_BY_INJURY_STATUS[injuryStatus]];
   }
 }

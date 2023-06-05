@@ -1,7 +1,7 @@
-import { BaseballLineupSlot, EspnClient } from 'sports-ui-sdk';
+import { BaseballLineupSlot, PlayerAvailabilityStatus } from 'sports-ui-sdk';
 
 export interface FreeAgentsFilterStateModel {
-  availabilityStatus: { [key in EspnClient.PlayerAvailabilityStatus]: boolean };
+  availabilityStatus: { [key in PlayerAvailabilityStatus]: boolean };
   lineupSlotIds: { [key in BaseballLineupSlot]: boolean };
   topScoringPeriodIds: { [id: string]: boolean };
   metaData: {
@@ -15,7 +15,7 @@ export interface FreeAgentsFilterStateModel {
 export interface IBaseFreeAgentFilterActionsClass {
   new (...args: any[]): any;
   stateName: string;
-  SetPlayerAvailabilityStatus: GenericSetActionClass<EspnClient.PlayerAvailabilityStatus>;
+  SetPlayerAvailabilityStatus: GenericSetActionClass<PlayerAvailabilityStatus>;
 }
 
 export interface GenericSetActionClass<T> {
@@ -29,7 +29,7 @@ export function BaseFreeAgentFilterActions({ stateName }: { stateName: string })
 
     static SetPlayerAvailabilityStatus = class {
       static readonly type = `[${stateName}] PatchPlayerAvailabilityStatus`;
-      constructor(public payload: EspnClient.PlayerAvailabilityStatus) {}
+      constructor(public payload: PlayerAvailabilityStatus) {}
     };
 
     // static SetPagination = class {

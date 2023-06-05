@@ -1,7 +1,7 @@
-import { EspnClient } from '../../espn.m';
+import { LineupEntityMap } from '../../models/espn-client.model';
 import { FootballLineupSlot } from './lineup.model';
 
-export const FOOTBALL_LINEUP_MAP: EspnClient.LineupEntityMap = {
+export const FOOTBALL_LINEUP_MAP: LineupEntityMap = {
   0: {
     abbrev: 'QB',
     active: true,

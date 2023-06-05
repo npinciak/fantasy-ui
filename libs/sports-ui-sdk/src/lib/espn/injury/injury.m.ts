@@ -1,2 +1,3 @@
-export * from './injury.const';
-export * from './injury.model';
+export * from './injury-icon.model';
+export * from './injury-severity.model';
+export * from './injury-status.model';

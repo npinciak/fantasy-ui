@@ -4,7 +4,7 @@ import { Selector } from '@app/@shared/models/typed-selector';
 
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { Action, State, StateContext, Store } from '@ngxs/store';
-import { EspnClient, FootballLineupSlot, PLAYER_AVAILABILITY_STATUS } from 'sports-ui-sdk';
+import { FootballLineupSlot, PLAYER_AVAILABILITY_STATUS, PlayerAvailabilityStatus } from 'sports-ui-sdk';
 import { SetLineupSlotId, SetPagination, TogglePlayerAvailabilityStatus } from '../actions/fantasy-football-free-agent-filter.actions';
 import { FantasyFootballFreeAgent } from '../actions/fantasy-football-free-agent.actions';
 
@@ -17,7 +17,7 @@ interface BaseFreeAgentFilterMetaData {
 
 export interface FantasyFootballFreeAgentFilterStateModel {
   sortDirection: string;
-  availabilityStatus: Record<EspnClient.PlayerAvailabilityStatus, boolean>;
+  availabilityStatus: Record<PlayerAvailabilityStatus, boolean>;
   lineupSlotId: FootballLineupSlot;
   topScoringPeriodIds: Record<string, boolean>;
   sortStatId: Record<string, boolean>;
