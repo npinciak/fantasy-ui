@@ -1,0 +1,26 @@
+{
+  "name": "ui-sdk",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ui-sdk/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/ui-sdk",
+        "main": "libs/ui-sdk/src/index.ts",
+        "tsConfig": "libs/ui-sdk/tsconfig.lib.json",
+        "assets": ["libs/ui-sdk/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/ui-sdk/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}

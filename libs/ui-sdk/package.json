@@ -1,0 +1,19 @@
+{
+  "name": "@sports-ui/ui-sdk",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./espn-client": {
+      "types": "../ui-sdk/src/lib/espn-client/espn-client.m.d.ts",
+      "default": "../ui-sdk/src/lib/espn-client/espn-client.m.js"
+    },
+    "./espn": {
+      "types": "../ui-sdk/src/lib/espn/espn.m.d.ts",
+      "default": "../ui-sdk/src/lib/espn/espn.m.js"
+    }
+  }
+}

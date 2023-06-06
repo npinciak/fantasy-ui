@@ -5,7 +5,8 @@ import { Selector } from '@app/@shared/models/typed-selector';
 import { exists, existsFilter, pickData } from '@app/@shared/utilities/utilities.m';
 import { SlatePlayer } from '@app/dfs/models/player.model';
 import { DfsSlatePlayersState } from '@app/dfs/state/dfs-players.state';
-import { uniqueBy } from 'sports-ui-sdk';
+import { NFL_RG_TEAM_ID_MAP } from '@sports-ui/ui-sdk/dfs';
+import { uniqueBy } from '@sports-ui/ui-sdk/helpers';
 import { GridIronPlayer } from '../models/nfl-gridIron.model';
 import { NflDfsPlayerTableData } from '../models/nfl-player.model';
 import { ProfilerQB, ProfilerRB, ProfilerReceiver } from '../models/nfl-profiler.model';
@@ -16,7 +17,6 @@ import { DfsNflProfilerRBSelectors } from './dfs-nfl-profiler-rb.selectors';
 import { DfsNflProfilerTESelectors } from './dfs-nfl-profiler-te.selectors';
 import { DfsNflProfilerWRSelectors } from './dfs-nfl-profiler-wr.selectors';
 import { DfsNflSlateTeamDetailsSelectors } from './dfs-nfl-slate-team.selectors';
-import { NFL_RG_TEAM_ID_MAP } from 'libs/sports-ui-sdk/src/lib/dfs/football/team/team.const';
 
 export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState) {
   @Selector([DfsNflPlayerSelectors.getList])

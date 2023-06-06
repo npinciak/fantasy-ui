@@ -1,4 +1,4 @@
-import { EspnClient } from 'sports-ui-sdk';
+import { EspnClient } from '@sports-ui/ui-sdk/espn';
 
 type CompetitorsProps = Pick<EspnClient.Competitor, 'id' | 'abbreviation' | 'homeAway'>;
 

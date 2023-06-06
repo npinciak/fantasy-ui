@@ -1,6 +1,6 @@
 import { normalizeStringToNumber, objectIsEmpty } from '@app/@shared/helpers/utils';
 import { exists } from '@app/@shared/utilities/utilities.m';
-import { DFS_SITE_TO_DFS_SITETYPE_MAP } from 'sports-ui-sdk';
+import { DFS_SITE_TO_DFS_SITETYPE_MAP } from '@sports-ui/ui-sdk/dfs';
 import {
   ClientSlatePlayerAttributesMap,
   ClientSlateStatGroups,

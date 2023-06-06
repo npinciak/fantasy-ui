@@ -4,7 +4,7 @@ import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { linearRegression, transformScatterGraphData } from '@app/@shared/helpers/graph.helpers';
 import { exists, existsFilter, pickData } from '@app/@shared/utilities/utilities.m';
 import { Selector } from '@ngxs/store';
-import { BaseballStat, MLB_STATS_MAP } from 'sports-ui-sdk';
+import { BaseballStat, MLB_STATS_MAP } from '@sports-ui/ui-sdk/espn';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
 import { FantasyBaseballFreeAgentsState } from '../state/fantasy-baseball-free-agents.state';
 import { FantasyBaseballTransformers } from '../transformers/fantasy-baseball.transformers.m';

@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
-import { EVENT_STATUS, EspnFastcastClient, EventStatus } from 'sports-ui-sdk';
+import { EspnFastcastClient } from '@sports-ui/ui-sdk/espn';
+import { EVENT_STATUS, EventStatus } from '@sports-ui/ui-sdk/espn-client';
 
 @Component({
   selector: 'app-espn-scoreboard-card-team',

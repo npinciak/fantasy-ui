@@ -1,9 +1,10 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { exists } from '@app/@shared/utilities/utilities.m';
-import { EspnClient, SCHEDULE_WINNER, unique } from 'sports-ui-sdk';
 
 import { Selector } from '@ngxs/store';
+import { EspnClient, SCHEDULE_WINNER } from '@sports-ui/ui-sdk/espn';
+import { unique } from '@sports-ui/ui-sdk/helpers';
 import { FantasyMatchup, FantasyMatchupMap, FantasyMatchupTeam } from '../models/fantasy-schedule.model';
 import { FootballTeam } from '../models/football-team.model';
 import { FantasyFootballScheduleState } from '../state/fantasy-football-schedule.state';

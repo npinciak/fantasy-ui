@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { Action, State, StateContext, Store } from '@ngxs/store';
-import { PLAYER_AVAILABILITY_STATUS } from 'sports-ui-sdk';
+
+import { PLAYER_AVAILABILITY_STATUS } from '@sports-ui/ui-sdk/espn-client';
+
 import { FantasyFootballFreeAgent } from '../actions/fantasy-football-free-agent.actions';
 import { FootballPlayer } from '../models/football-player.model';
 import { FantasyFootballLeagueSelector } from '../selectors/fantasy-football-league.selectors';

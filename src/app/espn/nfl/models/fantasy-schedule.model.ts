@@ -1,4 +1,5 @@
-import { EspnClient } from 'sports-ui-sdk';
+import { EspnClient } from '@sports-ui/ui-sdk/espn';
+
 import { FootballTeam } from './football-team.model';
 
 export type FantasyMatchup = Pick<EspnClient.ScheduleEntity, 'id' | 'matchupPeriodId'> & {

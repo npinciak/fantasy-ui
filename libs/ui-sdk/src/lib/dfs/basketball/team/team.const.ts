@@ -1,6 +1,6 @@
-import { RgTeam } from './team.model';
+import { NbaRgTeam } from './team.model';
 
-export const NBA_TEAM_MAP: Record<string, RgTeam> = {
+export const NBA_TEAM_MAP: Record<string, NbaRgTeam> = {
   '125': {
     id: 125,
     xmlId: '583eccfa-fb46-11e1-82cb-f4ce4684ea4c',

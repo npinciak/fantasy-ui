@@ -1,5 +1,5 @@
 import { StatThreshold } from '@app/@shared/models/stat-threshold.model';
-import { BaseballStat } from 'sports-ui-sdk';
+import { BaseballStat } from '@sports-ui/ui-sdk/espn';
 
 export const OpsThreshold = {
   [StatThreshold.Excellent]: 1.0,

@@ -3,7 +3,7 @@ import { linearRegression, transformScatterGraphData } from '@app/@shared/helper
 import { Selector } from '@app/@shared/models/typed-selector';
 import { exists, existsFilter } from '@app/@shared/utilities/utilities.m';
 import { SlateTeam } from '@app/dfs/models/slate-team.model';
-import { DfsNflTeams } from 'sports-ui-sdk';
+import { NFL_RG_TEAM_ID_MAP } from '@sports-ui/ui-sdk/dfs';
 import { DfsNflSlateTeamDetailsState } from '../state/dfs-nfl-slate-teams.state';
 
 export class DfsNflSlateTeamDetailsSelectors extends GenericSelector(DfsNflSlateTeamDetailsState) {
@@ -19,7 +19,7 @@ export class DfsNflSlateTeamDetailsSelectors extends GenericSelector(DfsNflSlate
 
       const lR = linearRegression(x, y);
 
-      const text = data.map(p => DfsNflTeams.NFL_RG_TEAM_ID_MAP[p.id]);
+      const text = data.map(p => NFL_RG_TEAM_ID_MAP[p.id]);
 
       const type = 'scatter';
 

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { BaseballStat } from '@sports-ui/ui-sdk/espn';
 import { Chart, registerables } from 'chart.js';
-import { BaseballStat } from 'sports-ui-sdk';
 
 export interface StatsChart {
   data: number[];

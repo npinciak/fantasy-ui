@@ -5,12 +5,12 @@ import { DfsSlatePlayer } from '@dfsClient/daily-fantasy-client.model';
 import { NFLClientGridIronPlayer } from '@dfsClient/nfl-client.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { uniqueBy } from 'sports-ui-sdk';
 import { DailyFantasyEndpointBuilder } from '../daily-fantasy-endpoint-builder';
 import { PlayersBySlate } from '../models/player.model';
 import { Team } from '../models/team.model';
 import { GridIronPlayer } from '../nfl/models/nfl-gridIron.model';
 import { DfsTransformers } from '../transformers/dfs-transformers.m';
+import { uniqueBy } from '@sports-ui/ui-sdk/helpers';
 
 @Injectable({
   providedIn: 'root',

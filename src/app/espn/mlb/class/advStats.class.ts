@@ -1,6 +1,6 @@
 import { FangraphsWobaFipConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
 import { exists } from '@app/@shared/utilities/utilities.m';
-import { BaseballStat, EspnClient } from 'sports-ui-sdk';
+import { BaseballStat, EspnClient } from '@sports-ui/ui-sdk/espn';
 
 export class AdvStats {
   private _stats: EspnClient.PlayerStatsEntity;
@@ -81,8 +81,8 @@ export class AdvStats {
     return (
       this._stats[BaseballStat.AB] +
       this._stats[BaseballStat.BB] -
-      this._stats[BaseballStat.IBB] + 
-      this._stats[BaseballStat.SF] + 
+      this._stats[BaseballStat.IBB] +
+      this._stats[BaseballStat.SF] +
       this._stats[BaseballStat.HBP]
     );
   }

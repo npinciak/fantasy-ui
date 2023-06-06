@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { BASIC_FOOTBALL_LINEUP_SLOT_FILTER_OPTIONS, FootballLineupSlot, FOOTBALL_LINEUP_MAP, NFL_STATS_MAP } from 'sports-ui-sdk';
+
 import { FOOTBALL_ROSTER_HEADERS_BY_LINEUP_SLOT, FOOTBALL_ROSTER_ROWS_BY_LINEUP_SLOT } from '../../consts/fantasy-football-table.const';
 
+import { BASIC_FOOTBALL_LINEUP_SLOT_FILTER_OPTIONS, FOOTBALL_LINEUP_MAP, FootballLineupSlot, NFL_STATS_MAP } from '@sports-ui/ui-sdk/espn';
 import { FOOTBALL_STATS_FILTER } from '../../consts/stats-filters.const';
 import { FantasyFootballFreeAgentsFilterFacade } from '../../facade/fantasy-football-free-agents-filter.facade';
 import { FantasyFootballFreeAgentsFacade } from '../../facade/fantasy-football-free-agents.facade';
