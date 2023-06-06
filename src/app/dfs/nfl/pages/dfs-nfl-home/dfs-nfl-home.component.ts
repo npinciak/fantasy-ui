@@ -4,9 +4,9 @@ import { DfsPlayersFacade } from '@app/dfs/facade/dfs-players.facade';
 import { DailyFantasySlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
 import { ClientSlateTypes, SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
+import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '@sports-ui/ui-sdk/dfs';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DfsNflTeams } from 'sports-ui-sdk';
 import { DfsNflThresholds } from '../../consts/stats-threshold.m';
 import { DfsNflTableColumns } from '../../consts/table.const';
 import { DfsNflPlayerFacade } from '../../facade/daily-fantasy-nfl-players.facade';
@@ -23,8 +23,8 @@ export class DfsNflHomeComponent {
   readonly TABLE_ROWS_BY_POS = DfsNflTableColumns.ROWS_BY_POS;
 
   readonly NFL_STAT_GROUP_MAP = NFL_STAT_GROUP_MAP;
-  readonly NFL_RG_TEAM_ID_MAP = DfsNflTeams.NFL_RG_TEAM_ID_MAP;
-  readonly NFL_TEAM_ID_MAP = DfsNflTeams.NFL_TEAM_ID_MAP;
+  readonly NFL_RG_TEAM_ID_MAP = NFL_RG_TEAM_ID_MAP;
+  readonly NFL_TEAM_ID_MAP = NFL_TEAM_ID_MAP;
 
   readonly matchupThreshold = DfsNflThresholds.matchupThreshold;
   readonly matchupThresholdInverse = DfsNflThresholds.matchupThresholdInverse;

@@ -14,7 +14,6 @@ export class SportsBookLeagueSpreadActionHandler {
   async footballLeague() {
     try {
       const {
-        future:{ },
         upcoming: { spread },
       } = await this.client.leagueStats(LEAGUE_ID.NBA).toPromise();
 

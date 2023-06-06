@@ -1,6 +1,6 @@
 import { Selector } from '@app/@shared/models/typed-selector';
 import { createPropertySelectors } from '@ngxs/store';
-import { PlayerAvailabilityStatus } from 'sports-ui-sdk';
+import { PlayerAvailabilityStatus } from '@sports-ui/ui-sdk/espn-client';
 import {
   FantasyBaseballFreeAgentsFilterState,
   FantasyBaseballFreeAgentsFilterStateModel,

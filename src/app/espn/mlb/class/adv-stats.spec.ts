@@ -1,4 +1,4 @@
-import { MOCK_BASEBALL_STATS_ENTITY } from 'sports-ui-sdk';
+import { MOCK_BASEBALL_STATS_ENTITY } from '@sports-ui/ui-sdk/espn';
 import { AdvStats } from './advStats.class';
 
 describe('Advanced Stats', () => {

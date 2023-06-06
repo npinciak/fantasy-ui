@@ -9,8 +9,6 @@ import { EspnPlayerDialogComponent } from '@app/espn/components/espn-player-dial
 import { PlayerDialog } from '@app/espn/models/player-dialog-component.model';
 import { FreeAgentAvailabilityStatusSelectedFacade } from '@app/espn/state/free-agent-availability-selected.facade';
 import { Store } from '@ngxs/store';
-import { BehaviorSubject, combineLatest, of } from 'rxjs';
-import { map } from 'rxjs/operators';
 import {
   BASEBALL_LINEUP_MAP,
   BATTER_STATS_LIST,
@@ -18,9 +16,11 @@ import {
   BaseballStat,
   MLB_STATS_MAP,
   PITCHER_STATS_LIST,
-  PLAYER_AVAILABILITY_STATUS,
-  PlayerAvailabilityStatus,
-} from 'sports-ui-sdk';
+} from '@sports-ui/ui-sdk/espn';
+import { BehaviorSubject, combineLatest, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { PLAYER_AVAILABILITY_STATUS, PlayerAvailabilityStatus } from '@sports-ui/ui-sdk/espn-client';
 import { FantasyBaseballPlayerNews } from '../../actions/fantasy-baseball-player-news.actions';
 import { BATTER_STATS_HEADERS, BATTER_STATS_ROWS, PITCHER_STATS_HEADERS, PITCHER_STATS_ROWS } from '../../consts/tables.const';
 import { FantasyBaseballFreeAgentsFilterFacade } from '../../facade/fantasy-baseball-free-agents-filter.facade';

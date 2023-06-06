@@ -5,7 +5,7 @@ import {
   INJURY_LABEL_BY_INJURY_STATUS,
   INJURY_SEVERITY_BY_INJURY_STATUS,
   INJURY_SEVERITY_CLASS,
-} from 'sports-ui-sdk';
+} from '@sports-ui/ui-sdk/espn';
 
 @Component({ template: '' })
 export class EspnLineupCardComponent<T extends PlayerEntity> {

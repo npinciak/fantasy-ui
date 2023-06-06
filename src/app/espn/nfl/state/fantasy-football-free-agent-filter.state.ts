@@ -4,7 +4,8 @@ import { Selector } from '@app/@shared/models/typed-selector';
 
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { Action, State, StateContext, Store } from '@ngxs/store';
-import { FootballLineupSlot, PLAYER_AVAILABILITY_STATUS, PlayerAvailabilityStatus } from 'sports-ui-sdk';
+import { FootballLineupSlot } from '@sports-ui/ui-sdk/espn';
+import { PLAYER_AVAILABILITY_STATUS, PlayerAvailabilityStatus } from '@sports-ui/ui-sdk/espn-client';
 import { SetLineupSlotId, SetPagination, TogglePlayerAvailabilityStatus } from '../actions/fantasy-football-free-agent-filter.actions';
 import { FantasyFootballFreeAgent } from '../actions/fantasy-football-free-agent.actions';
 

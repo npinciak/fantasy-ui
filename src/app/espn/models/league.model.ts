@@ -2,7 +2,7 @@
  * Base league model
  */
 
-import { EspnClient } from 'sports-ui-sdk';
+import { EspnClient } from '@sports-ui/ui-sdk/espn';
 
 interface LeagueProps {
   id: string;

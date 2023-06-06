@@ -2,7 +2,7 @@ import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { linearRegression, transformScatterGraphData } from '@app/@shared/helpers/graph.helpers';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { exists, pickData } from '@app/@shared/utilities/utilities.m';
-import { NFL_STATS_MAP } from 'sports-ui-sdk';
+import { NFL_STATS_MAP } from '@sports-ui/ui-sdk/espn';
 import { FootballPlayer, FootballPlayerFreeAgent } from '../models/football-player.model';
 import { FantasyFootballFreeAgentState } from '../state/fantasy-football-free-agent.state';
 import { FantasyFootballTeamSelectors } from './fantasy-football-team.selectors';

@@ -1,5 +1,5 @@
 import { FilterOptions } from '@app/@shared/models/filter.model';
-import { FootballStat, NFL_STATS_LIST } from 'sports-ui-sdk';
+import { FootballStat, NFL_STATS_LIST } from '@sports-ui/ui-sdk/espn';
 
 export function transformToEquivalentEnum<T>(value: toStringable): T;
 export function transformToEquivalentEnum<T>(value: toStringable | null): T | null;

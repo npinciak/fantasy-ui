@@ -4,9 +4,9 @@ import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { EspnPlayerDialogComponent } from '@app/espn/components/espn-player-dialog/espn-player-dialog.component';
 import { PlayerDialog } from '@app/espn/models/player-dialog-component.model';
 import { Store } from '@ngxs/store';
+import { BATTER_STATS_LIST, BaseballStat, MLB_STATS_MAP, PITCHER_STATS_LIST } from '@sports-ui/ui-sdk/espn';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { BATTER_STATS_LIST, BaseballStat, MLB_STATS_MAP, PITCHER_STATS_LIST } from 'sports-ui-sdk';
 import { FantasyBaseballPlayerNews } from '../../actions/fantasy-baseball-player-news.actions';
 import {
   BATTER_STATS_HEADERS,

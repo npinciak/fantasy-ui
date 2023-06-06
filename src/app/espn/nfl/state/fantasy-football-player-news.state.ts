@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
 import { Action, State, StateContext, Store } from '@ngxs/store';
+import { EspnClient } from '@sports-ui/ui-sdk/espn';
 import { map } from 'rxjs/operators';
-import { EspnClient } from 'sports-ui-sdk';
+
 import { FantasyFootballPlayerNews } from '../actions/fantasy-football-player-news.actions';
 import { FantasyFootballService } from '../services/fantasy-football.service';
 

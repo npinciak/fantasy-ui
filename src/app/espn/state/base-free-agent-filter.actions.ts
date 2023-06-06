@@ -1,4 +1,5 @@
-import { BaseballLineupSlot, PlayerAvailabilityStatus } from 'sports-ui-sdk';
+import { BaseballLineupSlot } from '@sports-ui/ui-sdk/espn';
+import { PlayerAvailabilityStatus } from '@sports-ui/ui-sdk/espn-client';
 
 export interface FreeAgentsFilterStateModel {
   availabilityStatus: { [key in PlayerAvailabilityStatus]: boolean };

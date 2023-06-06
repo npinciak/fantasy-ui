@@ -1,6 +1,6 @@
 import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
 import { FantasyPlayer } from '@app/espn/models/fantasy-player.model';
-import { EspnClient, PlayerInjuryStatus } from 'sports-ui-sdk';
+import { EspnClient, PlayerInjuryStatus } from '@sports-ui/ui-sdk/espn';
 
 export interface BaseballPlayerProps {
   isStarting: boolean;

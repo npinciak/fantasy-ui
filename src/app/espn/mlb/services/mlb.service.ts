@@ -6,9 +6,10 @@ import { EspnEndpointBuilder, EspnParamFragment, FantasySports } from '@app/espn
 import { PlayerNews } from '@app/espn/models/player-news.model';
 import { EspnService } from '@app/espn/service/espn.service';
 import { EspnTransformers } from '@app/espn/transformers/espn-transformers.m';
+import { EspnClient } from '@sports-ui/ui-sdk/espn';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { EspnClient } from 'sports-ui-sdk';
+
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballLeague } from '../models/baseball-league.model';
 import { BaseballPlayer } from '../models/baseball-player.model';

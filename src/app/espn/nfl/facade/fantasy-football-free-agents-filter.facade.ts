@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
-import { FootballLineupSlot } from 'sports-ui-sdk';
+import { FootballLineupSlot } from '@sports-ui/ui-sdk/espn';
 import { SetLineupSlotId } from '../actions/fantasy-football-free-agent-filter.actions';
 import { FantasyFootballFreeAgentFilterState } from '../state/fantasy-football-free-agent-filter.state';
 

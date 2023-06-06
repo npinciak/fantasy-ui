@@ -3,10 +3,10 @@ import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { benchPlayersFilter, injuredPlayersFilter, startingPlayersFilter } from '@app/espn/espn-helpers';
-import { EspnClient, FootballPosition, FOOTBALL_LINEUP_MAP } from 'sports-ui-sdk';
 import { FootballPlayer } from '../models/football-player.model';
 import { FootballTeam } from '../models/football-team.model';
 
+import { EspnClient, FOOTBALL_LINEUP_MAP, FootballPosition } from '@sports-ui/ui-sdk/espn';
 import { FantasyFootballTeamState } from '../state/fantasy-football-team.state';
 
 export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootballTeamState) {

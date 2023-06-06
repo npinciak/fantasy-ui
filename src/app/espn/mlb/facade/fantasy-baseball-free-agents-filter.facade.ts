@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
+import { PlayerAvailabilityStatus } from '@sports-ui/ui-sdk/espn-client';
 import { Observable } from 'rxjs';
-import { PlayerAvailabilityStatus } from 'sports-ui-sdk';
 import { FantasyBaseballFreeAgentFilterSelector } from '../selectors/fantasy-baseball-free-agent-filter.selector';
 import {
   RemoveLineupSlotIds,

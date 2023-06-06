@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
-import { EVENT_STATUS } from 'sports-ui-sdk';
+import { EVENT_STATUS } from '@sports-ui/ui-sdk/espn-client';
 
 @Component({
   selector: 'app-espn-fastcast-event-mlb',

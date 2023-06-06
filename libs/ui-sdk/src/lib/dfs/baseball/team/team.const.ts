@@ -1,4 +1,4 @@
-export const enum RgTeamId {
+export const enum MlbRgTeamId {
   Bos = 95,
   Bal,
   ChW,

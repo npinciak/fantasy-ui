@@ -1,4 +1,4 @@
-export interface RgTeam {
+export interface NbaRgTeam {
   id: number;
   xmlId: string;
   sportId: number;

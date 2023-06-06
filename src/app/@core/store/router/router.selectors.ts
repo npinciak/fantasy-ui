@@ -3,7 +3,7 @@ import { objectIsEmpty } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { exists } from '@app/@shared/utilities/utilities.m';
 // import { RouterState, RouterStateModel as RouterStateOuterModel } from '@ngxs/router-plugin';
-import { DfsSite } from 'sports-ui-sdk';
+import { DfsSite } from '@sports-ui/ui-sdk/dfs';
 import { EspnRouteBuilder } from './route-builder';
 import { RouterStateModel } from './router-state.model';
 import { RouterState } from './router.state';

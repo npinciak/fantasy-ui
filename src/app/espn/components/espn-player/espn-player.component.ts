@@ -7,7 +7,7 @@ import {
   INJURY_SEVERITY_COLOR_BY_INJURY_SEVERITY,
   InjurySeverityColor,
   PlayerInjuryStatus,
-} from 'sports-ui-sdk';
+} from '@sports-ui/ui-sdk/espn';
 
 @Component({
   selector: 'app-espn-player',

@@ -1,5 +1,5 @@
 import { FantasyPlayer } from '@app/espn/models/fantasy-player.model';
-import { EspnClient } from 'sports-ui-sdk';
+import { EspnClient } from '@sports-ui/ui-sdk/espn';
 
 export type FootballPlayerAttributes = {
   lineupSlot: string | null;

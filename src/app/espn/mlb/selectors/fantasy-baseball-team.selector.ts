@@ -11,7 +11,7 @@ import {
   startingPlayersFilter,
 } from '@app/espn/espn-helpers';
 import { Selector } from '@ngxs/store';
-import { BASEBALL_LINEUP_MAP, BaseballStat, MLB_STATS_MAP } from 'sports-ui-sdk';
+import { BASEBALL_LINEUP_MAP, BaseballStat, MLB_STATS_MAP } from '@sports-ui/ui-sdk/espn';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
 import { BaseballTeam, BaseballTeamTableRow } from '../models/baseball-team.model';

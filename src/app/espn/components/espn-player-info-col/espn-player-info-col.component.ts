@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { BaseballPlayer } from '@app/espn/mlb/models/baseball-player.model';
 import { FootballPlayer } from '@app/espn/nfl/models/football-player.model';
+
 import {
   FA_ICON_BY_INJURY_STATUS,
   INJURY_LABEL_BY_INJURY_STATUS,
   INJURY_SEVERITY_BY_INJURY_STATUS,
   INJURY_SEVERITY_CLASS,
-} from 'sports-ui-sdk';
+} from '@sports-ui/ui-sdk/espn';
 import { EspnPlayerComponent } from '../espn-player/espn-player.component';
 
 @Component({

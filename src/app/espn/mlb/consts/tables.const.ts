@@ -1,5 +1,5 @@
 import { TableColumnDataType, transformTableColumnsToTableRows } from '@app/@shared/models/table-columns.model';
-import { BaseballStat, MLB_STATS_MAP } from 'sports-ui-sdk';
+import { BaseballStat, MLB_STATS_MAP } from '@sports-ui/ui-sdk/espn';
 
 const statsKey = 'stats';
 

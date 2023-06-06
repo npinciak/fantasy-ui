@@ -1,4 +1,4 @@
-import { EspnClient } from 'sports-ui-sdk';
+import { EspnClient } from '@sports-ui/ui-sdk/espn';
 
 export interface FantasyLeague {
   id: string;

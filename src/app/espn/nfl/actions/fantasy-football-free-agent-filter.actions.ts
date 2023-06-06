@@ -1,4 +1,5 @@
-import { FootballLineupSlot, PlayerAvailabilityStatus } from 'sports-ui-sdk';
+import { FootballLineupSlot } from '@sports-ui/ui-sdk/espn';
+import { PlayerAvailabilityStatus } from '@sports-ui/ui-sdk/espn-client';
 
 const name = 'fantasyFootballFreeAgentFilter';
 

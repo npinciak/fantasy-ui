@@ -21,12 +21,15 @@
       "@espn/*": ["src/app/espn/*"],
       "@espnClient/*": ["src/espn-client-models/*"],
       "@mlb/*": ["src/app/espn/mlb/*"],
-      "sports-ui-sdk": ["libs/sports-ui-sdk/src/index.ts"]
+      "@sports-ui/ui-sdk": ["libs/ui-sdk/src/index.ts"],
+      "@sports-ui/ui-sdk/espn-client": [
+        "libs/ui-sdk/src/lib/espn-client/espn-client.m.ts"
+      ],
+      "@sports-ui/ui-sdk/espn": ["libs/ui-sdk/src/lib/espn/espn.m.ts"],
+      "@sports-ui/ui-sdk/dfs": ["libs/ui-sdk/src/lib/dfs/dfs.m.ts"],
+      "@sports-ui/ui-sdk/helpers": ["libs/ui-sdk/src/lib/helpers/helpers.m.ts"]
     },
-    "typeRoots": [
-      "./node_modules/sports-ui-sdk/lib/index.d.ts",
-      "./node_modules/@types"
-    ]
+    "typeRoots": ["./node_modules/@types"]
   },
   "exclude": ["schematics"]
 }

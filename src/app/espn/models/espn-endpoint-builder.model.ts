@@ -1,4 +1,4 @@
-import { enumAsList } from 'sports-ui-sdk';
+import { enumAsList } from '@sports-ui/ui-sdk/helpers';
 import { API_BASE_V2, COMMON_V3, FANTASY_BASE_V2, FANTASY_BASE_V3, ONE_FEED_BASE } from '../espn.const';
 
 export class EspnEndpointBuilder {

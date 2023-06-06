@@ -1,4 +1,3 @@
-import { BaseballLineupSlot } from 'sports-ui-sdk';
 import { FantasyBaseballScoringPeriod } from '../fantasy-baseball-scoring-period';
 import { transformToBaseballPlayerBatterStatsRow } from '../transformers/fantasy-baseball.transformers';
 import { BaseballPlayer } from './baseball-player.model';

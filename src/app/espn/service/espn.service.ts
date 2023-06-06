@@ -1,11 +1,11 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { espnDateFormatter } from '@app/@shared/helpers/date';
+import { ApiService } from '@app/@shared/services/api.service';
 import { FastcastTransform } from '@app/espn-fastcast/models/fastcast-transform.model';
+import { EspnClient, EspnFastcastClient } from '@sports-ui/ui-sdk/espn';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { EspnClient, EspnFastcastClient } from 'sports-ui-sdk';
-import { ApiService } from 'src/app/@shared/services/api.service';
 import {
   EspnEndpointBuilder,
   EspnParamFragment,
