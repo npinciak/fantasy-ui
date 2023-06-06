@@ -15,5 +15,8 @@
       "types": "../ui-sdk/src/lib/espn/espn.m.d.ts",
       "default": "../ui-sdk/src/lib/espn/espn.m.js"
     }
+  },
+  "devDependencies": {
+    "tslib": "^2.5.3"
   }
 }

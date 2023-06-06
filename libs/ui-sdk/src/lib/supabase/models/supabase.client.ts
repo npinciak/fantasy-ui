@@ -1,59 +1,59 @@
 export type Json = string | number | boolean | null | { [key: string]: Json } | Json[];
 
-export interface SupabaseDatabase {
+export interface Database {
   public: {
     Tables: {
       'fangraphs-constants': {
         Row: {
-          cFIP: number | null;
+          cFIP: number;
           id: number;
-          'R/PA': number | null;
-          'R/W': number | null;
-          runCS: number | null;
-          runSB: number | null;
-          Season: number;
-          w1B: number | null;
-          w2B: number | null;
-          w3B: number | null;
-          wBB: number | null;
-          wHBP: number | null;
-          wHR: number | null;
-          wOBA: number | null;
-          wOBAScale: number | null;
+          'R/PA': number;
+          'R/W': number;
+          runCS: number;
+          runSB: number;
+          season: number;
+          w1B: number;
+          w2B: number;
+          w3B: number;
+          wBB: number;
+          wHBP: number;
+          wHR: number;
+          wOBA: number;
+          wOBAScale: number;
         };
         Insert: {
-          cFIP?: number | null;
+          cFIP?: number;
           id?: number;
-          'R/PA'?: number | null;
-          'R/W'?: number | null;
-          runCS?: number | null;
-          runSB?: number | null;
-          Season: number;
-          w1B?: number | null;
-          w2B?: number | null;
-          w3B?: number | null;
-          wBB?: number | null;
-          wHBP?: number | null;
-          wHR?: number | null;
-          wOBA?: number | null;
-          wOBAScale?: number | null;
+          'R/PA'?: number;
+          'R/W'?: number;
+          runCS?: number;
+          runSB?: number;
+          season: number;
+          w1B?: number;
+          w2B?: number;
+          w3B?: number;
+          wBB?: number;
+          wHBP?: number;
+          wHR?: number;
+          wOBA?: number;
+          wOBAScale?: number;
         };
         Update: {
-          cFIP?: number | null;
+          cFIP?: number;
           id?: number;
-          'R/PA'?: number | null;
-          'R/W'?: number | null;
-          runCS?: number | null;
-          runSB?: number | null;
-          Season?: number;
-          w1B?: number | null;
-          w2B?: number | null;
-          w3B?: number | null;
-          wBB?: number | null;
-          wHBP?: number | null;
-          wHR?: number | null;
-          wOBA?: number | null;
-          wOBAScale?: number | null;
+          'R/PA'?: number;
+          'R/W'?: number;
+          runCS?: number;
+          runSB?: number;
+          season?: number;
+          w1B?: number;
+          w2B?: number;
+          w3B?: number;
+          wBB?: number;
+          wHBP?: number;
+          wHR?: number;
+          wOBA?: number;
+          wOBAScale?: number;
         };
       };
       Leagues: {
@@ -65,6 +65,7 @@ export interface SupabaseDatabase {
           ownerId: string;
           season: string | null;
           sport: string | null;
+          expired: boolean;
         };
         Insert: {
           created_at?: string | null;
@@ -74,6 +75,7 @@ export interface SupabaseDatabase {
           ownerId: string;
           season?: string | null;
           sport?: string | null;
+          expired?: boolean;
         };
         Update: {
           created_at?: string | null;
@@ -83,12 +85,13 @@ export interface SupabaseDatabase {
           ownerId?: string;
           season?: string | null;
           sport?: string | null;
+          expired?: boolean;
         };
       };
       Teams: {
         Row: {
           created_at: string | null;
-          espnId: number | null;
+          espnId: number;
           id: number;
           isFavorite: boolean | null;
           leagueId: string | null;
@@ -97,7 +100,7 @@ export interface SupabaseDatabase {
         };
         Insert: {
           created_at?: string | null;
-          espnId?: number | null;
+          espnId?: number;
           id?: number;
           isFavorite?: boolean | null;
           leagueId?: string | null;
@@ -106,7 +109,7 @@ export interface SupabaseDatabase {
         };
         Update: {
           created_at?: string | null;
-          espnId?: number | null;
+          espnId?: number;
           id?: number;
           isFavorite?: boolean | null;
           leagueId?: string | null;
