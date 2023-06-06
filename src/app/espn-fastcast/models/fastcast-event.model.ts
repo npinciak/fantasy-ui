@@ -1,12 +1,12 @@
 import { ParsedUid } from '@app/espn/espn-helpers';
-import { EspnFastcastClient, EventStatus, EventStatusId } from 'sports-ui-sdk';
+import { EspnFastcastClient, EventStatus, EventStatusType } from 'sports-ui-sdk';
 import { FastcastEventTeam } from './fastcast-team.model';
 
 interface FastcastEventAttributes {
   timestamp: number;
   state: string | null;
   status: EventStatus | null;
-  statusId: EventStatusId;
+  statusId: EventStatusType;
   location: string | null;
   clock: string | null;
   summary: string | null;

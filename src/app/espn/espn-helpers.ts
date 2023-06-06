@@ -1,7 +1,7 @@
 import { tickerDate } from '@app/@shared/helpers/date';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
-import { EspnClient, EspnFastcastClient, EVENT_STATUS, PITCHING_LINEUP_IDS, PLAYER_INJURY_STATUS, SEASON_ID } from 'sports-ui-sdk';
+import { EspnClient, EspnFastcastClient, EVENT_STATUS, PITCHING_LINEUP_IDS, PLAYER_INJURY_STATUS, SEASON_TYPE } from 'sports-ui-sdk';
 import { BaseballPlayer, BaseballPlayerStatsRow } from './mlb/models/baseball-player.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
 
@@ -243,7 +243,7 @@ export function fastcastEventSummary(event: FastcastEvent): string | null {
 
   const inProgress = status === EVENT_STATUS.InProgress;
   const eventPostponed = status === EVENT_STATUS.Postgame;
-  const isPostseason = seasonType === SEASON_ID.Postseason;
+  const isPostseason = seasonType === SEASON_TYPE.Postseason;
 
   const date = tickerDate(timestamp);
 

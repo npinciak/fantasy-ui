@@ -6,7 +6,7 @@ import { FastcastLeague } from '@app/espn-fastcast/models/fastcast-league.model'
 import { FastcastSport } from '@app/espn-fastcast/models/fastcast-sport.model';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
 import { FastcastTransform } from '@app/espn-fastcast/models/fastcast-transform.model';
-import { EVENT_STATUS_ID, EspnClient, EspnFastcastClient } from 'sports-ui-sdk';
+import { EVENT_STATUS_TYPE, EspnClient, EspnFastcastClient } from 'sports-ui-sdk';
 import {
   excludeLeagues,
   flattenPlayerStats,
@@ -206,7 +206,7 @@ export function clientEventToFastcastEvent(event: EspnFastcastClient.EventsEntit
   // mlbSituation.onSecond = event?.situation?.onSecond;
   // mlbSituation.onThird = event?.situation?.onThird;
 
-  let footballSituation = {} as FootballSituation;
+  const footballSituation = {} as FootballSituation;
 
   footballSituation['shortDownDistanceText'] = event?.situation?.shortDownDistanceText ?? '';
   footballSituation['possessionText'] = event?.situation?.possessionText ?? '';
@@ -262,7 +262,7 @@ export function clientEventToFastcastEvent(event: EspnFastcastClient.EventsEntit
     period,
     isTournament: false,
     note: note ?? null,
-    isHalftime: event?.fullStatus.type?.id ? event?.fullStatus.type.id === EVENT_STATUS_ID.Halftime : false,
+    isHalftime: event?.fullStatus.type?.id ? event?.fullStatus.type.id === EVENT_STATUS_TYPE.Halftime : false,
     lastPlay: situation?.lastPlay ?? null,
     link,
     odds: odds ?? null,

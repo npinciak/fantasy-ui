@@ -1,6 +1,5 @@
 ﻿/* eslint-disable @typescript-eslint/no-namespace */
-import { EventStatus, SeasonType } from '../../espn-client/espn-client.m';
-import { LegacyEspnClient } from './espn-client-legacy.model';
+import { EventStatus, EventStatusType, SeasonType } from '../../espn-client/espn-client.m';
 
 export namespace LegacyEspnFastcastClient {
   interface EntityBaseAttributes<T> {
@@ -68,7 +67,7 @@ export namespace LegacyEspnFastcastClient {
   export type EspnClientGroup = Pick<EntityBase, 'name' | 'abbreviation' | 'shortName'> & { groupId: string };
 
   export type FullStatus = { type: FullStatusType };
-  export type FullStatusType = { id: LegacyEspnClient.GameStatusTypeId; name: string; state: string; completed: boolean };
+  export type FullStatusType = { id: EventStatusType; name: string; state: string; completed: boolean };
 
   export type TeamAttributes = Pick<EntityBase, 'id' | 'abbreviation'>;
 
