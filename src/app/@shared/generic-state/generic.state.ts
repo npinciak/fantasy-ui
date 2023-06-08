@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
+import { PropertyOfType } from '@sports-ui/ui-sdk/helpers';
 import { patchMap } from '../operators';
 import { GenericStateClass, GenericStateModel, IGenericActionsClass } from './generic.model';
 
-export type PropertyOfType<T, U> = { [K in keyof T]: T[K] extends U ? K : never }[keyof T];
-
-export function GenericState<EntityType, IdProperty extends PropertyOfType<EntityType, string | number>, EntityFetchType extends {}>({
+export function GenericState<EntityType, IdProperty extends PropertyOfType<EntityType, string | number>, EntityFetchType extends object>({
   idProperty,
   actionHandler,
 }: {

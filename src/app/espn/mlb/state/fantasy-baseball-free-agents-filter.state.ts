@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { PropertyOfType } from '@app/@shared/generic-state/generic.state';
 import { Action, State, StateContext, StateOperator, Store } from '@ngxs/store';
 import { BaseballLineupSlot } from '@sports-ui/ui-sdk/espn';
 import { PLAYER_AVAILABILITY_STATUS, PlayerAvailabilityStatus } from '@sports-ui/ui-sdk/espn-client';
+import { PropertyOfType } from '@sports-ui/ui-sdk/helpers';
 import { FantasyBaseballFreeAgentFilter } from '../actions/fantasy-baseball-free-agents-filter.actions';
 import { FantasyBaseballFreeAgents } from '../actions/fantasy-baseball-free-agents.actions';
 import { FantasyBaseballLeagueFacade } from '../facade/fantasy-baseball-league.facade';

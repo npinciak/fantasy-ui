@@ -27,7 +27,10 @@
       ],
       "@sports-ui/ui-sdk/espn": ["libs/ui-sdk/src/lib/espn/espn.m.ts"],
       "@sports-ui/ui-sdk/dfs": ["libs/ui-sdk/src/lib/dfs/dfs.m.ts"],
-      "@sports-ui/ui-sdk/helpers": ["libs/ui-sdk/src/lib/helpers/helpers.m.ts"]
+      "@sports-ui/ui-sdk/helpers": ["libs/ui-sdk/src/lib/helpers/helpers.m.ts"],
+      "@sports-ui/ui-sdk/supabase": [
+        "libs/ui-sdk/src/lib/supabase/supabase.m.ts"
+      ]
     },
     "typeRoots": ["./node_modules/@types"]
   },
