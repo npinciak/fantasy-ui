@@ -1,1 +1,2 @@
-export * from './supabase.client';
+export * from './supabase-database.model';
+export * from './supabase-tables.model';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SupaClientTable } from '../supa/supa-client-tables.model';
+import { SupaClientTables } from '@sports-ui/ui-sdk/supabase';
 import { SupaClientService } from '../supa/supa-client.service';
 import { exists } from '../utilities/exists';
 
@@ -7,7 +7,7 @@ import { exists } from '../utilities/exists';
   providedIn: 'root',
 })
 export class FangraphsService extends SupaClientService {
-  private table: SupaClientTable = 'fangraphs-constants';
+  private table: SupaClientTables = 'fangraphs-constants';
 
   getFangraphsConstants() {
     return this.supabase
@@ -24,3 +24,5 @@ export class FangraphsService extends SupaClientService {
       .then(res => (exists(res.data) ? res.data : []));
   }
 }
+
+

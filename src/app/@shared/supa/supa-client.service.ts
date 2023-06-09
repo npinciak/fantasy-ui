@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Database } from '@sports-ui/ui-sdk/supabase';
 import { SupabaseClient, createClient } from '@supabase/supabase-js';
 import { environment } from 'src/environments/environment';
-import { Database } from './supabase-client.model';
 
 @Injectable({
   providedIn: 'root',

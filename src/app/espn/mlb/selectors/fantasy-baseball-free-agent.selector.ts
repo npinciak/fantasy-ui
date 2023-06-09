@@ -1,4 +1,4 @@
-import { FangraphsWobaFipConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
+import { FangraphsConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
 import { FangraphsConstantsSelector } from '@app/@shared/fangraphs/fangraphs-const.selector';
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { linearRegression, transformScatterGraphData } from '@app/@shared/helpers/graph.helpers';
@@ -25,7 +25,7 @@ export class FantasyBaseballFreeAgentSelector extends GenericSelector(FantasyBas
   @Selector([FantasyBaseballFreeAgentSelector.getFreeAgentBatterList, FangraphsConstantsSelector.getById])
   static getFreeAgentBatterStats(
     players: BaseballPlayer[],
-    getSeasonConsts: (id: string | null) => FangraphsWobaFipConstants
+    getSeasonConsts: (id: string | null) => FangraphsConstants
   ): (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[] {
     return (statPeriod: string, seasonId: string) => {
       const seasonConst = getSeasonConsts(seasonId);
@@ -98,7 +98,7 @@ export class FantasyBaseballFreeAgentSelector extends GenericSelector(FantasyBas
   @Selector([FantasyBaseballFreeAgentSelector.getFreeAgentPitcherList, FangraphsConstantsSelector.getById])
   static getFreeAgentPitcherStats(
     players: BaseballPlayer[],
-    getSeasonConsts: (id: string | null) => FangraphsWobaFipConstants
+    getSeasonConsts: (id: string | null) => FangraphsConstants
   ): (statPeriod: string, seasonId: string) => BaseballPlayerStatsRow[] {
     return (statPeriod: string, seasonId: string) => {
       const seasonConst = getSeasonConsts(seasonId);

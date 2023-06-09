@@ -1,4 +1,4 @@
-import { FangraphsWobaFipConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
+import { FangraphsConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import {
   BASEBALL_LINEUP_MAP,
@@ -200,7 +200,7 @@ export function clientLeagueToBaseballLeague(res: EspnClient.BaseballLeague, gen
 export function transformToBaseballPlayerBatterStatsRow(
   player: BaseballPlayer,
   statPeriod: string,
-  seasonConst: FangraphsWobaFipConstants
+  seasonConst: FangraphsConstants
 ): BaseballPlayerStatsRow | null {
   const {
     id,

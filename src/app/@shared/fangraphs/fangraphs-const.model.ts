@@ -1,3 +1,3 @@
-import { Database } from '../supa/supabase-client.model';
+import { SupaClientFangraphsConstantsTable } from '@sports-ui/ui-sdk/supabase';
 
-export type FangraphsWobaFipConstants = Database['public']['Tables']['fangraphs-constants']['Row'];
+export type FangraphsConstants = SupaClientFangraphsConstantsTable;

@@ -1,5 +1,5 @@
 import { RouterSelector } from '@app/@core/store/router/router.selectors';
-import { FangraphsWobaFipConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
+import { FangraphsConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
 import { FangraphsConstantsSelector } from '@app/@shared/fangraphs/fangraphs-const.selector';
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { ScatterChartDataset, transformDataToScatterGraph } from '@app/@shared/helpers/graph.helpers';
@@ -99,7 +99,7 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
   static getTeamBatterStats(
     batters: BaseballPlayer[],
     seasonId: string,
-    getSeasonConsts: (id: string | null) => FangraphsWobaFipConstants
+    getSeasonConsts: (id: string | null) => FangraphsConstants
   ): (statPeriod: string) => BaseballPlayerStatsRow[] {
     return (statPeriod: string) => {
       const seasonConst = getSeasonConsts(seasonId);
@@ -120,7 +120,7 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
   static getBatterStatsByTeamId(
     selectRosterByTeamId: (teamId: string) => BaseballPlayer[],
     seasonId: string,
-    getSeasonConsts: (id: string | null) => FangraphsWobaFipConstants
+    getSeasonConsts: (id: string | null) => FangraphsConstants
   ) {
     return (teamId: string, statPeriod: string) => {
       const seasonConst = getSeasonConsts(seasonId);
@@ -185,7 +185,7 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
   static getTeamPitcherStats(
     getTeamPitchers: BaseballPlayer[],
     seasonId: string,
-    getSeasonConsts: (id: string | null) => FangraphsWobaFipConstants
+    getSeasonConsts: (id: string | null) => FangraphsConstants
   ): (statPeriod: string) => BaseballPlayerStatsRow[] {
     return (statPeriod: string) => {
       const seasonConst = getSeasonConsts(seasonId);
@@ -205,7 +205,7 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
   static getPitcherStatsByTeamId(
     selectRosterByTeamId: (id: string) => BaseballPlayer[],
     seasonId: string,
-    getSeasonConsts: (id: string | null) => FangraphsWobaFipConstants
+    getSeasonConsts: (id: string | null) => FangraphsConstants
   ): (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[] {
     return (teamId: string, statPeriod: string) => {
       const seasonConst = getSeasonConsts(seasonId);

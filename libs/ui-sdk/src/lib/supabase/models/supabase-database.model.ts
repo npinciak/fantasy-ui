@@ -60,29 +60,32 @@ export interface Database {
         Row: {
           created_at: string | null;
           id: number;
-          leagueId: string | null;
+          leagueId: string;
           name: string | null;
           ownerId: string;
           season: string | null;
           sport: string | null;
+          expired: boolean;
         };
         Insert: {
           created_at?: string | null;
           id?: number;
-          leagueId?: string | null;
+          leagueId?: string;
           name?: string | null;
           ownerId: string;
           season?: string | null;
           sport?: string | null;
+          expired?: boolean;
         };
         Update: {
           created_at?: string | null;
           id?: number;
-          leagueId?: string | null;
+          leagueId?: string;
           name?: string | null;
           ownerId?: string;
           season?: string | null;
           sport?: string | null;
+          expired?: boolean;
         };
       };
       Teams: {
