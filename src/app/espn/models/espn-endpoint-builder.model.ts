@@ -1,56 +1,101 @@
 import { enumAsList } from '@sports-ui/ui-sdk/helpers';
 import { API_BASE_V2, COMMON_V3, FANTASY_BASE_V2, FANTASY_BASE_V3, ONE_FEED_BASE } from '../espn.const';
 
+/**
+ * Utility class for building ESPN endpoints.
+ */
 export class EspnEndpointBuilder {
-  private static apiBaseV2 = API_BASE_V2;
-  private static fantasyBaseV3 = FANTASY_BASE_V3;
-  private static fantasyBaseV2 = FANTASY_BASE_V2;
-  private static oneFeedBase = ONE_FEED_BASE;
-  private static commonV3 = COMMON_V3;
+  private static readonly apiBaseV2 = API_BASE_V2;
+  private static readonly fantasyBaseV3 = FANTASY_BASE_V3;
+  private static readonly fantasyBaseV2 = FANTASY_BASE_V2;
+  private static readonly oneFeedBase = ONE_FEED_BASE;
+  private static readonly commonV3 = COMMON_V3;
 
   private _leagueId: string | undefined;
   private _sport: FantasySports | undefined;
   private _year: string;
 
+  /**
+   * Constructs an instance of EspnEndpointBuilder.
+   * @param {FantasySports} sport - The fantasy sport.
+   * @param {string} leagueId - The league ID.
+   * @param {string} year - The year. Defaults to the current year.
+   */
   constructor(sport?: FantasySports, leagueId?: string, year = new Date().getFullYear().toString()) {
     this._leagueId = leagueId;
     this._sport = sport;
     this._year = year;
   }
 
+  /**
+   * Gets the fantasy player news endpoint.
+   * @returns {string} The endpoint URL.
+   */
   get fantasyPlayerNews(): string {
     return `${this.fantasyBaseV2WithFragments}/news/players`;
   }
 
+  /**
+   * Gets the ESPN events endpoint.
+   * @returns {string} The endpoint URL.
+   */
   get espnEvents(): string {
     return `${this.fantasyBaseV2WithFragments}/games`;
   }
 
+  /**
+   * Gets the fantasy player transaction endpoint.
+   * @returns {string} The endpoint URL.
+   */
   get fantasyPlayerTransaction(): string {
     return `${this.fantasyLeague}/transactions`;
   }
 
+  /**
+   * Gets the fantasy league communications endpoint.
+   * @returns {string} The endpoint URL.
+   */
   get fantasyLeagueComms(): string {
     return `${this.fantasyLeague}/communication`;
   }
 
+  /**
+   * Gets the fantasy league endpoint.
+   * @returns {string} The endpoint URL.
+   */
   get fantasyLeague(): string {
     return `${this.fantasyBaseV3WithFragments}/segments/0/leagues/${this._leagueId}`;
   }
 
+  /**
+   * Gets the positions endpoint.
+   * @returns {string} The endpoint URL.
+   */
   get positions(): string {
     return `${EspnEndpointBuilder.commonV3}/${this._sport}/mlb/positions`;
   }
 
+  /**
+   * Gets the one feed endpoint.
+   * @returns {string} The endpoint URL.
+   */
   get oneFeed(): string {
     return `${EspnEndpointBuilder.oneFeedBase}/oneFeed`;
   }
 
-  get staticScoreboard() {
+  /**
+   * Gets the static scoreboard endpoint.
+   * @returns {string} The endpoint URL.
+   */
+  get staticScoreboard(): string {
     return `${EspnEndpointBuilder.apiBaseV2}/scoreboard/header`;
   }
 
-  get baseballStatsBatterVsPitcher() {
+  /**
+   * Gets the baseball batter vs pitcher statistics endpoint.
+   * @returns {string} The endpoint URL.
+   */
+  get baseballStatsBatterVsPitcher(): string {
     return `${this.fantasyBaseV2WithStatsFragments}/${EspnPathFragment.BatterVsPitcher}`;
   }
 

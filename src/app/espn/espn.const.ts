@@ -6,6 +6,7 @@ export const ESPN_TEXT: Record<string, string> = {
   NO_GAMES_TEXT: `No games scheduled for today`,
 };
 
+export const BASE_URL = environment.espnBase;
 export const API_BASE = environment.espnBaseApi;
 export const API_BASE_V2 = API_BASE + '/v2';
 
@@ -31,7 +32,6 @@ export const NO_LOGO = `${CDN_COMBINER}?img=/i/teamlogos/default-team-logo-500.p
 export function fastcastURIBuilder(eventType: string | null, messageId: string): string {
   return `${FASTCAST_BASE}/${eventType}/message/${messageId}/checkpoint`;
 }
-
 
 export function logoImgBuilder({ id, league, width, height }: ImageBuilderInput): string {
   const w = exists(width) ? width : 100;
