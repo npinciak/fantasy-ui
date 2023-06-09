@@ -91,6 +91,16 @@ export const lobPctThreshold = {
   [StatThreshold.Awful]: 60,
 } as const;
 
+export const fipThreshold = {
+  [StatThreshold.Excellent]: 3.2,
+  [StatThreshold.Great]: 3.5,
+  [StatThreshold.AboveAvg]: 3.8,
+  [StatThreshold.Avg]: 4.2,
+  [StatThreshold.BelowAvg]: 4.4,
+  [StatThreshold.Poor]: 4.7,
+  [StatThreshold.Awful]: 5.0,
+} as const;
+
 export const THRESHOLD_MAP = {
   [BaseballStat.wRC]: wRCThreshold,
   [BaseballStat.wRAA]: WraaThreshold,
@@ -98,4 +108,5 @@ export const THRESHOLD_MAP = {
   [BaseballStat.OPS]: OpsThreshold,
   [BaseballStat.K_9]: k9Threshold,
   [BaseballStat.LOB_PCT]: lobPctThreshold,
+  [BaseballStat.fip]: fipThreshold,
 } as const;
