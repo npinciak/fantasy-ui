@@ -1,21 +1,7 @@
 <div class="flex-col gap-20">
   <div>
     <button
-      class="
-        mr-2
-        mb-2
-        cursor-pointer
-        rounded-lg
-        bg-blue-700
-        px-5
-        py-2.5
-        text-sm
-        font-medium
-        text-white
-        hover:bg-blue-800
-        focus:outline-none focus:ring-4 focus:ring-blue-300
-        dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
-      "
+      class="mr-2 mb-2 cursor-pointer rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       type="button"
       [disabled]="disableAdd"
       [class.disabled:opacity-50]="disableAdd"
@@ -43,7 +29,7 @@
               <ng-template [ngSwitchCase]="'actions'">
                 <div>
                   <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="League menu">
-                    <mat-icon>more_vert</mat-icon>
+                    <i class="fa fa-ellipsis-v"></i>
                   </button>
                   <mat-menu #menu="matMenu">
                     <button mat-menu-item [disabled]="disableAdd" (click)="disableAdd ? null : onRemoveLeague(data.id)">
