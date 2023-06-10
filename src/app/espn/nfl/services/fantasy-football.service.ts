@@ -17,7 +17,6 @@ import { FantasyFootballTransformers } from '../transformers/fantasy-football.tr
 export class FantasyFootballService extends EspnService {
   private sport = FantasySports.Football;
 
-
   /**
    * Return fantasy football league
    *
@@ -40,7 +39,7 @@ export class FantasyFootballService extends EspnService {
    * @param playerId
    * @returns PlayerNews[]
    */
-  fetchPlayerNews(playerId: string): Observable<PlayerNews[]> {
+  fetchPlayerNews(playerId: string): Observable<PlayerNews> {
     return this.fetchFantasyPlayerNewsBySport({ sport: this.sport, lookbackDays: '30', playerId }).pipe(map(res => res));
   }
 
@@ -55,8 +54,8 @@ export class FantasyFootballService extends EspnService {
     headers = headers.append('X-Fantasy-Filter', JSON.stringify(payload.filter));
     headers = headers.append('X-Fantasy-Platform', 'kona-PROD-c4559dd8257df5bff411b011384d90d4d60fbafa');
 
-    return this
-      .fetchFantasyFreeAgentsBySport(FantasySports.Football, payload.leagueId, payload.scoringPeriodId, headers)
-      .pipe(map(res => FantasyFootballTransformers.clientFreeAgentToFootballPlayer(res.players)));
+    return this.fetchFantasyFreeAgentsBySport(FantasySports.Football, payload.leagueId, payload.scoringPeriodId, headers).pipe(
+      map(res => FantasyFootballTransformers.clientFreeAgentToFootballPlayer(res.players))
+    );
   }
 }

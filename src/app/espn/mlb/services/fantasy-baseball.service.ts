@@ -52,7 +52,7 @@ export class FantasyBaseballService extends EspnService {
    * @param payload
    * @returns
    */
-  baseballPlayerNews(playerId: string): Observable<PlayerNews[]> {
+  baseballPlayerNews(playerId: string): Observable<PlayerNews> {
     return this.fetchFantasyPlayerNewsBySport({ sport: this.sport, lookbackDays: '30', playerId }).pipe(map(res => res));
   }
 

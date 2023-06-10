@@ -33,8 +33,6 @@ export type FantasyPlayerNewsRequest = Pick<FantasyLeagueBySportRequest, 'sport'
   providedIn: 'root',
 })
 export class EspnService extends ApiService {
-  // constructor(private api: ApiService) {}
-
   /**
    * Update Espn Fantasy Team
    *
@@ -86,7 +84,7 @@ export class EspnService extends ApiService {
    * @param sport
    * @returns Player news
    */
-  fetchFantasyPlayerNewsBySport({ sport, lookbackDays, playerId }: FantasyPlayerNewsRequest): Observable<PlayerNews[]> {
+  fetchFantasyPlayerNewsBySport({ sport, lookbackDays, playerId }: FantasyPlayerNewsRequest): Observable<PlayerNews> {
     const endpoint = BaseEspnEndpointBuilder({ sport }).fantasyPlayerNews;
     const params = new HttpParams().set(ESPN_PARAM_FRAGMENTS.Days, lookbackDays).set(ESPN_PARAM_FRAGMENTS.PlayerId, playerId);
     return this.get<EspnClient.PlayerNewsFeed>(endpoint, { params }).pipe(map(res => clientPlayerNewsFeed(playerId, res)));

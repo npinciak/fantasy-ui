@@ -12,7 +12,18 @@
     <div class="flex-col" class="divide-y">
       <ng-container *ngFor="let item of data.news">
         <article class="py-5">
-          <h2 class="text-base font-bold">{{ item?.headline }}</h2>
+          <h2 class="text-base font-bold">
+            <a *ngIf="item?.link; else noLinkHeadline" title="view story" [href]="item?.link" target="_blank">
+              {{ item?.headline }}
+              <i class="fas fa-external-link fa-xs ml-2"></i>
+              <span class="sr-only">view story</span>
+            </a>
+          </h2>
+
+          <ng-template #noLinkHeadline>
+            {{ item?.headline }}
+          </ng-template>
+
           <section>
             <p class="mt-3 text-sm" [innerHtml]="item?.story"></p>
           </section>

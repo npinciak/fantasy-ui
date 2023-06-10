@@ -38,11 +38,11 @@ export function clientPlayerOutlook(outlooks?: EspnClient.PlayerOutlooksMap) {
     .sort((a, b) => b.week - a.week);
 }
 
-export function clientPlayerNewsFeed(playerId: string, playerNewsFeed: EspnClient.PlayerNewsFeed): PlayerNews[] {
-  const news = {
+export function clientPlayerNewsFeed(playerId: string, playerNewsFeed: EspnClient.PlayerNewsFeed): PlayerNews {
+  return {
     id: playerId,
     news: playerNewsFeed.feed.map(article => {
-      const { id, published, headline, story, byline, images, type } = article;
+      const { id, published, headline, story, byline, images, type, links } = article;
 
       const author = exists(byline) ? byline : null;
 
@@ -50,10 +50,11 @@ export function clientPlayerNewsFeed(playerId: string, playerNewsFeed: EspnClien
 
       const heroImage = '';
 
-      return { id: id.toString(), author, type, headline, heroImage, story, storyImages, published };
+      const link = exists(links) && exists(links.mobile) ? links?.mobile?.href : null;
+
+      return { id: id.toString(), author, type, headline, heroImage, story, storyImages, published, link };
     }),
-  } as PlayerNews;
-  return [news];
+  };
 }
 
 export function clientLeagueToLeague(league: EspnClient.League): FantasyLeague {

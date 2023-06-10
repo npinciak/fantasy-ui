@@ -1,15 +1,15 @@
 import { PlayerInjuryStatus } from '../injury/injury-status.model';
 import { ARTICLE_TYPE, LEAGUE_COMMUNICATION_TOPIC, SCHEDULE_WINNER, SPORT_ID, TRANSACTION } from './espn-client.const';
 
-export type Article = (typeof ARTICLE_TYPE)[keyof typeof ARTICLE_TYPE];
+export type Article = typeof ARTICLE_TYPE[keyof typeof ARTICLE_TYPE];
 
-export type LeagueCommunicationTopic = (typeof LEAGUE_COMMUNICATION_TOPIC)[keyof typeof LEAGUE_COMMUNICATION_TOPIC];
+export type LeagueCommunicationTopic = typeof LEAGUE_COMMUNICATION_TOPIC[keyof typeof LEAGUE_COMMUNICATION_TOPIC];
 
-export type SportId = (typeof SPORT_ID)[keyof typeof SPORT_ID];
+export type SportId = typeof SPORT_ID[keyof typeof SPORT_ID];
 
-export type ScheduleWinnerType = (typeof SCHEDULE_WINNER)[keyof typeof SCHEDULE_WINNER];
+export type ScheduleWinnerType = typeof SCHEDULE_WINNER[keyof typeof SCHEDULE_WINNER];
 
-export type TransactionType = (typeof TRANSACTION)[keyof typeof TRANSACTION];
+export type TransactionType = typeof TRANSACTION[keyof typeof TRANSACTION];
 
 export const enum LeagueId {
   MLB = 10,
@@ -236,6 +236,14 @@ export type PlayerNewsFeedEntity = Pick<IdAttributesNumber, 'id'> & {
   type: Article;
   byline?: string | null;
   images?: ImagesEntity[] | null;
+  links: {
+    mobile?: {
+      href: string;
+    };
+    web?: {
+      hred: string;
+    };
+  };
 };
 
 export type ImagesEntity = {
