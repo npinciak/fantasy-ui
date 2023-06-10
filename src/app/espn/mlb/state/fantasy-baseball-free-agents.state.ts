@@ -6,7 +6,7 @@ import { FantasyBaseballFreeAgents } from '../actions/fantasy-baseball-free-agen
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { FantasyBaseballFreeAgentFilterSelector } from '../selectors/fantasy-baseball-free-agent-filter.selector';
 import { FantasyBaseballLeagueSelector } from '../selectors/fantasy-baseball-league.selector';
-import { MlbService } from '../services/mlb.service';
+import { FantasyBaseballService } from '../services/fantasy-baseball.service';
 
 @State({ name: FantasyBaseballFreeAgents.stateName })
 @Injectable()
@@ -14,7 +14,7 @@ export class FantasyBaseballFreeAgentsState extends GenericState({
   idProperty: 'id',
   actionHandler: FantasyBaseballFreeAgents,
 }) {
-  constructor(private mlbService: MlbService, private store: Store) {
+  constructor(private mlbService: FantasyBaseballService, private store: Store) {
     super();
   }
 

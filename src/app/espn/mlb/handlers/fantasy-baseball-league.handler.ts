@@ -7,12 +7,12 @@ import { FantasyBaseballLeague } from '../actions/fantasy-baseball-league.action
 import { FantasyBaseballTeamsLive } from '../actions/fantasy-baseball-team-live.actions';
 import { FantasyBaseballTeams } from '../actions/fantasy-baseball-team.actions';
 import { FantasyBaseballLeagueSelector } from '../selectors/fantasy-baseball-league.selector';
-import { MlbService } from '../services/mlb.service';
+import { FantasyBaseballService } from '../services/fantasy-baseball.service';
 
 @State({ name: FantasyBaseballLeague.stateName + 'Actionhandler' })
 @Injectable()
 export class FantasyBaseballLeagueActionHandler {
-  constructor(private mlbService: MlbService, private store: Store) {}
+  constructor(private mlbService: FantasyBaseballService, private store: Store) {}
 
   @Action(FantasyBaseballLeague.Fetch)
   async baseballLeague(

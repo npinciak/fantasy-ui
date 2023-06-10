@@ -6,7 +6,7 @@ import { EspnClient } from '@sports-ui/ui-sdk/espn';
 import { map } from 'rxjs/operators';
 
 import { FantasyBaseballPlayerNews } from '../actions/fantasy-baseball-player-news.actions';
-import { MlbService } from '../services/mlb.service';
+import { FantasyBaseballService } from '../services/fantasy-baseball.service';
 
 @State({ name: FantasyBaseballPlayerNews.stateName })
 @Injectable()
@@ -14,7 +14,7 @@ export class FantasyBaseballPlayerNewsState extends GenericState({
   idProperty: 'id',
   actionHandler: FantasyBaseballPlayerNews,
 }) {
-  constructor(private mlbService: MlbService, private store: Store) {
+  constructor(private mlbService: FantasyBaseballService, private store: Store) {
     super();
   }
 

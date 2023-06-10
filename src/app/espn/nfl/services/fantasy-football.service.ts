@@ -14,10 +14,9 @@ import { FantasyFootballTransformers } from '../transformers/fantasy-football.tr
 @Injectable({
   providedIn: 'root',
 })
-export class FantasyFootballService {
+export class FantasyFootballService extends EspnService {
   private sport = FantasySports.Football;
 
-  constructor(private client: EspnService) {}
 
   /**
    * Return fantasy football league
@@ -27,7 +26,7 @@ export class FantasyFootballService {
    * @returns
    */
   fetchLeague(leagueId: string, year: string): Observable<FootballLeague> {
-    return this.client.fetchFantasyLeagueBySport<EspnClient.FootballLeague>({ sport: this.sport, leagueId, year }).pipe(
+    return this.fetchFantasyLeagueBySport<EspnClient.FootballLeague>({ sport: this.sport, leagueId, year }).pipe(
       map(res => {
         const genericLeagueSettings = EspnTransformers.clientLeagueToLeague(res);
         return FantasyFootballTransformers.clientLeagueToFootballLeague(res, genericLeagueSettings);
@@ -42,7 +41,7 @@ export class FantasyFootballService {
    * @returns PlayerNews[]
    */
   fetchPlayerNews(playerId: string): Observable<PlayerNews[]> {
-    return this.client.fetchFantasyPlayerNewsBySport({ sport: this.sport, lookbackDays: '30', playerId }).pipe(map(res => res));
+    return this.fetchFantasyPlayerNewsBySport({ sport: this.sport, lookbackDays: '30', playerId }).pipe(map(res => res));
   }
 
   /**
@@ -56,7 +55,7 @@ export class FantasyFootballService {
     headers = headers.append('X-Fantasy-Filter', JSON.stringify(payload.filter));
     headers = headers.append('X-Fantasy-Platform', 'kona-PROD-c4559dd8257df5bff411b011384d90d4d60fbafa');
 
-    return this.client
+    return this
       .fetchFantasyFreeAgentsBySport(FantasySports.Football, payload.leagueId, payload.scoringPeriodId, headers)
       .pipe(map(res => FantasyFootballTransformers.clientFreeAgentToFootballPlayer(res.players)));
   }
