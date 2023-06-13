@@ -6,3 +6,5 @@ export * from './player-availability.const';
 export * from './player-availability.model';
 export * from './season-type.const';
 export * from './season-type.model';
+export * from './sport-type.const';
+export * from './sport-type.model';

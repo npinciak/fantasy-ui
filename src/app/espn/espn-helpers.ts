@@ -2,8 +2,7 @@ import { tickerDate } from '@app/@shared/helpers/date';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
 import { EspnClient, EspnFastcastClient, PITCHING_LINEUP_IDS, PLAYER_INJURY_STATUS } from '@sports-ui/ui-sdk/espn';
-import { EVENT_STATUS, SEASON_TYPE } from '@sports-ui/ui-sdk/espn-client';
-
+import { EVENT_STATUS, SEASON_TYPE, SportType } from '@sports-ui/ui-sdk/espn-client';
 import { BaseballPlayer, BaseballPlayerStatsRow } from './mlb/models/baseball-player.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
 
@@ -117,12 +116,12 @@ export function transformUidToLeagueId(uid: string | null): string | null {
 }
 
 export function transformIdToUid(
-  sportId: EspnClient.SportId | null,
+  sportType: SportType | null,
   leagueId: EspnClient.LeagueId | null,
   teamId: string | number | null
 ): string {
-  if (!sportId || !leagueId || !teamId) return '';
-  return `s:${sportId}~l:${leagueId}~t:${teamId}`;
+  if (!sportType || !leagueId || !teamId) return '';
+  return `s:${sportType}~l:${leagueId}~t:${teamId}`;
 }
 
 /**
@@ -142,7 +141,7 @@ export function parseEventUidStringToId(str: string): ParsedUid | null {
     return null;
   });
 
-  if (s && l && e && c) return { sportId: s, leagueId: l, eventId: e, competitionId: c };
+  if (s && l && e && c) return { sportType: s, leagueId: l, eventId: e, competitionId: c };
 
   return null;
 }
@@ -158,13 +157,13 @@ export function parseTeamUidStringToId(str: string): ParsedUid | null {
     return null;
   });
 
-  if (s && l && t) return { sportId: s, leagueId: l, teamId: t };
+  if (s && l && t) return { sportType: s, leagueId: l, teamId: t };
 
   return null;
 }
 
 export type ParsedUid = {
-  sportId: string;
+  sportType: string;
   leagueId: string;
   eventId?: string;
   competitionId?: string;

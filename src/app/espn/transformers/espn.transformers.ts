@@ -7,7 +7,7 @@ import { FastcastSport } from '@app/espn-fastcast/models/fastcast-sport.model';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
 import { FastcastTransform } from '@app/espn-fastcast/models/fastcast-transform.model';
 import { EspnClient, EspnFastcastClient } from '@sports-ui/ui-sdk/espn';
-import { ARTICLE_TYPE, EVENT_STATUS_TYPE } from '@sports-ui/ui-sdk/espn-client';
+import { ARTICLE_TYPE, EVENT_STATUS_TYPE, SportType } from '@sports-ui/ui-sdk/espn-client';
 import {
   excludeLeagues,
   flattenPlayerStats,
@@ -88,7 +88,7 @@ export function clientPlayerToFantasyPlayer({
   positionMap,
 }: {
   clientPlayer: EspnClient.PlayerInfo;
-  sport: EspnClient.SportId;
+  sport: SportType;
   leagueId: EspnClient.LeagueId;
   teamMap: Record<string, string>;
   positionMap: PositionEntityMap;

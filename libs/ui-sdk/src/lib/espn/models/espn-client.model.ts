@@ -1,10 +1,8 @@
 import { Article } from '../../espn-client/models/article-type.model';
 import { PlayerInjuryStatus } from '../injury/injury-status.model';
-import { LEAGUE_COMMUNICATION_TOPIC, SCHEDULE_WINNER, SPORT_ID, TRANSACTION } from './espn-client.const';
+import { LEAGUE_COMMUNICATION_TOPIC, SCHEDULE_WINNER, TRANSACTION } from './espn-client.const';
 
 export type LeagueCommunicationTopic = typeof LEAGUE_COMMUNICATION_TOPIC[keyof typeof LEAGUE_COMMUNICATION_TOPIC];
-
-export type SportId = typeof SPORT_ID[keyof typeof SPORT_ID];
 
 export type ScheduleWinnerType = typeof SCHEDULE_WINNER[keyof typeof SCHEDULE_WINNER];
 
