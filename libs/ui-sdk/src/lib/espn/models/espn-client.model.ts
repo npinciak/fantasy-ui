@@ -1,7 +1,6 @@
+import { Article } from '../../espn-client/models/article-type.model';
 import { PlayerInjuryStatus } from '../injury/injury-status.model';
-import { ARTICLE_TYPE, LEAGUE_COMMUNICATION_TOPIC, SCHEDULE_WINNER, SPORT_ID, TRANSACTION } from './espn-client.const';
-
-export type Article = typeof ARTICLE_TYPE[keyof typeof ARTICLE_TYPE];
+import { LEAGUE_COMMUNICATION_TOPIC, SCHEDULE_WINNER, SPORT_ID, TRANSACTION } from './espn-client.const';
 
 export type LeagueCommunicationTopic = typeof LEAGUE_COMMUNICATION_TOPIC[keyof typeof LEAGUE_COMMUNICATION_TOPIC];
 

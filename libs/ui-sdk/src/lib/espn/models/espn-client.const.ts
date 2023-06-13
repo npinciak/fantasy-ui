@@ -24,9 +24,3 @@ export const TRANSACTION = {
   Lineup: 'LINEUP',
   Roster: 'ROSTER',
 } as const;
-
-export const ARTICLE_TYPE = {
-  Default: 'Default',
-  Rotowire: 'Rotowire',
-  Story: 'Story',
-} as const;

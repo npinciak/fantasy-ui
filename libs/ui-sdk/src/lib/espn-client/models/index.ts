@@ -1,3 +1,5 @@
+export * from './article-type.const';
+export * from './article-type.model';
 export * from './event-status.const';
 export * from './event-status.model';
 export * from './player-availability.const';
