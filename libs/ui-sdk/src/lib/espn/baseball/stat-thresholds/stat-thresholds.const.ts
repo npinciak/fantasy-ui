@@ -1,7 +1,7 @@
-import { StatThreshold } from '@app/@shared/models/stat-threshold.model';
-import { BaseballStat } from '@sports-ui/ui-sdk/espn';
+import { BaseballStat } from '../stats/mlb-stats.model';
+import { StatThreshold, StatValueByThreshold } from './stat-thresholds.model';
 
-export const OpsThreshold = {
+export const OPS_THRESHOLD: StatValueByThreshold<number> = {
   [StatThreshold.Excellent]: 1.0,
   [StatThreshold.Great]: 0.9,
   [StatThreshold.AboveAvg]: 0.8,
@@ -11,8 +11,8 @@ export const OpsThreshold = {
   [StatThreshold.Awful]: 0.57,
 } as const;
 
-export const wRCThreshold = {
-  [StatThreshold.Excellent]: 2105,
+export const WRC_THRESHOLD: StatValueByThreshold<number> = {
+  [StatThreshold.Excellent]: 105,
   [StatThreshold.Great]: 90,
   [StatThreshold.AboveAvg]: 75,
   [StatThreshold.Avg]: 65,
@@ -21,7 +21,7 @@ export const wRCThreshold = {
   [StatThreshold.Awful]: 40,
 } as const;
 
-export const WraaThreshold = {
+export const WRAA_THRESHOLD: StatValueByThreshold<number> = {
   [StatThreshold.Excellent]: 40,
   [StatThreshold.Great]: 20,
   [StatThreshold.AboveAvg]: 10,
@@ -31,7 +31,7 @@ export const WraaThreshold = {
   [StatThreshold.Awful]: -20,
 } as const;
 
-export const wobaThreshold = {
+export const WOBA_THRESHOLD: StatValueByThreshold<number> = {
   [StatThreshold.Excellent]: 0.4,
   [StatThreshold.Great]: 0.37,
   [StatThreshold.AboveAvg]: 0.34,
@@ -41,7 +41,7 @@ export const wobaThreshold = {
   [StatThreshold.Awful]: 0.29,
 } as const;
 
-export const k9Threshold = {
+export const K9_THRESHOLD: StatValueByThreshold<number> = {
   [StatThreshold.Excellent]: 10,
   [StatThreshold.Great]: 9,
   [StatThreshold.AboveAvg]: 8.2,
@@ -51,7 +51,7 @@ export const k9Threshold = {
   [StatThreshold.Awful]: 5.0,
 } as const;
 
-export const kPctThreshold = {
+export const KPCT_THRESHOLD: StatValueByThreshold<number> = {
   [StatThreshold.Excellent]: 27,
   [StatThreshold.Great]: 24,
   [StatThreshold.AboveAvg]: 22,
@@ -61,7 +61,7 @@ export const kPctThreshold = {
   [StatThreshold.Awful]: 13,
 } as const;
 
-export const bb9Threshold = {
+export const BB9_THRESHOLD: StatValueByThreshold<number> = {
   [StatThreshold.Excellent]: 1.5,
   [StatThreshold.Great]: 1.9,
   [StatThreshold.AboveAvg]: 2.5,
@@ -71,7 +71,7 @@ export const bb9Threshold = {
   [StatThreshold.Awful]: 4.0,
 } as const;
 
-export const bbPctThreshold = {
+export const BBPCT_THRESHOLD: StatValueByThreshold<number> = {
   [StatThreshold.Excellent]: 4.5,
   [StatThreshold.Great]: 5.5,
   [StatThreshold.AboveAvg]: 6.5,
@@ -81,7 +81,7 @@ export const bbPctThreshold = {
   [StatThreshold.Awful]: 9.0,
 } as const;
 
-export const lobPctThreshold = {
+export const LOBPCT_THRESHOLD: StatValueByThreshold<number> = {
   [StatThreshold.Excellent]: 80,
   [StatThreshold.Great]: 78,
   [StatThreshold.AboveAvg]: 75,
@@ -91,7 +91,7 @@ export const lobPctThreshold = {
   [StatThreshold.Awful]: 60,
 } as const;
 
-export const fipThreshold = {
+export const FIP_THRESHOLD: StatValueByThreshold<number> = {
   [StatThreshold.Excellent]: 3.2,
   [StatThreshold.Great]: 3.5,
   [StatThreshold.AboveAvg]: 3.8,
@@ -101,12 +101,12 @@ export const fipThreshold = {
   [StatThreshold.Awful]: 5.0,
 } as const;
 
-export const THRESHOLD_MAP = {
-  [BaseballStat.wRC]: wRCThreshold,
-  [BaseballStat.wRAA]: WraaThreshold,
-  [BaseballStat.wOBA]: wobaThreshold,
-  [BaseballStat.OPS]: OpsThreshold,
-  [BaseballStat.K_9]: k9Threshold,
-  [BaseballStat.LOB_PCT]: lobPctThreshold,
-  [BaseballStat.fip]: fipThreshold,
+export const STAT_THRESHOLD_MAP = {
+  [BaseballStat.wRC]: WRC_THRESHOLD,
+  [BaseballStat.wRAA]: WRAA_THRESHOLD,
+  [BaseballStat.wOBA]: WOBA_THRESHOLD,
+  [BaseballStat.OPS]: OPS_THRESHOLD,
+  [BaseballStat.K_9]: K9_THRESHOLD,
+  [BaseballStat.LOB_PCT]: LOBPCT_THRESHOLD,
+  [BaseballStat.fip]: FIP_THRESHOLD,
 } as const;

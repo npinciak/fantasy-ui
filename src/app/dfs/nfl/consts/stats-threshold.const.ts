@@ -1,13 +1,13 @@
-import { StatThresholdClass } from '@app/@shared/models/stat-threshold.model';
+import { StatThreshold, StatThresholdClass } from '@sports-ui/ui-sdk';
 
 export function matchupThreshold(val: number): string {
   const thresholds = [
-    { range: [0, 7], class: StatThresholdClass.excellent },
-    { range: [7, 11], class: StatThresholdClass.aboveAvg },
-    { range: [11, 16], class: StatThresholdClass.avg },
-    { range: [16, 20], class: StatThresholdClass.belowAvg },
-    { range: [20, 25], class: StatThresholdClass.poor },
-    { range: [25, 32], class: StatThresholdClass.awful },
+    { range: [0, 7], class: StatThresholdClass[StatThreshold.Excellent] },
+    { range: [7, 11], class: StatThresholdClass[StatThreshold.Excellent] },
+    { range: [11, 16], class: StatThresholdClass[StatThreshold.Excellent] },
+    { range: [16, 20], class: StatThresholdClass[StatThreshold.Excellent] },
+    { range: [20, 25], class: StatThresholdClass[StatThreshold.Excellent] },
+    { range: [25, 32], class: StatThresholdClass[StatThreshold.Excellent] },
   ];
 
   const threshold = thresholds.find(t => range(val, t.range[0], t.range[1]));
@@ -16,12 +16,12 @@ export function matchupThreshold(val: number): string {
 
 export function matchupThresholdInverse(val: number): string {
   const thresholds = [
-    { range: [0, 7], class: StatThresholdClass.awful },
-    { range: [7, 11], class: StatThresholdClass.poor },
-    { range: [11, 16], class: StatThresholdClass.belowAvg },
-    { range: [16, 20], class: StatThresholdClass.avg },
-    { range: [20, 25], class: StatThresholdClass.aboveAvg },
-    { range: [25, 32], class: StatThresholdClass.excellent },
+    { range: [0, 7], class: StatThresholdClass[StatThreshold.Awful] },
+    { range: [7, 11], class: StatThresholdClass[StatThreshold.Poor] },
+    { range: [11, 16], class: StatThresholdClass[StatThreshold.BelowAvg] },
+    { range: [16, 20], class: StatThresholdClass[StatThreshold.Avg] },
+    { range: [20, 25], class: StatThresholdClass[StatThreshold.AboveAvg] },
+    { range: [25, 32], class: StatThresholdClass[StatThreshold.Excellent] },
   ];
 
   const threshold = thresholds.find(t => range(val, t.range[0], t.range[1]));
