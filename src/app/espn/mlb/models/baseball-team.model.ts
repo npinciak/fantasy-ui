@@ -1,4 +1,5 @@
 import { TeamEntity } from '@app/@shared/base-models/base-team.model';
+import { EspnClient } from '@sports-ui/ui-sdk/espn';
 import { BaseballPlayer } from './baseball-player.model';
 
 interface BaseballTeamProps {
@@ -6,11 +7,10 @@ interface BaseballTeamProps {
   roster: BaseballPlayer[];
   totalPoints: number;
   currentRank: number;
-  rotoStats: Record<number, number | string>;
   liveScore: number;
 }
 
-export type BaseballTeam = TeamEntity & BaseballTeamProps;
+export type BaseballTeam = TeamEntity & BaseballTeamProps & Pick<EspnClient.Team, 'valuesByStat' | 'pointsByStat'>;
 export type BaseballTeamMap = Record<string, BaseballTeam>;
 
 export type BaseballTeamLive = Pick<BaseballTeam, 'id' | 'totalPoints' | 'liveScore' | 'roster'>;

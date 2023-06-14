@@ -74,7 +74,6 @@ export const MOCK_BASEBALL_STATS_ENTITY = {
   [BaseballStat.OFAST]: 25,
   [BaseballStat.FPCT]: 0.9,
   [BaseballStat.E]: 10,
-  [BaseballStat.E]: 10,
   [BaseballStat.DPT]: 0,
   [BaseballStat.BTW]: 0,
   [BaseballStat.BTL]: 0,

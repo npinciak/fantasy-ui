@@ -50,7 +50,7 @@ export function clientEventToBaseballEvent(event: EspnClient.EventEntity): Baseb
  * @returns
  */
 export function clientTeamListToTeamList(team: EspnClient.Team): BaseballTeam {
-  const { abbrev, logo } = team;
+  const { abbrev, logo, valuesByStat, pointsByStat } = team;
 
   return {
     id: team.id.toString(),
@@ -61,7 +61,8 @@ export function clientTeamListToTeamList(team: EspnClient.Team): BaseballTeam {
     totalPoints: team.points,
     liveScore: 0,
     currentRank: team.playoffSeed,
-    rotoStats: team.valuesByStat,
+    valuesByStat,
+    pointsByStat,
   };
 }
 

@@ -10,7 +10,7 @@ export const MOCK_BASEBALL_TEAM_1: BaseballTeam = {
   totalPoints: 60.5,
   liveScore: 0,
   currentRank: 1,
-  rotoStats: {
+  rotoValuesByStat: {
     '0': 0,
     '1': 0,
     '2': 0,
@@ -41,7 +41,7 @@ export const MOCK_BASEBALL_TEAM_2: BaseballTeam = {
   totalPoints: 61.5,
   liveScore: 10,
   currentRank: 2,
-  rotoStats: {
+  rotoValuesByStat: {
     '0': 0,
     '1': 0,
     '2': 0,

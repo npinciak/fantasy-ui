@@ -1,8 +1,9 @@
 import { RouterSelector } from '@app/@core/store/router/router.selectors';
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { startingPlayersFilter } from '@app/espn/espn-helpers';
 import { Selector } from '@ngxs/store';
-import { BASEBALL_LINEUP_MAP } from '@sports-ui/ui-sdk/espn';
+import { BASEBALL_LINEUP_MAP, BaseballStat } from '@sports-ui/ui-sdk/espn';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
@@ -23,6 +24,36 @@ export class FantasyBaseballTeamLiveSelector extends GenericSelector(FantasyBase
         };
       })
       .sort((a, b) => b.liveScore - a.liveScore);
+  }
+
+  @Selector([FantasyBaseballTeamLiveSelector.standings])
+  static getStatsStandingsLineChartData(standings: BaseballTeam[]) {
+    return (statFilter: BaseballStat) => {
+      const batterStats = standings
+        .map(p => ({ statValue: exists(p.valuesByStat) ? p.valuesByStat[statFilter] : 0, name: p.name }))
+        .filter(d => d.statValue !== 0)
+        .sort((a, b) => Number(b.statValue) - Number(a.statValue));
+
+      return {
+        label: batterStats.map(p => p.name),
+        data: batterStats.map(p => p.statValue),
+      };
+    };
+  }
+
+  @Selector([FantasyBaseballTeamLiveSelector.standings])
+  static getRotoStatsStandingsLineChartData(standings: BaseballTeam[]) {
+    return (statFilter: BaseballStat) => {
+      const batterStats = standings
+        .map(p => ({ statValue: exists(p.pointsByStat) ? p.pointsByStat[statFilter] : 0, name: p.name }))
+        .filter(d => d.statValue !== 0)
+        .sort((a, b) => Number(b.statValue) - Number(a.statValue));
+
+      return {
+        label: batterStats.map(p => p.name),
+        data: batterStats.map(p => p.statValue),
+      };
+    };
   }
 
   @Selector([RouterSelector.getTeamId, FantasyBaseballTeamLiveSelector.getById])
