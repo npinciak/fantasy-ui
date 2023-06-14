@@ -21,6 +21,7 @@
       "@espn/*": ["src/app/espn/*"],
       "@espnClient/*": ["src/espn-client-models/*"],
       "@mlb/*": ["src/app/espn/mlb/*"],
+      "@sports-ui/daily-fantasy-sdk": ["libs/daily-fantasy-sdk/src/index.ts"],
       "@sports-ui/ui-sdk": ["libs/ui-sdk/src/index.ts"],
       "@sports-ui/ui-sdk/espn-client": [
         "libs/ui-sdk/src/lib/espn-client/espn-client.m.ts"

@@ -1,0 +1,26 @@
+{
+  "name": "daily-fantasy-sdk",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/daily-fantasy-sdk/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/daily-fantasy-sdk",
+        "main": "libs/daily-fantasy-sdk/src/index.ts",
+        "tsConfig": "libs/daily-fantasy-sdk/tsconfig.lib.json",
+        "assets": ["libs/daily-fantasy-sdk/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/daily-fantasy-sdk/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}
