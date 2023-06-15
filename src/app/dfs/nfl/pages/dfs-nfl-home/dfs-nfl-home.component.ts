@@ -4,7 +4,7 @@ import { DfsPlayersFacade } from '@app/dfs/facade/dfs-players.facade';
 import { DailyFantasySlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
 import { ClientSlateTypes, SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
-import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '@sports-ui/ui-sdk/dfs';
+import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DfsNflThresholds } from '../../consts/stats-threshold.m';

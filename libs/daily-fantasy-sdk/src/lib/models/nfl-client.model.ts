@@ -1,6 +1,6 @@
+import { ExpertConsensusRankBySite } from '../daily-fantasy-client/expert-consensus-ranking.model';
+import { SlateAttrTeamProperties } from '../daily-fantasy-client/slate.model';
 import { ClientSalaryDiff, DfsClientPlayerAttributes } from './daily-fantasy-client-slate-attr.model';
-import { ExpertConsensusRankByDfsSite } from './daily-fantasy-client.model';
-import { SlateAttrTeamProperties } from './slate.model';
 
 type SafptsAttributes =
   | 'RawQB'
@@ -149,7 +149,7 @@ export type NFLClientSalaryDiff = ClientSalaryDiff;
 export interface NFLClientPlayerAttributesEntity {
   team: string;
   xml_id: string;
-  ecr: ExpertConsensusRankByDfsSite;
+  ecr: ExpertConsensusRankBySite;
 }
 
 export interface NFLClientGridIronPlayer {

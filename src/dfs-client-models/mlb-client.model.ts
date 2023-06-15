@@ -1,6 +1,5 @@
 import { SlateAttrTeamProperties } from '@app/dfs/models/team.model';
 import { DfsClientPlayerAttributes } from '@dfsClient/daily-fantasy-client-slate-attr.model';
-import { PlayerEcrByDfsSiteType } from 'src/dfs-client-models/nfl-client.model';
 
 export type ValueProperties = {
   stack_value: string;
@@ -25,15 +24,6 @@ export type MLBClientTeamAttrProperties = Omit<
   pitcher: MLBClientPitcherAttr;
   team_total: number;
 };
-
-export interface MLBClientPlayerAttributeProperties {
-  hand: string;
-  stats: StatSplit;
-  batting_order: BattingOrder;
-  stat_group: string;
-  plateiq: PlateIq;
-  ecr: PlayerEcrByDfsSiteType;
-}
 
 export interface StatSplit {
   'last-two': StatsPropertiesMap;
@@ -111,6 +101,4 @@ export interface FactorEntity {
 }
 
 export type MLBClientSlateAttrTeam = SlateAttrTeamProperties & MLBClientTeamAttrProperties;
-export type MLBClientPlayerAttributes = MLBClientPlayerAttributeProperties &
-  Omit<DfsClientPlayerAttributes, 'stat_group' | 'salary_diff' | 'slate_ownership' | 'ownership' | 'value_pct'>;
 export type MLBClientTeamAttributes = MLBClientTeamAttrProperties & ValueProperties;

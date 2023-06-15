@@ -1,6 +1,6 @@
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { DfsSlatePlayer, Schedule as ScheduleImport, ScheduleTeamEntity } from '@dfsClient/daily-fantasy-client.model';
-import { NFLClientGridIronPlayer } from '@dfsClient/nfl-client.model';
+import { NFLClientGridIronPlayer } from '@sports-ui/daily-fantasy-sdk/models';
 import { camelCase } from 'lodash';
 import { SlatePlayer } from '../models/player.model';
 import { Schedule } from '../models/schedule.model';

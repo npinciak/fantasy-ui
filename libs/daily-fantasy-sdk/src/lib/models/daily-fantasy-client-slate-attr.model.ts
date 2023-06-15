@@ -1,6 +1,6 @@
+import { Site } from '../daily-fantasy-client/site.model';
 import { MLBClientPlayerAttributes, MLBClientSlateAttrTeam } from './mlb-client.model';
 import { NFLClientPlayerAttributes, NFLClientSlateAttrTeam, NFLClientStatGroup } from './nfl-client.model';
-import { DfsSite } from './site.model';
 
 export interface ClientSlateAttributes {
   stat_groups: ClientSlateStatGroups;
@@ -27,7 +27,7 @@ export interface ClientSalaryDiff {
   salary: string;
 }
 
-export type AttributesByDfsSite = Partial<{ [site in DfsSite]: string }>;
+export type AttributesByDfsSite = Partial<{ [site in Site]: string }>;
 
 export type SalaryDiffByDfsSiteType = Record<number, ClientSalaryDiff>;
 

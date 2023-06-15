@@ -10,7 +10,7 @@ import {
   NFLClientProfilerTimeFrameEntity,
   NFLClientSafptsProperties,
   NFLClientStatGroup,
-} from '@dfsClient/nfl-client.model';
+} from '@sports-ui/daily-fantasy-sdk/models';
 import { camelCase } from 'lodash';
 import { Vegas } from './models/vegas.model';
 import { ProfilerQB, ProfilerRB, ProfilerReceiver } from './nfl/models/nfl-profiler.model';

@@ -1,6 +1,6 @@
+import { ExpertConsensusRankBySite } from '../daily-fantasy-client/expert-consensus-ranking.model';
+import { SlateAttrTeamProperties } from '../daily-fantasy-client/slate.model';
 import { DfsClientPlayerAttributes } from './daily-fantasy-client-slate-attr.model';
-import { ExpertConsensusRankByDfsSite } from './daily-fantasy-client.model';
-import { SlateAttrTeamProperties } from './slate.model';
 
 export type ValueProperties = {
   stack_value: string;
@@ -32,7 +32,7 @@ export interface MLBClientPlayerAttributeProperties {
   batting_order: BattingOrder;
   stat_group: string;
   plateiq: PlateIq;
-  ecr: ExpertConsensusRankByDfsSite;
+  ecr: ExpertConsensusRankBySite;
 }
 
 export interface StatSplit {

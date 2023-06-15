@@ -1,9 +1,9 @@
 import { SlatePlayer } from '@app/dfs/models/slate-player.model';
 import { SlateTeam } from '@app/dfs/models/slate-team.model';
-import { PlayerEcrByDfsSiteType } from '../../../../dfs-client-models/nfl-client.model';
+import { ExpertConsensusRank } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 
 export type SlatePlayerNfl = SlatePlayer & {
-  expertRanking: PlayerEcrByDfsSiteType;
+  expertRanking: ExpertConsensusRank;
 };
 
 type SaFptsAttributes =

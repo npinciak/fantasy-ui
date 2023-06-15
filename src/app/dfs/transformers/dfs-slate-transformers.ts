@@ -1,13 +1,14 @@
 import { normalizeStringToNumber, objectIsEmpty } from '@app/@shared/helpers/utils';
 import { exists } from '@app/@shared/utilities/utilities.m';
-import { DFS_SITE_TO_DFS_SITETYPE_MAP } from '@sports-ui/ui-sdk/dfs';
+import { SITE_TO_SITETYPE_MAP } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+
+import { SlateWeather } from '@dfsClient/daily-fantasy-client-slate-attr.model';
 import {
   ClientSlatePlayerAttributesMap,
   ClientSlateStatGroups,
   ClientSlateTeamAttributes,
   ClientSlateTeamAttributesMap,
-  SlateWeather,
-} from '../../../dfs-client-models/daily-fantasy-client-slate-attr.model';
+} from '@sports-ui/daily-fantasy-sdk/models';
 import { MLBClientTeamAttributes } from '../../../dfs-client-models/mlb-client.model';
 import { SlatePlayer } from '../models/slate-player.model';
 import { Weather } from '../models/weather.model';
@@ -51,7 +52,7 @@ export function transformStatGroupsToProfiler(statGroup: ClientSlateStatGroups):
 export function transformPlayerSlateAttributes(players: ClientSlatePlayerAttributesMap, site: string): SlatePlayer[] {
   if (objectIsEmpty(players)) return [];
 
-  const siteMap = DFS_SITE_TO_DFS_SITETYPE_MAP[site];
+  const siteMap = SITE_TO_SITETYPE_MAP[site];
 
   return Object.entries(players).map(([id, player]) => ({
     id,

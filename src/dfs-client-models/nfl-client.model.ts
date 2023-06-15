@@ -1,6 +1,5 @@
 import { SlateAttrTeamProperties } from '@app/dfs/models/team.model';
-import { ClientSalaryDiff, DfsClientPlayerAttributes } from '@dfsClient/daily-fantasy-client-slate-attr.model';
-import { DfsSiteType } from '@sports-ui/ui-sdk/dfs';
+import { ClientSalaryDiff } from '@dfsClient/daily-fantasy-client-slate-attr.model';
 
 type SafptsAttributes =
   | 'RawQB'
@@ -149,12 +148,6 @@ export type NFLClientSalaryDiff = ClientSalaryDiff;
 type EcrAttributes = 'rank | avg';
 export type NFLClientEcr = { [attr in EcrAttributes]: string };
 
-export interface NFLClientPlayerAttributesEntity {
-  team: string;
-  xml_id: string;
-  ecr: PlayerEcrByDfsSiteType;
-}
-
 export interface NFLClientGridIronPlayer {
   PLAYERID: string;
   PLAYER: string;
@@ -188,9 +181,6 @@ export interface NFLClientGridIronPlayer {
 }
 
 export type NFLClientGridIronPlayerMap = Record<string, NFLClientGridIronPlayer>;
-export type NFLClientPlayerAttributes = NFLClientPlayerAttributesEntity & DfsClientPlayerAttributes;
-
-export type NFLClientPlayerAttributesMap = Record<string, NFLClientPlayerAttributes>;
 
 export type NFLClientSafptsProperties = { [attr in SafptsAttributes]: string };
 export type NFLClientOutsidersProperties = { [attr in OutsidersAttributes]: string };
@@ -202,5 +192,3 @@ export type NFLClientProfilerReceiverProperties = { [attr in ProfilerReceiverAtt
 export type NFLClientProfilerTimeFrameEntity = {
   [playerId: number]: NFLClientProfilerQBProperties | NFLClientProfilerRBProperties | NFLClientProfilerReceiverProperties;
 };
-
-export type PlayerEcrByDfsSiteType = Record<DfsSiteType, NFLClientEcr>;

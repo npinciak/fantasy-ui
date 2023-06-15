@@ -1,4 +1,4 @@
-import { ClientVegas } from '@dfsClient/daily-fantasy-client.model';
+import { Vegas } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 
 /**
  * Base team model
@@ -17,7 +17,7 @@ export type TeamMap = Record<string, Team>;
  * Base slate attr team model
  */
 export interface SlateAttrTeamProperties {
-  vegas: ClientVegas;
+  vegas: Vegas;
 }
 
 export type SlateAttrTeam = Team & SlateAttrTeamProperties;

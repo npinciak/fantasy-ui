@@ -1,4 +1,4 @@
-import { SalariesEntity } from '@dfsClient/daily-fantasy-client.model';
+import { SalariesEntity } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { Schedule } from './schedule.model';
 import { Team } from './team.model';
 
