@@ -79,6 +79,7 @@ export enum UrlPathFragments {
   Year = 'year',
   Batters = 'batters',
   Pitchers = 'pitchers',
+  Player = 'player',
 }
 
 export enum UrlPathParams {
@@ -87,6 +88,7 @@ export enum UrlPathParams {
   LeagueId = ':leagueId',
   Sport = ':sport',
   TeamId = ':teamId',
+  PlayerId = ':playerId',
 }
 
 export enum UrlQueryParams {

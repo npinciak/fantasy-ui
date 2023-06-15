@@ -5,7 +5,7 @@ import { BaseballTeamComponent } from './pages/baseball-team/baseball-team.compo
 import { FantasyBaseballFreeAgentsResolver } from './resolvers/fantasy-baseball-free-agents.resolver';
 import { FantasyBaseballLeagueResolver } from './resolvers/fantasy-baseball-league.resolver';
 
-export const BaseballRoutes = {
+export const FantasyBaseballRoutes = {
   path: UrlPathFragments.MLB,
   data: { sport: UrlPathFragments.MLB },
   children: [
@@ -13,6 +13,21 @@ export const BaseballRoutes = {
       // year
       path: UrlPathParams.Year,
       children: [
+        {
+          path: UrlPathFragments.Player,
+          children: [
+            {
+              // player
+              path: UrlPathParams.PlayerId,
+              children: [
+                {
+                  path: UrlPathFragments.Empty,
+                  component: BaseballTeamComponent,
+                },
+              ],
+            },
+          ],
+        },
         {
           path: UrlPathFragments.League,
           children: [
