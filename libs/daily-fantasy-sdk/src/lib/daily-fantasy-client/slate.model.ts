@@ -1,10 +1,10 @@
 import { SLATE_TYPES } from '../models/daily-fantasy-client.const';
-import { ClientVegas, Multiplier, SiteConfig, Slot } from '../models/daily-fantasy-client.model';
+import { Multiplier, Slot } from '../models/daily-fantasy-client.model';
 import { Site } from './site.model';
+import { Vegas } from './vegas.model';
 
 export type SlateType = typeof SLATE_TYPES[keyof typeof SLATE_TYPES];
 export type DkSlateTypeMap = { [slateType in SlateType]: SlateConfig };
-export type SiteSlateConfig = { [site in Site]: SiteConfig };
 
 export type SiteSlateEntityMap = { [slateId: string]: SiteSlateEntity };
 export type SlateMasterMap = { [site in Site]: SiteSlateEntityMap };
@@ -39,5 +39,5 @@ export interface SlateConfig {
 }
 
 export interface SlateAttrTeamProperties {
-  vegas: ClientVegas;
+  vegas: Vegas;
 }

@@ -1,14 +1,15 @@
 import { normalizeStringToNumber, objectIsEmpty } from '@app/@shared/helpers/utils';
 import { exists } from '@app/@shared/utilities/utilities.m';
-import { SITE_TO_SITETYPE_MAP } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
-
-import { SlateWeather } from '@dfsClient/daily-fantasy-client-slate-attr.model';
 import {
   ClientSlatePlayerAttributesMap,
   ClientSlateStatGroups,
   ClientSlateTeamAttributes,
   ClientSlateTeamAttributesMap,
-} from '@sports-ui/daily-fantasy-sdk/models';
+  SITE_TO_SITETYPE_MAP,
+} from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+
+import { SlateWeather } from '@dfsClient/daily-fantasy-client-slate-attr.model';
+
 import { MLBClientTeamAttributes } from '../../../dfs-client-models/mlb-client.model';
 import { SlatePlayer } from '../models/slate-player.model';
 import { Weather } from '../models/weather.model';

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { espnDateFormatter } from '@app/@shared/helpers/date';
 import { ApiService } from '@app/@shared/services/api.service';
 import { SlateMasterMap } from '@dfsClient/daily-fantasy-client.model';
-import { ClientSlateAttributes } from '@sports-ui/daily-fantasy-sdk/models';
+import { ClientSlateAttributes } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DailyFantasyEndpointBuilder } from '../daily-fantasy-endpoint-builder';
