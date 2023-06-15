@@ -1,6 +1,4 @@
-import { ClientSite } from './daily-fantasy-client.model';
-import { MLBClientSlateAttrTeam } from './mlb-client.model';
-import { NFLClientSlateAttrTeam, NFLClientStatGroup } from './nfl-client.model';
+import { Site } from '../daily-fantasy-client/site.model';
 
 type PlayerAttributes = 'stack_value' | 'top_value' | 'stack_leverage' | 'stack_field' | 'stack_diff';
 
@@ -21,23 +19,9 @@ export interface ClientSalaryDiff {
   salary: string;
 }
 
-export type SlateWeather = {
-  weather: SlateWeatherDetails;
-};
-
-export type SlateWeatherDetails = {
-  color: string;
-  description: string;
-};
-
-export type AttributesByDfsSite = Partial<{ [site in ClientSite]: string }>;
+export type AttributesByDfsSite = Partial<{ [site in Site]: string }>;
 
 export type SalaryDiffByDfsSiteType = Record<number, ClientSalaryDiff>;
-
-export type ClientSlateStatGroups = NFLClientStatGroup | null | undefined;
-
-export type ClientSlateTeamAttributes = Partial<NFLClientSlateAttrTeam & MLBClientSlateAttrTeam>;
-export type ClientSlateTeamAttributesMap = Record<string, ClientSlateTeamAttributes>;
 
 export type PlayerAttributesByDfsSite = Record<number, string>;
 export type PlayerOwnershipByDfsSiteTypeBySlate = Record<number, Record<number, string>>;

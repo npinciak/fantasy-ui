@@ -21,12 +21,27 @@
       "@espn/*": ["src/app/espn/*"],
       "@espnClient/*": ["src/espn-client-models/*"],
       "@mlb/*": ["src/app/espn/mlb/*"],
+      "@sports-ui/daily-fantasy-sdk": ["libs/daily-fantasy-sdk/src/index.ts"],
+      "@sports-ui/daily-fantasy-sdk/baseball": [
+        "libs/daily-fantasy-sdk/src/lib/baseball/baseball.m.ts"
+      ],
+      "@sports-ui/daily-fantasy-sdk/basketball": [
+        "libs/daily-fantasy-sdk/src/lib/basketball/basketball.m.ts"
+      ],
+      "@sports-ui/daily-fantasy-sdk/football": [
+        "libs/daily-fantasy-sdk/src/lib/football/football.m.ts"
+      ],
+      "@sports-ui/daily-fantasy-sdk/daily-fantasy-client": [
+        "libs/daily-fantasy-sdk/src/lib/daily-fantasy-client/daily-fantasy-client.m"
+      ],
+      "@sports-ui/daily-fantasy-sdk/models": [
+        "libs/daily-fantasy-sdk/src/lib/models/models.m"
+      ],
       "@sports-ui/ui-sdk": ["libs/ui-sdk/src/index.ts"],
+      "@sports-ui/ui-sdk/espn": ["libs/ui-sdk/src/lib/espn/espn.m.ts"],
       "@sports-ui/ui-sdk/espn-client": [
         "libs/ui-sdk/src/lib/espn-client/espn-client.m.ts"
       ],
-      "@sports-ui/ui-sdk/espn": ["libs/ui-sdk/src/lib/espn/espn.m.ts"],
-      "@sports-ui/ui-sdk/dfs": ["libs/ui-sdk/src/lib/dfs/dfs.m.ts"],
       "@sports-ui/ui-sdk/helpers": ["libs/ui-sdk/src/lib/helpers/helpers.m.ts"],
       "@sports-ui/ui-sdk/supabase": [
         "libs/ui-sdk/src/lib/supabase/supabase.m.ts"

@@ -5,7 +5,7 @@ import { Selector } from '@app/@shared/models/typed-selector';
 import { exists, existsFilter, pickData } from '@app/@shared/utilities/utilities.m';
 import { SlatePlayer } from '@app/dfs/models/player.model';
 import { DfsSlatePlayersState } from '@app/dfs/state/dfs-players.state';
-import { NFL_RG_TEAM_ID_MAP } from '@sports-ui/ui-sdk/dfs';
+import { NFL_RG_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
 import { uniqueBy } from '@sports-ui/ui-sdk/helpers';
 import { GridIronPlayer } from '../models/nfl-gridIron.model';
 import { NflDfsPlayerTableData } from '../models/nfl-player.model';

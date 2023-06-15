@@ -4,7 +4,7 @@ import { DfsPlayersFacade } from '@app/dfs/facade/dfs-players.facade';
 import { DailyFantasySlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
 import { ClientSlateTypes, SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
-import { NBA_RG_TEAM_ID_MAP } from '@sports-ui/ui-sdk/dfs';
+import { NBA_RG_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/basketball';
 import { BehaviorSubject } from 'rxjs';
 import { HEADERS_BY_POS, ROWS_BY_POS } from '../../consts/mlb-dfs-table.const';
 import { DfsMlbSlatePlayerFacade } from '../../facade/dfs-mlb-slate-players.facade';

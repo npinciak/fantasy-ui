@@ -1,5 +1,5 @@
 import { CamelCasedProperties } from '@app/@shared/models/camel-case.model';
-import { NFLClientGridIronPlayer } from '../../../../dfs-client-models/nfl-client.model';
+import { NFLClientGridIronPlayer } from '@sports-ui/daily-fantasy-sdk/models';
 
 type NormalizedGridIronPlayerAttributes = CamelCasedProperties<NFLClientGridIronPlayer>;
 

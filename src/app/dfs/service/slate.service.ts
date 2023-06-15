@@ -3,13 +3,12 @@ import { Injectable } from '@angular/core';
 import { espnDateFormatter } from '@app/@shared/helpers/date';
 import { ApiService } from '@app/@shared/services/api.service';
 import { SlateMasterMap } from '@dfsClient/daily-fantasy-client.model';
+import { ClientSlateAttributes } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ClientSlateAttributes } from '../../../dfs-client-models/daily-fantasy-client-slate-attr.model';
 import { DailyFantasyEndpointBuilder } from '../daily-fantasy-endpoint-builder';
 import { SlatePlayer } from '../models/slate-player.model';
 import { SlateTeam } from '../models/slate-team.model';
-import { Weather } from '../models/weather.model';
 import { PlayerProfilerSeasonMap } from '../nfl/models/nfl-profiler.model';
 import { DfsSlateTransformers } from '../transformers/dfs-transformers.m';
 
@@ -40,7 +39,7 @@ export class SlateService {
         teams: DfsSlateTransformers.transformTeamSlateAttributes(res.teams),
         statGroups: DfsSlateTransformers.transformStatGroupsToProfiler(res?.stat_groups),
         players: DfsSlateTransformers.transformPlayerSlateAttributes(res.players, request.site),
-        weather: DfsSlateTransformers.transformWeather(res.games),
+        // weather: DfsSlateTransformers.transformWeather(res.games),
       }))
     );
   }
@@ -50,7 +49,7 @@ type SlateAttributes = {
   teams: SlateTeam[];
   players: SlatePlayer[];
   statGroups: PlayerProfilerSeasonMap | null;
-  weather: Weather[];
+  // weather: Weather[];
 };
 
 type DfsQueryParamAttributes = 'date' | 'site' | 'slate_id';

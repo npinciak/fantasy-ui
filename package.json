@@ -17,8 +17,8 @@
     "lint:fix": "nx lint --fix",
     "install:sdk": "npm i ./libs/sports-ui-sdk",
     "install:sdk:new": "npm i ./libs/ui-sdk",
-    "circular-dependency": "skott src/main.ts --fileExtensions=.ts",
-    "fresh:install": "rm -rf .angular && rm -rf node_modules && npm i"
+    "circular-dependency": "skott src/main.ts",
+    "fresh:install": "rm -rf .angular && rm -rf node_modules && npm cache clean --force && npm cache verify && npm i"
   },
   "private": true,
   "dependencies": {
@@ -36,6 +36,7 @@
     "@ngxs/router-plugin": "^3.8.0",
     "@ngxs/store": "^3.8.0",
     "@nrwl/angular": "16.2.2",
+    "@sports-ui/daily-fantasy-sdk": "file:libs/daily-fantasy-sdk",
     "@sports-ui/ui-sdk": "file:libs/ui-sdk",
     "@supabase/supabase-js": "^2.2.0",
     "chart.js": "^3.8.0",
@@ -47,7 +48,6 @@
     "ng2-charts": "^3.1.2",
     "ngx-build-plus": "^15.0.0",
     "rxjs": "^6.6.6",
-    "sports-ui-sdk": "file:libs/sports-ui-sdk",
     "tslib": "^2.5.0",
     "zone.js": "^0.11.8"
   },
