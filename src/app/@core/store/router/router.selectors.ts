@@ -86,6 +86,11 @@ export class RouterSelector {
     return objectIsEmpty(params) ? null : (params?.teamId as string);
   }
 
+  @Selector([RouterSelector.getRouterParams])
+  static getPlayerId(params: Params | undefined) {
+    return objectIsEmpty(params) ? null : (params?.playerId as string);
+  }
+
   @Selector([RouterSelector.getRouterData])
   static getSport(data: { reuse: boolean; sport: UrlPathFragments } | undefined) {
     if (!exists(data) || !exists(data.sport)) return null;

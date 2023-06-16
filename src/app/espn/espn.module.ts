@@ -4,6 +4,7 @@ import { SharedModule } from '@app/@shared/shared.module';
 import { EspnFastcastModule } from '@app/espn-fastcast/espn-fastcast.module';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
+import { EspnFreeAgentFilterComponentComponent } from './components/espn-free-agent-filter-component/espn-free-agent-filter-component.component';
 import { EspnPlayerDialogComponent } from './components/espn-player-dialog/espn-player-dialog.component';
 import { EspnPlayerInfoColComponent } from './components/espn-player-info-col/espn-player-info-col.component';
 import { EspnPlayerTrendingColComponent } from './components/espn-player-trending-col/espn-player-trending-col.component';
@@ -18,6 +19,7 @@ import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/le
 import { FantasyBaseballLeagueActionHandler } from './mlb/handlers/fantasy-baseball-league.handler';
 import { BaseballFreeAgentsComponent } from './mlb/pages/baseball-free-agents/baseball-free-agents.component';
 import { BaseballHomeComponent } from './mlb/pages/baseball-home/baseball-home.component';
+import { BaseballPlayerComponent } from './mlb/pages/baseball-player/baseball-player.component';
 import { BaseballTeamComponent } from './mlb/pages/baseball-team/baseball-team.component';
 import { FantasyBaseballEventsState } from './mlb/state/fantasy-baseball-events.state';
 import { FantasyBaseballFreeAgentsFilterState } from './mlb/state/fantasy-baseball-free-agents-filter.state';
@@ -41,7 +43,6 @@ import { FantasyFootballTeamState } from './nfl/state/fantasy-football-team.stat
 import { FantasyFootballTransactionState } from './nfl/state/fantasy-football-transaction.state';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 import { FreeAgentsAvailabilitySelectedState } from './state/free-agent-availability-selected.state';
-import { EspnFreeAgentFilterComponentComponent } from './components/espn-free-agent-filter-component/espn-free-agent-filter-component.component';
 
 @NgModule({
   declarations: [
@@ -60,11 +61,12 @@ import { EspnFreeAgentFilterComponentComponent } from './components/espn-free-ag
     EspnPlayerInfoColComponent,
     EspnTeamInfoColComponent,
     LeagueScoreboardComponent,
-    BaseballLineupCardComponent,
     EspnPlayerDialogComponent,
+    BaseballLineupCardComponent,
     EspnStandingsTableComponent,
     FantasyTeamHeaderComponent,
     EspnFreeAgentFilterComponentComponent,
+    BaseballPlayerComponent,
   ],
   imports: [
     EspnRoutingModule,

@@ -34,6 +34,10 @@ export class RouterFacade {
     return this.store.selectSnapshot(RouterSelector.getTeamId);
   }
 
+  get playerId(): string | null {
+    return this.store.selectSnapshot(RouterSelector.getPlayerId);
+  }
+
   get sport() {
     return this.store.selectSnapshot(RouterSelector.getSport);
   }
@@ -60,6 +64,10 @@ export class RouterFacade {
 
   navigateToFantasyFreeAgents() {
     this.navigate(EspnRouteBuilder.freeAgentsPathFragments(this.sport, this.season, this.leagueId));
+  }
+
+  navigateToFantasyPlayer(playerId: string) {
+    this.navigate(EspnRouteBuilder.playerPathFragments(this.sport, this.season, this.leagueId, playerId));
   }
 
   navigateToDraftkingsBySport(sport: string) {

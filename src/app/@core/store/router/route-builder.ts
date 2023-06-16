@@ -69,6 +69,24 @@ export function RouteBuilder({ basePath }: { basePath: UrlPathFragments }) {
     }
 
     /**
+     * Creates player route for a fantasy player
+     *
+     * @param sport
+     * @param season
+     * @param leagueId
+     * @param playerId
+     * @returns string[]
+     *
+     * @example RouteBuilderClass.playerPathFragments('nfl','2022','1234','1') // returns ['espn','nfl','2022','league','1234','player','1']
+     *
+     */
+    static playerPathFragments(sport: string | null, season: string | null, leagueId: string | null, playerId: string | null): string[] {
+      return season && playerId && leagueId
+        ? [...RouteBuilderClass.leaguePathFragments(sport, season, leagueId), UrlPathFragments.Player, playerId]
+        : [];
+    }
+
+    /**
      * Creates free agents route for a fantasy league
      * @param sport
      * @param season
