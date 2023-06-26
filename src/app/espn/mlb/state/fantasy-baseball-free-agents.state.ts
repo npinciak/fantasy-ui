@@ -62,6 +62,9 @@ export class FantasyBaseballFreeAgentsState extends GenericState({
         // sortDraftRanks: { sortPriority: 100, sortAsc: pagination.sortDirection === 'asc' ? true : false, value: 'STANDARD' },
       },
     };
+
+    this.store.dispatch([new FantasyBaseballFreeAgents.Clear()]);
+
     const freeAgents = await this.mlbService.baseballFreeAgents({ leagueId, scoringPeriodId, filter }).toPromise();
     this.store.dispatch([new FantasyBaseballFreeAgents.AddOrUpdate(freeAgents)]);
   }
