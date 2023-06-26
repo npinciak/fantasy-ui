@@ -37,6 +37,7 @@ export interface IGenericActionsClass<T, U> {
   stateName: string;
   AddOrUpdate: GenericPayloadActionClass<T>;
   Fetch: GenericPayloadFetchActionClass<U>;
+  Clear: GenericPayloadClearActionClass;
   new (...args: any[]): any;
 }
 
