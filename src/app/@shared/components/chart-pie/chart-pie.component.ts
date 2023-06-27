@@ -8,7 +8,16 @@ Chart.register(...registerables);
   selector: `app-chart-pie`,
   template: `
     <app-base-card [title]="title" [subtitle]="subtitle" [height]="height">
-      <canvas baseChart [type]="'pie'" [data]="pieChartData" [options]="pieChartOptions" [legend]="pieChartLegend"> </canvas>
+      <canvas
+        baseChart
+        [attr.aria-label]="ariaLabel"
+        [type]="'pie'"
+        [data]="pieChartData"
+        [options]="pieChartOptions"
+        [legend]="pieChartLegend"
+      >
+        <p>Your browser does not support the canvas element.</p>
+      </canvas>
     </app-base-card>
   `,
 })

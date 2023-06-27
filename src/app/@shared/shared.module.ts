@@ -8,6 +8,7 @@ import { BaseChartComponent } from './components/base-chart/base-chart.component
 import { ChartBarComponent } from './components/chart-bar/chart-bar.component';
 import { ChartLineComponent } from './components/chart-line/chart-line.component';
 import { ChartPieComponent } from './components/chart-pie/chart-pie.component';
+import { ChartScatterComponent } from './components/chart-scatter/chart-scatter.component';
 import { DropdownFilterComponent } from './components/dropdown-filter/dropdown-filter.component';
 import { LoadingSkeletonComponent } from './components/loading-skeleton/loading-skeleton.component';
 import { MultiSelectComponent } from './components/multi-select/multi-select.component';
@@ -29,6 +30,7 @@ import { StatPipe } from './pipes/stat-format.pipe';
     ChartBarComponent,
     ChartLineComponent,
     ChartPieComponent,
+    ChartScatterComponent,
     LoadingSkeletonComponent,
     StatPipe,
     RefreshBtnComponent,
@@ -48,6 +50,7 @@ import { StatPipe } from './pipes/stat-format.pipe';
     NoDataComponent,
     StickyTableCellComponent,
     DropdownFilterComponent,
+    ChartScatterComponent,
     LoadingSkeletonComponent,
     MultiSelectComponent,
     PageLayoutComponent,

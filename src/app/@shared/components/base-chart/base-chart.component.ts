@@ -1,9 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { BaseballStat } from '@sports-ui/ui-sdk/espn';
 import { Chart, registerables } from 'chart.js';
 
-export interface StatsChart {
-  data: number[];
+export interface StatsChart<T = number> {
+  data: T[];
   label: string[];
 }
 
@@ -16,8 +15,8 @@ Chart.register(...registerables);
 export class BaseChartComponent {
   @Input() title = null;
   @Input() subtitle = null;
+  @Input() ariaLabel = null;
   @Input() statsMap = {};
   @Input() chartData: StatsChart;
-  @Input() statFilter: BaseballStat = BaseballStat.AB;
   @Input() height = null;
 }

@@ -7,7 +7,16 @@ Chart.register(...registerables);
   selector: `app-chart-line`,
   template: `
     <app-base-card [title]="title" [subtitle]="subtitle" [height]="height">
-      <canvas baseChart [type]="'line'" [data]="lineChartData" [options]="lineChartOptions" [legend]="lineChartLegend"> </canvas>
+      <canvas
+        baseChart
+        [attr.aria-label]="ariaLabel"
+        [type]="'line'"
+        [data]="lineChartData"
+        [options]="lineChartOptions"
+        [legend]="lineChartLegend"
+      >
+        <p>Your browser does not support the canvas element.</p>
+      </canvas>
     </app-base-card>
   `,
 })

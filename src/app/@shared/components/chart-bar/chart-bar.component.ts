@@ -6,7 +6,16 @@ import { BaseChartComponent, StatsChart } from '../base-chart/base-chart.compone
   selector: `app-chart-bar`,
   template: `
     <app-base-card [title]="title" [subtitle]="subtitle" [height]="height">
-      <canvas baseChart [type]="chartType" [data]="barChartData" [options]="barChartOptions" [legend]="lineChartLegend"> </canvas>
+      <canvas
+        baseChart
+        [attr.aria-label]="ariaLabel"
+        [type]="chartType"
+        [data]="barChartData"
+        [options]="barChartOptions"
+        [legend]="lineChartLegend"
+      >
+        <p>Your browser does not support the canvas element.</p>
+      </canvas>
     </app-base-card>
   `,
 })
