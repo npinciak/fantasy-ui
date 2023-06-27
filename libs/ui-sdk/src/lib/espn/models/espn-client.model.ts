@@ -8,14 +8,6 @@ export type ScheduleWinnerType = typeof SCHEDULE_WINNER[keyof typeof SCHEDULE_WI
 
 export type TransactionType = typeof TRANSACTION[keyof typeof TRANSACTION];
 
-export const enum LeagueId {
-  MLB = 10,
-  NCAAF = 23,
-  NFL = 28,
-  NBA = 46,
-  NHL = 90,
-}
-
 export interface IdAttributes<T> {
   defaultPositionId: T;
   externalId: T;

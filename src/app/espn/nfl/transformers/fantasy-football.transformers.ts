@@ -1,7 +1,7 @@
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { FantasyPlayer } from '@app/espn/models/fantasy-player.model';
 import { EspnClient, FOOTBALL_LINEUP_MAP, NFL_POSITION_MAP, NFL_TEAM_MAP } from '@sports-ui/ui-sdk/espn';
-import { SPORT_TYPE } from '@sports-ui/ui-sdk/espn-client';
+import { ProLeagueType, SPORT_TYPE } from '@sports-ui/ui-sdk/espn-client';
 import { headshotImgBuilder, logoImgBuilder } from '../../espn.const';
 import { FantasyLeague } from '../../models/fantasy-league.model';
 import { EspnTransformers } from '../../transformers/espn-transformers.m';
@@ -30,7 +30,7 @@ export function clientPlayerToFootballPlayer(player: EspnClient.TeamRosterEntry)
   const playerInfo: FantasyPlayer = EspnTransformers.clientPlayerToFantasyPlayer({
     clientPlayer: playerPoolEntry.player,
     sport: SPORT_TYPE.Football,
-    leagueId: EspnClient.LeagueId.NFL,
+    leagueId: ProLeagueType.NFL,
     teamMap: NFL_TEAM_MAP,
     positionMap: NFL_POSITION_MAP,
   });
@@ -86,7 +86,7 @@ export function clientFreeAgentToFootballPlayer(data: EspnClient.FreeAgentEntry[
     const playerInfo = EspnTransformers.clientPlayerToFantasyPlayer({
       clientPlayer: p.player,
       sport: SPORT_TYPE.Football,
-      leagueId: EspnClient.LeagueId.NFL,
+      leagueId: ProLeagueType.NFL,
       teamMap: NFL_TEAM_MAP,
       positionMap: NFL_POSITION_MAP,
     });

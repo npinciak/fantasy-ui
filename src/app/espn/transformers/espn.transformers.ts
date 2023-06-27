@@ -7,7 +7,13 @@ import { FastcastSport } from '@app/espn-fastcast/models/fastcast-sport.model';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
 import { FastcastTransform } from '@app/espn-fastcast/models/fastcast-transform.model';
 import { EspnClient, EspnFastcastClient } from '@sports-ui/ui-sdk/espn';
-import { ARTICLE_TYPE, EVENT_STATUS_TYPE, SportType } from '@sports-ui/ui-sdk/espn-client';
+import {
+  ARTICLE_TYPE,
+  EVENT_STATUS_TYPE,
+  PRO_LEAGUE_ABBREV_BY_PRO_LEAGUE_TYPE,
+  ProLeagueType,
+  SportType,
+} from '@sports-ui/ui-sdk/espn-client';
 import {
   excludeLeagues,
   flattenPlayerStats,
@@ -20,7 +26,6 @@ import {
 import { NO_LOGO, headshotImgBuilder } from '../espn.const';
 import { FantasyLeague } from '../models/fantasy-league.model';
 import { FantasyPlayer } from '../models/fantasy-player.model';
-import { LEAGUE_ABBREV_BY_ID } from '../models/league.model';
 import { PlayerNews } from '../models/player-news.model';
 
 export function clientPlayerOutlook(outlooks?: EspnClient.PlayerOutlooksMap) {
@@ -89,13 +94,13 @@ export function clientPlayerToFantasyPlayer({
 }: {
   clientPlayer: EspnClient.PlayerInfo;
   sport: SportType;
-  leagueId: EspnClient.LeagueId;
+  leagueId: ProLeagueType;
   teamMap: Record<string, string>;
   positionMap: PositionEntityMap;
 }): FantasyPlayer {
   const { proTeamId, defaultPositionId, injuryStatus, injured, outlooks, id, fullName, ownership, lastNewsDate } = clientPlayer;
 
-  const league = LEAGUE_ABBREV_BY_ID[leagueId].toLowerCase();
+  const leagueAbbrev = PRO_LEAGUE_ABBREV_BY_PRO_LEAGUE_TYPE[leagueId].toLowerCase();
   const team = teamMap[proTeamId] as string;
   const stats = flattenPlayerStats(clientPlayer.stats);
   const outlookByWeek = clientPlayerOutlook(outlooks);
@@ -106,7 +111,7 @@ export function clientPlayerToFantasyPlayer({
     teamId: proTeamId.toString(),
     teamUid: transformIdToUid(sport, leagueId, proTeamId),
     position: positionMap[defaultPositionId].abbrev,
-    img: headshotImgBuilder({ id, league }),
+    img: headshotImgBuilder({ id, league: leagueAbbrev }),
     lastNewsDate,
     injured,
     stats,
