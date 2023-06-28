@@ -1,5 +1,6 @@
 import { FangraphsConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
 import { exists } from '@app/@shared/utilities/utilities.m';
+import { headshotImgBuilder } from '@app/espn/espn.const';
 import { BASEBALL_LINEUP_MAP, BaseballLineupSlot, BaseballStat, EspnClient, MLB_POSITION_MAP, MLB_TEAM_MAP } from '@sports-ui/ui-sdk/espn';
 import { PlayerCardEntity, ProLeagueType, SPORT_TYPE } from '@sports-ui/ui-sdk/espn-client';
 import { isPitcher } from '../../espn-helpers';
@@ -8,7 +9,7 @@ import { EspnTransformers } from '../../transformers/espn-transformers.m';
 import { AdvStats } from '../class/advStats.class';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballLeague } from '../models/baseball-league.model';
-import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
+import { BaseballPlayer, BaseballPlayerCard, BaseballPlayerStatsRow } from '../models/baseball-player.model';
 import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
 
 export function playerEligibleLineupSlotDisplay(val: BaseballLineupSlot[]) {
@@ -80,6 +81,40 @@ export function clientScheduleTeamListToTeamList(team: EspnClient.ScheduleTeam):
     liveScore: exists(totalPointsLive) ? totalPointsLive : 0,
     roster: clientPlayerToBaseballPlayer(rosterForCurrentScoringPeriod.entries),
   };
+}
+
+export function clientPlayerCardToBaseballPlayerCard(players: PlayerCardEntity[]): BaseballPlayerCard[] {
+  return players.map(player => {
+    const {
+      player: { starterStatusByProGame, eligibleSlots, lastNewsDate, stance, laterality },
+      ratings,
+    } = player;
+
+    const eligibleLineupSlots = playerEligibleLineupSlotDisplay(eligibleSlots);
+
+    const playerInfo = EspnTransformers.clientPlayerToFantasyPlayer({
+      clientPlayer: player.player,
+      sport: SPORT_TYPE.Baseball,
+      leagueId: ProLeagueType.MLB,
+      teamMap: MLB_TEAM_MAP,
+      positionMap: MLB_POSITION_MAP,
+    });
+
+    const playerCardImage = headshotImgBuilder({ id: player.player.id, league: 'mlb', width: 426, height: 320 });
+
+    return {
+      ...playerInfo,
+      isPitcher: isPitcher(eligibleSlots),
+      starterStatusByProGame,
+      lastNewsDate,
+      isStarting: false,
+      eligibleLineupSlots,
+      playerRatings: ratings,
+      stance,
+      laterality,
+      playerCardImage,
+    };
+  });
 }
 
 /**

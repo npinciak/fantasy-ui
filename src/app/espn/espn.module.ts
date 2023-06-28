@@ -17,6 +17,7 @@ import { EspnRoutingModule } from './espn-routing.module';
 import { BaseballLineupCardComponent } from './mlb/components/baseball-lineup-card/baseball-lineup-card.component';
 import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
 import { FantasyBaseballLeagueActionHandler } from './mlb/handlers/fantasy-baseball-league.handler';
+import { FantasyBaseballPlayerCardActionHandler } from './mlb/handlers/fantasy-baseball-player-card.handler';
 import { BaseballFreeAgentsComponent } from './mlb/pages/baseball-free-agents/baseball-free-agents.component';
 import { BaseballHomeComponent } from './mlb/pages/baseball-home/baseball-home.component';
 import { BaseballPlayerComponent } from './mlb/pages/baseball-player/baseball-player.component';
@@ -25,6 +26,7 @@ import { FantasyBaseballEventsState } from './mlb/state/fantasy-baseball-events.
 import { FantasyBaseballFreeAgentsFilterState } from './mlb/state/fantasy-baseball-free-agents-filter.state';
 import { FantasyBaseballFreeAgentsState } from './mlb/state/fantasy-baseball-free-agents.state';
 import { FantasyBaseballLeagueState } from './mlb/state/fantasy-baseball-league.state';
+import { FantasyBaseballPlayerCardState } from './mlb/state/fantasy-baseball-player-card.state';
 import { FantasyBaseballPlayerNewsState } from './mlb/state/fantasy-baseball-player-news.state';
 import { FantasyBaseballTeamsLiveState } from './mlb/state/fantasy-baseball-team-live.state';
 import { FantasyBaseballTeamState } from './mlb/state/fantasy-baseball-team.state';
@@ -90,6 +92,8 @@ import { FreeAgentsAvailabilitySelectedState } from './state/free-agent-availabi
       FantasyBaseballFreeAgentsState,
       FantasyBaseballFreeAgentsFilterState,
       FantasyBaseballPlayerNewsState,
+      FantasyBaseballPlayerCardState,
+      FantasyBaseballPlayerCardActionHandler,
       FantasyBaseballEventsState,
       FreeAgentsAvailabilitySelectedState,
     ]),

@@ -1,5 +1,6 @@
 import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
 import { FantasyPlayer } from '@app/espn/models/fantasy-player.model';
+import { PlayerCardEntity } from '@sports-ui/ui-sdk';
 import { EspnClient, PlayerInjuryStatus } from '@sports-ui/ui-sdk/espn';
 
 export interface BaseballPlayerProps {
@@ -14,6 +15,9 @@ export interface BaseballPlayerProps {
 }
 
 export type BaseballPlayer = FantasyPlayer & BaseballPlayerProps & Pick<EspnClient.TeamRosterEntry, 'lineupSlotId'>;
+
+export type BaseballPlayerCard = Omit<BaseballPlayer, 'lineupSlotId' | 'lineupSlot'> &
+  Pick<PlayerCardEntity['player'], 'stance' | 'laterality'> & { playerCardImage: string };
 
 export type BaseballPlayerMap = Record<string, BaseballPlayer>;
 

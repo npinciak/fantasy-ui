@@ -14,7 +14,6 @@ import {
   ESPN_VIEW_PARAM_FRAGMENTS_LIST,
   FantasySportsAbbreviation,
 } from '../endpoint-builder/base-espn-endpoints-builder.m';
-
 import { PlayerNews } from '../models/player-news.model';
 import { EspnTransformers } from '../transformers/espn-transformers.m';
 import { clientPlayerNewsFeed } from '../transformers/espn.transformers';
@@ -40,7 +39,7 @@ export class EspnService extends ApiService {
    * @param leagueId
    * @returns
    */
-  updateFantasyTeam(payload: unknown, sport: FantasySportsAbbreviation, leagueId: string): Observable<unknown> {
+  protected updateFantasyTeam(payload: unknown, sport: FantasySportsAbbreviation, leagueId: string): Observable<unknown> {
     const endpoint = BaseEspnEndpointBuilder({ sport, leagueId }).fantasyPlayerTransaction;
     return this.post(endpoint, payload, {
       withCredentials: true,
@@ -55,19 +54,37 @@ export class EspnService extends ApiService {
    * @param sport
    * @returns EspnLeague
    */
-  fetchFantasyLeagueBySport<T>({ sport, leagueId, year, headers }: FantasyLeagueBySportRequest): Observable<T> {
+  protected fetchFantasyLeagueBySport<T>({ sport, leagueId, year, headers }: FantasyLeagueBySportRequest): Observable<T> {
     const endpoint = BaseEspnEndpointBuilder({ sport, leagueId, year }).fantasyLeague;
     return this.get<T>(endpoint, { params: this.params, headers });
   }
 
   /**
-   * Retrieve Espn Fantasy League
+   * Retrieve Espn Fantasy player stat card
    *
    * @param leagueId
    * @param sport
    * @returns EspnLeague
    */
-  fetchFantasyLeagueEvents({ sport, headers }: FantasyLeagueEventsRequest): Observable<EspnClient.EventList> {
+  protected fetchFantasyPlayerCardBySport<T>(
+    { sport, leagueId, year, headers }: FantasyLeagueBySportRequest,
+    scoringPeriodId: string
+  ): Observable<T> {
+    const endpoint = BaseEspnEndpointBuilder({ sport, leagueId, year }).fantasyLeague;
+    const params = new HttpParams()
+      .set(ESPN_PARAM_FRAGMENTS.View, ESPN_VIEW_PARAM_FRAGMENTS.PlayerCard)
+      .set(ESPN_PARAM_FRAGMENTS.ScoringPeriod, scoringPeriodId);
+    return this.get<T>(endpoint, { params, headers });
+  }
+
+  /**
+   * Retrieve Espn Fantasy League events
+   *
+   * @param leagueId
+   * @param sport
+   * @returns EspnLeague
+   */
+  protected fetchFantasyLeagueEvents({ sport, headers }: FantasyLeagueEventsRequest): Observable<EspnClient.EventList> {
     const endpoint = BaseEspnEndpointBuilder({ sport }).espnEvents;
     const params = new HttpParams()
       .set(ESPN_PARAM_FRAGMENTS.UseMap, true)
@@ -84,7 +101,7 @@ export class EspnService extends ApiService {
    * @param sport
    * @returns Player news
    */
-  fetchFantasyPlayerNewsBySport({ sport, lookbackDays, playerId }: FantasyPlayerNewsRequest): Observable<PlayerNews> {
+  protected fetchFantasyPlayerNewsBySport({ sport, lookbackDays, playerId }: FantasyPlayerNewsRequest): Observable<PlayerNews> {
     const endpoint = BaseEspnEndpointBuilder({ sport }).fantasyPlayerNews;
     const params = new HttpParams().set(ESPN_PARAM_FRAGMENTS.Days, lookbackDays).set(ESPN_PARAM_FRAGMENTS.PlayerId, playerId);
     return this.get<EspnClient.PlayerNewsFeed>(endpoint, { params }).pipe(map(res => clientPlayerNewsFeed(playerId, res)));
@@ -100,7 +117,7 @@ export class EspnService extends ApiService {
    * @param headers 'X-Fantasy-Filter' header required
    * @returns List of free agents
    */
-  fetchFantasyFreeAgentsBySport(
+  protected fetchFantasyFreeAgentsBySport(
     sport: FantasySportsAbbreviation,
     leagueId: string,
     scoringPeriod: string,
@@ -152,7 +169,7 @@ export class EspnService extends ApiService {
    */
   private get params(): HttpParams {
     let params = new HttpParams();
-    ESPN_VIEW_PARAM_FRAGMENTS_LIST.map(fragment => {
+    ESPN_VIEW_PARAM_FRAGMENTS_LIST.filter(param => param !== ESPN_VIEW_PARAM_FRAGMENTS.PlayerCard).map(fragment => {
       params = params.append(ESPN_PARAM_FRAGMENTS.View, fragment);
     });
     return params;

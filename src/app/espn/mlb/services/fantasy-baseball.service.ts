@@ -8,9 +8,10 @@ import { EspnClient } from '@sports-ui/ui-sdk/espn';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { PlayerCardEntity } from '@sports-ui/ui-sdk/espn-client';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballLeague } from '../models/baseball-league.model';
-import { BaseballPlayer } from '../models/baseball-player.model';
+import { BaseballPlayer, BaseballPlayerCard } from '../models/baseball-player.model';
 import { FantasyBaseballTransformers } from '../transformers/fantasy-baseball.transformers.m';
 
 @Injectable({
@@ -72,6 +73,29 @@ export class FantasyBaseballService extends EspnService {
     return this.fetchFantasyFreeAgentsBySport(this.sport, payload.leagueId, payload.scoringPeriodId, headers).pipe(
       map(res => FantasyBaseballTransformers.transformEspnFreeAgentToBaseballPlayer(res.players))
     );
+  }
+
+  /**
+   * Return fantasy baseball league
+   *
+   * @param leagueId
+   * @param year
+   * @returns
+   */
+  baseballPlayerCard(leagueId: string, year: string, scoringPeriod: string, playerId: string): Observable<BaseballPlayerCard[]> {
+    const filter = {
+      players: {
+        filterIds: { value: [playerId] },
+      },
+    };
+
+    let headers = new HttpHeaders();
+    headers = headers.append('X-Fantasy-Filter', JSON.stringify(filter));
+
+    return this.fetchFantasyPlayerCardBySport<{ players: PlayerCardEntity[] }>(
+      { sport: this.sport, leagueId, year, headers },
+      scoringPeriod
+    ).pipe(map(res => FantasyBaseballTransformers.clientPlayerCardToBaseballPlayerCard(res.players)));
   }
 
   // /**

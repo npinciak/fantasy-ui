@@ -139,7 +139,7 @@ type TeamAttributes = Pick<IdAttributesNumber, 'id' | 'teamId'> & {
   valuesByStat: Record<number, number>;
 };
 
-export type Team = Omit<TeamAttributes, 'teamId' | 'totalPoints' | 'totalPointsLive' | 'rosterForCurrentScoringPeriod'>;
+export type Team = Omit<TeamAttributes, 'teamId' | 'rosterForCurrentScoringPeriod'>;
 export type BaseballTeam = Team & { record: string };
 export type FootballTeam = Team & { record: TeamRecordEntity };
 
