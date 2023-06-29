@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { BaseballTeam } from '../../models/baseball-team.model';
 
 @Component({
@@ -10,13 +9,13 @@ export class LeagueScoreboardComponent {
   @Input() title = 'Scoreboard';
   @Input() teams: BaseballTeam[];
   @Input() isLoading = false;
-
+  @Output() navigateToTeam = new EventEmitter<string>();
   @Output() refreshClicked = new EventEmitter();
 
-  constructor(private routerFacade: RouterFacade) {}
+  constructor() {}
 
   viewTeam(id: string): void {
-    this.routerFacade.navigateToFantasyTeam(id);
+    this.navigateToTeam.emit(id);
   }
 
   onRefreshClick() {
