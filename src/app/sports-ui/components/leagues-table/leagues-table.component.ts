@@ -11,10 +11,10 @@ import {
 } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { cellDataAccessor } from '@app/@shared/helpers/utils';
 import { ICON_PATH } from '@app/espn/espn.const';
-import { FantasySports, FantasySportToLabelMap, SportLeagueToImageLocationMap } from '@app/espn/models/espn-endpoint-builder.model';
+import { FantasySportToLabelMap, FantasySports, SportLeagueToImageLocationMap } from '@app/espn/models/espn-endpoint-builder.model';
 import { SportsUiClientLeague } from '@app/sports-ui/models/sports-ui-league.model';
+import { cellDataAccessor } from '@sports-ui/ui-sdk/helpers';
 
 @Component({
   selector: 'app-leagues-table',

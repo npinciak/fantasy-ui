@@ -1,10 +1,6 @@
 import { camelCase } from 'lodash';
 import { CamelCasedProperties } from '../models/camel-case.model';
 
-export function cellDataAccessor(obj, path) {
-  return path.split('.').reduce((o, p) => o && o[p], obj);
-}
-
 export function getNestedValue<T>(obj: T, keys): T {
   return keys.reduce((o, k) => (o || {})[k], obj);
 }

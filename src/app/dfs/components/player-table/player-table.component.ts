@@ -2,11 +2,11 @@ import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { cellDataAccessor } from '@app/@shared/helpers/utils';
 import { TableColumnDataType } from '@app/@shared/models/table-columns.model';
 import { DfsNflThresholds } from '@app/dfs/nfl/consts/stats-threshold.m';
 import { NflDfsPlayerTableData } from '@app/dfs/nfl/models/nfl-player.model';
 import { FilterType, TableFilter } from '@app/dfs/nfl/models/nfl-table.model';
+import { cellDataAccessor } from '@sports-ui/ui-sdk/helpers';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({

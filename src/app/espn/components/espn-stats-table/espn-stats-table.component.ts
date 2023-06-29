@@ -14,10 +14,10 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
 import { StatEntity } from '@app/@shared/base-models/base-stats.model';
-import { cellDataAccessor } from '@app/@shared/helpers/utils';
 import { TableColumnDataType } from '@app/@shared/models/table-columns.model';
 import { BaseballPlayer } from '@app/espn/mlb/models/baseball-player.model';
 import { StatTypePeriodId } from '@app/espn/models/espn-stats.model';
+import { cellDataAccessor } from '@sports-ui/ui-sdk/helpers';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({

@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { cellDataAccessor } from '@app/@shared/helpers/utils';
+import { cellDataAccessor } from '@sports-ui/ui-sdk/helpers';
 
 @Component({
   selector: 'app-team-matchup-table',

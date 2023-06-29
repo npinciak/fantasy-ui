@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { cellDataAccessor } from '@app/@shared/helpers/utils';
 import { TableColumnDataType } from '@app/@shared/models/table-columns.model';
+import { cellDataAccessor } from '@sports-ui/ui-sdk/helpers';
 
 @Component({
   selector: 'app-espn-standings-table',

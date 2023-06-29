@@ -1,4 +1,4 @@
-import { cellDataAccessor } from '../helpers/utils';
+import { cellDataAccessor } from '@sports-ui/ui-sdk/helpers';
 
 export interface BaseTableColumn<T> {
   columnDef: keyof T;
