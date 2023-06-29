@@ -2,7 +2,7 @@ import { tickerDate } from '@app/@shared/helpers/date';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
 import { EspnClient, EspnFastcastClient, PITCHING_LINEUP_IDS, PLAYER_INJURY_STATUS } from '@sports-ui/ui-sdk/espn';
-import { EVENT_STATUS, ProLeagueType, SEASON_TYPE, SportType } from '@sports-ui/ui-sdk/espn-client';
+import { EVENT_STATUS, PlayerStatsYear, ProLeagueType, SEASON_TYPE, SportType } from '@sports-ui/ui-sdk/espn-client';
 import { BaseballPlayer, BaseballPlayerStatsRow } from './mlb/models/baseball-player.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
 
@@ -172,10 +172,10 @@ export type ParsedUid = {
  * @param stats
  * @returns
  */
-export function flattenPlayerStats(stats?: EspnClient.PlayerStatsYear[] | null): Record<string, EspnClient.PlayerStatsYear | null> | null {
+export function flattenPlayerStats(stats?: PlayerStatsYear[] | null): Record<string, PlayerStatsYear | null> | null {
   if (!stats) return null;
 
-  return stats.reduce<Record<string, EspnClient.PlayerStatsYear | null>>((result, stat) => {
+  return stats.reduce<Record<string, PlayerStatsYear | null>>((result, stat) => {
     result[stat.id] = stat;
     return result;
   }, {});

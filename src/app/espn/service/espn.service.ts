@@ -7,6 +7,7 @@ import { EspnClient, EspnFastcastClient } from '@sports-ui/ui-sdk/espn';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { FreeAgent } from '@sports-ui/ui-sdk/espn-client';
 import {
   BaseEspnEndpointBuilder,
   ESPN_PARAM_FRAGMENTS,
@@ -122,12 +123,12 @@ export class EspnService extends ApiService {
     leagueId: string,
     scoringPeriod: string,
     headers: HttpHeaders
-  ): Observable<{ players: EspnClient.FreeAgent[] }> {
+  ): Observable<{ players: FreeAgent[] }> {
     const endpoint = BaseEspnEndpointBuilder({ sport, leagueId }).fantasyLeague;
     const params = new HttpParams()
       .set(ESPN_PARAM_FRAGMENTS.ScoringPeriod, scoringPeriod.toString())
       .set(ESPN_PARAM_FRAGMENTS.View, ESPN_VIEW_PARAM_FRAGMENTS.PlayerInfo);
-    return this.get<{ players: EspnClient.FreeAgent[] }>(endpoint, { params, headers });
+    return this.get<{ players: FreeAgent[] }>(endpoint, { params, headers });
   }
 
   /**

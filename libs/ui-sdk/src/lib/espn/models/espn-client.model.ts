@@ -1,5 +1,7 @@
 import { Article } from '../../espn-client/models/article-type.model';
-import { PlayerInjuryStatus } from '../injury/injury-status.model';
+import { FreeAgent } from '../../espn-client/models/free-agent.model';
+import { IdAttributesNumber, IdAttributesString } from '../../espn-client/models/id-attributes.model';
+import { TeamRoster } from '../../espn-client/models/team-roster.model';
 import { LEAGUE_COMMUNICATION_TOPIC, SCHEDULE_WINNER, TRANSACTION } from './espn-client.const';
 
 export type LeagueCommunicationTopic = typeof LEAGUE_COMMUNICATION_TOPIC[keyof typeof LEAGUE_COMMUNICATION_TOPIC];
@@ -7,33 +9,6 @@ export type LeagueCommunicationTopic = typeof LEAGUE_COMMUNICATION_TOPIC[keyof t
 export type ScheduleWinnerType = typeof SCHEDULE_WINNER[keyof typeof SCHEDULE_WINNER];
 
 export type TransactionType = typeof TRANSACTION[keyof typeof TRANSACTION];
-
-export interface IdAttributes<T> {
-  defaultPositionId: T;
-  externalId: T;
-  fromLineupSlotId: T;
-  fromTeamId: T;
-  id: T;
-  lineupSlotId: T;
-  matchupPeriodId: T;
-  memberId: T;
-  messageTypeId: T;
-  parentId: T;
-  playerId: T;
-  proTeamId: T;
-  scoringPeriodId: T;
-  seasonId: T;
-  statSplitTypeId: T;
-  targetId: T;
-  teamId: T;
-  toLineupSlotId: T;
-  topicId: T;
-  toTeamId: T;
-  uid: T;
-}
-
-export type IdAttributesString = IdAttributes<string>;
-export type IdAttributesNumber = IdAttributes<number>;
 
 export type LineupAttributes = Pick<IdAttributesNumber, 'id' | 'parentId'> & {
   abbrev: string;
@@ -157,56 +132,6 @@ export type TeamRecordEntity = { [prop in TeamRecordEntityAttributes]: RecordEnt
 
 type RecordEntityAttributes = 'gamesBack' | 'losses' | 'percentage' | 'pointsAgainst' | 'pointsFor' | 'streakLength' | 'ties' | 'wins';
 export type RecordEntity = { [prop in RecordEntityAttributes]: number } & { streakType: string };
-
-export type TeamRoster = { entries: TeamRosterEntry[] };
-export type TeamRosterEntry = Pick<IdAttributesNumber, 'playerId' | 'lineupSlotId'> & { playerPoolEntry?: PlayerEntry };
-
-export type PlayerEntry = Pick<IdAttributesNumber, 'id'> & {
-  player: PlayerInfo;
-  ratings: PlayerRatings;
-  appliedStatTotal: number;
-};
-
-export type PlayerInfo = Pick<IdAttributesNumber, 'id' | 'proTeamId' | 'playerId' | 'defaultPositionId'> & {
-  fullName: string;
-  lastNewsDate: number;
-  injured: boolean;
-  injuryStatus: PlayerInjuryStatus;
-  ownership: PlayerOwnership;
-  outlooks?: PlayerOutlooksMap;
-  eligibleSlots: number[];
-  stats?: PlayerStatsYear[];
-  starterStatusByProGame: GameStatus;
-};
-
-export type FreeAgentEntry = PlayerEntry;
-export type FreeAgent = FreeAgentEntry;
-
-export type PlayerOutlooks = Record<string, string>;
-export type PlayerOutlooksMap = { outlooksByWeek?: PlayerOutlooks };
-
-export type GameStatus = Record<number, PlayerInjuryStatus>;
-
-type PlayerOwnershipAttributes = 'averageDraftPosition' | 'percentChange' | 'percentOwned' | 'percentStarted';
-export type PlayerOwnership = { [prop in PlayerOwnershipAttributes]: number };
-
-type PlayerRatingsAttributes = 'positionalRanking' | 'totalRanking' | 'totalRating';
-export type PlayerRatingsEntity = { [prop in PlayerRatingsAttributes]: number };
-
-export type PlayerRatings = Record<number, PlayerRatingsEntity>;
-export type FreeAgentPlayerInfo = Omit<PlayerInfo, 'playerId'>;
-
-export type PlayerStatsYear = Pick<IdAttributesString, 'id' | 'externalId'> &
-  Pick<IdAttributesNumber, 'seasonId' | 'statSplitTypeId' | 'scoringPeriodId'> & {
-    stats: PlayerStatsEntity;
-    appliedAverage: number | null;
-    appliedTotal: number | null;
-    appliedTotalCeiling: number | null;
-  };
-
-export type PlayerStatsEntity = Record<number, number>;
-export type PlayerStatsEntityMap = Record<string, PlayerStatsEntity>;
-export type PlayerStatsByYearMap = Record<string, PlayerStatsYear>;
 
 export interface PlayerNewsFeed {
   timestamp: string;

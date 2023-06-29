@@ -1,5 +1,5 @@
 import { FantasyPlayer } from '@app/espn/models/fantasy-player.model';
-import { EspnClient } from '@sports-ui/ui-sdk/espn';
+import { TeamRosterEntry } from '@sports-ui/ui-sdk/espn-client';
 
 export type FootballPlayerAttributes = {
   lineupSlot: string | null;
@@ -8,7 +8,7 @@ export type FootballPlayerAttributes = {
   eligibleLineupSlots?: string;
 };
 
-export type FootballPlayer = FantasyPlayer & FootballPlayerAttributes & Pick<EspnClient.TeamRosterEntry, 'lineupSlotId'>;
+export type FootballPlayer = FantasyPlayer & FootballPlayerAttributes & Pick<TeamRosterEntry, 'lineupSlotId'>;
 
 export type FootballPlayerFreeAgent = FootballPlayer & Omit<FootballPlayer, 'lineupSlotId'>;
 

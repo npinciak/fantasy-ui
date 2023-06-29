@@ -1,5 +1,6 @@
 import { PlayerEntity } from '@app/@shared/base-models/base-player.model';
-import { EspnClient, PlayerInjuryStatus } from '@sports-ui/ui-sdk/espn';
+import { PlayerInjuryStatus } from '@sports-ui/ui-sdk/espn';
+import { PlayerStatsYear } from '@sports-ui/ui-sdk/espn-client';
 
 export type FantasyPlayer = PlayerEntity & {
   lastNewsDate: number;
@@ -9,9 +10,11 @@ export type FantasyPlayer = PlayerEntity & {
   percentOwned: number;
   percentChange: number;
   percentStarted: number;
-  stats: { [year: string]: EspnClient.PlayerStatsYear | null } | null;
-  outlookByWeek: {
-    week: number;
-    outlook: string;
-  }[];
+  stats: { [year: string]: PlayerStatsYear | null } | null;
+  outlookByWeek: FantasyPlayerOutlookByWeek[];
+};
+
+type FantasyPlayerOutlookByWeek = {
+  week: number;
+  outlook: string;
 };

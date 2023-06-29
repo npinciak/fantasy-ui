@@ -1,7 +1,7 @@
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { FantasyPlayer } from '@app/espn/models/fantasy-player.model';
 import { EspnClient, FOOTBALL_LINEUP_MAP, NFL_POSITION_MAP, NFL_TEAM_MAP } from '@sports-ui/ui-sdk/espn';
-import { ProLeagueType, SPORT_TYPE } from '@sports-ui/ui-sdk/espn-client';
+import { FreeAgentEntry, ProLeagueType, SPORT_TYPE, TeamRosterEntry } from '@sports-ui/ui-sdk/espn-client';
 import { headshotImgBuilder, logoImgBuilder } from '../../espn.const';
 import { FantasyLeague } from '../../models/fantasy-league.model';
 import { EspnTransformers } from '../../transformers/espn-transformers.m';
@@ -22,7 +22,7 @@ export function clientLeagueToFootballLeague(res: EspnClient.FootballLeague, gen
   };
 }
 
-export function clientPlayerToFootballPlayer(player: EspnClient.TeamRosterEntry): FootballPlayer {
+export function clientPlayerToFootballPlayer(player: TeamRosterEntry): FootballPlayer {
   const { lineupSlotId, playerPoolEntry } = player;
 
   if (!exists(playerPoolEntry)) throw new Error('playerPoolEntry must be defined');
@@ -79,7 +79,7 @@ export function clientTeamListToTeamList(team: EspnClient.FootballTeam): Footbal
   };
 }
 
-export function clientFreeAgentToFootballPlayer(data: EspnClient.FreeAgentEntry[]): FootballPlayerFreeAgent[] {
+export function clientFreeAgentToFootballPlayer(data: FreeAgentEntry[]): FootballPlayerFreeAgent[] {
   return data.map(p => {
     if (!exists(p)) throw new Error('player must be defined');
 

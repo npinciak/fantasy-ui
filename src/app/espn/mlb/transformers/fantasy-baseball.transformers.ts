@@ -2,7 +2,7 @@ import { FangraphsConstants } from '@app/@shared/fangraphs/fangraphs-const.model
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { headshotImgBuilder } from '@app/espn/espn.const';
 import { BASEBALL_LINEUP_MAP, BaseballLineupSlot, BaseballStat, EspnClient, MLB_POSITION_MAP, MLB_TEAM_MAP } from '@sports-ui/ui-sdk/espn';
-import { PlayerCardEntity, ProLeagueType, SPORT_TYPE } from '@sports-ui/ui-sdk/espn-client';
+import { FreeAgent, PlayerCardEntity, ProLeagueType, SPORT_TYPE, TeamRosterEntry } from '@sports-ui/ui-sdk/espn-client';
 import { isPitcher } from '../../espn-helpers';
 import { FantasyLeague } from '../../models/fantasy-league.model';
 import { EspnTransformers } from '../../transformers/espn-transformers.m';
@@ -122,7 +122,7 @@ export function clientPlayerCardToBaseballPlayerCard(players: PlayerCardEntity[]
  * @param players
  * @returns
  */
-export function clientPlayerToBaseballPlayer(players: EspnClient.TeamRosterEntry[]): BaseballPlayer[] {
+export function clientPlayerToBaseballPlayer(players: TeamRosterEntry[]): BaseballPlayer[] {
   return players.map(player => {
     if (!exists(player.playerPoolEntry)) throw new Error('player.playerPoolEntry must be defined');
 
@@ -164,7 +164,7 @@ export function clientPlayerToBaseballPlayer(players: EspnClient.TeamRosterEntry
  * @param freeAgents
  * @returns
  */
-export function transformEspnFreeAgentToBaseballPlayer(freeAgents: EspnClient.FreeAgent[]): BaseballPlayer[] {
+export function transformEspnFreeAgentToBaseballPlayer(freeAgents: FreeAgent[]): BaseballPlayer[] {
   return freeAgents.map(freeAgent => {
     if (!exists(freeAgent.player)) throw new Error('player.player must be defined');
 

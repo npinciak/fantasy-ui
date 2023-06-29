@@ -11,6 +11,8 @@ import {
   ARTICLE_TYPE,
   EVENT_STATUS_TYPE,
   PRO_LEAGUE_ABBREV_BY_PRO_LEAGUE_TYPE,
+  PlayerInfo,
+  PlayerOutlooksMap,
   ProLeagueType,
   SportType,
 } from '@sports-ui/ui-sdk/espn-client';
@@ -28,7 +30,7 @@ import { FantasyLeague } from '../models/fantasy-league.model';
 import { FantasyPlayer } from '../models/fantasy-player.model';
 import { PlayerNews } from '../models/player-news.model';
 
-export function clientPlayerOutlook(outlooks?: EspnClient.PlayerOutlooksMap) {
+export function clientPlayerOutlook(outlooks?: PlayerOutlooksMap) {
   if (!exists(outlooks)) return [];
 
   const weeklyOutlook = outlooks.outlooksByWeek;
@@ -92,7 +94,7 @@ export function clientPlayerToFantasyPlayer({
   teamMap,
   positionMap,
 }: {
-  clientPlayer: EspnClient.PlayerInfo;
+  clientPlayer: PlayerInfo;
   sport: SportType;
   leagueId: ProLeagueType;
   teamMap: Record<string, string>;

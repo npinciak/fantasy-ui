@@ -1,12 +1,13 @@
-import { IdAttributesNumber, PlayerInfo, PlayerRatings } from '../../espn/models/espn-client.model';
+import { IdAttributesNumber } from './id-attributes.model';
+import { PlayerEntry, PlayerInfo } from './player.model';
 
-export type PlayerCardEntity = Pick<IdAttributesNumber, 'playerId'> & {
-  player: PlayerInfo & {
-    stance: PlayerStance;
-    laterality: PlayerLaterality;
+export type PlayerCardEntity = Pick<IdAttributesNumber, 'playerId'> &
+  Pick<PlayerEntry, 'ratings'> & {
+    player: PlayerInfo & {
+      stance: PlayerStance;
+      laterality: PlayerLaterality;
+    };
   };
-  ratings: PlayerRatings;
-};
 
 export type PlayerStance = typeof STANCE[keyof typeof STANCE];
 

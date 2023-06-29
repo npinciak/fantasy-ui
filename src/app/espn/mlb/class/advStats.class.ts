@@ -1,12 +1,13 @@
 import { FangraphsConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
 import { exists } from '@app/@shared/utilities/utilities.m';
-import { BaseballStat, EspnClient } from '@sports-ui/ui-sdk/espn';
+import { BaseballStat } from '@sports-ui/ui-sdk/espn';
+import { PlayerStatsEntity } from '@sports-ui/ui-sdk/espn-client';
 
 export class AdvStats {
-  private _stats: EspnClient.PlayerStatsEntity;
+  private _stats: PlayerStatsEntity;
   private _seasonConst: FangraphsConstants;
 
-  constructor({ seasonConst, statsEntity }: { seasonConst: FangraphsConstants; statsEntity: EspnClient.PlayerStatsEntity | null }) {
+  constructor({ seasonConst, statsEntity }: { seasonConst: FangraphsConstants; statsEntity: PlayerStatsEntity | null }) {
     this._stats = exists(statsEntity) ? statsEntity : [];
     this._seasonConst = seasonConst;
   }

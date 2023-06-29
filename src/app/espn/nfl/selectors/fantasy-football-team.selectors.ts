@@ -6,7 +6,8 @@ import { benchPlayersFilter, injuredPlayersFilter, startingPlayersFilter } from 
 import { FootballPlayer } from '../models/football-player.model';
 import { FootballTeam } from '../models/football-team.model';
 
-import { EspnClient, FOOTBALL_LINEUP_MAP, FootballPosition } from '@sports-ui/ui-sdk/espn';
+import { FOOTBALL_LINEUP_MAP, FootballPosition } from '@sports-ui/ui-sdk/espn';
+import { PlayerStatsYear } from '@sports-ui/ui-sdk/espn-client';
 import { FantasyFootballTeamState } from '../state/fantasy-football-team.state';
 
 export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootballTeamState) {
@@ -121,7 +122,7 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
 
 function statsValidator(
   stats: {
-    [year: string]: EspnClient.PlayerStatsYear | null;
+    [year: string]: PlayerStatsYear | null;
   } | null,
   statPeriod: string | null
 ) {
