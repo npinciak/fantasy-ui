@@ -1,13 +1,15 @@
 import { RouterSelector } from '@app/@core/store/router/router.selectors';
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { exists } from '@app/@shared/utilities/utilities.m';
+import { exists, existsFilter } from '@app/@shared/utilities/utilities.m';
 import { startingPlayersFilter } from '@app/espn/espn-helpers';
 import { Selector } from '@ngxs/store';
 import { BASEBALL_LINEUP_MAP, BaseballStat } from '@sports-ui/ui-sdk/espn';
+import { FantasyBaseballScoringPeriod } from '../fantasy-baseball-scoring-period';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
 import { FantasyBaseballTeamsLiveState } from '../state/fantasy-baseball-team-live.state';
+import { FantasyBaseballTransformers } from '../transformers/fantasy-baseball.transformers.m';
 import { FantasyBaseballEventSelector } from './fantasy-baseball-event.selector';
 import { FantasyBaseballTeamSelector } from './fantasy-baseball-team.selector';
 
@@ -57,42 +59,56 @@ export class FantasyBaseballTeamLiveSelector extends GenericSelector(FantasyBase
   }
 
   @Selector([RouterSelector.getTeamId, FantasyBaseballTeamLiveSelector.getById])
-  static getLiveTeamBatters(teamId: string | null | null, getLiveTeamById: (id: string) => BaseballTeamLive): BaseballPlayer[] {
+  static getLiveTeamBatters(teamId: string | null, getLiveTeamById: (id: string) => BaseballTeamLive): BaseballPlayer[] {
     return teamId ? getLiveTeamById(teamId).roster.filter(p => !p.isPitcher) : [];
   }
 
-  @Selector([FantasyBaseballTeamLiveSelector.getLiveTeamBatters, FantasyBaseballEventSelector.getById])
+  @Selector([RouterSelector.getTeamId, FantasyBaseballTeamLiveSelector.getLiveTeamBatters, FantasyBaseballEventSelector.getById])
   static getLiveTeamBatterStats(
-    getLiveTeamBatters: (id: string) => BaseballPlayer[],
+    teamId: string | null,
+    liveTeamBatters: BaseballPlayer[],
     getLiveBaseballEventById: (id: string | null) => BaseballEvent | null
   ) {
-    return (id: string) => {
-      const batters = startingPlayersFilter(getLiveTeamBatters(id), BASEBALL_LINEUP_MAP);
-      return batters.map(p => {
-        const games = Object.keys(p.starterStatusByProGame);
+    if (!teamId) throw new Error('teamId cannot be null');
 
-        const gameList = games.map(g => getLiveBaseballEventById(g));
+    const batters = startingPlayersFilter(liveTeamBatters, BASEBALL_LINEUP_MAP);
+    return batters.map(p => {
+      const games = exists(p.stats) ? Object.keys(p.stats) : [];
 
-        const eventUid = true; //getLiveBaseballEventById()
-
-        const stats = {};
-        if (eventUid) {
-          // const event = YearToStatTypePeriod(StatTypePeriodId.Live `${eventUid.split('~')[3].replace('c:', '')}`);
-          // stats = exists(p.stats) ? p.stats[event] : {};
-        }
-
-        const { name, img, team, position, percentChange, percentOwned } = p;
-
-        return {
-          name,
-          img,
-          team,
-          position,
-          percentChange,
-          percentOwned,
-          stats,
-        };
+      const gameList = games.map(g => {
+        const eventId = g.split('05')[1];
+        const event = getLiveBaseballEventById(eventId);
+        return event ? FantasyBaseballScoringPeriod.liveScoring(event.id) : null;
       });
-    };
+
+      const eventUid = gameList[0] != null ? gameList[0] : null;
+
+      let stats = {} as any;
+      if (exists(eventUid)) {
+        stats = exists(p.stats) ? p.stats[eventUid]?.stats : {};
+      }
+
+      const { id, name, img, team, position, injured, injuryStatus, lineupSlotId, percentChange, percentOwned, eligibleLineupSlots } = p;
+
+      return {
+        id,
+        name,
+        img,
+        team,
+        position,
+        injured,
+        injuryStatus,
+        lineupSlotId,
+        eligibleLineupSlots,
+        percentChange,
+        percentOwned,
+        stats,
+      };
+    });
+  }
+
+  @Selector([FantasyBaseballTeamLiveSelector.getLiveTeamBatterStats])
+  static getLiveTeamBatterStatsTableRows(liveTeamBatters: BaseballPlayer[]) {
+    return existsFilter(liveTeamBatters.map(player => FantasyBaseballTransformers.transformToLiveBaseballPlayerBatterStatsRow(player)));
   }
 }

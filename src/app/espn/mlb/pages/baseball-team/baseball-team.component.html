@@ -38,6 +38,7 @@
 
     <div class="mt-4 flex flex-wrap">
       <div class="w-full px-4 xl:w-3/12">
+        <app-toggle title="Live Stats" (selectChange)="onLiveScoringSelectChange($event)"></app-toggle>
         <app-baseball-lineup-card
           title="Starting Lineup"
           [isLoading]="isLoading$ | async"

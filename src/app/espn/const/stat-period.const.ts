@@ -26,6 +26,10 @@ export function BaseScoringPeriod() {
       return BaseScoringPeriodClass.seasonToScoringPeriodId(StatTypePeriodId.Season, previousSeason.toString());
     }
 
+    static liveScoring(eventId: string | null) {
+      return BaseScoringPeriodClass.seasonToScoringPeriodId(StatTypePeriodId.Live, eventId);
+    }
+
     static filterOptionList(year: string | null) {
       return [
         {

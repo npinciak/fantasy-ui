@@ -286,3 +286,8 @@ export function transformToBaseballPlayerBatterStatsRow(
     stats,
   };
 }
+
+export function transformToLiveBaseballPlayerBatterStatsRow(player: BaseballPlayer) {
+  const { id, name, injured, injuryStatus, img, team, position, lineupSlotId, eligibleLineupSlots, stats } = player;
+  return { id, name, injured, injuryStatus, img, team, position, lineupSlotId, eligibleLineupSlots, stats };
+}

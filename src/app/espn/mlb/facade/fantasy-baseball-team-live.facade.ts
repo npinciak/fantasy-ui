@@ -13,4 +13,7 @@ export class FantasyBaseballTeamLiveFacade extends GenericFacade({
 }) {
   standings$ = select(FantasyBaseballTeamLiveSelector.standings);
   liveBattingStats$ = select(FantasyBaseballTeamLiveSelector.getLiveTeamBatterStats);
+  liveTeamBatterStatsTableRows$ = select(FantasyBaseballTeamLiveSelector.getLiveTeamBatterStatsTableRows);
+  statsStandingsLineChartData$ = select(FantasyBaseballTeamLiveSelector.getStatsStandingsLineChartData);
+  rotoStandingsLineChartData$ = select(FantasyBaseballTeamLiveSelector.getRotoStatsStandingsLineChartData);
 }

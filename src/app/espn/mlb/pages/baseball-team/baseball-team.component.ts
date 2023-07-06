@@ -83,16 +83,18 @@ export class BaseballTeamComponent {
     map(([chartData, statPeriod, xAxis]) => chartData(statPeriod, xAxis))
   );
 
-  liveBattingStats$ = combineLatest([this.fantasyBaseballTeamLiveFacade.liveBattingStats$, this.teamId$]).pipe(
-    map(([liveStats, teamId]) => (teamId ? liveStats(teamId) : []))
-  );
   battingStats$ = of([]);
 
   pitcherStatsScatterChartData$ = of([]);
   pitcherStatsChartData$ = of([]);
 
-  tableDataBatters$ = combineLatest([this.fantasyBaseballTeamFacade.battingStats$, this.statPeriod$]).pipe(
-    map(([batterStats, statPeriod]) => batterStats(statPeriod))
+  tableDataBatters$ = combineLatest([
+    this.fantasyBaseballTeamFacade.battingStats$,
+    this.statPeriod$,
+    this.isLiveScore$,
+    this.fantasyBaseballTeamLiveFacade.liveTeamBatterStatsTableRows$,
+  ]).pipe(
+    map(([batterStats, statPeriod, isLiveScore, liveTeamBatterStats]) => (isLiveScore ? liveTeamBatterStats : batterStats(statPeriod)))
   );
 
   tableDataPitchers$ = combineLatest([this.fantasyBaseballTeamFacade.pitcherStats$, this.statPeriod$]).pipe(
@@ -104,19 +106,26 @@ export class BaseballTeamComponent {
     headers: PITCHER_STATS_HEADERS,
   });
 
-  tableConfig$ = of({
+  defaultTableConfig$ = of({
     rows: BATTER_STATS_ROWS,
     headers: BATTER_STATS_HEADERS,
   });
 
+  liveTableConfig$ = of({
+    rows: BATTER_STATS_LIVE_ROWS,
+    headers: BATTER_STATS_LIVE_HEADERS,
+  });
+
+  tableConfig$ = combineLatest([this.defaultTableConfig$, this.liveTableConfig$, this.isLiveScore$]).pipe(
+    map(([defaultTableConfig, liveTableConfig, isLive]) => (isLive ? liveTableConfig : defaultTableConfig))
+  );
+
   constructor(
-    private store: Store,
     readonly routerFacade: RouterFacade,
     readonly fantasyBaseballTeamFacade: FantasyBaseballTeamFacade,
     readonly fantasyBaseballTeamLiveFacade: FantasyBaseballTeamLiveFacade,
     readonly fantasyBaseballLeagueFacade: FantasyBaseballLeagueFacade,
-    readonly fantasyBaseballPlayerNewsFacade: FantasyBaseballPlayerNewsFacade,
-    private dialog: MatDialog
+    readonly fantasyBaseballPlayerNewsFacade: FantasyBaseballPlayerNewsFacade
   ) {}
 
   async onRefreshClick(): Promise<void> {
