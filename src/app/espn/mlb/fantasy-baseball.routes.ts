@@ -1,10 +1,12 @@
 import { UrlPathFragments, UrlPathParams } from '@app/@core/store/router/url-builder';
+import { BaseballBattersComponent } from './pages/baseball-batters/baseball-batters.component';
 import { BaseballFreeAgentsComponent } from './pages/baseball-free-agents/baseball-free-agents.component';
 import { BaseballHomeComponent } from './pages/baseball-home/baseball-home.component';
 import { BaseballPlayerComponent } from './pages/baseball-player/baseball-player.component';
 import { BaseballTeamComponent } from './pages/baseball-team/baseball-team.component';
 import { FantasyBaseballFreeAgentsResolver } from './resolvers/fantasy-baseball-free-agents.resolver';
 import { FantasyBaseballLeagueResolver } from './resolvers/fantasy-baseball-league.resolver';
+import { FantasyBaseballPlayerNewsResolver } from './resolvers/fantasy-baseball-player-news.resolver';
 
 export const FantasyBaseballRoutes = {
   path: UrlPathFragments.MLB,
@@ -42,7 +44,7 @@ export const FantasyBaseballRoutes = {
                           children: [
                             {
                               path: UrlPathFragments.Empty,
-                              component: BaseballTeamComponent,
+                              component: BaseballBattersComponent,
                               data: { position: UrlPathFragments.Batters },
                             },
                           ],
@@ -77,6 +79,7 @@ export const FantasyBaseballRoutes = {
                     {
                       // player
                       path: UrlPathParams.PlayerId,
+                      resolve: [FantasyBaseballPlayerNewsResolver],
                       children: [
                         {
                           path: UrlPathFragments.Empty,

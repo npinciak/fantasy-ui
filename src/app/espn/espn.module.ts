@@ -18,6 +18,7 @@ import { BaseballLineupCardComponent } from './mlb/components/baseball-lineup-ca
 import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
 import { FantasyBaseballLeagueActionHandler } from './mlb/handlers/fantasy-baseball-league.handler';
 import { FantasyBaseballPlayerCardActionHandler } from './mlb/handlers/fantasy-baseball-player-card.handler';
+import { BaseballBattersComponent } from './mlb/pages/baseball-batters/baseball-batters.component';
 import { BaseballFreeAgentsComponent } from './mlb/pages/baseball-free-agents/baseball-free-agents.component';
 import { BaseballHomeComponent } from './mlb/pages/baseball-home/baseball-home.component';
 import { BaseballPlayerComponent } from './mlb/pages/baseball-player/baseball-player.component';
@@ -69,6 +70,7 @@ import { FreeAgentsAvailabilitySelectedState } from './state/free-agent-availabi
     FantasyTeamHeaderComponent,
     EspnFreeAgentFilterComponentComponent,
     BaseballPlayerComponent,
+    BaseballBattersComponent,
   ],
   imports: [
     EspnRoutingModule,
