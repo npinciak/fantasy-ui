@@ -9,7 +9,7 @@ import { EVENT_STATUS, SEASON_TYPE } from '@sports-ui/ui-sdk/espn-client';
   selector: 'app-espn-scoreboard-card',
   templateUrl: './espn-scoreboard-card.component.html',
 })
-export class EspnScoreboardCardComponent implements OnChanges {
+export class EspnScoreboardCardComponent  {
   @Input() event: FastcastEvent;
   @Input() isTournament: boolean;
   @Input() isEventToggled: boolean;
@@ -24,9 +24,7 @@ export class EspnScoreboardCardComponent implements OnChanges {
 
   constructor() {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.isEventToggled = changes.isEventToggled.currentValue;
-  }
+
 
   toggleExpansionPanel(eventId: string): void {
     this.toggleExpandedEvent.emit(eventId);
