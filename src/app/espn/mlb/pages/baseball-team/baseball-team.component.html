@@ -79,24 +79,6 @@
         >
         </app-espn-stats-table>
       </div>
-      <div class="w-full px-4 xl:w-3/12">
-        <app-baseball-lineup-card
-          title="Starting Pitchers"
-          [isLoading]="isLoading$ | async"
-          [lineup]="startingPitchers$ | async"
-          (playerClicked)="onPlayerClick($event)"
-          (refreshClicked)="onRefreshClick()"
-        ></app-baseball-lineup-card>
-        <div class="my-3"></div>
-        <app-baseball-lineup-card
-          *ngIf="(benchPitchers$ | async).length > 0"
-          title="Bench"
-          [isLoading]="isLoading$ | async"
-          [lineup]="benchPitchers$ | async"
-          (playerClicked)="onPlayerClick($event)"
-          (refreshClicked)="onRefreshClick()"
-        ></app-baseball-lineup-card>
-      </div>
     </div>
   </div>
 </app-page-layout>

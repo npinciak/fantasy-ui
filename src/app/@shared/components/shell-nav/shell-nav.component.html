@@ -1,16 +1,5 @@
 <nav
-  class="
-    relative
-    z-10
-    flex flex-wrap
-    items-center
-    justify-between
-    bg-white
-    py-4
-    px-6
-    shadow-xl
-    md:fixed md:left-0 md:top-0 md:bottom-0 md:block md:w-64 md:flex-row md:flex-nowrap md:overflow-hidden md:overflow-y-auto
-  "
+  class="relative z-10 flex flex-wrap items-center justify-between bg-white py-4 px-6 shadow-xl md:fixed md:left-0 md:top-0 md:bottom-0 md:block md:w-64 md:flex-row md:flex-nowrap md:overflow-hidden md:overflow-y-auto"
 >
   <div class="mx-auto flex w-full flex-wrap items-center justify-between px-0 md:min-h-full md:flex-col md:flex-nowrap md:items-stretch">
     <button
@@ -29,20 +18,7 @@
       <li class="relative inline-block"></li>
     </ul>
     <div
-      class="
-        absolute
-        top-0
-        left-0
-        right-0
-        z-40
-        h-auto
-        flex-1
-        items-center
-        overflow-y-auto overflow-x-hidden
-        rounded
-        shadow
-        md:relative md:mt-4 md:flex md:flex-col md:items-stretch md:opacity-100 md:shadow-none
-      "
+      class="absolute top-0 left-0 right-0 z-40 h-auto flex-1 items-center overflow-y-auto overflow-x-hidden rounded shadow md:relative md:mt-4 md:flex md:flex-col md:items-stretch md:opacity-100 md:shadow-none"
       [ngClass]="collapseShow"
     >
       <div class="mb-4 block border-b border-solid border-sky-800 pb-4 sm:hidden md:min-w-full">
@@ -71,7 +47,7 @@
 
       <hr class="my-4 md:min-w-full" />
       <h6 class="block pt-1 pb-4 text-xs font-bold uppercase text-sky-800 no-underline md:min-w-full">Daily Fantasy</h6>
-      <ul class="flex list-none flex-col md:min-w-full md:flex-col">
+      <ul class="m-0 flex list-none flex-col p-0 md:mb-4 md:min-w-full md:flex-col">
         <li class="items-center" *ngFor="let menuItem of routerFacade.dailyFantasyMenu$ | async">
           <a [routerLink]="menuItem.routerLink" [queryParams]="menuItem.queryParams" class="block py-3 text-xs font-bold uppercase">
             {{ menuItem.label }}
@@ -81,7 +57,7 @@
 
       <hr class="my-4 md:min-w-full" />
       <h6 class="block pt-1 pb-4 text-xs font-bold uppercase text-sky-800 no-underline md:min-w-full">Espn</h6>
-      <ul class="flex list-none flex-col md:mb-4 md:min-w-full md:flex-col">
+      <ul class="m-0 flex list-none flex-col p-0 md:mb-4 md:min-w-full md:flex-col">
         <li class="items-center" *ngFor="let menuItem of routerFacade.espnFantasyMenu$ | async">
           <a [routerLink]="menuItem.routerLink" [queryParams]="menuItem.queryParams" class="block py-3 text-xs font-bold uppercase">
             {{ menuItem.label }}

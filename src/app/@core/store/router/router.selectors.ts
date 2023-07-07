@@ -128,12 +128,13 @@ export class RouterSelector {
     ];
   }
 
-  @Selector([RouterSelector.getSport, RouterSelector.getSeason, RouterSelector.getLeagueId])
-  static espnFantasyMenu(sport: UrlPathFragments, season: string | null, leagueId: string | null) {
+  @Selector([RouterSelector.getSport, RouterSelector.getSeason, RouterSelector.getLeagueId, RouterSelector.getTeamId])
+  static espnFantasyMenu(sport: UrlPathFragments, season: string | null, leagueId: string | null, teamId: string | null) {
     return [
       { id: '1', routerLink: ['/espn'], label: 'Home' },
       { id: '2', routerLink: EspnRouteBuilder.leaguePathFragments(sport, season, leagueId), label: 'League Home' },
       { id: '3', routerLink: EspnRouteBuilder.freeAgentsPathFragments(sport, season, leagueId), label: 'Free Agents' },
-    ].filter(m => (!sport ? m.id === '1' : m));
+      { id: '4', routerLink: EspnRouteBuilder.teamPitchersPathFragments(sport, season, leagueId, teamId), label: 'Pitchers' },
+    ].filter(menuItem => (!sport ? menuItem.id === '1' : menuItem));
   }
 }
