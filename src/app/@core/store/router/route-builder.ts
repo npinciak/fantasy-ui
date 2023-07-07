@@ -90,6 +90,22 @@ export function RouteBuilder({ basePath }: { basePath: UrlPathFragments }) {
     }
 
     /**
+     * Creates team batter's route for a fantasy team
+     *
+     * @param sport
+     * @param season
+     * @param leagueId
+     * @param teamId
+     * @returns string[]
+     *
+     * @example RouteBuilderClass.teamBattersPathFragments('mlb','2022','1234','1') // returns ['espn','mlb','2022','league','1234','team','1','batters']
+     *
+     */
+    static teamBattersPathFragments(sport: string | null, season: string | null, leagueId: string | null, teamId: string | null): string[] {
+      return [...RouteBuilderClass.teamPathFragments(sport, season, leagueId, teamId), UrlPathFragments.Batters];
+    }
+
+    /**
      * Creates player route for a fantasy player
      *
      * @param sport

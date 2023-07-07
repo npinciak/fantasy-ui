@@ -5,7 +5,7 @@ import { BaseChartComponent, StatsChart } from '../base-chart/base-chart.compone
 @Component({
   selector: `app-chart-bar`,
   template: `
-    <app-base-card [title]="title" [subtitle]="subtitle" [height]="height">
+    <div [ngStyle]="{ height: height }">
       <canvas
         baseChart
         [attr.aria-label]="ariaLabel"
@@ -16,7 +16,7 @@ import { BaseChartComponent, StatsChart } from '../base-chart/base-chart.compone
       >
         <p>Your browser does not support the canvas element.</p>
       </canvas>
-    </app-base-card>
+    </div>
   `,
 })
 export class ChartBarComponent extends BaseChartComponent implements OnChanges {

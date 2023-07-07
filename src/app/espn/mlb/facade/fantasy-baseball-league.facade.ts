@@ -17,6 +17,10 @@ export class FantasyBaseballLeagueFacade {
 
   constructor(private store: Store) {}
 
+  get scoringPeriod() {
+    return this.store.selectSnapshot(FantasyBaseballLeagueSelector.slices.scoringPeriodId);
+  }
+
   get seasonId() {
     return this.store.selectSnapshot(FantasyBaseballLeagueSelector.slices.seasonId);
   }

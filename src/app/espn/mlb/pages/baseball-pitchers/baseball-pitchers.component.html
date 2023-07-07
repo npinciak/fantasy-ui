@@ -4,16 +4,6 @@
   </div>
   <div main>
     <div class="mt-4 flex flex-wrap">
-      <div class="mb-12 w-full px-4 xl:mb-0 xl:w-9/12">
-        <app-espn-stats-table
-          [hidePaginator]="true"
-          [data]="tableDataPitchers$ | async"
-          [dataColumns]="(pitcherTableConfig$ | async).rows"
-          [headers]="(pitcherTableConfig$ | async).headers"
-          [statsMap]="MLB_STAT_MAP"
-        >
-        </app-espn-stats-table>
-      </div>
       <div class="w-full px-4 xl:w-3/12">
         <app-baseball-lineup-card
           title="Starting Pitchers"
@@ -31,6 +21,18 @@
           (playerClicked)="onPlayerClick($event)"
           (refreshClicked)="onRefreshClick()"
         ></app-baseball-lineup-card>
+      </div>
+      <div class="mb-12 w-full px-4 xl:mb-0 xl:w-9/12">
+        <app-base-card>
+          <app-espn-stats-table
+            [hidePaginator]="true"
+            [data]="tableDataPitchers$ | async"
+            [dataColumns]="(pitcherTableConfig$ | async).rows"
+            [headers]="(pitcherTableConfig$ | async).headers"
+            [statsMap]="MLB_STAT_MAP"
+          >
+          </app-espn-stats-table>
+        </app-base-card>
       </div>
     </div></div
 ></app-page-layout>

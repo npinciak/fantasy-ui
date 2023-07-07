@@ -1,1 +1,51 @@
-<p>baseball-batters works!</p>
+<app-page-layout>
+  <div statsHeader>
+    <app-fantasy-team-header [team]="fantasyBaseballTeamFacade.teamInfo$ | async"></app-fantasy-team-header>
+  </div>
+  <div main>
+    <div class="mt-4 flex flex-wrap">
+      <div class="w-full px-4 xl:w-3/12">
+        <app-baseball-lineup-card
+          title="Starting Lineup"
+          [isLoading]="isLoading$ | async"
+          [lineup]="startingBatters$ | async"
+          (playerClicked)="onPlayerClick($event)"
+          (refreshClicked)="onRefreshClick()"
+        ></app-baseball-lineup-card>
+        <div class="my-3"></div>
+        <app-baseball-lineup-card
+          *ngIf="(benchBatters$ | async).length > 0"
+          title="Bench"
+          [isLoading]="isLoading$ | async"
+          [lineup]="benchBatters$ | async"
+          (playerClicked)="onPlayerClick($event)"
+          (refreshClicked)="onRefreshClick()"
+        ></app-baseball-lineup-card>
+      </div>
+      <div class="mb-12 w-full px-4 xl:mb-0 xl:w-9/12">
+        <app-base-card>
+          <app-toggle title="Live Stats" (selectChange)="onLiveScoringSelectChange($event)"></app-toggle>
+
+          <app-espn-stats-table
+            [hidePaginator]="true"
+            [data]="tableDataBatters$ | async"
+            [dataColumns]="(tableConfig$ | async).rows"
+            [headers]="(tableConfig$ | async).headers"
+            [statsMap]="MLB_STAT_MAP"
+          >
+          </app-espn-stats-table>
+        </app-base-card>
+        <app-base-card *ngIf="isLiveScore$ | async">
+          <app-espn-stats-table
+            [hidePaginator]="true"
+            [data]="tableDataLiveBenchBatters$ | async"
+            [dataColumns]="(tableConfig$ | async).rows"
+            [headers]="(tableConfig$ | async).headers"
+            [statsMap]="MLB_STAT_MAP"
+          >
+          </app-espn-stats-table>
+        </app-base-card>
+      </div>
+    </div>
+  </div>
+</app-page-layout>

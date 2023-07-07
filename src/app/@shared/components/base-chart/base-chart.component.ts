@@ -13,8 +13,6 @@ Chart.register(...registerables);
   template: ``,
 })
 export class BaseChartComponent {
-  @Input() title = null;
-  @Input() subtitle = null;
   @Input() ariaLabel = null;
   @Input() statsMap = {};
   @Input() chartData: StatsChart;

@@ -135,6 +135,7 @@ export class RouterSelector {
       { id: '2', routerLink: EspnRouteBuilder.leaguePathFragments(sport, season, leagueId), label: 'League Home' },
       { id: '3', routerLink: EspnRouteBuilder.freeAgentsPathFragments(sport, season, leagueId), label: 'Free Agents' },
       { id: '4', routerLink: EspnRouteBuilder.teamPitchersPathFragments(sport, season, leagueId, teamId), label: 'Pitchers' },
+      { id: '5', routerLink: EspnRouteBuilder.teamBattersPathFragments(sport, season, leagueId, teamId), label: 'Batters' },
     ].filter(menuItem => (!sport ? menuItem.id === '1' : menuItem));
   }
 }

@@ -1,24 +1,14 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
-import { Store } from '@ngxs/store';
-import { BATTER_STATS_LIST, BaseballStat, MLB_STATS_MAP, PITCHER_STATS_LIST } from '@sports-ui/ui-sdk/espn';
+import { BATTER_STATS_LIST, BaseballStat, MLB_STATS_MAP } from '@sports-ui/ui-sdk/espn';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {
-  BATTER_STATS_HEADERS,
-  BATTER_STATS_LIVE_HEADERS,
-  BATTER_STATS_LIVE_ROWS,
-  BATTER_STATS_ROWS,
-  PITCHER_STATS_HEADERS,
-  PITCHER_STATS_ROWS,
-} from '../../consts/tables.const';
+import { BATTER_STATS_HEADERS, BATTER_STATS_LIVE_HEADERS, BATTER_STATS_LIVE_ROWS, BATTER_STATS_ROWS } from '../../consts/tables.const';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
 import { FantasyBaseballPlayerNewsFacade } from '../../facade/fantasy-baseball-player-news.facade';
 import { FantasyBaseballTeamLiveFacade } from '../../facade/fantasy-baseball-team-live.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
 import { FantasyBaseballScoringPeriod } from '../../fantasy-baseball-scoring-period';
-import { BaseballPlayer } from '../../models/baseball-player.model';
 
 @Component({
   selector: 'app-baseball-team',
@@ -32,15 +22,11 @@ export class BaseballTeamComponent {
 
   readonly MLB_STAT_MAP = MLB_STATS_MAP;
 
-  readonly BATTER_STATS_ROWS = BATTER_STATS_ROWS;
-  readonly BATTER_STATS_HEADERS = BATTER_STATS_HEADERS;
-
-  readonly BATTER_STATS_LIVE_ROWS = BATTER_STATS_LIVE_ROWS;
-  readonly BATTER_STATS_LIVE_HEADERS = BATTER_STATS_LIVE_HEADERS;
-
   statPeriod$ = new BehaviorSubject<string>(FantasyBaseballScoringPeriod.season('2023'));
   selectedBatterStatXAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.wRAA);
+  selectedBatterStatXAxisLabel$ = new BehaviorSubject<BaseballStat | null>(null);
   selectedBatterStatYAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.AB);
+  selectedBatterStatYAxisLabel$ = new BehaviorSubject<BaseballStat | null>(null);
 
   isLiveScore$ = new BehaviorSubject<boolean>(false);
   isLoading$ = new BehaviorSubject<boolean>(false);
@@ -65,18 +51,6 @@ export class BaseballTeamComponent {
   batterBarData$ = combineLatest([this.fantasyBaseballTeamFacade.batterChartData$, this.statPeriod$, this.selectedBatterStatXAxis$]).pipe(
     map(([chartData, statPeriod, xAxis]) => chartData(statPeriod, xAxis))
   );
-
-  battingStats$ = of([]);
-
-  tableDataBatters$ = combineLatest([
-    this.fantasyBaseballTeamFacade.battingStats$,
-    this.statPeriod$,
-    this.isLiveScore$,
-    this.fantasyBaseballTeamLiveFacade.liveTeamBatterStatsTableRows$,
-  ]).pipe(
-    map(([batterStats, statPeriod, isLiveScore, liveTeamBatterStats]) => (isLiveScore ? liveTeamBatterStats : batterStats(statPeriod)))
-  );
-
 
   defaultTableConfig$ = of({
     rows: BATTER_STATS_ROWS,
@@ -113,23 +87,17 @@ export class BaseballTeamComponent {
     }
   }
 
-  onLiveScoringSelectChange(isChecked: boolean): void {
-    this.isLiveScore$.next(isChecked);
-  }
-
   onScoringPeriodIdChange(val: string): void {
     this.statPeriod$.next(val);
   }
 
   onBatterStatXAxisChange(val: any): void {
     this.selectedBatterStatXAxis$.next(val);
+    this.selectedBatterStatXAxisLabel$.next(MLB_STATS_MAP[val].description);
   }
 
   onBatterStatYAxisChange(val: any): void {
     this.selectedBatterStatYAxis$.next(val);
-  }
-
-  onPlayerClick(player: BaseballPlayer) {
-    this.routerFacade.navigateToFantasyPlayer(player.id);
+    this.selectedBatterStatYAxisLabel$.next(MLB_STATS_MAP[val].description);
   }
 }

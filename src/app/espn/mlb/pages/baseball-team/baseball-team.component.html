@@ -28,56 +28,33 @@
               ></app-dropdown-filter>
             </app-base-card>
           </div>
+          <div class="basis-1/3">
+            <app-base-card>
+              <app-dropdown-filter
+                ariaLabel="batter stats options"
+                [selectedOption]="selectedBatterStatYAxis$ | async"
+                title="batter stats y"
+                [filterItems]="BATTER_STATS_LIST"
+                (filterUpdate)="onBatterStatYAxisChange($event)"
+              ></app-dropdown-filter>
+            </app-base-card>
+          </div>
         </div>
-        <app-chart-line height="350px" [chartData]="batterBarData$ | async"></app-chart-line>
+        <app-base-card>
+          <app-chart-line height="350px" ariaLabel="batter stats line chart" [chartData]="batterBarData$ | async"></app-chart-line>
+        </app-base-card>
       </div>
       <div class="w-full px-4 xl:w-4/12">
-        <app-chart-bar height="350px" [chartData]="batterBarData$ | async"></app-chart-bar>
-      </div>
-    </div>
-
-    <div class="mt-4 flex flex-wrap">
-      <div class="w-full px-4 xl:w-3/12">
-        <app-toggle title="Live Stats" (selectChange)="onLiveScoringSelectChange($event)"></app-toggle>
-        <app-baseball-lineup-card
-          title="Starting Lineup"
-          [isLoading]="isLoading$ | async"
-          [lineup]="startingBatters$ | async"
-          (playerClicked)="onPlayerClick($event)"
-          (refreshClicked)="onRefreshClick()"
-        ></app-baseball-lineup-card>
-        <div class="my-3"></div>
-        <app-baseball-lineup-card
-          *ngIf="(benchBatters$ | async).length > 0"
-          title="Bench"
-          [isLoading]="isLoading$ | async"
-          [lineup]="benchBatters$ | async"
-          (playerClicked)="onPlayerClick($event)"
-          (refreshClicked)="onRefreshClick()"
-        ></app-baseball-lineup-card>
-      </div>
-      <div class="mb-12 w-full px-4 xl:mb-0 xl:w-9/12">
-        <app-espn-stats-table
-          [hidePaginator]="true"
-          [data]="tableDataBatters$ | async"
-          [dataColumns]="(tableConfig$ | async).rows"
-          [headers]="(tableConfig$ | async).headers"
-          [statsMap]="MLB_STAT_MAP"
-        >
-        </app-espn-stats-table>
-      </div>
-    </div>
-
-    <div class="mt-4 flex flex-wrap">
-      <div class="mb-12 w-full px-4 xl:mb-0 xl:w-9/12">
-        <app-espn-stats-table
-          [hidePaginator]="true"
-          [data]="tableDataPitchers$ | async"
-          [dataColumns]="(pitcherTableConfig$ | async).rows"
-          [headers]="(pitcherTableConfig$ | async).headers"
-          [statsMap]="MLB_STAT_MAP"
-        >
-        </app-espn-stats-table>
+        <app-base-card>
+          <app-chart-scatter
+            height="350px"
+            [xAxisLabel]="selectedBatterStatXAxisLabel$ | async"
+            [yAxisLabel]="selectedBatterStatYAxisLabel$ | async"
+            ariaLabel="batter stats scatter chart"
+            [chartData]="batterScatterData$ | async"
+          ></app-chart-scatter>
+        </app-base-card>
+        <!-- <app-chart-bar height="350px" ariaLabel="" [chartData]="batterBarData$ | async"></app-chart-bar> -->
       </div>
     </div>
   </div>

@@ -6,7 +6,7 @@ Chart.register(...registerables);
 @Component({
   selector: `app-chart-line`,
   template: `
-    <app-base-card [title]="title" [subtitle]="subtitle" [height]="height">
+    <div [ngStyle]="{ height: height }">
       <canvas
         baseChart
         [attr.aria-label]="ariaLabel"
@@ -17,7 +17,7 @@ Chart.register(...registerables);
       >
         <p>Your browser does not support the canvas element.</p>
       </canvas>
-    </app-base-card>
+    </div>
   `,
 })
 export class ChartLineComponent extends BaseChartComponent implements OnChanges {

@@ -56,12 +56,12 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
   }
 
   @Selector([RouterSelector.getTeamId, FantasyBaseballTeamSelector.getRosterByTeamId])
-  static getCurrentRosterByTeamId(teamId: string | null | null, selectRosterByTeamId: (id: string) => BaseballPlayer[]): BaseballPlayer[] {
+  static getCurrentRosterByTeamId(teamId: string | null, selectRosterByTeamId: (id: string) => BaseballPlayer[]): BaseballPlayer[] {
     return teamId ? selectRosterByTeamId(teamId).filter(p => !p.isPitcher) : [];
   }
 
   @Selector([RouterSelector.getTeamId, FantasyBaseballTeamSelector.getRosterByTeamId])
-  static getTeamBatters(teamId: string | null | null, selectRosterByTeamId: (id: string) => BaseballPlayer[]): BaseballPlayer[] {
+  static getTeamBatters(teamId: string | null, selectRosterByTeamId: (id: string) => BaseballPlayer[]): BaseballPlayer[] {
     return teamId ? selectRosterByTeamId(teamId).filter(p => !p.isPitcher) : [];
   }
 
@@ -76,7 +76,7 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
   }
 
   @Selector([RouterSelector.getTeamId, FantasyBaseballTeamSelector.getRosterByTeamId])
-  static getTeamPitchers(teamId: string | null | null, selectRosterByTeamId: (id: string) => BaseballPlayer[]): BaseballPlayer[] {
+  static getTeamPitchers(teamId: string | null, selectRosterByTeamId: (id: string) => BaseballPlayer[]): BaseballPlayer[] {
     return teamId ? selectRosterByTeamId(teamId).filter(p => p.isPitcher) : [];
   }
 
@@ -157,23 +157,15 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
   }
 
   @Selector([FantasyBaseballTeamSelector.getTeamBatterStats, FantasyBaseballLeagueSelector.slices.seasonId])
-  static getBatterStatsScatterChartData(
-    players: (statPeriod: string) => BaseballPlayerStatsRow[]
-  ): (statPeriod: string, xAxisFilter: BaseballStat, yAxisFilter: BaseballStat) => ScatterChartDataset[] {
+  static getBatterStatsScatterChartData(players: (statPeriod: string) => BaseballPlayerStatsRow[]) {
     return (statPeriod: string, xAxisFilter: BaseballStat, yAxisFilter: BaseballStat) => {
-      const xAxisData = players(statPeriod).map(p => p?.stats[xAxisFilter] ?? 0);
-      const yAxisData = players(statPeriod).map(p => p?.stats[yAxisFilter] ?? 0);
-
-      const graph = transformDataToScatterGraph({
-        data: players(statPeriod),
-        xAxisData,
-        yAxisData,
-        xAxisLabel: MLB_STATS_MAP[xAxisFilter].abbrev,
-        yAxisLabel: MLB_STATS_MAP[xAxisFilter].abbrev,
-        dataLabels: 'name',
-      });
-
-      return graph;
+      return {
+        data: players(statPeriod).map(p => ({
+          x: p.stats[xAxisFilter] ?? 0,
+          y: p.stats[yAxisFilter] ?? 0,
+        })),
+        label: [''],
+      }
     };
   }
 
