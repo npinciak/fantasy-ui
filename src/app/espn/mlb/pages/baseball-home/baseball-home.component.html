@@ -14,6 +14,7 @@
         <app-league-scoreboard
           [teams]="fantasyBaseballTeamLiveFacade.standings$ | async"
           (refreshClicked)="fantasyBaseballLeagueFacade.refreshCurrentLeague()"
+          (navigateToTeam)="onNavigateToTeam($event)"
         ></app-league-scoreboard>
       </div>
       <div class="mb-12 w-full px-4 xl:mb-0 xl:w-8/12">

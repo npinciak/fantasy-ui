@@ -27,6 +27,7 @@ export class BaseballBattersComponent {
 
   startingBatters$ = this.fantasyBaseballTeamFacade.startingBatters$;
   benchBatters$ = this.fantasyBaseballTeamFacade.benchBatters$;
+
   isLiveScore$ = new BehaviorSubject<boolean>(false);
   statPeriod$ = new BehaviorSubject<string>(FantasyBaseballScoringPeriod.season('2023'));
   isLoading$ = new BehaviorSubject<boolean>(false);
@@ -35,6 +36,8 @@ export class BaseballBattersComponent {
   selectedBatterStatXAxisLabel$ = new BehaviorSubject<BaseballStat | null>(null);
   selectedBatterStatYAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.AB);
   selectedBatterStatYAxisLabel$ = new BehaviorSubject<BaseballStat | null>(null);
+
+  tableDataLiveBenchBatters$ = this.fantasyBaseballTeamLiveFacade.liveTeamBenchBatterStatsTableRows$;
 
   tableDataBatters$ = combineLatest([
     this.fantasyBaseballTeamFacade.battingStats$,
