@@ -124,12 +124,14 @@ export class EspnFastcastConnectionState {
       .fetchStaticScoreboard({ sport, league, weeks, seasontype })
       .toPromise();
 
+    const leagueSlug = exists(leagues[0]) ? leagues[0].id : null;
+
     this.store.dispatch([
       new FastcastSports.AddOrUpdate(sports),
       new FastcastLeagues.AddOrUpdate(leagues),
       new FastcastEvents.AddOrUpdate(events),
       new FastcastTeams.AddOrUpdate(teams),
-      new FastCastConnection.SetSelectedLeague({ leagueSlug: leagues[0].id }),
+      new FastCastConnection.SetSelectedLeague({ leagueSlug }),
     ]);
   }
 
