@@ -180,7 +180,9 @@ export function clientLeagueImportToFastcastLeague(leagueImport: EspnFastcastCli
 export function clientCompetitorToFastcastTeam(eventUid: string, data: EspnFastcastClient.CompetitorsEntity): FastcastEventTeam | null {
   if (!data) return null;
 
-  const { id, uid, name, winner, score, logo, abbreviation, homeAway, alternateColor, record, rank, seriesRecord } = data;
+  const { id, uid, name, winner, score, logo, abbreviation, homeAway, alternateColor, rank, seriesRecord } = data;
+
+  const record = data.record == undefined ? null : typeof data.record === 'string' ? data.record : data.record[0].displayValue;
 
   return {
     id,
@@ -194,7 +196,7 @@ export function clientCompetitorToFastcastTeam(eventUid: string, data: EspnFastc
     name: name ?? abbreviation,
     color: teamColorHandler(data),
     altColor: `#${alternateColor}` ?? null,
-    record: typeof record === 'string' ? record : record[0].displayValue,
+    record,
     rank: rank ?? null,
     winPct: null,
     seriesRecord,
