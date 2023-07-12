@@ -36,14 +36,14 @@ export class FantasyFootballFreeAgentsSelectors extends GenericSelector(FantasyF
 
   @Selector([FantasyFootballTeamSelectors.getTeamStats, FantasyFootballFreeAgentsSelectors.getFreeAgentsStats])
   static getCompareTeamAndFreeAgentList(
-    getTeamStats: (id: string | null, statPeriodId: string) => FootballPlayer[],
+    getTeamStats: (statPeriodId: string) => FootballPlayer[],
     getFreeAgentsStats: (statPeriod: string) => any[]
   ): (teamId: string | null, statPeriod: string) => FootballPlayer[] {
     return (teamId: string | null, statPeriod: string) => {
       const freeAgents = getFreeAgentsStats(statPeriod);
 
       if (exists(teamId)) {
-        const teamStats = getTeamStats(teamId, statPeriod).map(b => ({ ...b, highlightedPlayer: true }));
+        const teamStats = getTeamStats(statPeriod).map(b => ({ ...b, highlightedPlayer: true }));
 
         return [...teamStats, ...freeAgents];
       }

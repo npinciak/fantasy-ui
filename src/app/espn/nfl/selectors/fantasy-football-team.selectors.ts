@@ -6,11 +6,18 @@ import { benchPlayersFilter, injuredPlayersFilter, startingPlayersFilter } from 
 import { FootballPlayer } from '../models/football-player.model';
 import { FootballTeam } from '../models/football-team.model';
 
+import { RouterSelector } from '@app/@core/store/router/router.selectors';
 import { FOOTBALL_LINEUP_MAP, FootballPosition } from '@sports-ui/ui-sdk/espn';
 import { PlayerStatsYear } from '@sports-ui/ui-sdk/espn-client';
 import { FantasyFootballTeamState } from '../state/fantasy-football-team.state';
 
 export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootballTeamState) {
+  @Selector([RouterSelector.getTeamId, FantasyFootballTeamSelectors.getById])
+  static getTeamInfoByTeamId(teamId: string | null, getTeamById: (id: string | null) => FootballTeam) {
+    if (!exists(teamId)) throw new Error('cannot retrieve Team without valid teamId');
+    return getTeamById(teamId);
+  }
+
   @Selector([FantasyFootballTeamSelectors.getList])
   static standings(teamList: FootballTeam[]): FootballTeam[] {
     return teamList.sort((a, b) => b.wins - a.wins);
@@ -21,18 +28,15 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
     return teams.map(t => ({ value: t.id, label: t.name }));
   }
 
-  @Selector([FantasyFootballTeamSelectors.getById])
-  static getRosterByTeamId(getById: (id: string | null) => FootballTeam | null): (id: string | null) => FootballPlayer[] {
-    return (id: string | null) => {
-      if (!exists(id)) return [];
-      const team = getById(id);
-      return team ? team.roster : [];
-    };
+  @Selector([RouterSelector.getTeamId, FantasyFootballTeamSelectors.getById])
+  static getRosterByTeamId(teamId: string | null, getById: (id: string | null) => FootballTeam | null): FootballPlayer[] {
+    const team = getById(teamId);
+    return team ? team.roster : [];
   }
 
   @Selector([FantasyFootballTeamSelectors.getRosterByTeamId])
-  static getTeamStarters(getRosterByTeamId: (id: string | null) => FootballPlayer[]): (id: string | null) => FootballPlayer[] {
-    return (id: string | null) => startingPlayersFilter(getRosterByTeamId(id), FOOTBALL_LINEUP_MAP);
+  static getTeamStarters(rosterByTeamId: FootballPlayer[]): FootballPlayer[] {
+    return startingPlayersFilter(rosterByTeamId, FOOTBALL_LINEUP_MAP);
   }
 
   // @Selector([FantasyFootballLeagueSelectors.getCurrentStatTypePeriod, FantasyFootballTeamSelectors.getTeamStarters])
@@ -61,29 +65,29 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
   // }
 
   @Selector([FantasyFootballTeamSelectors.getTeamStarters])
-  static getTeamStartersPoints(getTeamStarters: (id: string | null) => FootballPlayer[]): (id: string | null) => number {
-    return (id: string | null) => getTeamStarters(id).reduce((a, b) => a + b.points, 0);
+  static getTeamStartersPoints(teamStarters: FootballPlayer[]): number {
+    return teamStarters.reduce((a, b) => a + b.points, 0);
   }
 
   @Selector([FantasyFootballTeamSelectors.getRosterByTeamId])
-  static getTeamBench(getRosterByTeamId: (id: string | null) => FootballPlayer[]): (id: string | null) => FootballPlayer[] {
-    return (id: string | null) => benchPlayersFilter(getRosterByTeamId(id), FOOTBALL_LINEUP_MAP);
+  static getTeamBench(rosterByTeamId: FootballPlayer[]): FootballPlayer[] {
+    return benchPlayersFilter(rosterByTeamId, FOOTBALL_LINEUP_MAP);
   }
 
   @Selector([FantasyFootballTeamSelectors.getTeamBench])
-  static getTeamBenchPoints(getTeamBench: (id: string | null) => FootballPlayer[]): (id: string | null) => number {
-    return (id: string | null) => getTeamBench(id).reduce((a, b) => a + b.points, 0);
+  static getTeamBenchPoints(teamBench: FootballPlayer[]): number {
+    return teamBench.reduce((a, b) => a + b.points, 0);
   }
 
   @Selector([FantasyFootballTeamSelectors.getRosterByTeamId])
-  static getTeamInjuredReserve(getRosterByTeamId: (id: string | null) => FootballPlayer[]): (id: string | null) => FootballPlayer[] {
-    return (id: string | null) => injuredPlayersFilter(getRosterByTeamId(id));
+  static getTeamInjuredReserve(rosterByTeamId: FootballPlayer[]): FootballPlayer[] {
+    return injuredPlayersFilter(rosterByTeamId);
   }
 
   @Selector([FantasyFootballTeamSelectors.getRosterByTeamId])
-  static getTeamStats(getRosterByTeamId: (id: string | null) => FootballPlayer[]) {
-    return (id: string | null, statPeriodId: string): FootballPlayer[] =>
-      getRosterByTeamId(id).map(p => {
+  static getTeamStats(rosterByTeamId: FootballPlayer[]) {
+    return (statPeriodId: string): FootballPlayer[] =>
+      rosterByTeamId.map(p => {
         const stats = statsValidator(p.stats, statPeriodId);
 
         return {
@@ -94,17 +98,16 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
   }
 
   @Selector([FantasyFootballTeamSelectors.getTeamStats])
-  static getTeamStatsByPositionId(getTeamStats: (id: string | null, statPeriod: string) => FootballPlayer[]) {
-    return (id: string | null, statPeriod: string, positionId: FootballPosition) =>
-      getTeamStats(id, statPeriod).filter(p => p.defaultPositionId === positionId);
+  static getTeamStatsByPositionId(getTeamStats: (statPeriod: string) => FootballPlayer[]) {
+    return (statPeriod: string, positionId: FootballPosition) => getTeamStats(statPeriod).filter(p => p.defaultPositionId === positionId);
   }
 
   @Selector([FantasyFootballTeamSelectors.getRosterByTeamId])
-  static getTeamPositionsCount(getRosterByTeamId: (id: string | null) => FootballPlayer[]) {
+  static getTeamPositionsCount(rosterByTeamId: FootballPlayer[]) {
     return (id: string | null) => {
       const teamPositionCount = {};
 
-      getRosterByTeamId(id).map(p => {
+      rosterByTeamId.map(p => {
         const position = FOOTBALL_LINEUP_MAP[p.defaultPositionId].abbrev;
 
         if (position in teamPositionCount) {

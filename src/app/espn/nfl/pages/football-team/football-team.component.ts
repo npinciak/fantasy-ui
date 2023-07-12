@@ -41,33 +41,19 @@ export class FootballTeamComponent {
 
   statPeriodFilterOptions$ = this.footballLeagueFacade.scoringPeriodFilterOptions$;
 
-  starters$ = combineLatest([this.footballTeamFacade.starters$, this.teamId$]).pipe(map(([starters, teamId]) => starters(teamId)));
+  starters$ = this.footballTeamFacade.starters$;
 
-  startersPoints$ = combineLatest([this.footballTeamFacade.startersPoints$, this.teamId$]).pipe(
-    map(([startersPoints, teamId]) => startersPoints(teamId))
-  );
+  startersPoints$ = this.footballTeamFacade.startersPoints$;
 
-  bench$ = combineLatest([this.footballTeamFacade.bench$, this.teamId$]).pipe(map(([bench, teamId]) => bench(teamId)));
+  bench$ = this.footballTeamFacade.bench$;
 
-  benchPoints$ = combineLatest([this.footballTeamFacade.benchPoints$, this.teamId$]).pipe(
-    map(([benchPoints, teamId]) => benchPoints(teamId))
-  );
+  benchPoints$ = this.footballTeamFacade.benchPoints$;
 
-  injuredReserve$ = combineLatest([this.footballTeamFacade.injuredReserve$, this.teamId$]).pipe(
-    map(([injuredReserve, teamId]) => injuredReserve(teamId))
-  );
-
+  injuredReserve$ = this.footballTeamFacade.injuredReserve$;
   currentScoringPeriodId$ = this.footballLeagueFacade.currentScoringPeriodId$;
 
-  tableData$ = combineLatest([
-    this.footballTeamFacade.teamStatsByPositionId$,
-    this.scoringPeriodId$,
-    this.selectedPosition$,
-    this.teamId$,
-  ]).pipe(
-    map(([teamStatsByPositionId, scoringPeriodId, selectedPosition, teamId]) =>
-      teamStatsByPositionId(teamId, scoringPeriodId, selectedPosition)
-    )
+  tableData$ = combineLatest([this.footballTeamFacade.teamStatsByPositionId$, this.scoringPeriodId$, this.selectedPosition$]).pipe(
+    map(([teamStatsByPositionId, scoringPeriodId, selectedPosition]) => teamStatsByPositionId(scoringPeriodId, selectedPosition))
   );
 
   tableConfig$ = combineLatest([this.selectedPosition$]).pipe(
