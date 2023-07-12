@@ -1,72 +1,40 @@
 <app-page-layout>
-  <div statsHeader>
-    <app-football-lineup-card
-      title="Starters"
-      [isLoading]="isLoading$ | async"
-      [lineup]="starters$ | async"
-      [points]="startersPoints$ | async"
-      [scoringPeriodId]="currentScoringPeriodId$ | async"
-      (playerClicked)="onPlayerClick($event)"
-      (refreshClicked)="refreshLeague()"
-    ></app-football-lineup-card>
-    <div class="my-6"></div>
-    <app-football-lineup-card
-      title="Bench"
-      [lineup]="bench$ | async"
-      [points]="benchPoints$ | async"
-      [scoringPeriodId]="currentScoringPeriodId$ | async"
-      (playerClicked)="onPlayerClick($event)"
-    ></app-football-lineup-card>
-    <div class="my-6"></div>
-    <ng-container *ngIf="(injuredReserve$ | async).length > 0">
-      <app-football-lineup-card
-        title="Injured Reserve"
-        [lineup]="injuredReserve$ | async"
-        [scoringPeriodId]="currentScoringPeriodId$ | async"
-        (playerClicked)="onPlayerClick($event)"
-      ></app-football-lineup-card>
-    </ng-container>
-  </div>
+  <div statsHeader></div>
   <div main>
-    <div class="flex w-full flex-row gap-6">
-      <div class="basis-1/3">
-        <app-dropdown-filter
-          ariaLabel="position options"
-          [selectedOption]="selectedPosition$ | async"
-          title="Position"
-          [filterItems]="FOOTBALL_POSITION_LIST_FILTER"
-          (filterUpdate)="onSelectedPositionChange($event)"
-        ></app-dropdown-filter>
-      </div>
+    <div class="flex flex-wrap">
+      <div class="mb-12 w-full px-4">
+        <app-base-card>
+          <div class="flex w-full flex-row gap-6">
+            <div class="basis-1/3">
+              <app-dropdown-filter
+                ariaLabel="position options"
+                [selectedOption]="selectedPosition$ | async"
+                title="Position"
+                [filterItems]="FOOTBALL_POSITION_LIST_FILTER"
+                (filterUpdate)="onSelectedPositionChange($event)"
+              ></app-dropdown-filter>
+            </div>
 
-      <div class="basis-1/3">
-        <app-dropdown-filter
-          ariaLabel="stats options"
-          [selectedOption]="selectedStats$ | async"
-          title="Stats"
-          [filterItems]="FOOTBALL_STAT_PERIOD_FILTER_OPTIONS"
-          (filterUpdate)="onSelectedStatChange($event)"
-        ></app-dropdown-filter>
+            <div class="basis-1/3">
+              <app-dropdown-filter
+                ariaLabel="scoring period options"
+                [selectedOption]="scoringPeriodId$ | async"
+                title="Stat Period"
+                [filterItems]="statPeriodFilterOptions$ | async"
+                (filterUpdate)="scoringPeriodIdChange($event)"
+              ></app-dropdown-filter>
+            </div>
+          </div>
+          <app-espn-stats-table
+            [hidePaginator]="true"
+            [data]="tableData$ | async"
+            [dataColumns]="(tableConfig$ | async).rows"
+            [headers]="(tableConfig$ | async).headers"
+            [statsMap]="FOOTBALL_STATS_MAP"
+          >
+          </app-espn-stats-table>
+        </app-base-card>
       </div>
-
-      <div class="basis-1/3">
-        <app-dropdown-filter
-          ariaLabel="scoring period options"
-          [selectedOption]="scoringPeriodId$ | async"
-          title="Stat Period"
-          [filterItems]="statPeriodFilterOptions$ | async"
-          (filterUpdate)="scoringPeriodIdChange($event)"
-        ></app-dropdown-filter>
-      </div>
-    </div>
-    <div>
-      <app-espn-stats-table
-        [data]="tableData$ | async"
-        [dataColumns]="(tableConfig$ | async).rows"
-        [headers]="(tableConfig$ | async).headers"
-        [statsMap]="FOOTBALL_STATS_MAP"
-      >
-      </app-espn-stats-table>
     </div>
   </div>
 </app-page-layout>
