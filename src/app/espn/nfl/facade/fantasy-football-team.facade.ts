@@ -12,6 +12,7 @@ export class FantasyFootballTeamFacade extends GenericFacade({
   selectorClass: FantasyFootballTeamSelectors,
   actionHandler: FantasyFootballTeam,
 }) {
+  teamInfo$ = select(FantasyFootballTeamSelectors.getTeamInfoByTeamId);
   standings$ = select(FantasyFootballTeamSelectors.standings);
 
   teamPositions$ = select(FantasyFootballTeamSelectors.getTeamPositionsCount);

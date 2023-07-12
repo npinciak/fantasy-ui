@@ -1,5 +1,7 @@
 <app-page-layout>
-  <div statsHeader></div>
+  <div statsHeader>
+    <app-football-team-header [team]="teamInfo$ | async"></app-football-team-header>
+  </div>
   <div main>
     <div class="flex flex-wrap">
       <div class="mb-12 w-full px-4">

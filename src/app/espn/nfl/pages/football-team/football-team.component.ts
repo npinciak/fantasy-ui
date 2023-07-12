@@ -34,7 +34,7 @@ export class FootballTeamComponent {
   readonly FOOTBALL_ROSTER_ROWS_BY_POS = FOOTBALL_ROSTER_ROWS_BY_POS;
 
   isLoading$ = this.footballLeagueFacade.isLoading$;
-
+  teamInfo$ = this.footballTeamFacade.teamInfo$;
   scoringPeriodId$ = new BehaviorSubject('');
   selectedPosition$ = new BehaviorSubject(FootballPosition.QB);
   selectedStats$ = new BehaviorSubject(FootballStat.GP);
