@@ -165,7 +165,7 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
           y: p.stats[yAxisFilter] ?? 0,
         })),
         label: [''],
-      }
+      };
     };
   }
 

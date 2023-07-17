@@ -16,6 +16,10 @@ export class FantasyBaseballTeamLiveFacade extends GenericFacade({
   liveTeamBatterStatsTableRows$ = select(FantasyBaseballTeamLiveSelector.getLiveTeamStartingBatterStatsTableRows);
   liveTeamBenchBatterStatsTableRows$ = select(FantasyBaseballTeamLiveSelector.getLiveTeamBenchBatterStatsTableRows);
 
+  livePitcherStats$ = select(FantasyBaseballTeamLiveSelector.getLiveTeamStartingPitchersStats);
+  liveTeamPitcherStatsTableRows$ = select(FantasyBaseballTeamLiveSelector.getLiveTeamStartingPitcherStatsTableRows);
+  liveTeamBenchPitcherStatsTableRows$ = select(FantasyBaseballTeamLiveSelector.getLiveTeamBenchPitcherStatsTableRows);
+
   statsStandingsLineChartData$ = select(FantasyBaseballTeamLiveSelector.getStatsStandingsLineChartData);
   rotoStandingsLineChartData$ = select(FantasyBaseballTeamLiveSelector.getRotoStatsStandingsLineChartData);
 }

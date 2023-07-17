@@ -3,7 +3,7 @@ import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { BaseballStat, MLB_STATS_MAP, PITCHER_STATS_LIST } from '@sports-ui/ui-sdk';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { PITCHER_STATS_HEADERS, PITCHER_STATS_ROWS } from '../../consts/tables.const';
+import { PITCHER_STATS_HEADERS, PITCHER_STATS_LIVE_HEADERS, PITCHER_STATS_LIVE_ROWS, PITCHER_STATS_ROWS } from '../../consts/tables.const';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
 import { FantasyBaseballPlayerNewsFacade } from '../../facade/fantasy-baseball-player-news.facade';
 import { FantasyBaseballTeamLiveFacade } from '../../facade/fantasy-baseball-team-live.facade';
@@ -24,6 +24,7 @@ export class BaseballPitchersComponent {
 
   selectedPitcherStat = BaseballStat.fip;
   isLoading$ = new BehaviorSubject<boolean>(false);
+  isLiveScore$ = new BehaviorSubject<boolean>(false);
 
   selectedPitcherStatXAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.SO);
   selectedPitcherStatYAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.APP);
@@ -32,14 +33,33 @@ export class BaseballPitchersComponent {
   startingPitchers$ = this.fantasyBaseballTeamFacade.startingPitchers$;
   benchPitchers$ = this.fantasyBaseballTeamFacade.benchPitchers$;
 
-  tableDataPitchers$ = combineLatest([this.fantasyBaseballTeamFacade.pitcherStats$, this.statPeriod$]).pipe(
-    map(([pitcherStats, statPeriod]) => pitcherStats(statPeriod))
+  tableDataPitchers$ = combineLatest([
+    this.fantasyBaseballTeamFacade.pitcherStats$,
+    this.statPeriod$,
+    this.isLiveScore$,
+    this.fantasyBaseballTeamLiveFacade.liveTeamPitcherStatsTableRows$,
+  ]).pipe(
+    map(([batterStats, statPeriod, isLiveScore, liveTeamBatterStats]) => (isLiveScore ? liveTeamBatterStats : batterStats(statPeriod)))
   );
 
   pitcherTableConfig$ = of({
     rows: PITCHER_STATS_ROWS,
     headers: PITCHER_STATS_HEADERS,
   });
+
+  defaultTableConfig$ = of({
+    rows: PITCHER_STATS_ROWS,
+    headers: PITCHER_STATS_HEADERS,
+  });
+
+  liveTableConfig$ = of({
+    rows: PITCHER_STATS_LIVE_ROWS,
+    headers: PITCHER_STATS_LIVE_HEADERS,
+  });
+
+  tableConfig$ = combineLatest([this.defaultTableConfig$, this.liveTableConfig$, this.isLiveScore$]).pipe(
+    map(([defaultTableConfig, liveTableConfig, isLive]) => (isLive ? liveTableConfig : defaultTableConfig))
+  );
 
   constructor(
     readonly routerFacade: RouterFacade,
@@ -60,6 +80,10 @@ export class BaseballPitchersComponent {
     } catch (e) {
       this.isLoading$.next(false);
     }
+  }
+
+  onLiveScoringSelectChange(isChecked: boolean): void {
+    this.isLiveScore$.next(isChecked);
   }
 
   onPitcherStatXAxisChange(val: any): void {

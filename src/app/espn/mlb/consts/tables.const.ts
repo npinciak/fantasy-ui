@@ -5,8 +5,6 @@ const statsKey = 'stats';
 const leagueStandingsStatsKey = 'valuesByStat';
 
 function transformStatToTableColumn(stat: BaseballStat, statKey: string, statsMap, dataType: TableColumnDataType) {
-
-  
   return {
     columnDef: `${[statKey]}.${stat}`,
     headerCell: `${[statKey]}.${stat}`,
@@ -14,6 +12,16 @@ function transformStatToTableColumn(stat: BaseballStat, statKey: string, statsMa
     dataType,
   };
 }
+
+export const PLAYER_BATTER_STATS_COLUMNS = [
+  transformStatToTableColumn(BaseballStat.H, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(BaseballStat.PA, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(BaseballStat.R, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(BaseballStat.HR, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(BaseballStat.RBI, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(BaseballStat.SB, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(BaseballStat.AVG, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
+];
 
 export const LEAGUE_STANDINGS_COLUMNS = [
   { columnDef: 'name', headerCell: 'name', headerLabel: 'Team', dataType: TableColumnDataType.String },
@@ -68,7 +76,7 @@ export const BATTER_STATS_COLUMNS = [
 export const BATTER_LIVE_STATS_COLUMNS = [
   { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String },
   transformStatToTableColumn(BaseballStat.H, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
-  transformStatToTableColumn(BaseballStat.PA, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(BaseballStat.AB, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
   transformStatToTableColumn(BaseballStat.R, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
   transformStatToTableColumn(BaseballStat.HR, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
   transformStatToTableColumn(BaseballStat.RBI, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
@@ -76,6 +84,16 @@ export const BATTER_LIVE_STATS_COLUMNS = [
   transformStatToTableColumn(BaseballStat.AVG, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
   transformStatToTableColumn(BaseballStat.BB, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
   transformStatToTableColumn(BaseballStat.KO, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
+];
+
+export const PITCHER_LIVE_STATS_COLUMNS = [
+  { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String },
+  transformStatToTableColumn(BaseballStat.IP, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(BaseballStat.W, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(BaseballStat.SV, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(BaseballStat.K, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(BaseballStat.ERA, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(BaseballStat.WHIP, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
 ];
 
 export const PITCHER_STATS_COLUMNS = [
@@ -125,3 +143,9 @@ export const BATTER_STATS_LIVE_HEADERS = BATTER_STATS_LIVE_ROWS.map(r => r.colum
 
 export const PITCHER_STATS_ROWS = transformTableColumnsToTableRows(PITCHER_STATS_COLUMNS);
 export const PITCHER_STATS_HEADERS = PITCHER_STATS_ROWS.map(r => r.columnDef);
+
+export const PITCHER_STATS_LIVE_ROWS = transformTableColumnsToTableRows(PITCHER_LIVE_STATS_COLUMNS);
+export const PITCHER_STATS_LIVE_HEADERS = PITCHER_STATS_LIVE_ROWS.map(r => r.columnDef);
+
+export const PLAYER_BATTER_STATS_ROWS = transformTableColumnsToTableRows(PLAYER_BATTER_STATS_COLUMNS);
+export const PLAYER_BATTER_STATS_HEADERS = PLAYER_BATTER_STATS_ROWS.map(r => r.columnDef);
