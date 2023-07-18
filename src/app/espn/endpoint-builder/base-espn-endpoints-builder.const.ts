@@ -42,6 +42,7 @@ export const ESPN_PARAM_FRAGMENTS = {
 export const ESPN_VIEW_PARAM_FRAGMENTS = {
   Settings: 'mSettings',
   PlayerInfo: 'kona_player_info',
+  PlayerCard: 'kona_playercard',
   LiveScoring: 'mLiveScoring',
   MatchupScore: 'mMatchupScore',
   Roster: 'mRoster',
@@ -50,4 +51,5 @@ export const ESPN_VIEW_PARAM_FRAGMENTS = {
   Transactions: 'mTransactions2',
   PendingTransactions: 'mPendingTransactions',
   Comms: 'kona_league_communication',
+  ProTeamSchedules: 'proTeamSchedules_wl',
 } as const;

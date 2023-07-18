@@ -7,7 +7,7 @@ import { EspnClient, EspnFastcastClient } from '@sports-ui/ui-sdk/espn';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { FreeAgent } from '@sports-ui/ui-sdk/espn-client';
+import { FreeAgent, ProTeamSchedule } from '@sports-ui/ui-sdk/espn-client';
 import {
   BaseEspnEndpointBuilder,
   ESPN_PARAM_FRAGMENTS,
@@ -131,6 +131,12 @@ export class EspnService extends ApiService {
     return this.get<{ players: FreeAgent[] }>(endpoint, { params, headers });
   }
 
+  protected fetchProteamSchedules(sport: FantasySportsAbbreviation, year: string) {
+    const endpoint = BaseEspnEndpointBuilder({ sport, year }).fantasyBaseV3WithFragments;
+    const params = new HttpParams().set(ESPN_PARAM_FRAGMENTS.View, ESPN_VIEW_PARAM_FRAGMENTS.ProTeamSchedules);
+    return this.get<ProTeamSchedule>(endpoint, { params });
+  }
+
   /**
    * Fastcast
    *
@@ -170,7 +176,9 @@ export class EspnService extends ApiService {
    */
   private get params(): HttpParams {
     let params = new HttpParams();
-    ESPN_VIEW_PARAM_FRAGMENTS_LIST.filter(param => param !== ESPN_VIEW_PARAM_FRAGMENTS.PlayerCard).map(fragment => {
+    ESPN_VIEW_PARAM_FRAGMENTS_LIST.filter(
+      param => param !== ESPN_VIEW_PARAM_FRAGMENTS.PlayerCard && param !== ESPN_VIEW_PARAM_FRAGMENTS.ProTeamSchedules
+    ).map(fragment => {
       params = params.append(ESPN_PARAM_FRAGMENTS.View, fragment);
     });
     return params;

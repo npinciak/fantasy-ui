@@ -30,6 +30,7 @@ import { FantasyBaseballFreeAgentsState } from './mlb/state/fantasy-baseball-fre
 import { FantasyBaseballLeagueState } from './mlb/state/fantasy-baseball-league.state';
 import { FantasyBaseballPlayerCardState } from './mlb/state/fantasy-baseball-player-card.state';
 import { FantasyBaseballPlayerNewsState } from './mlb/state/fantasy-baseball-player-news.state';
+import { FantasyBaseballProTeamScheduleState } from './mlb/state/fantasy-baseball-pro-team-schedule.state';
 import { FantasyBaseballTeamsLiveState } from './mlb/state/fantasy-baseball-team-live.state';
 import { FantasyBaseballTeamState } from './mlb/state/fantasy-baseball-team.state';
 import { FootballLineupCardComponent } from './nfl/components/football-lineup-card/football-lineup-card.component';
@@ -101,6 +102,7 @@ import { FreeAgentsAvailabilitySelectedState } from './state/free-agent-availabi
       FantasyBaseballPlayerCardState,
       FantasyBaseballPlayerCardActionHandler,
       FantasyBaseballEventsState,
+      FantasyBaseballProTeamScheduleState,
       FreeAgentsAvailabilitySelectedState,
     ]),
   ],

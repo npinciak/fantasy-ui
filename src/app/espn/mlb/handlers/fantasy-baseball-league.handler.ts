@@ -9,7 +9,7 @@ import { FantasyBaseballTeams } from '../actions/fantasy-baseball-team.actions';
 import { FantasyBaseballLeagueSelector } from '../selectors/fantasy-baseball-league.selector';
 import { FantasyBaseballService } from '../services/fantasy-baseball.service';
 
-@State({ name: FantasyBaseballLeague.stateName + 'Actionhandler' })
+@State({ name: FantasyBaseballLeague.stateName + 'ActionHandler' })
 @Injectable()
 export class FantasyBaseballLeagueActionHandler {
   constructor(private mlbService: FantasyBaseballService, private store: Store) {}

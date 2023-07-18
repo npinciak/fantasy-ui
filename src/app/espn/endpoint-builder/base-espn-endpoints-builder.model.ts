@@ -55,4 +55,5 @@ export type BaseEspnEndpointBuilderClass = {
   oneFeed: string;
   staticScoreboard: string;
   baseballStatsBatterVsPitcher: string;
+  fantasyBaseV3WithFragments: string;
 };

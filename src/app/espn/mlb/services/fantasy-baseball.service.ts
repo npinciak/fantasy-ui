@@ -8,7 +8,7 @@ import { EspnClient } from '@sports-ui/ui-sdk/espn';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { PlayerCardEntity } from '@sports-ui/ui-sdk/espn-client';
+import { PlayerCardEntity, ProTeamEntity } from '@sports-ui/ui-sdk/espn-client';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballLeague } from '../models/baseball-league.model';
 import { BaseballPlayer, BaseballPlayerCard } from '../models/baseball-player.model';
@@ -86,6 +86,7 @@ export class FantasyBaseballService extends EspnService {
     const filter = {
       players: {
         filterIds: { value: [playerId] },
+        filterStatsForTopScoringPeriodIds: { value: scoringPeriod },
       },
     };
 
@@ -96,6 +97,10 @@ export class FantasyBaseballService extends EspnService {
       { sport: this.sport, leagueId, year, headers },
       scoringPeriod
     ).pipe(map(res => FantasyBaseballTransformers.clientPlayerCardToBaseballPlayerCard(res.players)));
+  }
+
+  proteamSchedules(year: string): Observable<ProTeamEntity[]> {
+    return this.fetchProteamSchedules(this.sport, year).pipe(map(res => res.settings.proTeams));
   }
 
   // /**

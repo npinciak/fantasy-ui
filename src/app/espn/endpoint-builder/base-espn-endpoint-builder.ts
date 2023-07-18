@@ -100,7 +100,7 @@ export function BaseEspnEndpointBuilder({
       return `${this.fantasyBaseV2WithStatsFragments}/${ESPN_PATH_FRAGMENTS.BatterVsPitcher}`;
     }
 
-    private static get fantasyBaseV3WithFragments(): string {
+    static get fantasyBaseV3WithFragments(): string {
       return `${BaseEspnEndpointBuilderClass.fantasyBaseV3}/games/${sport}/seasons/${year}`;
     }
 

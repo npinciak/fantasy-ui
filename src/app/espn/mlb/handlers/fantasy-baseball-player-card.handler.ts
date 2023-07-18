@@ -1,26 +1,29 @@
 import { Injectable } from '@angular/core';
 import { GenericStateClass } from '@app/@shared/generic-state/generic.model';
 import { exists } from '@app/@shared/utilities/utilities.m';
-import { Action, State, StateContext, Store } from '@ngxs/store';
+import { Action, State, StateContext } from '@ngxs/store';
+import { ProTeamEntity } from '@sports-ui/ui-sdk';
 import { FantasyBaseballPlayerCard } from '../actions/fantasy-baseball-player-card.actions';
+import { FantasyBaseballProTeamSchedule } from '../actions/fantasy-baseball-pro-team-schedule.actions';
 import { FantasyBaseballLeagueFacade } from '../facade/fantasy-baseball-league.facade';
 import { FantasyBaseballPlayerCardFacade } from '../facade/fantasy-baseball-player-card.facade';
+import { FantasyBaseballProTeamScheduleFacade } from '../facade/fantasy-baseball-pro-team-schedule.facade';
 import { BaseballPlayerCard } from '../models/baseball-player.model';
 import { FantasyBaseballService } from '../services/fantasy-baseball.service';
 
-@State({ name: FantasyBaseballPlayerCard.stateName + 'Actionhandler' })
+@State({ name: FantasyBaseballPlayerCard.stateName + 'ActionHandler' })
 @Injectable()
 export class FantasyBaseballPlayerCardActionHandler {
   constructor(
-    private baseballPlayerCardFacade: FantasyBaseballPlayerCardFacade,
+    private fantasyBaseballProTeamScheduleFacade: FantasyBaseballProTeamScheduleFacade,
 
+    private baseballPlayerCardFacade: FantasyBaseballPlayerCardFacade,
     private baseballLeagueFacade: FantasyBaseballLeagueFacade,
-    private mlbService: FantasyBaseballService,
-    private store: Store
+    private mlbService: FantasyBaseballService
   ) {}
 
   @Action(FantasyBaseballPlayerCard.Fetch)
-  async baseballLeague(_: StateContext<GenericStateClass<BaseballPlayerCard>>, { payload: { playerId } }): Promise<void> {
+  async baseballPlayerCard(_: StateContext<GenericStateClass<BaseballPlayerCard>>, { payload: { playerId } }): Promise<void> {
     const leagueId = this.baseballLeagueFacade.leagueId;
     const year = this.baseballLeagueFacade.seasonId;
     const scoringPeriod = this.baseballLeagueFacade.scoringPeriod;
@@ -31,6 +34,19 @@ export class FantasyBaseballPlayerCardActionHandler {
       const player = await this.mlbService.baseballPlayerCard(leagueId, year, scoringPeriod, playerId).toPromise();
 
       this.baseballPlayerCardFacade.addOrUpdate(player);
+    } catch (e) {}
+  }
+
+  @Action(FantasyBaseballProTeamSchedule.Fetch)
+  async proTeamSchedules(_: StateContext<GenericStateClass<ProTeamEntity>>): Promise<void> {
+    const year = this.baseballLeagueFacade.seasonId;
+
+    if (!exists(year)) throw new Error('year cannot be null');
+
+    try {
+      const res = await this.mlbService.proteamSchedules(year).toPromise();
+
+      this.fantasyBaseballProTeamScheduleFacade.addOrUpdate(res);
     } catch (e) {}
   }
 }

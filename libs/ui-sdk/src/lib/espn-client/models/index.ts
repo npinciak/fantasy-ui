@@ -13,6 +13,7 @@ export * from './player-stats.model';
 export * from './player.model';
 export * from './professional-league-type.const';
 export * from './professional-league-type.model';
+export * from './professional-team-schedule.model';
 export * from './season-type.const';
 export * from './season-type.model';
 export * from './sport-type.const';
