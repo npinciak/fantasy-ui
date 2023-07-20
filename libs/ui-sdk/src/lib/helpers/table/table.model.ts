@@ -3,12 +3,14 @@ export interface BaseTableColumn<T> {
   headerCell: keyof T;
   headerLabel: string;
   dataType: TableColumnDataType;
+  sortable?: boolean;
 }
 
 export interface BaseTableRow<T> {
   columnDef: keyof T;
   cellData: (data: T) => T;
   headerLabel: string;
+  sortable: boolean;
 }
 
 export enum TableColumnDataType {

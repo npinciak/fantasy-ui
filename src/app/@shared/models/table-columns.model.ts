@@ -5,6 +5,7 @@ export interface BaseTableColumn<T> {
   headerCell: keyof T;
   headerLabel: string;
   dataType: TableColumnDataType;
+  sortable?: boolean;
 }
 
 export interface BaseTableRow<T> {
@@ -33,8 +34,8 @@ export enum TableColumnDataType {
 
 export function transformTableColumnsToTableRows<T>(cols: BaseTableColumn<T>[]): BaseTableRow<T>[] {
   return cols.map(col => {
-    const { columnDef, headerLabel, dataType } = col;
-    return { columnDef, cellData: data => cellDataAccessor(data, col.columnDef), headerLabel, dataType };
+    const { columnDef, headerLabel, dataType, sortable } = col;
+    return { columnDef, cellData: data => cellDataAccessor(data, col.columnDef), headerLabel, dataType, sortable };
   });
 }
 

@@ -1,26 +1,28 @@
-import { TableColumnDataType, transformTableColumnsToTableRows } from '@app/@shared/models/table-columns.model';
 import { BaseballStat, MLB_STATS_MAP } from '@sports-ui/ui-sdk/espn';
+import { TableColumnDataType, transformTableColumnsToTableRows } from '@sports-ui/ui-sdk/helpers';
 
 const statsKey = 'stats';
 const leagueStandingsStatsKey = 'valuesByStat';
 
-function transformStatToTableColumn(stat: BaseballStat, statKey: string, statsMap, dataType: TableColumnDataType) {
+function transformStatToTableColumn(stat: BaseballStat, statKey: string, statsMap, dataType: TableColumnDataType, sortable = true) {
   return {
     columnDef: `${[statKey]}.${stat}`,
     headerCell: `${[statKey]}.${stat}`,
     headerLabel: statsMap[stat].abbrev,
     dataType,
+    sortable,
   };
 }
 
 export const PLAYER_BATTER_STATS_COLUMNS = [
-  transformStatToTableColumn(BaseballStat.H, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
-  transformStatToTableColumn(BaseballStat.PA, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
-  transformStatToTableColumn(BaseballStat.R, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
-  transformStatToTableColumn(BaseballStat.HR, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
-  transformStatToTableColumn(BaseballStat.RBI, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
-  transformStatToTableColumn(BaseballStat.SB, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
-  transformStatToTableColumn(BaseballStat.AVG, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
+  { columnDef: 'opponent', headerCell: 'opponent', headerLabel: '', dataType: TableColumnDataType.String, sortable: false },
+  { columnDef: 'date', headerCell: 'date', headerLabel: '', dataType: TableColumnDataType.String, sortable: false },
+  transformStatToTableColumn(BaseballStat.H, statsKey, MLB_STATS_MAP, TableColumnDataType.Number, false),
+  transformStatToTableColumn(BaseballStat.R, statsKey, MLB_STATS_MAP, TableColumnDataType.Number, false),
+  transformStatToTableColumn(BaseballStat.HR, statsKey, MLB_STATS_MAP, TableColumnDataType.Number, false),
+  transformStatToTableColumn(BaseballStat.RBI, statsKey, MLB_STATS_MAP, TableColumnDataType.Number, false),
+  transformStatToTableColumn(BaseballStat.SB, statsKey, MLB_STATS_MAP, TableColumnDataType.Number, false),
+  transformStatToTableColumn(BaseballStat.AVG, statsKey, MLB_STATS_MAP, TableColumnDataType.Number, false),
 ];
 
 export const LEAGUE_STANDINGS_COLUMNS = [
@@ -41,7 +43,7 @@ export const LEAGUE_STANDINGS_COLUMNS = [
 export const BATTER_STATS_COLUMNS = [
   { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String },
   transformStatToTableColumn(BaseballStat.H, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
-  transformStatToTableColumn(BaseballStat.PA, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(BaseballStat.AB, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
   transformStatToTableColumn(BaseballStat.R, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
   transformStatToTableColumn(BaseballStat.HR, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),
   transformStatToTableColumn(BaseballStat.RBI, statsKey, MLB_STATS_MAP, TableColumnDataType.Number),

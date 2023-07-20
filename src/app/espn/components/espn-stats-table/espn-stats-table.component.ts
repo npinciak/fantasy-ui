@@ -17,6 +17,7 @@ import { StatEntity } from '@app/@shared/base-models/base-stats.model';
 import { TableColumnDataType } from '@app/@shared/models/table-columns.model';
 import { BaseballPlayer } from '@app/espn/mlb/models/baseball-player.model';
 import { StatTypePeriodId } from '@app/espn/models/espn-stats.model';
+import { BaseballStat } from '@sports-ui/ui-sdk/espn';
 import { cellDataAccessor } from '@sports-ui/ui-sdk/helpers';
 import { BehaviorSubject } from 'rxjs';
 
@@ -29,6 +30,7 @@ export class EspnStatsTableComponent<T extends PlayerEntity> implements OnChange
   @Input() data: any[];
   @Input() dataColumns: any[];
   @Input() headers: string[];
+
   @Input() ariaLabel: string | null = null;
   @Input() statsMap: Record<string, StatEntity>;
   @Input() hidePaginator = false;
@@ -42,6 +44,7 @@ export class EspnStatsTableComponent<T extends PlayerEntity> implements OnChange
 
   readonly StatType = StatTypePeriodId;
   readonly TableColumnDataType = TableColumnDataType;
+  readonly BaseballStat = BaseballStat;
 
   dataSource: MatTableDataSource<BaseballPlayer>;
 
@@ -70,12 +73,10 @@ export class EspnStatsTableComponent<T extends PlayerEntity> implements OnChange
 
   initTable(): void {
     this.isLoading$.next(true);
-
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.dataSource.data = this.data;
     this.dataSource.sortingDataAccessor = (player, stat) => cellDataAccessor(player, stat);
-
     if (this.dataSource.data.length > 0) {
       this.isLoading$.next(false);
     }

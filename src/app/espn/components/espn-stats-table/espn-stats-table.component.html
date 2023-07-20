@@ -3,21 +3,32 @@
   <table [attr.aria-label]="ariaLabel" class="xs:text-xs w-full text-sm" mat-table [dataSource]="dataSource" matSortDirection="asc" matSort>
     <ng-container *ngFor="let col of dataColumns">
       <ng-container [matColumnDef]="col?.columnDef" [sticky]="col.columnDef === 'name'">
-        <th
+        <!-- <th
           mat-header-cell
           class="px-2 text-right first-of-type:w-[200px] first-of-type:min-w-[200px] first-of-type:pl-0 first-of-type:text-left"
           *matHeaderCellDef
-          mat-sort-header
           [arrowPosition]="'before'"
+          tabindex="0"
+        > -->
+        <th
+          mat-header-cell
+          class="whitespace-nowrap border border-l-0 border-r-0 border-solid border-sky-100 bg-sky-50 p-3 py-3 text-left align-middle text-xs font-semibold uppercase text-sky-500"
+          *matHeaderCellDef
+          mat-sort-header
+          [disabled]="!col?.sortable"
           tabindex="0"
         >
           {{ col?.headerLabel }}
         </th>
-        <td mat-cell class="px-2 text-right first-of-type:w-[200px] first-of-type:min-w-[200px] first-of-type:pl-0 first-of-type:text-left" *matCellDef="let data">
+        <!-- <td mat-cell class="px-2 text-right first-of-type:w-[200px] first-of-type:min-w-[200px] first-of-type:pl-0 first-of-type:text-left" *matCellDef="let data"> -->
+        <td mat-cell class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-3 align-middle text-xs" *matCellDef="let data">
           <ng-container [ngSwitch]="col.columnDef">
             <ng-template [ngSwitchCase]="'name'">
               <app-espn-player-info-col [player]="data" [hideLineupSlot]="true" (playerClicked)="onPlayerClicked($event)"></app-espn-player-info-col>
             </ng-template>
+            <ng-template [ngSwitchCase]="'opponent'">{{ col?.cellData(data) ?? '-' }}</ng-template>
+            <ng-template [ngSwitchCase]="'date'">{{ col?.cellData(data) | date: 'shortDate' ?? '-' }}</ng-template>
+            <!-- <ng-template [ngSwitchCase]="'stats.1'">{{ data.stats[BaseballStat.H] }} / {{ data.stats[BaseballStat.AB] }}</ng-template> -->
             <ng-template [ngSwitchCase]="'percentChange'">
               <app-espn-player-trending-col [data]="col?.cellData(data)"></app-espn-player-trending-col>
             </ng-template>
