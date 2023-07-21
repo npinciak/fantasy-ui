@@ -10,11 +10,12 @@ export class DailyFantasyMlbPlayerSelectors extends GenericSelector(DfsSlatePlay
     return list.map(p => {
       const salary = exists(p.salaries) ? Number(p.salaries[0].salary) : 0;
 
-      const { id, name, rgTeamId, position } = p;
+      const { id, name, teamId, rgTeamId, position } = p;
 
       return {
         id,
         name,
+        teamId,
         rgTeamId,
         position,
         salary,

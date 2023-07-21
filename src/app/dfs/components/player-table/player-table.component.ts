@@ -18,7 +18,7 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
   @Input() dataRows: any[];
   @Input() dataHeaders: any[];
 
-  @Input() teamMap: Record<number, string>;
+  @Input() teamMap: Record<string, string>;
 
   @Input() filter: string;
 
