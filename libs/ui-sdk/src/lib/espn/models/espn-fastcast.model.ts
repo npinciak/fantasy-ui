@@ -77,7 +77,7 @@ export namespace LegacyEspnFastcastClient {
     homeAway: string;
     score: string;
     aggregateScore?: number;
-    record: string | RecordEntity[];
+    record?: string | RecordEntity[];
     logo: string;
     logoDark: string;
     winner: boolean;

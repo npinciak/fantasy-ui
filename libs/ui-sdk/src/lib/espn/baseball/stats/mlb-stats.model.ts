@@ -1,4 +1,4 @@
-export const enum BaseballStat {
+export enum BaseballStat {
   AB,
   H,
   AVG,

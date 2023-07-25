@@ -33,7 +33,7 @@ export function includeLeagues(id: string): boolean {
  * @returns boolean
  */
 export function excludeLeagues(id: string): boolean {
-  return new Set(['14', '102', '3923', '8097', '20226', '54', '59', '19834', '8301', '19483', '19868', '19728']).has(id);
+  return new Set(['14', '62', '760', '102', '3923', '8097', '20226', '54', '59', '19834', '8301', '19483', '19868', '19728']).has(id);
 }
 
 /**
@@ -84,7 +84,7 @@ export function teamColorHandler(val: EspnFastcastClient.CompetitorsEntity): str
 
   if (negativeColors.has(color.toLowerCase()) && negativeColors.has(alternateColor.toLowerCase())) return '#445058';
 
-  return negativeColors.has(color.toLowerCase()) ? `#${alternateColor}` : `#${color}`;
+  return negativeColors.has(color.toLowerCase()) ? `#${alternateColor ?? '445058'}` : `#${color}`;
 }
 
 /**

@@ -9,6 +9,7 @@ import { FantasyBaseballPlayerNewsFacade } from '../../facade/fantasy-baseball-p
 import { FantasyBaseballTeamLiveFacade } from '../../facade/fantasy-baseball-team-live.facade';
 import { FantasyBaseballTeamFacade } from '../../facade/fantasy-baseball-team.facade';
 import { FantasyBaseballScoringPeriod } from '../../fantasy-baseball-scoring-period';
+import { BaseballPlayer } from '../../models/baseball-player.model';
 
 @Component({
   selector: 'app-baseball-team',
@@ -23,6 +24,9 @@ export class BaseballTeamComponent {
   readonly MLB_STAT_MAP = MLB_STATS_MAP;
 
   statPeriod$ = new BehaviorSubject<string>(FantasyBaseballScoringPeriod.season('2023'));
+  selectedBatterStat$ = new BehaviorSubject<BaseballStat>(BaseballStat.wOBA);
+  selectedBatterStatLabel$ = new BehaviorSubject<BaseballStat>(BaseballStat.wOBA);
+
   selectedBatterStatXAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.wRAA);
   selectedBatterStatXAxisLabel$ = new BehaviorSubject<BaseballStat | null>(null);
   selectedBatterStatYAxis$ = new BehaviorSubject<BaseballStat>(BaseballStat.AB);
@@ -37,6 +41,7 @@ export class BaseballTeamComponent {
   startingBatters$ = this.fantasyBaseballTeamFacade.startingBatters$;
   benchBatters$ = this.fantasyBaseballTeamFacade.benchBatters$;
 
+  startingPitchers$ = this.fantasyBaseballTeamFacade.startingPitchers$;
   benchPitchers$ = this.fantasyBaseballTeamFacade.benchPitchers$;
 
   newRoster$ = this.fantasyBaseballTeamFacade.currentRoster$;
@@ -48,7 +53,7 @@ export class BaseballTeamComponent {
     this.selectedBatterStatYAxis$,
   ]).pipe(map(([chartData, statPeriod, xAxis, yAxis]) => chartData(statPeriod, xAxis, yAxis)));
 
-  batterBarData$ = combineLatest([this.fantasyBaseballTeamFacade.batterChartData$, this.statPeriod$, this.selectedBatterStatXAxis$]).pipe(
+  batterBarData$ = combineLatest([this.fantasyBaseballTeamFacade.batterChartData$, this.statPeriod$, this.selectedBatterStat$]).pipe(
     map(([chartData, statPeriod, xAxis]) => chartData(statPeriod, xAxis))
   );
 
@@ -91,6 +96,11 @@ export class BaseballTeamComponent {
     this.statPeriod$.next(val);
   }
 
+  onBatterStatChange(val: any): void {
+    this.selectedBatterStat$.next(val);
+    this.selectedBatterStatLabel$.next(MLB_STATS_MAP[val].description);
+  }
+
   onBatterStatXAxisChange(val: any): void {
     this.selectedBatterStatXAxis$.next(val);
     this.selectedBatterStatXAxisLabel$.next(MLB_STATS_MAP[val].description);
@@ -99,5 +109,9 @@ export class BaseballTeamComponent {
   onBatterStatYAxisChange(val: any): void {
     this.selectedBatterStatYAxis$.next(val);
     this.selectedBatterStatYAxisLabel$.next(MLB_STATS_MAP[val].description);
+  }
+
+  onPlayerClick(player: BaseballPlayer) {
+    this.routerFacade.navigateToFantasyPlayer(player.id);
   }
 }

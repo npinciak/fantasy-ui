@@ -7,6 +7,7 @@ import { isPitcher } from '../../espn-helpers';
 import { FantasyLeague } from '../../models/fantasy-league.model';
 import { EspnTransformers } from '../../transformers/espn-transformers.m';
 import { AdvStats } from '../class/advStats.class';
+import { FantasyBaseballScoringPeriod } from '../fantasy-baseball-scoring-period';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballLeague } from '../models/baseball-league.model';
 import { BaseballPlayer, BaseballPlayerCard, BaseballPlayerStatsRow } from '../models/baseball-player.model';
@@ -290,4 +291,19 @@ export function transformToBaseballPlayerBatterStatsRow(
 export function transformToLiveBaseballPlayerBatterStatsRow(player: BaseballPlayer) {
   const { id, name, injured, injuryStatus, img, team, position, lineupSlotId, eligibleLineupSlots, stats } = player;
   return { id, name, injured, injuryStatus, img, team, position, lineupSlotId, eligibleLineupSlots, stats };
+}
+
+export function transformLive(player: BaseballPlayer, getLiveBaseballEventById: (id: string | null) => BaseballEvent | null) {
+  const games: string[] = exists(player.stats) ? Object.keys(player.stats) : [];
+
+  const gameList: (string | null)[] = games.map(g => {
+    const eventId = g.split('05')[1];
+    const event = getLiveBaseballEventById(eventId);
+    return event ? FantasyBaseballScoringPeriod.liveScoring(event.id) : null;
+  });
+
+  const eventUid = gameList[0] != null ? gameList[0] : null;
+
+
+  
 }

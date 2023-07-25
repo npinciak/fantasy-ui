@@ -257,13 +257,13 @@ export const BASEBALL_LINEUP_MAP: LineupEntityMap = {
     parentId: 21,
     starter: false,
   },
-  [BaseballLineupSlot.P]: {
-    abbrev: 'P',
+  [BaseballLineupSlot.P2]: {
+    abbrev: 'P2',
     active: true,
     bench: false,
     displayOrder: 0,
     eligiblePositions: [1, 11],
-    id: BaseballLineupSlot.P,
+    id: BaseballLineupSlot.P2,
     lineupSlotEligible: false,
     name: 'Pitchers',
     parentId: 22,

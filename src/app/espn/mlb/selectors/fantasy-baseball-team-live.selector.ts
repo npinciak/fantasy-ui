@@ -173,7 +173,7 @@ export class FantasyBaseballTeamLiveSelector extends GenericSelector(FantasyBase
 
   @Selector([RouterSelector.getTeamId, FantasyBaseballTeamLiveSelector.getById])
   static getLiveTeamPitchers(teamId: string | null, getLiveTeamById: (id: string) => BaseballTeamLive): BaseballPlayer[] {
-    return teamId ? getLiveTeamById(teamId).roster.filter(p => !p.isPitcher) : [];
+    return teamId ? getLiveTeamById(teamId).roster.filter(p => p.isPitcher) : [];
   }
 
   @Selector([FantasyBaseballTeamLiveSelector.getLiveTeamPitchers])
@@ -238,5 +238,4 @@ export class FantasyBaseballTeamLiveSelector extends GenericSelector(FantasyBase
   static getLiveTeamStartingPitcherStatsTableRows(liveTeamBatters: BaseballPlayer[]) {
     return existsFilter(liveTeamBatters.map(player => FantasyBaseballTransformers.transformToLiveBaseballPlayerBatterStatsRow(player)));
   }
-  
 }

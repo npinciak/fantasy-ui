@@ -1,7 +1,7 @@
 <div class="relative mb-6 flex w-full min-w-0 flex-col break-words rounded bg-white shadow-lg">
   <div class="mb-0 rounded-t border-0 px-4 py-3">
     <div class="flex flex-wrap items-center">
-      <div class="relative w-full max-w-full flex-1 flex-grow px-4">
+      <div class="relative w-full max-w-full flex-1 flex-grow pr-4">
         <h3 class="text-base font-semibold text-sky-700">{{ title }}</h3>
       </div>
       <div class="relative w-full max-w-full flex-1 flex-grow px-4 text-right">
@@ -13,7 +13,7 @@
     <table class="w-full border-collapse items-center bg-transparent">
       <tbody>
         <tr class="cursor-pointer hover:bg-slate-100" *ngFor="let player of lineup; let i = index" [attr.data-index]="i" tabindex="-1" (click)="onPlayerClick(player)">
-          <th class="whitespace-nowrap border-t-0 border-l-0 border-r-0 py-2 px-6 align-middle text-xs">{{ player?.lineupSlot }}</th>
+          <th class="whitespace-nowrap border-t-0 border-l-0 border-r-0 py-2 px-6 align-middle text-xs sm:px-3">{{ player?.lineupSlot }}</th>
           <td class="whitespace-nowrap border-t-0 border-l-0 border-r-0 text-left align-middle text-xs">
             <img width="48" height="35" role="presentation" class="w-13 h-9 rounded-full text-center text-xs text-gray-500" [src]="player?.img" [alt]="player?.name" />
           </td>
@@ -23,23 +23,8 @@
               [ngClass]="[FaIconByEspnPlayerInjuryStatus[player?.injuryStatus], InjurySeverityClassByInjurySeverity[InjurySeverityByInjuryStatus[player?.injuryStatus]]]"
               [title]="InjuryLabelByInjuryStatus[player?.injuryStatus]"
             ></i>
+
             <p class="truncate text-xs hover:cursor-pointer">{{ player?.team }} - {{ player?.eligibleLineupSlots }}</p>
-          </td>
-          <td class="text-md whitespace-nowrap border-t-0 border-l-0 border-r-0 p-2 px-6 align-middle">
-            <!-- <mat-icon
-              *ngIf="player?.injuryStatus"
-              [ngStyle]="{ color: playerInjuryStatusColor(player.injuryStatus) }"
-              [title]="PlayerStatusAbbrevByInjuryStatusType[player?.injuryStatus]"
-              >{{ MatIconByEspnPlayerInjuryStatus[player?.injuryStatus] }}</mat-icon
-            > -->
-            <!-- <div class="flex items-center">
-              <span class="mr-2">60%</span>
-              <div class="relative w-full">
-                <div class="flex h-2 overflow-hidden rounded bg-red-200 text-xs">
-                  <div style="width: 60%" class="flex flex-col justify-center whitespace-nowrap bg-red-500 text-center text-white shadow-none"></div>
-                </div>
-              </div>
-            </div> -->
           </td>
         </tr>
       </tbody>

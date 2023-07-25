@@ -27,3 +27,7 @@ export type BaseballPlayerStatsRow = Omit<PlayerEntity, 'teamId' | 'teamUid'> &
     highlightedPlayer: boolean;
     stats: Record<number, number>;
   };
+
+export type BaseballPlayerLiveStatsRow = Omit<PlayerEntity, 'teamId' | 'teamUid'> &
+  Pick<BaseballPlayer, 'eligibleLineupSlots' | 'injured' | 'injuryStatus'> &
+  Pick<TeamRosterEntry, 'lineupSlotId'> & { stats: Record<number, number> | null };

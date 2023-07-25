@@ -39,7 +39,7 @@ export class BaseballPitchersComponent {
     this.isLiveScore$,
     this.fantasyBaseballTeamLiveFacade.liveTeamPitcherStatsTableRows$,
   ]).pipe(
-    map(([batterStats, statPeriod, isLiveScore, liveTeamBatterStats]) => (isLiveScore ? liveTeamBatterStats : batterStats(statPeriod)))
+    map(([pitcherStats, statPeriod, isLiveScore, liveTeamPitcherStats]) => (isLiveScore ? liveTeamPitcherStats : pitcherStats(statPeriod)))
   );
 
   pitcherTableConfig$ = of({
