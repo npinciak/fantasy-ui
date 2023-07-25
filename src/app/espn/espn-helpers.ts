@@ -1,8 +1,9 @@
 import { tickerDate } from '@app/@shared/helpers/date';
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
-import { EspnClient, EspnFastcastClient, PITCHING_LINEUP_IDS, PLAYER_INJURY_STATUS } from '@sports-ui/ui-sdk/espn';
+import { EspnClient, PITCHING_LINEUP_IDS, PLAYER_INJURY_STATUS } from '@sports-ui/ui-sdk/espn';
 import { EVENT_STATUS, PlayerStatsYear, ProLeagueType, SEASON_TYPE, SportType } from '@sports-ui/ui-sdk/espn-client';
+import { CompetitorsEntity } from '@sports-ui/ui-sdk/espn-fastcast-client';
 import { BaseballPlayer, BaseballPlayerStatsRow } from './mlb/models/baseball-player.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
 
@@ -54,7 +55,7 @@ export function isPitcher(eligiblePos: number[]): boolean {
  *
  * @example teamColor()
  */
-export function teamColorHandler(val: EspnFastcastClient.CompetitorsEntity): string | null {
+export function teamColorHandler(val: CompetitorsEntity): string | null {
   const { color, alternateColor } = val;
 
   if (!color || !alternateColor) return null;

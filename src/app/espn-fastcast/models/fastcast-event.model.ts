@@ -1,6 +1,6 @@
 import { ParsedUid } from '@app/espn/espn-helpers';
-import { EspnFastcastClient } from '@sports-ui/ui-sdk/espn';
 import { EventStatus, EventStatusType } from '@sports-ui/ui-sdk/espn-client';
+import { EventsEntity, FullStatusType, OddsEntity, Situation } from '@sports-ui/ui-sdk/espn-fastcast-client';
 import { FastcastEventTeam } from './fastcast-team.model';
 
 interface FastcastEventAttributes {
@@ -20,18 +20,15 @@ interface FastcastEventAttributes {
 }
 
 export type FastcastEvent = FastcastEventAttributes &
-  Partial<EspnFastcastClient.Situation> &
-  Pick<EspnFastcastClient.EventsEntity, 'id' | 'uid' | 'name' | 'shortName' | 'note' | 'seriesSummary' | 'link' | 'seasonType'> &
-  Pick<EspnFastcastClient.FullStatusType, 'completed'> & {
-    odds: EspnFastcastClient.EspnClientOddsEntity | null;
+  Partial<Situation> &
+  Pick<EventsEntity, 'id' | 'uid' | 'name' | 'shortName' | 'note' | 'seriesSummary' | 'link' | 'seasonType'> &
+  Pick<FullStatusType, 'completed'> & {
+    odds: OddsEntity | null;
     eventIds: ParsedUid | null;
   };
 
 export type FastcastEventMap = Record<string, FastcastEvent>;
 
-export type MlbSituation = Pick<
-  EspnFastcastClient.Situation,
-  'balls' | 'strikes' | 'outs' | 'onFirst' | 'onSecond' | 'onThird' | 'batter' | 'pitcher'
->;
+export type MlbSituation = Pick<Situation, 'balls' | 'strikes' | 'outs' | 'onFirst' | 'onSecond' | 'onThird' | 'batter' | 'pitcher'>;
 
-export type FootballSituation = Pick<EspnFastcastClient.Situation, 'isRedZone' | 'possession' | 'shortDownDistanceText' | 'possessionText'>;
+export type FootballSituation = Pick<Situation, 'isRedZone' | 'possession' | 'shortDownDistanceText' | 'possessionText'>;

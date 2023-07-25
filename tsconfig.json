@@ -42,6 +42,9 @@
       "@sports-ui/ui-sdk/espn-client": [
         "libs/ui-sdk/src/lib/espn-client/espn-client.m.ts"
       ],
+      "@sports-ui/ui-sdk/espn-fastcast-client": [
+        "libs/ui-sdk/src/lib/espn-fastcast-client/espn-fastcast-client.m.ts"
+      ],
       "@sports-ui/ui-sdk/helpers": ["libs/ui-sdk/src/lib/helpers/helpers.m.ts"],
       "@sports-ui/ui-sdk/supabase": [
         "libs/ui-sdk/src/lib/supabase/supabase.m.ts"

@@ -3,11 +3,12 @@ import { Injectable } from '@angular/core';
 import { espnDateFormatter } from '@app/@shared/helpers/date';
 import { ApiService } from '@app/@shared/services/api.service';
 import { FastcastTransform } from '@app/espn-fastcast/models/fastcast-transform.model';
-import { EspnClient, EspnFastcastClient } from '@sports-ui/ui-sdk/espn';
+import { EspnClient } from '@sports-ui/ui-sdk/espn';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { FreeAgent, ProTeamSchedule } from '@sports-ui/ui-sdk/espn-client';
+import { SportsEntity } from '@sports-ui/ui-sdk/espn-fastcast-client';
 import {
   BaseEspnEndpointBuilder,
   ESPN_PARAM_FRAGMENTS,
@@ -144,7 +145,7 @@ export class EspnService extends ApiService {
    * @returns
    */
   fetchFastcast(url: string): Observable<FastcastTransform> {
-    return this.get<EspnFastcastClient.EspnClientFastcast>(url).pipe(map(res => EspnTransformers.clientFastcastToFastcast(res)));
+    return this.get<{ sports: SportsEntity[] }>(url).pipe(map(res => EspnTransformers.clientFastcastToFastcast(res)));
   }
 
   /**
@@ -159,7 +160,7 @@ export class EspnService extends ApiService {
     seasontype: number | null;
   }): Observable<FastcastTransform> {
     const endpoint = BaseEspnEndpointBuilder({}).staticScoreboard;
-    return this.get<EspnFastcastClient.EspnClientFastcast>(endpoint).pipe(map(res => EspnTransformers.clientFastcastToFastcast(res)));
+    return this.get<{ sports: SportsEntity[] }>(endpoint).pipe(map(res => EspnTransformers.clientFastcastToFastcast(res)));
   }
 
   /**

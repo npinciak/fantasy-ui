@@ -6,7 +6,7 @@ import { FastcastLeague } from '@app/espn-fastcast/models/fastcast-league.model'
 import { FastcastSport } from '@app/espn-fastcast/models/fastcast-sport.model';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
 import { FastcastTransform } from '@app/espn-fastcast/models/fastcast-transform.model';
-import { EspnClient, EspnFastcastClient } from '@sports-ui/ui-sdk/espn';
+import { EspnClient } from '@sports-ui/ui-sdk/espn';
 import {
   ARTICLE_TYPE,
   EVENT_STATUS_TYPE,
@@ -16,6 +16,8 @@ import {
   ProLeagueType,
   SportType,
 } from '@sports-ui/ui-sdk/espn-client';
+import { CompetitorsEntity, EventsEntity, LeaguesEntity, SportsEntity } from '@sports-ui/ui-sdk/espn-fastcast-client';
+import { pickFields } from '@sports-ui/ui-sdk/helpers';
 import {
   excludeLeagues,
   flattenPlayerStats,
@@ -127,7 +129,7 @@ export function clientPlayerToFantasyPlayer({
   };
 }
 
-export function clientFastcastToFastcast(clientModel: EspnFastcastClient.EspnClientFastcast): FastcastTransform {
+export function clientFastcastToFastcast(clientModel: { sports: SportsEntity[] }): FastcastTransform {
   const sports = clientModel.sports.map(s => clientSportsEntityToSport(s));
 
   const leaguesImport = clientModel.sports.filter(s => includeSports(s.id)).map(i => i.leagues);
@@ -152,19 +154,13 @@ export function clientFastcastToFastcast(clientModel: EspnFastcastClient.EspnCli
   };
 }
 
-export function clientSportsEntityToSport(sportsEntity: EspnFastcastClient.SportsEntity): FastcastSport {
-  const { id, uid, name, slug } = sportsEntity;
-
-  return {
-    id,
-    uid,
-    name,
-    slug,
-  };
+export function clientSportsEntityToSport(sportsEntity: SportsEntity): FastcastSport {
+  return pickFields(sportsEntity, ['id', 'uid', 'name', 'slug']);
 }
 
-export function clientLeagueImportToFastcastLeague(leagueImport: EspnFastcastClient.LeaguesEntity): FastcastLeague {
+export function clientLeagueImportToFastcastLeague(leagueImport: LeaguesEntity): FastcastLeague {
   const { id, uid, name, isTournament, slug, abbreviation, shortName } = leagueImport;
+
   return {
     id,
     uid,
@@ -177,7 +173,7 @@ export function clientLeagueImportToFastcastLeague(leagueImport: EspnFastcastCli
   };
 }
 
-export function clientCompetitorToFastcastTeam(eventUid: string, data: EspnFastcastClient.CompetitorsEntity): FastcastEventTeam | null {
+export function clientCompetitorToFastcastTeam(eventUid: string, data: CompetitorsEntity): FastcastEventTeam | null {
   if (!data) return null;
 
   const { id, uid, name, winner, score, logo, abbreviation, homeAway, alternateColor, rank, seriesRecord } = data;
@@ -203,7 +199,7 @@ export function clientCompetitorToFastcastTeam(eventUid: string, data: EspnFastc
   };
 }
 
-export function clientEventToFastcastEvent(event: EspnFastcastClient.EventsEntity): FastcastEvent | null {
+export function clientEventToFastcastEvent(event: EventsEntity): FastcastEvent | null {
   if (!event) return null;
 
   const mlbSituation = {} as MlbSituation;

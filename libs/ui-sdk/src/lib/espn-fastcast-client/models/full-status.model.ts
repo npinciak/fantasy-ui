@@ -1,4 +1,4 @@
-import { EventStatusType } from '../../espn-client/models/event-status.model';
+import { EventStatusType } from '../../espn-client/espn-client.m';
 
 export type FullStatus = { type: FullStatusType };
 export type FullStatusType = { id: EventStatusType; name: string; state: string; completed: boolean };
