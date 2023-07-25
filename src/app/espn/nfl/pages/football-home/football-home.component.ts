@@ -20,7 +20,6 @@ export class FootballHomeComponent {
   finalScoringPeriod$ = this.fantasyFootballLeagueFacade.finalScoringPeriodId$;
 
   standings$ = this.fantasyFootballTeamsFacade.standings$;
-  leagueId$ = this.routerFacade.leagueId$;
 
   constructor(
     readonly routerFacade: RouterFacade,

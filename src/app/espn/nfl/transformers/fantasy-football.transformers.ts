@@ -106,7 +106,7 @@ export function clientFreeAgentToFootballPlayer(data: FreeAgentEntry[]): Footbal
 }
 
 export function transformToFootballPlayerStatsRow(player: FootballPlayer, statPeriod: string): any | null {
-  const { id, name, injured, injuryStatus, img, team, position, lineupSlotId, percentChange, percentOwned } = player;
+  const { id, name, injured, injuryStatus, img, team, position, lineupSlotId, percentChange, percentOwned, eligibleLineupSlots } = player;
 
   if (!exists(player.stats)) return null;
   if (!exists(player.stats[statPeriod])) return null;

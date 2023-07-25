@@ -14,9 +14,8 @@ const LEAGUE_STANDINGS_COLUMNS: BaseTableColumn<FootballTeam>[] = [
   { columnDef: 'wins', headerCell: 'wins', headerLabel: 'W', dataType: TableColumnDataType.Number },
   { columnDef: 'losses', headerCell: 'losses', headerLabel: 'L', dataType: TableColumnDataType.Number },
   { columnDef: 'ties', headerCell: 'ties', headerLabel: 'T', dataType: TableColumnDataType.Number },
-  { columnDef: 'pointsFor', headerCell: 'pointsFor', headerLabel: 'pointsFor', dataType: TableColumnDataType.Number },
-  { columnDef: 'pointsAgainst', headerCell: 'pointsAgainst', headerLabel: 'pointsAgainst', dataType: TableColumnDataType.Number },
-  { columnDef: 'percentage', headerCell: 'percentage', headerLabel: 'W %', dataType: TableColumnDataType.Number },
+  { columnDef: 'pointsFor', headerCell: 'pointsFor', headerLabel: 'Points For', dataType: TableColumnDataType.Number },
+  { columnDef: 'pointsAgainst', headerCell: 'pointsAgainst', headerLabel: 'Points Against', dataType: TableColumnDataType.Number },
 ];
 
 export const DEFAULT_FOOTBALL_ROSTER_COLUMNS = [

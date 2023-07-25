@@ -19,7 +19,6 @@
               *ngFor="let matchup of matchupListByMatchupPeriodId$ | async; let i = index"
               [attr.data-index]="i"
               tabindex="-1"
-              (click)="onPlayerClick(player)"
             >
               <div>
                 <app-football-scoreboard-card-team [team]="matchup.awayTeam"></app-football-scoreboard-card-team>

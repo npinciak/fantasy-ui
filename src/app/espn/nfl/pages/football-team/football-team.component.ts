@@ -20,10 +20,6 @@ import { FootballPlayer } from '../../models/football-player.model';
   templateUrl: './football-team.component.html',
 })
 export class FootballTeamComponent {
-  readonly leagueId$ = this.routerFacade.leagueId$;
-  readonly teamId$ = this.routerFacade.teamId$;
-  readonly getSeason$ = this.routerFacade.seasonId$;
-
   readonly FOOTBALL_STATS_MAP = NFL_STATS_MAP;
   readonly FOOTBALL_POSITION_LIST_FILTER = FOOTBALL_POSITION_LIST_FILTER;
   readonly NFL_POSITION_MAP = NFL_POSITION_MAP;
