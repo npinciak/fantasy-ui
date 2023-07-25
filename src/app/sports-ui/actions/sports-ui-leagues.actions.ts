@@ -1,7 +1,7 @@
 import { GenericActions } from '@app/@shared/generic-state/generic.actions';
-import { SportsUiClientLeague } from '../models/sports-ui-league.model';
+import { Database } from '@sports-ui/ui-sdk/supabase';
 
-export class SportsUiLeagues extends GenericActions<SportsUiClientLeague>({ stateName: 'sportsUiLeagues' }) {
+export class SportsUiLeagues extends GenericActions<Database['public']['Tables']['Leagues']['Row']>({ stateName: 'sportsUiLeagues' }) {
   static VerifyLeagues = class {
     static readonly type = `[${SportsUiLeagues.stateName}] VerifyLeagues`;
   };

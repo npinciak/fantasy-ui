@@ -6,4 +6,5 @@ export interface SportsUiClientLeague {
   season: string;
   createdAt: string;
   ownerId: string;
+  expired: boolean;
 }
