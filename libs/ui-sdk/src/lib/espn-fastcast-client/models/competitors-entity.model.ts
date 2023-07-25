@@ -1,0 +1,34 @@
+import { GoalieSummaryEntity, ScoringEntity } from './athlete-action-entity.model';
+import { EntityBase } from './entity.model';
+import { Leader } from './leader.model';
+import { RecordEntity } from './record-entity.model';
+import { Uniform } from './uniform.model';
+
+export type CompetitorsEntity = Omit<EntityBase, 'slug' | 'shortName'> & {
+  type: string;
+  order: number;
+  homeAway: string;
+  score: string;
+  aggregateScore?: number;
+  record?: string | RecordEntity[];
+  logo: string;
+  logoDark: string;
+  winner: boolean;
+  displayName: string;
+  location: string;
+  color?: string;
+  alternateColor?: string | null;
+  group: string;
+  competitionIdPrevious: string;
+  competitionIdNext?: string | null;
+  rank?: number | null;
+  leaders?: Leader[] | null;
+  goalieSummary?: GoalieSummaryEntity[] | null;
+  shortenedRecord?: string | null;
+  scoringSummary?: ScoringEntity[] | null;
+  advance?: boolean | null;
+  form?: string | null;
+  isNational?: boolean | null;
+  uniform?: Uniform | null;
+  seriesRecord?: string | null;
+};

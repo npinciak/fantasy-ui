@@ -1,0 +1,30 @@
+import { EventStatus } from '../../espn-client/models/event-status.model';
+import { SeasonType } from '../../espn-client/models/season-type.model';
+import { CompetitorsEntity } from './competitors-entity.model';
+import { EntityBase } from './entity.model';
+import { FullStatus } from './full-status.model';
+import { NotesEntity } from './notes-entity.model';
+import { OddsEntity } from './odds-entity.model';
+import { Situation } from './situation.model';
+
+export type EventsEntity = Omit<EntityBase, 'abbreviation' | 'slug'> & {
+  competitionId: string;
+  date: string;
+  location: string;
+  season: number;
+  seasonType: SeasonType;
+  period: number;
+  clock: string;
+  status: EventStatus;
+  summary: string;
+  fullStatus: FullStatus;
+  link: string;
+  odds?: OddsEntity;
+  seriesSummary?: string | null;
+  competitors?: CompetitorsEntity[] | null;
+  situation?: Situation | null;
+  week?: number | null;
+  weekText?: string | null;
+  note?: string | null;
+  notes?: NotesEntity[] | null;
+};

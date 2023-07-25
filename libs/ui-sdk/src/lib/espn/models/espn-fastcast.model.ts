@@ -17,15 +17,24 @@ export namespace LegacyEspnFastcastClient {
     sports: SportsEntity[];
   }
 
+  /**
+   * @deprecated
+   */
   export type SportsEntity = Omit<EntityBase, 'abbreviation'> & {
     leagues: LeaguesEntity[];
   };
 
+  /**
+   * @deprecated
+   */
   export type LeaguesEntity = EntityBase & {
     isTournament: boolean;
     events?: EventsEntity[];
   };
 
+  /**
+   * @deprecated
+   */
   export type EventsEntity = Omit<EntityBase, 'abbreviation' | 'slug'> & {
     competitionId: string;
     date: string;
@@ -48,6 +57,9 @@ export namespace LegacyEspnFastcastClient {
     notes?: NotesEntity[] | null;
   };
 
+  /**
+   * @deprecated
+   */
   export interface EspnClientOddsEntity {
     details: string;
     overUnder: number;
@@ -56,6 +68,9 @@ export namespace LegacyEspnFastcastClient {
     awayTeamOdds: EspnClientTeamOddsEntity;
   }
 
+  /**
+   * @deprecated
+   */
   export interface EspnClientTeamOddsEntity {
     favorite: boolean;
     underdog: boolean;
@@ -69,8 +84,14 @@ export namespace LegacyEspnFastcastClient {
   export type FullStatus = { type: FullStatusType };
   export type FullStatusType = { id: EventStatusType; name: string; state: string; completed: boolean };
 
+  /**
+   * @deprecated
+   */
   export type TeamAttributes = Pick<EntityBase, 'id' | 'abbreviation'>;
 
+  /**
+   * @deprecated
+   */
   export type CompetitorsEntity = Omit<EntityBase, 'slug' | 'shortName'> & {
     type: string;
     order: number;
@@ -100,6 +121,9 @@ export namespace LegacyEspnFastcastClient {
     seriesRecord?: string | null;
   };
 
+  /**
+   * @deprecated
+   */
   export interface RecordEntity {
     type: string;
     summary: string;
@@ -115,6 +139,9 @@ export namespace LegacyEspnFastcastClient {
     streakType: string;
   }
 
+  /**
+   * @deprecated
+   */
   type AthleteEntityProps<T> = Pick<EntityBase, 'id'> & {
     fullName: T;
     displayName: T;
@@ -130,6 +157,9 @@ export namespace LegacyEspnFastcastClient {
       leaders?: Leader[] | null;
     };
 
+  /**
+   * @deprecated
+   */
   export interface Leader {
     displayValue: string;
     value: number;
@@ -137,26 +167,44 @@ export namespace LegacyEspnFastcastClient {
     team: TeamAttributes;
   }
 
+  /**
+   * @deprecated
+   */
   export type AthleteEntity = AthleteEntityProps<string> & {
     team: TeamAttributes;
     lastName?: string | null;
     active: boolean;
   };
 
+  /**
+   * @deprecated
+   */
   type AthleteActionEntity = { athlete: AthleteEntity; displayValue: string };
-
+  /**
+   * @deprecated
+   */
   export type PositionEntity = Pick<EntityBase, 'abbreviation'>;
-
+  /**
+   * @deprecated
+   */
   export type GoalieSummaryEntity = AthleteActionEntity;
-
+  /**
+   * @deprecated
+   */
   export type ScoringEntity = AthleteActionEntity;
 
+  /**
+   * @deprecated
+   */
   export interface Uniform {
     type: string;
     color: string;
     alternateColor?: string | null;
   }
 
+  /**
+   * @deprecated
+   */
   export interface Situation {
     lastPlay: LastPlay | null;
     down: number;
@@ -178,13 +226,17 @@ export namespace LegacyEspnFastcastClient {
     batter: MlbSituationAthlete;
     pitcher: MlbSituationAthlete;
   }
-
+  /**
+   * @deprecated
+   */
   export interface MlbSituationAthlete {
     playerId: number;
     summary: string;
     athlete: AthleteEntity;
   }
-
+  /**
+   * @deprecated
+   */
   export type LastPlay = Pick<EntityBase, 'id'> & {
     type: LastPlayType;
     text: string;
@@ -192,16 +244,23 @@ export namespace LegacyEspnFastcastClient {
     team?: Pick<TeamAttributes, 'id'> | null;
     athletesInvolved?: AthletesInvolvedEntity[] | null;
   };
-
+  /**
+   * @deprecated
+   */
   export type LastPlayType = Pick<EntityBase, 'id'> & {
     text: string;
     abbreviation?: string | null;
   };
-
+  /**
+   * @deprecated
+   */
   export type AthletesInvolvedEntity = AthleteEntityProps<string> & {
     team: Pick<TeamAttributes, 'id'>;
   };
 
+  /**
+   * @deprecated
+   */
   export interface NotesEntity {
     type: string;
     headline?: string | null;
