@@ -19,6 +19,7 @@ import { ShellNavComponent } from './components/shell-nav/shell-nav.component';
 import { StickyTableCellComponent } from './components/sticky-table-cell/sticky-table-cell.component';
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { StatPipe } from './pipes/stat-format.pipe';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { StatPipe } from './pipes/stat-format.pipe';
     BaseCardComponent,
     BaseChartComponent,
   ],
-  imports: [RouterModule, MaterialModule, CommonModule],
+  imports: [RouterModule, MaterialModule, CommonModule, FormsModule],
   exports: [
     StatPipe,
     BaseChartDirective,

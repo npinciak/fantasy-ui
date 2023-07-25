@@ -2,6 +2,7 @@
   <div class="mb-3 w-full">
     <label [for]="customElementId" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">{{ title }}</label>
     <select
+      [(ngModel)]="selectedOption"
       [id]="customElementId"
       class="form-select m-0 block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding bg-no-repeat px-3 py-1.5 text-base font-normal text-gray-700 transition ease-in-out hover:cursor-pointer focus:border-blue-600 focus:bg-white focus:text-gray-700 focus:outline-none"
       [attr.aria-label]="ariaLabel"
@@ -14,7 +15,6 @@
         *ngFor="let item of filterItems; let i = index"
         [value]="item.value"
         tabindex="-1"
-        role="listbox"
         [class.disabled:cursor-not-allowed]="disabled"
         [class.hover:cursor-pointer]="!disabled"
         aria-labelledby="listbox-label"
