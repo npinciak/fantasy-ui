@@ -1,5 +1,5 @@
 /**
- * Takes input of object and specified fields, returns specfied fields
+ * Takes input of object and specified fields, returns specified fields
  *
  * @param object
  * @param fields
