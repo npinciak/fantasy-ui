@@ -18,6 +18,6 @@
         [title]="InjuryLabelByInjuryStatus[player?.injuryStatus]"
       ></i>
     </p>
-    <p class="truncate text-xs hover:cursor-pointer">{{ player?.team }} - {{ player?.eligibleLineupSlots }}</p>
+    <p class="truncate text-xs hover:cursor-pointer">{{ player?.team }} {{ player?.eligibleLineupSlots ? '- ' + player?.eligibleLineupSlots : '' }}</p>
   </div>
 </div>

@@ -8,7 +8,7 @@
         {{ player?.name }}
         <mat-icon
           *ngIf="player?.injuryStatus"
-          [ngStyle]="{ color: playerInjuryStatusColor(player.injuryStatus) }"
+          [ngStyle]="{ color: playerInjuryStatusColor(player?.injuryStatus) }"
           [title]="PlayerStatusAbbrevByInjuryStatusType[player?.injuryStatus]"
           >{{ MatIconByEspnPlayerInjuryStatus[player?.injuryStatus] }}</mat-icon
         >
