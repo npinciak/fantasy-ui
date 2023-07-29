@@ -1,12 +1,9 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 import { FilterOptions } from '@app/@shared/models/filter.model';
-import { EspnPlayerDialogComponent } from '@app/espn/components/espn-player-dialog/espn-player-dialog.component';
-import { PlayerDialog } from '@app/espn/models/player-dialog-component.model';
 import { FreeAgentAvailabilityStatusSelectedFacade } from '@app/espn/state/free-agent-availability-selected.facade';
 import { Store } from '@ngxs/store';
 import {
@@ -20,8 +17,8 @@ import {
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { PLAYER_AVAILABILITY_STATUS, PlayerAvailabilityStatus } from '@sports-ui/ui-sdk/espn-client';
-import { FantasyBaseballPlayerNews } from '../../actions/fantasy-baseball-player-news.actions';
 import { BATTER_STATS_HEADERS, BATTER_STATS_ROWS, PITCHER_STATS_HEADERS, PITCHER_STATS_ROWS } from '../../consts/tables.const';
 import { FantasyBaseballFreeAgentsFilterFacade } from '../../facade/fantasy-baseball-free-agents-filter.facade';
 import { FantasyBaseballFreeAgentsFacade } from '../../facade/fantasy-baseball-free-agents.facade';
@@ -150,7 +147,7 @@ export class BaseballFreeAgentsComponent implements OnInit {
   constructor(
     private store: Store,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog,
+    private routerFacade: RouterFacade,
     readonly freeAgentAvailabilityStatusSelectedFacade: FreeAgentAvailabilityStatusSelectedFacade,
     readonly fantasyBaseballPlayerNewsFacade: FantasyBaseballPlayerNewsFacade,
     readonly fantasyBaseballFreeAgentsFilterFacade: FantasyBaseballFreeAgentsFilterFacade,
@@ -221,13 +218,8 @@ export class BaseballFreeAgentsComponent implements OnInit {
     this.fantasyBaseballFreeAgentsFilterFacade.setPagination(this.paginationMeta);
   }
 
-  async onPlayerClick(player: BaseballPlayer) {
-    await this.store.dispatch([new FantasyBaseballPlayerNews.Fetch({ playerId: player.id })]).toPromise();
-    const news = this.fantasyBaseballPlayerNewsFacade.getById(player.id)?.news ?? [];
-
-    const data = { player, news, sport: 'mlb' } as PlayerDialog<BaseballPlayer>;
-
-    this.dialog.open(EspnPlayerDialogComponent, { data, height: '500px', width: '800px' });
+  onPlayerClick(player: BaseballPlayer): void {
+    this.routerFacade.navigateToFantasyPlayer(player.id);
   }
 
   private get paginationMeta() {
