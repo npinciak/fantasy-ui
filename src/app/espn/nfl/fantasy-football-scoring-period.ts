@@ -1,3 +1,3 @@
 import { BaseScoringPeriod } from '../const/stat-period.const';
 
-export class FootballScoringPeriod extends BaseScoringPeriod() {}
+export class FantasyFootballScoringPeriod extends BaseScoringPeriod() {}

@@ -1,7 +1,7 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
-import { exists } from '@app/@shared/utilities/utilities.m';
+import { exists, existsFilter } from '@app/@shared/utilities/utilities.m';
 import { benchPlayersFilter, injuredPlayersFilter, startingPlayersFilter } from '@app/espn/espn-helpers';
 import { FootballPlayer } from '../models/football-player.model';
 import { FootballTeam } from '../models/football-team.model';
@@ -10,6 +10,7 @@ import { RouterSelector } from '@app/@core/store/router/router.selectors';
 import { FOOTBALL_LINEUP_MAP, FootballPosition } from '@sports-ui/ui-sdk/espn';
 import { PlayerStatsYear } from '@sports-ui/ui-sdk/espn-client';
 import { FantasyFootballTeamState } from '../state/fantasy-football-team.state';
+import { FantasyFootballTransformers } from '../transformers/fantasy-football.transformers.m';
 
 export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootballTeamState) {
   @Selector([RouterSelector.getTeamId, FantasyFootballTeamSelectors.getById])
@@ -85,22 +86,45 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
   }
 
   @Selector([FantasyFootballTeamSelectors.getRosterByTeamId])
-  static getTeamStats(rosterByTeamId: FootballPlayer[]) {
-    return (statPeriodId: string): FootballPlayer[] =>
-      rosterByTeamId.map(p => {
-        const stats = statsValidator(p.stats, statPeriodId);
+  static getTeamStats(players: FootballPlayer[]) {
+    return (statPeriod: string): FootballPlayer[] => {
+      const playerList = existsFilter(players.map(p => FantasyFootballTransformers.transformToFootballPlayerStatsRow(p, statPeriod)));
 
-        return {
-          ...p,
-          stats,
-        };
-      });
+      // rosterByTeamId.map(p => {
+      //   const stats = statsValidator(p.stats, statPeriodId);
+
+      //   return {
+      //     ...p,
+      //     stats,
+      //   };
+      // });
+
+      // console.log('playerList', playerList);
+      return playerList; // sortPlayersByLineupSlotDisplayOrder(playerList, FOOTBALL_LINEUP_MAP);
+    };
   }
 
   @Selector([FantasyFootballTeamSelectors.getTeamStats])
   static getTeamStatsByPositionId(getTeamStats: (statPeriod: string) => FootballPlayer[]) {
-    return (statPeriod: string, positionId: FootballPosition) => getTeamStats(statPeriod).filter(p => p.defaultPositionId === positionId);
+    return (statPeriod: string, positionId: FootballPosition) => getTeamStats(statPeriod); //.filter(p => p.defaultPositionId === positionId);
   }
+
+  // @Selector([FantasyBaseballTeamSelector.getTeamBatters, FantasyBaseballLeagueSelector.slices.seasonId, FangraphsConstantsSelector.getById])
+  // static getTeamBatterStats(
+  //   batters: BaseballPlayer[],
+  //   seasonId: string,
+  //   getSeasonConsts: (id: string | null) => FangraphsConstants
+  // ): (statPeriod: string) => BaseballPlayerStatsRow[] {
+  //   return (statPeriod: string) => {
+  //     const seasonConst = getSeasonConsts(seasonId);
+
+  //     const playerList = existsFilter(
+  //       batters.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonConst))
+  //     );
+
+  //     return sortPlayersByLineupSlotDisplayOrder(playerList, BASEBALL_LINEUP_MAP);
+  //   };
+  // }
 
   @Selector([FantasyFootballTeamSelectors.getRosterByTeamId])
   static getTeamPositionsCount(rosterByTeamId: FootballPlayer[]) {

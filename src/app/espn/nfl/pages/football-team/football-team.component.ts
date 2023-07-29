@@ -14,6 +14,7 @@ import { FOOTBALL_STATS_QB } from '../../consts/stats-filters.const';
 import { FantasyFootballLeagueFacade } from '../../facade/fantasy-football-league.facade';
 import { FantasyFootballPlayerNewsFacade } from '../../facade/fantasy-football-player-news.facade';
 import { FantasyFootballTeamFacade } from '../../facade/fantasy-football-team.facade';
+import { FantasyFootballScoringPeriod } from '../../fantasy-football-scoring-period';
 import { FootballPlayer } from '../../models/football-player.model';
 @Component({
   selector: 'app-football-team',
@@ -31,7 +32,7 @@ export class FootballTeamComponent {
 
   isLoading$ = this.footballLeagueFacade.isLoading$;
   teamInfo$ = this.footballTeamFacade.teamInfo$;
-  scoringPeriodId$ = new BehaviorSubject('');
+  scoringPeriodId$ = new BehaviorSubject(FantasyFootballScoringPeriod.season('2023'));
   selectedPosition$ = new BehaviorSubject(FootballPosition.QB);
   selectedStats$ = new BehaviorSubject(FootballStat.GP);
 

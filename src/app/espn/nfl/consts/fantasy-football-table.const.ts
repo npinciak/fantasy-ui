@@ -7,7 +7,7 @@ import {
 import { FootballLineupSlot, FootballPosition, FootballStat, NFL_STATS_MAP } from '@sports-ui/ui-sdk/espn';
 import { FootballTeam } from '../models/football-team.model';
 
-const statsKey = 'stats.stats';
+const statsKey = 'stats';
 
 const LEAGUE_STANDINGS_COLUMNS: BaseTableColumn<FootballTeam>[] = [
   { columnDef: 'name', headerCell: 'name', headerLabel: 'Team', dataType: TableColumnDataType.String },
