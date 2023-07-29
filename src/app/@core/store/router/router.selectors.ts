@@ -130,12 +130,26 @@ export class RouterSelector {
 
   @Selector([RouterSelector.getSport, RouterSelector.getSeason, RouterSelector.getLeagueId, RouterSelector.getTeamId])
   static espnFantasyMenu(sport: UrlPathFragments, season: string | null, leagueId: string | null, teamId: string | null) {
-    return [
-      { id: '1', routerLink: ['/espn'], label: 'Home' },
+    const baseNavLinks = [{ id: '1', routerLink: ['/espn'], label: 'Home' }];
+
+    const leagueNavLinks = [
       { id: '2', routerLink: EspnRouteBuilder.leaguePathFragments(sport, season, leagueId), label: 'League Home' },
       { id: '3', routerLink: EspnRouteBuilder.freeAgentsPathFragments(sport, season, leagueId), label: 'Free Agents' },
-      { id: '4', routerLink: EspnRouteBuilder.teamPitchersPathFragments(sport, season, leagueId, teamId), label: 'Pitchers' },
-      { id: '5', routerLink: EspnRouteBuilder.teamBattersPathFragments(sport, season, leagueId, teamId), label: 'Batters' },
-    ].filter(menuItem => (!sport ? menuItem.id === '1' : menuItem));
+    ];
+
+    const fantasyBaseballTeamLinks = [
+      { id: '4', routerLink: EspnRouteBuilder.teamPathFragments(sport, season, leagueId, teamId), label: 'Team' },
+      { id: '5', routerLink: EspnRouteBuilder.teamPitchersPathFragments(sport, season, leagueId, teamId), label: 'Pitchers' },
+      { id: '6', routerLink: EspnRouteBuilder.teamBattersPathFragments(sport, season, leagueId, teamId), label: 'Batters' },
+    ];
+
+    const showFantasyLeagueLinks = (sport === UrlPathFragments.MLB || sport === UrlPathFragments.NFL) && exists(leagueId);
+    const showFantasyBaseballPositionLinks = sport === UrlPathFragments.MLB && exists(teamId);
+
+    return showFantasyBaseballPositionLinks
+      ? [...baseNavLinks, ...leagueNavLinks, ...fantasyBaseballTeamLinks]
+      : showFantasyLeagueLinks
+      ? [...baseNavLinks, ...leagueNavLinks]
+      : baseNavLinks;
   }
 }
