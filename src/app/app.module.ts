@@ -17,7 +17,6 @@ import { FangraphsConstantsState } from './@shared/fangraphs/fangraphs-const.sta
 import { SharedModule } from './@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SportsBookModule } from './sportsbook/sportsbook.module';
 
 const actionSanitizer = (action: { action: any; payload: any; type: string; addedStates?: any }) => {
   const uiRouterActions = /router+/g;
@@ -63,7 +62,6 @@ const ngxsConfig = {
     AuthenticationModule,
     SharedModule,
     ShellModule,
-    SportsBookModule,
     NgxsModule.forRoot([RouterState, FangraphsConstantsState, FangraphsConstantsActionHandler], ngxsConfig),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production, actionSanitizer, stateSanitizer }),
     ServiceWorkerModule.register('ngsw-worker.js', {
