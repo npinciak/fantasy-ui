@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterFacade } from '@app/@core/store/router/router.facade';
-import { BATTER_STATS_LIST, BaseballStat, MLB_STATS_MAP } from '@sports-ui/ui-sdk';
+import { BATTER_STATS_LIST_OPTIONS, BaseballStat, MLB_STATS_MAP } from '@sports-ui/ui-sdk';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BATTER_STATS_HEADERS, BATTER_STATS_LIVE_HEADERS, BATTER_STATS_LIVE_ROWS, BATTER_STATS_ROWS } from '../../consts/tables.const';
@@ -14,14 +14,10 @@ import { BaseballPlayer } from '../../models/baseball-player.model';
 @Component({
   selector: 'app-baseball-batters',
   templateUrl: './baseball-batters.component.html',
-  styleUrls: ['./baseball-batters.component.scss'],
 })
 export class BaseballBattersComponent {
   readonly MLB_STAT_MAP = MLB_STATS_MAP;
-  readonly BATTER_STATS_LIST = BATTER_STATS_LIST.map(p => ({
-    label: p.description,
-    value: p.id,
-  }));
+  readonly BATTER_STATS_LIST_OPTIONS = BATTER_STATS_LIST_OPTIONS;
 
   readonly BATTER_STATS_ROWS = BATTER_STATS_ROWS;
   readonly BATTER_STATS_HEADERS = BATTER_STATS_HEADERS;
@@ -102,7 +98,7 @@ export class BaseballBattersComponent {
     this.selectedBatterStat$.next(val);
   }
 
-  onPlayerClick(player: BaseballPlayer) {
+  onPlayerClicked(player: BaseballPlayer) {
     this.routerFacade.navigateToFantasyPlayer(player.id);
   }
 }

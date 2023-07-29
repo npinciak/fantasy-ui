@@ -62,12 +62,6 @@ export const BATTER_STATS_COLUMNS = [
     dataType: TableColumnDataType.Number,
   },
   {
-    columnDef: 'percentStarted',
-    headerCell: 'percentStarted',
-    headerLabel: '% Started',
-    dataType: TableColumnDataType.Number,
-  },
-  {
     columnDef: 'percentOwned',
     headerCell: 'percentOwned',
     headerLabel: '% Owned',

@@ -19,7 +19,7 @@
               <app-dropdown-filter
                 ariaLabel="batter stats options"
                 [selectedOption]="selectedBatterStat$ | async"
-                [filterItems]="BATTER_STATS_LIST"
+                [filterItems]="BATTER_STATS_LIST_OPTIONS"
                 (filterUpdate)="onBatterStatChange($event)"
               ></app-dropdown-filter>
             </div>
@@ -31,8 +31,15 @@
 
       <div class="mb-12 w-full px-4">
         <app-base-card>
-          <app-toggle title="Live Stats" (selectChange)="onLiveScoringSelectChange($event)"></app-toggle>
-          <app-refresh-btn (refreshButtonClicked)="onRefreshClick()"></app-refresh-btn>
+          <div class="flex flex-1 flex-col gap-5 sm:flex-row">
+            <div class="basis-1/8">
+              <app-refresh-btn (refreshButtonClicked)="onRefreshClick()"></app-refresh-btn>
+            </div>
+            <div class="basis-1/8">
+              <app-toggle title="Live Stats" (selectChange)="onLiveScoringSelectChange($event)"></app-toggle>
+            </div>
+            <div class="basis-6/8"></div>
+          </div>
 
           <app-espn-stats-table
             [hidePaginator]="true"
@@ -40,6 +47,7 @@
             [dataColumns]="(tableConfig$ | async).rows"
             [headers]="(tableConfig$ | async).headers"
             [statsMap]="MLB_STAT_MAP"
+            (playerClicked)="onPlayerClicked($event)"
           >
           </app-espn-stats-table>
         </app-base-card>

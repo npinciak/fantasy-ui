@@ -4,30 +4,6 @@
   </div>
   <div main>
     <div class="flex flex-wrap">
-      <div class="mb-12 w-full px-4 xl:mb-0 xl:w-8/12">
-        <app-base-card>
-          <div class="flex flex-1 flex-col gap-5 sm:flex-row">
-            <div class="basis-1/3">
-              <app-dropdown-filter
-                ariaLabel="scoring period options"
-                [selectedOption]="statPeriod$ | async"
-                [filterItems]="scoringPeriodFilters$ | async"
-                (filterUpdate)="onScoringPeriodIdChange($event)"
-              ></app-dropdown-filter>
-            </div>
-            <div class="basis-1/3">
-              <app-dropdown-filter
-                ariaLabel="batter stats options"
-                [selectedOption]="selectedBatterStat$ | async"
-                [filterItems]="BATTER_STATS_LIST"
-                (filterUpdate)="onBatterStatChange($event)"
-              ></app-dropdown-filter>
-            </div>
-          </div>
-
-          <app-chart-line height="350px" ariaLabel="batter stats line chart" [chartData]="batterBarData$ | async"></app-chart-line>
-        </app-base-card>
-      </div>
       <div class="w-full px-4 xl:w-4/12">
         <app-base-card>
           <div class="flex flex-1 flex-col gap-5 sm:flex-row">
@@ -45,7 +21,7 @@
                 ariaLabel="batter stats options"
                 [selectedOption]="selectedBatterStatXAxis$ | async"
                 title="batter stats x"
-                [filterItems]="BATTER_STATS_LIST"
+                [filterItems]="BATTER_STATS_LIST_OPTIONS"
                 (filterUpdate)="onBatterStatXAxisChange($event)"
               ></app-dropdown-filter>
             </div>
@@ -54,7 +30,7 @@
                 ariaLabel="batter stats options"
                 [selectedOption]="selectedBatterStatYAxis$ | async"
                 title="batter stats y"
-                [filterItems]="BATTER_STATS_LIST"
+                [filterItems]="BATTER_STATS_LIST_OPTIONS"
                 (filterUpdate)="onBatterStatYAxisChange($event)"
               ></app-dropdown-filter>
             </div>

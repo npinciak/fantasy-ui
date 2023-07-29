@@ -14,6 +14,7 @@
             [dataColumns]="(tableConfig$ | async).rows"
             [headers]="(tableConfig$ | async).headers"
             [statsMap]="MLB_STAT_MAP"
+            (playerClicked)="onPlayerClicked($event)"
           >
           </app-espn-stats-table>
         </app-base-card>

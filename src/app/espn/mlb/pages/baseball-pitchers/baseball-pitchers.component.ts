@@ -14,7 +14,6 @@ import { BaseballPlayer } from '../../models/baseball-player.model';
 @Component({
   selector: 'app-baseball-pitchers',
   templateUrl: './baseball-pitchers.component.html',
-  styleUrls: ['./baseball-pitchers.component.scss'],
 })
 export class BaseballPitchersComponent {
   readonly PITCHER_STATS_ROWS = PITCHER_STATS_ROWS;
@@ -98,7 +97,7 @@ export class BaseballPitchersComponent {
     this.statPeriod$.next(val);
   }
 
-  onPlayerClick(player: BaseballPlayer) {
+  onPlayerClicked(player: BaseballPlayer) {
     this.routerFacade.navigateToFantasyPlayer(player.id);
   }
 }
