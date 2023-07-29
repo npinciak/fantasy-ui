@@ -291,6 +291,7 @@ export const MLB_STATS_KEYS = Object.keys(MLB_STATS_MAP);
 
 export const BATTER_STATS_LIST = MLB_STATS_LIST.filter(s => s.statTypeId === BaseballStatType.Batting);
 export const BATTER_STATS_CATEGORY_LIST = MLB_STATS_LIST.filter(s => s.statCategoryId === BaseballStatCategory.Batting);
+export const BATTER_STATS_LIST_OPTIONS = BATTER_STATS_LIST.map(p => ({ label: p.description, value: p.id }));
 
 export const PITCHER_STATS_LIST = MLB_STATS_LIST.filter(s => s.statTypeId === BaseballStatType.Pitching);
 export const PITCHER_STATS_CATEGORY_LIST = MLB_STATS_LIST.filter(s => s.statCategoryId === BaseballStatCategory.Pitching);

@@ -14,6 +14,7 @@ export class FantasyBaseballPlayerCardFacade extends GenericFacade({
   actionHandler: FantasyBaseballPlayerCard,
 }) {
   getCurrentPlayerCard$ = select(FantasyBaseballPlayerCardSelector.getCurrentPlayerCard);
+  getCurrentPlayerCardStats$ = select(FantasyBaseballPlayerCardSelector.getCurrentPlayerCardStats);
 
   constructor(private store: Store) {
     super();
