@@ -6,7 +6,7 @@ import { FastcastLeague } from '@app/espn-fastcast/models/fastcast-league.model'
 import { FastcastSport } from '@app/espn-fastcast/models/fastcast-sport.model';
 import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
 import { FastcastTransform } from '@app/espn-fastcast/models/fastcast-transform.model';
-import { EspnClient } from '@sports-ui/ui-sdk/espn';
+import { EspnClient, PLAYER_INJURY_STATUS } from '@sports-ui/ui-sdk/espn';
 import {
   ARTICLE_TYPE,
   EVENT_STATUS_TYPE,
@@ -102,12 +102,13 @@ export function clientPlayerToFantasyPlayer({
   teamMap: Record<string, string>;
   positionMap: PositionEntityMap;
 }): FantasyPlayer {
-  const { proTeamId, defaultPositionId, injuryStatus, injured, outlooks, id, fullName, ownership, lastNewsDate } = clientPlayer;
+  const { proTeamId, defaultPositionId, injured, outlooks, id, fullName, ownership, lastNewsDate } = clientPlayer;
 
   const leagueAbbrev = PRO_LEAGUE_ABBREV_BY_PRO_LEAGUE_TYPE[leagueId].toLowerCase();
   const team = teamMap[proTeamId] as string;
   const stats = flattenPlayerStats(clientPlayer.stats);
   const outlookByWeek = clientPlayerOutlook(outlooks);
+  const injuryStatus = exists(clientPlayer.injuryStatus) ? clientPlayer.injuryStatus : PLAYER_INJURY_STATUS.Active;
 
   return {
     id: id.toString(),

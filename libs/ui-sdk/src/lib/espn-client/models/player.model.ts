@@ -14,7 +14,7 @@ export type PlayerInfo = Pick<IdAttributesNumber, 'id' | 'proTeamId' | 'playerId
   fullName: string;
   lastNewsDate: number;
   injured: boolean;
-  injuryStatus: PlayerInjuryStatus;
+  injuryStatus?: PlayerInjuryStatus;
   ownership: PlayerOwnership;
   outlooks?: PlayerOutlooksMap;
   eligibleSlots: number[];
