@@ -81,6 +81,9 @@ export function teamColorHandler(val: CompetitorsEntity): string | null {
     'f3f31e',
     'f5b6cd',
     'b7d0e9',
+    '37ff5d',
+    'ffcd00',
+    'ffef00',
   ]);
 
   if (negativeColors.has(color.toLowerCase()) && negativeColors.has(alternateColor.toLowerCase())) return '#445058';
