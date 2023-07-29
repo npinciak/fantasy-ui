@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { select } from '../models/typed-select';
 import { GenericFacade, GenericSelectorClass, IGenericActionsClass } from './generic.model';
 
 export function GenericFacade<T, U = Record<string, unknown>>({
@@ -14,11 +15,11 @@ export function GenericFacade<T, U = Record<string, unknown>>({
 } {
   @Injectable()
   class GenericFacadeBase implements GenericFacade<T> {
-    getMap$: Observable<Record<string, T>>;
-    getList$: Observable<T[]>;
-    getById$: Observable<(id: string | null) => T | null>;
-    getIdList$: Observable<string[]>;
-    getIdSet$: Observable<Set<string>>;
+    getMap$: Observable<Record<string, T>> = select(selectorClass.getMap);
+    getList$: Observable<T[]> = select(selectorClass.getList);
+    getById$: Observable<(id: string | null) => T | null> = select(selectorClass.getById);
+    getIdList$: Observable<string[]> = select(selectorClass.getIdList);
+    getIdSet$: Observable<Set<string>> = select(selectorClass.getIdSet);
 
     static fetch = actionHandler.Fetch;
     static addOrUpdate = actionHandler.AddOrUpdate;
