@@ -4,6 +4,7 @@ import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
 import { EspnClient, PITCHING_LINEUP_IDS, PLAYER_INJURY_STATUS } from '@sports-ui/ui-sdk/espn';
 import { EVENT_STATUS, PlayerStatsYear, ProLeagueType, SEASON_TYPE, SportType } from '@sports-ui/ui-sdk/espn-client';
 import { CompetitorsEntity } from '@sports-ui/ui-sdk/espn-fastcast-client';
+import { getContrastRatio } from '@sports-ui/ui-sdk/helpers';
 import { BaseballPlayer, BaseballPlayerStatsRow } from './mlb/models/baseball-player.model';
 import { FootballPlayer } from './nfl/models/football-player.model';
 
@@ -34,7 +35,9 @@ export function includeLeagues(id: string): boolean {
  * @returns boolean
  */
 export function excludeLeagues(id: string): boolean {
-  return new Set(['14', '62', '760', '102', '3923', '8097', '20226', '54', '59', '19834', '8301', '19483', '19868', '19728']).has(id);
+  const leagueIds = ['14', '62', '760', '102', '3923', '8097', '20226', '54', '59', '19834', '8301', '19483', '19868', '19728'];
+
+  return new Set([] as string[]).has(id);
 }
 
 /**
@@ -60,35 +63,12 @@ export function teamColorHandler(val: CompetitorsEntity): string | null {
 
   if (!color || !alternateColor) return null;
 
-  const negativeColors = new Set([
-    '80fed2',
-    'ffffff',
-    'ffc600',
-    'ffff00',
-    'fcee33',
-    'fafafc',
-    'cccccc',
-    'ffdc02',
-    'fdba31',
-    'f7aa25',
-    'ffc72c',
-    'd1d3d4',
-    'eaaa00',
-    'f7f316',
-    'aed6f1',
-    'e8d035',
-    'c9c7c8',
-    'f3f31e',
-    'f5b6cd',
-    'b7d0e9',
-    '37ff5d',
-    'ffcd00',
-    'ffef00',
-  ]);
+  const validColorRatio = getContrastRatio(color, 'ffffff') <= 2.5;
+  const validAlternativeColorRatio = getContrastRatio(alternateColor, 'ffffff') <= 2.5;
 
-  if (negativeColors.has(color.toLowerCase()) && negativeColors.has(alternateColor.toLowerCase())) return '#445058';
+  if (validColorRatio && validAlternativeColorRatio) return '#445058';
 
-  return negativeColors.has(color.toLowerCase()) ? `#${alternateColor ?? '445058'}` : `#${color}`;
+  return validColorRatio ? `#${alternateColor ?? '445058'}` : `#${color}`;
 }
 
 /**
