@@ -6,11 +6,10 @@ import {
   ClientSlateTeamAttributes,
   ClientSlateTeamAttributesMap,
   SITE_TO_SITETYPE_MAP,
+  SlateWeather,
 } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 
-import { SlateWeather } from '@dfsClient/daily-fantasy-client-slate-attr.model';
-
-import { MLBClientTeamAttributes } from '../../../dfs-client-models/mlb-client.model';
+import { MLBClientTeamAttributes } from '@sports-ui/daily-fantasy-sdk/models';
 import { SlatePlayer } from '../models/slate-player.model';
 import { Weather } from '../models/weather.model';
 import { PlayerProfilerSeasonMap } from '../nfl/models/nfl-profiler.model';
