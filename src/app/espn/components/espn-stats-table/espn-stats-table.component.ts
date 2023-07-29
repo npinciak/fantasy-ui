@@ -34,6 +34,7 @@ export class EspnStatsTableComponent<T extends PlayerEntity> implements OnChange
   @Input() ariaLabel: string | null = null;
   @Input() statsMap: Record<string, StatEntity>;
   @Input() hidePaginator = false;
+  @Input() defaultPageSize = 10;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
