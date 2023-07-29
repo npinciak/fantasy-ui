@@ -5,5 +5,6 @@ export * from './site-configs.model';
 export * from './site.model';
 export * from './slate-attributes.model';
 export * from './slate-player.model';
+export * from './slate-weather.model';
 export * from './slate.model';
 export * from './vegas.model';
