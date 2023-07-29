@@ -6,7 +6,7 @@ import { headshotImgBuilder, logoImgBuilder } from '../../espn.const';
 import { FantasyLeague } from '../../models/fantasy-league.model';
 import { EspnTransformers } from '../../transformers/espn-transformers.m';
 import { FootballLeague } from '../models/fantasy-football-league.model';
-import { FootballPlayer, FootballPlayerFreeAgent } from '../models/football-player.model';
+import { FootballPlayer, FootballPlayerFreeAgent, FootballPlayerStatsRow } from '../models/football-player.model';
 import { FootballTeam } from '../models/football-team.model';
 
 export function clientLeagueToFootballLeague(res: EspnClient.FootballLeague, genericLeagueSettings: FantasyLeague): FootballLeague {
@@ -105,8 +105,8 @@ export function clientFreeAgentToFootballPlayer(data: FreeAgentEntry[]): Footbal
   });
 }
 
-export function transformToFootballPlayerStatsRow(player: FootballPlayer, statPeriod: string): any | null {
-  const { id, name, injured, injuryStatus, img, team, position, lineupSlotId, percentChange, percentOwned, eligibleLineupSlots } = player;
+export function transformToFootballPlayerStatsRow(player: FootballPlayer, statPeriod: string): FootballPlayerStatsRow | null {
+  const { id, name, injured, injuryStatus, img, team, position, lineupSlotId, percentChange, percentOwned, defaultPositionId } = player;
 
   if (!exists(player.stats)) return null;
   if (!exists(player.stats[statPeriod])) return null;
@@ -124,6 +124,7 @@ export function transformToFootballPlayerStatsRow(player: FootballPlayer, statPe
     lineupSlotId,
     percentChange,
     percentOwned,
+    defaultPositionId,
     highlightedPlayer: false,
     stats,
   };

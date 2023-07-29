@@ -56,7 +56,7 @@ export function isPitcher(eligiblePos: number[]): boolean {
  * @param val
  * @returns string | null
  *
- * @example teamColor()
+ * @example teamColorHandler()
  */
 export function teamColorHandler(val: CompetitorsEntity): string | null {
   const { color, alternateColor } = val;
