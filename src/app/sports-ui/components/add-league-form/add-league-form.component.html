@@ -1,4 +1,4 @@
-<div class="flex-col">
+<div class="w-full px-4">
   <div>
     <app-dropdown-filter
       ariaLabel="sport options"
@@ -8,10 +8,16 @@
     ></app-dropdown-filter>
   </div>
   <div>
-    <mat-form-field>
-      <input matInput #leagueIdInput placeholder="Ex: 21345679" (change)="leagueIdInputChange(leagueIdInput.value)" autocomplete="off" />
-      <mat-label>League Id</mat-label>
-    </mat-form-field>
+    <div class="mb-3 pt-0">
+      <input
+        type="number"
+        #leagueIdInput
+        placeholder="Ex: 21345679"
+        (change)="leagueIdInputChange(leagueIdInput.value)"
+        autocomplete="off"
+        class="focus:shadow-outline relative w-full rounded bg-white px-3 py-3 text-sm shadow outline-none focus:outline-none"
+      />
+    </div>
   </div>
   <div>
     <button [disabled]="leagueFormFacade.isDirty$ | async" mat-flat-button color="primary" (click)="onAddLeague()">Add</button>
