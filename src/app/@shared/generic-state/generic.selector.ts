@@ -27,6 +27,11 @@ export function GenericSelector<EntityType>(stateClass: GenericStateClass<Entity
       return Object.values(map);
     }
 
+    @Selector([GenericSelectorBase.getList])
+    static getListLength(list: EntityType[]): number {
+      return list.length;
+    }
+
     @Selector([GenericSelectorBase.slices.map])
     static getIdList(map: Record<string, EntityType>): string[] {
       return Object.keys(map);

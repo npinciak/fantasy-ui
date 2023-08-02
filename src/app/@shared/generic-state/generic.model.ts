@@ -16,10 +16,12 @@ export interface GenericFacade<T> {
   getById$: Observable<(id: string | null) => T | null>;
   getIdList$: Observable<string[]>;
   getIdSet$: Observable<Set<string>>;
+  getListLength$: Observable<number>;
   addOrUpdate(entities: T[]): Observable<void>;
   fetch(): Observable<void>;
   getById(id: string | null): T | null;
   getList(): T[];
+  getListLength(): number;
 }
 
 export interface GenericSelectorClass<T> {
@@ -29,6 +31,7 @@ export interface GenericSelectorClass<T> {
   getMap(state: GenericStateModel<T>): Record<string, T>;
   getById(map: Record<string, T>): (id: string | null) => T | null;
   getList(map: Record<string, T>): T[];
+  getListLength(list: T[]): number;
   getIdList(map: Record<string, T>): string[];
   getIdSet(list: string[]): Set<string>;
 }

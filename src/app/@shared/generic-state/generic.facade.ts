@@ -17,6 +17,7 @@ export function GenericFacade<T, U = Record<string, unknown>>({
   class GenericFacadeBase implements GenericFacade<T> {
     getMap$: Observable<Record<string, T>> = select(selectorClass.getMap);
     getList$: Observable<T[]> = select(selectorClass.getList);
+    getListLength$: Observable<number> = select(selectorClass.getListLength);
     getById$: Observable<(id: string | null) => T | null> = select(selectorClass.getById);
     getIdList$: Observable<string[]> = select(selectorClass.getIdList);
     getIdSet$: Observable<Set<string>> = select(selectorClass.getIdSet);
@@ -36,6 +37,10 @@ export function GenericFacade<T, U = Record<string, unknown>>({
 
     getList(): T[] {
       return this.store.selectSnapshot(selectorClass.getList);
+    }
+
+    getListLength(): number {
+      return this.store.selectSnapshot(selectorClass.getListLength);
     }
 
     getById(id: string | null): T | null {
