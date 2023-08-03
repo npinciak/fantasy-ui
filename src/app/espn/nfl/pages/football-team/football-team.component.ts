@@ -35,6 +35,7 @@ export class FootballTeamComponent {
   scoringPeriodId$ = new BehaviorSubject(FantasyFootballScoringPeriod.season('2023'));
   selectedPosition$ = new BehaviorSubject(FootballPosition.QB);
   selectedStats$ = new BehaviorSubject(FootballStat.GP);
+  teamListLength$ = this.footballTeamFacade.getListLength$;
 
   statPeriodFilterOptions$ = this.footballLeagueFacade.scoringPeriodFilterOptions$;
 

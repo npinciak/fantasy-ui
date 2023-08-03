@@ -8,6 +8,7 @@ import { BaseballTeam } from '@app/espn/mlb/models/baseball-team.model';
 export class EspnTeamHeaderComponent {
   @Input() team: BaseballTeam;
   @Input() backgroundColor = '';
+  @Input() leagueSize = 10;
 
   constructor() {}
 }

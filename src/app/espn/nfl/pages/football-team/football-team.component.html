@@ -1,6 +1,6 @@
 <app-page-layout>
   <div statsHeader>
-    <app-football-team-header [team]="teamInfo$ | async"></app-football-team-header>
+    <app-espn-team-header [team]="teamInfo$ | async" [leagueSize]="teamListLength$ | async"></app-espn-team-header>
   </div>
   <div main>
     <div class="flex flex-wrap">

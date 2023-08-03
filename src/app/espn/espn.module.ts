@@ -12,8 +12,8 @@ import { EspnPlayerTrendingColComponent } from './components/espn-player-trendin
 import { EspnPlayerComponent } from './components/espn-player/espn-player.component';
 import { EspnStandingsTableComponent } from './components/espn-standings-table/espn-standings-table.component';
 import { EspnStatsTableComponent } from './components/espn-stats-table/espn-stats-table.component';
+import { EspnTeamHeaderComponent } from './components/espn-team-header/espn-team-header.component';
 import { EspnTeamInfoColComponent } from './components/espn-team-info-col/espn-team-info-col.component';
-import { FantasyTeamHeaderComponent } from './components/fantasy-team-header/fantasy-team-header.component';
 import { EspnRoutingModule } from './espn-routing.module';
 import { BaseballLineupCardComponent } from './mlb/components/baseball-lineup-card/baseball-lineup-card.component';
 import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
@@ -75,7 +75,7 @@ import { FreeAgentsAvailabilitySelectedState } from './state/free-agent-availabi
     EspnPlayerDialogComponent,
     BaseballLineupCardComponent,
     EspnStandingsTableComponent,
-    FantasyTeamHeaderComponent,
+    EspnTeamHeaderComponent,
     EspnFreeAgentFilterComponentComponent,
     BaseballPlayerComponent,
     BaseballBattersComponent,
