@@ -11,7 +11,7 @@ import { BaseballPlayer, BaseballPlayerLiveStatsRow } from '../models/baseball-p
 import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
 import { FantasyBaseballTeamsLiveState } from '../state/fantasy-baseball-team-live.state';
 import { FantasyBaseballTransformers } from '../transformers/fantasy-baseball.transformers.m';
-import { FantasyBaseballEventSelector } from './fantasy-baseball-event.selector';
+import { FantasyBaseballEventsSelector } from './fantasy-baseball-events.selector';
 import { FantasyBaseballTeamSelector } from './fantasy-baseball-team.selector';
 
 export class FantasyBaseballTeamLiveSelector extends GenericSelector(FantasyBaseballTeamsLiveState) {
@@ -74,7 +74,7 @@ export class FantasyBaseballTeamLiveSelector extends GenericSelector(FantasyBase
     return benchPlayersFilter(batters, BASEBALL_LINEUP_MAP);
   }
 
-  @Selector([RouterSelector.getTeamId, FantasyBaseballTeamLiveSelector.getLiveTeamStartingBatters, FantasyBaseballEventSelector.getById])
+  @Selector([RouterSelector.getTeamId, FantasyBaseballTeamLiveSelector.getLiveTeamStartingBatters, FantasyBaseballEventsSelector.getById])
   static getLiveTeamStartingBatterStats(
     teamId: string | null,
     batters: BaseballPlayer[],
@@ -117,7 +117,7 @@ export class FantasyBaseballTeamLiveSelector extends GenericSelector(FantasyBase
     });
   }
 
-  @Selector([RouterSelector.getTeamId, FantasyBaseballTeamLiveSelector.getLiveTeamBenchBatters, FantasyBaseballEventSelector.getById])
+  @Selector([RouterSelector.getTeamId, FantasyBaseballTeamLiveSelector.getLiveTeamBenchBatters, FantasyBaseballEventsSelector.getById])
   static getLiveTeamBenchBatterStats(
     teamId: string | null,
     batters: BaseballPlayer[],
@@ -186,7 +186,7 @@ export class FantasyBaseballTeamLiveSelector extends GenericSelector(FantasyBase
     return benchPlayersFilter(batters, BASEBALL_LINEUP_MAP);
   }
 
-  @Selector([RouterSelector.getTeamId, FantasyBaseballTeamLiveSelector.getLiveTeamStartingPitchers, FantasyBaseballEventSelector.getById])
+  @Selector([RouterSelector.getTeamId, FantasyBaseballTeamLiveSelector.getLiveTeamStartingPitchers, FantasyBaseballEventsSelector.getById])
   static getLiveTeamStartingPitchersStats(
     teamId: string | null,
     batters: BaseballPlayer[],

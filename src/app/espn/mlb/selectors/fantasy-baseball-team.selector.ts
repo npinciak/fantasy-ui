@@ -17,7 +17,7 @@ import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-playe
 import { BaseballTeam, BaseballTeamTableRow } from '../models/baseball-team.model';
 import { FantasyBaseballTeamState } from '../state/fantasy-baseball-team.state';
 import { FantasyBaseballTransformers } from '../transformers/fantasy-baseball.transformers.m';
-import { FantasyBaseballEventSelector } from './fantasy-baseball-event.selector';
+import { FantasyBaseballEventsSelector } from './fantasy-baseball-events.selector';
 import { FantasyBaseballLeagueSelector } from './fantasy-baseball-league.selector';
 
 export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseballTeamState) {
@@ -32,7 +32,7 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
     return getTeamById(teamId);
   }
 
-  @Selector([FantasyBaseballTeamSelector.getById, FantasyBaseballEventSelector.getById, FantasyBaseballEventSelector.getIdSet])
+  @Selector([FantasyBaseballTeamSelector.getById, FantasyBaseballEventsSelector.getById, FantasyBaseballEventsSelector.getIdSet])
   static getRosterByTeamId(
     getTeamById: (id: string) => BaseballTeamTableRow,
     getEventById: (id: string) => BaseballEvent,
