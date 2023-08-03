@@ -19,6 +19,7 @@ export interface GenericFacade<T> {
   getListLength$: Observable<number>;
   addOrUpdate(entities: T[]): Observable<void>;
   fetch(): Observable<void>;
+  clear(): Observable<void>;
   getById(id: string | null): T | null;
   getList(): T[];
   getListLength(): number;

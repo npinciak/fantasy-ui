@@ -46,6 +46,10 @@ export function GenericFacade<T, U = Record<string, unknown>>({
     getById(id: string | null): T | null {
       return this.store.selectSnapshot(selectorClass.getById)(id);
     }
+
+    clear(): Observable<void> {
+      return this.store.dispatch([new actionHandler.Clear()]);
+    }
   }
   return GenericFacadeBase;
 }
