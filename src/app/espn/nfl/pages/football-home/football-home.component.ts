@@ -8,7 +8,6 @@ import { FantasyFootballTeamFacade } from '../../facade/fantasy-football-team.fa
 @Component({
   selector: 'app-football-home',
   templateUrl: './football-home.component.html',
-  styleUrls: ['./football-home.component.scss'],
 })
 export class FootballHomeComponent {
   readonly LEAGUE_STANDINGS_ROWS = FOOTBALL_LEAGUE_STANDINGS_ROWS;

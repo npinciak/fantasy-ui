@@ -14,12 +14,7 @@
             ></app-dropdown-filter>
           </div>
           <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-            <li
-              class="py-3 sm:py-4"
-              *ngFor="let matchup of matchupListByMatchupPeriodId$ | async; let i = index"
-              [attr.data-index]="i"
-              tabindex="-1"
-            >
+            <li class="py-3 sm:py-4" *ngFor="let matchup of matchupListByMatchupPeriodId$ | async; let i = index" [attr.data-index]="i" tabindex="-1">
               <div>
                 <app-football-scoreboard-card-team [team]="matchup.awayTeam"></app-football-scoreboard-card-team>
                 <app-football-scoreboard-card-team [team]="matchup.homeTeam"></app-football-scoreboard-card-team>
