@@ -5,7 +5,7 @@ import { FantasyFootballFreeAgent } from '../actions/fantasy-football-free-agent
 
 @State({ name: FantasyFootballFreeAgent.stateName })
 @Injectable()
-export class FantasyFootballFreeAgentState extends GenericState({
+export class FantasyFootballFreeAgentsState extends GenericState({
   idProperty: 'id',
   actionHandler: FantasyFootballFreeAgent,
 }) {}

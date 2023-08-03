@@ -17,8 +17,10 @@ interface BaseFreeAgentFilterMetaData {
 }
 
 export interface FantasyFootballFreeAgentFilterStateModel {
+  filterInjured: boolean;
   sortDirection: string;
   availabilityStatus: Record<PlayerAvailabilityStatus, boolean>;
+  lineupSlotIds: { [key in FootballLineupSlot]: boolean };
   lineupSlotId: FootballLineupSlot;
   topScoringPeriodIds: Record<string, boolean>;
   sortStatId: Record<string, boolean>;
@@ -26,12 +28,14 @@ export interface FantasyFootballFreeAgentFilterStateModel {
 }
 
 @State({
-  name: 'fantasyFootballFreeAgentFilter',
+  name: 'fantasyFootballFreeAgentsFilter',
   defaults: {
+    filterInjured: false,
     availabilityStatus: {
       [PLAYER_AVAILABILITY_STATUS.FreeAgent]: true,
       [PLAYER_AVAILABILITY_STATUS.Waivers]: true,
     },
+    lineupSlotIds: {},
     lineupSlotId: FootballLineupSlot.QB,
     topScoringPeriodIds: {},
     metaData: {
@@ -42,13 +46,13 @@ export interface FantasyFootballFreeAgentFilterStateModel {
   },
 })
 @Injectable()
-export class FantasyFootballFreeAgentFilterState {
-  @Selector([FantasyFootballFreeAgentFilterState])
-  static getSelectedLineupSlotId(state: FantasyFootballFreeAgentFilterStateModel) {
-    return state.lineupSlotId;
+export class FantasyFootballFreeAgentsFilterState {
+  @Selector([FantasyFootballFreeAgentsFilterState])
+  static getSelectedLineupSlotIds(state: FantasyFootballFreeAgentFilterStateModel) {
+    return state.lineupSlotIds;
   }
 
-  @Selector([FantasyFootballFreeAgentFilterState])
+  @Selector([FantasyFootballFreeAgentsFilterState])
   static getAvailabilityStatus(state: FantasyFootballFreeAgentFilterStateModel) {
     return state.availabilityStatus;
   }

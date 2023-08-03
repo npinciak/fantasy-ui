@@ -5,7 +5,7 @@ import { FantasyFootballFreeAgentsFacade } from '../facade/fantasy-football-free
 @Injectable({
   providedIn: 'root',
 })
-export class FantasyFootballFreeAgentResolver implements Resolve<void> {
+export class FantasyFootballFreeAgentsResolver implements Resolve<void> {
   constructor(private freeAgentsFacade: FantasyFootballFreeAgentsFacade) {}
 
   async resolve(route: ActivatedRouteSnapshot): Promise<void> {
@@ -13,7 +13,7 @@ export class FantasyFootballFreeAgentResolver implements Resolve<void> {
     const season = route.paramMap.get('season');
 
     if (leagueId && season) {
-      await this.freeAgentsFacade.fetchFreeAgents(leagueId, season);
+      await this.freeAgentsFacade.fetchFreeAgents(leagueId, season).toPromise();
     }
   }
 }

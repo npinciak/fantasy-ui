@@ -37,12 +37,13 @@ import { FantasyBaseballTeamState } from './mlb/state/fantasy-baseball-team.stat
 import { FootballLineupCardComponent } from './nfl/components/football-lineup-card/football-lineup-card.component';
 import { FootballScoreboardCardTeamComponent } from './nfl/components/football-scoreboard-card-team/football-scoreboard-card-team.component';
 import { FootballTeamHeaderComponent } from './nfl/components/football-team-header/football-team-header.component';
+import { FantasyFootballFreeAgentActionHandler } from './nfl/handlers/fantasy-football-free-agent.handler';
 import { FantasyFootballLeagueActionHandler } from './nfl/handlers/fantasy-football-league.handler';
 import { FootballFreeAgentsComponent } from './nfl/pages/football-free-agents/football-free-agents.component';
 import { FootballHomeComponent } from './nfl/pages/football-home/football-home.component';
 import { FootballTeamComponent } from './nfl/pages/football-team/football-team.component';
-import { FantasyFootballFreeAgentFilterState } from './nfl/state/fantasy-football-free-agent-filter.state';
-import { FantasyFootballFreeAgentState } from './nfl/state/fantasy-football-free-agent.state';
+import { FantasyFootballFreeAgentsFilterState } from './nfl/state/fantasy-football-free-agent-filter.state';
+import { FantasyFootballFreeAgentsState } from './nfl/state/fantasy-football-free-agents.state';
 import { FantasyFootballLeagueState } from './nfl/state/fantasy-football-league.state';
 import { FantasyFootballPlayerNewsState } from './nfl/state/fantasy-football-player-news.state';
 import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-schedule.state';
@@ -90,8 +91,9 @@ import { FreeAgentsAvailabilitySelectedState } from './state/free-agent-availabi
       FantasyFootballLeagueState,
       FantasyFootballScheduleState,
       FantasyFootballTeamState,
-      FantasyFootballFreeAgentState,
-      FantasyFootballFreeAgentFilterState,
+      FantasyFootballFreeAgentsState,
+      FantasyFootballFreeAgentActionHandler,
+      FantasyFootballFreeAgentsFilterState,
       FantasyFootballPlayerNewsState,
       FantasyFootballTransactionState,
       FantasyBaseballLeagueActionHandler,

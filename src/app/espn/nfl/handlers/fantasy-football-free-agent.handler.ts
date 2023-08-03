@@ -2,63 +2,70 @@ import { Injectable } from '@angular/core';
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 
-import { PLAYER_AVAILABILITY_STATUS } from '@sports-ui/ui-sdk/espn-client';
-
 import { FantasyFootballFreeAgent } from '../actions/fantasy-football-free-agent.actions';
+import { FantasyFootballFreeAgentsFacade } from '../facade/fantasy-football-free-agents.facade';
 import { FootballPlayer } from '../models/football-player.model';
+import { FantasyFootballFreeAgentFilterSelector } from '../selectors/fantasy-football-free-agent-filter.selector';
 import { FantasyFootballLeagueSelector } from '../selectors/fantasy-football-league.selectors';
 import { FantasyFootballService } from '../services/fantasy-football.service';
-import { FantasyFootballFreeAgentFilterState } from '../state/fantasy-football-free-agent-filter.state';
 
 @State({ name: FantasyFootballFreeAgent.stateName + 'ActionHandler' })
 @Injectable()
 export class FantasyFootballFreeAgentActionHandler {
-  constructor(private service: FantasyFootballService, private store: Store) {}
+  constructor(
+    private freeAgentsFacade: FantasyFootballFreeAgentsFacade,
+    private fantasyFootballService: FantasyFootballService,
+    private store: Store
+  ) {}
 
   @Action(FantasyFootballFreeAgent.Fetch, { cancelUncompleted: true })
-  fetchFantasyFootballFreeAgents(_: StateContext<GenericStateModel<FootballPlayer>>, { payload: { leagueId, season } }) {
-    // const leagueId = this.store.selectSnapshot(RouterSelector) ?? '';
-    const scoringPeriodId = this.store.selectSnapshot(FantasyFootballLeagueSelector.getScoringPeriodId);
+  async fetchFantasyFootballFreeAgents(_: StateContext<GenericStateModel<FootballPlayer>>, { payload: { leagueId, season } }) {
+    const lineupSlotIds = this.store.selectSnapshot(FantasyFootballFreeAgentFilterSelector.getSelectedLineupSlotIds).map(id => Number(id));
+    const lineupSlotId = this.store.selectSnapshot(FantasyFootballFreeAgentFilterSelector.getSelectedLineupSlotId);
+    const availabilityStatus = this.store.selectSnapshot(FantasyFootballFreeAgentFilterSelector.getSelectedAvailabilityStatus);
+    const topScoringPeriodIds = this.store.selectSnapshot(FantasyFootballFreeAgentFilterSelector.getSelectedTopScoringPeriodIds);
 
+    const pagination = this.store.selectSnapshot(FantasyFootballFreeAgentFilterSelector.slices.metaData);
+
+    const scoringPeriodId = this.store.selectSnapshot(FantasyFootballLeagueSelector.getScoringPeriodId);
     if (!scoringPeriodId) throw new Error('scoringPeriodId cannot be missing');
 
-    const lineupSlotId = this.store.selectSnapshot(FantasyFootballFreeAgentFilterState.getSelectedLineupSlotId);
+    const filterInjured = { value: this.store.selectSnapshot(FantasyFootballFreeAgentFilterSelector.slices.filterInjured) };
 
+    const filterRanksForScoringPeriodIds = { value: [scoringPeriodId] };
     const filterSlotIds = { value: [lineupSlotId] };
+    const filterStatus = { value: availabilityStatus };
+    const filterStatsForTopScoringPeriodIds = {
+      value: 5,
+      additionalValue: topScoringPeriodIds,
+    };
 
-    const filterStatus = {
-      value: [PLAYER_AVAILABILITY_STATUS.FreeAgent, PLAYER_AVAILABILITY_STATUS.Waivers],
-    }; // { value: availabilityStatus };
-    //   const filterSlotIds = { value: lineupSlotIds };
-    //   const filterStatsForTopScoringPeriodIds = {
-    //     value: 5,
-    //     additionalValue: ['002022', '102022', '002021', '012022', '022022', '032022', '042022', '062022', '010002022'],
-    //   };
+    const sortStatId = { sortPriority: 1, sortAsc: pagination.sortDirection === 'asc' ? true : false, value: null, additionalValue: '' };
 
-    //   const sortStatId = { sortPriority: 1, sortAsc: pagination.sortDirection === 'asc' ? true : false, value: null, additionalValue: '' };
+    // const players = {};
 
-    //   const players = {};
-
-    //   if (lineupSlotIds.length > 0) {
-    //     Object.assign(players, { filterSlotIds });
-    //   }
+    // if (lineupSlotIds.length > 0) {
+    //   players['filterSlotIds'] = filterSlotIds;
+    // }
 
     const filter = {
       players: {
-        //   ...players,
+        // ...players,
+        filterInjured,
         // sortStatId,
         filterStatus,
         filterSlotIds,
         // filterStatsForTopScoringPeriodIds,
         // filterRanksForScoringPeriodIds,
-        limit: 100, //pagination.currentPageSize,
-        offset: 0, //pagination.currentPageIndex,
+        limit: pagination.currentPageSize,
+        offset: pagination.currentPageIndex,
         sortPercOwned: { sortPriority: 2, sortAsc: false, value: null },
         // sortDraftRanks: { sortPriority: 100, sortAsc: pagination.sortDirection === 'asc' ? true : false, value: 'STANDARD' },
       },
     };
-    // this.service
-    //   .fetchFreeAgents({ leagueId, scoringPeriodId, filter })
-    //   .pipe(map(freeAgents => this.store.dispatch([new FantasyFootballFreeAgent.AddOrUpdate(freeAgents)])));
+
+    this.freeAgentsFacade.clear();
+    const freeAgents = await this.fantasyFootballService.fetchFreeAgents({ leagueId, scoringPeriodId, filter }).toPromise();
+    this.freeAgentsFacade.addOrUpdate(freeAgents);
   }
 }

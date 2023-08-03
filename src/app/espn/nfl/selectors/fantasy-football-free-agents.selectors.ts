@@ -4,10 +4,10 @@ import { Selector } from '@app/@shared/models/typed-selector';
 import { exists, pickData } from '@app/@shared/utilities/utilities.m';
 import { NFL_STATS_MAP } from '@sports-ui/ui-sdk/espn';
 import { FootballPlayerFreeAgent, FootballPlayerStatsRow } from '../models/football-player.model';
-import { FantasyFootballFreeAgentState } from '../state/fantasy-football-free-agent.state';
+import { FantasyFootballFreeAgentsState } from '../state/fantasy-football-free-agents.state';
 import { FantasyFootballTeamSelectors } from './fantasy-football-team.selectors';
 
-export class FantasyFootballFreeAgentsSelectors extends GenericSelector(FantasyFootballFreeAgentState) {
+export class FantasyFootballFreeAgentsSelectors extends GenericSelector(FantasyFootballFreeAgentsState) {
   @Selector([FantasyFootballFreeAgentsSelectors.getList])
   static getFreeAgents(list: FootballPlayerFreeAgent[]): FootballPlayerFreeAgent[] {
     return list.filter(p => p.teamId !== '0');
