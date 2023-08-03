@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { exists } from '@app/@shared/utilities/utilities.m';
 import { FantasyLeagueBaseStateModel } from '@app/espn/state/base-league.model';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { FantasyFootballLeague } from '../actions/fantasy-football-league.actions';
@@ -33,17 +32,6 @@ export class FantasyFootballLeagueActionHandler {
         ])
         .toPromise();
     } catch (error) {}
-  }
-
-  @Action(FantasyFootballLeague.Refresh)
-  refresh() {
-    const leagueId = this.fantasyFootballLeagueFacade.leagueId;
-    const year = this.fantasyFootballLeagueFacade.seasonId;
-
-    if (!exists(leagueId)) throw new Error('leagueId cannot be null');
-    if (!exists(year)) throw new Error('year cannot be null');
-
-    this.store.dispatch(new FantasyFootballLeague.Fetch({ leagueId, year }));
   }
 
   @Action(FantasyFootballLeague.SetCurrentScoringPeriodId)

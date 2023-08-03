@@ -33,15 +33,4 @@ export class FantasyBaseballLeagueActionHandler {
       ]);
     } catch (e) {}
   }
-
-  @Action(FantasyBaseballLeague.Refresh)
-  refresh() {
-    const leagueId = this.store.selectSnapshot(FantasyBaseballLeagueSelector.slices.id);
-    const year = this.store.selectSnapshot(FantasyBaseballLeagueSelector.slices.seasonId);
-
-    if (!exists(leagueId)) throw new Error('leagueId cannot be null');
-    if (!exists(year)) throw new Error('year cannot be null');
-
-    this.store.dispatch(new FantasyBaseballLeague.Fetch({ leagueId, year }));
-  }
 }
