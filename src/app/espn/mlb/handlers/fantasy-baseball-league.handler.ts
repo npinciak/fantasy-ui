@@ -6,7 +6,7 @@ import { FantasyBaseballEvents } from '../actions/fantasy-baseball-events.action
 import { FantasyBaseballLeague } from '../actions/fantasy-baseball-league.actions';
 import { FantasyBaseballTeamsLive } from '../actions/fantasy-baseball-team-live.actions';
 import { FantasyBaseballTeams } from '../actions/fantasy-baseball-team.actions';
-import { FantasyBaseballLeagueSelector } from '../selectors/fantasy-baseball-league.selector';
+import { FantasyBaseballTransactions } from '../actions/fantasy-baseball-transactions.actions';
 import { FantasyBaseballService } from '../services/fantasy-baseball.service';
 
 @State({ name: FantasyBaseballLeague.stateName + 'ActionHandler' })
@@ -21,7 +21,7 @@ export class FantasyBaseballLeagueActionHandler {
   ): Promise<void> {
     if (!exists(leagueId)) throw new Error('LeagueId cannot be null');
     try {
-      const { id, scoringPeriodId, matchupPeriodCount, firstScoringPeriod, finalScoringPeriod, seasonId, teams, teamsLive } =
+      const { id, scoringPeriodId, matchupPeriodCount, firstScoringPeriod, finalScoringPeriod, seasonId, teams, teamsLive, transactions } =
         await this.mlbService.baseballLeague(leagueId, year).toPromise();
 
       const state = { id, scoringPeriodId, matchupPeriodCount, firstScoringPeriod, finalScoringPeriod, seasonId };
@@ -29,6 +29,7 @@ export class FantasyBaseballLeagueActionHandler {
         new FantasyBaseballEvents.Fetch(),
         new FantasyBaseballTeamsLive.AddOrUpdate(teamsLive),
         new FantasyBaseballTeams.AddOrUpdate(teams),
+        new FantasyBaseballTransactions.AddOrUpdate(transactions),
         new FantasyBaseballLeague.SetLeague({ state }),
       ]);
     } catch (e) {}

@@ -2,7 +2,8 @@ import { Article } from '../../espn-client/models/article-type.model';
 import { FreeAgent } from '../../espn-client/models/free-agent.model';
 import { IdAttributesNumber, IdAttributesString } from '../../espn-client/models/id-attributes.model';
 import { TeamRoster } from '../../espn-client/models/team-roster.model';
-import { LEAGUE_COMMUNICATION_TOPIC, SCHEDULE_WINNER, TRANSACTION } from './espn-client.const';
+import { TRANSACTION } from '../../espn-client/models/transaction.const';
+import { LEAGUE_COMMUNICATION_TOPIC, SCHEDULE_WINNER } from './espn-client.const';
 
 export type LeagueCommunicationTopic = typeof LEAGUE_COMMUNICATION_TOPIC[keyof typeof LEAGUE_COMMUNICATION_TOPIC];
 
