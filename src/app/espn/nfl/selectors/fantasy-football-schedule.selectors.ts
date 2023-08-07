@@ -3,7 +3,8 @@ import { FilterOptions } from '@app/@shared/models/filter.model';
 import { exists } from '@app/@shared/utilities/utilities.m';
 
 import { Selector } from '@ngxs/store';
-import { EspnClient, SCHEDULE_WINNER } from '@sports-ui/ui-sdk/espn';
+import { SCHEDULE_WINNER } from '@sports-ui/ui-sdk/espn';
+import { ScheduleEntity, ScheduleTeam } from '@sports-ui/ui-sdk/espn-client';
 import { unique } from '@sports-ui/ui-sdk/helpers';
 import { FantasyMatchup, FantasyMatchupMap, FantasyMatchupTeam } from '../models/fantasy-schedule.model';
 import { FootballTeam } from '../models/football-team.model';
@@ -13,7 +14,7 @@ import { FantasyFootballTeamSelectors } from './fantasy-football-team.selectors'
 
 export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFootballScheduleState) {
   @Selector([FantasyFootballScheduleSelectors.getList])
-  static getMatchupPeriodIds(matchupList: EspnClient.ScheduleEntity[]): number[] {
+  static getMatchupPeriodIds(matchupList: ScheduleEntity[]): number[] {
     const ids = matchupList.map(m => m.matchupPeriodId);
 
     return unique(ids);
@@ -26,7 +27,7 @@ export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFoo
 
   static transformTeamToMatchupTeam(
     team: FootballTeam | null,
-    scheduleTeam: EspnClient.ScheduleTeam,
+    scheduleTeam: ScheduleTeam,
     isWinner: boolean | null
   ): FantasyMatchupTeam | null {
     if (!exists(team)) return null;
@@ -48,7 +49,7 @@ export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFoo
 
   @Selector([FantasyFootballScheduleSelectors.getList, FantasyFootballTeamSelectors.getById])
   static getMatchupListWithFantasyTeams(
-    matchupList: EspnClient.ScheduleEntity[],
+    matchupList: ScheduleEntity[],
     getTeamById: (id: string | null) => FootballTeam | null
   ): FantasyMatchup[] {
     return matchupList.map(m => {
