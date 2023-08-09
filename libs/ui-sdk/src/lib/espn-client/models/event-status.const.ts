@@ -36,8 +36,22 @@ export const EVENT_STATUS_TYPE = {
   Final: '3',
   Cancelled: '5',
   Delayed: '7',
+  RainDelay: '17',
   EndOfPeriod: '22',
   FirstHalf: '25',
   Halftime: '23',
   FullTime: '28',
 } as const;
+
+export const EVENT_STATUS_TYPE_TO_EVENT_STATUS_NAME = {
+  [EVENT_STATUS_TYPE.Scheduled]: EVENT_STATUS_NAME.Scheduled,
+  [EVENT_STATUS_TYPE.InProgress]: EVENT_STATUS_NAME.InProgress,
+  [EVENT_STATUS_TYPE.Final]: EVENT_STATUS_NAME.Final,
+  [EVENT_STATUS_TYPE.Cancelled]: EVENT_STATUS_NAME.Canceled,
+  [EVENT_STATUS_TYPE.Delayed]: EVENT_STATUS_NAME.Delayed,
+  [EVENT_STATUS_TYPE.RainDelay]: EVENT_STATUS_NAME.RainDelay,
+  [EVENT_STATUS_TYPE.EndOfPeriod]: EVENT_STATUS_NAME.EndOfPeriod,
+  [EVENT_STATUS_TYPE.FirstHalf]: EVENT_STATUS_NAME.FirstHalf,
+  [EVENT_STATUS_TYPE.Halftime]: EVENT_STATUS_NAME.Halftime,
+  [EVENT_STATUS_TYPE.FullTime]: EVENT_STATUS_NAME.FullTime,
+};

@@ -1,5 +1,6 @@
 import { tickerDate } from '@app/@shared/helpers/date';
 import { exists } from '@app/@shared/utilities/utilities.m';
+import { EventSummaryBySeasonTypeByEventStatus } from '@app/espn-fastcast/models/fastcast-event-summary.model';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
 import { EspnClient, PITCHING_LINEUP_IDS, PLAYER_INJURY_STATUS } from '@sports-ui/ui-sdk/espn';
 import { EVENT_STATUS, PlayerStatsYear, ProLeagueType, SEASON_TYPE, SportType } from '@sports-ui/ui-sdk/espn-client';
@@ -220,18 +221,39 @@ export function injuredPlayersFilter<T extends FootballPlayer | BaseballPlayer>(
  * @returns
  */
 export function fastcastEventSummary(event: FastcastEvent): string | null {
-  const { status, seasonType, note, timestamp, completed, summary } = event;
+  const { status, seasonType, note, timestamp, summary } = event;
 
-  const inProgress = status === EVENT_STATUS.InProgress;
-  const eventPostponed = status === EVENT_STATUS.Postgame;
-  const isPostseason = seasonType === SEASON_TYPE.Postseason;
+  const defaultPregame = tickerDate(timestamp);
+  const postSeasonPregame = exists(note) ? `${note} | ${tickerDate(timestamp)}` : tickerDate(timestamp);
+  const postSeasonPostgame = exists(note) ? `${note}, ${summary}` : summary;
 
-  const date = tickerDate(timestamp);
+  const eventSummary: EventSummaryBySeasonTypeByEventStatus = {
+    [SEASON_TYPE.Preseason]: {
+      [EVENT_STATUS.Pre]: defaultPregame,
+      [EVENT_STATUS.InProgress]: summary,
+      [EVENT_STATUS.Postgame]: summary,
+    },
+    [SEASON_TYPE.Regular]: {
+      [EVENT_STATUS.Pre]: defaultPregame,
+      [EVENT_STATUS.InProgress]: summary,
+      [EVENT_STATUS.Postgame]: summary,
+    },
+    [SEASON_TYPE.Postseason]: {
+      [EVENT_STATUS.Pre]: postSeasonPregame,
+      [EVENT_STATUS.InProgress]: summary,
+      [EVENT_STATUS.Postgame]: postSeasonPostgame,
+    },
+    [SEASON_TYPE.AllStar]: {
+      [EVENT_STATUS.Pre]: postSeasonPregame,
+      [EVENT_STATUS.InProgress]: summary,
+      [EVENT_STATUS.Postgame]: postSeasonPostgame,
+    },
+    [SEASON_TYPE.OffSeason]: {
+      [EVENT_STATUS.Pre]: null,
+      [EVENT_STATUS.InProgress]: null,
+      [EVENT_STATUS.Postgame]: null,
+    },
+  };
 
-  if (inProgress || eventPostponed) return summary;
-  if (!completed && isPostseason) return exists(note) ? `${note} | ${date}` : date;
-  if (completed && isPostseason) return exists(note) ? note : summary;
-  if (completed && !isPostseason) return summary;
-
-  return date;
+  return eventSummary[seasonType][status ?? EVENT_STATUS.Pre];
 }
