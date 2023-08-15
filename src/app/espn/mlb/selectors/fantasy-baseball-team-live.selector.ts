@@ -234,7 +234,7 @@ export class FantasyBaseballTeamLiveSelector extends GenericSelector(FantasyBase
     return existsFilter(liveTeamBatters.map(player => FantasyBaseballTransformers.transformToLiveBaseballPlayerBatterStatsRow(player)));
   }
 
-  @Selector([FantasyBaseballTeamLiveSelector.getLiveTeamStartingPitchers])
+  @Selector([FantasyBaseballTeamLiveSelector.getLiveTeamStartingPitchersStats])
   static getLiveTeamStartingPitcherStatsTableRows(liveTeamBatters: BaseballPlayer[]) {
     return existsFilter(liveTeamBatters.map(player => FantasyBaseballTransformers.transformToLiveBaseballPlayerBatterStatsRow(player)));
   }
