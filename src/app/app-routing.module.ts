@@ -17,6 +17,10 @@ const routes: Routes = [
       path: UrlPathFragments.MyProfile,
       loadChildren: () => import('./sports-ui/sports-ui.module').then(m => m.SportsUiModule),
     },
+    {
+      path: UrlPathFragments.SystemStatus,
+      loadChildren: () => import('./system-status/system-status.module').then(m => m.SystemStatusModule),
+    },
     { path: '**', redirectTo: '/espn', pathMatch: 'full' },
   ]),
 ];

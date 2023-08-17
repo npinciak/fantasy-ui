@@ -80,6 +80,7 @@ export enum UrlPathFragments {
   Batters = 'batters',
   Pitchers = 'pitchers',
   Player = 'player',
+  SystemStatus = 'system-status',
 }
 
 export enum UrlPathParams {

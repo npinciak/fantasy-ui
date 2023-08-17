@@ -1,0 +1,8 @@
+<div class="relative h-full">
+  <div class="mx-auto w-full px-4 md:px-10">
+    <app-base-card>
+      <i [class.text-green-500]="isOnline$ | async" class="fa fa-circle"></i> Online
+      <p>isServiceWorkerEnabled | {{ isServiceWorkerEnabled }}</p>
+    </app-base-card>
+  </div>
+</div>
