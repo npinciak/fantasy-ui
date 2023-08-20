@@ -140,7 +140,7 @@ export class EspnFastcastConnectionState {
     const sportId = exists(eventType) ? (eventType.split('~')[0] as string) : null;
 
     const sport = this.store.selectSnapshot(EspnFastcastSportSelectors.getById)(sportId)?.slug;
-    const league = this.store.selectSnapshot(EspnFastcastLeagueSelectors.getById)(eventType)?.abbrev.toLowerCase();
+    const league = this.store.selectSnapshot(EspnFastcastLeagueSelectors.getById)(eventType)?.abbreviation.toLowerCase();
 
     if (sport != undefined && league != undefined) {
       const eventType = transformSportToFastcastEventType({ sport, league });

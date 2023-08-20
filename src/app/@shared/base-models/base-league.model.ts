@@ -1,4 +1,4 @@
-type BaseLeagueEntityProps = 'id' | 'name' | 'abbrev';
+type BaseLeagueEntityProps = 'id' | 'name' | 'abbreviation';
 
 /**
  * Base front end league model

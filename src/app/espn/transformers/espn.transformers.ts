@@ -166,7 +166,7 @@ export function clientLeagueImportToFastcastLeague(leagueImport: LeaguesEntity):
     id,
     uid,
     name,
-    abbrev: abbreviation ?? name,
+    abbreviation: abbreviation ?? name,
     shortName: shortName ?? name,
     isTournament,
     slug,
