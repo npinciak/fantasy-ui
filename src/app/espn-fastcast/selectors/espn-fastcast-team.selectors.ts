@@ -8,7 +8,7 @@ export class EspnFastcastTeamSelectors extends GenericSelector(EspnFastcastTeamS
   static getTeamsByEventUid(list: FastcastEventTeam[]): (eventUid: string) => Record<string, FastcastEventTeam> {
     return (eventUid: string) =>
       list
-        .filter(l => l?.eventUid === eventUid)
+        .filter(l => l?.uid === eventUid)
         .reduce((obj, val) => {
           obj[val.isHome] = val;
           return obj;

@@ -4,4 +4,5 @@ export const SEASON_TYPE = {
   Postseason: '3',
   AllStar: '4',
   OffSeason: '5',
+  Unknown: '6',
 } as const;

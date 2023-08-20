@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '@app/@shared/services/api.service';
 import { EspnWebSocket, SocketRes } from '@app/espn-fastcast/models/espn-fastcast-socket.model';
 import { Observable } from 'rxjs';
-import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { WebSocketSubject, webSocket } from 'rxjs/webSocket';
 import { FASTCAST_WS_HOST } from '../../espn/espn.const';
 
 @Injectable({
@@ -27,9 +27,7 @@ export class EspnFastcastService {
   }
 
   sendMessage(msg: any): void {
-    if (!this.webSocket$) {
-      return;
-    }
+    if (!this.webSocket$) return;
     this.webSocket$.next(msg);
   }
 

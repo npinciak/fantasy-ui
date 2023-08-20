@@ -1,4 +1,4 @@
-import { EspnClient } from '@sports-ui/ui-sdk/espn';
+import { LeagueTransaction } from '@sports-ui/ui-sdk/espn-client';
 
 export interface FantasyLeague {
   id: string;
@@ -7,5 +7,5 @@ export interface FantasyLeague {
   firstScoringPeriod: string;
   finalScoringPeriod: string;
   matchupPeriodCount: string;
-  transactions: EspnClient.LeagueTransaction[];
+  transactions: LeagueTransaction[];
 }

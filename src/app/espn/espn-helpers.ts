@@ -253,7 +253,14 @@ export function fastcastEventSummary(event: FastcastEvent): string | null {
       [EVENT_STATUS.InProgress]: null,
       [EVENT_STATUS.Postgame]: null,
     },
+    [SEASON_TYPE.Unknown]: {
+      [EVENT_STATUS.Pre]: postSeasonPregame,
+      [EVENT_STATUS.InProgress]: summary,
+      [EVENT_STATUS.Postgame]: postSeasonPostgame,
+    },
   };
+
+  if (!exists(seasonType)) throw new Error('Season type unavailable');
 
   return eventSummary[seasonType][status ?? EVENT_STATUS.Pre];
 }

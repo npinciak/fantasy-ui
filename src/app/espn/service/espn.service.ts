@@ -132,6 +132,15 @@ export class EspnService extends ApiService {
     return this.get<{ players: FreeAgent[] }>(endpoint, { params, headers });
   }
 
+  /**
+   * Fetches the pro team schedules for a given fantasy sport and year.
+   *
+   * @description This is used to determine the pro team schedule for a given fantasy sport and year.
+   *
+   * @param {FantasySportsAbbreviation} sport - The fantasy sport abbreviation, e.g. NFL, NBA, etc.
+   * @param {string} year - The year of the fantasy season, e.g. 2021, 2022, etc.
+   * @returns {Observable<ProTeamSchedule>} An observable that emits the pro team schedule data.
+   */
   protected fetchProteamSchedules(sport: FantasySportsAbbreviation, year: string) {
     const endpoint = BaseEspnEndpointBuilder({ sport, year }).fantasyBaseV3WithFragments;
     const params = new HttpParams().set(ESPN_PARAM_FRAGMENTS.View, ESPN_VIEW_PARAM_FRAGMENTS.ProTeamSchedules);
