@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { statusCodeToMessage } from '@app/@shared/models/http-errors.model';
+import { SnackBarService } from '@app/@shared/services/snackbar.service';
 import { SupaClientService } from '@app/@shared/supa/supa-client.service';
 import { AuthError, AuthResponse, AuthSession, User, UserResponse } from '@supabase/supabase-js';
 
@@ -10,7 +11,7 @@ export class AuthenticationService extends SupaClientService {
   private _session: AuthSession | null = null;
   private _user: User | null = null;
 
-  constructor(private snackBar: MatSnackBar) {
+  constructor(private snackBarService: SnackBarService) {
     super();
   }
 
@@ -43,6 +44,14 @@ export class AuthenticationService extends SupaClientService {
   signIn(email: string, password: string) {
     return this.supabase.auth.signInWithPassword({ email, password }).then(res => {
       if (res.error) this.authErrorHandler(res.error);
+
+      return res;
+    });
+  }
+
+  signOut(): Promise<{ error: AuthError | null }> {
+    return this.supabase.auth.signOut().then(res => {
+      if (res.error) this.authErrorHandler(res.error);
       return res;
     });
   }
@@ -50,6 +59,8 @@ export class AuthenticationService extends SupaClientService {
   updateUser(email: string, password: string): Promise<UserResponse> {
     return this.supabase.auth.updateUser({ email, password }).then(res => {
       if (res.error) this.authErrorHandler(res.error);
+      if (res) this.snackBarService.showSuccessSnackBar(`User updated successfully`);
+
       return res;
     });
   }
@@ -57,16 +68,14 @@ export class AuthenticationService extends SupaClientService {
   createUser(email: string, password: string): Promise<AuthResponse> {
     return this.supabase.auth.signUp({ email, password }).then(res => {
       if (res.error) this.authErrorHandler(res.error);
+      if (res) this.snackBarService.showSuccessSnackBar(`User created successfully`);
+
       return res;
     });
   }
 
   private authErrorHandler(res: AuthError | null) {
-    this.snackBar.open(`${res!.message}`, 'x', {
-      panelClass: ['mat-toolbar', 'mat-warn'],
-      duration: 3000,
-    });
-
-    throw res;
+    this.snackBarService.showErrorSnackBar(`${statusCodeToMessage[401]}`);
+    console.error(res?.message);
   }
 }
