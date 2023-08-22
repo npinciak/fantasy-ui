@@ -1,4 +1,4 @@
-import { Component, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartComponent, StatsChart } from '../base-chart/base-chart.component';
 
@@ -20,16 +20,10 @@ import { BaseChartComponent, StatsChart } from '../base-chart/base-chart.compone
   `,
 })
 export class ChartBarComponent extends BaseChartComponent implements OnChanges {
-  chartType = 'bar';
+  @Input() horizontalLabels = false;
 
   barChartData: ChartConfiguration<'bar'>['data'];
-
-  barChartOptions: ChartOptions<'bar'> = {
-    maintainAspectRatio: false,
-    responsive: true,
-    indexAxis: 'y',
-  };
-
+  chartType = 'bar';
   lineChartLegend = false;
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -41,6 +35,10 @@ export class ChartBarComponent extends BaseChartComponent implements OnChanges {
     } else {
       this.generateGraph(changes.chartData.currentValue);
     }
+  }
+
+  get barChartOptions(): ChartOptions<'bar'> {
+    return { maintainAspectRatio: false, responsive: true, indexAxis: this.horizontalLabels ? 'x' : 'y' };
   }
 
   generateGraph(graphData: StatsChart) {
