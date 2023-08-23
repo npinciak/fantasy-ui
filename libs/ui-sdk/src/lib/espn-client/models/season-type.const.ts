@@ -6,3 +6,5 @@ export const SEASON_TYPE = {
   OffSeason: '5',
   Unknown: '6',
 } as const;
+
+export const SEASON_TYPE_LIST = Object.values(SEASON_TYPE);

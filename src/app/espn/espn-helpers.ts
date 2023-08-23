@@ -3,7 +3,15 @@ import { exists } from '@app/@shared/utilities/utilities.m';
 import { EventSummaryBySeasonTypeByEventStatus } from '@app/espn-fastcast/models/fastcast-event-summary.model';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
 import { EspnClient, PITCHING_LINEUP_IDS, PLAYER_INJURY_STATUS } from '@sports-ui/ui-sdk/espn';
-import { EVENT_STATUS, PlayerStatsYear, ProLeagueType, SEASON_TYPE, SportType } from '@sports-ui/ui-sdk/espn-client';
+import {
+  EVENT_STATUS,
+  EVENT_STATUS_TYPE,
+  PlayerStatsYear,
+  ProLeagueType,
+  SEASON_TYPE,
+  SEASON_TYPE_LIST,
+  SportType,
+} from '@sports-ui/ui-sdk/espn-client';
 import { CompetitorsEntity } from '@sports-ui/ui-sdk/espn-fastcast-client';
 import { getContrastRatio } from '@sports-ui/ui-sdk/helpers';
 import { BaseballPlayer, BaseballPlayerStatsRow } from './mlb/models/baseball-player.model';
@@ -221,31 +229,33 @@ export function injuredPlayersFilter<T extends FootballPlayer | BaseballPlayer>(
  * @returns
  */
 export function fastcastEventSummary(event: FastcastEvent): string | null {
-  const { status, seasonType, note, timestamp, summary } = event;
+  const { status, statusId, seasonType, note, timestamp, summary } = event;
 
   const defaultPregame = tickerDate(timestamp);
+  const defaultInProgress = statusId === EVENT_STATUS_TYPE.RainDelay ? `Rain Delay, ${summary}` : summary;
+
   const postSeasonPregame = exists(note) ? `${note} | ${tickerDate(timestamp)}` : tickerDate(timestamp);
   const postSeasonPostgame = exists(note) ? `${note}, ${summary}` : summary;
 
   const eventSummary: EventSummaryBySeasonTypeByEventStatus = {
     [SEASON_TYPE.Preseason]: {
       [EVENT_STATUS.Pre]: defaultPregame,
-      [EVENT_STATUS.InProgress]: summary,
+      [EVENT_STATUS.InProgress]: defaultInProgress,
       [EVENT_STATUS.Postgame]: summary,
     },
     [SEASON_TYPE.Regular]: {
       [EVENT_STATUS.Pre]: defaultPregame,
-      [EVENT_STATUS.InProgress]: summary,
+      [EVENT_STATUS.InProgress]: defaultInProgress,
       [EVENT_STATUS.Postgame]: summary,
     },
     [SEASON_TYPE.Postseason]: {
       [EVENT_STATUS.Pre]: postSeasonPregame,
-      [EVENT_STATUS.InProgress]: summary,
+      [EVENT_STATUS.InProgress]: defaultInProgress,
       [EVENT_STATUS.Postgame]: postSeasonPostgame,
     },
     [SEASON_TYPE.AllStar]: {
       [EVENT_STATUS.Pre]: postSeasonPregame,
-      [EVENT_STATUS.InProgress]: summary,
+      [EVENT_STATUS.InProgress]: defaultInProgress,
       [EVENT_STATUS.Postgame]: postSeasonPostgame,
     },
     [SEASON_TYPE.OffSeason]: {
@@ -255,12 +265,14 @@ export function fastcastEventSummary(event: FastcastEvent): string | null {
     },
     [SEASON_TYPE.Unknown]: {
       [EVENT_STATUS.Pre]: postSeasonPregame,
-      [EVENT_STATUS.InProgress]: summary,
+      [EVENT_STATUS.InProgress]: defaultInProgress,
       [EVENT_STATUS.Postgame]: postSeasonPostgame,
     },
   };
 
   if (!exists(seasonType)) throw new Error('Season type unavailable');
 
-  return eventSummary[seasonType][status ?? EVENT_STATUS.Pre];
+  const seasonTypeValid = SEASON_TYPE_LIST.includes(seasonType);
+
+  return eventSummary[seasonTypeValid ? seasonType : SEASON_TYPE.Unknown][status ?? EVENT_STATUS.Pre];
 }
