@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { headshotImgBuilder } from '@app/espn/espn.const';
 import { BaseballPlayer } from '@app/espn/mlb/models/baseball-player.model';
 import { PlayerDialog } from '@app/espn/models/player-dialog-component.model';
 import { FootballPlayer } from '@app/espn/nfl/models/football-player.model';
@@ -18,8 +17,7 @@ export class EspnPlayerDialogComponent {
   ) {}
 
   get playerImg() {
-    const id = this.data.player.id;
-    return // headshotImgBuilder({ teamId: id, league: this.data.sport, width: 800, height: 500 });
+    return '';
   }
 
   safeHtml(content: string): SafeHtml {
