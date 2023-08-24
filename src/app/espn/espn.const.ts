@@ -1,6 +1,6 @@
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { environment } from 'src/environments/environment';
-import { ImageBuilderInput } from './espn.const.model';
+import { ImageBuilderInput } from './const/image-builder';
 
 export const ESPN_TEXT: Record<string, string> = {
   NO_GAMES_TEXT: `No games scheduled for today`,
@@ -33,6 +33,9 @@ export function fastcastURIBuilder(eventType: string | null, messageId: string):
   return `${FASTCAST_BASE}/${eventType}/message/${messageId}/checkpoint`;
 }
 
+/**
+ * @deprecated use ImageBuilder.logoImgBuilder
+ */
 export function logoImgBuilder({ id, league, width, height }: ImageBuilderInput): string {
   const w = exists(width) ? width : 100;
   const h = exists(height) ? height : 100;
@@ -40,10 +43,9 @@ export function logoImgBuilder({ id, league, width, height }: ImageBuilderInput)
   return `${CDN_COMBINER}?img=/i/teamlogos/${league}/500/${id}.png&w=${w}&h=${h}&cb=1`;
 }
 
-export function fieldImgBuilder(id: number): string {
-  return `${CDN_REDESIGN_IMG}/mlb/fields/${id}.png`;
-}
-
+/**
+ * @deprecated use ImageBuilder.headshotImgBuilder
+ */
 export function headshotImgBuilder({ id, league, width, height }: ImageBuilderInput): string {
   const w = exists(width) ? width : 55;
   const h = exists(height) ? height : 40;
@@ -54,6 +56,9 @@ export function headshotImgBuilder({ id, league, width, height }: ImageBuilderIn
   return `${CDN_COMBINER}?img=/i/headshots/${league}/players/full/${id}.png&w=${w}&h=${h}&cb=1`;
 }
 
+/**
+ * @deprecated use ImageBuilder.sportIconImgBuilder
+ */
 export function sportIconImgBuilder(sport: string): string {
   return `${CDN_COMBINER}?img=/redesign/assets/img/icons/ESPN-icon-${sport}.png&h=100&w=100`;
 }

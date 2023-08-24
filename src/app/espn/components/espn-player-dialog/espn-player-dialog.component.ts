@@ -19,7 +19,7 @@ export class EspnPlayerDialogComponent {
 
   get playerImg() {
     const id = this.data.player.id;
-    return headshotImgBuilder({ id, league: this.data.sport, width: 800, height: 500 });
+    return // headshotImgBuilder({ teamId: id, league: this.data.sport, width: 800, height: 500 });
   }
 
   safeHtml(content: string): SafeHtml {

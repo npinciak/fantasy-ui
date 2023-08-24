@@ -18,6 +18,7 @@ import {
 } from '@sports-ui/ui-sdk/espn-client';
 import { CompetitorsEntity, EventsEntity, LeaguesEntity, SportsEntity } from '@sports-ui/ui-sdk/espn-fastcast-client';
 import { pickFields } from '@sports-ui/ui-sdk/helpers';
+import { ImageBuilder } from '../const/image-builder';
 import {
   excludeLeagues,
   flattenPlayerStats,
@@ -27,7 +28,7 @@ import {
   teamColorHandler,
   transformIdToUid,
 } from '../espn-helpers';
-import { NO_LOGO, headshotImgBuilder } from '../espn.const';
+import { NO_LOGO } from '../espn.const';
 import { FantasyLeague } from '../models/fantasy-league.model';
 import { FantasyPlayer } from '../models/fantasy-player.model';
 import { PlayerNews } from '../models/player-news.model';
@@ -104,11 +105,11 @@ export function clientPlayerToFantasyPlayer({
 }): FantasyPlayer {
   const { proTeamId, defaultPositionId, injured, outlooks, id, fullName, ownership, lastNewsDate } = clientPlayer;
 
-  const leagueAbbrev = PRO_LEAGUE_ABBREV_BY_PRO_LEAGUE_TYPE[leagueId].toLowerCase();
   const team = teamMap[proTeamId] as string;
   const stats = flattenPlayerStats(clientPlayer.stats);
   const outlookByWeek = clientPlayerOutlook(outlooks);
   const injuryStatus = exists(clientPlayer.injuryStatus) ? clientPlayer.injuryStatus : PLAYER_INJURY_STATUS.Active;
+  const league = PRO_LEAGUE_ABBREV_BY_PRO_LEAGUE_TYPE[leagueId].toLowerCase();
 
   return {
     id: id.toString(),
@@ -116,7 +117,7 @@ export function clientPlayerToFantasyPlayer({
     teamId: proTeamId.toString(),
     teamUid: transformIdToUid(sport, leagueId, proTeamId),
     position: positionMap[defaultPositionId].abbrev,
-    img: headshotImgBuilder({ id, league: leagueAbbrev }),
+    img: ImageBuilder({ sport, league }).headshotImgBuilder({ id }),
     lastNewsDate,
     injured,
     stats,
@@ -160,16 +161,11 @@ export function clientSportsEntityToSport(sportsEntity: SportsEntity): FastcastS
 }
 
 export function clientLeagueImportToFastcastLeague(leagueImport: LeaguesEntity): FastcastLeague {
-  const { id, uid, name, isTournament, slug, abbreviation, shortName } = leagueImport;
-
+  const fields = pickFields(leagueImport, ['id', 'uid', 'name', 'slug', 'isTournament', 'abbreviation', 'shortName']);
   return {
-    id,
-    uid,
-    name,
-    abbreviation: abbreviation ?? name,
-    shortName: shortName ?? name,
-    isTournament,
-    slug,
+    ...fields,
+    abbreviation: fields.abbreviation ?? fields.name,
+    shortName: fields.shortName ?? fields.name,
     sport: '',
   };
 }

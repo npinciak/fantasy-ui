@@ -1,16 +1,17 @@
 import { FangraphsConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
 import { exists } from '@app/@shared/utilities/utilities.m';
-import { headshotImgBuilder } from '@app/espn/espn.const';
 import { BASEBALL_LINEUP_MAP, BaseballLineupSlot, BaseballStat, EspnClient, MLB_POSITION_MAP, MLB_TEAM_MAP } from '@sports-ui/ui-sdk/espn';
 import { FreeAgent, PlayerCardEntity, ProLeagueType, SPORT_TYPE, TeamRosterEntry } from '@sports-ui/ui-sdk/espn-client';
+import { pickFields } from '@sports-ui/ui-sdk/helpers';
 import { isPitcher } from '../../espn-helpers';
 import { FantasyLeague } from '../../models/fantasy-league.model';
 import { EspnTransformers } from '../../transformers/espn-transformers.m';
 import { AdvStats } from '../class/advStats.class';
+import { FantasyBaseballImageBuilder } from '../fantasy-baseball-image-builder';
 import { FantasyBaseballScoringPeriod } from '../fantasy-baseball-scoring-period';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballLeague } from '../models/baseball-league.model';
-import { BaseballPlayer, BaseballPlayerCard, BaseballPlayerStatsRow } from '../models/baseball-player.model';
+import { BaseballPlayer, BaseballPlayerCard, BaseballPlayerLiveStatsRow, BaseballPlayerStatsRow } from '../models/baseball-player.model';
 import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';
 
 export function playerEligibleLineupSlotDisplay(val: BaseballLineupSlot[]) {
@@ -101,7 +102,7 @@ export function clientPlayerCardToBaseballPlayerCard(players: PlayerCardEntity[]
       positionMap: MLB_POSITION_MAP,
     });
 
-    const playerCardImage = headshotImgBuilder({ id: player.player.id, league: 'mlb', width: 426, height: 320 });
+    const playerCardImage = FantasyBaseballImageBuilder.headshotImgBuilder({ id: playerInfo.id, width: 426, height: 320 });
 
     return {
       ...playerInfo,
@@ -293,17 +294,45 @@ export function transformToLiveBaseballPlayerBatterStatsRow(player: BaseballPlay
   return { id, name, injured, injuryStatus, img, team, position, lineupSlotId, eligibleLineupSlots, stats };
 }
 
-export function transformLive(player: BaseballPlayer, getLiveBaseballEventById: (id: string | null) => BaseballEvent | null) {
-  const games: string[] = exists(player.stats) ? Object.keys(player.stats) : [];
+export function transformLiveStatsToLiveStatsTableRows(
+  players: BaseballPlayer[],
+  getBaseballEvents: (id: string | null) => BaseballEvent | null
+): BaseballPlayerLiveStatsRow[] {
+  return players.map(p => {
+    const games = exists(p.stats) ? Object.keys(p.stats) : [];
 
-  const gameList: (string | null)[] = games.map(g => {
-    const eventId = g.split('05')[1];
-    const event = getLiveBaseballEventById(eventId);
-    return event ? FantasyBaseballScoringPeriod.liveScoring(event.id) : null;
+    const gameList = games.map(g => {
+      const eventId = g.split('05')[1];
+      const event = getBaseballEvents(eventId);
+      return event ? FantasyBaseballScoringPeriod.liveScoring(event.id) : null;
+    });
+
+    const eventUid = gameList[0] != null ? gameList[0] : null;
+
+    const statsEntity = exists(eventUid) ? (exists(p.stats) ? p.stats[eventUid]?.stats : null) : ({} as any);
+
+    const stats = {
+      ...statsEntity,
+      [BaseballStat.IP]: exists(statsEntity[BaseballStat.IP]) ? statsEntity[BaseballStat.IP] * 0.333 : 0,
+    };
+
+    const fields = pickFields(p, [
+      'id',
+      'name',
+      'img',
+      'team',
+      'position',
+      'injured',
+      'injuryStatus',
+      'lineupSlotId',
+      'lineupSlot',
+      'eligibleLineupSlots',
+      'isPitcher',
+    ]);
+
+    return {
+      ...fields,
+      stats,
+    };
   });
-
-  const eventUid = gameList[0] != null ? gameList[0] : null;
-
-
-  
 }

@@ -2,9 +2,9 @@ import { exists } from '@app/@shared/utilities/utilities.m';
 import { FantasyPlayer } from '@app/espn/models/fantasy-player.model';
 import { EspnClient, FOOTBALL_LINEUP_MAP, NFL_POSITION_MAP, NFL_TEAM_MAP } from '@sports-ui/ui-sdk/espn';
 import { FreeAgentEntry, ProLeagueType, SPORT_TYPE, TeamRosterEntry } from '@sports-ui/ui-sdk/espn-client';
-import { headshotImgBuilder, logoImgBuilder } from '../../espn.const';
 import { FantasyLeague } from '../../models/fantasy-league.model';
 import { EspnTransformers } from '../../transformers/espn-transformers.m';
+import { FantasyFootballImageBuilder } from '../fantasy-football-image-builder';
 import { FootballLeague } from '../models/fantasy-football-league.model';
 import { FootballPlayer, FootballPlayerFreeAgent, FootballPlayerStatsRow } from '../models/football-player.model';
 import { FootballTeam } from '../models/football-team.model';
@@ -35,19 +35,47 @@ export function clientPlayerToFootballPlayer(player: TeamRosterEntry): FootballP
     positionMap: NFL_POSITION_MAP,
   });
 
-  const league = 'nfl';
-
   const isDST = playerInfo.defaultPositionId === 16;
+
+  const img = !isDST
+    ? FantasyFootballImageBuilder.headshotImgBuilder({ id: playerInfo.id })
+    : FantasyFootballImageBuilder.logoImgBuilder({ id: playerInfo.team, height: 40, width: 55 });
 
   return {
     ...playerInfo,
     lineupSlotId,
-    img: !isDST
-      ? headshotImgBuilder({ id: player.playerId, league })
-      : logoImgBuilder({ id: playerInfo.team, league, height: 40, width: 54 }),
+    img,
     lineupSlot: FOOTBALL_LINEUP_MAP[lineupSlotId].abbrev,
     points: playerPoolEntry.appliedStatTotal,
   };
+}
+
+export function clientFreeAgentToFootballPlayer(data: FreeAgentEntry[]): FootballPlayerFreeAgent[] {
+  return data.map(p => {
+    if (!exists(p)) throw new Error('player must be defined');
+
+    const playerInfo = EspnTransformers.clientPlayerToFantasyPlayer({
+      clientPlayer: p.player,
+      sport: SPORT_TYPE.Football,
+      leagueId: ProLeagueType.NFL,
+      teamMap: NFL_TEAM_MAP,
+      positionMap: NFL_POSITION_MAP,
+    });
+
+    const isDST = playerInfo.defaultPositionId === 16;
+
+    const img = !isDST
+      ? FantasyFootballImageBuilder.headshotImgBuilder({ id: playerInfo.id })
+      : FantasyFootballImageBuilder.logoImgBuilder({ id: playerInfo.team, height: 40, width: 55 });
+
+    return {
+      ...playerInfo,
+      img,
+      lineupSlotId: playerInfo.defaultPositionId,
+      lineupSlot: FOOTBALL_LINEUP_MAP[playerInfo.defaultPositionId].abbrev,
+      points: 0, // p.player.appliedStatTotal,
+    };
+  });
 }
 
 export function clientTeamListToTeamList(team: EspnClient.FootballTeam): FootballTeam {
@@ -77,32 +105,6 @@ export function clientTeamListToTeamList(team: EspnClient.FootballTeam): Footbal
     pointsFor,
     currentRank,
   };
-}
-
-export function clientFreeAgentToFootballPlayer(data: FreeAgentEntry[]): FootballPlayerFreeAgent[] {
-  return data.map(p => {
-    if (!exists(p)) throw new Error('player must be defined');
-
-    const playerInfo = EspnTransformers.clientPlayerToFantasyPlayer({
-      clientPlayer: p.player,
-      sport: SPORT_TYPE.Football,
-      leagueId: ProLeagueType.NFL,
-      teamMap: NFL_TEAM_MAP,
-      positionMap: NFL_POSITION_MAP,
-    });
-
-    const isDST = playerInfo.defaultPositionId === 16;
-
-    const league = 'nfl';
-
-    return {
-      ...playerInfo,
-      img: !isDST ? headshotImgBuilder({ id: p.id, league }) : logoImgBuilder({ id: playerInfo.team, league, height: 40, width: 55 }),
-      lineupSlotId: playerInfo.defaultPositionId,
-      lineupSlot: FOOTBALL_LINEUP_MAP[playerInfo.defaultPositionId].abbrev,
-      points: 0, // p.player.appliedStatTotal,
-    };
-  });
 }
 
 export function transformToFootballPlayerStatsRow(player: FootballPlayer, statPeriod: string): FootballPlayerStatsRow | null {
