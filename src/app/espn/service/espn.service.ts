@@ -7,6 +7,7 @@ import { EspnClient } from '@sports-ui/ui-sdk/espn';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { clientFastcastToFastcast } from '@app/espn-fastcast/transformers/espn-fastcast.transformers';
 import { FreeAgent, ProTeamSchedule } from '@sports-ui/ui-sdk/espn-client';
 import { SportsEntity } from '@sports-ui/ui-sdk/espn-fastcast-client';
 import {
@@ -17,7 +18,6 @@ import {
   FantasySportsAbbreviation,
 } from '../endpoint-builder/base-espn-endpoints-builder.m';
 import { PlayerNews } from '../models/player-news.model';
-import { EspnTransformers } from '../transformers/espn-transformers.m';
 import { clientPlayerNewsFeed } from '../transformers/espn.transformers';
 
 export type FantasyLeagueBySportRequest = {
@@ -154,7 +154,7 @@ export class EspnService extends ApiService {
    * @returns
    */
   fetchFastcast(url: string): Observable<FastcastTransform> {
-    return this.get<{ sports: SportsEntity[] }>(url).pipe(map(res => EspnTransformers.clientFastcastToFastcast(res)));
+    return this.get<{ sports: SportsEntity[] }>(url).pipe(map(res => clientFastcastToFastcast(res)));
   }
 
   /**
@@ -169,7 +169,7 @@ export class EspnService extends ApiService {
     seasontype: number | null;
   }): Observable<FastcastTransform> {
     const endpoint = BaseEspnEndpointBuilder({}).staticScoreboard;
-    return this.get<{ sports: SportsEntity[] }>(endpoint).pipe(map(res => EspnTransformers.clientFastcastToFastcast(res)));
+    return this.get<{ sports: SportsEntity[] }>(endpoint).pipe(map(res => clientFastcastToFastcast(res)));
   }
 
   /**

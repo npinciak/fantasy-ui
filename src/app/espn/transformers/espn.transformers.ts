@@ -1,34 +1,16 @@
 import { PositionEntityMap } from '@app/@shared/base-models/base-position.model';
-import { flatten } from '@app/@shared/helpers/utils';
-import { exists, existsFilter } from '@app/@shared/utilities/utilities.m';
-import { FastcastEvent, FootballSituation, MlbSituation } from '@app/espn-fastcast/models/fastcast-event.model';
-import { FastcastLeague } from '@app/espn-fastcast/models/fastcast-league.model';
-import { FastcastSport } from '@app/espn-fastcast/models/fastcast-sport.model';
-import { FastcastEventTeam } from '@app/espn-fastcast/models/fastcast-team.model';
-import { FastcastTransform } from '@app/espn-fastcast/models/fastcast-transform.model';
+import { exists } from '@app/@shared/utilities/utilities.m';
 import { EspnClient, PLAYER_INJURY_STATUS } from '@sports-ui/ui-sdk/espn';
 import {
   ARTICLE_TYPE,
-  EVENT_STATUS_TYPE,
   PRO_LEAGUE_ABBREV_BY_PRO_LEAGUE_TYPE,
   PlayerInfo,
   PlayerOutlooksMap,
   ProLeagueType,
   SportType,
 } from '@sports-ui/ui-sdk/espn-client';
-import { CompetitorsEntity, EventsEntity, LeaguesEntity, SportsEntity } from '@sports-ui/ui-sdk/espn-fastcast-client';
-import { pickFields } from '@sports-ui/ui-sdk/helpers';
 import { ImageBuilder } from '../const/image-builder';
-import {
-  excludeLeagues,
-  flattenPlayerStats,
-  includeSports,
-  parseEventUidStringToId,
-  parseTeamUidStringToId,
-  teamColorHandler,
-  transformIdToUid,
-} from '../espn-helpers';
-import { NO_LOGO } from '../espn.const';
+import { flattenPlayerStats, transformIdToUid } from '../espn-helpers';
 import { FantasyLeague } from '../models/fantasy-league.model';
 import { FantasyPlayer } from '../models/fantasy-player.model';
 import { PlayerNews } from '../models/player-news.model';
@@ -128,150 +110,5 @@ export function clientPlayerToFantasyPlayer({
     percentOwned: ownership ? ownership.percentOwned : 0,
     percentChange: ownership ? ownership.percentChange : 0,
     percentStarted: ownership ? ownership.percentStarted : 0,
-  };
-}
-
-export function clientFastcastToFastcast(clientModel: { sports: SportsEntity[] }): FastcastTransform {
-  const sports = clientModel.sports.map(s => clientSportsEntityToSport(s));
-
-  const leaguesImport = clientModel.sports.filter(s => includeSports(s.id)).map(i => i.leagues);
-
-  const flattenLeaguesImport = flatten(leaguesImport)?.filter(l => !excludeLeagues(l.id));
-
-  const leagues = exists(flattenLeaguesImport) ? flattenLeaguesImport.map(l => clientLeagueImportToFastcastLeague(l)) : [];
-
-  const flatLeaguesEvents = exists(flattenLeaguesImport) ? flattenLeaguesImport.map(l => (exists(l.events) ? l.events : [])) : [];
-
-  const flattenEventsImport = flatten(flatLeaguesEvents);
-
-  const events = exists(flattenEventsImport) ? existsFilter(flattenEventsImport.map(e => clientEventToFastcastEvent(e))) : [];
-
-  const teams = [];
-
-  return {
-    sports,
-    leagues,
-    events,
-    teams,
-  };
-}
-
-export function clientSportsEntityToSport(sportsEntity: SportsEntity): FastcastSport {
-  return pickFields(sportsEntity, ['id', 'uid', 'name', 'slug']);
-}
-
-export function clientLeagueImportToFastcastLeague(leagueImport: LeaguesEntity): FastcastLeague {
-  const fields = pickFields(leagueImport, ['id', 'uid', 'name', 'slug', 'isTournament', 'abbreviation', 'shortName']);
-  return {
-    ...fields,
-    abbreviation: fields.abbreviation ?? fields.name,
-    shortName: fields.shortName ?? fields.name,
-    sport: '',
-  };
-}
-
-export function clientCompetitorToFastcastTeam(eventUid: string, data: CompetitorsEntity): FastcastEventTeam | null {
-  if (!data) return null;
-
-  const { id, uid, name, winner, score, logo, abbreviation, homeAway, alternateColor, rank, seriesRecord } = data;
-
-  const record = data.record == undefined ? null : typeof data.record === 'string' ? data.record : data.record[0].displayValue;
-
-  return {
-    id,
-    uid,
-    eventIds: parseTeamUidStringToId(uid),
-    score,
-    abbrev: abbreviation,
-    isHome: homeAway,
-    logo: logo.length > 0 ? logo : NO_LOGO,
-    isWinner: winner,
-    name: name ?? abbreviation,
-    color: teamColorHandler(data),
-    altColor: `#${alternateColor}` ?? null,
-    record,
-    rank: rank ?? null,
-    winPct: null,
-    seriesRecord,
-  };
-}
-
-export function clientEventToFastcastEvent(event: EventsEntity): FastcastEvent | null {
-  if (!event) return null;
-
-  const mlbSituation = {} as MlbSituation;
-
-  // mlbSituation.batter = event?.situation?.batter;
-  // mlbSituation.pitcher = event?.situation?.pitcher;
-  // mlbSituation.balls = event?.situation?.balls;
-  // mlbSituation.strikes = event?.situation?.strikes;
-  // mlbSituation.outs = event?.situation?.outs;
-  // mlbSituation.onFirst = event?.situation?.onFirst;
-  // mlbSituation.onSecond = event?.situation?.onSecond;
-  // mlbSituation.onThird = event?.situation?.onThird;
-
-  const footballSituation = {} as FootballSituation;
-
-  footballSituation['shortDownDistanceText'] = event?.situation?.shortDownDistanceText ?? '';
-  footballSituation['possessionText'] = event?.situation?.possessionText ?? '';
-  footballSituation['isRedZone'] = false;
-  footballSituation['possession'] = event?.situation?.possession ?? '';
-
-  const teams = exists(event.competitors)
-    ? event.competitors.reduce((obj, val) => {
-        const { homeAway } = val;
-        obj[homeAway] = clientCompetitorToFastcastTeam(event.uid, val);
-        return obj;
-      }, {})
-    : null;
-
-  const {
-    id,
-    uid,
-    name,
-    status,
-    seasonType,
-    shortName,
-    location,
-    summary,
-    period,
-    link,
-    date,
-    fullStatus: {
-      type: { state, completed },
-    },
-    odds,
-    note,
-    clock,
-    seriesSummary,
-    situation,
-  } = event;
-
-  return {
-    id,
-    uid,
-    eventIds: parseEventUidStringToId(uid),
-    timestamp: new Date(date).getTime(),
-    state,
-    completed,
-    status,
-    statusId: event.fullStatus.type.id,
-    name,
-    seasonType,
-    shortName,
-    location,
-    clock: clock ?? null,
-    seriesSummary: seriesSummary ?? null,
-    summary,
-    period,
-    isTournament: false,
-    note: note ?? null,
-    isHalftime: event?.fullStatus.type?.id ? event?.fullStatus.type.id === EVENT_STATUS_TYPE.Halftime : false,
-    lastPlay: situation?.lastPlay ?? null,
-    link,
-    odds: odds ?? null,
-    mlbSituation,
-    footballSituation,
-    teams,
   };
 }
