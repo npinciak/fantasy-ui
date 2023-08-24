@@ -4,14 +4,20 @@ import { map } from 'rxjs/operators';
 
 import { FOOTBALL_ROSTER_HEADERS_BY_LINEUP_SLOT, FOOTBALL_ROSTER_ROWS_BY_LINEUP_SLOT } from '../../consts/fantasy-football-table.const';
 
-import { FilterOptions } from '@app/@shared/models/filter.model';
-import { BASIC_FOOTBALL_LINEUP_SLOT_FILTER_OPTIONS, FOOTBALL_LINEUP_MAP, FootballLineupSlot, NFL_STATS_MAP } from '@sports-ui/ui-sdk/espn';
-import { PLAYER_AVAILABILITY_STATUS, PlayerAvailabilityStatus } from '@sports-ui/ui-sdk/espn-client';
+import {
+  BASIC_FOOTBALL_LINEUP_SLOT_FILTER_OPTIONS,
+  FOOTBALL_LINEUP_MAP,
+  FootballLineupSlot,
+  INJURY_STATUS_FILTER,
+  NFL_STATS_MAP,
+} from '@sports-ui/ui-sdk/espn';
+import { PLAYER_AVAILABILITY_FILTER, PLAYER_AVAILABILITY_STATUS, PlayerAvailabilityStatus } from '@sports-ui/ui-sdk/espn-client';
 import { FOOTBALL_STATS_FILTER } from '../../consts/stats-filters.const';
 import { FantasyFootballFreeAgentsFilterFacade } from '../../facade/fantasy-football-free-agents-filter.facade';
 import { FantasyFootballFreeAgentsFacade } from '../../facade/fantasy-football-free-agents.facade';
 import { FantasyFootballLeagueFacade } from '../../facade/fantasy-football-league.facade';
 import { FantasyFootballTeamFacade } from '../../facade/fantasy-football-team.facade';
+import { FantasyFootballScoringPeriod } from '../../fantasy-football-scoring-period';
 
 @Component({
   selector: 'app-football-free-agents',
@@ -24,20 +30,11 @@ export class FootballFreeAgentsComponent implements OnInit {
   readonly LINEUP_SLOTS = BASIC_FOOTBALL_LINEUP_SLOT_FILTER_OPTIONS;
   readonly FOOTBALL_STATS_FILTER = FOOTBALL_STATS_FILTER;
 
-  readonly PLAYER_HEALTH_FILTER: FilterOptions<boolean | null>[] = [
-    { value: null, label: 'All' },
-    { value: false, label: 'Healthy' },
-    { value: true, label: 'IL-Eligibile' },
-  ];
-
-  readonly PLAYER_AVAILABILITY_FILTER: FilterOptions<string>[] = [
-    { value: PLAYER_AVAILABILITY_STATUS.FreeAgent, label: 'Free Agents' },
-    { value: PLAYER_AVAILABILITY_STATUS.Waivers, label: 'Waivers' },
-    { value: PLAYER_AVAILABILITY_STATUS.OnTeam, label: 'On Team' },
-  ];
+  readonly INJURY_STATUS_FILTER = INJURY_STATUS_FILTER;
+  readonly PLAYER_AVAILABILITY_FILTER = PLAYER_AVAILABILITY_FILTER;
 
   selectedTeamId$ = new BehaviorSubject('10');
-  scoringPeriodId$ = new BehaviorSubject('');
+  scoringPeriodId$ = new BehaviorSubject(FantasyFootballScoringPeriod.season('2023'));
   xAxisStat$ = new BehaviorSubject<string>('');
   yAxisStat$ = new BehaviorSubject<string>('');
 

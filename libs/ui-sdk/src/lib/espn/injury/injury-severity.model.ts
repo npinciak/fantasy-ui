@@ -6,8 +6,8 @@ export const enum InjurySeverity {
   Positive,
 }
 
-export type InjurySeverityClass = (typeof INJURY_SEVERITY_CLASS)[keyof typeof INJURY_SEVERITY_CLASS];
-export type InjurySeverityColor = (typeof INJURY_SEVERITY_COLOR)[keyof typeof INJURY_SEVERITY_COLOR];
+export type InjurySeverityClass = typeof INJURY_SEVERITY_CLASS[keyof typeof INJURY_SEVERITY_CLASS];
+export type InjurySeverityColor = typeof INJURY_SEVERITY_COLOR[keyof typeof INJURY_SEVERITY_COLOR];
 
 export const INJURY_SEVERITY_COLOR = {
   Serious: '#cb0123',
@@ -51,3 +51,9 @@ export const INJURY_SEVERITY_BY_INJURY_STATUS: { [key in PlayerInjuryStatus]: In
   [PLAYER_INJURY_STATUS.Pat]: InjurySeverity.Serious,
   [PLAYER_INJURY_STATUS.SUS]: InjurySeverity.Serious,
 } as const;
+
+export const INJURY_STATUS_FILTER: { value: boolean | null; label: string }[] = [
+  { value: null, label: 'All' },
+  { value: false, label: 'Healthy' },
+  { value: true, label: 'IL-Eligibile' },
+];

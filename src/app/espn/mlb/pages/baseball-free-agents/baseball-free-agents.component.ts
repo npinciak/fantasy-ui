@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
-import { FilterOptions } from '@app/@shared/models/filter.model';
 import { FreeAgentAvailabilityStatusSelectedFacade } from '@app/espn/state/free-agent-availability-selected.facade';
 import { Store } from '@ngxs/store';
 import {
@@ -11,6 +10,7 @@ import {
   BATTER_STATS_LIST,
   BaseballLineupSlot,
   BaseballStat,
+  INJURY_STATUS_FILTER,
   MLB_STATS_MAP,
   PITCHER_STATS_LIST,
 } from '@sports-ui/ui-sdk/espn';
@@ -18,7 +18,7 @@ import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { RouterFacade } from '@app/@core/store/router/router.facade';
-import { PLAYER_AVAILABILITY_STATUS, PlayerAvailabilityStatus } from '@sports-ui/ui-sdk/espn-client';
+import { PLAYER_AVAILABILITY_FILTER, PLAYER_AVAILABILITY_STATUS, PlayerAvailabilityStatus } from '@sports-ui/ui-sdk/espn-client';
 import { BATTER_STATS_HEADERS, BATTER_STATS_ROWS, PITCHER_STATS_HEADERS, PITCHER_STATS_ROWS } from '../../consts/tables.const';
 import { FantasyBaseballFreeAgentsFilterFacade } from '../../facade/fantasy-baseball-free-agents-filter.facade';
 import { FantasyBaseballFreeAgentsFacade } from '../../facade/fantasy-baseball-free-agents.facade';
@@ -68,18 +68,10 @@ export class BaseballFreeAgentsComponent implements OnInit {
 
   readonly BASEBALL_LINEUP_MAP = BASEBALL_LINEUP_MAP;
 
-  readonly PLAYER_HEALTH_FILTER: FilterOptions<boolean | null>[] = [
-    { value: null, label: 'All' },
-    { value: false, label: 'Healthy' },
-    { value: true, label: 'IL-Eligibile' },
-  ];
+  readonly INJURY_STATUS_FILTER = INJURY_STATUS_FILTER;
+  readonly PLAYER_AVAILABILITY_FILTER = PLAYER_AVAILABILITY_FILTER;
 
-  readonly PLAYER_AVAILABILITY_FILTER: FilterOptions<string>[] = [
-    { value: PLAYER_AVAILABILITY_STATUS.FreeAgent, label: 'Free Agents' },
-    { value: PLAYER_AVAILABILITY_STATUS.Waivers, label: 'Waivers' },
-    { value: PLAYER_AVAILABILITY_STATUS.OnTeam, label: 'On Team' },
-  ];
-
+  isLoading$ = new BehaviorSubject<boolean>(false);
   isSelectedAvailabilityStatusToggled$ = this.freeAgentAvailabilityStatusSelectedFacade.isSelected$;
   isSelectedLineupSlotIdToggled$ = this.fantasyBaseballFreeAgentsFilterFacade.isSelectedLineupSlotIdToggled$;
 
@@ -161,9 +153,20 @@ export class BaseballFreeAgentsComponent implements OnInit {
   ngOnInit(): void {}
 
   async onRefreshClick(): Promise<void> {
+    const leagueId = this.routerFacade.leagueId;
+    const year = this.routerFacade.season;
+    if (!leagueId || !year) return;
+
     try {
-      await this.fantasyBaseballLeagueFacade.refreshCurrentLeague().toPromise();
-    } catch (e) {}
+      this.isLoading$.next(true);
+
+      await this.fantasyBaseballLeagueFacade.getLeague(leagueId, year).toPromise();
+      setTimeout(async () => {
+        this.isLoading$.next(false);
+      }, 2000);
+    } catch (e) {
+      this.isLoading$.next(false);
+    }
   }
 
   onSelectedLeagueTeamChange(val: string): void {
