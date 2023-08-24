@@ -1,15 +1,9 @@
-/**
- * @deprecated Use sdk StatusCode instead
- */
 export enum StatusCode {
   Ok = 200,
   NoContent = 204,
   BadRequest = 400,
 }
 
-/**
- * @deprecated Use sdk ErrorStatusCode instead
- */
 export enum ErrorStatusCode {
   Unknown = 0,
   BadRequest = 400,
@@ -23,9 +17,6 @@ export enum ErrorStatusCode {
   GatewayTimeout,
 }
 
-/**
- * @deprecated Use sdk statusCodeToEspnMessage instead
- */
 export const statusCodeToEspnMessage: { [key in ErrorStatusCode]: string } = {
   [ErrorStatusCode.Unknown]: 'Invalid LeagueId',
   [ErrorStatusCode.BadRequest]: 'Bad Request',
@@ -39,9 +30,6 @@ export const statusCodeToEspnMessage: { [key in ErrorStatusCode]: string } = {
   [ErrorStatusCode.GatewayTimeout]: 'Gateway Timeout',
 } as const;
 
-/**
- * @deprecated Use sdk statusCodeToMessage instead
- */
 export const statusCodeToMessage: { [key in ErrorStatusCode]: string } = {
   [ErrorStatusCode.Unknown]: 'Could not contact server',
   [ErrorStatusCode.BadRequest]: 'Bad Request',
