@@ -1,7 +1,7 @@
 <nav
   class="relative z-10 flex flex-wrap items-center justify-between bg-white py-4 px-6 shadow-xl md:fixed md:left-0 md:top-0 md:bottom-0 md:block md:w-64 md:flex-row md:flex-nowrap md:overflow-hidden md:overflow-y-auto"
 >
-  <div class="mx-auto flex w-full flex-wrap items-center justify-between px-0 md:min-h-full md:flex-col md:flex-nowrap md:items-stretch">
+  <div class="mx-auto flex w-full flex-wrap items-center justify-between md:min-h-full md:flex-col md:flex-nowrap md:items-stretch">
     <button
       class="cursor-pointer rounded border border-solid border-transparent bg-transparent px-3 py-1 text-xl leading-none text-black opacity-50 sm:hidden"
       type="button"
@@ -9,7 +9,7 @@
     >
       <i class="fas fa-bars"></i>
     </button>
-    <a [routerLink]="['/my-profile']" class="mr-0 inline-block whitespace-nowrap p-4 px-0 text-left text-sm font-bold uppercase text-sky-800 md:block md:pb-2">
+    <a [routerLink]="['/my-profile']" class="mr-0 inline-block whitespace-nowrap p-4 text-left text-sm font-bold uppercase text-sky-800 md:block md:pb-2">
       <span class="block sm:hidden">{{ appTitle }}</span>
       <span class="hidden sm:block">{{ appTitle }}</span>
     </a>
@@ -28,7 +28,7 @@
               [routerLink]="['/']"
               ariaCurrentWhenActive="page"
               routerLinkActive="text-red-600"
-              class="mr-0 inline-block whitespace-nowrap p-4 px-0 text-left text-sm font-bold uppercase text-sky-800 md:block md:pb-2"
+              class="mr-0 inline-block whitespace-nowrap p-4 text-left text-sm font-bold uppercase text-sky-800 md:block md:pb-2"
             >
               {{ appTitle }}
             </a>

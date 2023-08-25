@@ -1,4 +1,5 @@
 import { ActivatedRouteSnapshot, Params } from '@angular/router';
+import { ShellNavListItem } from '@app/@core/shell/shell-nav-list/shell-nav-list.model';
 import { objectIsEmpty } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { exists } from '@app/@shared/utilities/utilities.m';
@@ -120,7 +121,7 @@ export class RouterSelector {
   }
 
   @Selector()
-  static dailyFantasyMenu() {
+  static dailyFantasyMenu(): ShellNavListItem[] {
     return [
       { id: '1', routerLink: UrlBuilder.dfsMlbBase, queryParams: { site: SITE.Draftkings }, label: 'DK MLB' },
       // { routerLink: UrlBuilder.dfsNbaBase, queryParams: { site:  site:DfsSite.Draftkings }, label: 'DK NFL' },
@@ -129,7 +130,12 @@ export class RouterSelector {
   }
 
   @Selector([RouterSelector.getSport, RouterSelector.getSeason, RouterSelector.getLeagueId, RouterSelector.getTeamId])
-  static espnFantasyMenu(sport: UrlPathFragments, season: string | null, leagueId: string | null, teamId: string | null) {
+  static espnFantasyMenu(
+    sport: UrlPathFragments,
+    season: string | null,
+    leagueId: string | null,
+    teamId: string | null
+  ): ShellNavListItem[] {
     const baseNavLinks = [{ id: '1', routerLink: ['/espn'], label: 'Home' }];
 
     const leagueNavLinks = [

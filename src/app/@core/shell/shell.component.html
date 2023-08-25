@@ -1,4 +1,43 @@
-<div class="h-full">
-  <app-shell-nav [appTitle]="pageTitle"></app-shell-nav>
-  <router-outlet></router-outlet>
-</div>
+<!-- <div
+  class="p-2 text-center text-xs font-bold text-white"
+  [class.hidden]="isOnline$ | async"
+  [class.bg-red-700]="!(isOnline$ | async)"
+  [class.bg-green-500]="isOnline$ | async"
+>
+  {{ (isOnline$ | async) ? 'Online' : 'Offline' }}
+</div> -->
+<mat-toolbar class="bg-slate-800">
+  <mat-toolbar-row class="text-center">
+    <button
+      class="cursor-pointer rounded border border-solid border-transparent bg-transparent px-3 py-1 text-xl leading-none text-slate-400 opacity-50 hover:opacity-100"
+      type="button"
+      (click)="sidenav.toggle()"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <span class="flex-auto"> <h1 class="text-white">SportsUi</h1> </span>
+
+    <button
+      class="cursor-pointer rounded border border-solid border-transparent bg-transparent px-3 py-1 text-xl leading-none text-slate-400 opacity-50 hover:opacity-100"
+      type="button"
+      (click)="onProfileClick()"
+    >
+      <i class="fas fa-user"></i>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container class="h-full">
+  <mat-sidenav #sidenav class="w-1/2 p-3 sm:w-1/6">
+    <h6 class="block py-3 px-4 pt-1 pb-4 text-xs font-bold uppercase text-sky-800 no-underline md:min-w-full">Daily Fantasy</h6>
+    <app-shell-nav-list [navList]="routerFacade.dailyFantasyMenu$ | async"></app-shell-nav-list>
+    <hr class="my-4 md:min-w-full" />
+    <app-shell-nav-list [navList]="routerFacade.espnFantasyMenu$ | async"></app-shell-nav-list>
+    <hr class="my-4 md:min-w-full" />
+    <app-shell-nav-list [navList]="systemStatusNavList"></app-shell-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <!-- <app-shell-nav [appTitle]="pageTitle"></app-shell-nav> -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

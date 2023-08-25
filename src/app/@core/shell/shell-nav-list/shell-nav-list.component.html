@@ -1,0 +1,7 @@
+<ul class="m-0 flex list-none flex-col p-0 md:mb-4 md:min-w-full md:flex-col">
+  <li class="items-center" *ngFor="let menuItem of navList">
+    <a [routerLink]="menuItem.routerLink" [queryParams]="menuItem.queryParams" class="block py-3 px-4 text-xs font-bold uppercase">
+      {{ menuItem.label }}
+    </a>
+  </li>
+</ul>

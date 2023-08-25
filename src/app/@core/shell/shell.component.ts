@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ServiceWorkerService } from '../../@shared/services/service-worker.service';
+import { AuthenticationService } from '../authentication/services/authentication.service';
+import { RouterFacade } from '../store/router/router.facade';
 
 @Component({
   selector: 'app-shell',
@@ -7,7 +10,22 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ShellComponent implements OnInit {
   @Input() pageTitle = 'SportsUi';
 
-  constructor() {}
+  readonly systemStatusNavList = [{ id: '6', routerLink: '/system-status', label: 'System Status' }];
 
-  ngOnInit(): void {}
+  constructor(
+    readonly authService: AuthenticationService,
+    readonly routerFacade: RouterFacade,
+    private serviceWorkerService: ServiceWorkerService
+  ) {}
+
+  onProfileClick(): void {
+    this.routerFacade.navigateToMyProfile();
+  }
+
+  ngOnInit(): void {
+    this.serviceWorkerService.checkForUpdates();
+
+    window.addEventListener('online', this.serviceWorkerService.updateOnlineStatus.bind(this));
+    window.addEventListener('offline', this.serviceWorkerService.updateOnlineStatus.bind(this));
+  }
 }
