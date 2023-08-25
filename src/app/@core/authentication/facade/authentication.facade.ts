@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { Logout } from '../state/authentication.state';
+import { Logout } from '../actions/authentication.actions';
 
 @Injectable({
   providedIn: 'root',

@@ -5,7 +5,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {
-  @Input() isFormValid: boolean = false;
+  @Input() isFormValid = false;
   @Input() email: string | null = null;
   @Input() password: string | null = null;
   @Output() signInClicked = new EventEmitter();
