@@ -1,10 +1,11 @@
+import { FootballLineupSlot, FootballPosition, FootballStat, NFL_STATS_MAP } from '@sports-ui/ui-sdk/espn';
 import {
   BaseTableColumn,
-  getTableHeaders,
   TableColumnDataType,
+  getTableHeaders,
+  transformStatToTableColumn,
   transformTableColumnsToTableRows,
-} from '@app/@shared/models/table-columns.model';
-import { FootballLineupSlot, FootballPosition, FootballStat, NFL_STATS_MAP } from '@sports-ui/ui-sdk/espn';
+} from '@sports-ui/ui-sdk/helpers';
 import { FootballTeam } from '../models/football-team.model';
 
 const statsKey = 'stats';
@@ -19,146 +20,69 @@ const LEAGUE_STANDINGS_COLUMNS: BaseTableColumn<FootballTeam>[] = [
 ];
 
 export const DEFAULT_FOOTBALL_ROSTER_COLUMNS = [
-  { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String },
-  {
-    columnDef: `${[statsKey]}.${FootballStat.GP}`,
-    headerCell: `${[statsKey]}.${FootballStat.GP}`,
-    headerLabel: NFL_STATS_MAP[FootballStat.GP].abbrev,
-    headerTooltip: NFL_STATS_MAP[FootballStat.GP].description,
-    dataType: TableColumnDataType.Number,
-  },
+  { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String, sortable: true },
+  transformStatToTableColumn(FootballStat.GP, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
   {
     columnDef: `stats.appliedTotal`,
     headerCell: `stats.appliedTotal`,
     headerLabel: 'Total Pts',
     dataType: TableColumnDataType.Number,
+    sortable: true,
   },
   {
     columnDef: `stats.appliedAverage`,
     headerCell: `stats.appliedAverage`,
     headerLabel: 'Avg P/G',
     dataType: TableColumnDataType.Number,
+    sortable: true,
   },
   {
     columnDef: `percentChange`,
     headerCell: `percentChange`,
     headerLabel: 'Chng %',
     dataType: TableColumnDataType.Number,
+    sortable: true,
   },
   {
     columnDef: `percentStarted`,
     headerCell: `percentStarted`,
     headerLabel: 'Start %',
     dataType: TableColumnDataType.Number,
+    sortable: true,
   },
   {
     columnDef: `percentOwned`,
     headerCell: `percentOwned`,
     headerLabel: 'Own %',
     dataType: TableColumnDataType.Number,
+    sortable: true,
   },
 ];
 
 export const PASSING_ROSTER_COLUMNS = [
-  {
-    columnDef: `${[statsKey]}.${FootballStat.PY}`,
-    headerCell: `${[statsKey]}.${FootballStat.PY}`,
-    headerLabel: NFL_STATS_MAP[FootballStat.PY].abbrev,
-    dataType: TableColumnDataType.Number,
-  },
-  {
-    columnDef: `${[statsKey]}.${FootballStat.PTD}`,
-    headerCell: `${[statsKey]}.${FootballStat.PTD}`,
-    headerLabel: 'Pass TD',
-    dataType: TableColumnDataType.Number,
-  },
-  {
-    columnDef: `${[statsKey]}.${FootballStat.CPCT}`,
-    headerCell: `${[statsKey]}.${FootballStat.CPCT}`,
-    headerLabel: 'Complete %',
-    dataType: TableColumnDataType.Number,
-  },
-  {
-    columnDef: `${[statsKey]}.${FootballStat.PYPG}`,
-    headerCell: `${[statsKey]}.${FootballStat.PYPG}`,
-    headerLabel: 'Pass Yds/G',
-    dataType: TableColumnDataType.Number,
-  },
+  transformStatToTableColumn(FootballStat.PY, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(FootballStat.PTD, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(FootballStat.CPCT, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(FootballStat.PYPG, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
 ] as const;
 
 export const RUSHING_ROSTER_COLUMNS = [
-  {
-    columnDef: `${[statsKey]}.${FootballStat.RA}`,
-    headerCell: `${[statsKey]}.${FootballStat.RA}`,
-    headerLabel: NFL_STATS_MAP[FootballStat.RA].abbrev,
-    dataType: TableColumnDataType.Number,
-  },
-  {
-    columnDef: `${[statsKey]}.${FootballStat.RY}`,
-    headerCell: `${[statsKey]}.${FootballStat.RY}`,
-    headerLabel: NFL_STATS_MAP[FootballStat.RY].abbrev,
-    dataType: TableColumnDataType.Number,
-  },
-  {
-    columnDef: `${[statsKey]}.${FootballStat.RTD}`,
-    headerCell: `${[statsKey]}.${FootballStat.RTD}`,
-    headerLabel: 'Rush TDs',
-    dataType: TableColumnDataType.Number,
-  },
+  transformStatToTableColumn(FootballStat.RA, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(FootballStat.RY, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(FootballStat.RTD, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
 ] as const;
 
 export const RECEIVING_ROSTER_COLUMNS = [
-  {
-    columnDef: `${[statsKey]}.${FootballStat.REC}`,
-    headerCell: `${[statsKey]}.${FootballStat.REC}`,
-    headerLabel: NFL_STATS_MAP[FootballStat.REC].abbrev,
-    dataType: TableColumnDataType.Number,
-  },
-  {
-    columnDef: `${[statsKey]}.${FootballStat.RET}`,
-    headerCell: `${[statsKey]}.${FootballStat.RET}`,
-    headerLabel: 'Targets',
-    dataType: TableColumnDataType.Number,
-  },
-  {
-    columnDef: `extendedStats.${FootballStat.TargetsPerGame}`,
-    headerCell: `extendedStats.${FootballStat.TargetsPerGame}`,
-    headerLabel: 'Tar / Game',
-    dataType: TableColumnDataType.Number,
-  },
-  {
-    columnDef: `${[statsKey]}.${FootballStat.RETD}`,
-    headerCell: `${[statsKey]}.${FootballStat.RETD}`,
-    headerLabel: 'Rec TDs',
-    dataType: TableColumnDataType.Number,
-  },
-  {
-    columnDef: `${[statsKey]}.${FootballStat.YAC}`,
-    headerCell: `${[statsKey]}.${FootballStat.YAC}`,
-    headerLabel: 'Yards After Catch',
-    dataType: TableColumnDataType.Number,
-  },
-  {
-    columnDef: `${[statsKey]}.${FootballStat.YPC}`,
-    headerCell: `${[statsKey]}.${FootballStat.YPC}`,
-    headerLabel: 'Yards Per Catch',
-    dataType: TableColumnDataType.Number,
-  },
+  transformStatToTableColumn(FootballStat.REC, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(FootballStat.TargetsPerGame, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(FootballStat.RETD, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(FootballStat.YAC, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(FootballStat.YPC, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
 ] as const;
 
 export const DST_ROSTER_COLUMNS = [
-  {
-    columnDef: `${[statsKey]}.${FootballStat.SK}`,
-    headerCell: `${[statsKey]}.${FootballStat.SK}`,
-    headerLabel: NFL_STATS_MAP[FootballStat.SK].abbrev,
-    dataType: TableColumnDataType.Number,
-  },
-  {
-    columnDef: `${[statsKey]}.${FootballStat.INT}`,
-    headerCell: `${[statsKey]}.${FootballStat.INT}`,
-    headerLabel: NFL_STATS_MAP[FootballStat.INT].abbrev,
-    dataType: TableColumnDataType.Number,
-  },
+  transformStatToTableColumn(FootballStat.SK, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
+  transformStatToTableColumn(FootballStat.INT, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
 ] as const;
 
 export const FOOTBALL_ROSTER_COLUMNS_BY_LINEUP_SLOT = {

@@ -3,7 +3,7 @@ import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { BATTER_STATS_LIST, BaseballStat } from '@sports-ui/ui-sdk/espn';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { LEAGUE_STANDINGS_HEADERS, LEAGUE_STANDINGS_ROWS } from '../../consts/tables.const';
+import { LEAGUE_STANDINGS_HEADERS, LEAGUE_STANDINGS_ROWS } from '../../consts/fantasy-baseball-table.const';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
 import { FantasyBaseballTeamLiveFacade } from '../../facade/fantasy-baseball-team-live.facade';
 

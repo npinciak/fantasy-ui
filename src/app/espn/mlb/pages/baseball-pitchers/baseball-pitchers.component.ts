@@ -3,7 +3,12 @@ import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { BaseballStat, MLB_STATS_MAP, PITCHER_STATS_LIST } from '@sports-ui/ui-sdk';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { PITCHER_STATS_HEADERS, PITCHER_STATS_LIVE_HEADERS, PITCHER_STATS_LIVE_ROWS, PITCHER_STATS_ROWS } from '../../consts/tables.const';
+import {
+  PITCHER_STATS_HEADERS,
+  PITCHER_STATS_LIVE_HEADERS,
+  PITCHER_STATS_LIVE_ROWS,
+  PITCHER_STATS_ROWS,
+} from '../../consts/fantasy-baseball-table.const';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
 import { FantasyBaseballPlayerNewsFacade } from '../../facade/fantasy-baseball-player-news.facade';
 import { FantasyBaseballTeamLiveFacade } from '../../facade/fantasy-baseball-team-live.facade';
@@ -69,10 +74,14 @@ export class BaseballPitchersComponent {
   ) {}
 
   async onRefreshClick(): Promise<void> {
+    const leagueId = this.routerFacade.leagueId;
+    const year = this.routerFacade.season;
+    if (!leagueId || !year) return;
+
     try {
       this.isLoading$.next(true);
 
-      await this.fantasyBaseballLeagueFacade.refreshCurrentLeague().toPromise();
+      await this.fantasyBaseballLeagueFacade.getLeague(leagueId, year).toPromise();
       setTimeout(async () => {
         this.isLoading$.next(false);
       }, 2000);

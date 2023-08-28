@@ -3,7 +3,12 @@ import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { BATTER_STATS_LIST_OPTIONS, BaseballStat, MLB_STATS_MAP } from '@sports-ui/ui-sdk/espn';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { BATTER_STATS_HEADERS, BATTER_STATS_LIVE_HEADERS, BATTER_STATS_LIVE_ROWS, BATTER_STATS_ROWS } from '../../consts/tables.const';
+import {
+  BATTER_STATS_HEADERS,
+  BATTER_STATS_LIVE_HEADERS,
+  BATTER_STATS_LIVE_ROWS,
+  BATTER_STATS_ROWS,
+} from '../../consts/fantasy-baseball-table.const';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
 import { FantasyBaseballPlayerNewsFacade } from '../../facade/fantasy-baseball-player-news.facade';
 import { FantasyBaseballTeamLiveFacade } from '../../facade/fantasy-baseball-team-live.facade';

@@ -64,6 +64,12 @@ export class EspnStatsTableComponent<T extends PlayerEntity> implements OnChange
     }
   }
 
+  columnClassHelper(val: string) {
+    if (val === 'name') return 'first-of-type:w-[150px] first-of-type:min-w-[150px] first-of-type:pl-0 first-of-type:pl-0';
+
+    return '';
+  }
+
   onPlayerClicked(player: T): void {
     this.playerClicked.emit(player);
   }

@@ -2,15 +2,9 @@
   <table [attr.aria-label]="ariaLabel" class="xs:text-xs w-full text-sm" mat-table [dataSource]="dataSource" matSortDirection="asc" matSort>
     <ng-container *ngFor="let col of dataColumns">
       <ng-container [matColumnDef]="col?.columnDef" [sticky]="col.columnDef === 'name'">
-        <!-- <th
-          mat-header-cell
-          class="px-2 text-right first-of-type:w-[200px] first-of-type:min-w-[200px] first-of-type:pl-0 first-of-type:text-left"
-          *matHeaderCellDef
-          [arrowPosition]="'before'"
-          tabindex="0"
-        > -->
         <th
           mat-header-cell
+          [ngClass]="columnClassHelper(col.columnDef)"
           class="whitespace-nowrap border border-l-0 border-r-0 border-solid border-sky-100 bg-sky-50 p-3 py-3 text-left align-middle text-xs font-semibold uppercase text-sky-500"
           *matHeaderCellDef
           mat-sort-header
@@ -19,8 +13,12 @@
         >
           {{ col?.headerLabel }}
         </th>
-        <!-- <td mat-cell class="px-2 text-right first-of-type:w-[200px] first-of-type:min-w-[200px] first-of-type:pl-0 first-of-type:text-left" *matCellDef="let data"> -->
-        <td mat-cell class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-3 align-middle text-xs" *matCellDef="let data">
+        <td
+          mat-cell
+          [ngClass]="columnClassHelper(col.columnDef)"
+          class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-3 align-middle text-xs"
+          *matCellDef="let data"
+        >
           <ng-container [ngSwitch]="col.columnDef">
             <ng-template [ngSwitchCase]="'name'">
               <app-espn-player-info-col [player]="data" [hideLineupSlot]="true" (playerClicked)="onPlayerClicked($event)"></app-espn-player-info-col>

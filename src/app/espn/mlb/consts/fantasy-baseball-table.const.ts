@@ -1,22 +1,12 @@
 import { BaseballStat, MLB_STATS_MAP } from '@sports-ui/ui-sdk/espn';
-import { TableColumnDataType, transformTableColumnsToTableRows } from '@sports-ui/ui-sdk/helpers';
+import { TableColumnDataType, transformStatToTableColumn, transformTableColumnsToTableRows } from '@sports-ui/ui-sdk/helpers';
 
 const statsKey = 'stats';
 const leagueStandingsStatsKey = 'valuesByStat';
 
-function transformStatToTableColumn(stat: BaseballStat, statKey: string, statsMap, dataType: TableColumnDataType, sortable = true) {
-  return {
-    columnDef: `${[statKey]}.${stat}`,
-    headerCell: `${[statKey]}.${stat}`,
-    headerLabel: statsMap[stat].abbrev,
-    dataType,
-    sortable,
-  };
-}
-
 export const PLAYER_BATTER_STATS_COLUMNS = [
-  { columnDef: 'opponent', headerCell: 'opponent', headerLabel: '', dataType: TableColumnDataType.String, sortable: false },
-  { columnDef: 'date', headerCell: 'date', headerLabel: '', dataType: TableColumnDataType.String, sortable: false },
+  { columnDef: 'opponent', headerCell: 'opponent', headerLabel: 'Opponent', dataType: TableColumnDataType.String, sortable: false },
+  { columnDef: 'date', headerCell: 'date', headerLabel: 'Date', dataType: TableColumnDataType.String, sortable: false },
   transformStatToTableColumn(BaseballStat.H, statsKey, MLB_STATS_MAP, TableColumnDataType.Number, false),
   transformStatToTableColumn(BaseballStat.R, statsKey, MLB_STATS_MAP, TableColumnDataType.Number, false),
   transformStatToTableColumn(BaseballStat.HR, statsKey, MLB_STATS_MAP, TableColumnDataType.Number, false),
@@ -145,3 +135,6 @@ export const PITCHER_STATS_LIVE_HEADERS = PITCHER_STATS_LIVE_ROWS.map(r => r.col
 
 export const PLAYER_BATTER_STATS_ROWS = transformTableColumnsToTableRows(PLAYER_BATTER_STATS_COLUMNS);
 export const PLAYER_BATTER_STATS_HEADERS = PLAYER_BATTER_STATS_ROWS.map(r => r.columnDef);
+
+export const PLAYER_PITCHER_STATS_ROWS = transformTableColumnsToTableRows(PITCHER_STATS_COLUMNS);
+export const PLAYER_PITCHER_STATS_HEADERS = PLAYER_PITCHER_STATS_ROWS.map(r => r.columnDef);

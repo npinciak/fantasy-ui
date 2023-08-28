@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BaseballStat } from '@sports-ui/ui-sdk/espn';
 import { PlayerRatingTimePeriod } from '@sports-ui/ui-sdk/espn-client';
 import { of } from 'rxjs';
-import { PLAYER_BATTER_STATS_HEADERS, PLAYER_BATTER_STATS_ROWS } from '../../consts/tables.const';
+import { PLAYER_BATTER_STATS_HEADERS, PLAYER_BATTER_STATS_ROWS } from '../../consts/fantasy-baseball-table.const';
 import { FantasyBaseballPlayerCardFacade } from '../../facade/fantasy-baseball-player-card.facade';
 import { FantasyBaseballPlayerNewsFacade } from '../../facade/fantasy-baseball-player-news.facade';
 

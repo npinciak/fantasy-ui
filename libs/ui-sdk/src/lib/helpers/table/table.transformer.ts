@@ -1,8 +1,9 @@
+import { FootballStat } from '@sports-ui/ui-sdk/espn';
 import { BaseballStat } from '../../espn/baseball/stats/mlb-stats.m';
 import { BaseTableColumn, BaseTableRow, TableColumnDataType, cellDataAccessor } from './table.model';
 
 export function transformStatToTableColumn(
-  stat: BaseballStat,
+  stat: BaseballStat | FootballStat,
   statKey: string,
   statsMap: any,
   dataType: TableColumnDataType,

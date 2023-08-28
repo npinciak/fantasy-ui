@@ -19,7 +19,12 @@ import { map } from 'rxjs/operators';
 
 import { RouterFacade } from '@app/@core/store/router/router.facade';
 import { PLAYER_AVAILABILITY_FILTER, PLAYER_AVAILABILITY_STATUS, PlayerAvailabilityStatus } from '@sports-ui/ui-sdk/espn-client';
-import { BATTER_STATS_HEADERS, BATTER_STATS_ROWS, PITCHER_STATS_HEADERS, PITCHER_STATS_ROWS } from '../../consts/tables.const';
+import {
+  BATTER_STATS_HEADERS,
+  BATTER_STATS_ROWS,
+  PITCHER_STATS_HEADERS,
+  PITCHER_STATS_ROWS,
+} from '../../consts/fantasy-baseball-table.const';
 import { FantasyBaseballFreeAgentsFilterFacade } from '../../facade/fantasy-baseball-free-agents-filter.facade';
 import { FantasyBaseballFreeAgentsFacade } from '../../facade/fantasy-baseball-free-agents.facade';
 import { FantasyBaseballLeagueFacade } from '../../facade/fantasy-baseball-league.facade';
