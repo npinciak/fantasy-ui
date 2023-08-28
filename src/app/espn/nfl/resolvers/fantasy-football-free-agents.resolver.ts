@@ -10,10 +10,9 @@ export class FantasyFootballFreeAgentsResolver implements Resolve<void> {
 
   async resolve(route: ActivatedRouteSnapshot): Promise<void> {
     const leagueId = route.paramMap.get('leagueId');
-    const season = route.paramMap.get('season');
 
-    if (leagueId && season) {
-      await this.freeAgentsFacade.fetchFreeAgents(leagueId, season).toPromise();
-    }
+    if (!leagueId) throw new Error(`cannot fetch a league without a leagueId`);
+
+    await this.freeAgentsFacade.fetchFreeAgents(leagueId).toPromise();
   }
 }

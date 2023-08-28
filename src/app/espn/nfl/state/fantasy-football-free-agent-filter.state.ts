@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { RouterSelector } from '@app/@core/store/router/router.selectors';
-import { Selector } from '@app/@shared/models/typed-selector';
 
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { Action, State, StateContext, Store } from '@ngxs/store';
@@ -33,7 +32,6 @@ export interface FantasyFootballFreeAgentFilterStateModel {
     filterInjured: false,
     availabilityStatus: {
       [PLAYER_AVAILABILITY_STATUS.FreeAgent]: true,
-      [PLAYER_AVAILABILITY_STATUS.Waivers]: true,
     },
     lineupSlotIds: {},
     lineupSlotId: FootballLineupSlot.QB,
@@ -47,16 +45,6 @@ export interface FantasyFootballFreeAgentFilterStateModel {
 })
 @Injectable()
 export class FantasyFootballFreeAgentsFilterState {
-  @Selector([FantasyFootballFreeAgentsFilterState])
-  static getSelectedLineupSlotIds(state: FantasyFootballFreeAgentFilterStateModel) {
-    return state.lineupSlotIds;
-  }
-
-  @Selector([FantasyFootballFreeAgentsFilterState])
-  static getAvailabilityStatus(state: FantasyFootballFreeAgentFilterStateModel) {
-    return state.availabilityStatus;
-  }
-
   constructor(private store: Store) {}
 
   @Action(SetPagination)

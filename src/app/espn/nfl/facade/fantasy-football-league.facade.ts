@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { select } from '@app/@shared/models/typed-select';
+import { FantasyLeagueBaseStateModel } from '@app/espn/state/base-league.model';
 import { Store } from '@ngxs/store';
 import { Observable, of } from 'rxjs';
 import { FantasyFootballLeague } from '../actions/fantasy-football-league.actions';
@@ -19,6 +20,10 @@ export class FantasyFootballLeagueFacade {
 
   constructor(private store: Store) {}
 
+  get currentScoringPeriodId() {
+    return this.store.selectSnapshot(FantasyFootballLeagueSelector.slices.scoringPeriodId);
+  }
+
   get seasonId() {
     return this.store.selectSnapshot(FantasyFootballLeagueSelector.slices.seasonId);
   }
@@ -37,5 +42,9 @@ export class FantasyFootballLeagueFacade {
 
   updateCurrentScoringPeriodId(scoringPeriodId: string) {
     return this.store.dispatch(new FantasyFootballLeague.SetCurrentScoringPeriodId({ scoringPeriodId }));
+  }
+
+  setLeague(state: FantasyLeagueBaseStateModel) {
+    return this.store.dispatch(new FantasyFootballLeague.SetLeague({ state }));
   }
 }

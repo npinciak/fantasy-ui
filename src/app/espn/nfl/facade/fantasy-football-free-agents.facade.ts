@@ -21,7 +21,7 @@ export class FantasyFootballFreeAgentsFacade extends GenericFacade({
     super();
   }
 
-  fetchFreeAgents(leagueId: string, season: string): Observable<void> {
-    return this.store.dispatch(new FantasyFootballFreeAgent.Fetch({ leagueId, season }));
+  fetchFreeAgents(leagueId: string): Observable<void> {
+    return this.store.dispatch(new FantasyFootballFreeAgent.Fetch({ leagueId }));
   }
 }

@@ -8,24 +8,6 @@ export function FantasyLeagueBaseSelector(stateClass: FantasyLeagueBaseStateClas
 
     static slices = createPropertySelectors<FantasyLeagueBaseStateModel>(stateClass);
 
-    /**
-     * @deprecated
-     * use slices.id
-     */
-    @Selector([stateClass])
-    static getLeagueId(state: FantasyLeagueBaseStateModel) {
-      return state.id;
-    }
-
-    /**
-     * @deprecated
-     * use slices.id
-     */
-    @Selector([stateClass])
-    static getSeasonId(state: FantasyLeagueBaseStateModel) {
-      return state.seasonId;
-    }
-
     @Selector([stateClass])
     static getScoringPeriodId(state: FantasyLeagueBaseStateModel) {
       return state.scoringPeriodId;

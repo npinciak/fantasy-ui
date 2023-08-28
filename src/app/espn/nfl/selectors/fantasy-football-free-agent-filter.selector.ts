@@ -9,17 +9,7 @@ import {
 export class FantasyFootballFreeAgentFilterSelector {
   static slices = createPropertySelectors<FantasyFootballFreeAgentFilterStateModel>(FantasyFootballFreeAgentsFilterState);
 
-  @Selector([FantasyFootballFreeAgentFilterSelector.slices.lineupSlotId])
-  static getSelectedLineupSlotId(lineupSlotId) {
-    return lineupSlotId;
-  }
-
   @Selector([FantasyFootballFreeAgentFilterSelector.slices.lineupSlotIds])
-  static getLineupSlotIds(lineupSlotIds) {
-    return lineupSlotIds;
-  }
-
-  @Selector([FantasyFootballFreeAgentFilterSelector.getLineupSlotIds])
   static getSelectedLineupSlotIds(ids: { [id: number]: boolean }): string[] {
     return Object.keys(ids).filter(id => ids[id]);
   }

@@ -9,7 +9,11 @@ import { FantasyFootballFreeAgentFilterSelector } from '../selectors/fantasy-foo
   providedIn: 'root',
 })
 export class FantasyFootballFreeAgentsFilterFacade {
-  selectedLineupSlotId$ = select(FantasyFootballFreeAgentFilterSelector.getSelectedLineupSlotId);
+  selectedLineupSlotId$ = select(FantasyFootballFreeAgentFilterSelector.slices.lineupSlotId);
+  selectedAvailabilityStatus$ = select(FantasyFootballFreeAgentFilterSelector.getSelectedAvailabilityStatus);
+
+  metaData$ = select(FantasyFootballFreeAgentFilterSelector.slices.metaData);
+
   isSelectedAvailabilityStatusToggled$ = select(FantasyFootballFreeAgentFilterSelector.isSelectedAvailabilityStatusToggled);
   isSelectedAvailabilityStatusSelected$ = select(FantasyFootballFreeAgentFilterSelector.isSelectedAvailabilityStatusSelected);
   isSelectedLineupSlotIdToggled$ = select(FantasyFootballFreeAgentFilterSelector.isSelectedLineupSlotIdToggled);
@@ -18,6 +22,22 @@ export class FantasyFootballFreeAgentsFilterFacade {
   toggledAvailabilityStatusIds$ = select(FantasyFootballFreeAgentFilterSelector.getToggledAvailabilityStatusIds);
 
   constructor(private store: Store) {}
+
+  get injured() {
+    return this.store.selectSnapshot(FantasyFootballFreeAgentFilterSelector.slices.filterInjured);
+  }
+
+  get selectedLineupSlotId() {
+    return this.store.selectSnapshot(FantasyFootballFreeAgentFilterSelector.slices.lineupSlotId);
+  }
+
+  get selectedAvailabilityStatus() {
+    return this.store.selectSnapshot(FantasyFootballFreeAgentFilterSelector.getSelectedAvailabilityStatus);
+  }
+
+  get metaData() {
+    return this.store.selectSnapshot(FantasyFootballFreeAgentFilterSelector.slices.metaData);
+  }
 
   setLineupSlotId(lineupSlotId: FootballLineupSlot) {
     return this.store.dispatch(new SetLineupSlotId({ lineupSlotId }));
