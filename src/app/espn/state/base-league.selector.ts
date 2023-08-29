@@ -8,27 +8,7 @@ export function FantasyLeagueBaseSelector(stateClass: FantasyLeagueBaseStateClas
 
     static slices = createPropertySelectors<FantasyLeagueBaseStateModel>(stateClass);
 
-    @Selector([stateClass])
-    static getScoringPeriodId(state: FantasyLeagueBaseStateModel) {
-      return state.scoringPeriodId;
-    }
-
-    @Selector([stateClass])
-    static getFirstScoringPeriod(state: FantasyLeagueBaseStateModel) {
-      return state.firstScoringPeriod;
-    }
-
-    @Selector([stateClass])
-    static getFinalScoringPeriod(state: FantasyLeagueBaseStateModel) {
-      return state.finalScoringPeriod;
-    }
-
-    @Selector([stateClass])
-    static getMatchupPeriodCount(state: FantasyLeagueBaseStateModel) {
-      return state.matchupPeriodCount;
-    }
-
-    @Selector([EspnLeagueSelectorBase.getScoringPeriodId, EspnLeagueSelectorBase.getFinalScoringPeriod])
+    @Selector([EspnLeagueSelectorBase.slices.scoringPeriodId, EspnLeagueSelectorBase.slices.finalScoringPeriod])
     static getSeasonConcluded(currentScoringPeriod: string | null, finalScoringPeriod: string | null) {
       return currentScoringPeriod != null && finalScoringPeriod != null ? Number(currentScoringPeriod) > Number(finalScoringPeriod) : false;
     }

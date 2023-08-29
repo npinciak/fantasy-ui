@@ -94,8 +94,8 @@ export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFoo
 
   @Selector([
     FantasyFootballScheduleSelectors.matchupListByMatchupPeriodId,
-    FantasyFootballLeagueSelector.getFinalScoringPeriod,
-    FantasyFootballLeagueSelector.getScoringPeriodId,
+    FantasyFootballLeagueSelector.slices.finalScoringPeriod,
+    FantasyFootballLeagueSelector.slices.scoringPeriodId,
   ])
   static getMatchupListByMatchupPeriodId(
     matchupListByMatchupPeriodId: FantasyMatchupMap,

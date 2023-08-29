@@ -26,7 +26,7 @@ export class FantasyBaseballFreeAgentsState extends GenericState({
 
     const pagination = this.store.selectSnapshot(FantasyBaseballFreeAgentFilterSelector.slices.metaData);
 
-    const scoringPeriodId = this.store.selectSnapshot(FantasyBaseballLeagueSelector.getScoringPeriodId);
+    const scoringPeriodId = this.store.selectSnapshot(FantasyBaseballLeagueSelector.slices.scoringPeriodId);
     if (!scoringPeriodId) throw new Error('scoringPeriodId cannot be missing');
 
     const filterInjured = { value: this.store.selectSnapshot(FantasyBaseballFreeAgentFilterSelector.slices.filterInjured) };
