@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '@app/@shared/services/api.service';
-import { EspnWebSocket, SocketRes } from '@app/espn-fastcast/models/espn-fastcast-socket.model';
+import { SocketRes, WebSocketConnectionInfo } from '@sports-ui/ui-sdk/espn-fastcast-client';
 import { Observable } from 'rxjs';
 import { WebSocketSubject, webSocket } from 'rxjs/webSocket';
 import { FASTCAST_WS_HOST } from '../../espn/espn.const';
@@ -15,8 +15,8 @@ export class EspnFastcastService {
 
   constructor(private api: ApiService) {}
 
-  fastCastWebsocket(): Observable<EspnWebSocket> {
-    return this.api.get<EspnWebSocket>(EspnFastcastService.WS_HOST);
+  fastCastWebsocket(): Observable<WebSocketConnectionInfo> {
+    return this.api.get<WebSocketConnectionInfo>(EspnFastcastService.WS_HOST);
   }
 
   connect(uri: string): WebSocketSubject<SocketRes> {

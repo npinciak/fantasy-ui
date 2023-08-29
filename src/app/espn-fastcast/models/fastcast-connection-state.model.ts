@@ -1,4 +1,4 @@
-import { FASTCAST_EVENT_TYPE } from '@app/espn-fastcast/models/espn-fastcast-socket.model';
+import { FASTCAST_EVENT_TYPE } from '@sports-ui/ui-sdk/espn-fastcast-client';
 
 export interface EspnFastcastConnectionStateModel {
   disconnect: number | null;

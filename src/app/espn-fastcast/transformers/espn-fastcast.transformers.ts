@@ -1,15 +1,15 @@
 import { exists, existsFilter } from '@app/@shared/utilities/exists';
-import { includeSports, excludeLeagues, parseTeamUidStringToId, teamColorHandler, parseEventUidStringToId } from '@app/espn/espn-helpers';
+import { excludeLeagues, includeSports, parseEventUidStringToId, parseTeamUidStringToId, teamColorHandler } from '@app/espn/espn-helpers';
 import { NO_LOGO } from '@app/espn/espn.const';
-import { pickFields, EVENT_STATUS_TYPE } from '@sports-ui/ui-sdk';
-import { SportsEntity, LeaguesEntity, CompetitorsEntity, EventsEntity } from '@sports-ui/ui-sdk/espn-fastcast-client';
+import { EVENT_STATUS_TYPE, pickFields } from '@sports-ui/ui-sdk';
+import { CompetitorsEntity, EventsEntity, FASTCAST_EVENT_TYPE, LeaguesEntity, SportsEntity } from '@sports-ui/ui-sdk/espn-fastcast-client';
 
-import { FastcastEvent, MlbSituation, FootballSituation } from '../models/fastcast-event.model';
+import { flatten } from '@app/@shared/helpers/utils';
+import { FastcastEvent, FootballSituation, MlbSituation } from '../models/fastcast-event.model';
 import { FastcastLeague } from '../models/fastcast-league.model';
 import { FastcastSport } from '../models/fastcast-sport.model';
 import { FastcastEventTeam } from '../models/fastcast-team.model';
 import { FastcastTransform } from '../models/fastcast-transform.model';
-import { flatten } from '@app/@shared/helpers/utils';
 
 export function clientFastcastToFastcast(clientModel: { sports: SportsEntity[] }): FastcastTransform {
   const sports = clientModel.sports.map(s => clientSportsEntityToSport(s));
@@ -154,4 +154,50 @@ export function clientEventToFastcastEvent(event: EventsEntity): FastcastEvent |
     footballSituation,
     teams,
   };
+}
+
+/**
+ *
+ * Transform fastcast event slug to live game
+ * @param payload  ```typescript
+ *
+ * {
+ *    sport: string;
+ *    league: string;
+ *    gameId: string
+ * }
+ *
+ * ```
+ * @returns ```typescript
+ * Ex: gp-baseball-mlb-401355468
+ * ```
+ *
+ */
+export function transformEventToLiveFastcastEventType({ sport, league, gameId }: { sport: string; league: string; gameId: string }) {
+  return `${FASTCAST_EVENT_TYPE.LiveGame}-${sport}-${league}-${gameId}`;
+}
+
+/**
+ *
+ * Transform fastcast sport
+ * @param payload  ```typescript
+ *
+ * {
+ *    sport: string;
+ *    league: string;
+ * }
+ *
+ * ```
+ * @returns ```typescript
+ * Ex: event-baseball-mlb
+ * ```
+ *
+ */
+export function transformSportToFastcastEventType({ sport }: { sport: string }): string;
+export function transformSportToFastcastEventType({ sport, league }: { sport: string; league: string }): string;
+export function transformSportToFastcastEventType({ sport, league }: { sport: string; league?: string }): string {
+  if (!exists(league)) {
+    `${FASTCAST_EVENT_TYPE.Event}-${sport}`;
+  }
+  return `${FASTCAST_EVENT_TYPE.Event}-${sport}-${league}`;
 }

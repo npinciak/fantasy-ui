@@ -1,6 +1,8 @@
 export * from './athlete-action-entity.model';
 export * from './athlete-entity.model';
 export * from './competitors-entity.model';
+export * from './event-type.const';
+export * from './event-type.model';
 export * from './events-entity.model';
 export * from './full-status.model';
 export * from './last-play.model';
@@ -14,3 +16,6 @@ export * from './sports-entity.model';
 export * from './team-attributes.model';
 export * from './team-odds-team-attributes-entity.model';
 export * from './uniform.model';
+export * from './websocket-connection-builder.model';
+export * from './websocket.const';
+export * from './websocket.model';

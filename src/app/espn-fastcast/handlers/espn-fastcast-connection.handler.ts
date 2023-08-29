@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { fastcastURIBuilder } from '@app/espn/espn.const';
+import { FASTCAST_SERVICE_URI, fastcastURIBuilder } from '@app/espn/espn.const';
 import { EspnService } from '@app/espn/service/espn.service';
 import { Action, State, StateContext, Store } from '@ngxs/store';
+import { OPERATION_CODE, WebSocketBuilder } from '@sports-ui/ui-sdk/espn-fastcast-client';
 import { startWith, tap } from 'rxjs/operators';
 import { FastCastConnection } from '../actions/espn-fastcast-connection.actions';
 import { FastcastEvents } from '../actions/espn-fastcast-event.actions';
@@ -9,7 +10,6 @@ import { FastcastLeagues } from '../actions/espn-fastcast-league.actions';
 import { FastcastSports } from '../actions/espn-fastcast-sport.actions';
 import { FastcastTeams } from '../actions/espn-fastcast-team.actions';
 import { EspnFastcastConnectionFacade } from '../facade/espn-fastcast-connection.facade';
-import { OPERATION_CODE, WebSocketBuilder } from '../models/espn-fastcast-socket.model';
 import { EspnFastcastConnectionStateModel } from '../models/fastcast-connection-state.model';
 import { EspnFastcastService } from '../service/espn-fastcast.service';
 
@@ -31,7 +31,7 @@ export class FastcastConnectionHandler {
 
     const websocketInfo = await this.fastcastService.fastCastWebsocket().toPromise();
     const connect = new Date().getTime();
-    const socket = new WebSocketBuilder(websocketInfo);
+    const socket = new WebSocketBuilder(websocketInfo, FASTCAST_SERVICE_URI);
 
     this.fastcastService
       .connect(socket.websocketUri)
@@ -57,7 +57,7 @@ export class FastcastConnectionHandler {
     switch (message.op) {
       case OPERATION_CODE.B:
         break;
-      case OPERATION_CODE.C: {
+      case OPERATION_CODE.CONNECT: {
         const outgoing = { op: OPERATION_CODE.S, sid: message.sid, tc: eventType };
 
         this.fastcastConnectionFacade.sendWebSocketMessage({ message: outgoing });

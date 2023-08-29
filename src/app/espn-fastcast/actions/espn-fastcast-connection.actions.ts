@@ -21,12 +21,12 @@ export class FastCastConnection {
 
   static HandleWebSocketMessage = class {
     static readonly type = `[${FastCastConnection.stateName}] HandleWebSocketMessage`;
-    constructor(public payload: { message: any }) {}
+    constructor(public payload: any) {}
   };
 
   static SendWebSocketMessage = class {
     static readonly type = `[${FastCastConnection.stateName}] SendWebSocketMessage`;
-    constructor(public payload: { message: any }) {}
+    constructor(public payload: any) {}
   };
 
   static SetSelectedLeague = class {
@@ -46,5 +46,9 @@ export class FastCastConnection {
 
   static SetFastcastPause = class {
     static readonly type = `[${FastCastConnection.stateName}] SetFastcastPause`;
+  };
+
+  static SetDisconnect = class {
+    static readonly type = `[${FastCastConnection.stateName}] SetDisconnect`;
   };
 }
