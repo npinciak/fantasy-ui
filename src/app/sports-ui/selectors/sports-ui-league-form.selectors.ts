@@ -1,28 +1,15 @@
-import { Selector } from '@ngxs/store';
+import { Selector, createPropertySelectors } from '@ngxs/store';
 import { SportsUiLeagueFormState, SportsUiLeagueFormStateModel } from '../state/sports-ui-league-form.state';
 
 export class SportsUiLeagueFormSelectors {
-  @Selector([SportsUiLeagueFormState])
-  static getForm(state: SportsUiLeagueFormStateModel): SportsUiLeagueFormStateModel {
-    return state;
-  }
+  static slices = createPropertySelectors<SportsUiLeagueFormStateModel>(SportsUiLeagueFormState);
 
-  @Selector([SportsUiLeagueFormSelectors.getForm])
-  static getLeagueId(state: SportsUiLeagueFormStateModel): string | null {
-    return state.leagueId;
-  }
-
-  @Selector([SportsUiLeagueFormSelectors.getLeagueId])
+  @Selector([SportsUiLeagueFormSelectors.slices.leagueId])
   static getLeagueIdValid(leagueId: string | null): boolean {
     return leagueId ? true : false;
   }
 
-  @Selector([SportsUiLeagueFormSelectors.getForm])
-  static getSport(state: SportsUiLeagueFormStateModel): string | null {
-    return state.leagueSport;
-  }
-
-  @Selector([SportsUiLeagueFormSelectors.getSport])
+  @Selector([SportsUiLeagueFormSelectors.slices.leagueSport])
   static getSportValid(sport: string | null): boolean {
     return sport ? true : false;
   }

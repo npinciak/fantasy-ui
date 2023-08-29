@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { FantasySports } from '../../espn/models/espn-endpoint-builder.model';
 import { SportsUiLeagueForm } from '../actions/sports-ui-league-form.actions';
-import { SportsUiLeagues } from '../actions/sports-ui-leagues.actions';
 
 export interface SportsUiLeagueFormStateModel {
   leagueSport: FantasySports | null;
@@ -59,11 +58,5 @@ export class SportsUiLeagueFormState {
       leagueYear: new Date().getFullYear().toString(),
       verified: false,
     });
-  }
-
-  @Action(SportsUiLeagueForm.Submit)
-  async submit(_: StateContext<SportsUiLeagueFormStateModel>) {
-    await this.store.dispatch(new SportsUiLeagues.VerifyLeagues()).toPromise();
-    // dispatch([new CreateLeague()]);
   }
 }

@@ -54,7 +54,7 @@ export class MyProfileComponent implements OnInit {
   }
 
   onAddLeague(): void {
-    this.dialog.open(AddLeagueFormComponent, { height: '500px', width: '800px' });
+    this.dialog.open(AddLeagueFormComponent, { height: '300px', width: '800px' });
   }
 
   onRemoveLeague(leagueId: number): void {

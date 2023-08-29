@@ -7,6 +7,10 @@ import { Database, SupaClientTables } from '@sports-ui/ui-sdk/supabase';
 export class LeaguesClientService extends SupaClientService {
   private table: SupaClientTables = 'Leagues';
 
+  create(league: Pick<Database['public']['Tables']['Leagues']['Row'], 'leagueId' | 'name' | 'sport' | 'season'>) {
+    return this.supabase.from(this.table).insert(league);
+  }
+
   getAll() {
     return this.supabase
       .from(this.table)

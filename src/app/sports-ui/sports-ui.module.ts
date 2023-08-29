@@ -6,6 +6,8 @@ import { NgxsModule } from '@ngxs/store';
 import { AddLeagueFormComponent } from './components/add-league-form/add-league-form.component';
 import { LeaguesTableComponent } from './components/leagues-table/leagues-table.component';
 import { LoginComponent } from './components/login/login.component';
+import { SportsUiLeagueFormActionHandler } from './handlers/sports-ui-league-form.handler';
+import { SportsUiLeaguesActionHandler } from './handlers/sports-ui-leagues.handler';
 import { SportsUiTeamsActionHandler } from './handlers/sports-ui-teams.handler';
 import { MyProfileComponent } from './pages/my-profile/my-profile.component';
 import { SportsUiRoutingModule } from './sports-ui-routing.module';
@@ -21,6 +23,8 @@ import { SportsUiUserState } from './state/sports-ui-user.state';
       SportsUiTeamsState,
       SportsUiTeamsActionHandler,
       SportsUiLeaguesState,
+      SportsUiLeaguesActionHandler,
+      SportsUiLeagueFormActionHandler,
       SportsUiLeagueFormState,
       SportsUiUserState,
     ]),

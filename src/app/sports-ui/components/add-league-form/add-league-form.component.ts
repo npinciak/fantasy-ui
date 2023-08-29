@@ -2,9 +2,9 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 import { ICON_PATH } from '@app/espn/espn.const';
 import { LeagueStorageMap } from '@app/espn/mlb/models/baseball-league-storage.model';
 import {
-  FantasySports,
   FantasySportToLabelMap,
   FantasySportToSportLeagueMap,
+  FantasySports,
   LeagueSportToImageLocationMap,
   SportLeague,
 } from '@app/espn/models/espn-endpoint-builder.model';
@@ -28,6 +28,8 @@ export class AddLeagueFormComponent implements OnInit {
   @Output() navigateLeague = new EventEmitter<{ sport: SportLeague; leagueId: number }>();
 
   sportOption$ = this.leagueFormFacade.leagueSport$;
+  leagueName$ = this.leagueFormFacade.leagueName$;
+
   fantasySportOptionList = [
     { value: FantasySports.Baseball, label: FantasySportToLabelMap[FantasySports.Baseball] },
     { value: FantasySports.Football, label: FantasySportToLabelMap[FantasySports.Football] },

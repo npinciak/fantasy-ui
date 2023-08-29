@@ -158,6 +158,18 @@ export class EspnService extends ApiService {
   }
 
   /**
+   * Verify league
+   * @param sport
+   * @param leagueId
+   * @param year
+   * @returns
+   */
+  verifyLeague(sport: FantasySportsAbbreviation, leagueId: string, year: string): Observable<EspnClient.League> {
+    const endpoint = BaseEspnEndpointBuilder({ sport, leagueId, year }).fantasyLeague;
+    return this.get<EspnClient.League>(endpoint);
+  }
+
+  /**
    * Static Fastcast
    *
    * @returns

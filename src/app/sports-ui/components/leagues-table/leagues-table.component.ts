@@ -39,7 +39,7 @@ export class LeaguesTableComponent implements AfterViewInit, OnChanges {
 
   dataSource: MatTableDataSource<SportsUiClientLeague>;
 
-  disableAdd = true;
+  disableAdd = false;
 
   constructor(private cdr: ChangeDetectorRef) {
     this.dataSource = new MatTableDataSource<SportsUiClientLeague>();

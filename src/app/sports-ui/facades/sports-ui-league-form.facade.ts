@@ -10,20 +10,38 @@ import { SportsUiLeagueFormSelectors } from '../selectors/sports-ui-league-form.
   providedIn: 'root',
 })
 export class SportsUiLeagueFormFacade {
-  leagueId$ = select(SportsUiLeagueFormSelectors.getLeagueId);
+  leagueId$ = select(SportsUiLeagueFormSelectors.slices.leagueId);
   leagueIdValid$ = select(SportsUiLeagueFormSelectors.getLeagueIdValid);
-  leagueSport$ = select(SportsUiLeagueFormSelectors.getSport);
+  leagueSport$ = select(SportsUiLeagueFormSelectors.slices.leagueSport);
   leagueSportValid$ = select(SportsUiLeagueFormSelectors.getSportValid);
+  leagueName$ = select(SportsUiLeagueFormSelectors.slices.leagueName);
+
   isDirty$ = select(SportsUiLeagueFormSelectors.getIsDirty);
 
   constructor(private store: Store) {}
+
+  get leagueId() {
+    return this.store.selectSnapshot(SportsUiLeagueFormSelectors.slices.leagueId);
+  }
 
   setLeagueId(leagueId: string): Observable<void> {
     return this.store.dispatch(new SportsUiLeagueForm.SetLeagueIdValue({ leagueId }));
   }
 
+  get sport() {
+    return this.store.selectSnapshot(SportsUiLeagueFormSelectors.slices.leagueSport);
+  }
+
   setSport(leagueSport: FantasySports): Observable<void> {
     return this.store.dispatch(new SportsUiLeagueForm.SetLeagueSportValue({ leagueSport }));
+  }
+
+  get name() {
+    return this.store.selectSnapshot(SportsUiLeagueFormSelectors.slices.leagueName);
+  }
+
+  setName(leagueName: string): Observable<void> {
+    return this.store.dispatch(new SportsUiLeagueForm.SetLeagueNameValue({ leagueName }));
   }
 
   reset(): Observable<void> {
