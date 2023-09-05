@@ -146,12 +146,3 @@ export class EspnRouteBuilder extends RouteBuilder({ basePath: UrlPathFragments.
 
 export class DfsRouteBuilder extends RouteBuilder({ basePath: UrlPathFragments.Dfs }) {}
 
-// espn/2022/nfl/12434/team/10
-// espn/2022/football/12434/team/10
-
-// espn/football/2022/league/1123/team
-
-// espn/nfl?season=2022&league=1234&team=10
-// espn/football?season=2022&league=1234&team=10
-
-// [season,'nfl',leagueId,'team',teamId]

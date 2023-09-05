@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationExtras, Router } from '@angular/router';
-import { UrlBuilder, UrlPathFragments } from '@app/@core/store/router/url-builder';
+import { UrlPathFragments } from '@app/@core/store/router/url-builder';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
 import { DfsRouteBuilder, EspnRouteBuilder } from './route-builder';
@@ -50,6 +50,10 @@ export class RouterFacade {
     return this.store.selectSnapshot(RouterSelector.getDfsSite);
   }
 
+  navigateEspn() {
+    this.navigate([UrlPathFragments.Espn]);
+  }
+
   navigateToMyProfile() {
     this.navigate([UrlPathFragments.MyProfile]);
   }
@@ -72,75 +76,6 @@ export class RouterFacade {
 
   navigateToDraftkingsBySport(sport: string) {
     this.navigate(DfsRouteBuilder.sportPathFragments(sport), { queryParams: { site: 'draftkings' } });
-  }
-
-  /**
-   * @deprecated
-   */
-  navigateToEspnHome() {
-    this.navigate([UrlBuilder.espnBaseUrl]);
-  }
-
-  /**
-   * @deprecated
-   */
-  navigateToEspnBaseballLeagueHome(leagueId: string | null) {
-    this.navigate(UrlBuilder.espnMlbLeague(leagueId));
-  }
-
-  /**
-   * @deprecated
-   */
-  navigateToFootballLeagueHome(leagueId: string, year: string) {
-    this.navigate([]); //EspnFootballRouteBuilder.leaguePath(year, leagueId));
-  }
-
-  /**
-   * @deprecated
-   */
-  navigateToFootballFreeAgents(leagueId: string, year: string) {
-    this.navigate([]);
-  }
-
-  /**
-   * @deprecated
-   */
-  navigateToFootballTeam(teamId: string | null) {
-    const leagueId = this.leagueId;
-    const year = this.season;
-
-    this.navigate([]);
-  }
-
-  /**
-   * @deprecated
-   */
-  navigateToTeam(teamId: string | null) {
-    const leagueId = this.leagueId;
-    const year = this.season;
-
-    this.navigate([]);
-  }
-
-  /**
-   * @deprecated
-   */
-  navigateToEspnBaseballFreeAgents(leagueId: string | null) {
-    this.navigate(UrlBuilder.espnMlbLeagueFreeAgents(leagueId));
-  }
-
-  /**
-   * @deprecated
-   */
-  navigateToEspnBaseballTeam(leagueId: string | null, teamId: string | null) {
-    this.navigate(UrlBuilder.espnMlbLeagueTeam(leagueId, teamId));
-  }
-
-  /**
-   * @deprecated
-   */
-  navigateDfs(sport: UrlPathFragments, site: string) {
-    this.navigate(UrlBuilder.dfsSlates(sport, site), { queryParams: { sport: sport, site: site } });
   }
 
   private navigate(route: any[], opt?: NavigationExtras | undefined) {

@@ -3,11 +3,10 @@ import { ShellNavListItem } from '@app/@core/shell/shell-nav-list/shell-nav-list
 import { objectIsEmpty } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { exists } from '@app/@shared/utilities/utilities.m';
-import { SITE } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { EspnRouteBuilder } from './route-builder';
 import { RouterStateModel } from './router-state.model';
 import { RouterState } from './router.state';
-import { UrlBuilder, UrlPathFragments } from './url-builder';
+import { UrlPathFragments } from './url-builder';
 
 export class RouterSelector {
   constructor() {}
@@ -123,9 +122,9 @@ export class RouterSelector {
   @Selector()
   static dailyFantasyMenu(): ShellNavListItem[] {
     return [
-      { id: '1', routerLink: UrlBuilder.dfsMlbBase, queryParams: { site: SITE.Draftkings }, label: 'DK MLB' },
-      // { routerLink: UrlBuilder.dfsNbaBase, queryParams: { site:  site:DfsSite.Draftkings }, label: 'DK NFL' },
-      // { routerLink: UrlBuilder.dfsNflBase, queryParams: { site: DfsSite.Draftkings }, label: 'DK NFL' },
+      // { id: '1', routerLink: UrlBuilder.dfsMlbBase, queryParams: { site: SITE.Draftkings }, label: 'DK MLB' },
+      // { routerLink: UrlBuilder.dfsNbaBase, queryParams: { site:  site:SITE.Draftkings }, label: 'DK NFL' },
+      // { id: '2', routerLink: UrlBuilder.dfsNflBase, queryParams: { site: SITE.Draftkings }, label: 'DK NFL' },
     ];
   }
 
@@ -139,14 +138,14 @@ export class RouterSelector {
     const baseNavLinks = [{ id: '1', routerLink: ['/espn'], label: 'Home' }];
 
     const leagueNavLinks = [
-      { id: '2', routerLink: EspnRouteBuilder.leaguePathFragments(sport, season, leagueId), label: 'League Home' },
-      { id: '3', routerLink: EspnRouteBuilder.freeAgentsPathFragments(sport, season, leagueId), label: 'Free Agents' },
+      { id: '3', routerLink: EspnRouteBuilder.leaguePathFragments(sport, season, leagueId), label: 'League Home' },
+      { id: '4', routerLink: EspnRouteBuilder.freeAgentsPathFragments(sport, season, leagueId), label: 'Free Agents' },
     ];
 
     const fantasyBaseballTeamLinks = [
-      { id: '4', routerLink: EspnRouteBuilder.teamPathFragments(sport, season, leagueId, teamId), label: 'Team' },
-      { id: '5', routerLink: EspnRouteBuilder.teamPitchersPathFragments(sport, season, leagueId, teamId), label: 'Pitchers' },
-      { id: '6', routerLink: EspnRouteBuilder.teamBattersPathFragments(sport, season, leagueId, teamId), label: 'Batters' },
+      { id: '5', routerLink: EspnRouteBuilder.teamPathFragments(sport, season, leagueId, teamId), label: 'Team' },
+      { id: '6', routerLink: EspnRouteBuilder.teamPitchersPathFragments(sport, season, leagueId, teamId), label: 'Pitchers' },
+      { id: '7', routerLink: EspnRouteBuilder.teamBattersPathFragments(sport, season, leagueId, teamId), label: 'Batters' },
     ];
 
     const showFantasyLeagueLinks = (sport === UrlPathFragments.MLB || sport === UrlPathFragments.NFL) && exists(leagueId);

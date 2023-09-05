@@ -1,11 +1,6 @@
-<!-- <div
-  class="p-2 text-center text-xs font-bold text-white"
-  [class.hidden]="isOnline$ | async"
-  [class.bg-red-700]="!(isOnline$ | async)"
-  [class.bg-green-500]="isOnline$ | async"
->
-  {{ (isOnline$ | async) ? 'Online' : 'Offline' }}
-</div> -->
+<ng-container *ngIf="!(isOnline$ | async)">
+  <div class="white w-full bg-red-700 p-3 text-center text-xs text-white">App is offline</div>
+</ng-container>
 <mat-toolbar class="bg-slate-800">
   <mat-toolbar-row class="text-center">
     <button
@@ -16,7 +11,11 @@
       <i class="fas fa-bars"></i>
     </button>
 
-    <span class="flex-auto"> <h1 class="text-white">SportsUi</h1> </span>
+    <span class="flex-auto">
+      <h1>
+        <span class="text-slate-400 opacity-50 hover:cursor-pointer hover:opacity-100" (click)="onTitleClick()">SportsUi</span>
+      </h1>
+    </span>
 
     <button
       class="cursor-pointer rounded border border-solid border-transparent bg-transparent px-3 py-1 text-xl leading-none text-slate-400 opacity-50 hover:opacity-100"
@@ -37,7 +36,6 @@
     <app-shell-nav-list [navList]="systemStatusNavList"></app-shell-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <!-- <app-shell-nav [appTitle]="pageTitle"></app-shell-nav> -->
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

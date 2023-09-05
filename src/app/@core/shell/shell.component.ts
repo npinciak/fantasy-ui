@@ -10,6 +10,8 @@ import { RouterFacade } from '../store/router/router.facade';
 export class ShellComponent implements OnInit {
   @Input() pageTitle = 'SportsUi';
 
+  isOnline$ = this.serviceWorkerService.isOnline$;
+
   readonly systemStatusNavList = [{ id: '6', routerLink: '/system-status', label: 'System Status' }];
 
   constructor(
@@ -20,6 +22,10 @@ export class ShellComponent implements OnInit {
 
   onProfileClick(): void {
     this.routerFacade.navigateToMyProfile();
+  }
+
+  onTitleClick(): void {
+    this.routerFacade.navigateEspn();
   }
 
   ngOnInit(): void {
