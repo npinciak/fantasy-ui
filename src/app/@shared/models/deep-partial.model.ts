@@ -14,5 +14,5 @@ export type DeepPartial<T> = T extends Primitive
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
-interface DeepPartialArray<ItemType> extends Array<DeepPartial<ItemType>> {}
-interface DeepPartialReadonlyArray<ItemType> extends ReadonlyArray<DeepPartial<ItemType>> {}
+type DeepPartialArray<ItemType> = Array<DeepPartial<ItemType>>;
+type DeepPartialReadonlyArray<ItemType> = ReadonlyArray<DeepPartial<ItemType>>;

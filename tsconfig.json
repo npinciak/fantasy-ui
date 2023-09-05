@@ -13,7 +13,7 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2018", "dom"],
+    "lib": ["es2022", "dom"],
     "paths": {
       "@app/*": ["src/app/*"],
       "@dfsClient/*": ["src/dfs-client-models/*"],
@@ -45,10 +45,14 @@
       "@sports-ui/ui-sdk/espn-fastcast-client": [
         "libs/ui-sdk/src/lib/espn-fastcast-client/espn-fastcast-client.m.ts"
       ],
+      "@sports-ui/ui-sdk/supabase": [
+        "libs/ui-sdk/src/lib/supabase/supabase.m.ts"
+      ],
       "@sports-ui/ui-sdk/helpers": ["libs/ui-sdk/src/lib/helpers/helpers.m.ts"],
       "@sports-ui/ui-sdk/supabase": [
         "libs/ui-sdk/src/lib/supabase/supabase.m.ts"
-      ]
+      ],
+      "@sports-ui/ui-sdk/pwa": ["libs/ui-sdk/src/lib/pwa/pwa.m.ts"]
     },
     "typeRoots": ["./node_modules/@types"]
   },
