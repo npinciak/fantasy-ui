@@ -50,6 +50,7 @@ export const INJURY_SEVERITY_BY_INJURY_STATUS: { [key in PlayerInjuryStatus]: In
   [PLAYER_INJURY_STATUS.Brv]: InjurySeverity.Serious,
   [PLAYER_INJURY_STATUS.Pat]: InjurySeverity.Serious,
   [PLAYER_INJURY_STATUS.SUS]: InjurySeverity.Serious,
+  [PLAYER_INJURY_STATUS.UNKNOWN]: InjurySeverity.Positive,
 } as const;
 
 export const INJURY_STATUS_FILTER: { value: boolean | null; label: string }[] = [

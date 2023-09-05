@@ -15,6 +15,7 @@ export const PLAYER_INJURY_STATUS = {
   Brv: 'BEREAVEMENT',
   Pat: 'PATERNITY',
   SUS: 'SUSPENSION',
+  UNKNOWN: 'UNKNOWN',
 } as const;
 
 export const INJURY_STATUS_LIST = [
@@ -45,6 +46,7 @@ export const INJURY_LABEL_BY_INJURY_STATUS: { [key in PlayerInjuryStatus]: strin
   [PLAYER_INJURY_STATUS.Brv]: 'Bereavement',
   [PLAYER_INJURY_STATUS.Pat]: 'Paternity',
   [PLAYER_INJURY_STATUS.SUS]: 'Suspension',
+  [PLAYER_INJURY_STATUS.UNKNOWN]: 'Unknown',
 } as const;
 
-export type PlayerInjuryStatus = (typeof PLAYER_INJURY_STATUS)[keyof typeof PLAYER_INJURY_STATUS];
+export type PlayerInjuryStatus = typeof PLAYER_INJURY_STATUS[keyof typeof PLAYER_INJURY_STATUS];

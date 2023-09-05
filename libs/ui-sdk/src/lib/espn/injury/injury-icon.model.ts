@@ -25,6 +25,7 @@ export const FA_ICON_BY_INJURY_STATUS: { [key in PlayerInjuryStatus]: FaInjuryIc
   [PLAYER_INJURY_STATUS.Brv]: INJURY_ICONS_FA.Injured,
   [PLAYER_INJURY_STATUS.Pat]: INJURY_ICONS_FA.Injured,
   [PLAYER_INJURY_STATUS.SUS]: INJURY_ICONS_FA.Injured,
+  [PLAYER_INJURY_STATUS.UNKNOWN]: INJURY_ICONS_FA.Healthy,
 } as const;
 
 export type FaInjuryIcons = typeof INJURY_ICONS_FA[keyof typeof INJURY_ICONS_FA];
