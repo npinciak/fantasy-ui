@@ -37,7 +37,8 @@ import { FantasyBaseballTeamsLiveState } from './mlb/state/fantasy-baseball-team
 import { FantasyBaseballTeamState } from './mlb/state/fantasy-baseball-team.state';
 import { FantasyBaseballTransactionsState } from './mlb/state/fantasy-baseball-transactions.state';
 import { FootballLineupCardComponent } from './nfl/components/football-lineup-card/football-lineup-card.component';
-import { FootballScoreboardCardTeamComponent } from './nfl/components/football-scoreboard-card-team/football-scoreboard-card-team.component';
+import { FootballMatchupCardTeamComponent } from './nfl/components/football-matchup-card-team/football-matchup-card-team.component';
+import { FootballMatchupCardComponent } from './nfl/components/football-matchup-card/football-matchup-card.component';
 import { FantasyFootballFreeAgentActionHandler } from './nfl/handlers/fantasy-football-free-agent.handler';
 import { FantasyFootballLeagueActionHandler } from './nfl/handlers/fantasy-football-league.handler';
 import { FootballFreeAgentsComponent } from './nfl/pages/football-free-agents/football-free-agents.component';
@@ -63,7 +64,8 @@ import { FreeAgentsAvailabilitySelectedState } from './state/free-agent-availabi
     FootballFreeAgentsComponent,
     FootballTeamComponent,
     FootballLineupCardComponent,
-    FootballScoreboardCardTeamComponent,
+    FootballMatchupCardComponent,
+    FootballMatchupCardTeamComponent,
     EspnStatsTableComponent,
     EspnPlayerComponent,
     EspnPlayerNewsComponent,

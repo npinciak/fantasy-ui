@@ -2,28 +2,50 @@
   <div statsHeader></div>
   <div main>
     <div class="flex flex-wrap">
-      <div class="w-full px-4 xl:w-4/12">
+      <div class="mb-12 w-full px-4 xl:mb-0">
         <app-base-card>
-          <div>
-            <app-dropdown-filter
-              [disabled]="false"
-              ariaLabel="week selection options"
-              [selectedOption]="currentScoringPeriod$ | async"
-              [filterItems]="matchupPeriodIdFilterOptions$ | async"
-              (filterUpdate)="fantasyFootballLeagueFacade.updateCurrentScoringPeriodId($event)"
-            ></app-dropdown-filter>
-          </div>
-          <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-            <li class="py-3 sm:py-4" *ngFor="let matchup of matchupListByMatchupPeriodId$ | async; let i = index" [attr.data-index]="i" tabindex="-1">
-              <div>
-                <app-football-scoreboard-card-team [team]="matchup.awayTeam"></app-football-scoreboard-card-team>
-                <app-football-scoreboard-card-team [team]="matchup.homeTeam"></app-football-scoreboard-card-team>
+          <section class="mb-0 max-w-full">
+            <div class="flex flex-col sm:flex-row">
+              <div class="basis-1/5 p-6 align-middle">
+                <app-dropdown-filter
+                  [disabled]="false"
+                  ariaLabel="week selection options"
+                  [selectedOption]="currentScoringPeriod$ | async"
+                  [filterItems]="matchupPeriodIdFilterOptions$ | async"
+                  (filterUpdate)="fantasyFootballLeagueFacade.updateCurrentScoringPeriodId($event)"
+                ></app-dropdown-filter>
               </div>
-            </li>
-          </ul>
+              <div class="flex basis-4/5 overflow-x-auto px-6 align-middle">
+                <div class="flex flex-nowrap" id="matchup-feed">
+                  <ng-container *ngFor="let matchup of matchupListByMatchupPeriodId$ | async; let i = index">
+                    <article class="min-w-60 mr-3 w-60 p-3">
+                      <div class="flex text-gray-400">
+                        <div class="w-10/12"></div>
+
+                        <div class="w-2/12 text-base font-semibold">
+                          <span class="hover:cursor-pointer">
+                            <i class="fas fa-external-link fa-xs"></i>
+                            <!-- <span class="sr-only">{{ ariaInfo.eventGamecast }}</span> -->
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="divide-y" [attr.data-index]="i" tabindex="-1">
+                        <div class="py-2">
+                          <app-football-matchup-card-team [team]="matchup.awayTeam" (teamClicked)="onNavigateToTeam($event)"></app-football-matchup-card-team>
+                        </div>
+                        <div class="py-2">
+                          <app-football-matchup-card-team [team]="matchup.homeTeam" (teamClicked)="onNavigateToTeam($event)"></app-football-matchup-card-team>
+                        </div>
+                      </div>
+                    </article>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </section>
         </app-base-card>
       </div>
-
       <div class="mb-12 w-full px-4 xl:mb-0 xl:w-8/12">
         <app-base-card>
           <app-espn-standings-table
@@ -34,6 +56,5 @@
           ></app-espn-standings-table>
         </app-base-card>
       </div>
-    </div>
-  </div>
-</app-page-layout>
+    </div></div
+></app-page-layout>
