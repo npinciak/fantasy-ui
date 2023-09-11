@@ -2,7 +2,6 @@ import { FangraphsConstants } from '@app/@shared/fangraphs/fangraphs-const.model
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { BASEBALL_LINEUP_MAP, BaseballLineupSlot, BaseballStat, EspnClient, MLB_POSITION_MAP, MLB_TEAM_MAP } from '@sports-ui/ui-sdk/espn';
 import { FreeAgent, PlayerCardEntity, ProLeagueType, SPORT_TYPE, TeamRosterEntry } from '@sports-ui/ui-sdk/espn-client';
-import { pickFields } from '@sports-ui/ui-sdk/helpers';
 import { isPitcher } from '../../espn-helpers';
 import { FantasyLeague } from '../../models/fantasy-league.model';
 import { EspnTransformers } from '../../transformers/espn-transformers.m';
@@ -316,22 +315,19 @@ export function transformLiveStatsToLiveStatsTableRows(
       [BaseballStat.IP]: exists(statsEntity[BaseballStat.IP]) ? statsEntity[BaseballStat.IP] * 0.333 : 0,
     };
 
-    const fields = pickFields(p, [
-      'id',
-      'name',
-      'img',
-      'team',
-      'position',
-      'injured',
-      'injuryStatus',
-      'lineupSlotId',
-      'lineupSlot',
-      'eligibleLineupSlots',
-      'isPitcher',
-    ]);
+    const { id, name, injured, injuryStatus, img, team, position, lineupSlotId, eligibleLineupSlots, isPitcher } = p;
 
     return {
-      ...fields,
+      id,
+      name,
+      injured,
+      injuryStatus,
+      img,
+      team,
+      position,
+      lineupSlotId,
+      eligibleLineupSlots,
+      isPitcher,
       stats,
     };
   });

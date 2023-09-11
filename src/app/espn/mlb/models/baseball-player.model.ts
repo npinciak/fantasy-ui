@@ -29,5 +29,5 @@ export type BaseballPlayerStatsRow = Omit<PlayerEntity, 'teamId' | 'teamUid'> &
   };
 
 export type BaseballPlayerLiveStatsRow = Omit<PlayerEntity, 'teamId' | 'teamUid'> &
-  Pick<BaseballPlayer, 'eligibleLineupSlots' | 'injured' | 'injuryStatus'> &
+  Pick<BaseballPlayer, 'eligibleLineupSlots' | 'injured' | 'injuryStatus' | 'isPitcher'> &
   Pick<TeamRosterEntry, 'lineupSlotId'> & { stats: Record<number, number> | null };
