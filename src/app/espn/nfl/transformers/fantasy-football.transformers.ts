@@ -46,7 +46,6 @@ export function clientPlayerToFootballPlayer(player: TeamRosterEntry): FootballP
     lineupSlotId,
     img,
     lineupSlot: FOOTBALL_LINEUP_MAP[lineupSlotId].abbrev,
-    points: playerPoolEntry.appliedStatTotal,
   };
 }
 
@@ -113,7 +112,7 @@ export function transformToFootballPlayerStatsRow(player: FootballPlayer, statPe
   if (!exists(player.stats)) return null;
   if (!exists(player.stats[statPeriod])) return null;
 
-  const stats = player.stats[statPeriod]!.stats;
+  const { stats, appliedAverage, appliedTotal, appliedTotalCeiling } = player.stats[statPeriod]!;
 
   return {
     id,
@@ -129,5 +128,8 @@ export function transformToFootballPlayerStatsRow(player: FootballPlayer, statPe
     defaultPositionId,
     highlightedPlayer: false,
     stats,
+    appliedAverage,
+    appliedTotal,
+    appliedTotalCeiling,
   };
 }

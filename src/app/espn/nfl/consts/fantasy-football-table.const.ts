@@ -19,44 +19,54 @@ const LEAGUE_STANDINGS_COLUMNS: BaseTableColumn<FootballTeam>[] = [
   { columnDef: 'pointsAgainst', headerCell: 'pointsAgainst', headerLabel: 'Points Against', dataType: TableColumnDataType.Number },
 ];
 
-export const DEFAULT_FOOTBALL_ROSTER_COLUMNS = [
-  { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String, sortable: true },
-  transformStatToTableColumn(FootballStat.GP, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
+export const DEFAULT_FOOTBALL_ROSTER_END_COLUMNS = [
   {
-    columnDef: `stats.appliedTotal`,
-    headerCell: `stats.appliedTotal`,
+    columnDef: `appliedTotal`,
+    headerCell: `appliedTotal`,
     headerLabel: 'Total Pts',
     dataType: TableColumnDataType.Number,
     sortable: true,
   },
   {
-    columnDef: `stats.appliedAverage`,
-    headerCell: `stats.appliedAverage`,
-    headerLabel: 'Avg P/G',
+    columnDef: `appliedTotalCeiling`,
+    headerCell: `Ceiling`,
+    headerLabel: 'Ceiling',
     dataType: TableColumnDataType.Number,
     sortable: true,
   },
   {
-    columnDef: `percentChange`,
-    headerCell: `percentChange`,
-    headerLabel: 'Chng %',
+    columnDef: `appliedAverage`,
+    headerCell: `appliedAverage`,
+    headerLabel: 'appliedAverage',
     dataType: TableColumnDataType.Number,
     sortable: true,
   },
-  {
-    columnDef: `percentStarted`,
-    headerCell: `percentStarted`,
-    headerLabel: 'Start %',
-    dataType: TableColumnDataType.Number,
-    sortable: true,
-  },
-  {
-    columnDef: `percentOwned`,
-    headerCell: `percentOwned`,
-    headerLabel: 'Own %',
-    dataType: TableColumnDataType.Number,
-    sortable: true,
-  },
+];
+
+export const DEFAULT_FOOTBALL_ROSTER_COLUMNS = [
+  { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String, sortable: true },
+  transformStatToTableColumn(FootballStat.GP, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
+  // {
+  //   columnDef: `percentChange`,
+  //   headerCell: `percentChange`,
+  //   headerLabel: 'Chng %',
+  //   dataType: TableColumnDataType.Number,
+  //   sortable: true,
+  // },
+  // {
+  //   columnDef: `percentStarted`,
+  //   headerCell: `percentStarted`,
+  //   headerLabel: 'Start %',
+  //   dataType: TableColumnDataType.Number,
+  //   sortable: true,
+  // },
+  // {
+  //   columnDef: `percentOwned`,
+  //   headerCell: `percentOwned`,
+  //   headerLabel: 'Own %',
+  //   dataType: TableColumnDataType.Number,
+  //   sortable: true,
+  // },
 ];
 
 export const PASSING_ROSTER_COLUMNS = [
@@ -74,7 +84,7 @@ export const RUSHING_ROSTER_COLUMNS = [
 
 export const RECEIVING_ROSTER_COLUMNS = [
   transformStatToTableColumn(FootballStat.REC, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
-  transformStatToTableColumn(FootballStat.TargetsPerGame, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
+  // transformStatToTableColumn(FootballStat.TargetsPerGame, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
   transformStatToTableColumn(FootballStat.RETD, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
   transformStatToTableColumn(FootballStat.YAC, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
   transformStatToTableColumn(FootballStat.YPC, statsKey, NFL_STATS_MAP, TableColumnDataType.Number),
@@ -116,12 +126,17 @@ export const FOOTBALL_ROSTER_HEADERS_BY_LINEUP_SLOT = {
 } as const;
 
 export const FOOTBALL_ROSTER_COLUMNS_BY_POS = {
-  [FootballPosition.QB]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...PASSING_ROSTER_COLUMNS],
-  [FootballPosition.RB]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...RUSHING_ROSTER_COLUMNS, ...RECEIVING_ROSTER_COLUMNS],
-  [FootballPosition.WR]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...RECEIVING_ROSTER_COLUMNS],
-  [FootballPosition.TE]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...RECEIVING_ROSTER_COLUMNS],
+  [FootballPosition.QB]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...PASSING_ROSTER_COLUMNS, ...DEFAULT_FOOTBALL_ROSTER_END_COLUMNS],
+  [FootballPosition.RB]: [
+    ...DEFAULT_FOOTBALL_ROSTER_COLUMNS,
+    ...RUSHING_ROSTER_COLUMNS,
+    ...RECEIVING_ROSTER_COLUMNS,
+    ...DEFAULT_FOOTBALL_ROSTER_END_COLUMNS,
+  ],
+  [FootballPosition.WR]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...RECEIVING_ROSTER_COLUMNS, ...DEFAULT_FOOTBALL_ROSTER_END_COLUMNS],
+  [FootballPosition.TE]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...RECEIVING_ROSTER_COLUMNS, ...DEFAULT_FOOTBALL_ROSTER_END_COLUMNS],
   [FootballPosition.K]: DEFAULT_FOOTBALL_ROSTER_COLUMNS,
-  [FootballPosition.DST]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...DST_ROSTER_COLUMNS],
+  [FootballPosition.DST]: [...DEFAULT_FOOTBALL_ROSTER_COLUMNS, ...DST_ROSTER_COLUMNS, ...DEFAULT_FOOTBALL_ROSTER_END_COLUMNS],
 };
 
 export const FOOTBALL_ROSTER_ROWS_BY_POS = {
