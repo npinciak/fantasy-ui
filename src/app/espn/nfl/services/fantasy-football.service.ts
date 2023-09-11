@@ -44,6 +44,15 @@ export class FantasyFootballService extends EspnService {
   }
 
   /**
+   * Return games for current date
+   *
+   * @returns
+   */
+  footballEvents(): Observable<any[]> {
+    return this.fetchFantasyLeagueEvents({ sport: this.sport }).pipe(map(res => res.events.map(e => e)));
+  }
+
+  /**
    * Return fantasy football league free agents
    *
    * @param payload
