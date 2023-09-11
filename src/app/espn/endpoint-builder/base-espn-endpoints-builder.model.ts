@@ -30,6 +30,13 @@ export const FantasySportToSportLeagueMap: { [key in FantasySportsAbbreviation]:
   [FANTASY_SPORTS_ABBREVIATION.Basketball]: SPORT_LEAGUE.NBA,
 } as const;
 
+export const FantasySportToSportsMap: { [key in FantasySportsAbbreviation]: Sports } = {
+  [FANTASY_SPORTS_ABBREVIATION.Baseball]: SPORTS.baseball,
+  [FANTASY_SPORTS_ABBREVIATION.Football]: SPORTS.football,
+  [FANTASY_SPORTS_ABBREVIATION.Hockey]: SPORTS.hockey,
+  [FANTASY_SPORTS_ABBREVIATION.Basketball]: SPORTS.baseketball,
+} as const;
+
 export const LeagueSportToImageLocationMap: { [key in FantasySportsAbbreviation]: string } = {
   [FANTASY_SPORTS_ABBREVIATION.Baseball]: '-4px -272px',
   [FANTASY_SPORTS_ABBREVIATION.Basketball]: '-4px -239px',
@@ -56,4 +63,5 @@ export type BaseEspnEndpointBuilderClass = {
   staticScoreboard: string;
   baseballStatsBatterVsPitcher: string;
   fantasyBaseV3WithFragments: string;
+  matchupClickout: (teamId: string | number, matchupPeriodId: string | number) => string;
 };

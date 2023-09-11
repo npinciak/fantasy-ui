@@ -24,8 +24,10 @@
 
                         <div class="w-2/12 text-base font-semibold">
                           <span class="hover:cursor-pointer">
-                            <i class="fas fa-external-link fa-xs"></i>
-                            <!-- <span class="sr-only">{{ ariaInfo.eventGamecast }}</span> -->
+                            <a [href]="matchup.clickOutUrl" target="_blank">
+                              <i class="fas fa-external-link fa-xs"></i>
+                              <!-- <span class="sr-only">{{ ariaInfo.eventGamecast }}</span> -->
+                            </a>
                           </span>
                         </div>
                       </div>

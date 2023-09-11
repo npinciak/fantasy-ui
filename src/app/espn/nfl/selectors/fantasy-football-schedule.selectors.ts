@@ -2,6 +2,8 @@ import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { exists } from '@app/@shared/utilities/utilities.m';
 
+import { BaseEspnEndpointBuilder } from '@app/espn/endpoint-builder/base-espn-endpoint-builder';
+import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
 import { Selector } from '@ngxs/store';
 import { SCHEDULE_WINNER } from '@sports-ui/ui-sdk/espn';
 import { ScheduleEntity, ScheduleTeam } from '@sports-ui/ui-sdk/espn-client';
@@ -47,8 +49,15 @@ export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFoo
     };
   }
 
-  @Selector([FantasyFootballScheduleSelectors.getList, FantasyFootballTeamSelectors.getById])
+  @Selector([
+    FantasyFootballLeagueSelector.slices.id,
+    FantasyFootballLeagueSelector.slices.seasonId,
+    FantasyFootballScheduleSelectors.getList,
+    FantasyFootballTeamSelectors.getById,
+  ])
   static getMatchupListWithFantasyTeams(
+    leagueId: string | null,
+    seasonId: string | null,
     matchupList: ScheduleEntity[],
     getTeamById: (id: string | null) => FootballTeam | null
   ): FantasyMatchup[] {
@@ -64,11 +73,18 @@ export class FantasyFootballScheduleSelectors extends GenericSelector(FantasyFoo
       const homeTeam = FantasyFootballScheduleSelectors.transformTeamToMatchupTeam(home, m.home, homeWinner);
       const awayTeam = FantasyFootballScheduleSelectors.transformTeamToMatchupTeam(away, m.away, awayWinner);
 
+      const clickOutUrl = BaseEspnEndpointBuilder({
+        sport: FantasySports.Football,
+        leagueId: leagueId ?? '',
+        year: seasonId ?? '',
+      }).matchupClickout(m.home.teamId, m.matchupPeriodId);
+
       return {
         id,
         matchupPeriodId,
         homeTeam,
         awayTeam,
+        clickOutUrl,
       };
     });
   }

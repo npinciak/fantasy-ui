@@ -6,6 +6,7 @@ export const SPORT_LEAGUE = {
 } as const;
 
 export const SPORTS = {
+  football: 'football',
   baseball: 'baseball',
   tennis: 'tennis',
   mma: 'mma',

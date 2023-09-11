@@ -1,6 +1,7 @@
-import { API_BASE_V2, COMMON_V3, FANTASY_BASE_V2, FANTASY_BASE_V3, ONE_FEED_BASE } from '../espn.const';
+import { API_BASE_V2, BASE_URL, COMMON_V3, FANTASY_BASE_V2, FANTASY_BASE_V3, ONE_FEED_BASE } from '../espn.const';
+import { FantasySports } from '../models/espn-endpoint-builder.model';
 import { ESPN_PATH_FRAGMENTS } from './base-espn-endpoints-builder.const';
-import { BaseEspnEndpointBuilderClass, FantasySportsAbbreviation } from './base-espn-endpoints-builder.model';
+import { BaseEspnEndpointBuilderClass, FantasySportToSportsMap, FantasySportsAbbreviation } from './base-espn-endpoints-builder.model';
 
 /**
  * Creates a builder class for constructing ESPN API endpoint URLs.
@@ -13,7 +14,7 @@ import { BaseEspnEndpointBuilderClass, FantasySportsAbbreviation } from './base-
  *
  */
 export function BaseEspnEndpointBuilder({
-  sport,
+  sport = FantasySports.Baseball,
   leagueId,
   year = new Date().getFullYear().toString(),
 }: {
@@ -22,6 +23,7 @@ export function BaseEspnEndpointBuilder({
   year?: string;
 }): BaseEspnEndpointBuilderClass {
   return class BaseEspnEndpointBuilderClass {
+    private static readonly espnBase = BASE_URL;
     private static readonly apiBaseV2 = API_BASE_V2;
     private static readonly fantasyBaseV3 = FANTASY_BASE_V3;
     private static readonly fantasyBaseV2 = FANTASY_BASE_V2;
@@ -90,6 +92,10 @@ export function BaseEspnEndpointBuilder({
      */
     static get staticScoreboard(): string {
       return `${BaseEspnEndpointBuilderClass.apiBaseV2}/scoreboard/header`;
+    }
+
+    static matchupClickout(teamId: string | number, matchupPeriodId: string | number): string {
+      return `${this.espnBase}/${FantasySportToSportsMap[sport]}/boxscore?leagueId=${leagueId}&matchupPeriodId=${matchupPeriodId}&seasonId=${year}&teamId=${teamId}`;
     }
 
     /**

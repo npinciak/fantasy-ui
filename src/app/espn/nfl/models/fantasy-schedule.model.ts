@@ -5,6 +5,7 @@ import { FootballTeam } from './football-team.model';
 export type FantasyMatchup = Pick<EspnClient.ScheduleEntity, 'id' | 'matchupPeriodId'> & {
   homeTeam: FantasyMatchupTeam | null;
   awayTeam: FantasyMatchupTeam | null;
+  clickOutUrl: string;
 };
 
 export type FantasyMatchupTeam = FootballTeam &
