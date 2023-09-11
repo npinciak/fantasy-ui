@@ -3,11 +3,11 @@ import { StatThreshold, StatThresholdClass } from '@sports-ui/ui-sdk';
 export function matchupThreshold(val: number): string {
   const thresholds = [
     { range: [0, 7], class: StatThresholdClass[StatThreshold.Excellent] },
-    { range: [7, 11], class: StatThresholdClass[StatThreshold.Excellent] },
-    { range: [11, 16], class: StatThresholdClass[StatThreshold.Excellent] },
-    { range: [16, 20], class: StatThresholdClass[StatThreshold.Excellent] },
-    { range: [20, 25], class: StatThresholdClass[StatThreshold.Excellent] },
-    { range: [25, 32], class: StatThresholdClass[StatThreshold.Excellent] },
+    { range: [7, 11], class: StatThresholdClass[StatThreshold.AboveAvg] },
+    { range: [11, 16], class: StatThresholdClass[StatThreshold.Avg] },
+    { range: [16, 20], class: StatThresholdClass[StatThreshold.BelowAvg] },
+    { range: [20, 25], class: StatThresholdClass[StatThreshold.Poor] },
+    { range: [25, 32], class: StatThresholdClass[StatThreshold.Awful] },
   ];
 
   const threshold = thresholds.find(t => range(val, t.range[0], t.range[1]));

@@ -8,7 +8,7 @@ import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sd
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DfsNflThresholds } from '../../consts/stats-threshold.m';
-import { DfsNflTableColumns } from '../../consts/table.const';
+import { HEADERS_BY_POS, ROWS_BY_POS } from '../../consts/table.const';
 import { DfsNflPlayerFacade } from '../../facade/daily-fantasy-nfl-players.facade';
 import { DfsNflSlateTeamDetailsFacade } from '../../facade/dfs-nfl-slate-team.facade';
 import { FilterType } from '../../models/nfl-table.model';
@@ -19,8 +19,8 @@ import { NFL_STAT_GROUP_MAP } from '../../models/stat-group.model';
   templateUrl: './dfs-nfl-home.component.html',
 })
 export class DfsNflHomeComponent {
-  readonly TABLE_HEADERS_BY_POS = DfsNflTableColumns.HEADERS_BY_POS;
-  readonly TABLE_ROWS_BY_POS = DfsNflTableColumns.ROWS_BY_POS;
+  readonly TABLE_HEADERS_BY_POS = HEADERS_BY_POS;
+  readonly TABLE_ROWS_BY_POS = ROWS_BY_POS;
 
   readonly NFL_STAT_GROUP_MAP = NFL_STAT_GROUP_MAP;
   readonly NFL_RG_TEAM_ID_MAP = NFL_RG_TEAM_ID_MAP;
@@ -70,8 +70,8 @@ export class DfsNflHomeComponent {
 
   tableConfig$ = combineLatest([this.position$]).pipe(
     map(([position]) => {
-      const headers = position != null ? DfsNflTableColumns.HEADERS_BY_POS[position] : DfsNflTableColumns.HEADERS_BY_POS.All;
-      const rows = position != null ? DfsNflTableColumns.ROWS_BY_POS[position] : DfsNflTableColumns.ROWS_BY_POS.All;
+      const headers = position != null ? HEADERS_BY_POS[position] : HEADERS_BY_POS.All;
+      const rows = position != null ? ROWS_BY_POS[position] : ROWS_BY_POS.All;
       return {
         headers,
         rows,

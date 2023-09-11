@@ -4,7 +4,7 @@
       <ng-container [matColumnDef]="col?.columnDef" [sticky]="col.columnDef === 'name'">
         <th
           mat-header-cell
-          class="px-2 text-right first-of-type:w-[150px] first-of-type:min-w-[150px] first-of-type:pl-0 first-of-type:text-left"
+          class="whitespace-nowrap border border-l-0 border-r-0 border-solid border-sky-100 bg-sky-50 p-3 py-3 text-left align-middle text-xs font-semibold uppercase text-sky-500"
           *matHeaderCellDef
           mat-sort-header
           tabindex="0"
@@ -12,27 +12,30 @@
           {{ col?.headerLabel }}
         </th>
         <td
-          class="px-2 text-right first-of-type:w-[150px] first-of-type:min-w-[150px] first-of-type:pl-0 first-of-type:text-left"
+          class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-3 align-middle text-xs"
           mat-cell
           *matCellDef="let data"
           [ngClass]="col.columnDef === 'oppPassDefRank' || col.columnDef === 'oppRushDefRank' ? matchupThresholdInverse(col?.cellData(data)) : null"
         >
           <app-loading-skeleton [isLoading]="isLoading$ | async">
-            <ng-container *ngIf="col?.columnDef === 'name'; else defaultCell">
-              <div class="ml-3 flex items-center space-x-4">
-                <div class="flex-shrink-0" [attr.aria-label]="data?.name">
-                  <div class="min-w-0 flex-1">
-                    <p [title]="data?.name" class="truncate text-xs font-medium sm:text-sm">
-                      {{ data?.name }}
-                    </p>
-                    <p class="truncate text-xs">{{ teamMap[data?.teamId] }}, {{ data?.position }}</p>
+            <ng-container [ngSwitch]="col.columnDef">
+              <ng-template [ngSwitchCase]="'name'">
+                <div class="ml-3 flex items-center space-x-4">
+                  <div class="flex-shrink-0" [attr.aria-label]="data?.name">
+                    <div class="min-w-0 flex-1">
+                      <p [title]="data?.name" class="truncate text-xs font-medium sm:text-sm">
+                        {{ data?.name }}
+                      </p>
+                      <p class="truncate text-xs">{{ teamMap[data?.rgTeamId] }}, {{ data?.position }}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </ng-template>
+              <ng-template [ngSwitchCase]="'opp'">
+                {{ col?.cellData(data) ?? '-' }}
+              </ng-template>
+              <ng-template [ngSwitchDefault]> {{ (col?.cellData(data) | statFormat: 'number' | number: '1.0-2') ?? '-' }} </ng-template>
             </ng-container>
-            <ng-template #defaultCell>
-              {{ (col?.cellData(data) | statFormat: 'number' | number: '1.0-2') ?? '-' }}
-            </ng-template>
           </app-loading-skeleton>
         </td>
       </ng-container>
@@ -41,4 +44,6 @@
     <tr mat-row *matRowDef="let team; columns: dataHeaders"></tr>
   </table>
 </div>
-<mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons> </mat-paginator>
+<div class="my-3">
+  <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons> </mat-paginator>
+</div>

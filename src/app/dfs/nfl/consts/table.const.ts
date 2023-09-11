@@ -1,11 +1,6 @@
-import {
-  BaseTableColumn,
-  getTableHeaders,
-  TableColumnDataType,
-  transformTableColumnsToTableRows,
-} from '@app/@shared/models/table-columns.model';
+import { getTableHeaders, TableColumnDataType, transformTableColumnsToTableRows } from '@app/@shared/models/table-columns.model';
 
-const BASE_STATS_COLUMNS: BaseTableColumn<any>[] = [
+const BASE_STATS_COLUMNS = [
   { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String },
   { columnDef: 'opp', headerCell: 'opp', headerLabel: 'Opp', dataType: TableColumnDataType.String },
   { columnDef: 'salary', headerCell: 'salary', headerLabel: 'Sal', dataType: TableColumnDataType.Number },
@@ -20,7 +15,6 @@ const BASE_STATS_COLUMNS: BaseTableColumn<any>[] = [
 
 export const RECEIVER_STATS_COLUMNS = [
   { columnDef: 'oppPassDefRank', headerCell: 'oppPassDefRank', headerLabel: 'oppPassDefRank', dataType: TableColumnDataType.Number },
-
   { columnDef: 'tar', headerCell: 'tar', headerLabel: 'Tar', dataType: TableColumnDataType.Number },
   {
     columnDef: 'productionPremium',
@@ -88,31 +82,29 @@ export const PASSING_STATS_COLUMNS = [
   },
 ];
 
-export namespace DfsNflTableColumns {
-  export const COLUMNS_BY_POS = {
-    All: [...BASE_STATS_COLUMNS],
-    QB: [...BASE_STATS_COLUMNS, ...PASSING_STATS_COLUMNS],
-    RB: [...BASE_STATS_COLUMNS, ...RUSH_STATS_COLUMNS],
-    WR: [...BASE_STATS_COLUMNS, ...RECEIVER_STATS_COLUMNS],
-    TE: [...BASE_STATS_COLUMNS, ...RECEIVER_STATS_COLUMNS],
-    DST: [...BASE_STATS_COLUMNS],
-  };
+export const COLUMNS_BY_POS = {
+  All: [...BASE_STATS_COLUMNS],
+  QB: [...BASE_STATS_COLUMNS, ...PASSING_STATS_COLUMNS],
+  RB: [...BASE_STATS_COLUMNS, ...RUSH_STATS_COLUMNS],
+  WR: [...BASE_STATS_COLUMNS, ...RECEIVER_STATS_COLUMNS],
+  TE: [...BASE_STATS_COLUMNS, ...RECEIVER_STATS_COLUMNS],
+  DST: [...BASE_STATS_COLUMNS],
+};
 
-  export const ROWS_BY_POS = {
-    All: transformTableColumnsToTableRows(COLUMNS_BY_POS['All']),
-    QB: transformTableColumnsToTableRows(COLUMNS_BY_POS['QB']),
-    RB: transformTableColumnsToTableRows(COLUMNS_BY_POS['RB']),
-    WR: transformTableColumnsToTableRows(COLUMNS_BY_POS['WR']),
-    TE: transformTableColumnsToTableRows(COLUMNS_BY_POS['TE']),
-    DST: transformTableColumnsToTableRows(COLUMNS_BY_POS['DST']),
-  };
+export const ROWS_BY_POS = {
+  All: transformTableColumnsToTableRows(COLUMNS_BY_POS['All']),
+  QB: transformTableColumnsToTableRows(COLUMNS_BY_POS['QB']),
+  RB: transformTableColumnsToTableRows(COLUMNS_BY_POS['RB']),
+  WR: transformTableColumnsToTableRows(COLUMNS_BY_POS['WR']),
+  TE: transformTableColumnsToTableRows(COLUMNS_BY_POS['TE']),
+  DST: transformTableColumnsToTableRows(COLUMNS_BY_POS['DST']),
+};
 
-  export const HEADERS_BY_POS = {
-    All: getTableHeaders(ROWS_BY_POS['All']),
-    QB: getTableHeaders(ROWS_BY_POS['QB']),
-    RB: getTableHeaders(ROWS_BY_POS['RB']),
-    WR: getTableHeaders(ROWS_BY_POS['WR']),
-    TE: getTableHeaders(ROWS_BY_POS['TE']),
-    DST: getTableHeaders(ROWS_BY_POS['DST']),
-  };
-}
+export const HEADERS_BY_POS = {
+  All: getTableHeaders(ROWS_BY_POS['All']),
+  QB: getTableHeaders(ROWS_BY_POS['QB']),
+  RB: getTableHeaders(ROWS_BY_POS['RB']),
+  WR: getTableHeaders(ROWS_BY_POS['WR']),
+  TE: getTableHeaders(ROWS_BY_POS['TE']),
+  DST: getTableHeaders(ROWS_BY_POS['DST']),
+};

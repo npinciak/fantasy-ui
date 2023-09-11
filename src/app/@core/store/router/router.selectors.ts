@@ -3,6 +3,7 @@ import { ShellNavListItem } from '@app/@core/shell/shell-nav-list/shell-nav-list
 import { objectIsEmpty } from '@app/@shared/helpers/utils';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { exists } from '@app/@shared/utilities/utilities.m';
+import { SITE } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { EspnRouteBuilder } from './route-builder';
 import { RouterStateModel } from './router-state.model';
 import { RouterState } from './router.state';
@@ -122,9 +123,8 @@ export class RouterSelector {
   @Selector()
   static dailyFantasyMenu(): ShellNavListItem[] {
     return [
-      // { id: '1', routerLink: UrlBuilder.dfsMlbBase, queryParams: { site: SITE.Draftkings }, label: 'DK MLB' },
-      // { routerLink: UrlBuilder.dfsNbaBase, queryParams: { site:  site:SITE.Draftkings }, label: 'DK NFL' },
-      // { id: '2', routerLink: UrlBuilder.dfsNflBase, queryParams: { site: SITE.Draftkings }, label: 'DK NFL' },
+      { id: '1', routerLink: [UrlPathFragments.Dfs, UrlPathFragments.MLB], queryParams: { site: SITE.Draftkings }, label: 'DK MLB' },
+      { id: '2', routerLink: [UrlPathFragments.Dfs, UrlPathFragments.NFL], queryParams: { site: SITE.Draftkings }, label: 'DK NFL' },
     ];
   }
 
