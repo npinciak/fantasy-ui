@@ -1,13 +1,7 @@
-/**
- * @deprecated use `exists` in sdk instead
- */
 export function exists<T>(value: NonNullable<T> | null | undefined): value is NonNullable<T> {
   return value != null;
 }
 
-/**
- * @deprecated use `existsFilter` in sdk instead
- */
 export function existsFilter<T>(value: (NonNullable<T> | null | undefined)[]): NonNullable<T>[] {
   let index = 0;
   for (let i = 0; i < value.length; i++) {
