@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { tickerDate } from '@app/@shared/helpers/date';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
 import { fastcastEventSummary } from '@app/espn/espn-helpers';
@@ -9,7 +9,7 @@ import { EVENT_STATUS, SEASON_TYPE } from '@sports-ui/ui-sdk/espn-client';
   selector: 'app-espn-scoreboard-card',
   templateUrl: './espn-scoreboard-card.component.html',
 })
-export class EspnScoreboardCardComponent  {
+export class EspnScoreboardCardComponent {
   @Input() event: FastcastEvent;
   @Input() isTournament: boolean;
   @Input() isEventToggled: boolean;
@@ -23,8 +23,6 @@ export class EspnScoreboardCardComponent  {
   readonly FASTCAST_DATE_SHORT = FASTCAST_DATE_SHORT;
 
   constructor() {}
-
-
 
   toggleExpansionPanel(eventId: string): void {
     this.toggleExpandedEvent.emit(eventId);

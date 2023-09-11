@@ -36,7 +36,7 @@
     </div>
 
     <div class="flex basis-4/5 overflow-x-auto px-6 align-middle">
-      <div class="flex flex-nowrap" id="scoreboard-feed" role="feed" aria-live="polite">
+      <div class="flex flex-nowrap" role="feed" aria-live="polite">
         <ng-container *ngFor="let event of eventsByLeagueId$ | async; let first = first; let last = last; let i = index">
           <app-espn-scoreboard-card
             [index]="i"

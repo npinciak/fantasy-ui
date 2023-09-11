@@ -1,7 +1,7 @@
 import { exists, existsFilter } from '@app/@shared/utilities/exists';
 import { excludeLeagues, includeSports, parseEventUidStringToId, parseTeamUidStringToId, teamColorHandler } from '@app/espn/espn-helpers';
 import { NO_LOGO } from '@app/espn/espn.const';
-import { EVENT_STATUS_TYPE, pickFields } from '@sports-ui/ui-sdk';
+import { EVENT_STATUS_TYPE } from '@sports-ui/ui-sdk';
 import { CompetitorsEntity, EventsEntity, FASTCAST_EVENT_TYPE, LeaguesEntity, SportsEntity } from '@sports-ui/ui-sdk/espn-fastcast-client';
 
 import { flatten } from '@app/@shared/helpers/utils';
@@ -37,15 +37,25 @@ export function clientFastcastToFastcast(clientModel: { sports: SportsEntity[] }
 }
 
 export function clientSportsEntityToSport(sportsEntity: SportsEntity): FastcastSport {
-  return pickFields(sportsEntity, ['id', 'uid', 'name', 'slug']);
+  const { id, uid, name, slug } = sportsEntity;
+  return {
+    id,
+    uid,
+    name,
+    slug,
+  };
 }
 
 export function clientLeagueImportToFastcastLeague(leagueImport: LeaguesEntity): FastcastLeague {
-  const fields = pickFields(leagueImport, ['id', 'uid', 'name', 'slug', 'isTournament', 'abbreviation', 'shortName']);
+  const { id, uid, name, slug, isTournament, abbreviation, shortName } = leagueImport;
   return {
-    ...fields,
-    abbreviation: fields.abbreviation ?? fields.name,
-    shortName: fields.shortName ?? fields.name,
+    id,
+    uid,
+    name,
+    slug,
+    isTournament,
+    abbreviation: abbreviation ?? name,
+    shortName: shortName ?? name,
     sport: '',
   };
 }

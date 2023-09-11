@@ -51,4 +51,8 @@ export class FastCastConnection {
   static SetDisconnect = class {
     static readonly type = `[${FastCastConnection.stateName}] SetDisconnect`;
   };
+
+  static SetConnectionClosed = class {
+    static readonly type = `[${FastCastConnection.stateName}] SetConnectionClosed`;
+  };
 }
