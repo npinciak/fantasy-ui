@@ -51,6 +51,16 @@ export function BaseScoringPeriod() {
       }, {} as Record<string, FilterOptions<string>>);
     }
 
+    /**
+     * Returns a projected scoring period for a given year and week
+     *
+     * @param year  2022
+     * @param week  1
+     * @returns
+     * @example ```typescript
+     * BaseScoringPeriodTest.week('2022', '1'); // returns '1120221';
+     * ```
+     */
     static projectedWeek(year: string | null, week: string | null) {
       return BaseScoringPeriodClass.seasonToScoringPeriodId(StatTypePeriodId.ProjectedWeek, year, week);
     }
