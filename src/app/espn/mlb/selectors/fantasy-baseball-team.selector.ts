@@ -2,7 +2,6 @@ import { RouterSelector } from '@app/@core/store/router/router.selectors';
 import { FangraphsConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
 import { FangraphsConstantsSelector } from '@app/@shared/fangraphs/fangraphs-const.selector';
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { ScatterChartDataset, transformDataToScatterGraph } from '@app/@shared/helpers/graph.helpers';
 import {
   benchPlayersFilter,
   injuredPlayersFilter,
@@ -10,7 +9,7 @@ import {
   startingPlayersFilter,
 } from '@app/espn/espn-helpers';
 import { Selector } from '@ngxs/store';
-import { BASEBALL_LINEUP_MAP, BaseballStat, MLB_STATS_MAP } from '@sports-ui/ui-sdk/espn';
+import { BASEBALL_LINEUP_MAP, BaseballStat } from '@sports-ui/ui-sdk/espn';
 import { exists, existsFilter } from '@sports-ui/ui-sdk/helpers';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
@@ -227,29 +226,6 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
         })
         .filter(d => d.data !== 0)
         .sort((a, b) => b.data - a.data);
-    };
-  }
-
-  @Selector([FantasyBaseballTeamSelector.getTeamPitcherStats, FantasyBaseballLeagueSelector.slices.seasonId])
-  static getPitcherStatsScatterChartData(
-    getTeamPitchers: (teamId: string | null, statPeriod: string) => BaseballPlayerStatsRow[]
-  ): (teamId: string | null, statPeriod: string, xAxisFilter: BaseballStat, yAxisFilter: BaseballStat) => ScatterChartDataset[] {
-    return (teamId: string | null, statPeriod: string, xAxisFilter: BaseballStat, yAxisFilter: BaseballStat) => {
-      const pitchers = getTeamPitchers(teamId, statPeriod);
-
-      const xAxisData = pitchers.map(p => p?.stats[xAxisFilter] ?? 0);
-      const yAxisData = pitchers.map(p => p?.stats[yAxisFilter] ?? 0);
-
-      const graph = transformDataToScatterGraph({
-        data: pitchers,
-        xAxisData,
-        yAxisData,
-        xAxisLabel: MLB_STATS_MAP[xAxisFilter].abbrev,
-        yAxisLabel: MLB_STATS_MAP[xAxisFilter].abbrev,
-        dataLabels: 'name',
-      });
-
-      return graph;
     };
   }
 }

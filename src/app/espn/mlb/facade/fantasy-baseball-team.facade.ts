@@ -33,5 +33,4 @@ export class FantasyBaseballTeamFacade extends GenericFacade({
 
   pitcherStats$ = select(FantasyBaseballTeamSelector.getTeamPitcherStats);
   pitcherStatsChartData$ = select(FantasyBaseballTeamSelector.getPitcherStatsChartData);
-  pitcherStatsScatterChartData$ = select(FantasyBaseballTeamSelector.getPitcherStatsScatterChartData);
 }
