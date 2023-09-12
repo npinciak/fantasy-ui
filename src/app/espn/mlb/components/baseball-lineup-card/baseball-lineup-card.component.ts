@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { exists } from '@app/@shared/utilities/utilities.m';
 import { EspnLineupCardComponent } from '@app/espn/components/espn-lineup-card/espn-lineup-card.component';
 import { BaseballStat } from '@sports-ui/ui-sdk/espn';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 import { BaseballPlayer, BaseballPlayerLiveStatsRow } from '../../models/baseball-player.model';
 
 @Component({

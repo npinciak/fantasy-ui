@@ -1,6 +1,6 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { FilterOptions } from '@app/@shared/models/filter.model';
-import { exists } from '@app/@shared/utilities/utilities.m';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 
 import { BaseEspnEndpointBuilder } from '@app/espn/endpoint-builder/base-espn-endpoint-builder';
 import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';

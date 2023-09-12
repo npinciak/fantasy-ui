@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { RouterSelector } from '@app/@core/store/router/router.selectors';
 
-import { exists } from '@app/@shared/utilities/utilities.m';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { FootballLineupSlot } from '@sports-ui/ui-sdk/espn';
 import { PLAYER_AVAILABILITY_STATUS, PlayerAvailabilityStatus } from '@sports-ui/ui-sdk/espn-client';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 import { SetLineupSlotId, SetPagination, SetScoringPeriodId } from '../actions/fantasy-football-free-agent-filter.actions';
 import { FantasyFootballFreeAgent } from '../actions/fantasy-football-free-agent.actions';
 

@@ -1,9 +1,9 @@
 import { RouterSelector } from '@app/@core/store/router/router.selectors';
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { exists, existsFilter } from '@app/@shared/utilities/utilities.m';
 import { benchPlayersFilter, startingPlayersFilter } from '@app/espn/espn-helpers';
 import { Selector } from '@ngxs/store';
 import { BASEBALL_LINEUP_MAP, BaseballStat } from '@sports-ui/ui-sdk/espn';
+import { exists, existsFilter } from '@sports-ui/ui-sdk/helpers';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballPlayer, BaseballPlayerLiveStatsRow } from '../models/baseball-player.model';
 import { BaseballTeam, BaseballTeamLive } from '../models/baseball-team.model';

@@ -1,8 +1,8 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
-import { exists, existsFilter } from '@app/@shared/utilities/utilities.m';
 import { benchPlayersFilter, injuredPlayersFilter, startingPlayersFilter } from '@app/espn/espn-helpers';
+import { exists, existsFilter } from '@sports-ui/ui-sdk/helpers';
 import { FootballPlayer, FootballPlayerStatsRow } from '../models/football-player.model';
 import { FootballTeam } from '../models/football-team.model';
 

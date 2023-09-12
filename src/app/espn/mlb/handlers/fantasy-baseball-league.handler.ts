@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { exists } from '@app/@shared/utilities/utilities.m';
 import { FantasyLeagueBaseStateModel } from '@app/espn/state/base-league.model';
 import { Action, State, StateContext, Store } from '@ngxs/store';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 import { FantasyBaseballEvents } from '../actions/fantasy-baseball-events.actions';
 import { FantasyBaseballLeague } from '../actions/fantasy-baseball-league.actions';
 import { FantasyBaseballTeamsLive } from '../actions/fantasy-baseball-team-live.actions';

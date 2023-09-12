@@ -3,7 +3,6 @@ import { FangraphsConstants } from '@app/@shared/fangraphs/fangraphs-const.model
 import { FangraphsConstantsSelector } from '@app/@shared/fangraphs/fangraphs-const.selector';
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { ScatterChartDataset, transformDataToScatterGraph } from '@app/@shared/helpers/graph.helpers';
-import { exists, existsFilter } from '@app/@shared/utilities/utilities.m';
 import {
   benchPlayersFilter,
   injuredPlayersFilter,
@@ -12,6 +11,7 @@ import {
 } from '@app/espn/espn-helpers';
 import { Selector } from '@ngxs/store';
 import { BASEBALL_LINEUP_MAP, BaseballStat, MLB_STATS_MAP } from '@sports-ui/ui-sdk/espn';
+import { exists, existsFilter } from '@sports-ui/ui-sdk/helpers';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
 import { BaseballTeam, BaseballTeamTableRow } from '../models/baseball-team.model';

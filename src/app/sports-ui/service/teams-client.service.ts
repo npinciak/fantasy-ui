@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SupaClientService } from '@app/@shared/supa/supa-client.service';
-import { exists } from '@app/@shared/utilities/utilities.m';
 import { Database, SupaClientTables } from '@sports-ui/ui-sdk';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 
 @Injectable({ providedIn: 'root' })
 export class TeamsClientService extends SupaClientService {

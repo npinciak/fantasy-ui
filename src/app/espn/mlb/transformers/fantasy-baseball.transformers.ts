@@ -1,7 +1,7 @@
 import { FangraphsConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
-import { exists } from '@app/@shared/utilities/utilities.m';
 import { BASEBALL_LINEUP_MAP, BaseballLineupSlot, BaseballStat, EspnClient, MLB_POSITION_MAP, MLB_TEAM_MAP } from '@sports-ui/ui-sdk/espn';
 import { FreeAgent, PlayerCardEntity, ProLeagueType, SPORT_TYPE, TeamRosterEntry } from '@sports-ui/ui-sdk/espn-client';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 import { isPitcher } from '../../espn-helpers';
 import { FantasyLeague } from '../../models/fantasy-league.model';
 import { EspnTransformers } from '../../transformers/espn-transformers.m';

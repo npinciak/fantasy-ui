@@ -1,7 +1,7 @@
 import { FangraphsConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
-import { exists } from '@app/@shared/utilities/utilities.m';
 import { BaseballStat } from '@sports-ui/ui-sdk/espn';
 import { PlayerStatsEntity } from '@sports-ui/ui-sdk/espn-client';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 
 export class AdvStats {
   private _stats: PlayerStatsEntity;

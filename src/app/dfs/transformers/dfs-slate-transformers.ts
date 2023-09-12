@@ -1,5 +1,4 @@
 import { normalizeStringToNumber, objectIsEmpty } from '@app/@shared/helpers/utils';
-import { exists } from '@app/@shared/utilities/utilities.m';
 import {
   ClientSlatePlayerAttributesMap,
   ClientSlateStatGroups,
@@ -8,6 +7,7 @@ import {
   SITE_TO_SITETYPE_MAP,
   SlateWeather,
 } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 
 import { MLBClientTeamAttributes } from '@sports-ui/daily-fantasy-sdk/models';
 import { SlatePlayer } from '../models/slate-player.model';

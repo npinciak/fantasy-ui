@@ -1,5 +1,4 @@
 import { normalizeStringToNumber, objectIsEmpty } from '@app/@shared/helpers/utils';
-import { exists } from '@app/@shared/utilities/utilities.m';
 import { ClientSlateTeamAttributes } from '@dfsClient/daily-fantasy-client-slate-attr.model';
 import { ClientVegas } from '@dfsClient/daily-fantasy-client.model';
 import {
@@ -11,6 +10,7 @@ import {
   NFLClientSafptsProperties,
   NFLClientStatGroup,
 } from '@sports-ui/daily-fantasy-sdk/models';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 import { camelCase } from 'lodash';
 import { Vegas } from './models/vegas.model';
 import { ProfilerQB, ProfilerRB, ProfilerReceiver } from './nfl/models/nfl-profiler.model';

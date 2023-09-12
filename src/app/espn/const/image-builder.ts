@@ -1,5 +1,5 @@
-import { exists } from '@app/@shared/utilities/exists';
 import { SportType } from '@sports-ui/ui-sdk';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 import { CDN_COMBINER, CDN_REDESIGN_IMG } from '../espn.const';
 
 export function ImageBuilder({ sport, league }: { sport: SportType; league: string }) {

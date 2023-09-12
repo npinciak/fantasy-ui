@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RouterSelector } from '@app/@core/store/router/router.selectors';
-import { exists } from '@app/@shared/utilities/utilities.m';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 import { DfsSlateAttributes } from '../actions/dfs-slate-attr.actions';
 import { DfsMlbSlatePlayer } from '../mlb/actions/dfs-mlb-slate-player.actions';
 import { DfsMlbSlateTeamDetails } from '../mlb/actions/dfs-mlb-slate-team.actions';

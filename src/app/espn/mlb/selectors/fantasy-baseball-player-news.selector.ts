@@ -1,8 +1,8 @@
 import { RouterSelector } from '@app/@core/store/router/router.selectors';
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { exists } from '@app/@shared/utilities/utilities.m';
 import { PlayerNews, PlayerNewsEntity } from '@app/espn/models/player-news.model';
 import { Selector } from '@ngxs/store';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 import { FantasyBaseballPlayerNewsState } from '../state/fantasy-baseball-player-news.state';
 
 export class FantasyBaseballPlayerNewsSelector extends GenericSelector(FantasyBaseballPlayerNewsState) {

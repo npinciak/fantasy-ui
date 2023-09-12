@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GenericStateClass } from '@app/@shared/generic-state/generic.model';
-import { exists } from '@app/@shared/utilities/utilities.m';
 import { Action, State, StateContext } from '@ngxs/store';
 import { ProTeamEntity } from '@sports-ui/ui-sdk';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 import { FantasyBaseballPlayerCard } from '../actions/fantasy-baseball-player-card.actions';
 import { FantasyBaseballProTeamSchedule } from '../actions/fantasy-baseball-pro-team-schedule.actions';
 import { FantasyBaseballLeagueFacade } from '../facade/fantasy-baseball-league.facade';

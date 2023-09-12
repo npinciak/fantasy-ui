@@ -1,9 +1,9 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { linearRegression, transformScatterGraphData } from '@app/@shared/helpers/graph.helpers';
 import { Selector } from '@app/@shared/models/typed-selector';
-import { exists, existsFilter } from '@app/@shared/utilities/utilities.m';
 import { SlateTeam } from '@app/dfs/models/slate-team.model';
 import { NFL_RG_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
+import { exists, existsFilter } from '@sports-ui/ui-sdk/helpers';
 import { DfsNflSlateTeamDetailsState } from '../state/dfs-nfl-slate-teams.state';
 
 export class DfsNflSlateTeamDetailsSelectors extends GenericSelector(DfsNflSlateTeamDetailsState) {

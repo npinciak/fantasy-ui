@@ -1,5 +1,5 @@
 import { FilterOptions } from '@app/@shared/models/filter.model';
-import { exists } from '@app/@shared/utilities/utilities.m';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 import { StatTypePeriodId } from '../models/espn-stats.model';
 
 /**

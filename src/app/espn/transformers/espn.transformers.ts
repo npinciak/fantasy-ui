@@ -1,5 +1,4 @@
 import { PositionEntityMap } from '@app/@shared/base-models/base-position.model';
-import { exists } from '@app/@shared/utilities/utilities.m';
 import { EspnClient, PLAYER_INJURY_STATUS } from '@sports-ui/ui-sdk/espn';
 import {
   ARTICLE_TYPE,
@@ -9,6 +8,7 @@ import {
   ProLeagueType,
   SportType,
 } from '@sports-ui/ui-sdk/espn-client';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 import { ImageBuilder } from '../const/image-builder';
 import { flattenPlayerStats, transformIdToUid } from '../espn-helpers';
 import { FantasyLeague } from '../models/fantasy-league.model';

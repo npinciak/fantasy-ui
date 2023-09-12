@@ -1,8 +1,8 @@
-import { exists, existsFilter } from '@app/@shared/utilities/exists';
 import { excludeLeagues, includeSports, parseEventUidStringToId, parseTeamUidStringToId, teamColorHandler } from '@app/espn/espn-helpers';
 import { NO_LOGO } from '@app/espn/espn.const';
 import { EVENT_STATUS_TYPE } from '@sports-ui/ui-sdk';
 import { CompetitorsEntity, EventsEntity, FASTCAST_EVENT_TYPE, LeaguesEntity, SportsEntity } from '@sports-ui/ui-sdk/espn-fastcast-client';
+import { exists, existsFilter } from '@sports-ui/ui-sdk/helpers';
 
 import { flatten } from '@app/@shared/helpers/utils';
 import { FastcastEvent, FootballSituation, MlbSituation } from '../models/fastcast-event.model';

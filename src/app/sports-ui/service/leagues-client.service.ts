@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SupaClientService } from '@app/@shared/supa/supa-client.service';
-import { exists } from '@app/@shared/utilities/utilities.m';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 import { Database, SupaClientTables } from '@sports-ui/ui-sdk/supabase';
 
 @Injectable({ providedIn: 'root' })

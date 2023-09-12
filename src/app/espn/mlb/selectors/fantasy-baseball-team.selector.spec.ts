@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
-import { existsFilter } from '@app/@shared/utilities/exists';
 import { NgxsModule, Store } from '@ngxs/store';
+import { existsFilter } from '@sports-ui/ui-sdk/helpers';
 import { FantasyBaseballTeamsLive } from '../actions/fantasy-baseball-team-live.actions';
 import { FantasyBaseballTeams } from '../actions/fantasy-baseball-team.actions';
 import { FantasyBaseballScoringPeriod } from '../fantasy-baseball-scoring-period';

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { exists } from '@app/@shared/utilities/utilities.m';
 import { FastCastConnection } from '@app/espn-fastcast/actions/espn-fastcast-connection.actions';
 import { FASTCAST_SERVICE_URI, fastcastURIBuilder } from '@app/espn/espn.const';
 import { EspnService } from '@app/espn/service/espn.service';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { OPERATION_CODE, WebSocketBuilder } from '@sports-ui/ui-sdk/espn-fastcast-client';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 import { startWith, tap } from 'rxjs/operators';
 import { FastcastEvents } from '../actions/espn-fastcast-event.actions';
 import { FastcastLeagues } from '../actions/espn-fastcast-league.actions';

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { exists } from '@app/@shared/utilities/utilities.m';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 import { Chart, ChartConfiguration, ChartOptions, registerables } from 'chart.js';
 import { BaseChartComponent, StatsChart } from '../base-chart/base-chart.component';
 

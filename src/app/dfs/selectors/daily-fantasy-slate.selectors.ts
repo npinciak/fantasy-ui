@@ -1,7 +1,7 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { Selector } from '@app/@shared/models/typed-selector';
-import { existsFilter } from '@app/@shared/utilities/utilities.m';
 import { ClientSlateTypes, SiteSlateEntity, SiteSlateGameEntity } from '@dfsClient/daily-fantasy-client.model';
+import { existsFilter } from '@sports-ui/ui-sdk/helpers';
 import { flatten } from 'lodash';
 import { Weather } from '../models/weather.model';
 import { DfsSlatesState } from '../state/dfs-slates.state';

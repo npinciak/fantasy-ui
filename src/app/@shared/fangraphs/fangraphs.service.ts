@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { exists } from '@sports-ui/ui-sdk/helpers';
 import { SupaClientTables } from '@sports-ui/ui-sdk/supabase';
 import { SupaClientService } from '../supa/supa-client.service';
-import { exists } from '../utilities/exists';
 
 @Injectable({
   providedIn: 'root',
@@ -24,5 +24,3 @@ export class FangraphsService extends SupaClientService {
       .then(res => (exists(res.data) ? res.data : []));
   }
 }
-
-
