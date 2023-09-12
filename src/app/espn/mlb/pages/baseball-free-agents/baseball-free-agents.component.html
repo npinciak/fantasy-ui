@@ -3,11 +3,11 @@
 
   <div main>
     <div class="flex flex-wrap">
-      <div class="mb-12 w-full px-4 xl:mb-0 xl:w-8/12">
+      <!-- <div class="mb-12 w-full px-4 xl:mb-0 xl:w-8/12">
         <app-base-card>
           <app-chart-line height="350px" [chartData]="batterBarData$ | async"></app-chart-line>
         </app-base-card>
-      </div>
+      </div> -->
       <div class="w-full px-4 xl:w-4/12">
         <app-base-card>
           <app-chart-bar height="350px" [chartData]="batterBarData$ | async"></app-chart-bar>
@@ -18,7 +18,6 @@
       <div class="w-full px-4 xl:w-3/12">
         <app-base-card>
           <app-refresh-btn (refreshButtonClicked)="onRefreshClick()"></app-refresh-btn>
-
           <div>
             <app-dropdown-filter
               ariaLabel="scoring period options"
@@ -55,7 +54,6 @@
               (filterUpdate)="onPitcherStatChange($event)"
             ></app-dropdown-filter>
           </div>
-
           <div>
             <app-multi-select
               ariaLabel="player-availability-options-"

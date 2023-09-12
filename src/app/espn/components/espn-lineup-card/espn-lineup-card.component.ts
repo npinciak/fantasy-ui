@@ -14,6 +14,7 @@ export class EspnLineupCardComponent<T extends PlayerEntity> {
   @Input() points = 0;
   @Input() projectedPoints: number;
   @Input() scoringPeriodId: number;
+  @Input() isLive: boolean;
 
   @Input() isLoading = false;
 

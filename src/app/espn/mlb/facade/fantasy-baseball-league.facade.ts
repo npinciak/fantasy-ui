@@ -29,6 +29,9 @@ export class FantasyBaseballLeagueFacade {
     return this.store.selectSnapshot(FantasyBaseballLeagueSelector.slices.id);
   }
 
+  /**
+   * @deprecated use FantasyBaseballLeagueFacade.getLeague()
+   */
   refreshCurrentLeague(): Observable<void> {
     return this.store.dispatch(new FantasyBaseballLeague.Refresh());
   }

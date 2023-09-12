@@ -1,6 +1,6 @@
 <app-page-layout>
   <div statsHeader>
-    <app-fantasy-team-header [team]="fantasyBaseballTeamFacade.teamInfo$ | async"></app-fantasy-team-header>
+    <app-espn-team-header [team]="fantasyBaseballTeamFacade.teamInfo$ | async"></app-espn-team-header>
   </div>
   <div main>
     <div class="mt-4 flex flex-wrap">
@@ -25,7 +25,12 @@
             </div>
           </div>
 
-          <app-chart-line height="350px" ariaLabel="batter stats line chart" [chartData]="batterBarData$ | async"></app-chart-line>
+          <app-chart-bar
+            [horizontalLabels]="!(isMobile$ | async)"
+            height="350px"
+            ariaLabel="batter stats line chart"
+            [chartData]="batterBarData$ | async"
+          ></app-chart-bar>
         </app-base-card>
       </div>
 

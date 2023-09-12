@@ -1,10 +1,13 @@
 <app-page-layout>
   <div statsHeader>
-    <app-fantasy-team-header [team]="fantasyBaseballTeamFacade.teamInfo$ | async"></app-fantasy-team-header>
+    <app-espn-team-header [team]="fantasyBaseballTeamFacade.teamInfo$ | async"></app-espn-team-header>
+    <div class="w-full px-4 xl:w-4/12">
+      <app-toggle title="Live Stats" textColor="text-white" (selectChange)="onLiveScoreChange($event)"></app-toggle>
+    </div>
   </div>
   <div main>
     <div class="flex flex-wrap">
-      <div class="w-full px-4 xl:w-4/12">
+      <!-- <div class="w-full px-4 xl:w-4/12">
         <app-base-card>
           <div class="flex flex-1 flex-col gap-5 sm:flex-row">
             <div class="basis-1/3">
@@ -43,43 +46,58 @@
             [chartData]="batterScatterData$ | async"
           ></app-chart-scatter>
         </app-base-card>
-        <!-- <app-chart-bar height="350px" ariaLabel="" [chartData]="batterBarData$ | async"></app-chart-bar> -->
+        <app-chart-bar height="350px" ariaLabel="" [chartData]="batterBarData$ | async"></app-chart-bar>
+      </div> -->
+
+      <div class="w-full px-4 xl:w-4/12">
+        <app-base-card>
+          <app-baseball-lineup-card
+            title="Starting Lineup"
+            [isLoading]="isLoading$ | async"
+            [lineup]="startingBatters$ | async"
+            [isLive]="isLiveScore$ | async"
+            (playerClicked)="onPlayerClick($event)"
+            (refreshClicked)="onRefreshClick()"
+          ></app-baseball-lineup-card>
+        </app-base-card>
+
+        <div class="my-3"></div>
+        <app-base-card>
+          <app-baseball-lineup-card
+            *ngIf="(benchBatters$ | async).length > 0"
+            title="Bench"
+            [isLoading]="isLoading$ | async"
+            [lineup]="benchBatters$ | async"
+            [isLive]="isLiveScore$ | async"
+            (playerClicked)="onPlayerClick($event)"
+            (refreshClicked)="onRefreshClick()"
+          ></app-baseball-lineup-card>
+        </app-base-card>
       </div>
       <div class="w-full px-4 xl:w-4/12">
-        <app-baseball-lineup-card
-          title="Starting Lineup"
-          [isLoading]="isLoading$ | async"
-          [lineup]="startingBatters$ | async"
-          (playerClicked)="onPlayerClick($event)"
-          (refreshClicked)="onRefreshClick()"
-        ></app-baseball-lineup-card>
+        <app-base-card>
+          <app-baseball-lineup-card
+            title="Starting Pitchers"
+            [isLoading]="isLoading$ | async"
+            [lineup]="startingPitchers$ | async"
+            [isLive]="isLiveScore$ | async"
+            (playerClicked)="onPlayerClick($event)"
+            (refreshClicked)="onRefreshClick()"
+          ></app-baseball-lineup-card>
+        </app-base-card>
+
         <div class="my-3"></div>
-        <app-baseball-lineup-card
-          *ngIf="(benchBatters$ | async).length > 0"
-          title="Bench"
-          [isLoading]="isLoading$ | async"
-          [lineup]="benchBatters$ | async"
-          (playerClicked)="onPlayerClick($event)"
-          (refreshClicked)="onRefreshClick()"
-        ></app-baseball-lineup-card>
-      </div>
-      <div class="w-full px-4 xl:w-4/12">
-        <app-baseball-lineup-card
-          title="Starting Pitchers"
-          [isLoading]="isLoading$ | async"
-          [lineup]="startingPitchers$ | async"
-          (playerClicked)="onPlayerClick($event)"
-          (refreshClicked)="onRefreshClick()"
-        ></app-baseball-lineup-card>
-        <div class="my-3"></div>
-        <app-baseball-lineup-card
-          *ngIf="(benchPitchers$ | async).length > 0"
-          title="Bench"
-          [isLoading]="isLoading$ | async"
-          [lineup]="benchPitchers$ | async"
-          (playerClicked)="onPlayerClick($event)"
-          (refreshClicked)="onRefreshClick()"
-        ></app-baseball-lineup-card>
+        <app-base-card>
+          <app-baseball-lineup-card
+            *ngIf="(benchPitchers$ | async).length > 0"
+            title="Bench"
+            [isLoading]="isLoading$ | async"
+            [lineup]="benchPitchers$ | async"
+            [isLive]="isLiveScore$ | async"
+            (playerClicked)="onPlayerClick($event)"
+            (refreshClicked)="onRefreshClick()"
+          ></app-baseball-lineup-card>
+        </app-base-card>
       </div>
     </div>
   </div>

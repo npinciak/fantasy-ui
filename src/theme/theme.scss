@@ -46,36 +46,43 @@
     @apply font-bold;
 
     &.excellent {
-      background-color: #5c8cc0;
+      // background-color: #5c8cc0;
+      @apply bg-blue-400;
       @apply text-white;
     }
 
     &.great {
-      background-color: #a3d0e5;
+      // background-color: #a3d0e5;
+      @apply bg-blue-300;
       @apply text-white;
     }
 
     &.above-avg {
-      background-color: #e5f3e0;
+      // background-color: #e5f3e0;
+      @apply bg-yellow-50;
       @apply text-black;
     }
     &.avg {
-      background-color: #faf8c1;
+      // background-color: #faf8c1;
+      @apply bg-yellow-100;
       @apply text-black;
     }
 
     &.below-avg {
-      background-color: #fed185;
+      // background-color: #fed185;
+      @apply bg-orange-200;
       @apply text-black;
     }
 
     &.poor {
-      background-color: #f78d54;
+      // background-color: #f78d54;
+      @apply bg-orange-400;
       @apply text-white;
     }
 
     &.awful {
-      background-color: #db4132;
+      // background-color: #db4132;
+      @apply bg-red-500;
       @apply text-white;
     }
   }

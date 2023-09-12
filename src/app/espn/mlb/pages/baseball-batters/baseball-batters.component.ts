@@ -31,8 +31,11 @@ export class BaseballBattersComponent {
   readonly BATTER_STATS_LIVE_ROWS = BATTER_STATS_LIVE_ROWS;
   readonly BATTER_STATS_LIVE_HEADERS = BATTER_STATS_LIVE_HEADERS;
 
-  scoringPeriodFilters$ = this.fantasyBaseballLeagueFacade.scoringPeriodFilters$;
+  readonly BaseballStat = BaseballStat;
 
+  isMobile$ = this.layoutService.isMobile$;
+
+  scoringPeriodFilters$ = this.fantasyBaseballLeagueFacade.scoringPeriodFilters$;
   startingBatters$ = this.fantasyBaseballTeamFacade.startingBatters$;
   benchBatters$ = this.fantasyBaseballTeamFacade.benchBatters$;
 
@@ -72,6 +75,7 @@ export class BaseballBattersComponent {
   );
 
   constructor(
+    private layoutService: LayoutService,
     readonly routerFacade: RouterFacade,
     readonly fantasyBaseballTeamFacade: FantasyBaseballTeamFacade,
     readonly fantasyBaseballTeamLiveFacade: FantasyBaseballTeamLiveFacade,
@@ -80,10 +84,14 @@ export class BaseballBattersComponent {
   ) {}
 
   async onRefreshClick(): Promise<void> {
+    const leagueId = this.routerFacade.leagueId;
+    const year = this.routerFacade.season;
+    if (!leagueId || !year) return;
+
     try {
       this.isLoading$.next(true);
 
-      await this.fantasyBaseballLeagueFacade.refreshCurrentLeague().toPromise();
+      await this.fantasyBaseballLeagueFacade.getLeague(leagueId, year).toPromise();
       setTimeout(async () => {
         this.isLoading$.next(false);
       }, 2000);

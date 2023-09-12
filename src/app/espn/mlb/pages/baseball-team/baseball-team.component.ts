@@ -40,11 +40,37 @@ export class BaseballTeamComponent {
   seasonConcluded$ = this.fantasyBaseballLeagueFacade.seasonConcluded$;
   scoringPeriodFilters$ = this.fantasyBaseballLeagueFacade.scoringPeriodFilters$;
 
-  startingBatters$ = this.fantasyBaseballTeamFacade.startingBatters$;
-  benchBatters$ = this.fantasyBaseballTeamFacade.benchBatters$;
+  startingBatters$ = combineLatest([
+    this.fantasyBaseballTeamFacade.startingBatters$,
+    this.fantasyBaseballTeamLiveFacade.liveBattingStats$,
+    this.isLiveScore$,
+  ]).pipe(
+    map(([defaultStartingBatters, liveStartingBatters, isLiveScore]) => (isLiveScore ? liveStartingBatters : defaultStartingBatters))
+  );
 
-  startingPitchers$ = this.fantasyBaseballTeamFacade.startingPitchers$;
-  benchPitchers$ = this.fantasyBaseballTeamFacade.benchPitchers$;
+  benchBatters$ = combineLatest([
+    this.fantasyBaseballTeamFacade.benchBatters$,
+    this.fantasyBaseballTeamLiveFacade.liveTeamBenchBatterStatsTableRows$,
+    this.isLiveScore$,
+  ]).pipe(
+    map(([defaultBenchBatters, liveTeamBenchBatterStatsTableRows, isLiveScore]) =>
+      isLiveScore ? liveTeamBenchBatterStatsTableRows : defaultBenchBatters
+    )
+  );
+
+  startingPitchers$ = combineLatest([
+    this.fantasyBaseballTeamFacade.startingPitchers$,
+    this.fantasyBaseballTeamLiveFacade.liveTeamPitcherStatsTableRows$,
+    this.isLiveScore$,
+  ]).pipe(
+    map(([defaultStartingPitchers, liveStartingPitchers, isLiveScore]) => (isLiveScore ? liveStartingPitchers : defaultStartingPitchers))
+  );
+
+  benchPitchers$ = combineLatest([
+    this.fantasyBaseballTeamFacade.benchPitchers$,
+    this.fantasyBaseballTeamLiveFacade.liveTeamBenchPitcherStatsTableRows$,
+    this.isLiveScore$,
+  ]).pipe(map(([defaultBenchPitchers, liveBenchPitchers, isLiveScore]) => (isLiveScore ? liveBenchPitchers : defaultBenchPitchers)));
 
   newRoster$ = this.fantasyBaseballTeamFacade.currentRoster$;
 
@@ -82,16 +108,25 @@ export class BaseballTeamComponent {
   ) {}
 
   async onRefreshClick(): Promise<void> {
+    const leagueId = this.routerFacade.leagueId;
+    const year = this.routerFacade.season;
+    if (!leagueId || !year) return;
+
     try {
       this.isLoading$.next(true);
 
-      await this.fantasyBaseballLeagueFacade.refreshCurrentLeague().toPromise();
+      await this.fantasyBaseballLeagueFacade.getLeague(leagueId, year).toPromise();
       setTimeout(async () => {
         this.isLoading$.next(false);
       }, 2000);
     } catch (e) {
       this.isLoading$.next(false);
     }
+  }
+
+  onLiveScoreChange(val: boolean): void {
+    this.isLiveScore$.next(val);
+    this.onRefreshClick();
   }
 
   onScoringPeriodIdChange(val: string): void {
