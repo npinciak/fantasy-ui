@@ -10,8 +10,7 @@ export type FantasyMatchup = Pick<EspnClient.ScheduleEntity, 'id' | 'matchupPeri
 
 export type FantasyMatchupTeam = FootballTeam &
   Pick<EspnClient.ScheduleTeam, 'totalPoints' | 'totalProjectedPointsLive' | 'cumulativeScore'> & {
-    currentPredictedWinPct: number;
     currentRank: number;
-    isWinner: boolean | null;
+    isWinner: boolean;
   };
 export type FantasyMatchupMap = Record<number, FantasyMatchup[]>;

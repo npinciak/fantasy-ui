@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
 import { FootballLineupSlot } from '@sports-ui/ui-sdk/espn';
-import { SetLineupSlotId } from '../actions/fantasy-football-free-agent-filter.actions';
+import { SetLineupSlotId, SetScoringPeriodId } from '../actions/fantasy-football-free-agent-filter.actions';
 import { FantasyFootballFreeAgentFilterSelector } from '../selectors/fantasy-football-free-agent-filter.selector';
 
 @Injectable({
@@ -11,6 +11,7 @@ import { FantasyFootballFreeAgentFilterSelector } from '../selectors/fantasy-foo
 export class FantasyFootballFreeAgentsFilterFacade {
   selectedLineupSlotId$ = select(FantasyFootballFreeAgentFilterSelector.slices.lineupSlotId);
   selectedAvailabilityStatus$ = select(FantasyFootballFreeAgentFilterSelector.getSelectedAvailabilityStatus);
+  selectedScoringPeriodId$ = select(FantasyFootballFreeAgentFilterSelector.slices.scoringPeriodId);
 
   metaData$ = select(FantasyFootballFreeAgentFilterSelector.slices.metaData);
 
@@ -27,6 +28,10 @@ export class FantasyFootballFreeAgentsFilterFacade {
     return this.store.selectSnapshot(FantasyFootballFreeAgentFilterSelector.slices.filterInjured);
   }
 
+  get selectedScoringPeriodId() {
+    return this.store.selectSnapshot(FantasyFootballFreeAgentFilterSelector.slices.scoringPeriodId);
+  }
+
   get selectedLineupSlotId() {
     return this.store.selectSnapshot(FantasyFootballFreeAgentFilterSelector.slices.lineupSlotId);
   }
@@ -38,6 +43,11 @@ export class FantasyFootballFreeAgentsFilterFacade {
   get metaData() {
     return this.store.selectSnapshot(FantasyFootballFreeAgentFilterSelector.slices.metaData);
   }
+
+setScoringPeriodId(scoringPeriodId: string) {
+    return this.store.dispatch(new SetScoringPeriodId({ scoringPeriodId }))
+  }
+
 
   setLineupSlotId(lineupSlotId: FootballLineupSlot) {
     return this.store.dispatch(new SetLineupSlotId({ lineupSlotId }));

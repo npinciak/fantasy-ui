@@ -36,7 +36,7 @@
       <div class="w-full px-4 xl:w-9/12">
         <app-base-card>
           <app-espn-stats-table
-            [data]="tableDataWithTeams$ | async"
+            [data]="tableData$ | async"
             [dataColumns]="(tableConfig$ | async).rows"
             [headers]="(tableConfig$ | async).headers"
             [statsMap]="FOOTBALL_STATS_MAP"

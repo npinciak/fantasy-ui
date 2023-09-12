@@ -94,6 +94,10 @@ export function BaseEspnEndpointBuilder({
       return `${BaseEspnEndpointBuilderClass.apiBaseV2}/scoreboard/header`;
     }
 
+    static get leagueClickout(): string {
+      return `${this.espnBase}/${FantasySportToSportsMap[sport]}/standings?leagueId=${leagueId}&seasonId=${year}`;
+    }
+
     static matchupClickout(teamId: string | number, matchupPeriodId: string | number): string {
       return `${this.espnBase}/${FantasySportToSportsMap[sport]}/boxscore?leagueId=${leagueId}&matchupPeriodId=${matchupPeriodId}&seasonId=${year}&teamId=${teamId}`;
     }

@@ -63,5 +63,6 @@ export type BaseEspnEndpointBuilderClass = {
   staticScoreboard: string;
   baseballStatsBatterVsPitcher: string;
   fantasyBaseV3WithFragments: string;
+  leagueClickout: string;
   matchupClickout: (teamId: string | number, matchupPeriodId: string | number) => string;
 };

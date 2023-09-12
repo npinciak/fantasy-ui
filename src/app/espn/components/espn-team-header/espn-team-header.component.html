@@ -1,4 +1,4 @@
-<div class="mb-5 w-full p-5" [ngClass]="backgroundColor">
+<div class="w-full p-5" [ngClass]="backgroundColor">
   <div class="ml-3 flex items-center space-x-4">
     <div class="flex-shrink-0" [attr.aria-label]="">
       <img height="88" width="88" role="presentation" class="text-center text-xs text-white" [title]="team?.name" [alt]="team?.name" [src]="team?.logo" />
@@ -6,7 +6,9 @@
     <div class="min-w-0 flex-1 text-white">
       <p [title]="team?.name" class="truncate text-xl font-bold sm:text-xl">
         {{ team?.name }}
-        <span class="text-lg font-medium"> {{ team?.totalPoints }} pts</span>
+        <ng-container *ngIf="team?.totalPoints">
+          <span class="text-lg font-medium"> {{ team?.totalPoints }} pts</span>
+        </ng-container>
       </p>
       <p class="text-lg font-medium">({{ team?.currentRank }} of {{ leagueSize }})</p>
     </div>

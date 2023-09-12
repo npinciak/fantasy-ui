@@ -5,7 +5,7 @@ import { exists } from '@app/@shared/utilities/utilities.m';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { FootballLineupSlot } from '@sports-ui/ui-sdk/espn';
 import { PLAYER_AVAILABILITY_STATUS, PlayerAvailabilityStatus } from '@sports-ui/ui-sdk/espn-client';
-import { SetLineupSlotId, SetPagination, TogglePlayerAvailabilityStatus } from '../actions/fantasy-football-free-agent-filter.actions';
+import { SetLineupSlotId, SetPagination, SetScoringPeriodId } from '../actions/fantasy-football-free-agent-filter.actions';
 import { FantasyFootballFreeAgent } from '../actions/fantasy-football-free-agent.actions';
 
 interface BaseFreeAgentFilterMetaData {
@@ -21,6 +21,8 @@ export interface FantasyFootballFreeAgentFilterStateModel {
   availabilityStatus: Record<PlayerAvailabilityStatus, boolean>;
   lineupSlotIds: { [key in FootballLineupSlot]: boolean };
   lineupSlotId: FootballLineupSlot;
+  scoringPeriodId: string | null;
+  /** @deprecated use scoringPeriodId */
   topScoringPeriodIds: Record<string, boolean>;
   sortStatId: Record<string, boolean>;
   metaData: BaseFreeAgentFilterMetaData;
@@ -35,7 +37,9 @@ export interface FantasyFootballFreeAgentFilterStateModel {
     },
     lineupSlotIds: {},
     lineupSlotId: FootballLineupSlot.QB,
+
     topScoringPeriodIds: {},
+    scoringPeriodId: '002022',
     metaData: {
       sortDirection: 'desc',
       currentPageSize: 100,
@@ -67,12 +71,11 @@ export class FantasyFootballFreeAgentsFilterState {
     this.store.dispatch(new FantasyFootballFreeAgent.Fetch({ leagueId, season }));
   }
 
-  @Action(TogglePlayerAvailabilityStatus)
-  togglePlayerAvailabilityStatus(
+  @Action(SetScoringPeriodId)
+  setScoringPeriodId(
     { patchState }: StateContext<FantasyFootballFreeAgentFilterStateModel>,
-    { payload: { availabilityStatus } }: TogglePlayerAvailabilityStatus
+    { payload: { scoringPeriodId } }: SetScoringPeriodId
   ) {
-    // patchState({ availabilityStatus });
-    // setState(patch({ availabilityStatus: append([payload]) }));
+    patchState({ scoringPeriodId });
   }
 }

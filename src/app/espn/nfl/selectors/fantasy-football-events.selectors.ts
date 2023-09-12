@@ -1,4 +1,4 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { FantasyFootballEventState } from '../state/fantasy-football-events.state';
+import { FantasyFootballEventsState } from '../state/fantasy-football-events.state';
 
-export class FantasyFootballEventsSelectors extends GenericSelector(FantasyFootballEventState) {}
+export class FantasyFootballEventsSelectors extends GenericSelector(FantasyFootballEventsState) {}

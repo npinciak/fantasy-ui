@@ -25,6 +25,9 @@ export class FantasyFootballFreeAgentActionHandler {
     const availabilityStatus = this.fantasyFootballFreeAgentsFilterFacade.selectedAvailabilityStatus;
     const pagination = this.fantasyFootballFreeAgentsFilterFacade.metaData;
     const scoringPeriodId = this.fantasyFootballLeagueFacade.currentScoringPeriodId;
+
+    const selectedScoringPeriodId = this.fantasyFootballFreeAgentsFilterFacade.selectedScoringPeriodId ?? '';
+
     const injured = this.fantasyFootballFreeAgentsFilterFacade.injured;
 
     if (!scoringPeriodId) throw new Error('scoringPeriodId cannot be missing');
@@ -33,11 +36,17 @@ export class FantasyFootballFreeAgentActionHandler {
     const filterSlotIds = { value: [lineupSlotId] };
     const filterStatus = { value: availabilityStatus };
 
+    const filterStatsForTopScoringPeriodIds = {
+      value: 2,
+      additionalValue: ['002022'],
+    };
+
     const filter = {
       players: {
         filterInjured,
         filterStatus,
         filterSlotIds,
+        filterStatsForTopScoringPeriodIds,
         limit: pagination.currentPageSize,
         offset: pagination.currentPageIndex,
         sortPercOwned: { sortPriority: 2, sortAsc: false, value: null },

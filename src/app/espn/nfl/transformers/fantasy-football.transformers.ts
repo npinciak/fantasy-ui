@@ -1,13 +1,14 @@
 import { exists } from '@app/@shared/utilities/utilities.m';
 import { FantasyPlayer } from '@app/espn/models/fantasy-player.model';
 import { EspnClient, FOOTBALL_LINEUP_MAP, NFL_POSITION_MAP, NFL_TEAM_MAP } from '@sports-ui/ui-sdk/espn';
-import { FreeAgentEntry, ProLeagueType, SPORT_TYPE, TeamRosterEntry } from '@sports-ui/ui-sdk/espn-client';
+import { FreeAgentEntry, ProLeagueType, SPORT_TYPE, ScheduleTeam, TeamRosterEntry } from '@sports-ui/ui-sdk/espn-client';
 import { FantasyLeague } from '../../models/fantasy-league.model';
 import { EspnTransformers } from '../../transformers/espn-transformers.m';
 import { FantasyFootballImageBuilder } from '../fantasy-football-image-builder';
 import { FootballLeague } from '../models/fantasy-football-league.model';
 import { FootballPlayer, FootballPlayerFreeAgent, FootballPlayerStatsRow } from '../models/football-player.model';
 import { FootballTeam } from '../models/football-team.model';
+import { FantasyMatchupTeam, FantasyMatchup, FantasyMatchupMap } from '../models/fantasy-schedule.model';
 
 export function clientLeagueToFootballLeague(res: EspnClient.FootballLeague, genericLeagueSettings: FantasyLeague): FootballLeague {
   const { schedule } = res;
@@ -132,4 +133,39 @@ export function transformToFootballPlayerStatsRow(player: FootballPlayer, statPe
     appliedTotal,
     appliedTotalCeiling,
   };
+}
+
+export function transformTeamToMatchupTeam(
+  team: FootballTeam | null,
+  scheduleTeam: ScheduleTeam,
+  isWinner: boolean
+): FantasyMatchupTeam | null {
+  if (!exists(team)) return null;
+
+  const { cumulativeScore, totalProjectedPointsLive, totalPoints, totalPointsLive } = scheduleTeam;
+  const { roster, currentRank } = team;
+
+  return {
+    ...team,
+    currentRank,
+    cumulativeScore,
+    totalProjectedPointsLive,
+    roster,
+    totalPoints: exists(totalPointsLive) ? totalPointsLive : totalPoints,
+    isWinner,
+  };
+}
+
+export function transformMatchupListToMatchupMap(matchupList: FantasyMatchup[]): FantasyMatchupMap {
+  const map = {} as FantasyMatchupMap;
+
+  matchupList.map(m => {
+    if (m.matchupPeriodId in map) {
+      map[m.matchupPeriodId].push(m);
+    } else {
+      map[m.matchupPeriodId] = [];
+      map[m.matchupPeriodId].push(m);
+    }
+  });
+  return map;
 }

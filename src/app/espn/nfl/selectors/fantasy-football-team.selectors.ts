@@ -40,34 +40,9 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
     return startingPlayersFilter(rosterByTeamId, FOOTBALL_LINEUP_MAP);
   }
 
-  // @Selector([FantasyFootballLeagueSelectors.getCurrentStatTypePeriod, FantasyFootballTeamSelectors.getTeamStarters])
-  // static getTeamStartersLineupCard(
-  //   currentStatTypePeriod: string,
-  //   getTeamStarters: (id: string | null) => FootballPlayer[]
-  // ): (id: string | null) => FootballPlayerLineupCard[] {
-  //   return (id: string | null) =>
-  //     getTeamStarters(id).map(p => {
-  //       const { id, name, img, team, teamId, teamUid, position, injuryStatus } = p;
-
-  //       const projectedPoints = statsValidator(p.stats, currentStatTypePeriod).appliedTotal;
-
-  //       return {
-  //         id,
-  //         name,
-  //         img,
-  //         team,
-  //         teamId,
-  //         teamUid,
-  //         position,
-  //         injuryStatus,
-  //         projectedPoints,
-  //       };
-  //     });
-  // }
-
   @Selector([FantasyFootballTeamSelectors.getTeamStarters])
   static getTeamStartersPoints(teamStarters: FootballPlayer[]): number {
-    return teamStarters.reduce((a, b) => a + b.points, 0);
+    return 0;
   }
 
   @Selector([FantasyFootballTeamSelectors.getRosterByTeamId])
@@ -77,7 +52,7 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
 
   @Selector([FantasyFootballTeamSelectors.getTeamBench])
   static getTeamBenchPoints(teamBench: FootballPlayer[]): number {
-    return teamBench.reduce((a, b) => a + b.points, 0);
+    return 0;
   }
 
   @Selector([FantasyFootballTeamSelectors.getRosterByTeamId])

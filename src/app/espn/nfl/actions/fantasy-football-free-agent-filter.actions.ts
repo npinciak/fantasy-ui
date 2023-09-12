@@ -17,3 +17,8 @@ export class SetLineupSlotId {
   static readonly type = `[${name}] ToggleLineupSlotId`;
   constructor(public payload: { lineupSlotId: FootballLineupSlot }) {}
 }
+
+export class SetScoringPeriodId {
+  static readonly type = `[${name}] SetScoringPeriodId`;
+  constructor(public payload: { scoringPeriodId: string }) {}
+}

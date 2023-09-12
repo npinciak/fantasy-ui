@@ -46,15 +46,8 @@ export class FootballFreeAgentsComponent implements OnInit {
   scoringPeriodFilterOptions$ = this.footballLeagueFacade.scoringPeriodFilterOptions$;
   teamFilterOptions$ = this.footballTeamFacade.teamFilterOptions$;
 
-  tableData$ = combineLatest([this.freeAgentsFacade.freeAgentsStats$, this.scoringPeriodId$]).pipe(
-    map(([getFreeAgentStats, scoringPeriodId]) => getFreeAgentStats(scoringPeriodId))
-  );
-
-  tableDataWithTeams$ = combineLatest([
-    this.freeAgentsFacade.compareTeamAndFreeAgentList$,
-    this.scoringPeriodId$,
-    this.selectedTeamId$,
-  ]).pipe(map(([compareTeamAndFreeAgentList, scoringPeriodId, teamId]) => compareTeamAndFreeAgentList(teamId, scoringPeriodId)));
+  // TODO: fix this with freeAgentsFacade.compareTeamAndFreeAgentList$
+  tableData$ = this.freeAgentsFacade.freeAgentsStats$;
 
   freeAgentsScatter$ = combineLatest([
     this.freeAgentsFacade.freeAgentsScatter$,
@@ -81,8 +74,13 @@ export class FootballFreeAgentsComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  scoringPeriodIdChange(val: string) {
+  async scoringPeriodIdChange(val: string) {
     this.scoringPeriodId$.next(val);
+
+    const leagueId = this.footballLeagueFacade.leagueId!;
+
+    await this.freeAgentsFilterFacade.setScoringPeriodId(val).toPromise();
+    await this.freeAgentsFacade.fetchFreeAgents(leagueId).toPromise();
   }
 
   onLineupFilterSlotIdChange(lineupSlotId: FootballLineupSlot) {
@@ -103,6 +101,5 @@ export class FootballFreeAgentsComponent implements OnInit {
 
   onPlayerAvailabilityChange(val: PlayerAvailabilityStatus): void {
     this.selectedPlayerAvailability$.next(val);
-    // this.freeAgentAvailabilityStatusSelectedFacade.toggle([val]);
   }
 }

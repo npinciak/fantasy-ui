@@ -1,10 +1,12 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { linearRegression, transformScatterGraphData } from '@app/@shared/helpers/graph.helpers';
 import { Selector } from '@app/@shared/models/typed-selector';
-import { exists, pickData } from '@app/@shared/utilities/utilities.m';
+import { exists, existsFilter, pickData } from '@app/@shared/utilities/utilities.m';
 import { NFL_STATS_MAP } from '@sports-ui/ui-sdk/espn';
 import { FootballPlayerFreeAgent, FootballPlayerStatsRow } from '../models/football-player.model';
 import { FantasyFootballFreeAgentsState } from '../state/fantasy-football-free-agents.state';
+import { transformToFootballPlayerStatsRow } from '../transformers/fantasy-football.transformers';
+import { FantasyFootballFreeAgentFilterSelector } from './fantasy-football-free-agent-filter.selector';
 import { FantasyFootballTeamSelectors } from './fantasy-football-team.selectors';
 
 export class FantasyFootballFreeAgentsSelectors extends GenericSelector(FantasyFootballFreeAgentsState) {
@@ -13,51 +15,23 @@ export class FantasyFootballFreeAgentsSelectors extends GenericSelector(FantasyF
     return list.filter(p => p.teamId !== '0');
   }
 
-  @Selector([FantasyFootballFreeAgentsSelectors.getFreeAgents])
-  static getFreeAgentsStats(players: FootballPlayerFreeAgent[]): (statPeriod: string) => any[] {
-    return (statPeriod: string) => {
-      return players
-        .map(p => {
-          const stats = exists(p.stats) ? (exists(p.stats[statPeriod]) ? p.stats[statPeriod] : null) : null;
-
-          return {
-            ...p,
-            stats,
-          };
-        })
-        .sort((a, b) => {
-          const statsB = exists(b.stats) ? (exists(b.stats.appliedTotal) ? b.stats.appliedTotal : 0) : 0;
-
-          const statsA = exists(a.stats) ? (exists(a.stats.appliedTotal) ? a.stats.appliedTotal : 0) : 0;
-          return statsB - statsA;
-        });
-    };
+  @Selector([FantasyFootballFreeAgentsSelectors.getFreeAgents, FantasyFootballFreeAgentFilterSelector.slices.scoringPeriodId])
+  static getFreeAgentsStats(players: FootballPlayerFreeAgent[], scoringPeriodId: string | null) {
+    return existsFilter(players.map(p => transformToFootballPlayerStatsRow(p, scoringPeriodId ?? '')));
   }
 
   @Selector([FantasyFootballTeamSelectors.getTeamStats, FantasyFootballFreeAgentsSelectors.getFreeAgentsStats])
   static getCompareTeamAndFreeAgentList(
     getTeamStats: (statPeriodId: string) => FootballPlayerStatsRow[],
-    getFreeAgentsStats: (statPeriod: string) => any[]
-  ): (teamId: string | null, statPeriod: string) => FootballPlayerStatsRow[] {
-    return (teamId: string | null, statPeriod: string) => {
-      const freeAgents = getFreeAgentsStats(statPeriod);
-
-      if (exists(teamId)) {
-        const teamStats = getTeamStats(statPeriod).map(b => ({ ...b, highlightedPlayer: true }));
-
-        return [...teamStats, ...freeAgents];
-      }
-
-      return freeAgents;
-    };
+    freeAgents: any[]
+  ): (teamId: string | null) => FootballPlayerStatsRow[] {
+    return (teamId: string | null) => [];
   }
 
   @Selector([FantasyFootballFreeAgentsSelectors.getFreeAgentsStats])
-  static getFreeAgentsScatter(
-    players: (statPeriod: string) => any[]
-  ): (statPeriod: string, xAxis: string | null, yAxis: string | null) => any {
+  static getFreeAgentsScatter(freeAgents: any[]): (statPeriod: string, xAxis: string | null, yAxis: string | null) => any {
     return (statPeriod: string, xAxis: string | null, yAxis: string | null) => {
-      const data = players(statPeriod);
+      const data = freeAgents;
 
       if (xAxis == null || yAxis == null) return [];
 

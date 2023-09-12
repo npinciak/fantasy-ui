@@ -1,10 +1,10 @@
 <div class="flex items-center space-x-2" (click)="onPlayerClick()">
-  <div class="flex-shrink-0" [attr.aria-label]="player?.name">
+  <div class="flex-shrink-0" [attr.aria-label]="ariaLabel" style="height: 35px; width: 48px">
     <img
-      width="48"
-      height="35"
+      width="48px"
+      height="35px"
       role="presentation"
-      class="w-13 h-9 rounded-full text-center text-xs text-gray-500 hover:cursor-pointer"
+      class="text-center text-xs text-gray-500 hover:cursor-pointer"
       [title]="player?.name"
       [alt]="player?.name"
       [src]="player?.img"
@@ -14,8 +14,11 @@
     <p [title]="player?.name" class="truncate text-xs font-medium hover:cursor-pointer sm:text-sm">
       {{ player?.name }}
       <i
-        [ngClass]="[FaIconByEspnPlayerInjuryStatus[player?.injuryStatus], InjurySeverityClassByInjurySeverity[InjurySeverityByInjuryStatus[player?.injuryStatus]]]"
-        [title]="InjuryLabelByInjuryStatus[player?.injuryStatus]"
+        [ngClass]="[
+          FaIconByEspnPlayerInjuryStatus[player?.injuryStatus ?? PlayerInjuryStatus.UNKNOWN],
+          InjurySeverityClassByInjurySeverity[InjurySeverityByInjuryStatus[player?.injuryStatus ?? PlayerInjuryStatus.UNKNOWN]]
+        ]"
+        [title]="InjuryLabelByInjuryStatus[player?.injuryStatus ?? PlayerInjuryStatus.UNKNOWN]"
       ></i>
     </p>
     <p class="truncate text-xs hover:cursor-pointer">{{ player?.team }} {{ player?.eligibleLineupSlots ? '- ' + player?.eligibleLineupSlots : '' }}</p>
