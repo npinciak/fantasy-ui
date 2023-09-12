@@ -1,5 +1,4 @@
-import { PropertyOfType } from '@sports-ui/ui-sdk/helpers';
-import { pickData } from '../utilities/utilities.m';
+import { PropertyOfType, pickData } from '@sports-ui/ui-sdk/helpers';
 
 export function transformDataToScatterGraph<DataEntityType, DataLabelProperty extends PropertyOfType<DataEntityType, string | number>>({
   data,
