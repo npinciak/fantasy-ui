@@ -3,6 +3,8 @@
     <app-base-card>
       <i [class.text-green-500]="isOnline$ | async" class="fa fa-circle"></i> Online
       <p>isServiceWorkerEnabled | {{ isServiceWorkerEnabled }}</p>
+      <p>isStandaloneMode | {{ isStandaloneMode$ | async }}</p>
     </app-base-card>
   </div>
 </div>
+<ng-container *ngIf="isIosAndSafari"> Ios! </ng-container>

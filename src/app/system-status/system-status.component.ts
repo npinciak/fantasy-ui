@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ServiceWorkerService } from '@app/@shared/services/service-worker.services';
+import { ServiceWorkerService } from '@app/@shared/services/service-worker.service';
 
 @Component({
   selector: 'app-system-status',
@@ -7,10 +7,17 @@ import { ServiceWorkerService } from '@app/@shared/services/service-worker.servi
 })
 export class SystemStatusComponent implements OnInit {
   isOnline$ = this.swService.isOnline$;
-
+  isIosAndSafari = this.swService.isIosAndSafari;
   isServiceWorkerEnabled = this.swService.isServiceWorkerEnabled;
+  isStandaloneMode$ = this.swService.isInStandaloneMode$;
 
   constructor(private swService: ServiceWorkerService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.swService.isStandaloneMode();
+  }
+
+  clickPwa() {
+    this.swService.installPwa();
+  }
 }
