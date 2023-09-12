@@ -25,4 +25,8 @@ export namespace SportsUiLeagueForm {
   export class Submit {
     static readonly type = `[${name}] Submit`;
   }
+
+  export class VerifyLeague {
+    static readonly type = `[${name}] VerifyLeague`;
+  }
 }

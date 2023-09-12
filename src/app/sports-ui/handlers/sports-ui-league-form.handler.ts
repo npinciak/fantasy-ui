@@ -14,8 +14,8 @@ export class SportsUiLeagueFormActionHandler {
     private sportsUiLeagueFormFacade: SportsUiLeagueFormFacade
   ) {}
 
-  @Action(SportsUiLeagueForm.Submit)
-  async submit(): Promise<void> {
+  @Action(SportsUiLeagueForm.VerifyLeague)
+  async verifyLeague(): Promise<void> {
     const sport = this.sportsUiLeagueFormFacade.sport;
     const leagueId = this.sportsUiLeagueFormFacade.leagueId;
     const season = new Date().getFullYear().toString();
@@ -23,26 +23,35 @@ export class SportsUiLeagueFormActionHandler {
     if (!sport || !leagueId) throw new Error('League sport and league id are required');
 
     try {
-      const {
-        settings: { name },
-      } = await this.espnService.verifyLeague(sport, leagueId, season).toPromise();
+      const { settings } = await this.espnService.verifyLeague(sport, leagueId, season).toPromise();
 
-      this.sportsUiLeagueFormFacade.setName(name);
+      this.sportsUiLeagueFormFacade.setName(settings.name);
     } catch (error) {
-      if (error.status === 404) {
-        throw new Error('League not found');
-      }
+      if (error.status === 404) throw new Error('League not found');
     }
+  }
 
-    const requestBody = {
-      leagueId,
-      name,
-      sport,
-      season,
-    };
+  @Action(SportsUiLeagueForm.Submit)
+  async submit(): Promise<void> {
+    const sport = this.sportsUiLeagueFormFacade.sport;
+    const leagueId = this.sportsUiLeagueFormFacade.leagueId;
+    const name = this.sportsUiLeagueFormFacade.name;
+    const season = new Date().getFullYear().toString();
 
-    // const league = await this.leagueClientService.create(requestBody);
+    if (!sport || !leagueId) throw new Error('League sport and league id are required');
 
-    this.sportsUiLeagueFormFacade.reset();
+    try {
+      const requestBody = {
+        leagueId,
+        name,
+        sport,
+        season,
+      };
+      await this.leagueClientService.create(requestBody);
+      await this.leagueClientService.getAll();
+    } catch (error) {
+      if (error.status === 404) throw new Error('League not found');
+      this.sportsUiLeagueFormFacade.reset();
+    }
   }
 }

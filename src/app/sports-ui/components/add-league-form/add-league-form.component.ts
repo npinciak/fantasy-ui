@@ -48,6 +48,10 @@ export class AddLeagueFormComponent implements OnInit {
     this.leagueFormFacade.submit();
   }
 
+  onVerifyLeague() {
+    this.leagueFormFacade.verifyLeague();
+  }
+
   onRemoveLeague(leagueId): void {
     this.removeLeague.emit(leagueId);
   }

@@ -51,4 +51,8 @@ export class SportsUiLeagueFormFacade {
   submit(): Observable<void> {
     return this.store.dispatch(new SportsUiLeagueForm.Submit());
   }
+
+  verifyLeague(): Observable<void> {
+    return this.store.dispatch(new SportsUiLeagueForm.VerifyLeague());
+  }
 }
