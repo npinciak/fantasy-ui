@@ -1,9 +1,9 @@
+import { FantasyLeague } from '@app/espn/models/fantasy-league.model';
 import { FantasyPlayer } from '@app/espn/models/fantasy-player.model';
+import { EspnTransformers } from '@app/espn/transformers/espn-transformers.m';
 import { EspnClient, FOOTBALL_LINEUP_MAP, NFL_POSITION_MAP, NFL_TEAM_MAP } from '@sports-ui/ui-sdk/espn';
 import { FreeAgentEntry, ProLeagueType, SPORT_TYPE, ScheduleTeam, TeamRosterEntry } from '@sports-ui/ui-sdk/espn-client';
 import { exists } from '@sports-ui/ui-sdk/helpers';
-import { FantasyLeague } from '../../models/fantasy-league.model';
-import { EspnTransformers } from '../../transformers/espn-transformers.m';
 import { FantasyFootballImageBuilder } from '../fantasy-football-image-builder';
 import { FootballLeague } from '../models/fantasy-football-league.model';
 import { FantasyMatchup, FantasyMatchupMap, FantasyMatchupTeam } from '../models/fantasy-schedule.model';

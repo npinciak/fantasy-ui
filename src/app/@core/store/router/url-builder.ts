@@ -5,7 +5,11 @@ export enum UrlPathFragments {
   Game = 'game',
   League = 'league',
   MLB = 'mlb',
+  /**
+   * @deprecated Use UrlPathFragments.Football instead
+   */
   NFL = 'nfl',
+  Football = 'football',
   NBA = 'nba',
   Team = 'team',
   FreeAgents = 'free-agents',
@@ -33,6 +37,6 @@ export enum UrlQueryParams {
 }
 
 export const SportToUrlFragmentSportMap = {
-  ffl: UrlPathFragments.NFL,
+  ffl: UrlPathFragments.Football,
   flb: UrlPathFragments.MLB,
 };

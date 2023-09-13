@@ -10,7 +10,7 @@ const routes: Routes = [
       loadChildren: () => import('./espn/espn.module').then(m => m.EspnModule),
     },
     {
-      path: `${UrlPathFragments.Espn}/football`,
+      path: `${UrlPathFragments.Espn}/${UrlPathFragments.Football}`,
       loadChildren: () => import('./espn-fantasy-football/espn-fantasy-football.module').then(m => m.EspnFantasyFootballModule),
     },
     {
