@@ -36,23 +36,6 @@ import { FantasyBaseballProTeamScheduleState } from './mlb/state/fantasy-basebal
 import { FantasyBaseballTeamsLiveState } from './mlb/state/fantasy-baseball-team-live.state';
 import { FantasyBaseballTeamState } from './mlb/state/fantasy-baseball-team.state';
 import { FantasyBaseballTransactionsState } from './mlb/state/fantasy-baseball-transactions.state';
-import { FootballLineupCardComponent } from './nfl/components/football-lineup-card/football-lineup-card.component';
-import { FootballMatchupCardTeamComponent } from './nfl/components/football-matchup-card-team/football-matchup-card-team.component';
-import { FootballMatchupCardComponent } from './nfl/components/football-matchup-card/football-matchup-card.component';
-import { FantasyFootballEventsActionHandler } from './nfl/handlers/fantasy-football-events.handler';
-import { FantasyFootballFreeAgentActionHandler } from './nfl/handlers/fantasy-football-free-agent.handler';
-import { FantasyFootballLeagueActionHandler } from './nfl/handlers/fantasy-football-league.handler';
-import { FootballFreeAgentsComponent } from './nfl/pages/football-free-agents/football-free-agents.component';
-import { FootballHomeComponent } from './nfl/pages/football-home/football-home.component';
-import { FootballTeamComponent } from './nfl/pages/football-team/football-team.component';
-import { FantasyFootballEventsState } from './nfl/state/fantasy-football-events.state';
-import { FantasyFootballFreeAgentsFilterState } from './nfl/state/fantasy-football-free-agent-filter.state';
-import { FantasyFootballFreeAgentsState } from './nfl/state/fantasy-football-free-agents.state';
-import { FantasyFootballLeagueState } from './nfl/state/fantasy-football-league.state';
-import { FantasyFootballPlayerNewsState } from './nfl/state/fantasy-football-player-news.state';
-import { FantasyFootballScheduleState } from './nfl/state/fantasy-football-schedule.state';
-import { FantasyFootballTeamState } from './nfl/state/fantasy-football-team.state';
-import { FantasyFootballTransactionState } from './nfl/state/fantasy-football-transaction.state';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 import { FreeAgentsAvailabilitySelectedState } from './state/free-agent-availability-selected.state';
 
@@ -62,12 +45,6 @@ import { FreeAgentsAvailabilitySelectedState } from './state/free-agent-availabi
     BaseballHomeComponent,
     BaseballFreeAgentsComponent,
     BaseballTeamComponent,
-    FootballHomeComponent,
-    FootballFreeAgentsComponent,
-    FootballTeamComponent,
-    FootballLineupCardComponent,
-    FootballMatchupCardComponent,
-    FootballMatchupCardTeamComponent,
     EspnStatsTableComponent,
     EspnPlayerComponent,
     EspnPlayerNewsComponent,
@@ -91,17 +68,6 @@ import { FreeAgentsAvailabilitySelectedState } from './state/free-agent-availabi
     MaterialModule,
     SharedModule,
     NgxsModule.forFeature([
-      FantasyFootballLeagueActionHandler,
-      FantasyFootballLeagueState,
-      FantasyFootballScheduleState,
-      FantasyFootballTeamState,
-      FantasyFootballFreeAgentsState,
-      FantasyFootballFreeAgentActionHandler,
-      FantasyFootballFreeAgentsFilterState,
-      FantasyFootballPlayerNewsState,
-      FantasyFootballTransactionState,
-      FantasyFootballEventsState,
-      FantasyFootballEventsActionHandler,
       FantasyBaseballLeagueActionHandler,
       FantasyBaseballLeagueState,
       FantasyBaseballTeamState,
@@ -119,5 +85,18 @@ import { FreeAgentsAvailabilitySelectedState } from './state/free-agent-availabi
     ]),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  exports: [
+    EspnStatsTableComponent,
+    EspnPlayerComponent,
+    EspnPlayerNewsComponent,
+    EspnPlayerTrendingColComponent,
+    EspnPlayerInfoColComponent,
+    EspnTeamInfoColComponent,
+    LeagueScoreboardComponent,
+    EspnPlayerDialogComponent,
+    EspnStandingsTableComponent,
+    EspnTeamHeaderComponent,
+    EspnFreeAgentFilterComponentComponent,
+  ],
 })
 export class EspnModule {}

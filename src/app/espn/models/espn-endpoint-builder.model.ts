@@ -120,12 +120,13 @@ export enum SportLeague {
 }
 
 export enum Sports {
+  football = 'football',
   baseball = 'baseball',
   tennis = 'tennis',
   mma = 'mma',
   golf = 'golf',
   hockey = 'hockey',
-  baseketball = 'basketball',
+  basketball = 'basketball',
   soccer = 'soccer',
 }
 
@@ -189,9 +190,19 @@ export const LeagueSportToImageLocationMap: { [key in FantasySports]: string } =
   [FantasySports.Hockey]: '-4px -304px',
 } as const;
 
+/**
+ * @deprecated use SportToImageLocationMap instead
+ */
 export const SportLeagueToImageLocationMap: { [key in SportLeague]: string } = {
   [SportLeague.MLB]: '-4px -272px',
   [SportLeague.NBA]: '-4px -239px',
   [SportLeague.NFL]: '-4px -206px',
   [SportLeague.NHL]: '-4px -304px',
+} as const;
+
+export const SportToImageLocationMap = {
+  [Sports.baseball]: '-4px -272px',
+  [Sports.basketball]: '-4px -239px',
+  [Sports.football]: '-4px -206px',
+  [Sports.hockey]: '-4px -304px',
 } as const;

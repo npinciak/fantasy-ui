@@ -1,9 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { FootballPlayer } from '@app/espn-fantasy-football/models/football-player.model';
 import { BaseballPlayer } from '@app/espn/mlb/models/baseball-player.model';
 import { PlayerDialog } from '@app/espn/models/player-dialog-component.model';
-import { FootballPlayer } from '@app/espn/nfl/models/football-player.model';
 
 @Component({
   selector: 'app-espn-player-dialog',

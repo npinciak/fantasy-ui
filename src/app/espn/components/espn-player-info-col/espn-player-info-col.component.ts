@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseballPlayer } from '@app/espn/mlb/models/baseball-player.model';
-import { FootballPlayer } from '@app/espn/nfl/models/football-player.model';
 
+import { FootballPlayer } from '@app/espn-fantasy-football/models/football-player.model';
 import { EspnPlayerComponent } from '../espn-player/espn-player.component';
 
 @Component({
