@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GenericFacade } from '@app/@shared/generic-state/generic.facade';
 import { select } from '@app/@shared/models/typed-select';
-import { DfsSlatePlayers } from '@app/dfs/actions/dfs-players.actions';
+import { DfsSlatePlayers } from '@app/dfs/actions/dfs-slate-players.actions';
 import { of } from 'rxjs';
 import { DfsNflPlayerSelectors } from '../selectors/dfs-nfl-players.selectors';
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DfsMatchupFacade } from '@app/dfs/facade/dfs-matchup.facade';
-import { DfsPlayersFacade } from '@app/dfs/facade/dfs-players.facade';
 import { DailyFantasySlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
+import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade';
 import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
 import { ClientSlateTypes, SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
 import { MLB_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/baseball';
@@ -30,7 +30,7 @@ export class DfsMlbHomeComponent implements OnInit {
 
   constructor(
     readonly mlbPlayerFacade: DfsMlbSlatePlayerFacade,
-    readonly dailyFantasyPlayersFacade: DfsPlayersFacade,
+    readonly dailyFantasyPlayersFacade: DfsSlatePlayersFacade,
     readonly dailyFantasySlateFacade: DfsSlatesFacade,
     readonly dailyFantasySlateAttrFacade: DailyFantasySlateAttrFacade,
     readonly dailyFantasyMatchupFacade: DfsMatchupFacade

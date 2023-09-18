@@ -3,8 +3,8 @@ import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
 import { ClientSlateTypes, SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
 import { Action, State, StateContext, Store } from '@ngxs/store';
-import { DfsSlatePlayers } from '../actions/dfs-players.actions';
 import { DfsSlateAttributes } from '../actions/dfs-slate-attr.actions';
+import { DfsSlatePlayers } from '../actions/dfs-slate-players.actions';
 import { DfsSlates } from '../actions/dfs-slates.actions';
 
 import { SlateService } from '../service/slate.service';

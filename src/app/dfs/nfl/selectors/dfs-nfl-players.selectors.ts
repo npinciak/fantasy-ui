@@ -3,7 +3,7 @@ import { linearRegression, transformScatterGraphData } from '@app/@shared/helper
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { SlatePlayer } from '@app/dfs/models/player.model';
-import { DfsSlatePlayersState } from '@app/dfs/state/dfs-players.state';
+import { DfsSlatePlayersState } from '@app/dfs/state/dfs-slate-players.state';
 import { NFL_RG_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
 import { exists, existsFilter, pickData, uniqueBy } from '@sports-ui/ui-sdk/helpers';
 import { GridIronPlayer } from '../models/nfl-gridIron.model';

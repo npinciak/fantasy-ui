@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DfsMatchupFacade } from '@app/dfs/facade/dfs-matchup.facade';
-import { DfsPlayersFacade } from '@app/dfs/facade/dfs-players.facade';
 import { DailyFantasySlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
+import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade';
 import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
 import { ClientSlateTypes, SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
 import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
@@ -82,7 +82,7 @@ export class DfsNflHomeComponent {
   constructor(
     readonly nflPlayerFacade: DfsNflPlayerFacade,
     readonly nflTeamSlateAttrFacade: DfsNflSlateTeamDetailsFacade,
-    readonly dailyFantasyPlayersFacade: DfsPlayersFacade,
+    readonly dailyFantasyPlayersFacade: DfsSlatePlayersFacade,
     readonly dailyFantasySlateFacade: DfsSlatesFacade,
     readonly dailyFantasySlateAttrFacade: DailyFantasySlateAttrFacade,
     readonly dailyFantasyMatchupFacade: DfsMatchupFacade
