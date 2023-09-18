@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DfsMatchupFacade } from '@app/dfs/facade/dfs-matchup.facade';
+import { DfsMatchupsFacade } from '@app/dfs/facade/dfs-matchups.facade';
 import { DailyFantasySlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade';
 import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
@@ -33,7 +33,7 @@ export class DfsNbaHomeComponent implements OnInit {
     readonly dailyFantasyPlayersFacade: DfsSlatePlayersFacade,
     readonly dailyFantasySlateFacade: DfsSlatesFacade,
     readonly dailyFantasySlateAttrFacade: DailyFantasySlateAttrFacade,
-    readonly dailyFantasyMatchupFacade: DfsMatchupFacade
+    readonly dailyFantasyMatchupFacade: DfsMatchupsFacade
   ) {}
 
   ngOnInit(): void {}

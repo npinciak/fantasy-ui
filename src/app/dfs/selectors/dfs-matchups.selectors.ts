@@ -7,8 +7,8 @@ import { Outsiders, SlateTeamNfl } from '../nfl/models/nfl-slate-attr.model';
 import { DfsNflSlateTeamDetailsSelectors } from '../nfl/selectors/dfs-nfl-slate-team.selectors';
 import { DfsMatchupsState } from '../state/dfs-matchups.state';
 
-export class DailyFantasyMatchupSelectors extends GenericSelector(DfsMatchupsState) {
-  @Selector([DailyFantasyMatchupSelectors.getList, DfsNflSlateTeamDetailsSelectors.getById])
+export class DfsMatchupsSelectors extends GenericSelector(DfsMatchupsState) {
+  @Selector([DfsMatchupsSelectors.getList, DfsNflSlateTeamDetailsSelectors.getById])
   static getNflMatchupTableData(matchups: Schedule[], slateTeamById: (id: string | null) => SlateTeamNfl | null) {
     return matchups.map(m => {
       const homeTeam = slateTeamById(m.homeTeam.rgId);
