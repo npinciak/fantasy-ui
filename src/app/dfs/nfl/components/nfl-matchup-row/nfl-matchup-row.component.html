@@ -1,0 +1,9 @@
+<div class="flex w-full gap-5 text-left">
+  <div class="flex-1 truncate p-1 text-xs sm:text-sm" [matTooltip]="description">{{ label }}</div>
+  <div class="flex-1 p-1 text-center text-xs sm:text-sm" [ngClass]="threshold(matchup.away[statRank])" matTooltip="{{ matchup.away[statValue] }} %">
+    {{ matchup.away[statRank] }}
+  </div>
+  <div class="flex-1 p-1 text-center text-xs sm:text-sm" [ngClass]="threshold(matchup.home[statRank])" matTooltip="{{ matchup.home[statValue] }} %">
+    {{ matchup.home[statRank] }}
+  </div>
+</div>

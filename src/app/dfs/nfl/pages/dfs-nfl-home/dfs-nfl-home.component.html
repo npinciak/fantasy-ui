@@ -71,14 +71,14 @@
 <app-page-layout>
   <div main>
     <div class="flex flex-wrap">
-      <div class="w-full px-4 xl:w-3/12">
+      <div class="w-full sm:px-4 xl:w-3/12">
         <app-base-card>
           <ng-container *ngIf="!(slatesEmpty$ | async)">
             <app-slate-list [slateList]="selectSlateByType$ | async" (selectSlate)="onSelectSlate($event)"></app-slate-list>
           </ng-container>
         </app-base-card>
       </div>
-      <div class="mb-12 w-full px-4 xl:mb-0 xl:w-9/12">
+      <div class="mb-12 w-full sm:px-4 xl:mb-0 xl:w-9/12">
         <app-base-card>
           <div class="flex flex-wrap">
             <div>
@@ -111,58 +111,104 @@
 
         <ng-container *ngFor="let matchup of matchups$ | async">
           <app-base-card>
-            <div class="flex w-full gap-5 text-center">
-              <div class="flex-1">{{ matchup.away.name }}</div>
-              <div class="flex-1">@</div>
-              <div class="flex-1">{{ matchup.home.name }}</div>
+            <div class="flex w-full gap-5 text-left">
+              <div class="flex-1 p-1 text-xs font-bold sm:text-sm">{{ matchup.overUnder }}</div>
+              <div class="flex-1 p-1 text-center text-xs font-bold sm:text-sm">{{ matchup.away.name }}</div>
+              <div class="flex-1 p-1 text-center text-xs font-bold sm:text-sm">@ {{ matchup.home.name }}</div>
             </div>
 
-            <div class="flex w-full gap-5 text-center">
-              <div class="flex-1">{{ matchup.away.total }}</div>
-              <div class="flex-1">{{ matchup.away.overUnder }}</div>
-              <div class="flex-1">{{ matchup.home.total }}</div>
-            </div>
-            <div class="flex w-full gap-5 text-center">
-              <div class="flex-1">{{ matchup.away.line }}</div>
-              <div class="flex-1">line</div>
-              <div class="flex-1">{{ matchup.home.line }}</div>
+            <div class="flex w-full gap-5 text-left">
+              <div class="flex-1 truncate p-1 text-xs sm:text-sm">Total</div>
+              <div class="flex-1 p-1 text-center text-xs sm:text-sm">{{ matchup.away.total }}</div>
+              <div class="flex-1 p-1 text-center text-xs sm:text-sm">{{ matchup.home.total }}</div>
             </div>
 
-            <div class="flex w-full gap-5 text-center">
-              <div class="flex-1" [ngClass]="matchupThreshold(matchup.away.dPowerRk)">{{ matchup.away.dPowerRk }}</div>
-              <div class="flex-1">D Power Rank</div>
-              <div class="flex-1" [ngClass]="matchupThreshold(matchup.home.dPowerRk)">{{ matchup.home.dPowerRk }}</div>
+            <div class="flex w-full gap-5 text-left">
+              <div class="flex-1 truncate p-1 text-xs sm:text-sm">Line</div>
+              <div class="flex-1 p-1 text-center text-xs sm:text-sm">{{ matchup.away.line }}</div>
+              <div class="flex-1 p-1 text-center text-xs sm:text-sm">{{ matchup.home.line }}</div>
             </div>
-            <div class="flex w-full gap-5 text-center">
-              <div class="flex-1" [ngClass]="matchupThreshold(matchup.away.dlSkRateRk)">{{ matchup.away.dlSkRateRk }}</div>
-              <div class="flex-1">dlSkRateRk</div>
-              <div class="flex-1" [ngClass]="matchupThreshold(matchup.home.dlSkRateRk)">{{ matchup.home.dlSkRateRk }}</div>
-            </div>
-            <div class="flex w-full gap-5 text-center">
-              <div class="flex-1" [ngClass]="matchupThreshold(matchup.away.oPowerRk)">{{ matchup.away.oPowerRk }}</div>
-              <div class="flex-1">O Power Rank</div>
-              <div class="flex-1" [ngClass]="matchupThreshold(matchup.home.oPowerRk)">{{ matchup.home.oPowerRk }}</div>
-            </div>
-            <div class="flex w-full gap-5 text-center">
-              <div class="flex-1" [ngClass]="matchupThreshold(matchup.away.paOffRk)" [matTooltip]="matchup.away.paOff">{{ matchup.away.paOffRk }}</div>
-              <div class="flex-1">Pa Rank</div>
-              <div class="flex-1" [ngClass]="matchupThreshold(matchup.home.paOffRk)" [matTooltip]="matchup.home.paOff">{{ matchup.home.paOffRk }}</div>
-            </div>
-            <div class="flex w-full gap-5 text-center">
-              <div class="flex-1" [ngClass]="matchupThresholdInverse(matchup.away.oppPaDefRk)">{{ matchup.away.oppPaDefRk }}</div>
-              <div class="flex-1">OppPaDefRk</div>
-              <div class="flex-1" [ngClass]="matchupThresholdInverse(matchup.home.oppPaDefRk)">{{ matchup.home.oppPaDefRk }}</div>
-            </div>
-            <div class="flex w-full gap-5 text-center">
-              <div class="flex-1" [ngClass]="matchupThreshold(matchup.away.ruOffRk)">{{ matchup.away.ruOffRk }}</div>
-              <div class="flex-1">Ru Rank</div>
-              <div class="flex-1" [ngClass]="matchupThreshold(matchup.home.ruOffRk)">{{ matchup.home.ruOffRk }}</div>
-            </div>
-            <div class="flex w-full gap-5 text-center">
-              <div class="flex-1" [ngClass]="matchupThresholdInverse(matchup.away.oppRuDefRk)">{{ matchup.away.oppRuDefRk }}</div>
-              <div class="flex-1">OppRuDefRk</div>
-              <div class="flex-1" [ngClass]="matchupThresholdInverse(matchup.home.oppRuDefRk)">{{ matchup.home.oppRuDefRk }}</div>
-            </div>
+
+            <app-nfl-matchup-row
+              [matchup]="matchup"
+              statRank="dPowerRk"
+              statValue="dPower"
+              description="The percentage of runs allowed on third or fourth down, two yards or less to go, that achieved a first down or touchdown."
+              label="DL Rk"
+              [threshold]="matchupThreshold"
+            ></app-nfl-matchup-row>
+            <app-nfl-matchup-row
+              [matchup]="matchup"
+              statRank="dlSkRateRk"
+              statValue="dlSkRate"
+              description="Sacks (plus intentional grounding penalties) by the opposing team per pass attempt adjusted for down, distance and opponent."
+              label="Sacks Rk"
+              [threshold]="matchupThreshold"
+            ></app-nfl-matchup-row>
+            <app-nfl-matchup-row
+              [matchup]="matchup"
+              statRank="olSkRateRk"
+              statValue="olSkRate"
+              description="Sacks allowed per pass attempt adjusted for down, distance and opponent."
+              label="Sacks Allowed Rk"
+              [threshold]="matchupThreshold"
+            ></app-nfl-matchup-row>
+            <app-nfl-matchup-row
+              [matchup]="matchup"
+              statRank="oPowerRk"
+              statValue="oPower"
+              description="The percentage of runs on third or fourth down, two yards or less to go, that achieved a first down or touchdown."
+              label="OL Power Rk"
+              [threshold]="matchupThreshold"
+            ></app-nfl-matchup-row>
+            <app-nfl-matchup-row
+              [matchup]="matchup"
+              statRank="oStuffedRk"
+              statValue="oStuffed"
+              description=""
+              label="OL Stuff Rk"
+              [threshold]="matchupThreshold"
+            ></app-nfl-matchup-row>
+            <app-nfl-matchup-row
+              [matchup]="matchup"
+              statRank="dStuffedRk"
+              statValue="dStuffed"
+              description="The percentage of runs where the running back is tackled at or behind the line of scrimmage by the opposing team. Since being stuffed is so bad, a higher number here is better for the defense."
+              label="DL Stuff Rk"
+              [threshold]="matchupThresholdInverse"
+            ></app-nfl-matchup-row>
+            <app-nfl-matchup-row
+              [matchup]="matchup"
+              statRank="paOffRk"
+              statValue="paOff"
+              description="Weighted DVOA for the team's passing offense. A high rating in this column indicates that the team has a strong overall passing offense."
+              label="Pa Rk"
+              [threshold]="matchupThreshold"
+            ></app-nfl-matchup-row>
+            <app-nfl-matchup-row
+              [matchup]="matchup"
+              statRank="oppPaDefRk"
+              statValue="oppPaDef"
+              description="Weighted DVOA for the opposing team's passing defense. A high rating in this column indicates that the opposing team has a weak passing defense, and is therefore a good matchup for the offensive player."
+              label="Opp Def Pa Rk"
+              [threshold]="matchupThresholdInverse"
+            ></app-nfl-matchup-row>
+            <app-nfl-matchup-row
+              [matchup]="matchup"
+              statRank="ruOffRk"
+              statValue="ruOff"
+              description="Weighted DVOA for the team's rushing offense. A high rating in this column indicates that the team has a strong overall rushing offense."
+              label="Ru Rk"
+              [threshold]="matchupThreshold"
+            ></app-nfl-matchup-row>
+            <app-nfl-matchup-row
+              [matchup]="matchup"
+              statRank="oppRuDefRk"
+              statValue="oppRuDef"
+              description="Weighted DVOA for the opposing team's rushing defense. A high rating in this column indicates that the opposing team has a weak rushing defense, and is therefore a good matchup for the offensive player."
+              label="Opp Def Ru Rk"
+              [threshold]="matchupThresholdInverse"
+            ></app-nfl-matchup-row>
           </app-base-card>
         </ng-container>
       </div>

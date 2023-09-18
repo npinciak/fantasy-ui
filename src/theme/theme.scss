@@ -43,8 +43,6 @@
   * @link https://vega.github.io/vega/docs/schemes/#redyellowblue
   */
   .status-indicator {
-    @apply font-bold;
-
     &.excellent {
       // background-color: #5c8cc0;
       @apply bg-blue-400;
