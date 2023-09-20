@@ -1,3 +1,5 @@
+import { MOCK_FANGRAPHS_CONSTANTS } from '@app/@shared/fangraphs/fangraphs-const.model.mock';
+import { BaseballLineupSlot } from '@sports-ui/ui-sdk/espn';
 import { FantasyBaseballScoringPeriod } from '../fantasy-baseball-scoring-period';
 import { transformToBaseballPlayerBatterStatsRow } from '../transformers/fantasy-baseball.transformers';
 import { BaseballPlayer } from './baseball-player.model';
@@ -58,8 +60,24 @@ export const MOCK_BASEBALL_PLAYER_B: BaseballPlayer = {
   percentOwned: 99.79503618437029,
   percentChange: 0.03790774631831084,
   percentStarted: 99.42396425275632,
+  eligibleLineupSlots: '2',
   playerRatings: {
     '0': {
+      positionalRanking: 5,
+      totalRanking: 63,
+      totalRating: 8.505085,
+    },
+    '1': {
+      positionalRanking: 5,
+      totalRanking: 63,
+      totalRating: 8.505085,
+    },
+    '2': {
+      positionalRanking: 5,
+      totalRanking: 63,
+      totalRating: 8.505085,
+    },
+    '3': {
       positionalRanking: 5,
       totalRanking: 63,
       totalRating: 8.505085,
@@ -102,8 +120,8 @@ export const MOCK_BASEBALL_PLAYER_P_1: BaseballPlayer = {
 export const MOCK_BASEBALL_PLAYER_BATTER_LIST = [MOCK_BASEBALL_PLAYER_B, MOCK_BASEBALL_PLAYER_B_1];
 export const MOCK_BASEBALL_PLAYER_PITCHER_LIST = [MOCK_BASEBALL_PLAYER_P, MOCK_BASEBALL_PLAYER_P_1];
 export const MOCK_BASEBALL_PLAYER_BATTER_STATS_ROW_LIST = MOCK_BASEBALL_PLAYER_BATTER_LIST.map(p =>
-  transformToBaseballPlayerBatterStatsRow(p, FantasyBaseballScoringPeriod.season('2023'), '2023')
+  transformToBaseballPlayerBatterStatsRow(p, FantasyBaseballScoringPeriod.season('2023'), MOCK_FANGRAPHS_CONSTANTS)
 );
 export const MOCK_BASEBALL_PLAYER_PITCHER_STATS_ROW_LIST = MOCK_BASEBALL_PLAYER_PITCHER_LIST.map(p =>
-  transformToBaseballPlayerBatterStatsRow(p, FantasyBaseballScoringPeriod.season('2023'), '2023')
+  transformToBaseballPlayerBatterStatsRow(p, FantasyBaseballScoringPeriod.season('2023'), MOCK_FANGRAPHS_CONSTANTS)
 );
