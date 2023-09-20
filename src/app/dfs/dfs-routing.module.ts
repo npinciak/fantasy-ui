@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UrlPathFragments } from '@app/@core/store/router/url-builder';
+import { UrlPathFragments } from '@app/@core/router/url-builder';
 import { DfsMlbHomeComponent } from './mlb/pages/dfs-mlb-home/dfs-mlb-home.component';
 import { DfsNbaHomeComponent } from './nba/pages/dfs-nba-home/dfs-nba-home.component';
 import { DfsNflHomeComponent } from './nfl/pages/dfs-nfl-home/dfs-nfl-home.component';

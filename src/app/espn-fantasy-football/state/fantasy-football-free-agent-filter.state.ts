@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RouterSelector } from '@app/@core/store/router/router.selectors';
+import { RouterSelector } from '@app/@core/router/router.selectors';
 
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { FootballLineupSlot } from '@sports-ui/ui-sdk/espn';

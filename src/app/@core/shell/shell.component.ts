@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ServiceWorkerService } from '../../@shared/services/service-worker.service';
 import { AuthenticationService } from '../authentication/services/authentication.service';
-import { RouterFacade } from '../store/router/router.facade';
+import { RouterFacade } from '../router/router.facade';
 
 @Component({
   selector: 'app-shell',

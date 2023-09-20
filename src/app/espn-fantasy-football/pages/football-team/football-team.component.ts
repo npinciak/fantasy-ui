@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { RouterFacade } from '@app/@core/store/router/router.facade';
+import { RouterFacade } from '@app/@core/router/router.facade';
 import { EspnPlayerDialogComponent } from '@app/espn/components/espn-player-dialog/espn-player-dialog.component';
 import { PlayerDialog } from '@app/espn/models/player-dialog-component.model';
 import { Store } from '@ngxs/store';

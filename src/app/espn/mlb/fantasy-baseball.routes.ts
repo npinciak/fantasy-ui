@@ -1,4 +1,4 @@
-import { UrlPathFragments, UrlPathParams } from '@app/@core/store/router/url-builder';
+import { UrlPathFragments, UrlPathParams } from '@app/@core/router/url-builder';
 import { BaseballBattersComponent } from './pages/baseball-batters/baseball-batters.component';
 import { BaseballFreeAgentsComponent } from './pages/baseball-free-agents/baseball-free-agents.component';
 import { BaseballHomeComponent } from './pages/baseball-home/baseball-home.component';

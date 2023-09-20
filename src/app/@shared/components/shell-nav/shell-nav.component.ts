@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RouterFacade } from '@app/@core/store/router/router.facade';
+import { RouterFacade } from '@app/@core/router/router.facade';
 
 @Component({
   selector: 'app-shell-nav',

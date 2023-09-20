@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UrlPathFragments } from '@app/@core/store/router/url-builder';
+import { UrlPathFragments } from '@app/@core/router/url-builder';
 import { MyProfileComponent } from './pages/my-profile/my-profile.component';
 import { SportsUiLeaguesResolver } from './resolvers/sports-ui-leagues.resolver';
 

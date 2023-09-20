@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterFacade } from '@app/@core/store/router/router.facade';
+import { RouterFacade } from '@app/@core/router/router.facade';
 import { FOOTBALL_LEAGUE_STANDINGS_HEADERS, FOOTBALL_LEAGUE_STANDINGS_ROWS } from '../../consts/fantasy-football-table.const';
 import { FantasyFootballLeagueFacade } from '../../facade/fantasy-football-league.facade';
 import { FantasyFootballScheduleFacade } from '../../facade/fantasy-football-schedule.facade';

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterFacade } from '@app/@core/store/router/router.facade';
+import { RouterFacade } from '@app/@core/router/router.facade';
 import { BATTER_STATS_LIST_OPTIONS, BaseballStat, MLB_STATS_MAP } from '@sports-ui/ui-sdk/espn';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';

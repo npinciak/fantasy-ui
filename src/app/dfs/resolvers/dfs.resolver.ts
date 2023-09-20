@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { UrlQueryParams } from '@app/@core/store/router/url-builder';
+import { UrlQueryParams } from '@app/@core/router/url-builder';
 import { Store } from '@ngxs/store';
 import { exists } from '@sports-ui/ui-sdk/helpers';
 import { DfsSlates } from '../actions/dfs-slates.actions';

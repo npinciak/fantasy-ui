@@ -17,7 +17,7 @@ import {
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { RouterFacade } from '@app/@core/store/router/router.facade';
+import { RouterFacade } from '@app/@core/router/router.facade';
 import { PLAYER_AVAILABILITY_FILTER, PLAYER_AVAILABILITY_STATUS, PlayerAvailabilityStatus } from '@sports-ui/ui-sdk/espn-client';
 import {
   BATTER_STATS_HEADERS,

@@ -1,4 +1,4 @@
-import { RouterSelector } from '@app/@core/store/router/router.selectors';
+import { RouterSelector } from '@app/@core/router/router.selectors';
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { PlayerNews, PlayerNewsEntity } from '@app/espn/models/player-news.model';
 import { Selector } from '@ngxs/store';

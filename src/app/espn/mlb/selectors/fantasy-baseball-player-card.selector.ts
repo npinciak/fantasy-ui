@@ -1,4 +1,4 @@
-import { RouterSelector } from '@app/@core/store/router/router.selectors';
+import { RouterSelector } from '@app/@core/router/router.selectors';
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { Selector } from '@ngxs/store';
 import { MLB_TEAM_MAP } from '@sports-ui/ui-sdk/espn';

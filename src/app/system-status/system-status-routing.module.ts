@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UrlPathFragments } from '@app/@core/store/router/url-builder';
+import { UrlPathFragments } from '@app/@core/router/url-builder';
 import { SystemStatusComponent } from './system-status.component';
 
 export const routes: Routes = [

@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import { RouterSelector } from '@app/@core/router/router.selectors';
-import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
+import { Action, State, StateContext, Store } from '@ngxs/store';
 import { exists } from '@sports-ui/ui-sdk/helpers';
 import { DfsSlateAttributes } from '../actions/dfs-slate-attr.actions';
 import { DfsMlbSlatePlayer } from '../mlb/actions/dfs-mlb-slate-player.actions';
 import { DfsMlbSlateTeamDetails } from '../mlb/actions/dfs-mlb-slate-team.actions';
 import { DfsNflGridIron } from '../nfl/actions/dfs-nfl-grid-iron.actions';
-import { DfsNflProfilerQb } from '../nfl/actions/dfs-nfl-profiler-qb.actions';
-import { DfsNflProfilerRb } from '../nfl/actions/dfs-nfl-profiler-rb.actions';
-import { DfsNflProfilerTe } from '../nfl/actions/dfs-nfl-profiler-te.actions';
-import { DfsNflProfilerWr } from '../nfl/actions/dfs-nfl-profiler-wr.actions';
 import { DfsNflSlatePlayerAttributes } from '../nfl/actions/dfs-nfl-slate-player-attributes.actions';
 
 import { DfsNflSlateTeamDetails } from '../nfl/actions/dfs-nfl-slate-team.actions';
 import { PlayerProfiler } from '../nfl/models/nfl-profiler.model';
 import { SlateTeamNfl } from '../nfl/models/nfl-slate-attr.model';
 
+import { DfsNflProfilerQBFacade } from '../nfl/facade/dfs-nfl-profiler-qb.facade';
+import { DfsNflProfilerRBFacade } from '../nfl/facade/dfs-nfl-profiler-rb.facade';
+import { DfsNflProfilerTEFacade } from '../nfl/facade/dfs-nfl-profiler-te.facade';
+import { DfsNflProfilerWRFacade } from '../nfl/facade/dfs-nfl-profiler-wr.facade';
 import { SlateService } from '../service/slate.service';
 
 export class DfsSlateAttributesStateModel {
@@ -28,21 +28,20 @@ const defaults = {
   site: null,
 };
 
-@State<DfsSlateAttributesStateModel>({
-  name: DfsSlateAttributes.stateName,
-  defaults,
-})
+@State({ name: DfsSlateAttributes.stateName + 'Actionhandler' })
 @Injectable()
-export class DfsSlateAttributesState {
-  constructor(private store: Store, private slateService: SlateService) {}
-
-  @Selector()
-  static slate(state: DfsSlateAttributesStateModel): string | null {
-    return state.slate;
-  }
+export class DfsSlateAttributesHandlerState {
+  constructor(
+    private store: Store,
+    private slateService: SlateService,
+    private dfsNflProfilerQbFacade: DfsNflProfilerQBFacade,
+    private dfsNflProfilerRbFacade: DfsNflProfilerRBFacade,
+    private dfsNflProfilerWrFacade: DfsNflProfilerWRFacade,
+    private dfsNflProfilerTeFacade: DfsNflProfilerTEFacade
+  ) {}
 
   @Action(DfsSlateAttributes.Fetch)
-  async FetchSlateAttr({ patchState }: StateContext<DfsSlateAttributesStateModel>, { payload }: { payload: { slate } }): Promise<void> {
+  async fetchSlateAttr(_: StateContext<DfsSlateAttributesStateModel>, { payload }: { payload: { slate } }): Promise<void> {
     const queryParams = this.store.selectSnapshot(RouterSelector.getRouterQueryParams);
     const routeData = this.store.selectSnapshot(RouterSelector.getRouterData);
 
@@ -65,14 +64,23 @@ export class DfsSlateAttributesState {
 
         break;
       case 'nfl':
+        await Promise.all([
+          this.dfsNflProfilerQbFacade.clear().toPromise(),
+          this.dfsNflProfilerRbFacade.clear().toPromise(),
+          this.dfsNflProfilerWrFacade.clear().toPromise(),
+          this.dfsNflProfilerTeFacade.clear().toPromise(),
+        ]);
+
+        await Promise.all([
+          this.dfsNflProfilerQbFacade.addOrUpdate(qbStatGroup).toPromise(),
+          this.dfsNflProfilerRbFacade.addOrUpdate(rbStatGroup).toPromise(),
+          this.dfsNflProfilerWrFacade.addOrUpdate(wrStatGroup).toPromise(),
+          this.dfsNflProfilerTeFacade.addOrUpdate(teStatGroup).toPromise(),
+        ]);
         await this.store
           .dispatch([
             new DfsNflSlatePlayerAttributes.AddOrUpdate(players),
             new DfsNflSlateTeamDetails.AddOrUpdate(teams as SlateTeamNfl[]),
-            new DfsNflProfilerQb.AddOrUpdate(qbStatGroup),
-            new DfsNflProfilerRb.AddOrUpdate(rbStatGroup),
-            new DfsNflProfilerWr.AddOrUpdate(wrStatGroup),
-            new DfsNflProfilerTe.AddOrUpdate(teStatGroup),
             new DfsNflGridIron.Fetch({ site }),
           ])
           .toPromise();
@@ -85,6 +93,6 @@ export class DfsSlateAttributesState {
         break;
     }
 
-    patchState({ slate });
+    // patchState({ slate });
   }
 }

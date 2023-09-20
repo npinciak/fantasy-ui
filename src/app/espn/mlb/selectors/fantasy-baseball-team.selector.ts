@@ -1,4 +1,4 @@
-import { RouterSelector } from '@app/@core/store/router/router.selectors';
+import { RouterSelector } from '@app/@core/router/router.selectors';
 import { FangraphsConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
 import { FangraphsConstantsSelector } from '@app/@shared/fangraphs/fangraphs-const.selector';
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';

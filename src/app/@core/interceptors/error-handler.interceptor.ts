@@ -4,7 +4,7 @@ import { SnackBarService } from '@app/@shared/services/snackbar.service';
 import { statusCodeToMessage } from '@sports-ui/ui-sdk';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { RouterFacade } from '../store/router/router.facade';
+import { RouterFacade } from '../router/router.facade';
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {

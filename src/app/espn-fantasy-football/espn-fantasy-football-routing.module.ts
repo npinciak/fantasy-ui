@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UrlPathFragments, UrlPathParams } from '@app/@core/store/router/url-builder';
+import { UrlPathFragments, UrlPathParams } from '@app/@core/router/url-builder';
 import { FootballFreeAgentsComponent } from './pages/football-free-agents/football-free-agents.component';
 import { FootballHomeComponent } from './pages/football-home/football-home.component';
 import { FootballTeamComponent } from './pages/football-team/football-team.component';

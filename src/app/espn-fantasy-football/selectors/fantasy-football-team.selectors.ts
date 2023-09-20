@@ -6,7 +6,7 @@ import { exists, existsFilter } from '@sports-ui/ui-sdk/helpers';
 import { FootballPlayer, FootballPlayerStatsRow } from '../models/football-player.model';
 import { FootballTeam } from '../models/football-team.model';
 
-import { RouterSelector } from '@app/@core/store/router/router.selectors';
+import { RouterSelector } from '@app/@core/router/router.selectors';
 import { FOOTBALL_LINEUP_MAP, FootballPosition } from '@sports-ui/ui-sdk/espn';
 import { PlayerStatsYear } from '@sports-ui/ui-sdk/espn-client';
 import { FantasyFootballTeamState } from '../state/fantasy-football-team.state';

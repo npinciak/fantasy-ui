@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationExtras, Router } from '@angular/router';
-import { UrlPathFragments } from '@app/@core/store/router/url-builder';
+import { UrlPathFragments } from '@app/@core/router/url-builder';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
 import { DfsRouteBuilder, EspnRouteBuilder } from './route-builder';

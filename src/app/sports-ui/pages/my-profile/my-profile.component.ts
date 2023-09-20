@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthenticationFormFacade } from '@app/@core/authentication/facade/authentication-form.facade';
 import { AuthenticationFacade } from '@app/@core/authentication/facade/authentication.facade';
-import { RouterFacade } from '@app/@core/store/router/router.facade';
+import { RouterFacade } from '@app/@core/router/router.facade';
 import { AddLeagueFormComponent } from '@app/sports-ui/components/add-league-form/add-league-form.component';
 import { USER_LEAGUE_HEADERS, USER_LEAGUE_ROWS } from '@app/sports-ui/components/leagues-table/leagues-table.const';
 import { SportsUiLeaguesFacade } from '@app/sports-ui/facades/sports-ui-leagues.facade';

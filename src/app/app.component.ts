@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Event, NavigationCancel, NavigationEnd, Router, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { filter } from 'rxjs/operators';
-import { CustomRouterStateSerializer } from './@core/store/router/router-state.serializer';
-import { SetRouterState } from './@core/store/router/router.state';
+import { CustomRouterStateSerializer } from './@core/router/router-state.serializer';
+import { SetRouterState } from './@core/router/router.state';
 import { untilDestroyed } from './@shared/until-destroyed';
 
 type NavigationComplete = NavigationEnd | NavigationCancel;

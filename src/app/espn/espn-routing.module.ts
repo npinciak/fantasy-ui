@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UrlPathFragments } from '@app/@core/store/router/url-builder';
+import { UrlPathFragments } from '@app/@core/router/url-builder';
 import { FantasyBaseballRoutes } from './mlb/fantasy-baseball.routes';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 
