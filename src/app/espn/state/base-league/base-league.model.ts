@@ -1,4 +1,5 @@
 import { GenericPayloadClearActionClass, GenericPayloadFetchActionClass } from '@app/@shared/generic-state/generic.model';
+import { Observable } from 'rxjs';
 
 export interface FantasyLeagueBaseStateClass {
   // eslint-disable-next-line @typescript-eslint/prefer-function-type
@@ -29,4 +30,16 @@ export interface IBaseLeagueActionsClass {
   SetLeague: GenericPayloadFetchActionClass<{ state: FantasyLeagueBaseStateModel }>;
   Fetch: GenericPayloadFetchActionClass<{ leagueId: string; year: string }>;
   Refresh: GenericPayloadClearActionClass;
+}
+
+export interface IFantasyLeagueBaseFacade {
+  id: string | null;
+  seasonId: string | null;
+  scoringPeriodId: string | null;
+  firstScoringPeriod: string | null;
+  finalScoringPeriod: string | null;
+  matchupPeriodCount: string | null;
+  setLeague(state): void;
+  fetch(): Observable<void>;
+  refresh(): Observable<void>;
 }

@@ -1,7 +1,7 @@
 import { Selector } from '@app/@shared/models/typed-selector';
 import { BaseEspnEndpointBuilder } from '@app/espn/endpoint-builder/base-espn-endpoint-builder';
 import { FantasySports } from '@app/espn/models/espn-endpoint-builder.model';
-import { FantasyLeagueBaseSelector } from '@app/espn/state/base-league.selector';
+import { FantasyLeagueBaseSelector } from '@app/espn/state/base-league/base-league.selector';
 import { FantasyFootballScoringPeriod } from '../fantasy-football-scoring-period';
 import { FantasyFootballLeagueState } from '../state/fantasy-football-league.state';
 
