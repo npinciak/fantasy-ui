@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { select } from '../models/typed-select';
-import { GenericFacade, GenericSelectorClass, IGenericActionsClass } from './generic.model';
+import { GenericSelectorClass, IGenericActionsClass, IGenericFacade } from './generic.model';
 
 export function GenericFacade<T, U = Record<string, unknown>>({
   selectorClass,
@@ -11,10 +11,10 @@ export function GenericFacade<T, U = Record<string, unknown>>({
   selectorClass: GenericSelectorClass<T>;
   actionHandler: IGenericActionsClass<T, U>;
 }): {
-  new (...args: any[]): GenericFacade<T>;
+  new (...args: any[]): IGenericFacade<T>;
 } {
   @Injectable()
-  class GenericFacadeBase implements GenericFacade<T> {
+  class GenericFacadeBaseClass {
     getMap$: Observable<Record<string, T>> = select(selectorClass.getMap);
     getList$: Observable<T[]> = select(selectorClass.getList);
     getListLength$: Observable<number> = select(selectorClass.getListLength);
@@ -28,11 +28,11 @@ export function GenericFacade<T, U = Record<string, unknown>>({
     constructor(private store: Store) {}
 
     addOrUpdate(entities: T[]): Observable<void> {
-      return this.store.dispatch([new GenericFacadeBase.addOrUpdate(entities)]);
+      return this.store.dispatch([new GenericFacadeBaseClass.addOrUpdate(entities)]);
     }
 
     fetch(): Observable<void> {
-      return this.store.dispatch([new GenericFacadeBase.fetch()]);
+      return this.store.dispatch([new GenericFacadeBaseClass.fetch()]);
     }
 
     getList(): T[] {
@@ -51,5 +51,5 @@ export function GenericFacade<T, U = Record<string, unknown>>({
       return this.store.dispatch([new actionHandler.Clear()]);
     }
   }
-  return GenericFacadeBase;
+  return GenericFacadeBaseClass;
 }

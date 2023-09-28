@@ -10,7 +10,7 @@ export interface GenericStateClass<T> {
   new (...args: any[]): any;
 }
 
-export interface GenericFacade<T> {
+export interface IGenericFacade<T> {
   getMap$: Observable<Record<string, T>>;
   getList$: Observable<T[]>;
   getById$: Observable<(id: string | null) => T | null>;
