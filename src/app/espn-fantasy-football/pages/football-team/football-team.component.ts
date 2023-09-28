@@ -30,7 +30,6 @@ export class FootballTeamComponent {
   readonly FOOTBALL_ROSTER_HEADERS_BY_POS = FOOTBALL_ROSTER_HEADERS_BY_POS;
   readonly FOOTBALL_ROSTER_ROWS_BY_POS = FOOTBALL_ROSTER_ROWS_BY_POS;
 
-  isLoading$ = this.footballLeagueFacade.isLoading$;
   teamInfo$ = this.footballTeamFacade.teamInfo$;
   scoringPeriodId$ = new BehaviorSubject(FantasyFootballScoringPeriod.season('2023'));
   selectedPosition$ = new BehaviorSubject(FootballPosition.QB);
@@ -48,7 +47,7 @@ export class FootballTeamComponent {
   benchPoints$ = this.footballTeamFacade.benchPoints$;
 
   injuredReserve$ = this.footballTeamFacade.injuredReserve$;
-  currentScoringPeriodId$ = this.footballLeagueFacade.currentScoringPeriodId$;
+  currentScoringPeriodId$ = this.footballLeagueFacade.scoringPeriodId$;
 
   tableData$ = combineLatest([this.footballTeamFacade.teamStatsByPositionId$, this.scoringPeriodId$, this.selectedPosition$]).pipe(
     map(([teamStatsByPositionId, scoringPeriodId, selectedPosition]) => teamStatsByPositionId(scoringPeriodId, selectedPosition))
@@ -83,7 +82,7 @@ export class FootballTeamComponent {
   }
 
   refreshLeague(): void {
-    this.footballLeagueFacade.refreshCurrentLeague();
+    this.footballLeagueFacade.refresh();
   }
 
   async onPlayerClick(player: FootballPlayer): Promise<void> {

@@ -11,7 +11,6 @@ import { FantasyBaseballLeagueSelector } from '../selectors/fantasy-baseball-lea
 export class FantasyBaseballLeagueFacade {
   isLoading$ = of(false); //select(FantasyBaseballLeagueState.getIsLoading);
   scoringPeriod$ = select(FantasyBaseballLeagueSelector.slices.scoringPeriodId);
-  seasonConcluded$ = of(FantasyBaseballLeagueSelector.getSeasonConcluded);
 
   scoringPeriodFilters$ = select(FantasyBaseballLeagueSelector.scoringPeriodFilters);
 

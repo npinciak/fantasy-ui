@@ -12,7 +12,7 @@
                   ariaLabel="week selection options"
                   [selectedOption]="currentScoringPeriod$ | async"
                   [filterItems]="matchupPeriodIdFilterOptions$ | async"
-                  (filterUpdate)="fantasyFootballLeagueFacade.updateCurrentScoringPeriodId($event)"
+                  (filterUpdate)="updateCurrentScoringPeriodId($event)"
                 ></app-dropdown-filter>
               </div>
               <div class="flex basis-4/5 overflow-x-auto px-6 align-middle">

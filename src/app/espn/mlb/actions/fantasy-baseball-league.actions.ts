@@ -1,4 +1,4 @@
-import { BaseLeagueActions } from '@app/espn/state/base-league.actions';
+import { BaseLeagueActions } from '@app/espn/state/base-league/base-league.actions';
 
 export class FantasyBaseballLeague extends BaseLeagueActions({
   stateName: 'fantasyBaseballLeague',

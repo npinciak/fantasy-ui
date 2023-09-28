@@ -13,7 +13,7 @@ export class FantasyFootballLeagueResolver implements Resolve<void> {
     const leagueId = route.paramMap.get('leagueId');
     const year = route.paramMap.get('year');
     if (leagueId && year) {
-      await this.fantasyFootballFacade.getLeague(leagueId, year).toPromise();
+      await this.fantasyFootballFacade.fetch(leagueId, year).toPromise();
     }
   }
 }

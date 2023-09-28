@@ -37,7 +37,6 @@ export class BaseballTeamComponent {
   isLiveScore$ = new BehaviorSubject<boolean>(false);
   isLoading$ = new BehaviorSubject<boolean>(false);
 
-  seasonConcluded$ = this.fantasyBaseballLeagueFacade.seasonConcluded$;
   scoringPeriodFilters$ = this.fantasyBaseballLeagueFacade.scoringPeriodFilters$;
 
   startingBatters$ = combineLatest([

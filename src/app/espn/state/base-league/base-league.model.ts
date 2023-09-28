@@ -1,4 +1,5 @@
 import { GenericPayloadClearActionClass, GenericPayloadFetchActionClass } from '@app/@shared/generic-state/generic.model';
+import { PropertySelectors } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
 export interface FantasyLeagueBaseStateClass {
@@ -32,14 +33,25 @@ export interface IBaseLeagueActionsClass {
   Refresh: GenericPayloadClearActionClass;
 }
 
+export interface IBaseLeagueSelectorsClass<T extends FantasyLeagueBaseStateModel> {
+  new (...args: any[]): any;
+  slices: PropertySelectors<T>;
+}
+
 export interface IFantasyLeagueBaseFacade {
-  id: string | null;
+  leagueId: string | null;
   seasonId: string | null;
   scoringPeriodId: string | null;
   firstScoringPeriod: string | null;
   finalScoringPeriod: string | null;
   matchupPeriodCount: string | null;
+  leagueId$: Observable<string | null>;
+  seasonId$: Observable<string | null>;
+  scoringPeriodId$: Observable<string | null>;
+  firstScoringPeriod$: Observable<string | null>;
+  finalScoringPeriod$: Observable<string | null>;
+  matchupPeriodCount$: Observable<string | null>;
   setLeague(state): void;
-  fetch(): Observable<void>;
+  fetch(leagueId: string, year: string): Observable<void>;
   refresh(): Observable<void>;
 }
