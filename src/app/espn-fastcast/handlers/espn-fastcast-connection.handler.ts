@@ -33,10 +33,14 @@ export class FastcastConnectionHandler {
     const connect = new Date().getTime();
     const socket = new WebSocketBuilder(websocketInfo, FASTCAST_SERVICE_URI);
 
-    this.fastcastService
+    await this.fastcastService
       .connect(socket.websocketUri)
       .pipe(
-        startWith(this.fastcastConnectionFacade.sendWebSocketMessage({ message: { op: OPERATION_CODE.C } })),
+        startWith(
+          this.fastcastConnectionFacade.sendWebSocketMessage({
+            message: { op: OPERATION_CODE.CONNECT },
+          })
+        ),
         tap(message => {
           this.fastcastConnectionFacade.handleWebSocketMessage({ message });
         })
