@@ -24,6 +24,7 @@ import { DfsNflProfilerTeState } from './nfl/state/dfs-nfl-profiler-te.state';
 import { DfsNflProfilerWrState } from './nfl/state/dfs-nfl-profiler-wr.state';
 import { DfsNflSlateTeamDetailsState } from './nfl/state/dfs-nfl-slate-teams.state';
 import { DfsMatchupsState } from './state/dfs-matchups.state';
+import { DfsSelectedSlateConfigurationState } from './state/dfs-selected-slate-configuration.state';
 import { DfsSlateAttributesState } from './state/dfs-slate-attr.state';
 import { DfsSlatePlayersState } from './state/dfs-slate-players.state';
 import { DfsSlatesState } from './state/dfs-slates.state';
@@ -33,6 +34,7 @@ import { DfsWeatherState } from './state/dfs-weather.state';
 const states = [
   DfsSlatePlayersState,
   DfsSlatePlayersHandlerState,
+  DfsSelectedSlateConfigurationState,
   DfsMatchupsState,
   DfsSlatesState,
   DfsSlateAttributesState,
