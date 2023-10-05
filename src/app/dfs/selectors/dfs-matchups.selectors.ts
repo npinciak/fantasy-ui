@@ -36,6 +36,22 @@ export class DfsMatchupsSelectors extends GenericSelector(DfsMatchupsState) {
       };
     });
   }
+
+  @Selector([DfsMatchupsSelectors.getNflMatchupTableData])
+  static getTopFiveMatchupsByOverUnder(matchups: NflMatchupTableRow[]) {
+    return matchups
+      .sort((a, b) => {
+        if (a.overUnder == null || b.overUnder == null) return 0;
+
+        return b.overUnder - a.overUnder;
+      })
+      .slice(0, 5);
+  }
+
+  @Selector([DfsMatchupsSelectors.getNflMatchupTableData])
+  static getTopFiveTeamTotals(matchups: NflMatchupTableRow[]) {
+    return [].slice(0, 5);
+  }
 }
 
 function transformMatchupTeamToTeamTableRow(slateTeam: SlateTeamNfl | null, team: Team) {

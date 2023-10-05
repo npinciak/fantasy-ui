@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DfsMatchupsFacade } from '@app/dfs/facade/dfs-matchups.facade';
 import { DfsSlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade';
@@ -18,7 +18,7 @@ import { NFL_STAT_GROUP_MAP } from '../../models/stat-group.model';
   selector: 'app-dfs-nfl-home',
   templateUrl: './dfs-nfl-home.component.html',
 })
-export class DfsNflHomeComponent {
+export class DfsNflHomeComponent implements OnInit {
   readonly TABLE_HEADERS_BY_POS = HEADERS_BY_POS;
   readonly TABLE_ROWS_BY_POS = ROWS_BY_POS;
 
@@ -43,6 +43,10 @@ export class DfsNflHomeComponent {
   selectSlateByType$ = this.dailyFantasySlateFacade.selectSlateByType$;
 
   matchups$ = this.dailyFantasyMatchupFacade.nflMatchupTableData$;
+  nflTopFiveMatchups$ = this.dailyFantasyMatchupFacade.nflTopFiveMatchupsByOverUnder$;
+  nflTopFiveTeamTotals$ = this.dailyFantasyMatchupFacade.nflTopFiveTeamTotals$;
+
+  teamsWithHighestPown$ = this.nflPlayerFacade.teamsWithHighestPown$;
 
   playersEmpty$ = this.dailyFantasyPlayersFacade.playersEmpty$;
 
@@ -87,6 +91,11 @@ export class DfsNflHomeComponent {
     readonly dailyFantasySlateAttrFacade: DfsSlateAttrFacade,
     readonly dailyFantasyMatchupFacade: DfsMatchupsFacade
   ) {}
+
+  ngOnInit(): void {
+    // this.loadingBudget$.next(true);
+    // this.routerFacade.getResolverPromise(LineItemListBudgetsResolver).finally(() => this.loadingBudget$.next(false));
+  }
 
   onAxisXChange(val: string) {
     this.xAxisStat$.next(val);

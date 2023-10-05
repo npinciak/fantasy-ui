@@ -143,6 +143,63 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
       .sort((a, b) => b.salary - a.salary);
   }
 
+  @Selector([DfsNflPlayerSelectors.getPlayerTableData, DfsTeamsSelectors.getById, DfsNflSlateTeamDetailsSelectors.getById])
+  static getPlayersWithHighestPown(
+    tableData: NflDfsPlayerTableData[],
+    teamById: ReturnType<typeof DfsTeamsSelectors.getById>,
+    teamMatchupById: (rgId: string | null) => SlateTeamNfl | null
+  ): { pown: number | null; teamName: string }[] {
+    const teamMap = new Map<string, number>();
+
+    tableData.forEach(player => {
+      if (teamMap.has(player.rgTeamId!)) {
+        teamMap.set(player.rgTeamId!, teamMap.get(player.rgTeamId!)! + player.pown!);
+      } else {
+        teamMap.set(player.rgTeamId!, player.pown!);
+      }
+    });
+
+    return [...teamMap]
+      .map(([key, value]) => {
+        const pown = value;
+        const teamName = teamById(key)?.name ?? '';
+
+        return { pown, teamName };
+      })
+      .sort((a, b) => b.pown - a.pown)
+      .slice(0, 10);
+  }
+
+  // static getTeamsWithHighestPown(): string[] {
+  //   const playerTableData = DfsNflPlayerSelectors.getPlayerTableData(DfsSlatePlayersState.getState());
+  //   const teams = new Map<string, number>();
+  //   let highestPown = 0;
+
+  //   playerTableData.forEach(player => {
+  //     if (teams.has(player.teamId)) {
+  //       teams.set(player.teamId, teams.get(player.teamId)! + player.pown);
+  //     } else {
+  //       teams.set(player.teamId, player.pown);
+  //     }
+  //   });
+
+  //   for (const [teamId, pown] of teams.entries()) {
+  //     if (pown > highestPown) {
+  //       highestPown = pown;
+  //     }
+  //   }
+
+  //   const teamsWithHighestPown = [];
+
+  //   for (const [teamId, pown] of teams.entries()) {
+  //     if (pown === highestPown) {
+  //       teamsWithHighestPown.push(teamId);
+  //     }
+  //   }
+
+  //   return teamsWithHighestPown;
+  // }
+
   // @Selector([DfsNflPlayerSelectors.getPlayerTableData])
   // static teamOwnPercent(players: NflDfsPlayerTableData[]) {
   //   const teams = new Map<string, NflDfsPlayerTableData[]>();
