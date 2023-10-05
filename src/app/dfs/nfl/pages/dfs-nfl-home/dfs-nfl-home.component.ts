@@ -109,6 +109,10 @@ export class DfsNflHomeComponent {
     this.tableFilter$.next(JSON.stringify({ filterType: FilterType.team, value: value.toString() }));
   }
 
+  nameInputChange(value: string) {
+    this.tableFilter$.next(JSON.stringify({ filterType: FilterType.name, value }));
+  }
+
   onSelectSlate(event: SiteSlateEntity) {
     this.dailyFantasyPlayersFacade.fetchPlayers(event.slate_path);
     this.selectedSlate$.next(event.name);

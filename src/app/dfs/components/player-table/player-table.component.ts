@@ -60,39 +60,29 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
 
   dataSourceFilter(): (data: NflDfsPlayerTableData, filterJson: string) => boolean {
     return (data, filterJson): boolean => {
-      if (filterJson === '') {
-        return true;
-      }
+      if (filterJson === '') return true;
 
-      const filter: TableFilter = JSON.parse(filterJson);
-      let textMatches = false;
+      const filter = JSON.parse(filterJson) as TableFilter;
+
+      let match = false;
 
       switch (filter.filterType) {
         case FilterType.name:
-          if (data.name) {
-            textMatches = data.name.includes(filter.value);
-          }
+          match = data.name.trim().toLowerCase().includes(filter.value.trim().toLowerCase());
           break;
         case FilterType.team:
-          if (data.rgTeamId) {
-            textMatches = data.rgTeamId === filter.value;
-          }
+          if (filter.value.trim().toLowerCase() === 'all') return true;
+          match = data.rgTeamId === filter.value;
           break;
         case FilterType.pos:
-          if (data.position) {
-            textMatches = data.position.includes(filter.value);
-          }
-          break;
-        case FilterType.statGroup:
-          // if (data.statGroupFilter) {
-          //   textMatches = data.statGroup.includes(filterVal);
-          // }
+          if (filter.value.trim().toLowerCase() === 'all') return true;
+          match = data.position.trim().toLowerCase().includes(filter.value.trim().toLowerCase());
           break;
         default:
           break;
       }
 
-      return textMatches;
+      return match;
     };
   }
 }

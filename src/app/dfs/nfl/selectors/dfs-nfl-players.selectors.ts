@@ -3,6 +3,7 @@ import { linearRegression, transformScatterGraphData } from '@app/@shared/helper
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { SlatePlayer } from '@app/dfs/models/player.model';
+import { DfsTeamsSelectors } from '@app/dfs/selectors/dfs-teams.selectors';
 import { DfsSlatePlayersState } from '@app/dfs/state/dfs-slate-players.state';
 import { NFL_RG_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
 import { exists, existsFilter, pickData, uniqueBy } from '@sports-ui/ui-sdk/helpers';
@@ -21,7 +22,7 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
   @Selector([DfsNflPlayerSelectors.getList])
   static getPlayerTeams(list: SlatePlayer[]) {
     const teams = existsFilter(list.map(p => p.rgTeamId));
-    return uniqueBy(teams, t => t).map(t => Number(t));
+    return uniqueBy(teams, t => t);
   }
 
   @Selector([DfsNflPlayerSelectors.getList])
@@ -31,8 +32,8 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
   }
 
   @Selector([DfsNflPlayerSelectors.getPlayerTeams])
-  static getPlayerTeamsFilterOptions(list: number[]): FilterOptions<number | null>[] {
-    const reset = [{ value: null, label: 'All' }];
+  static getPlayerTeamsFilterOptions(list: string[]): FilterOptions<string | null>[] {
+    const reset = [{ value: 'All', label: 'All' }];
     const teams = list.map(t => ({ value: t, label: NFL_RG_TEAM_ID_MAP[t] as string })).sort((a, b) => a.label.localeCompare(b.label));
 
     return [...reset, ...teams];
@@ -77,48 +78,34 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
         const playerProfilerTe = playerProfilerTeById(p.rgId);
 
         const productionPremium =
-          playerProfilerQb != null
-            ? playerProfilerQb.productionPremium
-            : playerProfilerRb != null
-            ? playerProfilerRb.productionPremium
-            : playerProfilerWr != null
-            ? playerProfilerWr.productionPremium
-            : playerProfilerTe != null
-            ? playerProfilerTe.productionPremium
-            : null;
+          playerProfilerQb?.productionPremium ??
+          playerProfilerRb?.productionPremium ??
+          playerProfilerWr?.productionPremium ??
+          playerProfilerTe?.productionPremium ??
+          null;
 
-        const matchupRtg = playerProfilerWr?.matchupRtg;
+        const matchupRtg = playerProfilerWr?.matchupRtg ?? null;
 
         const weeklyVolatility =
-          playerProfilerQb != null
-            ? playerProfilerQb.weeklyVolatility
-            : playerProfilerRb != null
-            ? playerProfilerRb.weeklyVolatility
-            : playerProfilerWr != null
-            ? playerProfilerWr.weeklyVolatility
-            : playerProfilerTe != null
-            ? playerProfilerTe.weeklyVolatility
-            : null;
+          playerProfilerQb?.weeklyVolatility ??
+          playerProfilerRb?.weeklyVolatility ??
+          playerProfilerWr?.weeklyVolatility ??
+          playerProfilerTe?.weeklyVolatility ??
+          null;
 
-        const redZoneTargetShare =
-          playerProfilerWr != null
-            ? playerProfilerWr.redZoneTargetShare
-            : playerProfilerTe != null
-            ? playerProfilerTe.redZoneTargetShare
-            : null;
+        const redZoneTargetShare = playerProfilerWr?.redZoneTargetShare ?? playerProfilerTe?.redZoneTargetShare ?? null;
 
-        const gameScript = playerProfilerRb != null ? playerProfilerRb.gameScript : null;
-        const goalLineCarriesPerGame = playerProfilerRb != null ? playerProfilerRb.goalLineCarriesPerGame : null;
+        const gameScript = playerProfilerRb?.gameScript ?? null;
 
-        const targetShare =
-          playerProfilerWr != null ? playerProfilerWr.targetShare : playerProfilerTe != null ? playerProfilerTe.targetShare : null;
+        const goalLineCarriesPerGame = playerProfilerRb?.goalLineCarriesPerGame ?? null;
 
-        const dominatorRating =
-          playerProfilerWr != null ? playerProfilerWr.dominatorRating : playerProfilerTe != null ? playerProfilerTe.dominatorRating : null;
+        const targetShare = playerProfilerWr?.targetShare ?? playerProfilerTe?.targetShare ?? null;
 
-        const protectionRate = playerProfilerQb != null ? playerProfilerQb.protectionRate : null;
-        const truePasserRating = playerProfilerQb != null ? playerProfilerQb.truePasserRating : null;
-        const pressuredCompletionPercentage = playerProfilerQb != null ? playerProfilerQb.pressuredCompletionPercentage : null;
+        const dominatorRating = playerProfilerWr?.dominatorRating ?? playerProfilerTe?.dominatorRating ?? null;
+
+        const protectionRate = playerProfilerQb?.protectionRate ?? null;
+        const truePasserRating = playerProfilerQb?.truePasserRating ?? null;
+        const pressuredCompletionPercentage = playerProfilerQb?.pressuredCompletionPercentage ?? null;
 
         const { id, name, rgTeamId, position } = p;
 
