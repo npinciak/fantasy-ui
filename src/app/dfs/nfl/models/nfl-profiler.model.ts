@@ -1,6 +1,9 @@
 import { NFLClientStatGroupAttributes } from '@dfsClient/nfl-client.model';
 
+/** @deprecated data unavailable as of 10.5.2023 */
 export type ProfilerPosition = NFLClientStatGroupAttributes;
+
+/** @deprecated data unavailable as of 10.5.2023 */
 export type ProfilerTimeFrameAttributes = 'season' | 'lastSeason' | 'combined';
 
 type ProfilerBaseAttributes = 'expectedPointsAdded' | 'fantasyPointsPerGame' | 'productionPremium' | 'weeklyVolatility';
@@ -32,8 +35,10 @@ type ProfilerQBAttributes =
   | 'truePasserRating'
   | 'underPressureAttemptsPerGame';
 
+/** @deprecated data unavailable as of 10.5.2023 */
 export type ProfilerBase = { statGroup: string; rgId: string; profilerId: string } & { [attr in ProfilerBaseAttributes]: number | null };
 
+/** @deprecated data unavailable as of 10.5.2023 */
 export type ProfilerQB = ProfilerBase & { [attr in ProfilerQBAttributes]: number | null };
 
 type ProfilerRBAttributes =
@@ -59,6 +64,7 @@ type ProfilerRBAttributes =
   | 'weightedOpportunitiesPerGame'
   | 'yardsCreatedPerTouch';
 
+/** @deprecated data unavailable as of 10.5.2023 */
 export type ProfilerRB = ProfilerBase & { [attr in ProfilerRBAttributes]: number | null };
 
 type ProfilerReceiverAttributes =
@@ -83,11 +89,20 @@ type ProfilerReceiverAttributes =
   | 'likelyCb'
   | 'matchupRtg';
 
+/** @deprecated data unavailable as of 10.5.2023 */
 export type ProfilerReceiver = ProfilerBase & { [attr in ProfilerReceiverAttributes]: number | null };
 
+/** @deprecated data unavailable as of 10.5.2023 */
 export type PlayerProfiler = ProfilerQB | ProfilerRB | ProfilerReceiver;
+
+/** @deprecated data unavailable as of 10.5.2023 */
 export type PlayerProfilerTimeframeMap = { [prop in ProfilerTimeFrameAttributes]: PlayerProfiler };
+
+/** @deprecated data unavailable as of 10.5.2023 */
 export type PlayerProfilerEntityMap = Record<string, PlayerProfilerTimeframeMap>;
 
+/** @deprecated data unavailable as of 10.5.2023 */
 export type PlayerProfilerSeason = PlayerProfiler;
+
+/** @deprecated data unavailable as of 10.5.2023 */
 export type PlayerProfilerSeasonMap = { [key in ProfilerPosition]: PlayerProfilerSeason[] };

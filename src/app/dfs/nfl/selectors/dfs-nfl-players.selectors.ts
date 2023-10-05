@@ -72,11 +72,19 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
         const salary = exists(p.salaries) ? Number(p.salaries[0].salary) : 0;
         const gridIron = gridIronById(p.rgId);
 
+        /** @deprecated data unavailable as of 10.5.2023 */
         const playerProfilerQb = playerProfilerQbById(p.rgId);
+
+        /** @deprecated data unavailable as of 10.5.2023 */
         const playerProfilerRb = playerProfilerRbById(p.rgId);
+
+        /** @deprecated data unavailable as of 10.5.2023 */
         const playerProfilerWr = playerProfilerWrById(p.rgId);
+
+        /** @deprecated data unavailable as of 10.5.2023 */
         const playerProfilerTe = playerProfilerTeById(p.rgId);
 
+        /** @deprecated data unavailable as of 10.5.2023 */
         const productionPremium =
           playerProfilerQb?.productionPremium ??
           playerProfilerRb?.productionPremium ??
@@ -84,8 +92,10 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
           playerProfilerTe?.productionPremium ??
           null;
 
+        /** @deprecated data unavailable as of 10.5.2023 */
         const matchupRtg = playerProfilerWr?.matchupRtg ?? null;
 
+        /** @deprecated data unavailable as of 10.5.2023 */
         const weeklyVolatility =
           playerProfilerQb?.weeklyVolatility ??
           playerProfilerRb?.weeklyVolatility ??
@@ -93,18 +103,28 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
           playerProfilerTe?.weeklyVolatility ??
           null;
 
+        /** @deprecated data unavailable as of 10.5.2023 */
         const redZoneTargetShare = playerProfilerWr?.redZoneTargetShare ?? playerProfilerTe?.redZoneTargetShare ?? null;
 
+        /** @deprecated data unavailable as of 10.5.2023 */
         const gameScript = playerProfilerRb?.gameScript ?? null;
 
+        /** @deprecated data unavailable as of 10.5.2023 */
         const goalLineCarriesPerGame = playerProfilerRb?.goalLineCarriesPerGame ?? null;
 
+        /** @deprecated data unavailable as of 10.5.2023 */
         const targetShare = playerProfilerWr?.targetShare ?? playerProfilerTe?.targetShare ?? null;
 
+        /** @deprecated data unavailable as of 10.5.2023 */
         const dominatorRating = playerProfilerWr?.dominatorRating ?? playerProfilerTe?.dominatorRating ?? null;
 
+        /** @deprecated data unavailable as of 10.5.2023 */
         const protectionRate = playerProfilerQb?.protectionRate ?? null;
+
+        /** @deprecated data unavailable as of 10.5.2023 */
         const truePasserRating = playerProfilerQb?.truePasserRating ?? null;
+
+        /** @deprecated data unavailable as of 10.5.2023 */
         const pressuredCompletionPercentage = playerProfilerQb?.pressuredCompletionPercentage ?? null;
 
         const { id, name, rgTeamId, position } = p;
@@ -169,53 +189,6 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
       .sort((a, b) => b.pown - a.pown)
       .slice(0, 10);
   }
-
-  // static getTeamsWithHighestPown(): string[] {
-  //   const playerTableData = DfsNflPlayerSelectors.getPlayerTableData(DfsSlatePlayersState.getState());
-  //   const teams = new Map<string, number>();
-  //   let highestPown = 0;
-
-  //   playerTableData.forEach(player => {
-  //     if (teams.has(player.teamId)) {
-  //       teams.set(player.teamId, teams.get(player.teamId)! + player.pown);
-  //     } else {
-  //       teams.set(player.teamId, player.pown);
-  //     }
-  //   });
-
-  //   for (const [teamId, pown] of teams.entries()) {
-  //     if (pown > highestPown) {
-  //       highestPown = pown;
-  //     }
-  //   }
-
-  //   const teamsWithHighestPown = [];
-
-  //   for (const [teamId, pown] of teams.entries()) {
-  //     if (pown === highestPown) {
-  //       teamsWithHighestPown.push(teamId);
-  //     }
-  //   }
-
-  //   return teamsWithHighestPown;
-  // }
-
-  // @Selector([DfsNflPlayerSelectors.getPlayerTableData])
-  // static teamOwnPercent(players: NflDfsPlayerTableData[]) {
-  //   const teams = new Map<string, NflDfsPlayerTableData[]>();
-
-  //   players.map(p => {
-  //     if (teams.has(p.teamId)) {
-  //       teams.get(p.teamId)?.push(p);
-  //     } else {
-  //       teams.set(p.teamId, [p]);
-  //     }
-  //   });
-
-  //   console.log(teams);
-
-  //   return;
-  // }
 
   @Selector()
   static getPlayerScatterAxisOptions(): FilterOptions<string>[] {

@@ -48,12 +48,16 @@ export type NFLClientSlateAttrTeamMap = Record<string, SlateAttrTeamProperties &
 export type NFLClientStatGroupAttributes = 'qb' | 'rb' | 'te' | 'wr';
 export type NFLClientStatGroup = { [attr in NFLClientStatGroupAttributes]: NFLClientProfiler };
 
+/** @deprecated data unavailable as of 10.5.2023 */
 export type NFLClientProfiler = { profiler: NFLClientProfilerEntity };
 
+/** @deprecated data unavailable as of 10.5.2023 */
 export type ProfilerTimeFrameAttributes = 'season' | 'last-season' | 'combined';
 
+/** @deprecated data unavailable as of 10.5.2023 */
 export type NFLClientProfilerEntity = { [attr in ProfilerTimeFrameAttributes]?: NFLClientProfilerTimeFrameEntity };
 
+/** @deprecated data unavailable as of 10.5.2023 */
 type ProfilerQBAttributes =
   | 'profilerId'
   | 'Expected Points Added'
@@ -87,6 +91,7 @@ type ProfilerQBAttributes =
   | 'Under Pressure Attempts Per Game'
   | 'Weekly Volatility';
 
+/** @deprecated data unavailable as of 10.5.2023 */
 type ProfilerRBAttributes =
   | 'profilerId'
   | 'Expected Points Added'
@@ -116,6 +121,7 @@ type ProfilerRBAttributes =
   | 'Weighted Opportunities Per Game'
   | 'Yards Created Per Touch';
 
+/** @deprecated data unavailable as of 10.5.2023 */
 type ProfilerReceiverAttributes =
   | 'profilerId'
   | 'Expected Points Added'
@@ -185,10 +191,16 @@ export type NFLClientGridIronPlayerMap = Record<string, NFLClientGridIronPlayer>
 export type NFLClientSafptsProperties = { [attr in SafptsAttributes]: string };
 export type NFLClientOutsidersProperties = { [attr in OutsidersAttributes]: string };
 
+/** @deprecated data unavailable as of 10.5.2023 */
 export type NFLClientProfilerQBProperties = { [attr in ProfilerQBAttributes]: string };
+
+/** @deprecated data unavailable as of 10.5.2023 */
 export type NFLClientProfilerRBProperties = { [attr in ProfilerRBAttributes]: string };
+
+/** @deprecated data unavailable as of 10.5.2023 */
 export type NFLClientProfilerReceiverProperties = { [attr in ProfilerReceiverAttributes]: string };
 
+/** @deprecated data unavailable as of 10.5.2023 */
 export type NFLClientProfilerTimeFrameEntity = {
   [playerId: number]: NFLClientProfilerQBProperties | NFLClientProfilerRBProperties | NFLClientProfilerReceiverProperties;
 };
