@@ -27,7 +27,7 @@ import { DfsMatchupsState } from './state/dfs-matchups.state';
 import { DfsSlateAttributesState } from './state/dfs-slate-attr.state';
 import { DfsSlatePlayersState } from './state/dfs-slate-players.state';
 import { DfsSlatesState } from './state/dfs-slates.state';
-import { DfsTeamsState } from './state/dfs-team.state';
+import { DfsTeamsState } from './state/dfs-teams.state';
 import { DfsWeatherState } from './state/dfs-weather.state';
 
 const states = [
