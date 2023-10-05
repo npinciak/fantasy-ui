@@ -9,4 +9,6 @@ import { DfsMatchupsSelectors } from '../selectors/dfs-matchups.selectors';
 })
 export class DfsMatchupsFacade extends GenericFacade({ selectorClass: DfsMatchupsSelectors, actionHandler: DfsMatchups }) {
   nflMatchupTableData$ = select(DfsMatchupsSelectors.getNflMatchupTableData);
+  nflTopFiveMatchupsByOverUnder$ = select(DfsMatchupsSelectors.getTopFiveMatchupsByOverUnder);
+  nflTopFiveTeamTotals$ = select(DfsMatchupsSelectors.getTopFiveTeamTotals);
 }

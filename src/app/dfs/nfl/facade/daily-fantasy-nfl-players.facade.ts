@@ -5,9 +5,7 @@ import { DfsSlatePlayers } from '@app/dfs/actions/dfs-slate-players.actions';
 import { of } from 'rxjs';
 import { DfsNflPlayerSelectors } from '../selectors/dfs-nfl-players.selectors';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class DfsNflPlayerFacade extends GenericFacade({ selectorClass: DfsNflPlayerSelectors, actionHandler: DfsSlatePlayers }) {
   playerList$ = select(DfsNflPlayerSelectors.getPlayerTableData);
   teamList$ = select(DfsNflPlayerSelectors.getPlayerTeams);

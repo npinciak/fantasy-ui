@@ -2,7 +2,7 @@ import { espnDateFormatter } from '@app/@shared/helpers/date';
 import { environment } from 'src/environments/environment';
 import { DailyFantasyEndpointBuilder } from './daily-fantasy-endpoint-builder';
 
-describe('fastcastEventSummary', () => {
+describe('DailyFantasyEndpointBuilder', () => {
   const endpointBuilder = new DailyFantasyEndpointBuilder();
 
   const dailyFantasyJsonBase = environment.dailyFantasyJsonBase;
@@ -42,12 +42,11 @@ describe('fastcastEventSummary', () => {
   });
 
   it('should get plateIq endpoint', () => {
-    const date = espnDateFormatter({ delim: '-', date: 1675452811335 });
+    const timestamp = new Date().getTime();
+    const date = espnDateFormatter({ delim: '-', date: timestamp });
     endpointBuilder.gameId = '678';
 
-    expect(endpointBuilder.plateIq).toEqual(
-      `https://${awsBase}/${dailyFantasyJsonBase}/plateiq/${date}/678.json?timestamp=${new Date().getTime()}`
-    );
+    expect(endpointBuilder.plateIq).toEqual(`https://${awsBase}/${dailyFantasyJsonBase}/plateiq/${date}/678.json`);
   });
 
   it('should get gridIron endpoint', () => {
@@ -55,7 +54,7 @@ describe('fastcastEventSummary', () => {
   });
 
   it('should get slateMaster endpoint ', () => {
-    const date = espnDateFormatter({ delim: '/', date: 1675452811335 });
+    const date = espnDateFormatter({ delim: '/', date: new Date().getTime() });
     endpointBuilder.sport = 'nfl';
     expect(endpointBuilder.slateMaster).toEqual(`https://${awsBase}/${dailyFantasyJsonBase}/v2.00/${date}/slates/nfl-master.json`);
   });

@@ -37,8 +37,7 @@ export class DailyFantasyEndpointBuilder {
 
   get plateIq() {
     const date = espnDateFormatter({ delim: '-', date: new Date().getTime() });
-    let url = `${this.awsJson}/plateiq/${date}/${this._gameId}.json`;
-    url += `?timestamp=${new Date().getTime()}`;
+    const url = `${this.awsJson}/plateiq/${date}/${this._gameId}.json`;
     return url;
   }
 

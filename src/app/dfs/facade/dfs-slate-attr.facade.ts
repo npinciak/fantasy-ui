@@ -6,10 +6,14 @@ import { DfsSlateAttributes } from '../actions/dfs-slate-attr.actions';
 @Injectable({
   providedIn: 'root',
 })
-export class DailyFantasySlateAttrFacade {
+export class DfsSlateAttrFacade {
   constructor(private store: Store) {}
 
-  fetchSlateAttr(slate: string): Observable<void> {
-    return this.store.dispatch(new DfsSlateAttributes.Fetch({ slate }));
+  clear(): Observable<void> {
+    return this.store.dispatch(new DfsSlateAttributes.Clear());
+  }
+
+  fetchSlateAttributesBySlateId(slateId: string): Observable<void> {
+    return this.store.dispatch(new DfsSlateAttributes.Fetch({ slateId }));
   }
 }

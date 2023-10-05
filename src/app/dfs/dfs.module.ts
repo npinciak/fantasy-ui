@@ -8,6 +8,7 @@ import { PlayerTableComponent } from './components/player-table/player-table.com
 import { DfsSlateListComponent } from './components/slate-list/slate-list.component';
 import { DfsTeamMatchupTableComponent } from './components/team-matchup-table/team-matchup-table.component';
 import { DfsRoutingModule } from './dfs-routing.module';
+import { DfsSlateAttributesHandlerState } from './handlers/dfs-slate-attributes.handlers';
 import { DfsSlatePlayersHandlerState } from './handlers/dfs-slate-players.handlers';
 import { DfsSlatesHandlerState } from './handlers/dfs-slates.handler';
 import { DfsMlbHomeComponent } from './mlb/pages/dfs-mlb-home/dfs-mlb-home.component';
@@ -40,6 +41,7 @@ const states = [
   DfsSlatesState,
   DfsSlatesHandlerState,
   DfsSlateAttributesState,
+  DfsSlateAttributesHandlerState,
   DfsTeamsState,
   DailyFantasyMlbPlayerSlateAttributeState,
   DfsMlbTeamSlateDetailsState,

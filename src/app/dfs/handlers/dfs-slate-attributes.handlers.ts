@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { RouterSelector } from '@app/@core/router/router.selectors';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { exists } from '@sports-ui/ui-sdk/helpers';
 import { DfsSlateAttributes } from '../actions/dfs-slate-attr.actions';
@@ -12,6 +11,8 @@ import { DfsNflSlateTeamDetails } from '../nfl/actions/dfs-nfl-slate-team.action
 import { PlayerProfiler } from '../nfl/models/nfl-profiler.model';
 import { SlateTeamNfl } from '../nfl/models/nfl-slate-attr.model';
 
+import { RouterFacade } from '@app/@core/router/router.facade';
+import { DfsSelectedSlateConfigurationFacade } from '../facade/dfs-selected-slate-configuration.facade';
 import { DfsNflProfilerQBFacade } from '../nfl/facade/dfs-nfl-profiler-qb.facade';
 import { DfsNflProfilerRBFacade } from '../nfl/facade/dfs-nfl-profiler-rb.facade';
 import { DfsNflProfilerTEFacade } from '../nfl/facade/dfs-nfl-profiler-te.facade';
@@ -34,6 +35,8 @@ export class DfsSlateAttributesHandlerState {
   constructor(
     private store: Store,
     private slateService: SlateService,
+    private routerFacade: RouterFacade,
+    private dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade,
     private dfsNflProfilerQbFacade: DfsNflProfilerQBFacade,
     private dfsNflProfilerRbFacade: DfsNflProfilerRBFacade,
     private dfsNflProfilerWrFacade: DfsNflProfilerWRFacade,
@@ -41,15 +44,13 @@ export class DfsSlateAttributesHandlerState {
   ) {}
 
   @Action(DfsSlateAttributes.Fetch)
-  async fetchSlateAttr(_: StateContext<DfsSlateAttributesStateModel>, { payload }: { payload: { slate } }): Promise<void> {
-    const queryParams = this.store.selectSnapshot(RouterSelector.getRouterQueryParams);
-    const routeData = this.store.selectSnapshot(RouterSelector.getRouterData);
+  async fetchSlateAttr(_: StateContext<DfsSlateAttributesStateModel>, { payload: { slateId } }: { payload: { slateId } }): Promise<void> {
+    const sport = this.dfsSelectedSlateConfigurationFacade.sport;
+    const site = this.dfsSelectedSlateConfigurationFacade.site;
 
-    const sport = routeData?.sport as string;
-    const site = queryParams?.site as string;
-    const { slate } = payload;
+    if (!sport || !site) return;
 
-    const { statGroups, teams, players } = await this.slateService.getGameAttrBySlateId({ sport, site, slate }).toPromise();
+    const { statGroups, teams, players } = await this.slateService.getGameAttrBySlateId({ sport, site, slateId }).toPromise();
 
     const qbStatGroup = exists(statGroups) ? statGroups.qb : ([] as PlayerProfiler[]);
     const rbStatGroup = exists(statGroups) ? statGroups.rb : ([] as PlayerProfiler[]);

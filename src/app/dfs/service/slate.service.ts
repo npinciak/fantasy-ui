@@ -27,13 +27,13 @@ export class SlateService {
     return this.apiService.get<SlateMasterMap>(this.endpointBuilder.slateMaster);
   }
 
-  getGameAttrBySlateId(request: { sport: string; site: string; slate: string }): Observable<SlateAttributes> {
+  getGameAttrBySlateId(request: { sport: string; site: string; slateId: string }): Observable<SlateAttributes> {
     this.endpointBuilder.sport = request.sport;
 
     let params = new HttpParams();
     params = params.append('date', espnDateFormatter({ delim: '-', date: new Date().getTime() }));
     params = params.append('site', request.site);
-    params = params.append('slate_id', request.slate);
+    params = params.append('slate_id', request.slateId);
     return this.apiService.get<ClientSlateAttributes>(this.endpointBuilder.slateAttr, { params }).pipe(
       map(res => ({
         teams: DfsSlateTransformers.transformTeamSlateAttributes(res.teams),

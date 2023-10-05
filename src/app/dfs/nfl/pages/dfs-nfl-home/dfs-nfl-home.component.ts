@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DfsMatchupsFacade } from '@app/dfs/facade/dfs-matchups.facade';
-import { DailyFantasySlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
+import { DfsSlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade';
 import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
 import { ClientSlateTypes, SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
@@ -84,7 +84,7 @@ export class DfsNflHomeComponent {
     readonly nflTeamSlateAttrFacade: DfsNflSlateTeamDetailsFacade,
     readonly dailyFantasyPlayersFacade: DfsSlatePlayersFacade,
     readonly dailyFantasySlateFacade: DfsSlatesFacade,
-    readonly dailyFantasySlateAttrFacade: DailyFantasySlateAttrFacade,
+    readonly dailyFantasySlateAttrFacade: DfsSlateAttrFacade,
     readonly dailyFantasyMatchupFacade: DfsMatchupsFacade
   ) {}
 
@@ -113,7 +113,7 @@ export class DfsNflHomeComponent {
     this.dailyFantasyPlayersFacade.fetchPlayers(event.slate_path);
     this.selectedSlate$.next(event.name);
     this.selectedSlateType$.next(event.type);
-    this.dailyFantasySlateAttrFacade.fetchSlateAttr(event.importId);
+    this.dailyFantasySlateAttrFacade.fetchSlateAttributesBySlateId(event.importId);
   }
 }
 
