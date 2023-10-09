@@ -29,9 +29,9 @@ export class DfsMatchupsSelectors extends GenericSelector(DfsMatchupsState) {
         away: {
           ...awayTeam?.outsiders,
           name: m.awayTeam.name,
-          oppTotal: awayTeam?.vegas?.oppTotal,
-          total: awayTeam?.vegas?.total,
-          line: awayTeam?.vegas?.line,
+          oppTotal: awayTeam?.vegas?.oppTotal ?? null,
+          total: awayTeam?.vegas?.total ?? null,
+          line: awayTeam?.vegas?.line ?? null,
         },
       };
     });

@@ -152,37 +152,40 @@ export interface NFLClientPlayerAttributesEntity {
   ecr: ExpertConsensusRankBySite;
 }
 
-export interface NFLClientGridIronPlayer {
-  PLAYERID: string;
-  PLAYER: string;
-  SALARY: string;
-  OPP?: string | null;
-  POS?: string | null;
-  TEAM?: string | null;
-  SCHEDULE_ID?: string | null;
-  PAATT: string;
-  COMP: string;
-  PAYDS: string;
-  PATD: string;
-  INT: string;
-  RUATT: string;
-  RUYDS: string;
-  RUTD: string;
-  TAR: string;
-  REC: string;
-  REYDS: string;
-  RETD: string;
-  FPTS: string;
-  'FPTS/$': string;
-  FLOOR: string;
-  CEIL: string;
-  SMASH?: string | null;
-  VALUE?: string | null;
-  POWN: string;
-  PARTNERID: string;
-  OWNERSHIP: Record<string, string>;
-  RGID: string;
-}
+type NFLClientGridIronPlayerAttributes =
+  | 'PLAYERID'
+  | 'PLAYER'
+  | 'SALARY'
+  | 'FPTS/$'
+  | 'FLOOR'
+  | 'CEIL'
+  | 'SMASH'
+  | 'VALUE'
+  | 'POWN'
+  | 'PARTNERID'
+  | 'OWNERSHIP'
+  | 'RGID'
+  | 'SLATE'
+  | 'INJURY'
+  | 'SCHEDULE_ID'
+  | 'OPP'
+  | 'POS'
+  | 'TEAM'
+  | 'PAATT'
+  | 'COMP'
+  | 'PAYDS'
+  | 'PATD'
+  | 'INT'
+  | 'RUATT'
+  | 'RUYDS'
+  | 'RUTD'
+  | 'TAR'
+  | 'REC'
+  | 'REYDS'
+  | 'RETD'
+  | 'FPTS';
+
+export type NFLClientGridIronPlayer = { [key in NFLClientGridIronPlayerAttributes]: string | null } & { OWNERSHIP: Record<string, string> };
 
 export type NFLClientGridIronPlayerMap = Record<string, NFLClientGridIronPlayer>;
 export type NFLClientPlayerAttributes = NFLClientPlayerAttributesEntity & DfsClientPlayerAttributes;

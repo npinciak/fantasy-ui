@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiService } from '@app/@shared/services/api.service';
 import { DfsSlatePlayer } from '@dfsClient/daily-fantasy-client.model';
-import { NFLClientGridIronPlayer } from '@dfsClient/nfl-client.model';
+import { NFLClientGridIronPlayer } from '@sports-ui/daily-fantasy-sdk/models';
 import { uniqueBy } from '@sports-ui/ui-sdk/helpers';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -22,13 +22,7 @@ export class PlayerService {
     this.endpoint = new DailyFantasyEndpointBuilder();
   }
 
-  /**
-   * Fetch players by slate
-   *
-   * @param param0
-   * @returns
-   */
-  playersBySlate({ slatePath }: { slatePath: string }): Observable<PlayersBySlate> {
+  getPlayersBySlate({ slatePath }: { slatePath: string }): Observable<PlayersBySlate> {
     const endpoint = slatePath.replace(this.endpoint.slateNonHttps, this.endpoint.slateHttps);
     return this.apiService.get<DfsSlatePlayer[]>(endpoint).pipe(
       map(res => {
@@ -49,12 +43,6 @@ export class PlayerService {
     );
   }
 
-  /**
-   * Fetch GridIron Insights
-   *
-   * @param param0
-   * @returns
-   */
   getGridIronPlayers({ site }: { site: string }): Observable<GridIronPlayer[]> {
     let params = new HttpParams();
     params = params.append('site', site ?? 'draftkings');

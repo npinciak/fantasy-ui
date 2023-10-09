@@ -23,7 +23,7 @@ export class DfsSlatePlayersHandlerState {
     _: StateContext<GenericStateModel<SlatePlayer>>,
     { payload: { slatePath } }: { payload: { slatePath: string } }
   ): Promise<void> {
-    const { players, schedule, teams } = await this.playerService.playersBySlate({ slatePath }).toPromise();
+    const { players, schedule, teams } = await this.playerService.getPlayersBySlate({ slatePath }).toPromise();
 
     await this.dfsSlatePlayersFacade.clear().toPromise();
     await this.dfsMatchupsFacade.clear().toPromise();

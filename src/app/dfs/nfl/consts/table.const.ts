@@ -8,7 +8,7 @@ const BASE_STATS_COLUMNS = [
   { columnDef: 'smash', headerCell: 'smash', headerLabel: 'Smash', dataType: TableColumnDataType.Percentage },
   { columnDef: 'val', headerCell: 'val', headerLabel: 'Value', dataType: TableColumnDataType.Number },
   { columnDef: 'fpts', headerCell: 'fpts', headerLabel: 'FPts', dataType: TableColumnDataType.Number },
-  { columnDef: 'fptsPerK', headerCell: 'fptsPerK', headerLabel: 'FPts/$', dataType: TableColumnDataType.Number },
+  { columnDef: 'fptsPerDollar', headerCell: 'fptsPerDollar', headerLabel: 'FPts/$', dataType: TableColumnDataType.Number },
   { columnDef: 'ceil', headerCell: 'ceil', headerLabel: 'Ceil', dataType: TableColumnDataType.Number },
   { columnDef: 'floor', headerCell: 'floor', headerLabel: 'Floor', dataType: TableColumnDataType.Number },
 ];
