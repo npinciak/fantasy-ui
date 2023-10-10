@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiService } from '@app/@shared/services/api.service';
-import { DfsSlatePlayer } from '@dfsClient/daily-fantasy-client.model';
+import { DfsSlatePlayer } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { NFLClientGridIronPlayer } from '@sports-ui/daily-fantasy-sdk/models';
 import { uniqueBy } from '@sports-ui/ui-sdk/helpers';
 import { Observable } from 'rxjs';

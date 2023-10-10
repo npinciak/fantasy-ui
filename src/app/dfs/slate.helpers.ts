@@ -1,11 +1,6 @@
-import { ClientSlateTeamAttributes } from '@dfsClient/daily-fantasy-client-slate-attr.model';
-import { ClientVegas } from '@dfsClient/daily-fantasy-client.model';
-import {
-  NFLClientOutsidersProperties,
-  NFLClientSafptsProperties
-} from '@sports-ui/daily-fantasy-sdk/models';
+import { ClientSlateTeamAttributes, Vegas as ClientVegas } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { NFLClientOutsidersProperties, NFLClientSafptsProperties } from '@sports-ui/daily-fantasy-sdk/models';
 import { exists } from '@sports-ui/ui-sdk/helpers';
-import { camelCase } from 'lodash';
 import { Vegas } from './models/vegas.model';
 import { Outsiders, SaFpts, SlateTeamNfl } from './nfl/models/nfl-slate-attr.model';
 
@@ -95,6 +90,4 @@ export class DfsSlateHelpers {
 
     return final;
   }
-
-
 }

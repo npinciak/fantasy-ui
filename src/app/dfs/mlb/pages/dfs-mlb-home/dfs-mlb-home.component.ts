@@ -3,8 +3,8 @@ import { DfsMatchupsFacade } from '@app/dfs/facade/dfs-matchups.facade';
 import { DfsSlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade';
 import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
-import { ClientSlateTypes, SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
 import { MLB_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/baseball';
+import { SiteSlateEntity, SlateType } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { BehaviorSubject } from 'rxjs';
 import { HEADERS_BY_POS, ROWS_BY_POS } from '../../consts/mlb-dfs-table.const';
 import { DfsMlbSlatePlayerFacade } from '../../facade/dfs-mlb-slate-players.facade';
@@ -18,7 +18,7 @@ export class DfsMlbHomeComponent implements OnInit {
 
   playerList$ = this.mlbPlayerFacade.getPlayerTableData$;
   selectedSlate$ = new BehaviorSubject<string | null>(null);
-  selectedSlateType$ = new BehaviorSubject<ClientSlateTypes | null>(null);
+  selectedSlateType$ = new BehaviorSubject<SlateType | null>(null);
 
   slatesEmpty$ = this.dailyFantasySlateFacade.slatesEmpty$;
   selectSlateByType$ = this.dailyFantasySlateFacade.selectSlateByType$;

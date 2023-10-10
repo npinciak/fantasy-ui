@@ -6,7 +6,6 @@ import { MaterialModule } from '@app/material.module';
 import { NgxsModule } from '@ngxs/store';
 import { PlayerTableComponent } from './components/player-table/player-table.component';
 import { DfsSlateListComponent } from './components/slate-list/slate-list.component';
-import { DfsTeamMatchupTableComponent } from './components/team-matchup-table/team-matchup-table.component';
 import { DfsRoutingModule } from './dfs-routing.module';
 import { DfsSlateAttributesHandlerState } from './handlers/dfs-slate-attributes.handlers';
 import { DfsSlatePlayersHandlerState } from './handlers/dfs-slate-players.handlers';
@@ -53,7 +52,6 @@ const states = [
   declarations: [
     NflMatchupRowComponent,
     DfsNbaHomeComponent,
-    DfsTeamMatchupTableComponent,
     DfsSlateListComponent,
     DfsNflHomeComponent,
     DfsMlbHomeComponent,

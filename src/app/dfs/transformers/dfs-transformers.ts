@@ -1,4 +1,4 @@
-import { DfsSlatePlayer, Schedule as ScheduleImport, ScheduleTeamEntity } from '@dfsClient/daily-fantasy-client.model';
+import { DfsSlatePlayer, Schedule as ScheduleImport, ScheduleTeamEntity } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { NFLClientGridIronPlayer } from '@sports-ui/daily-fantasy-sdk/models';
 import { exists } from '@sports-ui/ui-sdk/helpers';
 import { SlatePlayer } from '../models/player.model';

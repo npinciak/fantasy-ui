@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
-import { ClientSlateTypes } from '@dfsClient/daily-fantasy-client.model';
 import { Action, State, StateContext } from '@ngxs/store';
 import { SiteSlateEntity } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { SLATE_TYPES } from '@sports-ui/daily-fantasy-sdk/models';
 import { DfsSlates } from '../actions/dfs-slates.actions';
 import { DfsSelectedSlateConfigurationFacade } from '../facade/dfs-selected-slate-configuration.facade';
 import { DfsSlatesFacade } from '../facade/dfs-slates.facade';
@@ -32,8 +32,8 @@ export class DfsSlatesHandlerState {
 
     if (slates.length <= 0) return;
 
-    const filteredClassicSlates = slates.filter(s => s.type === ClientSlateTypes.Classic);
-    const filteredShowdownSlates = slates.filter(s => s.type === ClientSlateTypes.Showdown);
+    const filteredClassicSlates = slates.filter(s => s.type === SLATE_TYPES.Classic);
+    const filteredShowdownSlates = slates.filter(s => s.type === SLATE_TYPES.Showdown);
 
     const filteredClassicSlatesExist = filteredClassicSlates.length > 0;
     const slateId = filteredClassicSlatesExist ? filteredClassicSlates[0].importId : filteredShowdownSlates[0].importId;

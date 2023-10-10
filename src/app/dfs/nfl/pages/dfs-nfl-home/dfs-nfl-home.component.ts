@@ -4,7 +4,7 @@ import { DfsSelectedSlateConfigurationFacade } from '@app/dfs/facade/dfs-selecte
 import { DfsSlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade';
 import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
-import { ClientSlateTypes, SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
+import { SiteSlateEntity, SlateType } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -59,7 +59,7 @@ export class DfsNflHomeComponent implements OnInit {
   yAxisStat$ = new BehaviorSubject<string | null>(null);
 
   selectedSlate$ = this.dfsSelectedSlateConfigurationFacade.slateId$;
-  selectedSlateType$ = new BehaviorSubject<ClientSlateTypes | null>(null);
+  selectedSlateType$ = new BehaviorSubject<SlateType | null>(null);
 
   playerScatterData$ = combineLatest([this.nflPlayerFacade.playerScatterData$, this.xAxisStat$, this.yAxisStat$]).pipe(
     map(([playerScatterData, xAxis, yAxis]) => {
@@ -69,7 +69,7 @@ export class DfsNflHomeComponent implements OnInit {
 
   slateWeather$ = combineLatest([this.selectedSlateType$, this.dailyFantasySlateFacade.slateWeather$]).pipe(
     map(([slate, weather]) => {
-      return slate != null ? weather(slate as ClientSlateTypes) : [];
+      return slate != null ? weather(slate as SlateType) : [];
     })
   );
 

@@ -6,12 +6,8 @@ import { ApiService } from '@app/@shared/services/api.service';
 import { DailyFantasyEndpointBuilder } from '@app/dfs/daily-fantasy-endpoint-builder';
 import { SlatePlayer } from '@app/dfs/models/slate-player.model';
 import { DfsSlateTransformers } from '@app/dfs/transformers/dfs-transformers.m';
-import {
-  ClientSlateAttributes,
-  ClientSlateTeamAttributesMap,
-  DfsClientPlayerAttributes,
-} from '@dfsClient/daily-fantasy-client-slate-attr.model';
-import { ClientVegas } from '@dfsClient/daily-fantasy-client.model';
+import { ClientSlateAttributes, ClientSlateTeamAttributesMap, Vegas } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { DfsClientPlayerAttributes } from '@sports-ui/daily-fantasy-sdk/models';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -65,4 +61,4 @@ type SlateAttributes = {
   players: SlatePlayer[];
 };
 
-export type MlbSlateTeam = { id: string; vegas: ClientVegas } & DfsClientPlayerAttributes;
+export type MlbSlateTeam = { id: string; vegas: Vegas } & DfsClientPlayerAttributes;
