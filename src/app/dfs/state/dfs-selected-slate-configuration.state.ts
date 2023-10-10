@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
 import { patch } from '@ngxs/store/operators';
-import { DfsSelectedSlateConfiguration } from '../actions/dfs-selected-slate-configuration.actions';
+import { DfsSelectedSlateConfigurationActions } from '../actions/dfs-selected-slate-configuration.actions';
 
 export class DfsSelectedSlateConfigurationStateModel {
   slateId: string | null;
@@ -18,12 +18,12 @@ export const INITIAL_STATE: DfsSelectedSlateConfigurationStateModel = {
 };
 
 @State<DfsSelectedSlateConfigurationStateModel>({
-  name: DfsSelectedSlateConfiguration.stateName,
+  name: DfsSelectedSlateConfigurationActions.stateName,
   defaults: INITIAL_STATE,
 })
 @Injectable()
 export class DfsSelectedSlateConfigurationState {
-  @Action(DfsSelectedSlateConfiguration.SetSlateId)
+  @Action(DfsSelectedSlateConfigurationActions.SetSlateId)
   setSlateId(
     { setState }: StateContext<DfsSelectedSlateConfigurationStateModel>,
     { payload: { slateId } }: { payload: { slateId: string | null } }
@@ -31,7 +31,7 @@ export class DfsSelectedSlateConfigurationState {
     setState(patch<DfsSelectedSlateConfigurationStateModel>({ slateId }));
   }
 
-  @Action(DfsSelectedSlateConfiguration.SetSite)
+  @Action(DfsSelectedSlateConfigurationActions.SetSite)
   setSite(
     { setState }: StateContext<DfsSelectedSlateConfigurationStateModel>,
     { payload: { site } }: { payload: { site: string | null } }
@@ -39,7 +39,7 @@ export class DfsSelectedSlateConfigurationState {
     setState(patch<DfsSelectedSlateConfigurationStateModel>({ site }));
   }
 
-  @Action(DfsSelectedSlateConfiguration.SetPath)
+  @Action(DfsSelectedSlateConfigurationActions.SetPath)
   setPath(
     { setState }: StateContext<DfsSelectedSlateConfigurationStateModel>,
     { payload: { path } }: { payload: { path: string | null } }
@@ -47,7 +47,7 @@ export class DfsSelectedSlateConfigurationState {
     setState(patch<DfsSelectedSlateConfigurationStateModel>({ path }));
   }
 
-  @Action(DfsSelectedSlateConfiguration.SetSport)
+  @Action(DfsSelectedSlateConfigurationActions.SetSport)
   setSport(
     { setState }: StateContext<DfsSelectedSlateConfigurationStateModel>,
     { payload: { sport } }: { payload: { sport: string | null } }

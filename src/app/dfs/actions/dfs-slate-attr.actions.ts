@@ -1,14 +1,14 @@
 import { GenericActions } from '@app/@shared/generic-state/generic.actions';
 import { SlateTeam } from '../models/slate-team.model';
 
-export class DfsSlateAttributes extends GenericActions<SlateTeam, { slateId: string }>({
+export class DfsSlateAttributesActions extends GenericActions<SlateTeam, { slateId: string }>({
   stateName: 'dfsSlateAttributes',
 }) {
   /**
    * @deprecated user selectedSlateConfiguration instead
    */
   static SetSlateId = class {
-    static readonly type = `[${DfsSlateAttributes.stateName}] SetSlateId`;
+    static readonly type = `[${DfsSlateAttributesActions.stateName}] SetSlateId`;
     constructor(public payload: { slateId: string }) {}
   };
 
@@ -16,7 +16,7 @@ export class DfsSlateAttributes extends GenericActions<SlateTeam, { slateId: str
    * @deprecated user selectedSlateConfiguration instead
    */
   static SetSite = class {
-    static readonly type = `[${DfsSlateAttributes.stateName}] SetSite`;
+    static readonly type = `[${DfsSlateAttributesActions.stateName}] SetSite`;
     constructor(public payload: { site: string }) {}
   };
 }

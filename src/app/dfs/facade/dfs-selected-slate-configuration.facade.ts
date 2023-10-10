@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { DfsSelectedSlateConfiguration } from '../actions/dfs-selected-slate-configuration.actions';
+import { DfsSelectedSlateConfigurationActions } from '../actions/dfs-selected-slate-configuration.actions';
 import { DfsSelectedSlateConfigurationSelectors } from '../selectors/dfs-selected-slate-configuration.selectors';
 
 @Injectable({
@@ -33,18 +33,18 @@ export class DfsSelectedSlateConfigurationFacade {
   }
 
   setSlateId(slateId: string): Observable<void> {
-    return this.store.dispatch(new DfsSelectedSlateConfiguration.SetSlateId({ slateId }));
+    return this.store.dispatch(new DfsSelectedSlateConfigurationActions.SetSlateId({ slateId }));
   }
 
   setSite(site: string): Observable<void> {
-    return this.store.dispatch(new DfsSelectedSlateConfiguration.SetSite({ site }));
+    return this.store.dispatch(new DfsSelectedSlateConfigurationActions.SetSite({ site }));
   }
 
   setPath(path: string): Observable<void> {
-    return this.store.dispatch(new DfsSelectedSlateConfiguration.SetPath({ path }));
+    return this.store.dispatch(new DfsSelectedSlateConfigurationActions.SetPath({ path }));
   }
 
   setSport(sport: string): Observable<void> {
-    return this.store.dispatch(new DfsSelectedSlateConfiguration.SetSport({ sport }));
+    return this.store.dispatch(new DfsSelectedSlateConfigurationActions.SetSport({ sport }));
   }
 }

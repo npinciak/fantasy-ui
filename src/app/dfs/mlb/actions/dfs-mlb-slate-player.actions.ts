@@ -1,4 +1,4 @@
 import { GenericActions } from '@app/@shared/generic-state/generic.actions';
 import { SlatePlayer } from '@app/dfs/models/slate-player.model';
 
-export class DfsMlbSlatePlayer extends GenericActions<SlatePlayer>({ stateName: 'dfsMlbSlatePlayer' }) {}
+export class DfsMlbSlatePlayerActions extends GenericActions<SlatePlayer>({ stateName: 'dfsMlbSlatePlayer' }) {}

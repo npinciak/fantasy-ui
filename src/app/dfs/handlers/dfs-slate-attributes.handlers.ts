@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext, Store } from '@ngxs/store';
-import { DfsSlateAttributes } from '../actions/dfs-slate-attr.actions';
-import { DfsMlbSlatePlayer } from '../mlb/actions/dfs-mlb-slate-player.actions';
-import { DfsMlbSlateTeamDetails } from '../mlb/actions/dfs-mlb-slate-team.actions';
-import { DfsNflGridIron } from '../nfl/actions/dfs-nfl-grid-iron.actions';
-import { DfsNflSlatePlayerAttributes } from '../nfl/actions/dfs-nfl-slate-player-attributes.actions';
-
-import { DfsNflSlateTeamDetails } from '../nfl/actions/dfs-nfl-slate-team.actions';
-import { SlateTeamNfl } from '../nfl/models/nfl-slate-attr.model';
-
+import { DfsSlateAttributesActions } from '../actions/dfs-slate-attr.actions';
 import { DfsSelectedSlateConfigurationFacade } from '../facade/dfs-selected-slate-configuration.facade';
-
+import { DfsMlbSlatePlayerActions } from '../mlb/actions/dfs-mlb-slate-player.actions';
+import { DfsMlbSlateTeamDetailsActions } from '../mlb/actions/dfs-mlb-slate-team.actions';
+import { SlateTeamNfl } from '../models/slate-team.model';
+import { DfsNflGridIronActions } from '../nfl/actions/dfs-nfl-grid-iron.actions';
+import { DfsNflSlatePlayerAttributesActions } from '../nfl/actions/dfs-nfl-slate-player-attributes.actions';
+import { DfsNflSlateTeamDetailsActions } from '../nfl/actions/dfs-nfl-slate-team.actions';
 import { SlateService } from '../service/slate.service';
 
 export class DfsSlateAttributesStateModel {
@@ -23,7 +20,7 @@ const defaults = {
   site: null,
 };
 
-@State({ name: DfsSlateAttributes.stateName + 'Actionhandler' })
+@State({ name: DfsSlateAttributesActions.stateName + 'Actionhandler' })
 @Injectable()
 export class DfsSlateAttributesHandlerState {
   constructor(
@@ -32,7 +29,7 @@ export class DfsSlateAttributesHandlerState {
     private dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade
   ) {}
 
-  @Action(DfsSlateAttributes.Fetch)
+  @Action(DfsSlateAttributesActions.Fetch)
   async fetchSlateAttr(_: StateContext<DfsSlateAttributesStateModel>, { payload: { slateId } }: { payload: { slateId } }): Promise<void> {
     const sport = this.dfsSelectedSlateConfigurationFacade.sport;
     const site = this.dfsSelectedSlateConfigurationFacade.site;
@@ -45,15 +42,15 @@ export class DfsSlateAttributesHandlerState {
 
     switch (sport) {
       case 'mlb':
-        this.store.dispatch([new DfsMlbSlatePlayer.AddOrUpdate(players), new DfsMlbSlateTeamDetails.AddOrUpdate(teams)]);
+        this.store.dispatch([new DfsMlbSlatePlayerActions.AddOrUpdate(players), new DfsMlbSlateTeamDetailsActions.AddOrUpdate(teams)]);
 
         break;
       case 'nfl':
         await this.store
           .dispatch([
-            new DfsNflSlatePlayerAttributes.AddOrUpdate(players),
-            new DfsNflSlateTeamDetails.AddOrUpdate(teams as SlateTeamNfl[]),
-            new DfsNflGridIron.Fetch({ site }),
+            new DfsNflSlatePlayerAttributesActions.AddOrUpdate(players),
+            new DfsNflSlateTeamDetailsActions.AddOrUpdate(teams as SlateTeamNfl[]),
+            new DfsNflGridIronActions.Fetch({ site }),
           ])
           .toPromise();
         break;

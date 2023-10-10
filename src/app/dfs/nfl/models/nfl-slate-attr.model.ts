@@ -1,5 +1,4 @@
 import { SlatePlayer } from '@app/dfs/models/slate-player.model';
-import { SlateTeam } from '@app/dfs/models/slate-team.model';
 import { ExpertConsensusRank } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 
 export type SlatePlayerNfl = SlatePlayer & {
@@ -44,8 +43,3 @@ export type OutsidersAttributes =
 
 export type SaFpts = { [att in SaFptsAttributes]: number | null };
 export type Outsiders = { [att in OutsidersAttributes]: number | null };
-
-export type SlateTeamNfl = SlateTeam & {
-  outsiders: Outsiders | null;
-  safpts: SaFpts | null;
-};

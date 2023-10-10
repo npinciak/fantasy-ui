@@ -1,9 +1,10 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { Schedule } from '../models/schedule.model';
+import { SlateTeamNfl } from '../models/slate-team.model';
 import { Team } from '../models/team.model';
 import { Vegas } from '../models/vegas.model';
-import { Outsiders, SlateTeamNfl } from '../nfl/models/nfl-slate-attr.model';
+import { Outsiders } from '../nfl/models/nfl-slate-attr.model';
 import { DfsNflSlateTeamDetailsSelectors } from '../nfl/selectors/dfs-nfl-slate-team.selectors';
 import { DfsMatchupsState } from '../state/dfs-matchups.state';
 

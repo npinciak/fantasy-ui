@@ -1,4 +1,4 @@
 import { GenericActions } from '@app/@shared/generic-state/generic.actions';
-import { SlateTeamNfl } from '../models/nfl-slate-attr.model';
+import { SlateTeamNfl } from '@app/dfs/models/slate-team.model';
 
-export class DfsNflSlateTeamDetails extends GenericActions<SlateTeamNfl>({ stateName: 'dfsNflSlateTeamDetails' }) {}
+export class DfsNflSlateTeamDetailsActions extends GenericActions<SlateTeamNfl>({ stateName: 'dfsNflSlateTeamDetails' }) {}

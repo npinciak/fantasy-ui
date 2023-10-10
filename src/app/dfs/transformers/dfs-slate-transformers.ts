@@ -7,13 +7,13 @@ import {
   SITE_TO_SITETYPE_MAP,
   SlateWeather,
 } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
-import { NFLClientOutsidersProperties, NFLClientSafptsProperties } from '@sports-ui/daily-fantasy-sdk/models';
-import { Vegas } from '../models/vegas.model';
-import { MLBClientTeamAttributes } from '@sports-ui/daily-fantasy-sdk/models';
+import { MLBClientTeamAttributes, NFLClientOutsidersProperties, NFLClientSafptsProperties } from '@sports-ui/daily-fantasy-sdk/models';
 import { exists } from '@sports-ui/ui-sdk/helpers';
 import { SlatePlayer } from '../models/slate-player.model';
+import { SlateTeamNfl } from '../models/slate-team.model';
+import { Vegas } from '../models/vegas.model';
 import { Weather } from '../models/weather.model';
-import { Outsiders, SaFpts, SlateTeamNfl } from '../nfl/models/nfl-slate-attr.model';
+import { Outsiders, SaFpts } from '../nfl/models/nfl-slate-attr.model';
 
 export function transformMlbSlateTeamAttributes(teamAttributes: ClientSlateTeamAttributes, site: string): MLBClientTeamAttributes {
   const obj = {} as MLBClientTeamAttributes;
@@ -65,18 +65,18 @@ export function transformWeather(games: Record<string, SlateWeather>): Weather[]
   }));
 }
 
-export function transformSlateTeamAttributesToSlateTeamNfl(teamAttributes: ClientSlateTeamAttributes | null | undefined): SlateTeamNfl {
+export function transformSlateTeamAttributesToSlateTeamNfl(
+  teamAttributes: ClientSlateTeamAttributes | null | undefined
+): Pick<SlateTeamNfl, 'outsiders' | 'safpts' | 'vegas'> {
   const final = { outsiders: null, safpts: null, vegas: null } as SlateTeamNfl;
 
   if (!exists(teamAttributes)) return final;
 
-  final.outsiders = transformClientOutsidersToOutsiders(teamAttributes.outsiders);
-
-  final.safpts = transformClientSafptsToSafpts(teamAttributes.safpts);
-
-  final.vegas = transformClientVegasToVegas(teamAttributes.vegas);
-
-  return final;
+  return {
+    outsiders: transformClientOutsidersToOutsiders(teamAttributes.outsiders),
+    safpts: transformClientSafptsToSafpts(teamAttributes.safpts),
+    vegas: transformClientVegasToVegas(teamAttributes.vegas),
+  };
 }
 
 export function transformClientOutsidersToOutsiders(client: NFLClientOutsidersProperties | null | undefined): Outsiders | null {

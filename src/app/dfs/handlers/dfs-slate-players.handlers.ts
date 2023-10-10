@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { Action, State, StateContext } from '@ngxs/store';
-import { DfsSlatePlayers } from '../actions/dfs-slate-players.actions';
+import { DfsSlatePlayersActions } from '../actions/dfs-slate-players.actions';
 import { DfsMatchupsFacade } from '../facade/dfs-matchups.facade';
 import { DfsSlatePlayersFacade } from '../facade/dfs-slate-players.facade';
 import { DfsTeamsFacade } from '../facade/dfs-teams.facade';
 import { SlatePlayer } from '../models/player.model';
 import { PlayerService } from '../service/player.service';
 
-@State({ name: DfsSlatePlayers.stateName + 'ActionHandler' })
+@State({ name: DfsSlatePlayersActions.stateName + 'ActionHandler' })
 @Injectable()
 export class DfsSlatePlayersHandlerState {
   constructor(
@@ -18,7 +18,7 @@ export class DfsSlatePlayersHandlerState {
     private dfsSlatePlayersFacade: DfsSlatePlayersFacade
   ) {}
 
-  @Action(DfsSlatePlayers.Fetch)
+  @Action(DfsSlatePlayersActions.Fetch)
   async fetchPlayers(
     _: StateContext<GenericStateModel<SlatePlayer>>,
     { payload: { slatePath } }: { payload: { slatePath: string } }

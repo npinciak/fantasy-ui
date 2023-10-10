@@ -3,13 +3,13 @@ import { linearRegression, transformScatterGraphData } from '@app/@shared/helper
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { SlatePlayer } from '@app/dfs/models/player.model';
+import { SlateTeamNfl } from '@app/dfs/models/slate-team.model';
 import { DfsTeamsSelectors } from '@app/dfs/selectors/dfs-teams.selectors';
 import { DfsSlatePlayersState } from '@app/dfs/state/dfs-slate-players.state';
 import { NFL_RG_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
 import { exists, existsFilter, pickData, uniqueBy } from '@sports-ui/ui-sdk/helpers';
 import { GridIronPlayer } from '../models/nfl-gridIron.model';
 import { NflDfsPlayerTableData } from '../models/nfl-player.model';
-import { SlateTeamNfl } from '../models/nfl-slate-attr.model';
 import { DfsNflGridIronSelectors } from './dfs-nfl-grid-iron.selectors';
 import { DfsNflSlateTeamDetailsSelectors } from './dfs-nfl-slate-team.selectors';
 

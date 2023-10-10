@@ -3,12 +3,12 @@ import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { Action, State, StateContext } from '@ngxs/store';
 import { SiteSlateEntity } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { SLATE_TYPES } from '@sports-ui/daily-fantasy-sdk/models';
-import { DfsSlates } from '../actions/dfs-slates.actions';
+import { DfsSlatesActions } from '../actions/dfs-slates.actions';
 import { DfsSelectedSlateConfigurationFacade } from '../facade/dfs-selected-slate-configuration.facade';
 import { DfsSlatesFacade } from '../facade/dfs-slates.facade';
 import { SlateService } from '../service/slate.service';
 
-@State({ name: DfsSlates.stateName + 'ActionHandler' })
+@State({ name: DfsSlatesActions.stateName + 'ActionHandler' })
 @Injectable()
 export class DfsSlatesHandlerState {
   constructor(
@@ -17,7 +17,7 @@ export class DfsSlatesHandlerState {
     private slateService: SlateService
   ) {}
 
-  @Action(DfsSlates.Fetch)
+  @Action(DfsSlatesActions.Fetch)
   async fetchSlates(
     _: StateContext<GenericStateModel<SiteSlateEntity>>,
     { payload }: { payload: { sport: string; site: string } }
