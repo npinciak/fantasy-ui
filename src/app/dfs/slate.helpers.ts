@@ -1,19 +1,12 @@
-import { normalizeStringToNumber, objectIsEmpty } from '@app/@shared/helpers/utils';
 import { ClientSlateTeamAttributes } from '@dfsClient/daily-fantasy-client-slate-attr.model';
 import { ClientVegas } from '@dfsClient/daily-fantasy-client.model';
 import {
   NFLClientOutsidersProperties,
-  NFLClientProfilerQBProperties,
-  NFLClientProfilerRBProperties,
-  NFLClientProfilerReceiverProperties,
-  NFLClientProfilerTimeFrameEntity,
-  NFLClientSafptsProperties,
-  NFLClientStatGroup,
+  NFLClientSafptsProperties
 } from '@sports-ui/daily-fantasy-sdk/models';
 import { exists } from '@sports-ui/ui-sdk/helpers';
 import { camelCase } from 'lodash';
 import { Vegas } from './models/vegas.model';
-import { ProfilerQB, ProfilerRB, ProfilerReceiver } from './nfl/models/nfl-profiler.model';
 import { Outsiders, SaFpts, SlateTeamNfl } from './nfl/models/nfl-slate-attr.model';
 
 export class DfsSlateHelpers {
@@ -103,85 +96,5 @@ export class DfsSlateHelpers {
     return final;
   }
 
-  static camelCaseObjProps(obj: Record<string, unknown>) {
-    return Object.keys(obj).map(k => camelCase(k));
-  }
 
-  static normalizeStatGroupToProfiler(pos: NFLClientStatGroup): NormalizedProfiler;
-  static normalizeStatGroupToProfiler(pos: undefined): null;
-  static normalizeStatGroupToProfiler(statGroup: NFLClientStatGroup | undefined): NormalizedProfiler | null {
-    if (!exists(statGroup) || objectIsEmpty(statGroup)) return null;
-
-    const statGroupQb = statGroup.qb.profiler.season;
-    const statGroupRb = statGroup.rb.profiler.season;
-    const statGroupWr = statGroup.wr.profiler.season;
-    const statGroupTe = statGroup.te.profiler.season;
-
-    const qb = DfsSlateHelpers.transformStatGroup<ProfilerQB>(statGroupQb);
-    const rb = DfsSlateHelpers.transformStatGroup<ProfilerRB>(statGroupRb);
-    const te = DfsSlateHelpers.transformStatGroup<ProfilerReceiver>(statGroupTe);
-    const wr = DfsSlateHelpers.transformStatGroup<ProfilerReceiver>(statGroupWr);
-
-    return {
-      qb,
-      rb,
-      te,
-      wr,
-    };
-  }
-
-  static transformStatGroup<T>(obj: NFLClientProfilerTimeFrameEntity | undefined): T[] {
-    if (!obj) return [];
-
-    const players = [] as any[];
-
-    for (const [rgId, value] of Object.entries(obj)) {
-      const transform = {
-        rgId,
-        productionPremium: normalizeStringToNumber(value['Production Premium']),
-        matchupRtg: DfsSlateHelpers.isNFLClientProfilerReceiver(value) ? normalizeStringToNumber(value['Matchup Rtg']) : null,
-        weeklyVolatility: normalizeStringToNumber(value['Weekly Volatility']),
-        redZoneTargetShare: normalizeStringToNumber(value['Red Zone Target Share']),
-        targetShare: normalizeStringToNumber(value['Target Share']),
-        dominatorRating: normalizeStringToNumber(value['Dominator Rating']),
-        protectionRate: normalizeStringToNumber(value['Protection Rate']),
-        truePasserRating: normalizeStringToNumber(value['True Passer Rating']),
-        pressuredCompletionPercentage: normalizeStringToNumber(value['Pressured Completion Percentage']),
-        gameScript: normalizeStringToNumber(value['Game Script']),
-        goalLineCarriesPerGame: normalizeStringToNumber(value['Goal Line Carries Per Game']),
-      };
-
-      players.push(transform);
-    }
-
-    return players;
-  }
-
-  static isNFLClientProfilerQB(
-    value: NFLClientProfilerQBProperties | NFLClientProfilerRBProperties | NFLClientProfilerReceiverProperties
-  ): value is NFLClientProfilerQBProperties {
-    // eslint-disable-next-line no-prototype-builtins
-    return value.hasOwnProperty('Total QBR');
-  }
-
-  static isNFLClientProfilerRB(
-    value: NFLClientProfilerQBProperties | NFLClientProfilerRBProperties | NFLClientProfilerReceiverProperties
-  ): value is NFLClientProfilerRBProperties {
-    // eslint-disable-next-line no-prototype-builtins
-    return value.hasOwnProperty('passEpa');
-  }
-
-  static isNFLClientProfilerReceiver(
-    value: NFLClientProfilerQBProperties | NFLClientProfilerRBProperties | NFLClientProfilerReceiverProperties
-  ): value is NFLClientProfilerReceiverProperties {
-    // eslint-disable-next-line no-prototype-builtins
-    return value.hasOwnProperty('Matchup Rtg');
-  }
-}
-
-interface NormalizedProfiler {
-  qb: ProfilerQB[];
-  rb: ProfilerRB[];
-  te: ProfilerReceiver[];
-  wr: ProfilerReceiver[];
 }

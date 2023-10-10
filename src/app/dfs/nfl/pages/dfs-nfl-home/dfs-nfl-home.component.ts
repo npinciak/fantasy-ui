@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DfsMatchupsFacade } from '@app/dfs/facade/dfs-matchups.facade';
+import { DfsSelectedSlateConfigurationFacade } from '@app/dfs/facade/dfs-selected-slate-configuration.facade';
 import { DfsSlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade';
 import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
@@ -57,7 +58,7 @@ export class DfsNflHomeComponent implements OnInit {
   xAxisStat$ = new BehaviorSubject<string | null>(null);
   yAxisStat$ = new BehaviorSubject<string | null>(null);
 
-  selectedSlate$ = new BehaviorSubject<string | null>(null);
+  selectedSlate$ = this.dfsSelectedSlateConfigurationFacade.slateId$;
   selectedSlateType$ = new BehaviorSubject<ClientSlateTypes | null>(null);
 
   playerScatterData$ = combineLatest([this.nflPlayerFacade.playerScatterData$, this.xAxisStat$, this.yAxisStat$]).pipe(
@@ -89,7 +90,8 @@ export class DfsNflHomeComponent implements OnInit {
     readonly dailyFantasyPlayersFacade: DfsSlatePlayersFacade,
     readonly dailyFantasySlateFacade: DfsSlatesFacade,
     readonly dailyFantasySlateAttrFacade: DfsSlateAttrFacade,
-    readonly dailyFantasyMatchupFacade: DfsMatchupsFacade
+    readonly dailyFantasyMatchupFacade: DfsMatchupsFacade,
+    readonly dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade
   ) {}
 
   ngOnInit(): void {
@@ -124,15 +126,8 @@ export class DfsNflHomeComponent implements OnInit {
 
   onSelectSlate(event: SiteSlateEntity) {
     this.dailyFantasyPlayersFacade.fetchPlayers(event.slate_path);
-    this.selectedSlate$.next(event.name);
+    this.dfsSelectedSlateConfigurationFacade.setSlateId(event.importId);
     this.selectedSlateType$.next(event.type);
     this.dailyFantasySlateAttrFacade.fetchSlateAttributesBySlateId(event.importId);
   }
 }
-
-//  Green
-//  Yellow
-//  Orange
-//  Red
-//   Orange/Yellow
-//    Yellow/Orange

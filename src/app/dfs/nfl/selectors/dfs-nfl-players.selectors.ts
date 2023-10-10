@@ -9,13 +9,8 @@ import { NFL_RG_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
 import { exists, existsFilter, pickData, uniqueBy } from '@sports-ui/ui-sdk/helpers';
 import { GridIronPlayer } from '../models/nfl-gridIron.model';
 import { NflDfsPlayerTableData } from '../models/nfl-player.model';
-import { ProfilerQB, ProfilerRB, ProfilerReceiver } from '../models/nfl-profiler.model';
 import { SlateTeamNfl } from '../models/nfl-slate-attr.model';
 import { DfsNflGridIronSelectors } from './dfs-nfl-grid-iron.selectors';
-import { DfsNflProfilerQBSelectors } from './dfs-nfl-profiler-qb.selectors';
-import { DfsNflProfilerRBSelectors } from './dfs-nfl-profiler-rb.selectors';
-import { DfsNflProfilerTESelectors } from './dfs-nfl-profiler-te.selectors';
-import { DfsNflProfilerWRSelectors } from './dfs-nfl-profiler-wr.selectors';
 import { DfsNflSlateTeamDetailsSelectors } from './dfs-nfl-slate-team.selectors';
 
 export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState) {
@@ -47,22 +42,10 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
     return [...reset, ...positions];
   }
 
-  @Selector([
-    DfsNflPlayerSelectors.getList,
-    DfsNflGridIronSelectors.getById,
-    DfsNflProfilerQBSelectors.getById,
-    DfsNflProfilerRBSelectors.getById,
-    DfsNflProfilerWRSelectors.getById,
-    DfsNflProfilerTESelectors.getById,
-    DfsNflSlateTeamDetailsSelectors.getById,
-  ])
+  @Selector([DfsNflPlayerSelectors.getList, DfsNflGridIronSelectors.getById, DfsNflSlateTeamDetailsSelectors.getById])
   static getPlayerTableData(
     list: SlatePlayer[],
     gridIronById: (id: string | null) => GridIronPlayer | null,
-    playerProfilerQbById: (rgId: string | null) => ProfilerQB | null,
-    playerProfilerRbById: (rgId: string | null) => ProfilerRB | null,
-    playerProfilerWrById: (rgId: string | null) => ProfilerReceiver | null,
-    playerProfilerTeById: (rgId: string | null) => ProfilerReceiver | null,
     teamMatchupById: (rgId: string | null) => SlateTeamNfl | null
   ): NflDfsPlayerTableData[] {
     return list
@@ -72,61 +55,6 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
         const salary = exists(p.salaries) ? Number(p.salaries[0].salary) : 0;
         const gridIron = gridIronById(p.rgId);
 
-        /** @deprecated data unavailable as of 10.5.2023 */
-        const playerProfilerQb = playerProfilerQbById(p.rgId);
-
-        /** @deprecated data unavailable as of 10.5.2023 */
-        const playerProfilerRb = playerProfilerRbById(p.rgId);
-
-        /** @deprecated data unavailable as of 10.5.2023 */
-        const playerProfilerWr = playerProfilerWrById(p.rgId);
-
-        /** @deprecated data unavailable as of 10.5.2023 */
-        const playerProfilerTe = playerProfilerTeById(p.rgId);
-
-        /** @deprecated data unavailable as of 10.5.2023 */
-        const productionPremium =
-          playerProfilerQb?.productionPremium ??
-          playerProfilerRb?.productionPremium ??
-          playerProfilerWr?.productionPremium ??
-          playerProfilerTe?.productionPremium ??
-          null;
-
-        /** @deprecated data unavailable as of 10.5.2023 */
-        const matchupRtg = playerProfilerWr?.matchupRtg ?? null;
-
-        /** @deprecated data unavailable as of 10.5.2023 */
-        const weeklyVolatility =
-          playerProfilerQb?.weeklyVolatility ??
-          playerProfilerRb?.weeklyVolatility ??
-          playerProfilerWr?.weeklyVolatility ??
-          playerProfilerTe?.weeklyVolatility ??
-          null;
-
-        /** @deprecated data unavailable as of 10.5.2023 */
-        const redZoneTargetShare = playerProfilerWr?.redZoneTargetShare ?? playerProfilerTe?.redZoneTargetShare ?? null;
-
-        /** @deprecated data unavailable as of 10.5.2023 */
-        const gameScript = playerProfilerRb?.gameScript ?? null;
-
-        /** @deprecated data unavailable as of 10.5.2023 */
-        const goalLineCarriesPerGame = playerProfilerRb?.goalLineCarriesPerGame ?? null;
-
-        /** @deprecated data unavailable as of 10.5.2023 */
-        const targetShare = playerProfilerWr?.targetShare ?? playerProfilerTe?.targetShare ?? null;
-
-        /** @deprecated data unavailable as of 10.5.2023 */
-        const dominatorRating = playerProfilerWr?.dominatorRating ?? playerProfilerTe?.dominatorRating ?? null;
-
-        /** @deprecated data unavailable as of 10.5.2023 */
-        const protectionRate = playerProfilerQb?.protectionRate ?? null;
-
-        /** @deprecated data unavailable as of 10.5.2023 */
-        const truePasserRating = playerProfilerQb?.truePasserRating ?? null;
-
-        /** @deprecated data unavailable as of 10.5.2023 */
-        const pressuredCompletionPercentage = playerProfilerQb?.pressuredCompletionPercentage ?? null;
-
         const { id, name, rgTeamId, position } = p;
 
         return {
@@ -135,19 +63,8 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
           rgTeamId,
           position,
           salary,
-          dominatorRating,
-          protectionRate,
-          truePasserRating,
-          pressuredCompletionPercentage,
-          targetShare,
-          gameScript,
-          goalLineCarriesPerGame,
           oppRushDefRank: matchup?.outsiders?.oppRuDefRk,
           oppPassDefRank: matchup?.outsiders?.oppPaDefRk,
-          productionPremium,
-          matchupRtg,
-          weeklyVolatility,
-          redZoneTargetShare,
           pown: gridIron ? gridIron.pown : null,
           opp: gridIron ? gridIron.opp : null,
           smash: gridIron ? gridIron.smash : null,

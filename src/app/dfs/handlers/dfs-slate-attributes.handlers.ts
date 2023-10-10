@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext, Store } from '@ngxs/store';
-import { exists } from '@sports-ui/ui-sdk/helpers';
 import { DfsSlateAttributes } from '../actions/dfs-slate-attr.actions';
 import { DfsMlbSlatePlayer } from '../mlb/actions/dfs-mlb-slate-player.actions';
 import { DfsMlbSlateTeamDetails } from '../mlb/actions/dfs-mlb-slate-team.actions';
@@ -8,15 +7,10 @@ import { DfsNflGridIron } from '../nfl/actions/dfs-nfl-grid-iron.actions';
 import { DfsNflSlatePlayerAttributes } from '../nfl/actions/dfs-nfl-slate-player-attributes.actions';
 
 import { DfsNflSlateTeamDetails } from '../nfl/actions/dfs-nfl-slate-team.actions';
-import { PlayerProfiler } from '../nfl/models/nfl-profiler.model';
 import { SlateTeamNfl } from '../nfl/models/nfl-slate-attr.model';
 
-import { RouterFacade } from '@app/@core/router/router.facade';
 import { DfsSelectedSlateConfigurationFacade } from '../facade/dfs-selected-slate-configuration.facade';
-import { DfsNflProfilerQBFacade } from '../nfl/facade/dfs-nfl-profiler-qb.facade';
-import { DfsNflProfilerRBFacade } from '../nfl/facade/dfs-nfl-profiler-rb.facade';
-import { DfsNflProfilerTEFacade } from '../nfl/facade/dfs-nfl-profiler-te.facade';
-import { DfsNflProfilerWRFacade } from '../nfl/facade/dfs-nfl-profiler-wr.facade';
+
 import { SlateService } from '../service/slate.service';
 
 export class DfsSlateAttributesStateModel {
@@ -35,12 +29,7 @@ export class DfsSlateAttributesHandlerState {
   constructor(
     private store: Store,
     private slateService: SlateService,
-    private routerFacade: RouterFacade,
-    private dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade,
-    private dfsNflProfilerQbFacade: DfsNflProfilerQBFacade,
-    private dfsNflProfilerRbFacade: DfsNflProfilerRBFacade,
-    private dfsNflProfilerWrFacade: DfsNflProfilerWRFacade,
-    private dfsNflProfilerTeFacade: DfsNflProfilerTEFacade
+    private dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade
   ) {}
 
   @Action(DfsSlateAttributes.Fetch)
@@ -50,12 +39,7 @@ export class DfsSlateAttributesHandlerState {
 
     if (!sport || !site) return;
 
-    const { statGroups, teams, players } = await this.slateService.getGameAttrBySlateId({ sport, site, slateId }).toPromise();
-
-    const qbStatGroup = exists(statGroups) ? statGroups.qb : ([] as PlayerProfiler[]);
-    const rbStatGroup = exists(statGroups) ? statGroups.rb : ([] as PlayerProfiler[]);
-    const wrStatGroup = exists(statGroups) ? statGroups.wr : ([] as PlayerProfiler[]);
-    const teStatGroup = exists(statGroups) ? statGroups.te : ([] as PlayerProfiler[]);
+    const { teams, players } = await this.slateService.getGameAttrBySlateId({ sport, site, slateId }).toPromise();
 
     // this.store.dispatch([new DfsWeather.AddOrUpdate(weather)]);
 
@@ -65,19 +49,6 @@ export class DfsSlateAttributesHandlerState {
 
         break;
       case 'nfl':
-        await Promise.all([
-          this.dfsNflProfilerQbFacade.clear().toPromise(),
-          this.dfsNflProfilerRbFacade.clear().toPromise(),
-          this.dfsNflProfilerWrFacade.clear().toPromise(),
-          this.dfsNflProfilerTeFacade.clear().toPromise(),
-        ]);
-
-        await Promise.all([
-          this.dfsNflProfilerQbFacade.addOrUpdate(qbStatGroup).toPromise(),
-          this.dfsNflProfilerRbFacade.addOrUpdate(rbStatGroup).toPromise(),
-          this.dfsNflProfilerWrFacade.addOrUpdate(wrStatGroup).toPromise(),
-          this.dfsNflProfilerTeFacade.addOrUpdate(teStatGroup).toPromise(),
-        ]);
         await this.store
           .dispatch([
             new DfsNflSlatePlayerAttributes.AddOrUpdate(players),

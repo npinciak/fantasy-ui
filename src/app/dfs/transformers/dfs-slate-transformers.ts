@@ -1,18 +1,15 @@
 import { normalizeStringToNumber, objectIsEmpty } from '@app/@shared/helpers/utils';
 import {
   ClientSlatePlayerAttributesMap,
-  ClientSlateStatGroups,
   ClientSlateTeamAttributes,
   ClientSlateTeamAttributesMap,
   SITE_TO_SITETYPE_MAP,
   SlateWeather,
 } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
-import { exists } from '@sports-ui/ui-sdk/helpers';
 
 import { MLBClientTeamAttributes } from '@sports-ui/daily-fantasy-sdk/models';
 import { SlatePlayer } from '../models/slate-player.model';
 import { Weather } from '../models/weather.model';
-import { PlayerProfilerSeasonMap } from '../nfl/models/nfl-profiler.model';
 import { DfsSlateHelpers } from '../slate.helpers';
 
 export function transformMlbSlateTeamAttributes(teamAttributes: ClientSlateTeamAttributes, site: string): MLBClientTeamAttributes {
@@ -41,12 +38,6 @@ export function transformTeamSlateAttributes(teams: ClientSlateTeamAttributesMap
     const { vegas, outsiders, safpts } = DfsSlateHelpers.normalizeSlateTeamAttributes(team);
     return { id, vegas, outsiders, safpts };
   });
-}
-
-export function transformStatGroupsToProfiler(statGroup: ClientSlateStatGroups): PlayerProfilerSeasonMap | null {
-  if (objectIsEmpty(statGroup) || !exists(statGroup)) return null;
-
-  return DfsSlateHelpers.normalizeStatGroupToProfiler(statGroup);
 }
 
 export function transformPlayerSlateAttributes(players: ClientSlatePlayerAttributesMap, site: string): SlatePlayer[] {

@@ -9,7 +9,6 @@ import { map } from 'rxjs/operators';
 import { DailyFantasyEndpointBuilder } from '../daily-fantasy-endpoint-builder';
 import { SlatePlayer } from '../models/slate-player.model';
 import { SlateTeam } from '../models/slate-team.model';
-import { PlayerProfilerSeasonMap } from '../nfl/models/nfl-profiler.model';
 import { DfsSlateTransformers } from '../transformers/dfs-transformers.m';
 
 @Injectable({
@@ -37,7 +36,6 @@ export class SlateService {
     return this.apiService.get<ClientSlateAttributes>(this.endpointBuilder.slateAttr, { params }).pipe(
       map(res => ({
         teams: DfsSlateTransformers.transformTeamSlateAttributes(res.teams),
-        statGroups: DfsSlateTransformers.transformStatGroupsToProfiler(res?.stat_groups),
         players: DfsSlateTransformers.transformPlayerSlateAttributes(res.players, request.site),
         // weather: DfsSlateTransformers.transformWeather(res.games),
       }))
@@ -48,7 +46,7 @@ export class SlateService {
 type SlateAttributes = {
   teams: SlateTeam[];
   players: SlatePlayer[];
-  statGroups: PlayerProfilerSeasonMap | null;
+  // statGroups: PlayerProfilerSeasonMap | null;
   // weather: Weather[];
 };
 

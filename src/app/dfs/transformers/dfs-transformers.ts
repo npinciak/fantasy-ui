@@ -66,10 +66,28 @@ export function normalizeNFLClientGridIronPlayer(gridIronPlayer: NFLClientGridIr
   map['value'] = VALUE ? Number(VALUE) : null;
   map['pown'] = POWN ? Number(POWN) : null;
   map['partnerId'] = PARTNERID ? Number(PARTNERID) : null;
-  map['ownership'] = {} as Record<number, number>;
+  map['ownership'] = convertObjectValuesToNumbers(gridIronPlayer.OWNERSHIP);
   map['rgid'] = RGID ? Number(RGID) : null;
 
   return map;
+}
+
+export function convertObjectValuesToNumbers(obj: Record<string, any>): Record<string, any> {
+  const result: Record<string, any> = {};
+
+  for (const key in obj) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (obj.hasOwnProperty(key)) {
+      const value = obj[key];
+      if (typeof value === 'string' && !isNaN(Number(value))) {
+        result[key] = Number(value);
+      } else {
+        result[key] = value;
+      }
+    }
+  }
+
+  return result;
 }
 
 export function transformDfsClientPlayerToPlayer(dfsClientPlayer: DfsSlatePlayer): SlatePlayer {
