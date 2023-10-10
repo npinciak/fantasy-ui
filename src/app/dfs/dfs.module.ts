@@ -20,6 +20,7 @@ import { DfsNflHomeComponent } from './nfl/pages/dfs-nfl-home/dfs-nfl-home.compo
 import { DfsNflGridIronState } from './nfl/state/dfs-nfl-grid-iron.state';
 import { DfsNflSlatePlayerAttributesState } from './nfl/state/dfs-nfl-players-slate-attributes.state';
 import { DfsNflSlateTeamDetailsState } from './nfl/state/dfs-nfl-slate-teams.state';
+import { DfsHomeComponent } from './pages/dfs-home/dfs-home.component';
 import { DfsMatchupsState } from './state/dfs-matchups.state';
 import { DfsSelectedSlateConfigurationState } from './state/dfs-selected-slate-configuration.state';
 import { DfsSlateAttributesState } from './state/dfs-slate-attr.state';
@@ -50,6 +51,7 @@ const states = [
 @NgModule({
   imports: [CommonModule, DfsRoutingModule, FormsModule, MaterialModule, SharedModule, NgxsModule.forFeature(states)],
   declarations: [
+    DfsHomeComponent,
     NflMatchupRowComponent,
     DfsNbaHomeComponent,
     DfsSlateListComponent,

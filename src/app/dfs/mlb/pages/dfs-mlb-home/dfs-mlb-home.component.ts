@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { DfsMatchupsFacade } from '@app/dfs/facade/dfs-matchups.facade';
+import { DfsSelectedSlateConfigurationFacade } from '@app/dfs/facade/dfs-selected-slate-configuration.facade';
 import { DfsSlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade';
 import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
+import { DfsHomeComponent } from '@app/dfs/pages/dfs-home/dfs-home.component';
 import { MLB_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/baseball';
-import { SiteSlateEntity, SlateType } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { SlateType } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { BehaviorSubject } from 'rxjs';
 import { HEADERS_BY_POS, ROWS_BY_POS } from '../../consts/mlb-dfs-table.const';
 import { DfsMlbSlatePlayerFacade } from '../../facade/dfs-mlb-slate-players.facade';
@@ -13,15 +15,12 @@ import { DfsMlbSlatePlayerFacade } from '../../facade/dfs-mlb-slate-players.faca
   selector: 'app-dfs-mlb-home',
   templateUrl: './dfs-mlb-home.component.html',
 })
-export class DfsMlbHomeComponent implements OnInit {
+export class DfsMlbHomeComponent extends DfsHomeComponent implements OnInit {
   readonly MLB_TEAM_ID_MAP = MLB_TEAM_ID_MAP;
 
   playerList$ = this.mlbPlayerFacade.getPlayerTableData$;
-  selectedSlate$ = new BehaviorSubject<string | null>(null);
-  selectedSlateType$ = new BehaviorSubject<SlateType | null>(null);
 
-  slatesEmpty$ = this.dailyFantasySlateFacade.slatesEmpty$;
-  selectSlateByType$ = this.dailyFantasySlateFacade.selectSlateByType$;
+  selectedSlateType$ = new BehaviorSubject<SlateType | null>(null);
 
   tableConfig = {
     headers: HEADERS_BY_POS.B,
@@ -29,19 +28,15 @@ export class DfsMlbHomeComponent implements OnInit {
   };
 
   constructor(
-    readonly mlbPlayerFacade: DfsMlbSlatePlayerFacade,
-    readonly dailyFantasyPlayersFacade: DfsSlatePlayersFacade,
-    readonly dailyFantasySlateFacade: DfsSlatesFacade,
-    readonly dailyFantasySlateAttrFacade: DfsSlateAttrFacade,
-    readonly dailyFantasyMatchupFacade: DfsMatchupsFacade
-  ) {}
+    readonly dfsPlayersFacade: DfsSlatePlayersFacade,
+    readonly dfsSlateFacade: DfsSlatesFacade,
+    readonly dfsSlateAttrFacade: DfsSlateAttrFacade,
+    readonly dfsMatchupFacade: DfsMatchupsFacade,
+    readonly dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade,
+    readonly mlbPlayerFacade: DfsMlbSlatePlayerFacade
+  ) {
+    super(dfsPlayersFacade, dfsSlateFacade, dfsSlateAttrFacade, dfsMatchupFacade, dfsSelectedSlateConfigurationFacade);
+  }
 
   ngOnInit(): void {}
-
-  onSelectSlate(event: SiteSlateEntity) {
-    this.dailyFantasyPlayersFacade.fetchPlayers(event.slate_path);
-    this.selectedSlate$.next(event.name);
-    this.selectedSlateType$.next(event.type);
-    this.dailyFantasySlateAttrFacade.fetchSlateAttributesBySlateId(event.importId);
-  }
 }

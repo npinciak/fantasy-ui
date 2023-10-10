@@ -4,7 +4,8 @@ import { DfsSelectedSlateConfigurationFacade } from '@app/dfs/facade/dfs-selecte
 import { DfsSlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade';
 import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
-import { SiteSlateEntity, SlateType } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { DfsHomeComponent } from '@app/dfs/pages/dfs-home/dfs-home.component';
+import { SlateType } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -19,7 +20,7 @@ import { NFL_STAT_GROUP_MAP } from '../../models/stat-group.model';
   selector: 'app-dfs-nfl-home',
   templateUrl: './dfs-nfl-home.component.html',
 })
-export class DfsNflHomeComponent implements OnInit {
+export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   readonly TABLE_HEADERS_BY_POS = HEADERS_BY_POS;
   readonly TABLE_ROWS_BY_POS = ROWS_BY_POS;
 
@@ -40,16 +41,11 @@ export class DfsNflHomeComponent implements OnInit {
 
   nflMatchupGraphData$ = this.nflTeamSlateAttrFacade.matchupGraphData$;
 
-  slatesEmpty$ = this.dailyFantasySlateFacade.slatesEmpty$;
-  selectSlateByType$ = this.dailyFantasySlateFacade.selectSlateByType$;
-
-  matchups$ = this.dailyFantasyMatchupFacade.nflMatchupTableData$;
-  nflTopFiveMatchups$ = this.dailyFantasyMatchupFacade.nflTopFiveMatchupsByOverUnder$;
-  nflTopFiveTeamTotals$ = this.dailyFantasyMatchupFacade.nflTopFiveTeamTotals$;
+  matchups$ = this.dfsMatchupFacade.nflMatchupTableData$;
+  nflTopFiveMatchups$ = this.dfsMatchupFacade.nflTopFiveMatchupsByOverUnder$;
+  nflTopFiveTeamTotals$ = this.dfsMatchupFacade.nflTopFiveTeamTotals$;
 
   teamsWithHighestPown$ = this.nflPlayerFacade.teamsWithHighestPown$;
-
-  playersEmpty$ = this.dailyFantasyPlayersFacade.playersEmpty$;
 
   statGroup: string;
   teamId: number | null = null;
@@ -58,7 +54,6 @@ export class DfsNflHomeComponent implements OnInit {
   xAxisStat$ = new BehaviorSubject<string | null>(null);
   yAxisStat$ = new BehaviorSubject<string | null>(null);
 
-  selectedSlate$ = this.dfsSelectedSlateConfigurationFacade.slateId$;
   selectedSlateType$ = new BehaviorSubject<SlateType | null>(null);
 
   playerScatterData$ = combineLatest([this.nflPlayerFacade.playerScatterData$, this.xAxisStat$, this.yAxisStat$]).pipe(
@@ -67,7 +62,7 @@ export class DfsNflHomeComponent implements OnInit {
     })
   );
 
-  slateWeather$ = combineLatest([this.selectedSlateType$, this.dailyFantasySlateFacade.slateWeather$]).pipe(
+  slateWeather$ = combineLatest([this.selectedSlateType$, this.dfsSlateFacade.slateWeather$]).pipe(
     map(([slate, weather]) => {
       return slate != null ? weather(slate as SlateType) : [];
     })
@@ -85,14 +80,16 @@ export class DfsNflHomeComponent implements OnInit {
   );
 
   constructor(
+    readonly dfsPlayersFacade: DfsSlatePlayersFacade,
+    readonly dfsSlateFacade: DfsSlatesFacade,
+    readonly dfsSlateAttrFacade: DfsSlateAttrFacade,
+    readonly dfsMatchupFacade: DfsMatchupsFacade,
+    readonly dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade,
     readonly nflPlayerFacade: DfsNflPlayerFacade,
-    readonly nflTeamSlateAttrFacade: DfsNflSlateTeamDetailsFacade,
-    readonly dailyFantasyPlayersFacade: DfsSlatePlayersFacade,
-    readonly dailyFantasySlateFacade: DfsSlatesFacade,
-    readonly dailyFantasySlateAttrFacade: DfsSlateAttrFacade,
-    readonly dailyFantasyMatchupFacade: DfsMatchupsFacade,
-    readonly dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade
-  ) {}
+    readonly nflTeamSlateAttrFacade: DfsNflSlateTeamDetailsFacade
+  ) {
+    super(dfsPlayersFacade, dfsSlateFacade, dfsSlateAttrFacade, dfsMatchupFacade, dfsSelectedSlateConfigurationFacade);
+  }
 
   ngOnInit(): void {
     // this.loadingBudget$.next(true);
@@ -122,12 +119,5 @@ export class DfsNflHomeComponent implements OnInit {
 
   nameInputChange(value: string) {
     this.tableFilter$.next(JSON.stringify({ filterType: FilterType.name, value }));
-  }
-
-  onSelectSlate(event: SiteSlateEntity) {
-    this.dailyFantasyPlayersFacade.fetchPlayers(event.slate_path);
-    this.dfsSelectedSlateConfigurationFacade.setSlateId(event.importId);
-    this.selectedSlateType$.next(event.type);
-    this.dailyFantasySlateAttrFacade.fetchSlateAttributesBySlateId(event.importId);
   }
 }
