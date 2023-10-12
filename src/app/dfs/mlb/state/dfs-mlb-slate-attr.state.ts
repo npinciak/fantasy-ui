@@ -36,7 +36,7 @@ export class DailyFantasyMlbSlateAttrState {
     { setState }: StateContext<DailyFantasySlateAttrStateModel>,
     { payload: { sport, site, slate } }: FetchSlateAttr
   ): Promise<void> {
-    const { teams, players } = await this.slateService.getGameAttrBySlateId({ sport, site, slate }).toPromise();
+    const { teams, players } = await this.slateService.getGameAttributesBySlateId({ sport, site, slate }).toPromise();
 
     this.store.dispatch([new DfsMlbSlatePlayerActions.AddOrUpdate(players)]);
 

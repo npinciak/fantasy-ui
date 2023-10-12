@@ -16,10 +16,12 @@ import { DfsMlbTeamSlateDetailsState } from './mlb/state/dfs-mlb-slate-teams.sta
 import { DfsNbaHomeComponent } from './nba/pages/dfs-nba-home/dfs-nba-home.component';
 import { DfsNbaSlatePlayerAttributesState } from './nba/state/dfs-nba-slate-players-attributes.state';
 import { NflMatchupRowComponent } from './nfl/components/nfl-matchup-row/nfl-matchup-row.component';
+import { DfsNflGridIronHandlerState } from './nfl/handlers/dfs-nfl-gridiron.handler';
+import { DfsNflSlateDetailsHandlerState } from './nfl/handlers/dfs-nfl-slate-details.handler';
 import { DfsNflHomeComponent } from './nfl/pages/dfs-nfl-home/dfs-nfl-home.component';
 import { DfsNflGridIronState } from './nfl/state/dfs-nfl-grid-iron.state';
-import { DfsNflSlatePlayerAttributesState } from './nfl/state/dfs-nfl-players-slate-attributes.state';
-import { DfsNflSlateTeamDetailsState } from './nfl/state/dfs-nfl-slate-teams.state';
+import { DfsNflSlatePlayerDetailsState } from './nfl/state/dfs-nfl-slate-player-details.state';
+import { DfsNflSlateTeamDetailsState } from './nfl/state/dfs-nfl-slate-team-details.state';
 import { DfsHomeComponent } from './pages/dfs-home/dfs-home.component';
 import { DfsMatchupsState } from './state/dfs-matchups.state';
 import { DfsSelectedSlateConfigurationState } from './state/dfs-selected-slate-configuration.state';
@@ -41,9 +43,11 @@ const states = [
   DfsTeamsState,
   DailyFantasyMlbPlayerSlateAttributeState,
   DfsMlbTeamSlateDetailsState,
-  DfsNflSlatePlayerAttributesState,
+  DfsNflSlateDetailsHandlerState,
+  DfsNflSlatePlayerDetailsState,
   DfsNflSlateTeamDetailsState,
   DfsNflGridIronState,
+  DfsNflGridIronHandlerState,
   DfsNbaSlatePlayerAttributesState,
   DfsWeatherState,
 ];

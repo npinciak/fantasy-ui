@@ -1,3 +1,5 @@
+import { GridIronProjectionType } from '../nfl/models/nfl-gridIron.model';
+
 export class DfsSelectedSlateConfigurationActions {
   static stateName = 'dfsSelectedSlateConfiguration';
 
@@ -19,5 +21,10 @@ export class DfsSelectedSlateConfigurationActions {
   static SetSport = class {
     static readonly type = `[${DfsSelectedSlateConfigurationActions.stateName}] SetSport`;
     constructor(public payload: { sport: string | null }) {}
+  };
+
+  static SetProjectionType = class {
+    static readonly type = `[${DfsSelectedSlateConfigurationActions.stateName}] SetProjectionType`;
+    constructor(public payload: { projectionType: GridIronProjectionType }) {}
   };
 }

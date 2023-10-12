@@ -1,15 +1,12 @@
-import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiService } from '@app/@shared/services/api.service';
 import { DfsSlatePlayer } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
-import { NFLClientGridIronPlayer } from '@sports-ui/daily-fantasy-sdk/models';
 import { uniqueBy } from '@sports-ui/ui-sdk/helpers';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DailyFantasyEndpointBuilder } from '../daily-fantasy-endpoint-builder';
+import { DailyFantasyEndpointBuilder } from '../endpoint-builder/daily-fantasy-endpoint-builder';
 import { PlayersBySlate } from '../models/player.model';
 import { Team } from '../models/team.model';
-import { GridIronPlayer } from '../nfl/models/nfl-gridIron.model';
 import { DfsTransformers } from '../transformers/dfs-transformers.m';
 
 @Injectable({
@@ -41,13 +38,5 @@ export class PlayerService {
         };
       })
     );
-  }
-
-  getGridIronPlayers({ site }: { site: string }): Observable<GridIronPlayer[]> {
-    let params = new HttpParams();
-    params = params.append('site', site ?? 'draftkings');
-    return this.apiService
-      .get<NFLClientGridIronPlayer[]>(this.endpoint.gridIron, { params })
-      .pipe(map(res => res.map(p => DfsTransformers.normalizeNFLClientGridIronPlayer(p))));
   }
 }

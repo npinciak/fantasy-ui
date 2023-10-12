@@ -2,31 +2,27 @@ import { Injectable } from '@angular/core';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { DfsSlateAttributesActions } from '../actions/dfs-slate-attr.actions';
 import { DfsSelectedSlateConfigurationFacade } from '../facade/dfs-selected-slate-configuration.facade';
-import { DfsMlbSlatePlayerActions } from '../mlb/actions/dfs-mlb-slate-player.actions';
-import { DfsMlbSlateTeamDetailsActions } from '../mlb/actions/dfs-mlb-slate-team.actions';
+import { DfsMlbSlatePlayerFacade } from '../mlb/facade/dfs-mlb-slate-players.facade';
+import { DfsSlateAttributesStateModel } from '../models/dfs-slate-attr.model';
 import { SlateTeamNfl } from '../models/slate-team.model';
 import { DfsNflGridIronActions } from '../nfl/actions/dfs-nfl-grid-iron.actions';
-import { DfsNflSlatePlayerAttributesActions } from '../nfl/actions/dfs-nfl-slate-player-attributes.actions';
-import { DfsNflSlateTeamDetailsActions } from '../nfl/actions/dfs-nfl-slate-team.actions';
-import { SlateService } from '../service/slate.service';
-
-export class DfsSlateAttributesStateModel {
-  slate: string | null;
-  site: number | string | null;
-}
-
-const defaults = {
-  slate: null,
-  site: null,
-};
+import { DfsNflSlatePlayerDetailsActions } from '../nfl/actions/dfs-nfl-slate-player-details.actions';
+import { DfsNflSlateTeamDetailsActions } from '../nfl/actions/dfs-nfl-slate-team-details.actions';
+import { DfsNflSlateTeamDetailsFacade } from '../nfl/facade/dfs-nfl-slate-team-details.facade';
+import { NflSlateService } from '../nfl/service/nfl-slate.service';
 
 @State({ name: DfsSlateAttributesActions.stateName + 'Actionhandler' })
 @Injectable()
 export class DfsSlateAttributesHandlerState {
   constructor(
     private store: Store,
-    private slateService: SlateService,
-    private dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade
+    // private slateService: SlateService,
+    private nflSlateService: NflSlateService,
+    private dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade,
+    // private dfsNflSlatePlayerAttributesFacade: DfsNflSlatePlayerAttributesFacade,
+    private dfsNflSlateTeamDetailsFacade: DfsNflSlateTeamDetailsFacade,
+    // private dfsNflGridIronActions: DfsNflGridIronFacade,
+    private dfsMlbSlatePlayerFacade: DfsMlbSlatePlayerFacade // private dfsMlbSlateTeamDetailsFacade: DfsMlbSlateTeamDetailsFacade
   ) {}
 
   @Action(DfsSlateAttributesActions.Fetch)
@@ -36,32 +32,33 @@ export class DfsSlateAttributesHandlerState {
 
     if (!sport || !site) return;
 
-    const { teams, players } = await this.slateService.getGameAttrBySlateId({ sport, site, slateId }).toPromise();
+    // const { teams, players } = await this.slateService.getGameAttributesBySlateId({ sport, site, slateId }).toPromise();
 
     // this.store.dispatch([new DfsWeather.AddOrUpdate(weather)]);
 
+    const { teams, players } = await this.nflSlateService.getNflGameAttributesBySlateId({ sport, site, slateId }).toPromise();
+
     switch (sport) {
       case 'mlb':
-        this.store.dispatch([new DfsMlbSlatePlayerActions.AddOrUpdate(players), new DfsMlbSlateTeamDetailsActions.AddOrUpdate(teams)]);
-
+        // this.dfsMlbSlatePlayerFacade.addOrUpdate(players);
+        // this.store.dispatch([new DfsMlbSlatePlayerActions.AddOrUpdate(players), new DfsMlbSlateTeamDetailsActions.AddOrUpdate(teams)]);
         break;
       case 'nfl':
+        // this.dfsNflSlateTeamDetailsFacade.addOrUpdate(teams);
+        // const { teams, players } = await this.nflSlateService.getNflGameAttributesBySlateId({ sport, site, slateId }).toPromise();
+
         await this.store
           .dispatch([
-            new DfsNflSlatePlayerAttributesActions.AddOrUpdate(players),
+            new DfsNflSlatePlayerDetailsActions.AddOrUpdate(players),
             new DfsNflSlateTeamDetailsActions.AddOrUpdate(teams as SlateTeamNfl[]),
             new DfsNflGridIronActions.Fetch({ site }),
           ])
           .toPromise();
         break;
       case 'nba':
-        // dispatch([new PatchNbaTeamSlateAttr({ teams })]);
-        break;
-
+        throw new Error(`NBA Not implemented`);
       default:
         break;
     }
-
-    // patchState({ slate });
   }
 }

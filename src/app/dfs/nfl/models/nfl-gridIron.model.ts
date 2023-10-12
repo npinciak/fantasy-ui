@@ -33,3 +33,10 @@ export interface GridIronPlayer {
 }
 
 export type GridIronPlayerMap = Record<number, GridIronPlayer>;
+
+export enum GridIronProjectionType {
+  BlitzDefault = 2009661,
+  BlitzDefenseAgnostic = 3202616,
+  BlitzDefenseDeflated = 3202618,
+  Default = 3350867,
+}

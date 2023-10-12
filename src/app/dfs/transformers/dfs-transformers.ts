@@ -6,8 +6,8 @@ import { Schedule } from '../models/schedule.model';
 import { Team } from '../models/team.model';
 import { GridIronPlayer } from '../nfl/models/nfl-gridIron.model';
 
-export function normalizeNFLClientGridIronPlayer(gridIronPlayer: NFLClientGridIronPlayer): GridIronPlayer {
-  if (!exists(gridIronPlayer.PLAYERID)) throw new Error('gridIronPlayer.PLAYERID must exist');
+export function normalizeNFLClientGridIronPlayer(gridIronPlayer: NFLClientGridIronPlayer): GridIronPlayer | null {
+  if (!exists(gridIronPlayer.PLAYERID)) return null; //throw new Error('gridIronPlayer.PLAYERID must exist');
 
   const {
     PLAYERID,

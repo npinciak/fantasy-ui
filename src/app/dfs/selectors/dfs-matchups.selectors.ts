@@ -4,38 +4,43 @@ import { Schedule } from '../models/schedule.model';
 import { SlateTeamNfl } from '../models/slate-team.model';
 import { Team } from '../models/team.model';
 import { Vegas } from '../models/vegas.model';
-import { Outsiders } from '../nfl/models/nfl-slate-attr.model';
-import { DfsNflSlateTeamDetailsSelectors } from '../nfl/selectors/dfs-nfl-slate-team.selectors';
+import { Outsiders } from '../nfl/models/nfl-slate-attributes.model';
+import { DfsNflSlateTeamDetailsSelectors } from '../nfl/selectors/dfs-nfl-slate-team-details.selectors';
 import { DfsMatchupsState } from '../state/dfs-matchups.state';
 
 export class DfsMatchupsSelectors extends GenericSelector(DfsMatchupsState) {
   @Selector([DfsMatchupsSelectors.getList, DfsNflSlateTeamDetailsSelectors.getById])
   static getNflMatchupTableData(matchups: Schedule[], slateTeamById: (id: string | null) => SlateTeamNfl | null) {
-    return matchups.map(m => {
-      const homeTeam = slateTeamById(m.homeTeam.rgId);
-      const awayTeam = slateTeamById(m.awayTeam.rgId);
+    return matchups
+      .map(m => {
+        const { homeTeam, awayTeam, date } = m;
 
-      const { movement, overUnder } = homeTeam?.vegas ?? awayTeam?.vegas ?? { line: null, movement: null, overUnder: null };
+        const slateHomeTeam = slateTeamById(homeTeam.rgId);
+        const slateAwayTeam = slateTeamById(awayTeam.rgId);
 
-      return {
-        movement,
-        overUnder,
-        home: {
-          ...homeTeam?.outsiders,
-          name: m.homeTeam.name,
-          oppTotal: homeTeam?.vegas?.oppTotal ?? null,
-          total: homeTeam?.vegas?.total ?? null,
-          line: homeTeam?.vegas?.line ?? null,
-        },
-        away: {
-          ...awayTeam?.outsiders,
-          name: m.awayTeam.name,
-          oppTotal: awayTeam?.vegas?.oppTotal ?? null,
-          total: awayTeam?.vegas?.total ?? null,
-          line: awayTeam?.vegas?.line ?? null,
-        },
-      };
-    });
+        const { movement, overUnder } = slateHomeTeam?.vegas ?? slateAwayTeam?.vegas ?? { line: null, movement: null, overUnder: null };
+
+        return {
+          date,
+          movement,
+          overUnder,
+          home: {
+            ...slateHomeTeam?.outsiders,
+            name: homeTeam.name,
+            oppTotal: slateHomeTeam?.vegas?.oppTotal ?? null,
+            total: slateHomeTeam?.vegas?.total ?? null,
+            line: slateHomeTeam?.vegas?.line ?? null,
+          },
+          away: {
+            ...slateAwayTeam?.outsiders,
+            name: awayTeam.name,
+            oppTotal: slateAwayTeam?.vegas?.oppTotal ?? null,
+            total: slateAwayTeam?.vegas?.total ?? null,
+            line: slateAwayTeam?.vegas?.line ?? null,
+          },
+        };
+      })
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
 
   @Selector([DfsMatchupsSelectors.getNflMatchupTableData])
@@ -75,6 +80,7 @@ function transformMatchupTeamToTeamTableRow(slateTeam: SlateTeamNfl | null, team
 }
 
 type NflMatchupTableRow = Pick<Vegas, 'movement' | 'overUnder'> & {
+  date: string;
   home: NflMatchupTableRowTeam;
   away: NflMatchupTableRowTeam;
 };

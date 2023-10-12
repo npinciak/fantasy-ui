@@ -12,7 +12,9 @@ import { map } from 'rxjs/operators';
 import { DfsNflThresholds } from '../../consts/stats-threshold.m';
 import { HEADERS_BY_POS, ROWS_BY_POS } from '../../consts/table.const';
 import { DfsNflPlayerFacade } from '../../facade/daily-fantasy-nfl-players.facade';
-import { DfsNflSlateTeamDetailsFacade } from '../../facade/dfs-nfl-slate-team.facade';
+import { DfsNflGridIronFacade } from '../../facade/dfs-nfl-gridiron.facade';
+import { DfsNflSlateTeamDetailsFacade } from '../../facade/dfs-nfl-slate-team-details.facade';
+import { GridIronProjectionType } from '../../models/nfl-gridIron.model';
 import { FilterType } from '../../models/nfl-table.model';
 import { NFL_STAT_GROUP_MAP } from '../../models/stat-group.model';
 
@@ -46,6 +48,7 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   nflTopFiveTeamTotals$ = this.dfsMatchupFacade.nflTopFiveTeamTotals$;
 
   teamsWithHighestPown$ = this.nflPlayerFacade.teamsWithHighestPown$;
+  teamsWithHighestValue$ = this.nflPlayerFacade.teamsWithHighestValue$;
 
   statGroup: string;
   teamId: number | null = null;
@@ -79,11 +82,19 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
     })
   );
 
+  projectionTypeOptions = [
+    { value: GridIronProjectionType.BlitzDefault, label: 'Blitz Default' },
+    { value: GridIronProjectionType.BlitzDefenseAgnostic, label: 'Blitz Defense Agnostic' },
+    { value: GridIronProjectionType.BlitzDefenseDeflated, label: 'Blitz Defense Deflated' },
+    { value: GridIronProjectionType.Default, label: 'Default' },
+  ];
+
   constructor(
     readonly dfsPlayersFacade: DfsSlatePlayersFacade,
     readonly dfsSlateFacade: DfsSlatesFacade,
     readonly dfsSlateAttrFacade: DfsSlateAttrFacade,
     readonly dfsMatchupFacade: DfsMatchupsFacade,
+    readonly dfsNflGridIronFacade: DfsNflGridIronFacade,
     readonly dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade,
     readonly nflPlayerFacade: DfsNflPlayerFacade,
     readonly nflTeamSlateAttrFacade: DfsNflSlateTeamDetailsFacade
@@ -119,5 +130,10 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
 
   nameInputChange(value: string) {
     this.tableFilter$.next(JSON.stringify({ filterType: FilterType.name, value }));
+  }
+
+  async projectionTypeChange(value: GridIronProjectionType): Promise<void> {
+    await this.dfsSelectedSlateConfigurationFacade.setProjectionType(value).toPromise();
+    await this.dfsNflGridIronFacade.fetch().toPromise();
   }
 }

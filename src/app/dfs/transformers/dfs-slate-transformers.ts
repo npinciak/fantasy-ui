@@ -1,19 +1,22 @@
 import { normalizeStringToNumber, objectIsEmpty } from '@app/@shared/helpers/utils';
 import {
-  ClientSlatePlayerAttributesMap,
-  ClientSlateTeamAttributes,
-  ClientSlateTeamAttributesMap,
-  Vegas as ClientVegas,
+  ClientMlbSlateTeamAttributesMap,
+  ClientVegas,
   SITE_TO_SITETYPE_MAP,
   SlateWeather,
 } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { MLBClientTeamAttributes, NFLClientOutsidersProperties, NFLClientSafptsProperties } from '@sports-ui/daily-fantasy-sdk/models';
 import { exists } from '@sports-ui/ui-sdk/helpers';
+import {
+  ClientSlatePlayerAttributesMap,
+  ClientSlateTeamAttributes,
+  ClientSlateTeamAttributesMap,
+} from 'dist/libs/daily-fantasy-sdk/src/lib/daily-fantasy-client/slate-attributes.model';
 import { SlatePlayer } from '../models/slate-player.model';
-import { SlateTeamNfl } from '../models/slate-team.model';
+import { SlateTeamMlb, SlateTeamNfl } from '../models/slate-team.model';
 import { Vegas } from '../models/vegas.model';
 import { Weather } from '../models/weather.model';
-import { Outsiders, SaFpts } from '../nfl/models/nfl-slate-attr.model';
+import { Outsiders, SaFpts } from '../nfl/models/nfl-slate-attributes.model';
 
 export function transformMlbSlateTeamAttributes(teamAttributes: ClientSlateTeamAttributes, site: string): MLBClientTeamAttributes {
   const obj = {} as MLBClientTeamAttributes;
@@ -33,12 +36,38 @@ export function transformMlbSlateTeamAttributes(teamAttributes: ClientSlateTeamA
   return obj;
 }
 
-export function transformTeamSlateAttributes(teams: ClientSlateTeamAttributesMap) {
+export function transformNflTeamSlateAttributes(teams: ClientSlateTeamAttributesMap) {
   if (objectIsEmpty(teams)) return [];
 
   return Object.entries(teams).map(([id, team]) => {
     const { vegas, outsiders, safpts } = transformSlateTeamAttributesToSlateTeamNfl(team);
     return { id, vegas, outsiders, safpts };
+  });
+}
+
+export function transformMlbTeamSlateAttributes(teams: ClientMlbSlateTeamAttributesMap, site: string): SlateTeamMlb[] {
+  if (objectIsEmpty(teams)) return [];
+
+  return Object.entries(teams).map(([id, team]) => {
+    const { stack_value, stack_leverage, stack_field, stack_diff, top_value, smash_pct } = team;
+
+    const slateTeam: SlateTeamMlb = {
+      id,
+      vegas: transformClientVegasToVegas(team.vegas),
+      stack_value: stack_value[site],
+      stack_leverage: stack_leverage[site],
+      stack_field: stack_field[site],
+      stack_diff: stack_diff[site],
+      top_value: top_value[site],
+      stat_group: '',
+      salary_diff: {},
+      slate_ownership: {},
+      ownership: {},
+      value_pct: {},
+      smash_pct: smash_pct[site],
+    };
+
+    return slateTeam;
   });
 }
 

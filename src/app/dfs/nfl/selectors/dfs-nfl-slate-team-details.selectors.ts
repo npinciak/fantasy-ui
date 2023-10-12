@@ -4,7 +4,7 @@ import { Selector } from '@app/@shared/models/typed-selector';
 import { SlateTeam } from '@app/dfs/models/slate-team.model';
 import { NFL_RG_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
 import { exists, existsFilter } from '@sports-ui/ui-sdk/helpers';
-import { DfsNflSlateTeamDetailsState } from '../state/dfs-nfl-slate-teams.state';
+import { DfsNflSlateTeamDetailsState } from '../state/dfs-nfl-slate-team-details.state';
 
 export class DfsNflSlateTeamDetailsSelectors extends GenericSelector(DfsNflSlateTeamDetailsState) {
   @Selector([DfsNflSlateTeamDetailsSelectors.getList])

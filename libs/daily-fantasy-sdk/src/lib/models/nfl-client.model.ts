@@ -1,5 +1,5 @@
 import { ExpertConsensusRankBySite } from '../daily-fantasy-client/expert-consensus-ranking.model';
-import { SlateAttrTeamProperties } from '../daily-fantasy-client/slate.model';
+import { ClientVegas } from '../daily-fantasy-client/vegas.model';
 import { ClientSalaryDiff, DfsClientPlayerAttributes } from './daily-fantasy-client-slate-attr.model';
 
 type SafptsAttributes =
@@ -43,8 +43,8 @@ export interface NFLSlateAttrTeamAttributes {
   outsiders: NFLClientOutsidersProperties;
 }
 
-export type NFLClientSlateAttrTeam = SlateAttrTeamProperties & NFLSlateAttrTeamAttributes;
-export type NFLClientSlateAttrTeamMap = Record<string, SlateAttrTeamProperties & NFLSlateAttrTeamAttributes>;
+export type NFLClientSlateAttrTeam = { vegas: ClientVegas } & NFLSlateAttrTeamAttributes;
+export type NFLClientSlateAttrTeamMap = Record<string, { vegas: ClientVegas } & NFLSlateAttrTeamAttributes>;
 
 export type NFLClientStatGroupAttributes = 'qb' | 'rb' | 'te' | 'wr';
 export type NFLClientStatGroup = { [attr in NFLClientStatGroupAttributes]: NFLClientProfiler };

@@ -24,7 +24,7 @@ export class DfsSlatesHandlerState {
   ): Promise<void> {
     const { sport, site } = payload;
 
-    const map = await this.slateService.slatesByDate({ sport }).toPromise();
+    const map = await this.slateService.getSlatesByDate({ sport }).toPromise();
 
     const slates = Object.values(map[site]) as SiteSlateEntity[];
 

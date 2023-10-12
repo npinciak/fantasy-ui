@@ -33,6 +33,16 @@
               </ng-container>
             </app-base-card>
           </div>
+          <div class="mb-12 w-full sm:px-4 xl:mb-0 xl:w-4/12">
+            <app-base-card>
+              <ng-container *ngFor="let team of teamsWithHighestValue$ | async">
+                <div class="flex w-full gap-5 text-left">
+                  <div class="flex-1 p-1 text-left text-xs sm:text-sm">{{ team.teamName }}</div>
+                  <div class="flex-1 p-1 text-xs sm:text-sm">{{ team.value / 100 }}</div>
+                </div>
+              </ng-container>
+            </app-base-card>
+          </div>
         </div>
 
         <app-base-card>
@@ -48,6 +58,14 @@
                 autocomplete="off"
                 class="m-0 block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding bg-no-repeat px-3 py-1.5 text-base font-normal text-gray-700 focus:border-sky-900 focus:bg-white focus:text-gray-700 focus:outline-none"
               />
+            </div>
+            <div class="w-full sm:px-4 xl:w-4/12">
+              <app-dropdown-filter
+                ariaLabel="ProjectionType options"
+                title="Projection Type"
+                [filterItems]="projectionTypeOptions"
+                (filterUpdate)="projectionTypeChange($event)"
+              ></app-dropdown-filter>
             </div>
 
             <div class="w-full sm:px-4 xl:w-4/12">

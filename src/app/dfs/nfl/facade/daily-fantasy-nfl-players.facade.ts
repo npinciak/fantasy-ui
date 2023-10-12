@@ -17,7 +17,8 @@ export class DfsNflPlayerFacade extends GenericFacade({ selectorClass: DfsNflPla
   playerTeamsFilterOptions$ = select(DfsNflPlayerSelectors.getPlayerTeamsFilterOptions);
   playerPositionFilterOptions$ = select(DfsNflPlayerSelectors.getPlayerPositionFilterOptions);
 
-  teamsWithHighestPown$ = select(DfsNflPlayerSelectors.getPlayersWithHighestPown);
+  teamsWithHighestPown$ = select(DfsNflPlayerSelectors.getTeamsWithHighestPown);
+  teamsWithHighestValue$ = select(DfsNflPlayerSelectors.getTeamsWithHighestValue);
 
   teamOwnPercent$ = of(); // select(DfsNflPlayerSelectors.teamOwnPercent);
 }

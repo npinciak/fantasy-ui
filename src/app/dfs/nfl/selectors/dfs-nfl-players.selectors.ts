@@ -11,7 +11,7 @@ import { exists, existsFilter, pickData, uniqueBy } from '@sports-ui/ui-sdk/help
 import { GridIronPlayer } from '../models/nfl-gridIron.model';
 import { NflDfsPlayerTableData } from '../models/nfl-player.model';
 import { DfsNflGridIronSelectors } from './dfs-nfl-grid-iron.selectors';
-import { DfsNflSlateTeamDetailsSelectors } from './dfs-nfl-slate-team.selectors';
+import { DfsNflSlateTeamDetailsSelectors } from './dfs-nfl-slate-team-details.selectors';
 
 export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState) {
   @Selector([DfsNflPlayerSelectors.getList])
@@ -73,15 +73,15 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
           tar: gridIron ? gridIron.tar : null,
           fpts: gridIron ? gridIron.fpts : null,
           fptsPerDollar: gridIron ? gridIron.fptsPerDollar : null,
-          val: gridIron ? gridIron.value : null,
-        };
+          value: gridIron ? gridIron.value : null,
+        } as NflDfsPlayerTableData;
       })
       .filter(p => p.opp != null)
-      .sort((a, b) => b.salary - a.salary);
+      .sort((a, b) => b.salary! - a.salary!);
   }
 
   @Selector([DfsNflPlayerSelectors.getPlayerTableData, DfsTeamsSelectors.getById, DfsNflSlateTeamDetailsSelectors.getById])
-  static getPlayersWithHighestPown(
+  static getTeamsWithHighestPown(
     tableData: NflDfsPlayerTableData[],
     teamById: ReturnType<typeof DfsTeamsSelectors.getById>,
     teamMatchupById: (rgId: string | null) => SlateTeamNfl | null
@@ -104,6 +104,32 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
         return { pown, teamName };
       })
       .sort((a, b) => b.pown - a.pown)
+      .slice(0, 10);
+  }
+
+  @Selector([DfsNflPlayerSelectors.getPlayerTableData, DfsTeamsSelectors.getById, DfsNflSlateTeamDetailsSelectors.getById])
+  static getTeamsWithHighestValue(
+    tableData: NflDfsPlayerTableData[],
+    teamById: ReturnType<typeof DfsTeamsSelectors.getById>,
+    teamMatchupById: (rgId: string | null) => SlateTeamNfl | null
+  ): { value: number | null; teamName: string }[] {
+    const teamMap = new Map<string, number>();
+
+    tableData.forEach(player => {
+      if (teamMap.has(player.rgTeamId!)) {
+        teamMap.set(player.rgTeamId!, teamMap.get(player.rgTeamId!)! + player.value!);
+      } else {
+        teamMap.set(player.rgTeamId!, player.value!);
+      }
+    });
+
+    return [...teamMap]
+      .map(([key, value]) => {
+        const teamName = teamById(key)?.name ?? '';
+
+        return { value, teamName };
+      })
+      .sort((a, b) => b.value - a.value)
       .slice(0, 10);
   }
 

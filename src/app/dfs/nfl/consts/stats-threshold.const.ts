@@ -11,6 +11,7 @@ export function matchupThreshold(val: number): string {
   ];
 
   const threshold = thresholds.find(t => range(val, t.range[0], t.range[1]));
+
   return `status-indicator ${threshold?.class || ''}`;
 }
 
