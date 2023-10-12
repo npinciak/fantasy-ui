@@ -4,7 +4,7 @@
       <div class="w-full sm:px-4 xl:w-3/12">
         <app-base-card>
           <ng-container *ngIf="!(slatesEmpty$ | async)">
-            <app-slate-list [slateList]="selectSlateByType$ | async" (selectSlate)="onSelectSlate($event)"></app-slate-list>
+            <app-slate-list [slateList]="selectSlateByType$ | async" (selectSlate)="onSelectNflSlate($event)"></app-slate-list>
           </ng-container>
         </app-base-card>
       </div>
@@ -16,9 +16,9 @@
               <ng-container *ngFor="let matchup of nflTopFiveMatchups$ | async">
                 <div class="flex w-full gap-5 text-left">
                   <div class="flex-1 p-1 text-left text-xs sm:text-sm">{{ matchup.away.name }}</div>
-                  <div class="flex-1 truncate p-1 text-left text-xs font-bold sm:text-sm">@ {{ matchup.home.name }}</div>
-                  <div class="flex-1 p-1 text-xs sm:text-sm">{{ matchup.overUnder }}</div>
-                  <div class="flex-1 p-1 text-xs sm:text-sm">{{ matchup.movement }}</div>
+                  <div class="flex-1 truncate text-left text-xs font-bold sm:text-sm">@ {{ matchup.home.name }}</div>
+                  <div class="flex-1 p-1 text-xs sm:text-sm">{{ matchup.overUnder ?? '-' }}</div>
+                  <div class="flex-1 p-1 text-xs sm:text-sm">{{ matchup.movement ?? '-' }}</div>
                 </div>
               </ng-container>
             </app-base-card>
@@ -28,7 +28,7 @@
               <ng-container *ngFor="let team of teamsWithHighestPown$ | async">
                 <div class="flex w-full gap-5 text-left">
                   <div class="flex-1 p-1 text-left text-xs sm:text-sm">{{ team.teamName }}</div>
-                  <div class="flex-1 p-1 text-xs sm:text-sm">{{ team.pown / 100 | percent }}</div>
+                  <div class="flex-1 p-1 text-xs sm:text-sm">{{ (team.pown / 100 | percent) ?? '-' }}</div>
                 </div>
               </ng-container>
             </app-base-card>
@@ -38,7 +38,7 @@
               <ng-container *ngFor="let team of teamsWithHighestValue$ | async">
                 <div class="flex w-full gap-5 text-left">
                   <div class="flex-1 p-1 text-left text-xs sm:text-sm">{{ team.teamName }}</div>
-                  <div class="flex-1 p-1 text-xs sm:text-sm">{{ team.value / 100 }}</div>
+                  <div class="flex-1 p-1 text-xs sm:text-sm">{{ team.value / 100 ?? '-' }}</div>
                 </div>
               </ng-container>
             </app-base-card>

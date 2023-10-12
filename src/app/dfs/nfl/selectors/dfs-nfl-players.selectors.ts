@@ -63,8 +63,8 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
           rgTeamId,
           position,
           salary,
-          oppRushDefRank: matchup?.outsiders?.oppRuDefRk,
-          oppPassDefRank: matchup?.outsiders?.oppPaDefRk,
+          oppRushDefRank: matchup?.outsiders?.oppRuDefRk ?? null,
+          oppPassDefRank: matchup?.outsiders?.oppPaDefRk?? null,
           pown: gridIron ? gridIron.pown : null,
           opp: gridIron ? gridIron.opp : null,
           smash: gridIron ? gridIron.smash : null,
@@ -74,7 +74,7 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
           fpts: gridIron ? gridIron.fpts : null,
           fptsPerDollar: gridIron ? gridIron.fptsPerDollar : null,
           value: gridIron ? gridIron.value : null,
-        } as NflDfsPlayerTableData;
+        };
       })
       .filter(p => p.opp != null)
       .sort((a, b) => b.salary! - a.salary!);

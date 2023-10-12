@@ -13,6 +13,7 @@ export class DfsSlateAttrFacade {
     return this.store.dispatch(new DfsSlateAttributesActions.Clear());
   }
 
+  /**@deprecated use nfl/mlb slate sttributes */
   fetchSlateAttributesBySlateId(slateId: string): Observable<void> {
     return this.store.dispatch(new DfsSlateAttributesActions.Fetch({ slateId }));
   }

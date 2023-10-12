@@ -5,7 +5,7 @@ import { DfsSlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade';
 import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
 import { DfsHomeComponent } from '@app/dfs/pages/dfs-home/dfs-home.component';
-import { SlateType } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { SiteSlateEntity, SlateType } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,6 +13,7 @@ import { DfsNflThresholds } from '../../consts/stats-threshold.m';
 import { HEADERS_BY_POS, ROWS_BY_POS } from '../../consts/table.const';
 import { DfsNflPlayerFacade } from '../../facade/daily-fantasy-nfl-players.facade';
 import { DfsNflGridIronFacade } from '../../facade/dfs-nfl-gridiron.facade';
+import { DfsNflSlateDetailsFacade } from '../../facade/dfs-nfl-slate-details.facade';
 import { DfsNflSlateTeamDetailsFacade } from '../../facade/dfs-nfl-slate-team-details.facade';
 import { GridIronProjectionType } from '../../models/nfl-gridIron.model';
 import { FilterType } from '../../models/nfl-table.model';
@@ -97,7 +98,8 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
     readonly dfsNflGridIronFacade: DfsNflGridIronFacade,
     readonly dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade,
     readonly nflPlayerFacade: DfsNflPlayerFacade,
-    readonly nflTeamSlateAttrFacade: DfsNflSlateTeamDetailsFacade
+    readonly nflTeamSlateAttrFacade: DfsNflSlateTeamDetailsFacade,
+    readonly dfsNflSlateDetailsFacade: DfsNflSlateDetailsFacade
   ) {
     super(dfsPlayersFacade, dfsSlateFacade, dfsSlateAttrFacade, dfsMatchupFacade, dfsSelectedSlateConfigurationFacade);
   }
@@ -130,6 +132,14 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
 
   nameInputChange(value: string) {
     this.tableFilter$.next(JSON.stringify({ filterType: FilterType.name, value }));
+  }
+
+  onSelectNflSlate(event: SiteSlateEntity) {
+    const { slate_path, importId } = event;
+
+    this.dfsPlayersFacade.fetchPlayers(slate_path);
+    this.dfsSelectedSlateConfigurationFacade.setSlateId(importId);
+    this.dfsNflSlateDetailsFacade.fetch();
   }
 
   async projectionTypeChange(value: GridIronProjectionType): Promise<void> {

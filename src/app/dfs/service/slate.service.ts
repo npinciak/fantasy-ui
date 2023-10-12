@@ -5,8 +5,6 @@ import { ApiService } from '@app/@shared/services/api.service';
 import { SlateMasterMap } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { Observable } from 'rxjs';
 import { DailyFantasyEndpointBuilder, DfsEndpointBuilder } from '../endpoint-builder/daily-fantasy-endpoint-builder';
-import { SlatePlayer } from '../models/slate-player.model';
-import { SlateTeam } from '../models/slate-team.model';
 
 @Injectable({
   providedIn: 'root',
@@ -44,12 +42,3 @@ export type GameAttributesRequest = {
   site: string;
   slateId: string;
 };
-
-type SlateAttributes = {
-  teams: SlateTeam[];
-  players: SlatePlayer[];
-  // statGroups: PlayerProfilerSeasonMap | null;
-  // weather: Weather[];
-};
-
-type DfsQueryParamAttributes = 'date' | 'site' | 'slate_id';

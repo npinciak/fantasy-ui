@@ -3,6 +3,6 @@ export class DfsNflSlateDetailsActions {
 
   static Fetch = class {
     static readonly type = `[${DfsNflSlateDetailsActions.stateName}] Fetch`;
-    constructor(public slateId: number) {}
+    constructor() {}
   };
 }

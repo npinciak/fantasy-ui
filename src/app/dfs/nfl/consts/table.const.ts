@@ -15,16 +15,16 @@ const BASE_STATS_COLUMNS: BaseTableColumn<NflDfsPlayerTableData>[] = [
   { columnDef: 'floor', headerCell: 'floor', headerLabel: 'Floor', dataType: TableColumnDataType.Number },
 ];
 
-export const RECEIVER_STATS_COLUMNS = [
+export const RECEIVER_STATS_COLUMNS: BaseTableColumn<NflDfsPlayerTableData>[] = [
   { columnDef: 'oppPassDefRank', headerCell: 'oppPassDefRank', headerLabel: 'oppPassDefRank', dataType: TableColumnDataType.Number },
   { columnDef: 'tar', headerCell: 'tar', headerLabel: 'Tar', dataType: TableColumnDataType.Number },
 ];
 
-export const RUSH_STATS_COLUMNS = [
+export const RUSH_STATS_COLUMNS: BaseTableColumn<NflDfsPlayerTableData>[] = [
   { columnDef: 'oppRushDefRank', headerCell: 'oppRushDefRank', headerLabel: 'Opp Rush D', dataType: TableColumnDataType.Number },
 ];
 
-export const PASSING_STATS_COLUMNS = [
+export const PASSING_STATS_COLUMNS: BaseTableColumn<NflDfsPlayerTableData>[] = [
   { columnDef: 'oppPassDefRank', headerCell: 'oppPassDefRank', headerLabel: 'Opp Pass D', dataType: TableColumnDataType.Number },
 ];
 

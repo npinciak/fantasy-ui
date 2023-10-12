@@ -1,42 +1,22 @@
 import { normalizeStringToNumber, objectIsEmpty } from '@app/@shared/helpers/utils';
 import {
   ClientMlbSlateTeamAttributesMap,
+  ClientNflSlatePlayerAttributesMap,
+  ClientNflSlateTeamAttributesMap,
   ClientVegas,
   SITE_TO_SITETYPE_MAP,
   SlateWeather,
 } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
-import { MLBClientTeamAttributes, NFLClientOutsidersProperties, NFLClientSafptsProperties } from '@sports-ui/daily-fantasy-sdk/models';
+import { NFLClientOutsidersProperties, NFLClientSafptsProperties, NFLClientSlateAttrTeam } from '@sports-ui/daily-fantasy-sdk/models';
 import { exists } from '@sports-ui/ui-sdk/helpers';
-import {
-  ClientSlatePlayerAttributesMap,
-  ClientSlateTeamAttributes,
-  ClientSlateTeamAttributesMap,
-} from 'dist/libs/daily-fantasy-sdk/src/lib/daily-fantasy-client/slate-attributes.model';
+
 import { SlatePlayer } from '../models/slate-player.model';
 import { SlateTeamMlb, SlateTeamNfl } from '../models/slate-team.model';
 import { Vegas } from '../models/vegas.model';
 import { Weather } from '../models/weather.model';
 import { Outsiders, SaFpts } from '../nfl/models/nfl-slate-attributes.model';
 
-export function transformMlbSlateTeamAttributes(teamAttributes: ClientSlateTeamAttributes, site: string): MLBClientTeamAttributes {
-  const obj = {} as MLBClientTeamAttributes;
-
-  for (const prop in teamAttributes) {
-    switch (prop) {
-      case 'pitcher':
-      case 'vegas':
-        obj[prop] = teamAttributes[prop];
-        break;
-      default:
-        obj[prop] = normalizeStringToNumber(teamAttributes[prop][site]);
-        break;
-    }
-  }
-
-  return obj;
-}
-
-export function transformNflTeamSlateAttributes(teams: ClientSlateTeamAttributesMap) {
+export function transformNflTeamSlateAttributes(teams: ClientNflSlateTeamAttributesMap) {
   if (objectIsEmpty(teams)) return [];
 
   return Object.entries(teams).map(([id, team]) => {
@@ -71,7 +51,7 @@ export function transformMlbTeamSlateAttributes(teams: ClientMlbSlateTeamAttribu
   });
 }
 
-export function transformPlayerSlateAttributes(players: ClientSlatePlayerAttributesMap, site: string): SlatePlayer[] {
+export function transformPlayerSlateAttributes(players: ClientNflSlatePlayerAttributesMap, site: string): SlatePlayer[] {
   if (objectIsEmpty(players)) return [];
 
   const siteMap = SITE_TO_SITETYPE_MAP[site];
@@ -95,7 +75,7 @@ export function transformWeather(games: Record<string, SlateWeather>): Weather[]
 }
 
 export function transformSlateTeamAttributesToSlateTeamNfl(
-  teamAttributes: ClientSlateTeamAttributes | null | undefined
+  teamAttributes: NFLClientSlateAttrTeam | null | undefined
 ): Pick<SlateTeamNfl, 'outsiders' | 'safpts' | 'vegas'> {
   const final = { outsiders: null, safpts: null, vegas: null } as SlateTeamNfl;
 

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DfsSelectedSlateConfigurationFacade } from '@app/dfs/facade/dfs-selected-slate-configuration.facade';
-import { DfsSlateAttributesStateModel } from '@app/dfs/models/dfs-slate-attr.model';
-import { Action, State, StateContext } from '@ngxs/store';
+import { Action, State } from '@ngxs/store';
 import { DfsNflSlateDetailsActions } from '../actions/dfs-nfl-slate-details.actions';
 import { DfsNflSlatePlayerDetailsFacade } from '../facade/dfs-nfl-slate-player-details.facade';
 import { DfsNflSlateTeamDetailsFacade } from '../facade/dfs-nfl-slate-team-details.facade';
@@ -18,14 +17,12 @@ export class DfsNflSlateDetailsHandlerState {
   ) {}
 
   @Action(DfsNflSlateDetailsActions.Fetch)
-  async fetchSlateDetails(
-    _: StateContext<DfsSlateAttributesStateModel>,
-    { payload: { slateId } }: { payload: { slateId } }
-  ): Promise<void> {
+  async fetchSlateDetails(): Promise<void> {
     const sport = this.dfsSelectedSlateConfigurationFacade.sport;
     const site = this.dfsSelectedSlateConfigurationFacade.site;
+    const slateId = this.dfsSelectedSlateConfigurationFacade.slateId;
 
-    if (!sport || !site) return;
+    if (!sport || !site || !slateId) return;
 
     const { teams, players } = await this.nflSlateService.getNflGameAttributesBySlateId({ sport, site, slateId }).toPromise();
 

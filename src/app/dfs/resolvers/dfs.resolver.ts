@@ -6,6 +6,7 @@ import { DfsSelectedSlateConfigurationFacade } from '../facade/dfs-selected-slat
 import { DfsSlateAttrFacade } from '../facade/dfs-slate-attr.facade';
 import { DfsSlatePlayersFacade } from '../facade/dfs-slate-players.facade';
 import { DfsSlatesFacade } from '../facade/dfs-slates.facade';
+import { DfsNflGridIronFacade } from '../nfl/facade/dfs-nfl-gridiron.facade';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,8 @@ export class DfsResolver implements Resolve<void> {
     private dfsSlatesFacade: DfsSlatesFacade,
     private dfsSlatePlayersFacade: DfsSlatePlayersFacade,
     private dfsSlateAttrFacade: DfsSlateAttrFacade,
-    private dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade
+    private dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade,
+    private dfsNflGridIronFacade: DfsNflGridIronFacade
   ) {}
 
   async resolve(route: ActivatedRouteSnapshot): Promise<void> {
@@ -35,5 +37,6 @@ export class DfsResolver implements Resolve<void> {
 
     await this.dfsSlatePlayersFacade.fetchPlayers(slatePath).toPromise();
     await this.dfsSlateAttrFacade.fetchSlateAttributesBySlateId(slateId).toPromise();
+    await this.dfsNflGridIronFacade.fetch().toPromise();
   }
 }

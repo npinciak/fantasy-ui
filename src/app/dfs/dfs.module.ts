@@ -7,7 +7,6 @@ import { NgxsModule } from '@ngxs/store';
 import { PlayerTableComponent } from './components/player-table/player-table.component';
 import { DfsSlateListComponent } from './components/slate-list/slate-list.component';
 import { DfsRoutingModule } from './dfs-routing.module';
-import { DfsSlateAttributesHandlerState } from './handlers/dfs-slate-attributes.handlers';
 import { DfsSlatePlayersHandlerState } from './handlers/dfs-slate-players.handlers';
 import { DfsSlatesHandlerState } from './handlers/dfs-slates.handler';
 import { DfsMlbHomeComponent } from './mlb/pages/dfs-mlb-home/dfs-mlb-home.component';
@@ -25,7 +24,6 @@ import { DfsNflSlateTeamDetailsState } from './nfl/state/dfs-nfl-slate-team-deta
 import { DfsHomeComponent } from './pages/dfs-home/dfs-home.component';
 import { DfsMatchupsState } from './state/dfs-matchups.state';
 import { DfsSelectedSlateConfigurationState } from './state/dfs-selected-slate-configuration.state';
-import { DfsSlateAttributesState } from './state/dfs-slate-attr.state';
 import { DfsSlatePlayersState } from './state/dfs-slate-players.state';
 import { DfsSlatesState } from './state/dfs-slates.state';
 import { DfsTeamsState } from './state/dfs-teams.state';
@@ -38,8 +36,6 @@ const states = [
   DfsMatchupsState,
   DfsSlatesState,
   DfsSlatesHandlerState,
-  DfsSlateAttributesState,
-  DfsSlateAttributesHandlerState,
   DfsTeamsState,
   DailyFantasyMlbPlayerSlateAttributeState,
   DfsMlbTeamSlateDetailsState,
