@@ -15,10 +15,18 @@
             <app-base-card title="Games to Target">
               <ng-container *ngFor="let matchup of nflTopFiveMatchups$ | async">
                 <div class="flex w-full gap-5 text-left">
-                  <div class="flex-1 p-1 text-left text-xs sm:text-sm">{{ matchup.away.name }}</div>
-                  <div class="flex-1 truncate text-left text-xs font-bold sm:text-sm">@ {{ matchup.home.name }}</div>
-                  <div class="flex-1 p-1 text-xs sm:text-sm">{{ matchup.overUnder ?? '-' }}</div>
-                  <div class="flex-1 p-1 text-xs sm:text-sm">{{ matchup.movement ?? '-' }}</div>
+                  <div class="flex-1 p-1 text-left text-xs sm:text-sm">
+                    <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" sm="true">{{ matchup.away.name }}</app-loading-skeleton>
+                  </div>
+                  <div class="flex-1 truncate text-left text-xs font-bold sm:text-sm">
+                    <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" xs="true">@ {{ matchup.home.name }}</app-loading-skeleton>
+                  </div>
+                  <div class="flex-1 p-1 text-xs sm:text-sm">
+                    <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" xs="true">{{ matchup.overUnder ?? '-' }}</app-loading-skeleton>
+                  </div>
+                  <div class="flex-1 p-1 text-xs sm:text-sm">
+                    <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" xs="true">{{ matchup.movement ?? '-' }}</app-loading-skeleton>
+                  </div>
                 </div>
               </ng-container>
             </app-base-card>

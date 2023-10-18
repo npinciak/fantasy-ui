@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingExecutorFacade } from '@app/@core/loading-executor/loading-executor.facade';
 import { DfsMatchupsFacade } from '@app/dfs/facade/dfs-matchups.facade';
 import { DfsSelectedSlateConfigurationFacade } from '@app/dfs/facade/dfs-selected-slate-configuration.facade';
 import { DfsSlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
@@ -24,6 +25,7 @@ import { NFL_STAT_GROUP_MAP } from '../../models/stat-group.model';
   templateUrl: './dfs-nfl-home.component.html',
 })
 export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
+  isDfsNflSlateDetailsActionsFetchExecuting$ = this.loadingExecutorFacade.isDfsNflSlateDetailsActionsFetchExecuting$;
   readonly TABLE_HEADERS_BY_POS = HEADERS_BY_POS;
   readonly TABLE_ROWS_BY_POS = ROWS_BY_POS;
 
@@ -91,6 +93,7 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   ];
 
   constructor(
+    readonly loadingExecutorFacade: LoadingExecutorFacade,
     readonly dfsPlayersFacade: DfsSlatePlayersFacade,
     readonly dfsSlateFacade: DfsSlatesFacade,
     readonly dfsSlateAttrFacade: DfsSlateAttrFacade,
