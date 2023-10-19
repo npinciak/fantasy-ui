@@ -10,7 +10,6 @@ import { SiteSlateEntity, SlateType } from '@sports-ui/daily-fantasy-sdk/daily-f
 import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DfsNflThresholds } from '../../consts/stats-threshold.m';
 import { HEADERS_BY_POS, ROWS_BY_POS } from '../../consts/table.const';
 import { DfsNflPlayerFacade } from '../../facade/daily-fantasy-nfl-players.facade';
 import { DfsNflGridIronFacade } from '../../facade/dfs-nfl-gridiron.facade';
@@ -33,8 +32,6 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   readonly NFL_RG_TEAM_ID_MAP = NFL_RG_TEAM_ID_MAP;
   readonly NFL_TEAM_ID_MAP = NFL_TEAM_ID_MAP;
 
-  readonly matchupThreshold = DfsNflThresholds.matchupThreshold;
-  readonly matchupThresholdInverse = DfsNflThresholds.matchupThresholdInverse;
 
   nflPositionList$ = this.nflPlayerFacade.positionList$;
   nflPlayerList$ = this.nflPlayerFacade.playerList$;
