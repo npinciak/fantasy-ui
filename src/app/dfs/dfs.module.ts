@@ -23,6 +23,7 @@ import { DfsNflSlatePlayerDetailsState } from './nfl/state/dfs-nfl-slate-player-
 import { DfsNflSlateTeamDetailsState } from './nfl/state/dfs-nfl-slate-team-details.state';
 import { DfsHomeComponent } from './pages/dfs-home/dfs-home.component';
 import { DfsMatchupsState } from './state/dfs-matchups.state';
+import { DfsSelectedLineupState } from './state/dfs-selected-lineup.state';
 import { DfsSelectedSlateConfigurationState } from './state/dfs-selected-slate-configuration.state';
 import { DfsSlatePlayersState } from './state/dfs-slate-players.state';
 import { DfsSlatesState } from './state/dfs-slates.state';
@@ -46,6 +47,7 @@ const states = [
   DfsNflGridIronHandlerState,
   DfsNbaSlatePlayerAttributesState,
   DfsWeatherState,
+  DfsSelectedLineupState,
 ];
 
 @NgModule({
