@@ -7,7 +7,7 @@ import { SlateTeamNfl } from '@app/dfs/models/slate-team.model';
 import { DfsTeamsSelectors } from '@app/dfs/selectors/dfs-teams.selectors';
 import { DfsSlatePlayersState } from '@app/dfs/state/dfs-slate-players.state';
 import { NFL_RG_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
-import { exists, existsFilter, pickData, uniqueBy } from '@sports-ui/ui-sdk/helpers';
+import { exists, existsFilter, hasNonNullableFields, pickData, uniqueBy } from '@sports-ui/ui-sdk/helpers';
 import { GridIronPlayer } from '../models/nfl-gridIron.model';
 import { NflDfsPlayerTableData } from '../models/nfl-player.model';
 import { DfsNflGridIronSelectors } from './dfs-nfl-grid-iron.selectors';
@@ -63,15 +63,19 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
           rgTeamId,
           position,
           salary,
+          playerSiteId: p.salaries ? p.salaries[0].player_id : null,
           oppRushDefRank: matchup?.outsiders?.oppRuDefRk ?? null,
-          oppPassDefRank: matchup?.outsiders?.oppPaDefRk?? null,
+          oppPassDefRank: matchup?.outsiders?.oppPaDefRk ?? null,
           pown: gridIron ? gridIron.pown : null,
           opp: gridIron ? gridIron.opp : null,
           smash: gridIron ? gridIron.smash : null,
           ceil: gridIron ? gridIron.ceil : null,
+          sdCeil: gridIron ? gridIron.sdCeil : null,
           floor: gridIron ? gridIron.floor : null,
+          sdFloor: gridIron ? gridIron.sdFloor : null,
           tar: gridIron ? gridIron.tar : null,
           fpts: gridIron ? gridIron.fpts : null,
+          sdFpts: gridIron ? gridIron.sdFpts : null,
           fptsPerDollar: gridIron ? gridIron.fptsPerDollar : null,
           value: gridIron ? gridIron.value : null,
         };
@@ -80,19 +84,22 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
       .sort((a, b) => b.salary! - a.salary!);
   }
 
-  @Selector([DfsNflPlayerSelectors.getPlayerTableData, DfsTeamsSelectors.getById, DfsNflSlateTeamDetailsSelectors.getById])
+  @Selector([DfsNflPlayerSelectors.getPlayerTableData, DfsTeamsSelectors.getById])
   static getTeamsWithHighestPown(
     tableData: NflDfsPlayerTableData[],
-    teamById: ReturnType<typeof DfsTeamsSelectors.getById>,
-    teamMatchupById: (rgId: string | null) => SlateTeamNfl | null
+    teamById: ReturnType<typeof DfsTeamsSelectors.getById>
   ): { pown: number | null; teamName: string }[] {
     const teamMap = new Map<string, number>();
 
     tableData.forEach(player => {
-      if (teamMap.has(player.rgTeamId!)) {
-        teamMap.set(player.rgTeamId!, teamMap.get(player.rgTeamId!)! + player.pown!);
+      if (!hasNonNullableFields(player, ['rgTeamId', 'pown'])) return;
+
+      const { rgTeamId, pown } = player;
+
+      if (teamMap.has(rgTeamId)) {
+        teamMap.set(rgTeamId, teamMap.get(rgTeamId)! + pown);
       } else {
-        teamMap.set(player.rgTeamId!, player.pown!);
+        teamMap.set(rgTeamId, pown);
       }
     });
 
@@ -107,11 +114,10 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
       .slice(0, 10);
   }
 
-  @Selector([DfsNflPlayerSelectors.getPlayerTableData, DfsTeamsSelectors.getById, DfsNflSlateTeamDetailsSelectors.getById])
+  @Selector([DfsNflPlayerSelectors.getPlayerTableData, DfsTeamsSelectors.getById])
   static getTeamsWithHighestValue(
     tableData: NflDfsPlayerTableData[],
-    teamById: ReturnType<typeof DfsTeamsSelectors.getById>,
-    teamMatchupById: (rgId: string | null) => SlateTeamNfl | null
+    teamById: ReturnType<typeof DfsTeamsSelectors.getById>
   ): { value: number | null; teamName: string }[] {
     const teamMap = new Map<string, number>();
 

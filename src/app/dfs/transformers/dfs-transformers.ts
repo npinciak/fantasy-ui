@@ -26,8 +26,11 @@ export function normalizeNFLClientGridIronPlayer(gridIronPlayer: NFLClientGridIr
     REYDS,
     RETD,
     FPTS,
+    SDFPTS,
     FLOOR,
+    SDFLOOR,
     CEIL,
+    SDCEIL,
     SMASH,
     VALUE,
     POWN,
@@ -59,9 +62,12 @@ export function normalizeNFLClientGridIronPlayer(gridIronPlayer: NFLClientGridIr
   map['reyds'] = REYDS ? Number(REYDS) : null;
   map['retd'] = RETD ? Number(RETD) : null;
   map['fpts'] = FPTS ? Number(FPTS) : null;
+  map['sdFpts'] = SDFPTS ? Number(SDFPTS) : null;
   map['fptsPerDollar'] = gridIronPlayer['FPTS/$'] ? Number(gridIronPlayer['FPTS/$']) : null;
   map['floor'] = FLOOR ? Number(FLOOR) : null;
+  map['sdFloor'] = SDFLOOR ? Number(SDFLOOR) : null;
   map['ceil'] = CEIL ? Number(CEIL) : null;
+  map['sdCeil'] = SDCEIL ? Number(SDCEIL) : null;
   map['smash'] = SMASH ? Number(SMASH) : null;
   map['value'] = VALUE ? Number(VALUE) : null;
   map['pown'] = POWN ? Number(POWN) : null;

@@ -12,7 +12,9 @@ const BASE_STATS_COLUMNS: BaseTableColumn<NflDfsPlayerTableData>[] = [
   { columnDef: 'fpts', headerCell: 'fpts', headerLabel: 'FPts', dataType: TableColumnDataType.Number },
   { columnDef: 'fptsPerDollar', headerCell: 'fptsPerDollar', headerLabel: 'FPts/$', dataType: TableColumnDataType.Number },
   { columnDef: 'ceil', headerCell: 'ceil', headerLabel: 'Ceil', dataType: TableColumnDataType.Number },
+  { columnDef: 'sdCeil', headerCell: 'sdCeil', headerLabel: 'SDCeil', dataType: TableColumnDataType.Number },
   { columnDef: 'floor', headerCell: 'floor', headerLabel: 'Floor', dataType: TableColumnDataType.Number },
+  { columnDef: 'sdFloor', headerCell: 'sdFloor', headerLabel: 'sdFloor', dataType: TableColumnDataType.Number },
 ];
 
 export const RECEIVER_STATS_COLUMNS: BaseTableColumn<NflDfsPlayerTableData>[] = [

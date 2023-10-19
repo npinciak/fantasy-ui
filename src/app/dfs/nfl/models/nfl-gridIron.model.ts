@@ -19,9 +19,12 @@ export interface GridIronPlayer {
   reyds: number | null;
   retd: number | null;
   fpts: number | null;
+  sdFpts: number | null;
   fptsPerDollar: number | null;
   floor: number | null;
+  sdFloor: number | null;
   ceil: number | null;
+  sdCeil: number | null;
   smash?: number | null;
   value?: number | null;
   pown: number | null;
