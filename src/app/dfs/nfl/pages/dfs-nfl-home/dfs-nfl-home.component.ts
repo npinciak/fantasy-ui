@@ -18,8 +18,8 @@ import { DfsNflMatchupsFacade } from '../../facade/dfs-nfl-matchups.facade';
 import { DfsNflSlateDetailsFacade } from '../../facade/dfs-nfl-slate-details.facade';
 import { DfsNflSlateTeamDetailsFacade } from '../../facade/dfs-nfl-slate-team-details.facade';
 import { GridIronProjectionType } from '../../models/nfl-gridIron.model';
+import { NflDfsPlayerTableData } from '../../models/nfl-player.model';
 import { FilterType } from '../../models/nfl-table.model';
-import { NFL_STAT_GROUP_MAP } from '../../models/stat-group.model';
 
 @Component({
   selector: 'app-dfs-nfl-home',
@@ -27,10 +27,10 @@ import { NFL_STAT_GROUP_MAP } from '../../models/stat-group.model';
 })
 export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   isDfsNflSlateDetailsActionsFetchExecuting$ = this.loadingExecutorFacade.isDfsNflSlateDetailsActionsFetchExecuting$;
+
   readonly TABLE_HEADERS_BY_POS = HEADERS_BY_POS;
   readonly TABLE_ROWS_BY_POS = ROWS_BY_POS;
 
-  readonly NFL_STAT_GROUP_MAP = NFL_STAT_GROUP_MAP;
   readonly NFL_RG_TEAM_ID_MAP = NFL_RG_TEAM_ID_MAP;
   readonly NFL_TEAM_ID_MAP = NFL_TEAM_ID_MAP;
 

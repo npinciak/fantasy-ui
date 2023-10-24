@@ -4,10 +4,12 @@ import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { SlatePlayer } from '@app/dfs/models/player.model';
 import { SlateTeamNfl } from '@app/dfs/models/slate-team.model';
+import { DfsSelectedSlateConfigurationSelectors } from '@app/dfs/selectors/dfs-selected-slate-configuration.selectors';
 import { DfsTeamsSelectors } from '@app/dfs/selectors/dfs-teams.selectors';
 import { DfsSlatePlayersState } from '@app/dfs/state/dfs-slate-players.state';
 import { NFL_RG_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
 import { exists, existsFilter, hasNonNullableFields, pickData, uniqueBy } from '@sports-ui/ui-sdk/helpers';
+import { positionValueByDfsSite } from '../consts/value-targets-by-position.const';
 import { GridIronPlayer } from '../models/nfl-gridIron.model';
 import { NflDfsPlayerTableData } from '../models/nfl-player.model';
 import { DfsNflGridIronSelectors } from './dfs-nfl-grid-iron.selectors';
@@ -42,11 +44,17 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
     return [...reset, ...positions];
   }
 
-  @Selector([DfsNflPlayerSelectors.getList, DfsNflGridIronSelectors.getById, DfsNflSlateTeamDetailsSelectors.getById])
+  @Selector([
+    DfsNflPlayerSelectors.getList,
+    DfsNflGridIronSelectors.getById,
+    DfsNflSlateTeamDetailsSelectors.getById,
+    DfsSelectedSlateConfigurationSelectors.slices.site,
+  ])
   static getPlayerTableData(
     list: SlatePlayer[],
     gridIronById: (id: string | null) => GridIronPlayer | null,
-    teamMatchupById: (rgId: string | null) => SlateTeamNfl | null
+    teamMatchupById: (rgId: string | null) => SlateTeamNfl | null,
+    dfsSite: string
   ): NflDfsPlayerTableData[] {
     return list
       .map(p => {
@@ -56,6 +64,8 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
         const gridIron = gridIronById(p.rgId);
 
         const { id, name, rgTeamId, position } = p;
+
+        const targetValue = positionValueByDfsSite[position][dfsSite];
 
         return {
           id,
@@ -78,6 +88,10 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
           sdFpts: gridIron ? gridIron.sdFpts : null,
           fptsPerDollar: gridIron ? gridIron.fptsPerDollar : null,
           value: gridIron ? gridIron.value : null,
+          valueTargetGPPs: (salary * targetValue.valueTargetMultiplierGPPs) / 1000,
+          valueTargetCash: (salary * targetValue.valueTargetMultiplierCash) / 1000,
+          minimumFantasyPointsCash: targetValue.minimumFantasyPointsCash,
+          minimumFantasyPointsGPPs: targetValue.minimumFantasyPointsGPPs,
         };
       })
       .filter(p => p.opp != null)

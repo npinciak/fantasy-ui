@@ -11,4 +11,8 @@ export type NflDfsPlayerTableData = Pick<SlatePlayer, 'name' | 'rgTeamId' | 'pos
     playerSiteId: string | null;
     oppPassDefRank: number | null;
     oppRushDefRank: number | null;
+    valueTargetGPPs: number;
+    valueTargetCash: number;
+    minimumFantasyPointsCash: number;
+    minimumFantasyPointsGPPs: number;
   };
