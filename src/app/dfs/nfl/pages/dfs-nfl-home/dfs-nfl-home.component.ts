@@ -10,6 +10,7 @@ import { SiteSlateEntity, SlateType } from '@sports-ui/daily-fantasy-sdk/daily-f
 import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { GRIDIRON_PROJECTION_FILTER_OPTIONS } from '../../consts/nfl-gridiron-projection.const';
 import { HEADERS_BY_POS, ROWS_BY_POS } from '../../consts/table.const';
 import { DfsNflPlayerFacade } from '../../facade/daily-fantasy-nfl-players.facade';
 import { DfsNflGridIronFacade } from '../../facade/dfs-nfl-gridiron.facade';
@@ -33,6 +34,7 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   readonly NFL_RG_TEAM_ID_MAP = NFL_RG_TEAM_ID_MAP;
   readonly NFL_TEAM_ID_MAP = NFL_TEAM_ID_MAP;
 
+  readonly GRIDIRON_PROJECTION_FILTER_OPTIONS = GRIDIRON_PROJECTION_FILTER_OPTIONS;
 
   nflPositionList$ = this.nflPlayerFacade.positionList$;
   nflPlayerList$ = this.nflPlayerFacade.playerList$;
@@ -82,13 +84,6 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
       };
     })
   );
-
-  projectionTypeOptions = [
-    { value: GridIronProjectionType.BlitzDefault, label: 'Blitz Default' },
-    { value: GridIronProjectionType.BlitzDefenseAgnostic, label: 'Blitz Defense Agnostic' },
-    { value: GridIronProjectionType.BlitzDefenseDeflated, label: 'Blitz Defense Deflated' },
-    { value: GridIronProjectionType.Default, label: 'Default' },
-  ];
 
   constructor(
     readonly loadingExecutorFacade: LoadingExecutorFacade,
