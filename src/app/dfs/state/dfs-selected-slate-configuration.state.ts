@@ -2,23 +2,8 @@ import { Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
 import { patch } from '@ngxs/store/operators';
 import { DfsSelectedSlateConfigurationActions } from '../actions/dfs-selected-slate-configuration.actions';
+import { DfsSelectedSlateConfigurationStateModel, INITIAL_STATE } from '../models/dfs-selected-slate-configuration.model';
 import { GridIronProjectionType } from '../nfl/models/nfl-gridIron.model';
-
-export class DfsSelectedSlateConfigurationStateModel {
-  slateId: string | null;
-  site: string | null;
-  path: string | null;
-  sport: string | null;
-  projectionType: GridIronProjectionType;
-}
-
-export const INITIAL_STATE: DfsSelectedSlateConfigurationStateModel = {
-  slateId: null,
-  site: null,
-  path: null,
-  sport: null,
-  projectionType: GridIronProjectionType.Default,
-};
 
 @State<DfsSelectedSlateConfigurationStateModel>({
   name: DfsSelectedSlateConfigurationActions.stateName,

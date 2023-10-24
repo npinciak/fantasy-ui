@@ -22,7 +22,6 @@ export class DfsHomeComponent {
     readonly dfsPlayersFacade: DfsSlatePlayersFacade,
     readonly dfsSlateFacade: DfsSlatesFacade,
     readonly dfsSlateAttrFacade: DfsSlateAttrFacade,
-    readonly dfsMatchupFacade: DfsMatchupsFacade,
     readonly dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade
   ) {}
 
