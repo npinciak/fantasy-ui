@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingExecutorFacade } from '@app/@core/loading-executor/loading-executor.facade';
-import { DfsMatchupsFacade } from '@app/dfs/facade/dfs-matchups.facade';
 import { DfsSelectedSlateConfigurationFacade } from '@app/dfs/facade/dfs-selected-slate-configuration.facade';
 import { DfsSlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade';
@@ -13,6 +12,7 @@ import { map } from 'rxjs/operators';
 import { HEADERS_BY_POS, ROWS_BY_POS } from '../../consts/table.const';
 import { DfsNflPlayerFacade } from '../../facade/daily-fantasy-nfl-players.facade';
 import { DfsNflGridIronFacade } from '../../facade/dfs-nfl-gridiron.facade';
+import { DfsNflMatchupsFacade } from '../../facade/dfs-nfl-matchups.facade';
 import { DfsNflSlateDetailsFacade } from '../../facade/dfs-nfl-slate-details.facade';
 import { DfsNflSlateTeamDetailsFacade } from '../../facade/dfs-nfl-slate-team-details.facade';
 import { GridIronProjectionType } from '../../models/nfl-gridIron.model';
@@ -43,9 +43,9 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
 
   nflMatchupGraphData$ = this.nflTeamSlateAttrFacade.matchupGraphData$;
 
-  matchups$ = this.dfsMatchupFacade.nflMatchupTableData$;
-  nflTopFiveMatchups$ = this.dfsMatchupFacade.nflTopFiveMatchupsByOverUnder$;
-  nflTopFiveTeamTotals$ = this.dfsMatchupFacade.nflTopFiveTeamTotals$;
+  matchups$ = this.nflMatchupsFacade.nflMatchupTableData$;
+  nflTopFiveMatchups$ = this.nflMatchupsFacade.nflTopFiveMatchupsByOverUnder$;
+  nflTopFiveTeamTotals$ = this.nflMatchupsFacade.nflTopFiveTeamTotals$;
 
   teamsWithHighestPown$ = this.nflPlayerFacade.teamsWithHighestPown$;
   teamsWithHighestValue$ = this.nflPlayerFacade.teamsWithHighestValue$;
@@ -94,20 +94,17 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
     readonly dfsPlayersFacade: DfsSlatePlayersFacade,
     readonly dfsSlateFacade: DfsSlatesFacade,
     readonly dfsSlateAttrFacade: DfsSlateAttrFacade,
-    readonly dfsMatchupFacade: DfsMatchupsFacade,
     readonly dfsNflGridIronFacade: DfsNflGridIronFacade,
     readonly dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade,
     readonly nflPlayerFacade: DfsNflPlayerFacade,
     readonly nflTeamSlateAttrFacade: DfsNflSlateTeamDetailsFacade,
+    readonly nflMatchupsFacade: DfsNflMatchupsFacade,
     readonly dfsNflSlateDetailsFacade: DfsNflSlateDetailsFacade
   ) {
-    super(dfsPlayersFacade, dfsSlateFacade, dfsSlateAttrFacade, dfsMatchupFacade, dfsSelectedSlateConfigurationFacade);
+    super(dfsPlayersFacade, dfsSlateFacade, dfsSlateAttrFacade, dfsSelectedSlateConfigurationFacade);
   }
 
-  ngOnInit(): void {
-    // this.loadingBudget$.next(true);
-    // this.routerFacade.getResolverPromise(LineItemListBudgetsResolver).finally(() => this.loadingBudget$.next(false));
-  }
+  ngOnInit(): void {}
 
   onAxisXChange(val: string) {
     this.xAxisStat$.next(val);

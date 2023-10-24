@@ -8,6 +8,7 @@ import { DfsNflThresholds } from '../../consts/stats-threshold.m';
 })
 export class DfsNflMatchupComponent {
   @Input() matchups: any;
+  @Input() matchupsExist = false;
 
   readonly matchupThreshold = DfsNflThresholds.matchupThreshold;
   readonly matchupThresholdInverse = DfsNflThresholds.matchupThresholdInverse;
