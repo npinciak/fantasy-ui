@@ -43,9 +43,8 @@ export function includeLeagues(id: string): boolean {
  * @returns boolean
  */
 export function excludeLeagues(id: string): boolean {
-  const leagueIds = ['14', '62', '760', '102', '3923', '8097', '20226', '54', '59', '19834', '8301', '19483', '19868', '19728'];
-
-  return new Set([] as string[]).has(id);
+  const leagueIds = ['14', '62', '760', '102', '3923', '8097', '8301', '20226', '54', '59', '19834', '8301', '19483', '19868', '19728'];
+  return new Set(leagueIds).has(id);
 }
 
 /**
