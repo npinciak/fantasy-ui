@@ -3,10 +3,8 @@ import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { UrlQueryParams } from '@app/@core/router/url-builder';
 import { exists } from '@sports-ui/ui-sdk/helpers';
 import { DfsSelectedSlateConfigurationFacade } from '../facade/dfs-selected-slate-configuration.facade';
-import { DfsSlateAttrFacade } from '../facade/dfs-slate-attr.facade';
 import { DfsSlatePlayersFacade } from '../facade/dfs-slate-players.facade';
 import { DfsSlatesFacade } from '../facade/dfs-slates.facade';
-import { DfsNflGridIronFacade } from '../nfl/facade/dfs-nfl-gridiron.facade';
 
 @Injectable({
   providedIn: 'root',
@@ -15,9 +13,7 @@ export class DfsResolver implements Resolve<void> {
   constructor(
     private dfsSlatesFacade: DfsSlatesFacade,
     private dfsSlatePlayersFacade: DfsSlatePlayersFacade,
-    private dfsSlateAttrFacade: DfsSlateAttrFacade,
-    private dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade,
-    private dfsNflGridIronFacade: DfsNflGridIronFacade
+    private dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade
   ) {}
 
   async resolve(route: ActivatedRouteSnapshot): Promise<void> {
@@ -36,7 +32,5 @@ export class DfsResolver implements Resolve<void> {
     if (!exists(slateId) || !exists(slatePath)) throw new Error(`slateId (${slateId}) or slatePath (${slateId}) is not defined`);
 
     await this.dfsSlatePlayersFacade.fetchPlayers(slatePath).toPromise();
-    await this.dfsSlateAttrFacade.fetchSlateAttributesBySlateId(slateId).toPromise();
-    await this.dfsNflGridIronFacade.fetch().toPromise();
   }
 }

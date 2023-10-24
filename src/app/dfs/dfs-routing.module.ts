@@ -4,6 +4,7 @@ import { UrlPathFragments } from '@app/@core/router/url-builder';
 import { DfsMlbHomeComponent } from './mlb/pages/dfs-mlb-home/dfs-mlb-home.component';
 import { DfsNbaHomeComponent } from './nba/pages/dfs-nba-home/dfs-nba-home.component';
 import { DfsNflHomeComponent } from './nfl/pages/dfs-nfl-home/dfs-nfl-home.component';
+import { DfsNflResolver } from './nfl/resolver/dfs-nfl.resolver';
 import { DfsResolver } from './resolvers/dfs.resolver';
 
 export const routes: Routes = [
@@ -22,7 +23,7 @@ export const routes: Routes = [
     path: UrlPathFragments.NFL,
     data: { sport: UrlPathFragments.NFL },
     component: DfsNflHomeComponent,
-    resolve: [DfsResolver],
+    resolve: [DfsResolver, DfsNflResolver],
   },
   {
     path: UrlPathFragments.MLB,
