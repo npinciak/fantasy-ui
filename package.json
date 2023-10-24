@@ -11,7 +11,7 @@
     "bump:patch": "npm version patch",
     "bump:minor": "npm version minor",
     "bump:major": "npm version major",
-    "test": "ng test --configuration=develop --code-coverage --watch=true",
+    "test": "nx test --configuration=develop --code-coverage --watch=true",
     "test:ci": "npm run lint && npm run test",
     "lint": "nx lint",
     "lint:fix": "nx lint --fix",
