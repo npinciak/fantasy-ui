@@ -17,24 +17,8 @@ export class SportsUiLeaguesState extends GenericState({
   }
 
   @Action(SportsUiLeagues.DeleteLeague)
-  async deleteUserLeague(_: StateContext<GenericStateClass<SportsUiClientLeague>>, { payload: { leagueId } }): Promise<void> {
-    try {
-      // await this.leagueClientService.delete(leagueId);
-    } catch (error) {}
-    this.store.dispatch([new SportsUiLeagues.Fetch()]);
-  }
+  async deleteUserLeague(_: StateContext<GenericStateClass<SportsUiClientLeague>>, { payload: { leagueId } }): Promise<void> {}
 
   @Action(SportsUiLeagues.VerifyLeagues)
-  async verify() {
-    // const { leagueSport, leagueId, leagueYear } = this.store.selectSnapshot(SportsUiLeagueFormSelectors.getForm);
-    // if (leagueId && leagueSport && leagueYear) {
-    //   try {
-    //     const data = await this.api.verifyLeague({ leagueId, leagueSport, leagueYear }).toPromise();
-    //     const leagueName = data.leagueName;
-    //     this.store.dispatch([new SportsUiLeagueForm.SetLeagueNameValue({ leagueName }), new SportsUiLeagues.CreateLeague()]);
-    //   } catch (er) {
-    //     console.error(er);
-    //   }
-    // }
-  }
+  async verify() {}
 }

@@ -3,6 +3,7 @@ import { FASTCAST_SERVICE_URI, fastcastURIBuilder } from '@app/espn/espn.const';
 import { EspnService } from '@app/espn/service/espn.service';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { OPERATION_CODE, WebSocketBuilder } from '@sports-ui/ui-sdk/espn-fastcast-client';
+import { firstValueFrom } from 'rxjs';
 import { startWith, tap } from 'rxjs/operators';
 import { FastCastConnection } from '../actions/espn-fastcast-connection.actions';
 import { FastcastEvents } from '../actions/espn-fastcast-event.actions';
@@ -29,13 +30,12 @@ export class FastcastConnectionHandler {
 
     if (pause) return;
 
-    const websocketInfo = await this.fastcastService.fastCastWebsocket().toPromise();
+    const websocketInfo = await firstValueFrom(this.fastcastService.fastCastWebsocket());
     const connect = new Date().getTime();
     const socket = new WebSocketBuilder(websocketInfo, FASTCAST_SERVICE_URI);
 
-    await this.fastcastService
-      .connect(socket.websocketUri)
-      .pipe(
+    await firstValueFrom(
+      this.fastcastService.connect(socket.websocketUri).pipe(
         startWith(
           this.fastcastConnectionFacade.sendWebSocketMessage({
             message: { op: OPERATION_CODE.CONNECT },
@@ -45,7 +45,7 @@ export class FastcastConnectionHandler {
           this.fastcastConnectionFacade.handleWebSocketMessage({ message });
         })
       )
-      .toPromise();
+    );
 
     patchState({ connect, connectionClosed: false });
   }
@@ -107,7 +107,7 @@ export class FastcastConnectionHandler {
 
   @Action(FastCastConnection.FetchFastcast)
   async fetchFastcast(_: StateContext<EspnFastcastConnectionStateModel>, { payload: { uri } }): Promise<void> {
-    const { sports, leagues, events, teams } = await this.espnService.fetchFastcast(uri).toPromise();
+    const { sports, leagues, events, teams } = await firstValueFrom(this.espnService.fetchFastcast(uri));
 
     this.store.dispatch([
       new FastcastSports.AddOrUpdate(sports),
@@ -122,9 +122,9 @@ export class FastcastConnectionHandler {
     _: StateContext<EspnFastcastConnectionStateModel>,
     { payload: { sport, league, weeks, seasontype } }
   ): Promise<void> {
-    const { sports, leagues, events, teams } = await this.espnService
-      .fetchStaticScoreboard({ sport, league, weeks, seasontype })
-      .toPromise();
+    const { sports, leagues, events, teams } = await firstValueFrom(
+      this.espnService.fetchStaticScoreboard({ sport, league, weeks, seasontype })
+    );
 
     this.store.dispatch([
       new FastcastSports.AddOrUpdate(sports),

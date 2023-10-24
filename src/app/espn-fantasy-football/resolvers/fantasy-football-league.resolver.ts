@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { RouterFacade } from '@app/@core/router/router.facade';
+import { firstValueFrom } from 'rxjs';
 import { FantasyFootballLeagueFacade } from '../facade/fantasy-football-league.facade';
 
 @Injectable({
@@ -13,7 +14,7 @@ export class FantasyFootballLeagueResolver implements Resolve<void> {
     const leagueId = route.paramMap.get('leagueId');
     const year = route.paramMap.get('year');
     if (leagueId && year) {
-      await this.fantasyFootballFacade.fetch(leagueId, year).toPromise();
+      await firstValueFrom(this.fantasyFootballFacade.fetch(leagueId, year));
     }
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { FantasyFootballFreeAgentsFacade } from '../facade/fantasy-football-free-agents.facade';
 
 @Injectable({
@@ -13,6 +14,6 @@ export class FantasyFootballFreeAgentsResolver implements Resolve<void> {
 
     if (!leagueId) throw new Error(`cannot fetch a league without a leagueId`);
 
-    await this.freeAgentsFacade.fetchFreeAgents(leagueId).toPromise();
+    await firstValueFrom(this.freeAgentsFacade.fetchFreeAgents(leagueId));
   }
 }

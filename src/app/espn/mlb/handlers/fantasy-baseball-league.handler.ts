@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { FantasyLeagueBaseStateModel } from '@app/espn/state/base-league/base-league.model';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { exists } from '@sports-ui/ui-sdk/helpers';
+import { firstValueFrom } from 'rxjs';
 import { FantasyBaseballEvents } from '../actions/fantasy-baseball-events.actions';
 import { FantasyBaseballLeague } from '../actions/fantasy-baseball-league.actions';
 import { FantasyBaseballTeamsLive } from '../actions/fantasy-baseball-team-live.actions';
@@ -22,7 +23,7 @@ export class FantasyBaseballLeagueActionHandler {
     if (!exists(leagueId)) throw new Error('LeagueId cannot be null');
     try {
       const { id, scoringPeriodId, matchupPeriodCount, firstScoringPeriod, finalScoringPeriod, seasonId, teams, teamsLive, transactions } =
-        await this.mlbService.baseballLeague(leagueId, year).toPromise();
+        await firstValueFrom(this.mlbService.baseballLeague(leagueId, year));
 
       const state = { id, scoringPeriodId, matchupPeriodCount, firstScoringPeriod, finalScoringPeriod, seasonId };
       this.store.dispatch([

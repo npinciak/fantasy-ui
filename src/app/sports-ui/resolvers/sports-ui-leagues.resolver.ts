@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { SportsUiLeaguesFacade } from '../facades/sports-ui-leagues.facade';
 import { SportsUiTeamsFacade } from '../facades/sports-ui-teams.facade';
 import { SportsUiUserFacade } from '../facades/sports-ui-user.facade';
@@ -15,8 +16,8 @@ export class SportsUiLeaguesResolver implements Resolve<void> {
   ) {}
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    this.sportsUiLeaguesFacade.fetchLeagues().toPromise();
-    this.sportsUiUsersFacade.fetchUser().toPromise();
-    this.sportsUiTeamsFacade.fetchTeams().toPromise();
+    await firstValueFrom(this.sportsUiLeaguesFacade.fetchLeagues());
+    await firstValueFrom(this.sportsUiUsersFacade.fetchUser());
+    await firstValueFrom(this.sportsUiTeamsFacade.fetchTeams());
   }
 }

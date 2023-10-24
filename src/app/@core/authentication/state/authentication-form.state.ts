@@ -26,7 +26,7 @@ export class AuthenticationFormState {
 
   @Action(UpdateUser)
   async updateUser(_: StateContext<AuthenticationFormStateModel>, { payload: { email, password } }: UpdateUser): Promise<void> {
-    // await this.supaService.updateUser(email, password);
+    // await firstValueFrom(this.supaService.updateUser(email, password);
     // this.store.dispatch([new FetchUser()]);
   }
 }

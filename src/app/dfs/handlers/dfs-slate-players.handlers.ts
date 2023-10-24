@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { Action, State, StateContext } from '@ngxs/store';
+import { firstValueFrom } from 'rxjs';
 import { DfsSlatePlayersActions } from '../actions/dfs-slate-players.actions';
 import { DfsMatchupsFacade } from '../facade/dfs-matchups.facade';
 import { DfsSlatePlayersFacade } from '../facade/dfs-slate-players.facade';
@@ -23,16 +24,16 @@ export class DfsSlatePlayersHandlerState {
     _: StateContext<GenericStateModel<SlatePlayer>>,
     { payload: { slatePath } }: { payload: { slatePath: string } }
   ): Promise<void> {
-    const { players, schedule, teams } = await this.playerService.getPlayersBySlate({ slatePath }).toPromise();
+    const { players, schedule, teams } = await firstValueFrom(this.playerService.getPlayersBySlate({ slatePath }));
 
-    await this.dfsSlatePlayersFacade.clear().toPromise();
-    await this.dfsMatchupsFacade.clear().toPromise();
-    await this.dfsTeamsFacade.clear().toPromise();
+    await firstValueFrom(this.dfsSlatePlayersFacade.clear());
+    await firstValueFrom(this.dfsMatchupsFacade.clear());
+    await firstValueFrom(this.dfsTeamsFacade.clear());
 
     await Promise.all([
-      this.dfsSlatePlayersFacade.addOrUpdate(players).toPromise(),
-      this.dfsMatchupsFacade.addOrUpdate(schedule).toPromise(),
-      this.dfsTeamsFacade.addOrUpdate(teams).toPromise(),
+      firstValueFrom(this.dfsSlatePlayersFacade.addOrUpdate(players)),
+      firstValueFrom(this.dfsMatchupsFacade.addOrUpdate(schedule)),
+      firstValueFrom(this.dfsTeamsFacade.addOrUpdate(teams)),
     ]);
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { UrlQueryParams } from '@app/@core/router/url-builder';
 import { exists } from '@sports-ui/ui-sdk/helpers';
+import { firstValueFrom } from 'rxjs';
 import { DfsSelectedSlateConfigurationFacade } from '../facade/dfs-selected-slate-configuration.facade';
 import { DfsSlatePlayersFacade } from '../facade/dfs-slate-players.facade';
 import { DfsSlatesFacade } from '../facade/dfs-slates.facade';
@@ -22,15 +23,15 @@ export class DfsResolver implements Resolve<void> {
 
     if (!exists(site) || !exists(sport)) throw new Error('Site or Sport is not defined');
 
-    await this.dfsSelectedSlateConfigurationFacade.setSport(sport).toPromise();
-    await this.dfsSelectedSlateConfigurationFacade.setSite(site).toPromise();
-    await this.dfsSlatesFacade.fetchSlates(site, sport).toPromise();
+    await firstValueFrom(this.dfsSelectedSlateConfigurationFacade.setSport(sport));
+    await firstValueFrom(this.dfsSelectedSlateConfigurationFacade.setSite(site));
+    await firstValueFrom(this.dfsSlatesFacade.fetchSlates(site, sport));
 
     const slatePath = this.dfsSelectedSlateConfigurationFacade.path;
     const slateId = this.dfsSelectedSlateConfigurationFacade.slateId;
 
     if (!exists(slateId) || !exists(slatePath)) throw new Error(`slateId (${slateId}) or slatePath (${slateId}) is not defined`);
 
-    await this.dfsSlatePlayersFacade.fetchPlayers(slatePath).toPromise();
+    await firstValueFrom(this.dfsSlatePlayersFacade.fetchPlayers(slatePath));
   }
 }

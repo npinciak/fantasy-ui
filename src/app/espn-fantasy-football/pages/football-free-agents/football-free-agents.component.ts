@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
-
 import {
   BASIC_FOOTBALL_LINEUP_SLOT_FILTER_OPTIONS,
   FOOTBALL_LINEUP_MAP,
@@ -9,6 +6,8 @@ import {
   NFL_STATS_MAP,
 } from '@sports-ui/ui-sdk/espn';
 import { PLAYER_AVAILABILITY_FILTER, PLAYER_AVAILABILITY_STATUS, PlayerAvailabilityStatus } from '@sports-ui/ui-sdk/espn-client';
+import { BehaviorSubject, combineLatest, firstValueFrom } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { FOOTBALL_STATS_FILTER } from '../../consts/stats-filters.const';
 import { FantasyFootballFreeAgentsFilterFacade } from '../../facade/fantasy-football-free-agents-filter.facade';
 import { FantasyFootballFreeAgentsFacade } from '../../facade/fantasy-football-free-agents.facade';
@@ -75,13 +74,13 @@ export class FootballFreeAgentsComponent implements OnInit {
 
     const leagueId = this.footballLeagueFacade.leagueId!;
 
-    await this.freeAgentsFilterFacade.toggleScoringPeriodIds([val]).toPromise();
-    await this.freeAgentsFacade.fetchFreeAgents(leagueId).toPromise();
+    await firstValueFrom(this.freeAgentsFilterFacade.toggleScoringPeriodIds([val]));
+    await firstValueFrom(this.freeAgentsFacade.fetchFreeAgents(leagueId));
   }
 
   async onLineupFilterSlotIdChange(lineupSlotId: any): Promise<void> {
-    await this.freeAgentsFilterFacade.toggleLineupSlotIds([lineupSlotId]).toPromise();
-    await this.freeAgentsFacade.fetchFreeAgents(this.footballLeagueFacade.leagueId!).toPromise();
+    await firstValueFrom(this.freeAgentsFilterFacade.toggleLineupSlotIds([lineupSlotId]));
+    await firstValueFrom(this.freeAgentsFacade.fetchFreeAgents(this.footballLeagueFacade.leagueId!));
   }
 
   onAxisXChange(val: string) {

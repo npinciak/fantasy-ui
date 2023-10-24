@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { FangraphsConstantsFacade } from '@app/@shared/fangraphs/fangraphs-const.facade';
+import { firstValueFrom } from 'rxjs';
 import { FantasyBaseballLeagueFacade } from '../facade/fantasy-baseball-league.facade';
 
 @Injectable({
@@ -16,7 +17,7 @@ export class FantasyBaseballLeagueResolver implements Resolve<void> {
     if (!leagueId) throw new Error('cannot fetch a league without a leagueId');
     if (!year) throw new Error('cannot fetch a league without a year');
 
-    await this.fangraphsConstFacade.fetch().toPromise();
-    await this.fantasyBaseballLeagueFacade.getLeague(leagueId, year).toPromise();
+    await firstValueFrom(this.fangraphsConstFacade.fetch());
+    await firstValueFrom(this.fantasyBaseballLeagueFacade.getLeague(leagueId, year));
   }
 }

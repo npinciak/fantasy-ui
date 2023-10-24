@@ -8,7 +8,7 @@ import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
 import { DfsHomeComponent } from '@app/dfs/pages/dfs-home/dfs-home.component';
 import { SiteSlateEntity, SlateType } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, firstValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GRIDIRON_PROJECTION_FILTER_OPTIONS } from '../../consts/nfl-gridiron-projection.const';
 import { HEADERS_BY_POS, ROWS_BY_POS } from '../../consts/table.const';
@@ -151,7 +151,7 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   }
 
   async projectionTypeChange(value: GridIronProjectionType): Promise<void> {
-    await this.dfsSelectedSlateConfigurationFacade.setProjectionType(value).toPromise();
-    await this.dfsNflGridIronFacade.fetch().toPromise();
+    await firstValueFrom(this.dfsSelectedSlateConfigurationFacade.setProjectionType(value));
+    await firstValueFrom(this.dfsNflGridIronFacade.fetch());
   }
 }

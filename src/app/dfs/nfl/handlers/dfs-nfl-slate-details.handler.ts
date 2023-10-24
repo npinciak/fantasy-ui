@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DfsSelectedSlateConfigurationFacade } from '@app/dfs/facade/dfs-selected-slate-configuration.facade';
 import { Action, State } from '@ngxs/store';
+import { firstValueFrom } from 'rxjs';
 import { DfsNflSlateDetailsActions } from '../actions/dfs-nfl-slate-details.actions';
 import { DfsNflSlatePlayerDetailsFacade } from '../facade/dfs-nfl-slate-player-details.facade';
 import { DfsNflSlateTeamDetailsFacade } from '../facade/dfs-nfl-slate-team-details.facade';
@@ -24,14 +25,14 @@ export class DfsNflSlateDetailsHandlerState {
 
     if (!sport || !site || !slateId) return;
 
-    const { teams, players } = await this.nflSlateService.getNflGameAttributesBySlateId({ sport, site, slateId }).toPromise();
+    const { teams, players } = await firstValueFrom(this.nflSlateService.getNflGameAttributesBySlateId({ sport, site, slateId }));
 
-    await this.dfsNflSlatePlayerDetailsFacade.clear().toPromise();
-    await this.dfsNflSlateTeamDetailsFacade.clear().toPromise();
+    await firstValueFrom(this.dfsNflSlatePlayerDetailsFacade.clear());
+    await firstValueFrom(this.dfsNflSlateTeamDetailsFacade.clear());
 
     await Promise.all([
-      this.dfsNflSlateTeamDetailsFacade.addOrUpdate(teams).toPromise(),
-      this.dfsNflSlatePlayerDetailsFacade.addOrUpdate(players).toPromise(),
+      firstValueFrom(this.dfsNflSlateTeamDetailsFacade.addOrUpdate(teams)),
+      firstValueFrom(this.dfsNflSlatePlayerDetailsFacade.addOrUpdate(players)),
     ]);
   }
 }

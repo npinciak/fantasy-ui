@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EspnService } from '@app/espn/service/espn.service';
 import { Action, State } from '@ngxs/store';
+import { firstValueFrom } from 'rxjs';
 import { SportsUiLeagueForm } from '../actions/sports-ui-league-form.actions';
 import { SportsUiLeagueFormFacade } from '../facades/sports-ui-league-form.facade';
 import { LeaguesClientService } from '../service/leagues-client.service';
@@ -23,7 +24,7 @@ export class SportsUiLeagueFormActionHandler {
     if (!sport || !leagueId) throw new Error('League sport and league id are required');
 
     try {
-      const { settings } = await this.espnService.verifyLeague(sport, leagueId, season).toPromise();
+      const { settings } = await firstValueFrom(this.espnService.verifyLeague(sport, leagueId, season));
 
       this.sportsUiLeagueFormFacade.setName(settings.name);
     } catch (error) {

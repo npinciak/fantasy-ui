@@ -3,6 +3,7 @@ import { GenericStateClass } from '@app/@shared/generic-state/generic.model';
 import { Action, State, StateContext } from '@ngxs/store';
 import { ProTeamEntity } from '@sports-ui/ui-sdk';
 import { exists } from '@sports-ui/ui-sdk/helpers';
+import { firstValueFrom } from 'rxjs';
 import { FantasyBaseballPlayerCard } from '../actions/fantasy-baseball-player-card.actions';
 import { FantasyBaseballProTeamSchedule } from '../actions/fantasy-baseball-pro-team-schedule.actions';
 import { FantasyBaseballLeagueFacade } from '../facade/fantasy-baseball-league.facade';
@@ -31,7 +32,7 @@ export class FantasyBaseballPlayerCardActionHandler {
     if (!exists(leagueId) || !exists(year) || !exists(scoringPeriod)) throw new Error('leagueId, year or scoringPeriod cannot be null');
 
     try {
-      const player = await this.mlbService.baseballPlayerCard(leagueId, year, scoringPeriod, playerId).toPromise();
+      const player = await firstValueFrom(this.mlbService.baseballPlayerCard(leagueId, year, scoringPeriod, playerId));
 
       this.baseballPlayerCardFacade.addOrUpdate(player);
     } catch (e) {}
@@ -44,7 +45,7 @@ export class FantasyBaseballPlayerCardActionHandler {
     if (!exists(year)) throw new Error('year cannot be null');
 
     try {
-      const res = await this.mlbService.proteamSchedules(year).toPromise();
+      const res = await firstValueFrom(this.mlbService.proteamSchedules(year));
 
       this.fantasyBaseballProTeamScheduleFacade.addOrUpdate(res);
     } catch (e) {}
