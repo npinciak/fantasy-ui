@@ -5,7 +5,7 @@ import { exists } from '@sports-ui/ui-sdk/helpers';
 import { isPitcher } from '../../espn-helpers';
 import { FantasyLeague } from '../../models/fantasy-league.model';
 import { EspnTransformers } from '../../transformers/espn-transformers.m';
-import { AdvStats } from '../class/advStats.class';
+import { MlbAdvancedStats } from '../class/mlb-advanced-stats';
 import { FantasyBaseballImageBuilder } from '../fantasy-baseball-image-builder';
 import { FantasyBaseballScoringPeriod } from '../fantasy-baseball-scoring-period';
 import { BaseballEvent } from '../models/baseball-event.model';
@@ -252,7 +252,7 @@ export function transformToBaseballPlayerBatterStatsRow(
 
   const statsEntity = player.stats[statPeriod]!.stats;
 
-  const { fip, wOBA, wRAA, babip, iso, leftOnBasePercent, wRC } = new AdvStats({ seasonConst, statsEntity });
+  const { fip, wOBA, wRAA, babip, iso, leftOnBasePercent, wRC } = MlbAdvancedStats(seasonConst, statsEntity);
 
   const adv = {} as Record<BaseballStat, number>;
 
