@@ -5,6 +5,7 @@ import { EspnService } from '@app/espn/service/espn.service';
 import { Action, State, StateContext, Store } from '@ngxs/store';
 import { OPERATION_CODE, WebSocketBuilder } from '@sports-ui/ui-sdk/espn-fastcast-client';
 import { exists } from '@sports-ui/ui-sdk/helpers';
+import { firstValueFrom } from 'rxjs';
 import { startWith, tap } from 'rxjs/operators';
 import { FastcastEvents } from '../actions/espn-fastcast-event.actions';
 import { FastcastLeagues } from '../actions/espn-fastcast-league.actions';
@@ -30,17 +31,16 @@ export class EspnFastcastConnectionState {
 
     if (pause) return;
 
-    const websocketInfo = await this.fastcastService.fastCastWebsocket().toPromise();
+    const websocketInfo = await firstValueFrom(this.fastcastService.fastCastWebsocket());
     const connect = new Date().getTime();
     const socket = new WebSocketBuilder(websocketInfo, FASTCAST_SERVICE_URI);
 
-    this.fastcastService
-      .connect(socket.websocketUri)
-      .pipe(
+    await firstValueFrom(
+      this.fastcastService.connect(socket.websocketUri).pipe(
         startWith(this.store.dispatch(new FastCastConnection.SendWebSocketMessage({ message: { op: OPERATION_CODE.CONNECT } }))),
         tap(message => this.store.dispatch(new FastCastConnection.HandleWebSocketMessage({ message })))
       )
-      .toPromise();
+    );
 
     patchState({ connect, connectionClosed: false });
   }
@@ -108,7 +108,7 @@ export class EspnFastcastConnectionState {
 
   @Action(FastCastConnection.FetchFastcast)
   async fetchFastcast(_: StateContext<EspnFastcastConnectionStateModel>, { payload: { uri } }): Promise<void> {
-    const { sports, leagues, events, teams } = await this.espnService.fetchFastcast(uri).toPromise();
+    const { sports, leagues, events, teams } = await firstValueFrom(this.espnService.fetchFastcast(uri));
 
     this.store.dispatch([
       new FastcastSports.AddOrUpdate(sports),
@@ -123,9 +123,9 @@ export class EspnFastcastConnectionState {
     _: StateContext<EspnFastcastConnectionStateModel>,
     { payload: { sport, league, weeks, seasontype } }
   ): Promise<void> {
-    const { sports, leagues, events, teams } = await this.espnService
-      .fetchStaticScoreboard({ sport, league, weeks, seasontype })
-      .toPromise();
+    const { sports, leagues, events, teams } = await firstValueFrom(
+      this.espnService.fetchStaticScoreboard({ sport, league, weeks, seasontype })
+    );
 
     const leagueSlug = exists(leagues[0]) ? leagues[0].id : null;
 

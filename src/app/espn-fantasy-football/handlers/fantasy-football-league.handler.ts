@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FantasyLeagueBaseStateModel } from '@app/espn/state/base-league/base-league.model';
 import { Action, State, StateContext } from '@ngxs/store';
+import { firstValueFrom } from 'rxjs';
 import { FantasyFootballLeague } from '../actions/fantasy-football-league.actions';
 import { FantasyFootballEventsFacade } from '../facade/fantasy-football-events.facade';
 import { FantasyFootballLeagueFacade } from '../facade/fantasy-football-league.facade';
@@ -23,7 +24,7 @@ export class FantasyFootballLeagueActionHandler {
   async footballLeague(_: StateContext<FantasyLeagueBaseStateModel>, { payload: { leagueId, year } }) {
     try {
       const { id, seasonId, scoringPeriodId, firstScoringPeriod, finalScoringPeriod, teams, matchupPeriodCount, schedule } =
-        await this.nflService.fetchLeague(leagueId, year).toPromise();
+        await firstValueFrom(this.nflService.fetchLeague(leagueId, year));
 
       const state = { id, scoringPeriodId, matchupPeriodCount, firstScoringPeriod, finalScoringPeriod, seasonId };
 

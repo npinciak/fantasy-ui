@@ -29,7 +29,6 @@ export class ServiceWorkerService {
 
   updateOnlineStatus(): void {
     this.isOnline$.next(window.navigator.onLine);
-    console.log(`isOnline=[${window.navigator.onLine}]`);
   }
 
   async checkForUpdates() {
@@ -39,13 +38,9 @@ export class ServiceWorkerService {
 
     const hasUpdate = await this.sw.checkForUpdate();
 
-    console.log('hasUpdateAgain!', hasUpdate);
-
     const activateUpdate = await this.sw.activateUpdate();
 
     if (activateUpdate) {
-      console.log('activateUpdate!', activateUpdate);
-
       document.location.reload();
     }
 

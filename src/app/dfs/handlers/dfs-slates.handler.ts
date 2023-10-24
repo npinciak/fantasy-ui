@@ -3,6 +3,7 @@ import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { Action, State, StateContext } from '@ngxs/store';
 import { SiteSlateEntity } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { SLATE_TYPES } from '@sports-ui/daily-fantasy-sdk/models';
+import { firstValueFrom } from 'rxjs';
 import { DfsSlatesActions } from '../actions/dfs-slates.actions';
 import { DfsSelectedSlateConfigurationFacade } from '../facade/dfs-selected-slate-configuration.facade';
 import { DfsSlatesFacade } from '../facade/dfs-slates.facade';
@@ -24,11 +25,11 @@ export class DfsSlatesHandlerState {
   ): Promise<void> {
     const { sport, site } = payload;
 
-    const map = await this.slateService.getSlatesByDate({ sport }).toPromise();
+    const map = await firstValueFrom(this.slateService.getSlatesByDate({ sport }));
 
     const slates = Object.values(map[site]) as SiteSlateEntity[];
 
-    await this.dfsSlatesFacade.addOrUpdate(slates).toPromise();
+    await firstValueFrom(this.dfsSlatesFacade.addOrUpdate(slates));
 
     if (slates.length <= 0) return;
 
@@ -40,8 +41,8 @@ export class DfsSlatesHandlerState {
     const slatePath = filteredClassicSlatesExist ? filteredClassicSlates[0].slate_path : filteredShowdownSlates[0].slate_path;
 
     await Promise.all([
-      this.dfsSelectedSlateConfigurationFacade.setPath(slatePath).toPromise(),
-      this.dfsSelectedSlateConfigurationFacade.setSlateId(slateId).toPromise(),
+      firstValueFrom(this.dfsSelectedSlateConfigurationFacade.setPath(slatePath)),
+      firstValueFrom(this.dfsSelectedSlateConfigurationFacade.setSlateId(slateId)),
     ]);
   }
 }

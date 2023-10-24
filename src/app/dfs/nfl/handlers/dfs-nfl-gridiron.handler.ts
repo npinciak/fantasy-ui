@@ -3,6 +3,7 @@ import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { DfsSelectedSlateConfigurationFacade } from '@app/dfs/facade/dfs-selected-slate-configuration.facade';
 import { Action, State, StateContext } from '@ngxs/store';
 import { existsFilter } from '@sports-ui/ui-sdk';
+import { firstValueFrom } from 'rxjs';
 import { DfsNflGridIronActions } from '../actions/dfs-nfl-grid-iron.actions';
 import { DfsNflGridIronFacade } from '../facade/dfs-nfl-gridiron.facade';
 import { GridIronPlayer } from '../models/nfl-gridIron.model';
@@ -22,7 +23,7 @@ export class DfsNflGridIronHandlerState {
     const site = this.dfsSelectedSlateConfigurationFacade.site;
     const projectionType = this.dfsSelectedSlateConfigurationFacade.projectionType;
 
-    const players = await this.nflService.getGridIronPlayerProjections({ site, projectionType }).toPromise();
+    const players = await firstValueFrom(this.nflService.getGridIronPlayerProjections({ site, projectionType }));
 
     this.dfsNflGridIronFacade.addOrUpdate(existsFilter(players));
   }

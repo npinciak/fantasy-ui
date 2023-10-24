@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
+import { RouterFacade } from '@app/@core/router/router.facade';
 import { FreeAgentAvailabilityStatusSelectedFacade } from '@app/espn/state/free-agent-availability-selected.facade';
 import { Store } from '@ngxs/store';
 import {
@@ -14,11 +15,9 @@ import {
   MLB_STATS_MAP,
   PITCHER_STATS_LIST,
 } from '@sports-ui/ui-sdk/espn';
-import { BehaviorSubject, combineLatest, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-
-import { RouterFacade } from '@app/@core/router/router.facade';
 import { PLAYER_AVAILABILITY_FILTER, PLAYER_AVAILABILITY_STATUS, PlayerAvailabilityStatus } from '@sports-ui/ui-sdk/espn-client';
+import { BehaviorSubject, combineLatest, firstValueFrom, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {
   BATTER_STATS_HEADERS,
   BATTER_STATS_ROWS,
@@ -165,7 +164,7 @@ export class BaseballFreeAgentsComponent implements OnInit {
     try {
       this.isLoading$.next(true);
 
-      await this.fantasyBaseballLeagueFacade.getLeague(leagueId, year).toPromise();
+      await firstValueFrom(this.fantasyBaseballLeagueFacade.getLeague(leagueId, year));
       setTimeout(async () => {
         this.isLoading$.next(false);
       }, 2000);

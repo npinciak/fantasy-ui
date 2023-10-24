@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterFacade } from '@app/@core/router/router.facade';
 import { BaseballStat, MLB_STATS_MAP, PITCHER_STATS_LIST } from '@sports-ui/ui-sdk';
-import { BehaviorSubject, combineLatest, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, firstValueFrom, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
   PITCHER_STATS_HEADERS,
@@ -81,7 +81,7 @@ export class BaseballPitchersComponent {
     try {
       this.isLoading$.next(true);
 
-      await this.fantasyBaseballLeagueFacade.getLeague(leagueId, year).toPromise();
+      await firstValueFrom(this.fantasyBaseballLeagueFacade.getLeague(leagueId, year));
       setTimeout(async () => {
         this.isLoading$.next(false);
       }, 2000);

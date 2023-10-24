@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action, State } from '@ngxs/store';
+import { firstValueFrom } from 'rxjs';
 import { FantasyFootballEvents } from '../actions/fantasy-football-events.actions';
 import { FantasyFootballEventsFacade } from '../facade/fantasy-football-events.facade';
 import { FantasyFootballService } from '../services/fantasy-football.service';
@@ -11,7 +12,7 @@ export class FantasyFootballEventsActionHandler {
 
   @Action(FantasyFootballEvents.Fetch)
   async fetchBaseballEvents(): Promise<void> {
-    const events = await this.fantasyFootballService.footballEvents().toPromise();
+    const events = await firstValueFrom(this.fantasyFootballService.footballEvents());
     this.fantasyFootballEventsFacade.addOrUpdate(events);
   }
 }

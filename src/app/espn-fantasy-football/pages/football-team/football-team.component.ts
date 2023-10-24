@@ -5,7 +5,7 @@ import { EspnPlayerDialogComponent } from '@app/espn/components/espn-player-dial
 import { PlayerDialog } from '@app/espn/models/player-dialog-component.model';
 import { Store } from '@ngxs/store';
 import { FootballPosition, FootballStat, NFL_POSITION_MAP, NFL_STATS_MAP } from '@sports-ui/ui-sdk/espn';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, firstValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FantasyFootballPlayerNews } from '../../actions/fantasy-football-player-news.actions';
 import { FOOTBALL_POSITION_LIST_FILTER } from '../../consts/fantasy-football-position.const';
@@ -16,6 +16,7 @@ import { FantasyFootballPlayerNewsFacade } from '../../facade/fantasy-football-p
 import { FantasyFootballTeamFacade } from '../../facade/fantasy-football-team.facade';
 import { FantasyFootballScoringPeriod } from '../../fantasy-football-scoring-period';
 import { FootballPlayer } from '../../models/football-player.model';
+
 @Component({
   selector: 'app-football-team',
   templateUrl: './football-team.component.html',
@@ -86,7 +87,7 @@ export class FootballTeamComponent {
   }
 
   async onPlayerClick(player: FootballPlayer): Promise<void> {
-    await this.store.dispatch([new FantasyFootballPlayerNews.Fetch({ playerId: player.id })]).toPromise();
+    await firstValueFrom(this.store.dispatch([new FantasyFootballPlayerNews.Fetch({ playerId: player.id })]));
     const news = this.footballPlayerNewsFacade.getById(player.id)?.news ?? [];
 
     const data = { player, news, sport: 'nfl' } as PlayerDialog<FootballPlayer>;

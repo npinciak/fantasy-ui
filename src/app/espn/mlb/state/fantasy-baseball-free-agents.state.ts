@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
 import { Action, State, StateContext, Store } from '@ngxs/store';
+import { firstValueFrom } from 'rxjs';
 import { FantasyBaseballFreeAgents } from '../actions/fantasy-baseball-free-agents.actions';
 import { BaseballPlayer } from '../models/baseball-player.model';
 import { FantasyBaseballFreeAgentFilterSelector } from '../selectors/fantasy-baseball-free-agent-filter.selector';
@@ -65,7 +66,7 @@ export class FantasyBaseballFreeAgentsState extends GenericState({
 
     this.store.dispatch([new FantasyBaseballFreeAgents.Clear()]);
 
-    const freeAgents = await this.mlbService.baseballFreeAgents({ leagueId, scoringPeriodId, filter }).toPromise();
+    const freeAgents = await firstValueFrom(this.mlbService.baseballFreeAgents({ leagueId, scoringPeriodId, filter }));
     this.store.dispatch([new FantasyBaseballFreeAgents.AddOrUpdate(freeAgents)]);
   }
 }

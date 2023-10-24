@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
+import { firstValueFrom } from 'rxjs';
 import { DfsMlbSlatePlayerActions } from '../actions/dfs-mlb-slate-player.actions';
 import { MlbSlateService } from '../service/mlb-slate.service';
 
@@ -36,7 +37,7 @@ export class DailyFantasyMlbSlateAttrState {
     { setState }: StateContext<DailyFantasySlateAttrStateModel>,
     { payload: { sport, site, slate } }: FetchSlateAttr
   ): Promise<void> {
-    const { teams, players } = await this.slateService.getGameAttributesBySlateId({ sport, site, slate }).toPromise();
+    const { teams, players } = await firstValueFrom(this.slateService.getGameAttributesBySlateId({ sport, site, slateId: slate }));
 
     this.store.dispatch([new DfsMlbSlatePlayerActions.AddOrUpdate(players)]);
 

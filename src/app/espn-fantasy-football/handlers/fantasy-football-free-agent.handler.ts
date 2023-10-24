@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
 
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
+import { firstValueFrom } from 'rxjs';
 import { FantasyFootballFreeAgentActions } from '../actions/fantasy-football-free-agent.actions';
 import { FantasyFootballFreeAgentsFilterFacade } from '../facade/fantasy-football-free-agents-filter.facade';
 import { FantasyFootballFreeAgentsFacade } from '../facade/fantasy-football-free-agents.facade';
@@ -50,7 +51,7 @@ export class FantasyFootballFreeAgentActionHandler {
       },
     };
     this.freeAgentsFacade.clear();
-    const freeAgents = await this.fantasyFootballService.fetchFreeAgents({ leagueId, scoringPeriodId, filter }).toPromise();
+    const freeAgents = await firstValueFrom(this.fantasyFootballService.fetchFreeAgents({ leagueId, scoringPeriodId, filter }));
     this.freeAgentsFacade.addOrUpdate(freeAgents);
   }
 }

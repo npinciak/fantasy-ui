@@ -22,8 +22,5 @@ export class AuthenticationActionHandler {
     } catch (e) {
       console.error(e);
     }
-
-    // await this.sportsUiUsersFacade.fetchUser().toPromise();
-    // await this.sportsUiLeaguesFacade.fetch().toPromise();
   }
 }
