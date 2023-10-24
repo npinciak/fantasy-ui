@@ -38,6 +38,9 @@ export class RouterFacade {
     return this.store.selectSnapshot(RouterSelector.getPlayerId);
   }
 
+  /**
+   *  @deprecated find a better way to retrieve sport
+   */
   get sport() {
     return this.store.selectSnapshot(RouterSelector.getSport);
   }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Action, State, StateContext, Store } from '@ngxs/store';
+import { Action, State, StateContext } from '@ngxs/store';
 import { FantasySports } from '../../espn/models/espn-endpoint-builder.model';
 import { SportsUiLeagueForm } from '../actions/sports-ui-league-form.actions';
 
@@ -11,20 +11,20 @@ export interface SportsUiLeagueFormStateModel {
   verified: boolean;
 }
 
+const INITIAL_STATE = {
+  leagueSport: FantasySports.Baseball,
+  leagueId: null,
+  leagueName: null,
+  leagueYear: new Date().getFullYear().toString(),
+  verified: false,
+};
+
 @State<SportsUiLeagueFormStateModel>({
   name: 'sportsUiLeagueForm',
-  defaults: {
-    leagueSport: FantasySports.Baseball,
-    leagueId: null,
-    leagueName: null,
-    leagueYear: new Date().getFullYear().toString(),
-    verified: false,
-  },
+  defaults: INITIAL_STATE,
 })
 @Injectable()
 export class SportsUiLeagueFormState {
-  constructor(private store: Store) {}
-
   @Action(SportsUiLeagueForm.SetLeagueSportValue)
   setSportValue(
     { patchState }: StateContext<SportsUiLeagueFormStateModel>,
@@ -51,12 +51,6 @@ export class SportsUiLeagueFormState {
 
   @Action(SportsUiLeagueForm.Reset)
   reset({ setState }: StateContext<SportsUiLeagueFormStateModel>): void {
-    setState({
-      leagueId: null,
-      leagueSport: FantasySports.Baseball,
-      leagueName: null,
-      leagueYear: new Date().getFullYear().toString(),
-      verified: false,
-    });
+    setState(INITIAL_STATE);
   }
 }

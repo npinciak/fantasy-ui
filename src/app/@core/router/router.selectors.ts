@@ -92,6 +92,9 @@ export class RouterSelector {
     return objectIsEmpty(params) ? null : (params?.playerId as string);
   }
 
+  /**
+   *  @deprecated find a better way to retrieve sport
+   */
   @Selector([RouterSelector.getRouterData])
   static getSport(data: { reuse: boolean; sport: UrlPathFragments } | undefined) {
     if (!exists(data) || !exists(data.sport)) return null;

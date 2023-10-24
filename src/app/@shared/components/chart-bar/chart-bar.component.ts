@@ -20,7 +20,7 @@ import { BaseChartComponent, StatsChart } from '../base-chart/base-chart.compone
   `,
 })
 export class ChartBarComponent extends BaseChartComponent implements OnChanges {
-  @Input() horizontalLabels = false;
+  @Input() horizontalLabels = true;
 
   barChartData: ChartConfiguration<'bar'>['data'];
   chartType = 'bar';
