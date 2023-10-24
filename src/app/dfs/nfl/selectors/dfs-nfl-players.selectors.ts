@@ -98,6 +98,21 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
       .sort((a, b) => b.salary! - a.salary!);
   }
 
+  @Selector([DfsNflPlayerSelectors.getPlayerTableData])
+  static getPlayerBarChartDataByStatAndPosition(playerTableData: NflDfsPlayerTableData[]) {
+    return (stat: string, position: string) => {
+      const tableData = playerTableData
+        .filter(p => p.position === position && p[stat] > 1)
+        .map(p => ({ label: p.name, value: p[stat] as number | null }))
+        .sort((a, b) => b.value! - a.value!);
+
+      return {
+        label: tableData.map(p => p.label),
+        data: tableData.map(p => p.value),
+      };
+    };
+  }
+
   @Selector([DfsNflPlayerSelectors.getPlayerTableData, DfsTeamsSelectors.getById])
   static getTeamsWithHighestPown(
     tableData: NflDfsPlayerTableData[],
@@ -125,6 +140,7 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
         return { pown, teamName };
       })
       .sort((a, b) => b.pown - a.pown)
+      .filter(p => p.pown > 0)
       .slice(0, 10);
   }
 
@@ -150,6 +166,7 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
         return { value, teamName };
       })
       .sort((a, b) => b.value - a.value)
+      .filter(p => p.value > 0)
       .slice(0, 10);
   }
 

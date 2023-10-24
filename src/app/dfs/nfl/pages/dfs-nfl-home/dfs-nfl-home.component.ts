@@ -68,6 +68,10 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
     })
   );
 
+  playerBarChartData$ = combineLatest([this.nflPlayerFacade.playerBarChartData$, this.xAxisStat$, this.position$]).pipe(
+    map(([playerBarChartData, stat, position]) => playerBarChartData(stat ?? 'fpts', position ?? 'QB'))
+  );
+
   slateWeather$ = combineLatest([this.selectedSlateType$, this.dfsSlateFacade.slateWeather$]).pipe(
     map(([slate, weather]) => {
       return slate != null ? weather(slate as SlateType) : [];
@@ -126,6 +130,10 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
 
   nameInputChange(value: string) {
     this.tableFilter$.next(JSON.stringify({ filterType: FilterType.name, value }));
+  }
+
+  onStatChange(value: string) {
+    this.xAxisStat$.next(value);
   }
 
   onSelectNflSlate(event: SiteSlateEntity) {

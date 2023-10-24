@@ -13,45 +13,73 @@
         <div class="flex flex-wrap">
           <div class="mb-12 w-full sm:px-4 xl:mb-0 xl:w-4/12">
             <app-base-card title="Games to Target">
-              <ng-container *ngFor="let matchup of nflTopFiveMatchups$ | async">
-                <div class="flex w-full gap-5 text-left">
-                  <div class="flex-1 p-1 text-left text-xs sm:text-sm">
-                    <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" sm="true">{{ matchup.away.name }}</app-loading-skeleton>
+              <ng-container *ngIf="(nflTopFiveMatchups$ | async).length > 0; else noData">
+                <ng-container *ngFor="let matchup of nflTopFiveMatchups$ | async">
+                  <div class="flex w-full gap-5 text-left">
+                    <div class="flex-1 p-1 text-left text-xs sm:text-sm">
+                      <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" sm="true">{{
+                        matchup?.away?.name ?? '-'
+                      }}</app-loading-skeleton>
+                    </div>
+                    <div class="flex-1 truncate text-left text-xs font-bold sm:text-sm">
+                      <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" xs="true"
+                        >@ {{ matchup?.home?.name ?? '-' }}</app-loading-skeleton
+                      >
+                    </div>
+                    <div class="flex-1 p-1 text-xs sm:text-sm">
+                      <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" xs="true">{{
+                        matchup?.overUnder ?? '-'
+                      }}</app-loading-skeleton>
+                    </div>
+                    <div class="flex-1 p-1 text-xs sm:text-sm">
+                      <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" xs="true">{{
+                        matchup?.movement ?? '-'
+                      }}</app-loading-skeleton>
+                    </div>
                   </div>
-                  <div class="flex-1 truncate text-left text-xs font-bold sm:text-sm">
-                    <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" xs="true">@ {{ matchup.home.name }}</app-loading-skeleton>
-                  </div>
-                  <div class="flex-1 p-1 text-xs sm:text-sm">
-                    <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" xs="true">{{ matchup.overUnder ?? '-' }}</app-loading-skeleton>
-                  </div>
-                  <div class="flex-1 p-1 text-xs sm:text-sm">
-                    <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" xs="true">{{ matchup.movement ?? '-' }}</app-loading-skeleton>
-                  </div>
-                </div>
+                </ng-container>
               </ng-container>
             </app-base-card>
           </div>
           <div class="mb-12 w-full sm:px-4 xl:mb-0 xl:w-4/12">
-            <app-base-card>
-              <ng-container *ngFor="let team of teamsWithHighestPown$ | async">
-                <div class="flex w-full gap-5 text-left">
-                  <div class="flex-1 p-1 text-left text-xs sm:text-sm">{{ team.teamName }}</div>
-                  <div class="flex-1 p-1 text-xs sm:text-sm">{{ (team.pown / 100 | percent) ?? '-' }}</div>
-                </div>
+            <app-base-card title="Highest Own Pct">
+              <ng-container *ngIf="(teamsWithHighestPown$ | async).length > 0; else noData">
+                <ng-container *ngFor="let team of teamsWithHighestPown$ | async">
+                  <div class="flex w-full gap-5 text-left">
+                    <div class="flex-1 p-1 text-left text-xs sm:text-sm">
+                      <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" sm="true">{{ team?.teamName }}</app-loading-skeleton>
+                    </div>
+                    <div class="flex-1 p-1 text-xs sm:text-sm">
+                      <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" sm="true">{{
+                        (team?.pown / 100 | percent) ?? '-'
+                      }}</app-loading-skeleton>
+                    </div>
+                  </div>
+                </ng-container>
               </ng-container>
             </app-base-card>
           </div>
           <div class="mb-12 w-full sm:px-4 xl:mb-0 xl:w-4/12">
-            <app-base-card>
-              <ng-container *ngFor="let team of teamsWithHighestValue$ | async">
-                <div class="flex w-full gap-5 text-left">
-                  <div class="flex-1 p-1 text-left text-xs sm:text-sm">{{ team.teamName }}</div>
-                  <div class="flex-1 p-1 text-xs sm:text-sm">{{ team.value / 100 ?? '-' }}</div>
-                </div>
+            <app-base-card title="Highest Team Value">
+              <ng-container *ngIf="(teamsWithHighestValue$ | async).length > 0; else noData">
+                <ng-container *ngFor="let team of teamsWithHighestValue$ | async">
+                  <div class="flex w-full gap-5 text-left">
+                    <div class="flex-1 p-1 text-left text-xs sm:text-sm">{{ team?.teamName }}</div>
+                    <div class="flex-1 p-1 text-xs sm:text-sm">{{ (team?.value / 100 | number) ?? '-' }}</div>
+                  </div>
+                </ng-container>
               </ng-container>
             </app-base-card>
           </div>
         </div>
+
+        <!-- <div class="flex flex-wrap">
+          <div class="mb-12 w-full xl:mb-0">
+            <app-base-card>
+              <app-chart-bar height="350px" [chartData]="playerBarChartData$ | async"></app-chart-bar>
+            </app-base-card>
+          </div>
+        </div> -->
 
         <app-base-card>
           <div class="flex flex-wrap">
@@ -67,6 +95,15 @@
                 class="m-0 block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding bg-no-repeat px-3 py-1.5 text-base font-normal text-gray-700 focus:border-sky-900 focus:bg-white focus:text-gray-700 focus:outline-none"
               />
             </div>
+            <div class="w-full sm:px-4 xl:w-4/12">
+              <app-dropdown-filter
+                ariaLabel="Stat options"
+                title="Stat"
+                [filterItems]="playerScatterAxisOptions$ | async"
+                (filterUpdate)="onStatChange($event)"
+              ></app-dropdown-filter>
+            </div>
+
             <div class="w-full sm:px-4 xl:w-4/12">
               <app-dropdown-filter
                 ariaLabel="ProjectionType options"
@@ -110,3 +147,6 @@
     </div>
   </div>
 </app-page-layout>
+<ng-template #noData>
+  <app-no-data></app-no-data>
+</ng-template>
