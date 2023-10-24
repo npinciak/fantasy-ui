@@ -30,7 +30,7 @@ export class FantasyBaseballLeagueActionHandler {
         new FantasyBaseballEvents.Fetch(),
         new FantasyBaseballTeamsLive.AddOrUpdate(teamsLive),
         new FantasyBaseballTeams.AddOrUpdate(teams),
-        new FantasyBaseballTransactions.AddOrUpdate(transactions),
+        new FantasyBaseballTransactions.AddOrUpdate(transactions ?? []),
         new FantasyBaseballLeague.SetLeague({ state }),
       ]);
     } catch (e) {}
