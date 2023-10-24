@@ -102,8 +102,7 @@ type TeamAttributes = Pick<IdAttributesNumber, 'id' | 'teamId'> & {
   totalProjectedPointsLive: number;
   rosterForCurrentScoringPeriod: TeamRoster;
   abbrev: string;
-  location: string;
-  nickname: string;
+  name: string;
   roster: TeamRoster;
   points: number;
   logo: string;

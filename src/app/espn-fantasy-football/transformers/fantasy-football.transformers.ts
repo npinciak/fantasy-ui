@@ -85,6 +85,7 @@ export function clientTeamListToTeamList(team: EspnClient.FootballTeam): Footbal
     id,
     abbrev,
     logo,
+    name,
     playoffSeed: currentRank,
     record: {
       overall: { wins, losses, ties, pointsAgainst, percentage, pointsFor },
@@ -93,7 +94,7 @@ export function clientTeamListToTeamList(team: EspnClient.FootballTeam): Footbal
 
   return {
     id: id.toString(),
-    name: `${team.location} ${team.nickname}`,
+    name,
     abbrev,
     logo,
     wins,

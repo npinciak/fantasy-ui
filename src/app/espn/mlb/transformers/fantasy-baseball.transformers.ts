@@ -52,11 +52,11 @@ export function clientEventToBaseballEvent(event: EspnClient.EventEntity): Baseb
  * @returns
  */
 export function clientTeamListToTeamList(team: EspnClient.Team): BaseballTeam {
-  const { abbrev, logo, valuesByStat, pointsByStat } = team;
+  const { abbrev, logo, valuesByStat, pointsByStat, name } = team;
 
   return {
     id: team.id.toString(),
-    name: `${team.location} ${team.nickname}`,
+    name,
     abbrev,
     logo,
     roster: clientPlayerToBaseballPlayer(team.roster?.entries),
