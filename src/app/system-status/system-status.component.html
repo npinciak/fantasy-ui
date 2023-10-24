@@ -4,6 +4,12 @@
       <i [class.text-green-500]="isOnline$ | async" class="fa fa-circle"></i> Online
       <p>isServiceWorkerEnabled | {{ isServiceWorkerEnabled }}</p>
       <p>isStandaloneMode | {{ isStandaloneMode$ | async }}</p>
+      <p>
+        <button mat-button (click)="clickInstallPwa()" color="primary">Install PWA</button>
+      </p>
+      <p>
+        <button mat-button (click)="clickUpdate()" [disabled]="!(isUpdateAvailable$ | async)" color="secondary">Update PWA</button>
+      </p>
     </app-base-card>
   </div>
 </div>

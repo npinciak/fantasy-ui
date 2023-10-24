@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-no-data',
   template: `
     <div class="px-2 text-center">
-      <div class="text-5xl font-bold">{{ title }}</div>
+      <div class="text-2xl text-slate-400">{{ title }}</div>
     </div>
   `,
 })

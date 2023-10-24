@@ -10,14 +10,20 @@ export class SystemStatusComponent implements OnInit {
   isIosAndSafari = this.swService.isIosAndSafari;
   isServiceWorkerEnabled = this.swService.isServiceWorkerEnabled;
   isStandaloneMode$ = this.swService.isInStandaloneMode$;
+  isUpdateAvailable$ = this.swService.isUpdateAvailable$;
 
   constructor(private swService: ServiceWorkerService) {}
 
   ngOnInit(): void {
+    this.swService.checkForUpdates();
     this.swService.isStandaloneMode();
   }
 
-  clickPwa() {
+  clickInstallPwa() {
     this.swService.installPwa();
+  }
+
+  clickUpdate() {
+    this.swService.updatePwa();
   }
 }
