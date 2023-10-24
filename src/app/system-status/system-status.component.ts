@@ -10,7 +10,6 @@ export class SystemStatusComponent implements OnInit {
   isIosAndSafari = this.swService.isIosAndSafari;
   isServiceWorkerEnabled = this.swService.isServiceWorkerEnabled;
   isStandaloneMode$ = this.swService.isInStandaloneMode$;
-  isUpdateAvailable$ = this.swService.isUpdateAvailable$;
 
   constructor(private swService: ServiceWorkerService) {}
 
@@ -21,9 +20,5 @@ export class SystemStatusComponent implements OnInit {
 
   clickInstallPwa() {
     this.swService.installPwa();
-  }
-
-  clickUpdate() {
-    this.swService.updatePwa();
   }
 }
