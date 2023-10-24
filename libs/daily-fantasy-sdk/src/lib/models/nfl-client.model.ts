@@ -1,5 +1,5 @@
 import { ExpertConsensusRankBySite } from '../daily-fantasy-client/expert-consensus-ranking.model';
-import { SlateAttrTeamProperties } from '../daily-fantasy-client/slate.model';
+import { ClientVegas } from '../daily-fantasy-client/vegas.model';
 import { ClientSalaryDiff, DfsClientPlayerAttributes } from './daily-fantasy-client-slate-attr.model';
 
 type SafptsAttributes =
@@ -43,8 +43,8 @@ export interface NFLSlateAttrTeamAttributes {
   outsiders: NFLClientOutsidersProperties;
 }
 
-export type NFLClientSlateAttrTeam = SlateAttrTeamProperties & NFLSlateAttrTeamAttributes;
-export type NFLClientSlateAttrTeamMap = Record<string, SlateAttrTeamProperties & NFLSlateAttrTeamAttributes>;
+export type NFLClientSlateAttrTeam = { vegas: ClientVegas } & NFLSlateAttrTeamAttributes;
+export type NFLClientSlateAttrTeamMap = Record<string, { vegas: ClientVegas } & NFLSlateAttrTeamAttributes>;
 
 export type NFLClientStatGroupAttributes = 'qb' | 'rb' | 'te' | 'wr';
 export type NFLClientStatGroup = { [attr in NFLClientStatGroupAttributes]: NFLClientProfiler };
@@ -152,37 +152,43 @@ export interface NFLClientPlayerAttributesEntity {
   ecr: ExpertConsensusRankBySite;
 }
 
-export interface NFLClientGridIronPlayer {
-  PLAYERID: string;
-  PLAYER: string;
-  SALARY: string;
-  OPP?: string | null;
-  POS?: string | null;
-  TEAM?: string | null;
-  SCHEDULE_ID?: string | null;
-  PAATT: string;
-  COMP: string;
-  PAYDS: string;
-  PATD: string;
-  INT: string;
-  RUATT: string;
-  RUYDS: string;
-  RUTD: string;
-  TAR: string;
-  REC: string;
-  REYDS: string;
-  RETD: string;
-  FPTS: string;
-  'FPTS/$': string;
-  FLOOR: string;
-  CEIL: string;
-  SMASH?: string | null;
-  VALUE?: string | null;
-  POWN: string;
-  PARTNERID: string;
-  OWNERSHIP: Record<string, string>;
-  RGID: string;
-}
+type NFLClientGridIronPlayerAttributes =
+  | 'PLAYERID'
+  | 'PLAYER'
+  | 'SALARY'
+  | 'FPTS/$'
+  | 'FLOOR'
+  | 'SDFLOOR'
+  | 'CEIL'
+  | 'SDCEIL'
+  | 'SMASH'
+  | 'VALUE'
+  | 'POWN'
+  | 'PARTNERID'
+  | 'OWNERSHIP'
+  | 'RGID'
+  | 'SLATE'
+  | 'INJURY'
+  | 'SCHEDULE_ID'
+  | 'OPP'
+  | 'POS'
+  | 'TEAM'
+  | 'PAATT'
+  | 'COMP'
+  | 'PAYDS'
+  | 'PATD'
+  | 'INT'
+  | 'RUATT'
+  | 'RUYDS'
+  | 'RUTD'
+  | 'TAR'
+  | 'REC'
+  | 'REYDS'
+  | 'RETD'
+  | 'FPTS'
+  | 'SDFPTS';
+
+export type NFLClientGridIronPlayer = { [key in NFLClientGridIronPlayerAttributes]: string | null } & { OWNERSHIP: Record<string, string> };
 
 export type NFLClientGridIronPlayerMap = Record<string, NFLClientGridIronPlayer>;
 export type NFLClientPlayerAttributes = NFLClientPlayerAttributesEntity & DfsClientPlayerAttributes;

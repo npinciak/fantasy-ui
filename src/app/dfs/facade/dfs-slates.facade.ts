@@ -1,21 +1,26 @@
 import { Injectable } from '@angular/core';
+import { GenericFacade } from '@app/@shared/generic-state/generic.facade';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
-import { DfsSlates } from '../actions/dfs-slates.actions';
+import { Observable } from 'rxjs';
+import { DfsSlatesActions } from '../actions/dfs-slates.actions';
 import { DailyFantasySlateSelectors } from '../selectors/daily-fantasy-slate.selectors';
+import { DfsSlatesSelectors } from '../selectors/dfs-slates.selectors';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DfsSlatesFacade {
+export class DfsSlatesFacade extends GenericFacade({ selectorClass: DfsSlatesSelectors, actionHandler: DfsSlatesActions }) {
   slatesEmpty$ = select(DailyFantasySlateSelectors.getSlatesEmpty);
   selectSlateByType$ = select(DailyFantasySlateSelectors.getSlateByType);
 
   slateWeather$ = select(DailyFantasySlateSelectors.getSlateGameWeather);
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) {
+    super();
+  }
 
-  fetchSlates(site: string, sport: string): void {
-    this.store.dispatch(new DfsSlates.Fetch({ site, sport }));
+  fetchSlates(site: string, sport: string): Observable<void> {
+    return this.store.dispatch(new DfsSlatesActions.Fetch({ site, sport }));
   }
 }

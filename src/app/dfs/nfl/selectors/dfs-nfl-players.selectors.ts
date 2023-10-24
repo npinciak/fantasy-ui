@@ -3,25 +3,23 @@ import { linearRegression, transformScatterGraphData } from '@app/@shared/helper
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { SlatePlayer } from '@app/dfs/models/player.model';
+import { SlateTeamNfl } from '@app/dfs/models/slate-team.model';
+import { DfsSelectedSlateConfigurationSelectors } from '@app/dfs/selectors/dfs-selected-slate-configuration.selectors';
+import { DfsTeamsSelectors } from '@app/dfs/selectors/dfs-teams.selectors';
 import { DfsSlatePlayersState } from '@app/dfs/state/dfs-slate-players.state';
 import { NFL_RG_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
-import { exists, existsFilter, pickData, uniqueBy } from '@sports-ui/ui-sdk/helpers';
+import { exists, existsFilter, hasNonNullableFields, pickData, uniqueBy } from '@sports-ui/ui-sdk/helpers';
+import { positionValueByDfsSite } from '../consts/value-targets-by-position.const';
 import { GridIronPlayer } from '../models/nfl-gridIron.model';
 import { NflDfsPlayerTableData } from '../models/nfl-player.model';
-import { ProfilerQB, ProfilerRB, ProfilerReceiver } from '../models/nfl-profiler.model';
-import { SlateTeamNfl } from '../models/nfl-slate-attr.model';
 import { DfsNflGridIronSelectors } from './dfs-nfl-grid-iron.selectors';
-import { DfsNflProfilerQBSelectors } from './dfs-nfl-profiler-qb.selectors';
-import { DfsNflProfilerRBSelectors } from './dfs-nfl-profiler-rb.selectors';
-import { DfsNflProfilerTESelectors } from './dfs-nfl-profiler-te.selectors';
-import { DfsNflProfilerWRSelectors } from './dfs-nfl-profiler-wr.selectors';
-import { DfsNflSlateTeamDetailsSelectors } from './dfs-nfl-slate-team.selectors';
+import { DfsNflSlateTeamDetailsSelectors } from './dfs-nfl-slate-team-details.selectors';
 
 export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState) {
   @Selector([DfsNflPlayerSelectors.getList])
   static getPlayerTeams(list: SlatePlayer[]) {
     const teams = existsFilter(list.map(p => p.rgTeamId));
-    return uniqueBy(teams, t => t).map(t => Number(t));
+    return uniqueBy(teams, t => t);
   }
 
   @Selector([DfsNflPlayerSelectors.getList])
@@ -31,8 +29,8 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
   }
 
   @Selector([DfsNflPlayerSelectors.getPlayerTeams])
-  static getPlayerTeamsFilterOptions(list: number[]): FilterOptions<number | null>[] {
-    const reset = [{ value: null, label: 'All' }];
+  static getPlayerTeamsFilterOptions(list: string[]): FilterOptions<string | null>[] {
+    const reset = [{ value: 'All', label: 'All' }];
     const teams = list.map(t => ({ value: t, label: NFL_RG_TEAM_ID_MAP[t] as string })).sort((a, b) => a.label.localeCompare(b.label));
 
     return [...reset, ...teams];
@@ -49,20 +47,14 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
   @Selector([
     DfsNflPlayerSelectors.getList,
     DfsNflGridIronSelectors.getById,
-    DfsNflProfilerQBSelectors.getById,
-    DfsNflProfilerRBSelectors.getById,
-    DfsNflProfilerWRSelectors.getById,
-    DfsNflProfilerTESelectors.getById,
     DfsNflSlateTeamDetailsSelectors.getById,
+    DfsSelectedSlateConfigurationSelectors.slices.site,
   ])
   static getPlayerTableData(
     list: SlatePlayer[],
     gridIronById: (id: string | null) => GridIronPlayer | null,
-    playerProfilerQbById: (rgId: string | null) => ProfilerQB | null,
-    playerProfilerRbById: (rgId: string | null) => ProfilerRB | null,
-    playerProfilerWrById: (rgId: string | null) => ProfilerReceiver | null,
-    playerProfilerTeById: (rgId: string | null) => ProfilerReceiver | null,
-    teamMatchupById: (rgId: string | null) => SlateTeamNfl | null
+    teamMatchupById: (rgId: string | null) => SlateTeamNfl | null,
+    dfsSite: string
   ): NflDfsPlayerTableData[] {
     return list
       .map(p => {
@@ -71,56 +63,9 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
         const salary = exists(p.salaries) ? Number(p.salaries[0].salary) : 0;
         const gridIron = gridIronById(p.rgId);
 
-        const playerProfilerQb = playerProfilerQbById(p.rgId);
-        const playerProfilerRb = playerProfilerRbById(p.rgId);
-        const playerProfilerWr = playerProfilerWrById(p.rgId);
-        const playerProfilerTe = playerProfilerTeById(p.rgId);
-
-        const productionPremium =
-          playerProfilerQb != null
-            ? playerProfilerQb.productionPremium
-            : playerProfilerRb != null
-            ? playerProfilerRb.productionPremium
-            : playerProfilerWr != null
-            ? playerProfilerWr.productionPremium
-            : playerProfilerTe != null
-            ? playerProfilerTe.productionPremium
-            : null;
-
-        const matchupRtg = playerProfilerWr?.matchupRtg;
-
-        const weeklyVolatility =
-          playerProfilerQb != null
-            ? playerProfilerQb.weeklyVolatility
-            : playerProfilerRb != null
-            ? playerProfilerRb.weeklyVolatility
-            : playerProfilerWr != null
-            ? playerProfilerWr.weeklyVolatility
-            : playerProfilerTe != null
-            ? playerProfilerTe.weeklyVolatility
-            : null;
-
-        const redZoneTargetShare =
-          playerProfilerWr != null
-            ? playerProfilerWr.redZoneTargetShare
-            : playerProfilerTe != null
-            ? playerProfilerTe.redZoneTargetShare
-            : null;
-
-        const gameScript = playerProfilerRb != null ? playerProfilerRb.gameScript : null;
-        const goalLineCarriesPerGame = playerProfilerRb != null ? playerProfilerRb.goalLineCarriesPerGame : null;
-
-        const targetShare =
-          playerProfilerWr != null ? playerProfilerWr.targetShare : playerProfilerTe != null ? playerProfilerTe.targetShare : null;
-
-        const dominatorRating =
-          playerProfilerWr != null ? playerProfilerWr.dominatorRating : playerProfilerTe != null ? playerProfilerTe.dominatorRating : null;
-
-        const protectionRate = playerProfilerQb != null ? playerProfilerQb.protectionRate : null;
-        const truePasserRating = playerProfilerQb != null ? playerProfilerQb.truePasserRating : null;
-        const pressuredCompletionPercentage = playerProfilerQb != null ? playerProfilerQb.pressuredCompletionPercentage : null;
-
         const { id, name, rgTeamId, position } = p;
+
+        const targetValue = positionValueByDfsSite[position][dfsSite];
 
         return {
           id,
@@ -128,50 +73,102 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
           rgTeamId,
           position,
           salary,
-          dominatorRating,
-          protectionRate,
-          truePasserRating,
-          pressuredCompletionPercentage,
-          targetShare,
-          gameScript,
-          goalLineCarriesPerGame,
-          oppRushDefRank: matchup?.outsiders?.oppRuDefRk,
-          oppPassDefRank: matchup?.outsiders?.oppPaDefRk,
-          productionPremium,
-          matchupRtg,
-          weeklyVolatility,
-          redZoneTargetShare,
-          pown: exists(gridIron) ? gridIron.pown : null,
-          opp: exists(gridIron) ? gridIron.opp : null,
-          smash: exists(gridIron) ? gridIron.smash : null,
-          ceil: exists(gridIron) ? gridIron.ceil : null,
-          floor: exists(gridIron) ? gridIron.floor : null,
-          tar: exists(gridIron) ? gridIron.tar : null,
-          fpts: exists(gridIron) ? gridIron.fpts : null,
-          fptsPerK: exists(gridIron) ? gridIron.fptsPerK : null,
-          val: exists(gridIron) ? gridIron.value : null,
+          playerSiteId: p.salaries ? p.salaries[0].player_id : null,
+          oppRushDefRank: matchup?.outsiders?.oppRuDefRk ?? null,
+          oppPassDefRank: matchup?.outsiders?.oppPaDefRk ?? null,
+          pown: gridIron ? gridIron.pown : null,
+          opp: gridIron ? gridIron.opp : null,
+          smash: gridIron ? gridIron.smash : null,
+          ceil: gridIron ? gridIron.ceil : null,
+          sdCeil: gridIron ? gridIron.sdCeil : null,
+          floor: gridIron ? gridIron.floor : null,
+          sdFloor: gridIron ? gridIron.sdFloor : null,
+          tar: gridIron ? gridIron.tar : null,
+          fpts: gridIron ? gridIron.fpts : null,
+          sdFpts: gridIron ? gridIron.sdFpts : null,
+          fptsPerDollar: gridIron ? gridIron.fptsPerDollar : null,
+          value: gridIron ? gridIron.value : null,
+          valueTargetGPPs: (salary * targetValue.valueTargetMultiplierGPPs) / 1000,
+          valueTargetCash: (salary * targetValue.valueTargetMultiplierCash) / 1000,
+          minimumFantasyPointsCash: targetValue.minimumFantasyPointsCash,
+          minimumFantasyPointsGPPs: targetValue.minimumFantasyPointsGPPs,
         };
       })
       .filter(p => p.opp != null)
-      .sort((a, b) => b.salary - a.salary);
+      .sort((a, b) => b.salary! - a.salary!);
   }
 
-  // @Selector([DfsNflPlayerSelectors.getPlayerTableData])
-  // static teamOwnPercent(players: NflDfsPlayerTableData[]) {
-  //   const teams = new Map<string, NflDfsPlayerTableData[]>();
+  @Selector([DfsNflPlayerSelectors.getPlayerTableData])
+  static getPlayerBarChartDataByStatAndPosition(playerTableData: NflDfsPlayerTableData[]) {
+    return (stat: string, position: string) => {
+      const tableData = playerTableData
+        .filter(p => p.position === position && p[stat] > 1)
+        .map(p => ({ label: p.name, value: p[stat] as number | null }))
+        .sort((a, b) => b.value! - a.value!);
 
-  //   players.map(p => {
-  //     if (teams.has(p.teamId)) {
-  //       teams.get(p.teamId)?.push(p);
-  //     } else {
-  //       teams.set(p.teamId, [p]);
-  //     }
-  //   });
+      return {
+        label: tableData.map(p => p.label),
+        data: tableData.map(p => p.value),
+      };
+    };
+  }
 
-  //   console.log(teams);
+  @Selector([DfsNflPlayerSelectors.getPlayerTableData, DfsTeamsSelectors.getById])
+  static getTeamsWithHighestPown(
+    tableData: NflDfsPlayerTableData[],
+    teamById: ReturnType<typeof DfsTeamsSelectors.getById>
+  ): { pown: number | null; teamName: string }[] {
+    const teamMap = new Map<string, number>();
 
-  //   return;
-  // }
+    tableData.forEach(player => {
+      if (!hasNonNullableFields(player, ['rgTeamId', 'pown'])) return;
+
+      const { rgTeamId, pown } = player;
+
+      if (teamMap.has(rgTeamId)) {
+        teamMap.set(rgTeamId, teamMap.get(rgTeamId)! + pown);
+      } else {
+        teamMap.set(rgTeamId, pown);
+      }
+    });
+
+    return [...teamMap]
+      .map(([key, value]) => {
+        const pown = value;
+        const teamName = teamById(key)?.name ?? '';
+
+        return { pown, teamName };
+      })
+      .sort((a, b) => b.pown - a.pown)
+      .filter(p => p.pown > 0)
+      .slice(0, 10);
+  }
+
+  @Selector([DfsNflPlayerSelectors.getPlayerTableData, DfsTeamsSelectors.getById])
+  static getTeamsWithHighestValue(
+    tableData: NflDfsPlayerTableData[],
+    teamById: ReturnType<typeof DfsTeamsSelectors.getById>
+  ): { value: number | null; teamName: string }[] {
+    const teamMap = new Map<string, number>();
+
+    tableData.forEach(player => {
+      if (teamMap.has(player.rgTeamId!)) {
+        teamMap.set(player.rgTeamId!, teamMap.get(player.rgTeamId!)! + player.value!);
+      } else {
+        teamMap.set(player.rgTeamId!, player.value!);
+      }
+    });
+
+    return [...teamMap]
+      .map(([key, value]) => {
+        const teamName = teamById(key)?.name ?? '';
+
+        return { value, teamName };
+      })
+      .sort((a, b) => b.value - a.value)
+      .filter(p => p.value > 0)
+      .slice(0, 10);
+  }
 
   @Selector()
   static getPlayerScatterAxisOptions(): FilterOptions<string>[] {

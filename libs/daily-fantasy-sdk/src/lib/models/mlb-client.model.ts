@@ -1,5 +1,5 @@
 import { ExpertConsensusRankBySite } from '../daily-fantasy-client/expert-consensus-ranking.model';
-import { SlateAttrTeamProperties } from '../daily-fantasy-client/slate.model';
+import { ClientVegas } from '../daily-fantasy-client/vegas.model';
 import { DfsClientPlayerAttributes } from './daily-fantasy-client-slate-attr.model';
 
 export type ValueProperties = {
@@ -11,41 +11,28 @@ export type ValueProperties = {
   stack_diff: string;
 };
 
-export interface MLBClientPitcherAttr {
+export interface ClientMlbPitcherAttributes {
   last_name: string;
   first_name: string;
   hand: 'L' | 'R';
   id: string;
 }
 
-export type MLBClientTeamAttrProperties = Omit<
+export type ClientMlbSlateTeamAttributesProperties = Omit<
   DfsClientPlayerAttributes,
   'stat_group' | 'salary_diff' | 'slate_ownership' | 'ownership' | 'value_pct'
 > & {
-  pitcher: MLBClientPitcherAttr;
+  pitcher: ClientMlbPitcherAttributes;
   team_total: number;
 };
 
-export interface MLBClientPlayerAttributeProperties {
+export interface ClientMlbSlatePlayerAttributesProperties {
   hand: string;
   stats: StatSplit;
   batting_order: BattingOrder;
   stat_group: string;
   plateiq: PlateIq;
   ecr: ExpertConsensusRankBySite;
-}
-
-export interface StatSplit {
-  'last-two': StatsPropertiesMap;
-  season: StatsPropertiesMap;
-  '12weeks': StatsPropertiesMap;
-  '4weeks': StatsPropertiesMap;
-  '2weeks': StatsPropertiesMap;
-  '1week': StatsPropertiesMap;
-  yesterday: Pick<
-    StatsPropertiesMap,
-    'id' | 'name' | 'muwoba' | 'ab' | 'avg' | 'woba' | 'iso' | 'obp' | 'slg' | 'k%' | 'bb%' | 'ops' | 'babip'
-  >;
 }
 
 type StatsProperties =
@@ -71,6 +58,19 @@ type StatsProperties =
   | 'muwoba';
 
 type StatsPropertiesMap = { [prop in StatsProperties]: string };
+
+export interface StatSplit {
+  'last-two': StatsPropertiesMap;
+  season: StatsPropertiesMap;
+  '12weeks': StatsPropertiesMap;
+  '4weeks': StatsPropertiesMap;
+  '2weeks': StatsPropertiesMap;
+  '1week': StatsPropertiesMap;
+  yesterday: Pick<
+    StatsPropertiesMap,
+    'id' | 'name' | 'muwoba' | 'ab' | 'avg' | 'woba' | 'iso' | 'obp' | 'slg' | 'k%' | 'bb%' | 'ops' | 'babip'
+  >;
+}
 
 export interface BattingAttributes {
   batting_order: BattingOrder;
@@ -98,20 +98,20 @@ type PlateIqScoreProperties =
   | 'overall';
 
 export interface PlateIqFactors {
-  positive: FactorEntity[] | null;
-  negative: FactorEntity[] | null;
+  positive: PlateIqFactorEntity[] | null;
+  negative: PlateIqFactorEntity[] | null;
   positiveCt: number;
   negativeCt: number;
 }
 
-export interface FactorEntity {
+export type PlateIqFactorEntity = {
   name: string;
   comparisonValue: number;
   description: string;
   type: string;
-}
+};
 
-export type MLBClientSlateAttrTeam = SlateAttrTeamProperties & MLBClientTeamAttrProperties;
-export type MLBClientPlayerAttributes = MLBClientPlayerAttributeProperties &
+export type ClientMlbSlateTeamAttributes = { vegas: ClientVegas } & ClientMlbSlateTeamAttributesProperties;
+export type ClientMlbSlatePlayerAttributes = ClientMlbSlatePlayerAttributesProperties &
   Omit<DfsClientPlayerAttributes, 'stat_group' | 'salary_diff' | 'slate_ownership' | 'ownership' | 'value_pct'>;
-export type MLBClientTeamAttributes = MLBClientTeamAttrProperties & ValueProperties;
+export type MLBClientTeamAttributes = ClientMlbSlateTeamAttributesProperties & ValueProperties;

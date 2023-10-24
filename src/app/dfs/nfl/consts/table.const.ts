@@ -1,85 +1,47 @@
 import { getTableHeaders, TableColumnDataType, transformTableColumnsToTableRows } from '@app/@shared/models/table-columns.model';
+import { BaseTableColumn } from '@sports-ui/ui-sdk';
+import { NflDfsPlayerTableData } from '../models/nfl-player.model';
 
-const BASE_STATS_COLUMNS = [
+const BASE_STATS_COLUMNS: BaseTableColumn<NflDfsPlayerTableData>[] = [
   { columnDef: 'name', headerCell: 'name', headerLabel: '', dataType: TableColumnDataType.String },
   { columnDef: 'opp', headerCell: 'opp', headerLabel: 'Opp', dataType: TableColumnDataType.String },
   { columnDef: 'salary', headerCell: 'salary', headerLabel: 'Sal', dataType: TableColumnDataType.Number },
   { columnDef: 'pown', headerCell: 'pown', headerLabel: 'pOwn', dataType: TableColumnDataType.Percentage },
   { columnDef: 'smash', headerCell: 'smash', headerLabel: 'Smash', dataType: TableColumnDataType.Percentage },
-  { columnDef: 'val', headerCell: 'val', headerLabel: 'Value', dataType: TableColumnDataType.Number },
+  { columnDef: 'value', headerCell: 'value', headerLabel: 'Value', dataType: TableColumnDataType.Number },
   { columnDef: 'fpts', headerCell: 'fpts', headerLabel: 'FPts', dataType: TableColumnDataType.Number },
-  { columnDef: 'fptsPerK', headerCell: 'fptsPerK', headerLabel: 'FPts/$', dataType: TableColumnDataType.Number },
+  { columnDef: 'valueTargetGPPs', headerCell: 'valueTargetGPPs', headerLabel: 'GPP', dataType: TableColumnDataType.Number },
+  { columnDef: 'valueTargetCash', headerCell: 'valueTargetCash', headerLabel: 'Cash', dataType: TableColumnDataType.Number },
+  {
+    columnDef: 'minimumFantasyPointsGPPs',
+    headerCell: 'minimumFantasyPointsGPPs',
+    headerLabel: 'Min GPP',
+    dataType: TableColumnDataType.Number,
+  },
+  {
+    columnDef: 'minimumFantasyPointsCash',
+    headerCell: 'minimumFantasyPointsCash',
+    headerLabel: 'Min Cash',
+    dataType: TableColumnDataType.Number,
+  },
+  { columnDef: 'fptsPerDollar', headerCell: 'fptsPerDollar', headerLabel: 'FPts/$', dataType: TableColumnDataType.Number },
   { columnDef: 'ceil', headerCell: 'ceil', headerLabel: 'Ceil', dataType: TableColumnDataType.Number },
+  { columnDef: 'sdCeil', headerCell: 'sdCeil', headerLabel: 'SDCeil', dataType: TableColumnDataType.Number },
   { columnDef: 'floor', headerCell: 'floor', headerLabel: 'Floor', dataType: TableColumnDataType.Number },
+  { columnDef: 'sdFloor', headerCell: 'sdFloor', headerLabel: 'sdFloor', dataType: TableColumnDataType.Number },
 ];
 
-export const RECEIVER_STATS_COLUMNS = [
+export const RECEIVER_STATS_COLUMNS: BaseTableColumn<NflDfsPlayerTableData>[] = [
   { columnDef: 'oppPassDefRank', headerCell: 'oppPassDefRank', headerLabel: 'oppPassDefRank', dataType: TableColumnDataType.Number },
   { columnDef: 'tar', headerCell: 'tar', headerLabel: 'Tar', dataType: TableColumnDataType.Number },
-  {
-    columnDef: 'productionPremium',
-    headerCell: 'productionPremium',
-    headerLabel: 'Production Prem',
-    dataType: TableColumnDataType.Number,
-  },
-  {
-    columnDef: 'matchupRtg',
-    headerCell: 'matchupRtg',
-    headerLabel: 'Matchup',
-    dataType: TableColumnDataType.Number,
-  },
-  {
-    columnDef: 'redZoneTargetShare',
-    headerCell: 'redZoneTargetShare',
-    headerLabel: 'RZ Target %',
-    dataType: TableColumnDataType.Percentage,
-  },
-  {
-    columnDef: 'targetShare',
-    headerCell: 'targetShare',
-    headerLabel: 'Target %',
-    dataType: TableColumnDataType.Percentage,
-  },
-  {
-    columnDef: 'dominatorRating',
-    headerCell: 'dominatorRating',
-    headerLabel: 'Dom Rating',
-    dataType: TableColumnDataType.Number,
-  },
 ];
 
-export const RUSH_STATS_COLUMNS = [
+export const RUSH_STATS_COLUMNS: BaseTableColumn<NflDfsPlayerTableData>[] = [
   { columnDef: 'oppRushDefRank', headerCell: 'oppRushDefRank', headerLabel: 'Opp Rush D', dataType: TableColumnDataType.Number },
-  {
-    columnDef: 'goalLineCarriesPerGame',
-    headerCell: 'goalLineCarriesPerGame',
-    headerLabel: 'goalLineCarriesPerGame',
-    dataType: TableColumnDataType.Number,
-  },
-  { columnDef: 'gameScript', headerCell: 'gameScript', headerLabel: 'gameScript', dataType: TableColumnDataType.Number },
 ];
 
-export const PASSING_STATS_COLUMNS = [
+export const PASSING_STATS_COLUMNS: BaseTableColumn<NflDfsPlayerTableData>[] = [
   { columnDef: 'oppPassDefRank', headerCell: 'oppPassDefRank', headerLabel: 'Opp Pass D', dataType: TableColumnDataType.Number },
-
-  {
-    columnDef: 'protectionRate',
-    headerCell: 'protectionRate',
-    headerLabel: 'Protect %',
-    dataType: TableColumnDataType.Percentage,
-  },
-  {
-    columnDef: 'truePasserRating',
-    headerCell: 'truePasserRating',
-    headerLabel: 'truePasserRating',
-    dataType: TableColumnDataType.Number,
-  },
-  {
-    columnDef: 'pressuredCompletionPercentage',
-    headerCell: 'pressuredCompletionPercentage',
-    headerLabel: 'Pressure Comp. %',
-    dataType: TableColumnDataType.Percentage,
-  },
 ];
 
 export const COLUMNS_BY_POS = {

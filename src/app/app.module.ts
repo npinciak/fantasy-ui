@@ -9,6 +9,8 @@ import { NgxsModule } from '@ngxs/store';
 import { environment } from 'src/environments/environment';
 import { AuthenticationModule } from './@core/authentication/authentication.module';
 import { httpInterceptorProviders } from './@core/interceptors';
+import { LoadingExecutorActionHandlerState } from './@core/loading-executor/loading-executor.handler';
+import { LoadingExecutorState } from './@core/loading-executor/loading-executor.state';
 import { CustomRouterStateSerializer } from './@core/router/router-state.serializer';
 import { RouterState } from './@core/router/router.state';
 import { ShellModule } from './@core/shell/shell.module';
@@ -62,7 +64,10 @@ const ngxsConfig = {
     AuthenticationModule,
     SharedModule,
     ShellModule,
-    NgxsModule.forRoot([RouterState, FangraphsConstantsState, FangraphsConstantsActionHandler], ngxsConfig),
+    NgxsModule.forRoot(
+      [RouterState, LoadingExecutorState, LoadingExecutorActionHandlerState, FangraphsConstantsState, FangraphsConstantsActionHandler],
+      ngxsConfig
+    ),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production, actionSanitizer, stateSanitizer }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,

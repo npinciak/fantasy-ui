@@ -1,23 +1,36 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { UrlQueryParams } from '@app/@core/router/url-builder';
-import { Store } from '@ngxs/store';
 import { exists } from '@sports-ui/ui-sdk/helpers';
-import { DfsSlates } from '../actions/dfs-slates.actions';
+import { DfsSelectedSlateConfigurationFacade } from '../facade/dfs-selected-slate-configuration.facade';
+import { DfsSlatePlayersFacade } from '../facade/dfs-slate-players.facade';
+import { DfsSlatesFacade } from '../facade/dfs-slates.facade';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DfsResolver implements Resolve<void> {
-  constructor(private store: Store) {}
+  constructor(
+    private dfsSlatesFacade: DfsSlatesFacade,
+    private dfsSlatePlayersFacade: DfsSlatePlayersFacade,
+    private dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade
+  ) {}
 
   async resolve(route: ActivatedRouteSnapshot): Promise<void> {
     const site = route.queryParamMap.get(UrlQueryParams.Site);
+    const sport = route.routeConfig?.path;
 
-    const sport = route.data.sport;
+    if (!exists(site) || !exists(sport)) throw new Error('Site or Sport is not defined');
 
-    if (exists(site) && exists(sport)) {
-      this.store.dispatch(new DfsSlates.Fetch({ site, sport })).toPromise();
-    }
+    await this.dfsSelectedSlateConfigurationFacade.setSport(sport).toPromise();
+    await this.dfsSelectedSlateConfigurationFacade.setSite(site).toPromise();
+    await this.dfsSlatesFacade.fetchSlates(site, sport).toPromise();
+
+    const slatePath = this.dfsSelectedSlateConfigurationFacade.path;
+    const slateId = this.dfsSelectedSlateConfigurationFacade.slateId;
+
+    if (!exists(slateId) || !exists(slatePath)) throw new Error(`slateId (${slateId}) or slatePath (${slateId}) is not defined`);
+
+    await this.dfsSlatePlayersFacade.fetchPlayers(slatePath).toPromise();
   }
 }
