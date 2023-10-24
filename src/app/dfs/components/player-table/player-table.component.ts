@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,10 +17,10 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
   @Input() data: NflDfsPlayerTableData[];
   @Input() dataRows: any[];
   @Input() dataHeaders: any[];
-
   @Input() teamMap: Record<string, string>;
-
   @Input() filter: string;
+
+  @Output() playerSelectionChange = new EventEmitter<NflDfsPlayerTableData>();
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -84,5 +84,9 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
 
       return match;
     };
+  }
+
+  onPlayerSelect(player: NflDfsPlayerTableData) {
+    this.playerSelectionChange.emit(player);
   }
 }

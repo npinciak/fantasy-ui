@@ -101,6 +101,7 @@
             [data]="nflPlayerList$ | async"
             [dataRows]="(tableConfig$ | async).rows"
             [dataHeaders]="(tableConfig$ | async).headers"
+            (playerSelectionChange)="onPlayerSelectionChange($event)"
           ></app-player-table
         ></app-base-card>
 

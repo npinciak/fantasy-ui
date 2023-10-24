@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingExecutorFacade } from '@app/@core/loading-executor/loading-executor.facade';
+import { DfsSelectedLineupFacade } from '@app/dfs/facade/dfs-selected-lineup.facade';
 import { DfsSelectedSlateConfigurationFacade } from '@app/dfs/facade/dfs-selected-slate-configuration.facade';
 import { DfsSlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade';
@@ -91,6 +92,7 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
 
   constructor(
     readonly loadingExecutorFacade: LoadingExecutorFacade,
+    readonly dfsLineupSelectorFacade: DfsSelectedLineupFacade,
     readonly dfsPlayersFacade: DfsSlatePlayersFacade,
     readonly dfsSlateFacade: DfsSlatesFacade,
     readonly dfsSlateAttrFacade: DfsSlateAttrFacade,
@@ -134,9 +136,15 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   onSelectNflSlate(event: SiteSlateEntity) {
     const { slate_path, importId } = event;
 
+    this.dfsLineupSelectorFacade.clear();
     this.dfsPlayersFacade.fetchPlayers(slate_path);
     this.dfsSelectedSlateConfigurationFacade.setSlateId(importId);
     this.dfsNflSlateDetailsFacade.fetch();
+  }
+
+  onPlayerSelectionChange(player: NflDfsPlayerTableData) {
+    if (!player.playerSiteId) return;
+    this.dfsLineupSelectorFacade.toggle([player.playerSiteId]);
   }
 
   async projectionTypeChange(value: GridIronProjectionType): Promise<void> {
