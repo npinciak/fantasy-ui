@@ -1,33 +1,40 @@
-import { Component } from '@angular/core';
-import { DfsMatchupsFacade } from '@app/dfs/facade/dfs-matchups.facade';
-import { DailyFantasySlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
+import { Component, OnInit } from '@angular/core';
+import { LoadingExecutorFacade } from '@app/@core/loading-executor/loading-executor.facade';
+import { DfsSelectedLineupFacade } from '@app/dfs/facade/dfs-selected-lineup.facade';
+import { DfsSelectedSlateConfigurationFacade } from '@app/dfs/facade/dfs-selected-slate-configuration.facade';
+import { DfsSlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade';
 import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
-import { ClientSlateTypes, SiteSlateEntity } from '@dfsClient/daily-fantasy-client.model';
+import { DfsHomeComponent } from '@app/dfs/pages/dfs-home/dfs-home.component';
+import { SiteSlateEntity, SlateType } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { NFL_RG_TEAM_ID_MAP, NFL_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DfsNflThresholds } from '../../consts/stats-threshold.m';
+import { GRIDIRON_PROJECTION_FILTER_OPTIONS } from '../../consts/nfl-gridiron-projection.const';
 import { HEADERS_BY_POS, ROWS_BY_POS } from '../../consts/table.const';
 import { DfsNflPlayerFacade } from '../../facade/daily-fantasy-nfl-players.facade';
-import { DfsNflSlateTeamDetailsFacade } from '../../facade/dfs-nfl-slate-team.facade';
+import { DfsNflGridIronFacade } from '../../facade/dfs-nfl-gridiron.facade';
+import { DfsNflMatchupsFacade } from '../../facade/dfs-nfl-matchups.facade';
+import { DfsNflSlateDetailsFacade } from '../../facade/dfs-nfl-slate-details.facade';
+import { DfsNflSlateTeamDetailsFacade } from '../../facade/dfs-nfl-slate-team-details.facade';
+import { GridIronProjectionType } from '../../models/nfl-gridIron.model';
+import { NflDfsPlayerTableData } from '../../models/nfl-player.model';
 import { FilterType } from '../../models/nfl-table.model';
-import { NFL_STAT_GROUP_MAP } from '../../models/stat-group.model';
 
 @Component({
   selector: 'app-dfs-nfl-home',
   templateUrl: './dfs-nfl-home.component.html',
 })
-export class DfsNflHomeComponent {
+export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
+  isDfsNflSlateDetailsActionsFetchExecuting$ = this.loadingExecutorFacade.isDfsNflSlateDetailsActionsFetchExecuting$;
+
   readonly TABLE_HEADERS_BY_POS = HEADERS_BY_POS;
   readonly TABLE_ROWS_BY_POS = ROWS_BY_POS;
 
-  readonly NFL_STAT_GROUP_MAP = NFL_STAT_GROUP_MAP;
   readonly NFL_RG_TEAM_ID_MAP = NFL_RG_TEAM_ID_MAP;
   readonly NFL_TEAM_ID_MAP = NFL_TEAM_ID_MAP;
 
-  readonly matchupThreshold = DfsNflThresholds.matchupThreshold;
-  readonly matchupThresholdInverse = DfsNflThresholds.matchupThresholdInverse;
+  readonly GRIDIRON_PROJECTION_FILTER_OPTIONS = GRIDIRON_PROJECTION_FILTER_OPTIONS;
 
   nflPositionList$ = this.nflPlayerFacade.positionList$;
   nflPlayerList$ = this.nflPlayerFacade.playerList$;
@@ -39,12 +46,12 @@ export class DfsNflHomeComponent {
 
   nflMatchupGraphData$ = this.nflTeamSlateAttrFacade.matchupGraphData$;
 
-  slatesEmpty$ = this.dailyFantasySlateFacade.slatesEmpty$;
-  selectSlateByType$ = this.dailyFantasySlateFacade.selectSlateByType$;
+  matchups$ = this.nflMatchupsFacade.nflMatchupTableData$;
+  nflTopFiveMatchups$ = this.nflMatchupsFacade.nflTopFiveMatchupsByOverUnder$;
+  nflTopFiveTeamTotals$ = this.nflMatchupsFacade.nflTopFiveTeamTotals$;
 
-  matchups$ = this.dailyFantasyMatchupFacade.nflMatchupTableData$;
-
-  playersEmpty$ = this.dailyFantasyPlayersFacade.playersEmpty$;
+  teamsWithHighestPown$ = this.nflPlayerFacade.teamsWithHighestPown$;
+  teamsWithHighestValue$ = this.nflPlayerFacade.teamsWithHighestValue$;
 
   statGroup: string;
   teamId: number | null = null;
@@ -53,8 +60,7 @@ export class DfsNflHomeComponent {
   xAxisStat$ = new BehaviorSubject<string | null>(null);
   yAxisStat$ = new BehaviorSubject<string | null>(null);
 
-  selectedSlate$ = new BehaviorSubject<string | null>(null);
-  selectedSlateType$ = new BehaviorSubject<ClientSlateTypes | null>(null);
+  selectedSlateType$ = new BehaviorSubject<SlateType | null>(null);
 
   playerScatterData$ = combineLatest([this.nflPlayerFacade.playerScatterData$, this.xAxisStat$, this.yAxisStat$]).pipe(
     map(([playerScatterData, xAxis, yAxis]) => {
@@ -62,9 +68,13 @@ export class DfsNflHomeComponent {
     })
   );
 
-  slateWeather$ = combineLatest([this.selectedSlateType$, this.dailyFantasySlateFacade.slateWeather$]).pipe(
+  playerBarChartData$ = combineLatest([this.nflPlayerFacade.playerBarChartData$, this.xAxisStat$, this.position$]).pipe(
+    map(([playerBarChartData, stat, position]) => playerBarChartData(stat ?? 'fpts', position ?? 'QB'))
+  );
+
+  slateWeather$ = combineLatest([this.selectedSlateType$, this.dfsSlateFacade.slateWeather$]).pipe(
     map(([slate, weather]) => {
-      return slate != null ? weather(slate as ClientSlateTypes) : [];
+      return slate != null ? weather(slate as SlateType) : [];
     })
   );
 
@@ -80,13 +90,22 @@ export class DfsNflHomeComponent {
   );
 
   constructor(
+    readonly loadingExecutorFacade: LoadingExecutorFacade,
+    readonly dfsLineupSelectorFacade: DfsSelectedLineupFacade,
+    readonly dfsPlayersFacade: DfsSlatePlayersFacade,
+    readonly dfsSlateFacade: DfsSlatesFacade,
+    readonly dfsSlateAttrFacade: DfsSlateAttrFacade,
+    readonly dfsNflGridIronFacade: DfsNflGridIronFacade,
+    readonly dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade,
     readonly nflPlayerFacade: DfsNflPlayerFacade,
     readonly nflTeamSlateAttrFacade: DfsNflSlateTeamDetailsFacade,
-    readonly dailyFantasyPlayersFacade: DfsSlatePlayersFacade,
-    readonly dailyFantasySlateFacade: DfsSlatesFacade,
-    readonly dailyFantasySlateAttrFacade: DailyFantasySlateAttrFacade,
-    readonly dailyFantasyMatchupFacade: DfsMatchupsFacade
-  ) {}
+    readonly nflMatchupsFacade: DfsNflMatchupsFacade,
+    readonly dfsNflSlateDetailsFacade: DfsNflSlateDetailsFacade
+  ) {
+    super(dfsPlayersFacade, dfsSlateFacade, dfsSlateAttrFacade, dfsSelectedSlateConfigurationFacade);
+  }
+
+  ngOnInit(): void {}
 
   onAxisXChange(val: string) {
     this.xAxisStat$.next(val);
@@ -109,17 +128,30 @@ export class DfsNflHomeComponent {
     this.tableFilter$.next(JSON.stringify({ filterType: FilterType.team, value: value.toString() }));
   }
 
-  onSelectSlate(event: SiteSlateEntity) {
-    this.dailyFantasyPlayersFacade.fetchPlayers(event.slate_path);
-    this.selectedSlate$.next(event.name);
-    this.selectedSlateType$.next(event.type);
-    this.dailyFantasySlateAttrFacade.fetchSlateAttr(event.importId);
+  nameInputChange(value: string) {
+    this.tableFilter$.next(JSON.stringify({ filterType: FilterType.name, value }));
+  }
+
+  onStatChange(value: string) {
+    this.xAxisStat$.next(value);
+  }
+
+  onSelectNflSlate(event: SiteSlateEntity) {
+    const { slate_path, importId } = event;
+
+    this.dfsLineupSelectorFacade.clear();
+    this.dfsPlayersFacade.fetchPlayers(slate_path);
+    this.dfsSelectedSlateConfigurationFacade.setSlateId(importId);
+    this.dfsNflSlateDetailsFacade.fetch();
+  }
+
+  onPlayerSelectionChange(player: NflDfsPlayerTableData) {
+    if (!player.playerSiteId) return;
+    this.dfsLineupSelectorFacade.toggle([player.playerSiteId]);
+  }
+
+  async projectionTypeChange(value: GridIronProjectionType): Promise<void> {
+    await this.dfsSelectedSlateConfigurationFacade.setProjectionType(value).toPromise();
+    await this.dfsNflGridIronFacade.fetch().toPromise();
   }
 }
-
-//  Green
-//  Yellow
-//  Orange
-//  Red
-//   Orange/Yellow
-//    Yellow/Orange

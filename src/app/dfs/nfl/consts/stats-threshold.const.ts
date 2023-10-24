@@ -1,6 +1,8 @@
 import { StatThreshold, StatThresholdClass } from '@sports-ui/ui-sdk';
 
-export function matchupThreshold(val: number): string {
+export function matchupThreshold(val: number | null): string {
+  if (val == null) return '';
+
   const thresholds = [
     { range: [0, 7], class: StatThresholdClass[StatThreshold.Excellent] },
     { range: [7, 11], class: StatThresholdClass[StatThreshold.AboveAvg] },
@@ -11,10 +13,13 @@ export function matchupThreshold(val: number): string {
   ];
 
   const threshold = thresholds.find(t => range(val, t.range[0], t.range[1]));
+
   return `status-indicator ${threshold?.class || ''}`;
 }
 
-export function matchupThresholdInverse(val: number): string {
+export function matchupThresholdInverse(val: number | null): string {
+  if (val == null) return '';
+
   const thresholds = [
     { range: [0, 7], class: StatThresholdClass[StatThreshold.Awful] },
     { range: [7, 11], class: StatThresholdClass[StatThreshold.Poor] },

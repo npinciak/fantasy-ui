@@ -1,87 +1,119 @@
-<!-- <div>
-      <mat-card>
-        <mat-card-content>
-          <div class="flex-row gap-15">
-            <div>
-              <app-dropdown-filter
-                ariaLabel=""
-                [selectedOption]="xAxisStat$ | async"
-                title="xAxis"
-                [filterItems]="playerScatterAxisOptions$ | async"
-                (filterUpdate)="onAxisXChange($event)"
-              ></app-dropdown-filter>
-            </div>
-            <div>
-              <app-dropdown-filter
-                ariaLabel=""
-                [selectedOption]="yAxisStat$ | async"
-                title="yAxis"
-                [filterItems]="playerScatterAxisOptions$ | async"
-                (filterUpdate)="onAxisYChange($event)"
-              ></app-dropdown-filter>
-            </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-<div> -->
-<!-- <app-data-vis-scatter
-        title="hey there"
-        [xAxisFilterTitle]="xAxisStat$ | async"
-        [yAxisFilterTitle]="yAxisStat$ | async"
-        [chartData]="playerScatterData$ | async"
-      ></app-data-vis-scatter> -->
-<!-- </div> -->
-
-<!-- <div>
-      <mat-card>
-        <mat-card-content>
-          <div class="gap-15 flex-row">
-            <div>
-              <app-dropdown-filter
-                ariaLabel="team options"
-                title="Teams"
-                [filterItems]="playerTeamsFilterOptions$ | async"
-                (filterUpdate)="teamFilterChange($event)"
-              ></app-dropdown-filter>
-            </div>
-            <div>
-              <app-dropdown-filter
-                ariaLabel="position options"
-                title="Position"
-                [filterItems]="playerPositionFilterOptions$ | async"
-                (filterUpdate)="positionFilterChange($event)"
-              ></app-dropdown-filter>
-            </div>
-          </div>
-
-          <app-player-table
-            [filter]="tableFilter$ | async"
-            [teamMap]="NFL_RG_TEAM_ID_MAP"
-            [data]="nflPlayerList$ | async"
-            [dataRows]="(tableConfig$ | async).rows"
-            [dataHeaders]="(tableConfig$ | async).headers"
-          ></app-player-table>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </div>
-</app-page-layout> -->
-
 <app-page-layout>
   <div main>
     <div class="flex flex-wrap">
       <div class="w-full sm:px-4 xl:w-3/12">
         <app-base-card>
           <ng-container *ngIf="!(slatesEmpty$ | async)">
-            <app-slate-list [slateList]="selectSlateByType$ | async" (selectSlate)="onSelectSlate($event)"></app-slate-list>
+            <app-slate-list [slateList]="selectSlateByType$ | async" (selectSlate)="onSelectNflSlate($event)"></app-slate-list>
           </ng-container>
         </app-base-card>
       </div>
+
       <div class="mb-12 w-full sm:px-4 xl:mb-0 xl:w-9/12">
+        <div class="flex flex-wrap">
+          <div class="mb-12 w-full sm:px-4 xl:mb-0 xl:w-4/12">
+            <app-base-card title="Games to Target">
+              <ng-container *ngIf="(nflTopFiveMatchups$ | async).length > 0; else noData">
+                <ng-container *ngFor="let matchup of nflTopFiveMatchups$ | async">
+                  <div class="flex w-full gap-5 text-left">
+                    <div class="flex-1 p-1 text-left text-xs sm:text-sm">
+                      <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" sm="true">{{
+                        matchup?.away?.name ?? '-'
+                      }}</app-loading-skeleton>
+                    </div>
+                    <div class="flex-1 truncate text-left text-xs font-bold sm:text-sm">
+                      <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" xs="true"
+                        >@ {{ matchup?.home?.name ?? '-' }}</app-loading-skeleton
+                      >
+                    </div>
+                    <div class="flex-1 p-1 text-xs sm:text-sm">
+                      <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" xs="true">{{
+                        matchup?.overUnder ?? '-'
+                      }}</app-loading-skeleton>
+                    </div>
+                    <div class="flex-1 p-1 text-xs sm:text-sm">
+                      <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" xs="true">{{
+                        matchup?.movement ?? '-'
+                      }}</app-loading-skeleton>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </app-base-card>
+          </div>
+          <div class="mb-12 w-full sm:px-4 xl:mb-0 xl:w-4/12">
+            <app-base-card title="Highest Own Pct">
+              <ng-container *ngIf="(teamsWithHighestPown$ | async).length > 0; else noData">
+                <ng-container *ngFor="let team of teamsWithHighestPown$ | async">
+                  <div class="flex w-full gap-5 text-left">
+                    <div class="flex-1 p-1 text-left text-xs sm:text-sm">
+                      <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" sm="true">{{ team?.teamName }}</app-loading-skeleton>
+                    </div>
+                    <div class="flex-1 p-1 text-xs sm:text-sm">
+                      <app-loading-skeleton [isLoading]="isDfsNflSlateDetailsActionsFetchExecuting$ | async" sm="true">{{
+                        (team?.pown / 100 | percent) ?? '-'
+                      }}</app-loading-skeleton>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </app-base-card>
+          </div>
+          <div class="mb-12 w-full sm:px-4 xl:mb-0 xl:w-4/12">
+            <app-base-card title="Highest Team Value">
+              <ng-container *ngIf="(teamsWithHighestValue$ | async).length > 0; else noData">
+                <ng-container *ngFor="let team of teamsWithHighestValue$ | async">
+                  <div class="flex w-full gap-5 text-left">
+                    <div class="flex-1 p-1 text-left text-xs sm:text-sm">{{ team?.teamName }}</div>
+                    <div class="flex-1 p-1 text-xs sm:text-sm">{{ (team?.value / 100 | number) ?? '-' }}</div>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </app-base-card>
+          </div>
+        </div>
+
+        <!-- <div class="flex flex-wrap">
+          <div class="mb-12 w-full xl:mb-0">
+            <app-base-card>
+              <app-chart-bar height="350px" [chartData]="playerBarChartData$ | async"></app-chart-bar>
+            </app-base-card>
+          </div>
+        </div> -->
+
         <app-base-card>
           <div class="flex flex-wrap">
-            <div>
+            <div class="w-full sm:px-4 xl:w-4/12">
+              <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Search</label>
+
+              <input
+                type="text"
+                #nameInput
+                placeholder="Search for player"
+                (change)="nameInputChange(nameInput.value)"
+                autocomplete="off"
+                class="m-0 block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding bg-no-repeat px-3 py-1.5 text-base font-normal text-gray-700 focus:border-sky-900 focus:bg-white focus:text-gray-700 focus:outline-none"
+              />
+            </div>
+            <div class="w-full sm:px-4 xl:w-4/12">
+              <app-dropdown-filter
+                ariaLabel="Stat options"
+                title="Stat"
+                [filterItems]="playerScatterAxisOptions$ | async"
+                (filterUpdate)="onStatChange($event)"
+              ></app-dropdown-filter>
+            </div>
+
+            <div class="w-full sm:px-4 xl:w-4/12">
+              <app-dropdown-filter
+                ariaLabel="ProjectionType options"
+                title="Projection Type"
+                [filterItems]="GRIDIRON_PROJECTION_FILTER_OPTIONS"
+                (filterUpdate)="projectionTypeChange($event)"
+              ></app-dropdown-filter>
+            </div>
+
+            <div class="w-full sm:px-4 xl:w-4/12">
               <app-dropdown-filter
                 ariaLabel="team options"
                 title="Teams"
@@ -89,7 +121,7 @@
                 (filterUpdate)="teamFilterChange($event)"
               ></app-dropdown-filter>
             </div>
-            <div>
+            <div class="w-full sm:px-4 xl:w-4/12">
               <app-dropdown-filter
                 ariaLabel="position options"
                 title="Position"
@@ -106,112 +138,15 @@
             [data]="nflPlayerList$ | async"
             [dataRows]="(tableConfig$ | async).rows"
             [dataHeaders]="(tableConfig$ | async).headers"
+            (playerSelectionChange)="onPlayerSelectionChange($event)"
           ></app-player-table
         ></app-base-card>
 
-        <ng-container *ngFor="let matchup of matchups$ | async">
-          <app-base-card>
-            <div class="flex w-full gap-5 text-left">
-              <div class="flex-1 p-1 text-xs font-bold sm:text-sm">{{ matchup.overUnder }}</div>
-              <div class="flex-1 p-1 text-center text-xs font-bold sm:text-sm">{{ matchup.away.name }}</div>
-              <div class="flex-1 p-1 text-center text-xs font-bold sm:text-sm">@ {{ matchup.home.name }}</div>
-            </div>
-
-            <div class="flex w-full gap-5 text-left">
-              <div class="flex-1 truncate p-1 text-xs sm:text-sm">Total</div>
-              <div class="flex-1 p-1 text-center text-xs sm:text-sm">{{ matchup.away.total }}</div>
-              <div class="flex-1 p-1 text-center text-xs sm:text-sm">{{ matchup.home.total }}</div>
-            </div>
-
-            <div class="flex w-full gap-5 text-left">
-              <div class="flex-1 truncate p-1 text-xs sm:text-sm">Line</div>
-              <div class="flex-1 p-1 text-center text-xs sm:text-sm">{{ matchup.away.line }}</div>
-              <div class="flex-1 p-1 text-center text-xs sm:text-sm">{{ matchup.home.line }}</div>
-            </div>
-
-            <app-nfl-matchup-row
-              [matchup]="matchup"
-              statRank="dPowerRk"
-              statValue="dPower"
-              description="The percentage of runs allowed on third or fourth down, two yards or less to go, that achieved a first down or touchdown."
-              label="DL Rk"
-              [threshold]="matchupThreshold"
-            ></app-nfl-matchup-row>
-            <app-nfl-matchup-row
-              [matchup]="matchup"
-              statRank="dlSkRateRk"
-              statValue="dlSkRate"
-              description="Sacks (plus intentional grounding penalties) by the opposing team per pass attempt adjusted for down, distance and opponent."
-              label="Sacks Rk"
-              [threshold]="matchupThreshold"
-            ></app-nfl-matchup-row>
-            <app-nfl-matchup-row
-              [matchup]="matchup"
-              statRank="olSkRateRk"
-              statValue="olSkRate"
-              description="Sacks allowed per pass attempt adjusted for down, distance and opponent."
-              label="Sacks Allowed Rk"
-              [threshold]="matchupThreshold"
-            ></app-nfl-matchup-row>
-            <app-nfl-matchup-row
-              [matchup]="matchup"
-              statRank="oPowerRk"
-              statValue="oPower"
-              description="The percentage of runs on third or fourth down, two yards or less to go, that achieved a first down or touchdown."
-              label="OL Power Rk"
-              [threshold]="matchupThreshold"
-            ></app-nfl-matchup-row>
-            <app-nfl-matchup-row
-              [matchup]="matchup"
-              statRank="oStuffedRk"
-              statValue="oStuffed"
-              description=""
-              label="OL Stuff Rk"
-              [threshold]="matchupThreshold"
-            ></app-nfl-matchup-row>
-            <app-nfl-matchup-row
-              [matchup]="matchup"
-              statRank="dStuffedRk"
-              statValue="dStuffed"
-              description="The percentage of runs where the running back is tackled at or behind the line of scrimmage by the opposing team. Since being stuffed is so bad, a higher number here is better for the defense."
-              label="DL Stuff Rk"
-              [threshold]="matchupThresholdInverse"
-            ></app-nfl-matchup-row>
-            <app-nfl-matchup-row
-              [matchup]="matchup"
-              statRank="paOffRk"
-              statValue="paOff"
-              description="Weighted DVOA for the team's passing offense. A high rating in this column indicates that the team has a strong overall passing offense."
-              label="Pa Rk"
-              [threshold]="matchupThreshold"
-            ></app-nfl-matchup-row>
-            <app-nfl-matchup-row
-              [matchup]="matchup"
-              statRank="oppPaDefRk"
-              statValue="oppPaDef"
-              description="Weighted DVOA for the opposing team's passing defense. A high rating in this column indicates that the opposing team has a weak passing defense, and is therefore a good matchup for the offensive player."
-              label="Opp Def Pa Rk"
-              [threshold]="matchupThresholdInverse"
-            ></app-nfl-matchup-row>
-            <app-nfl-matchup-row
-              [matchup]="matchup"
-              statRank="ruOffRk"
-              statValue="ruOff"
-              description="Weighted DVOA for the team's rushing offense. A high rating in this column indicates that the team has a strong overall rushing offense."
-              label="Ru Rk"
-              [threshold]="matchupThreshold"
-            ></app-nfl-matchup-row>
-            <app-nfl-matchup-row
-              [matchup]="matchup"
-              statRank="oppRuDefRk"
-              statValue="oppRuDef"
-              description="Weighted DVOA for the opposing team's rushing defense. A high rating in this column indicates that the opposing team has a weak rushing defense, and is therefore a good matchup for the offensive player."
-              label="Opp Def Ru Rk"
-              [threshold]="matchupThresholdInverse"
-            ></app-nfl-matchup-row>
-          </app-base-card>
-        </ng-container>
+        <app-dfs-nfl-matchup [matchups]="matchups$ | async"></app-dfs-nfl-matchup>
       </div>
     </div>
   </div>
 </app-page-layout>
+<ng-template #noData>
+  <app-no-data></app-no-data>
+</ng-template>

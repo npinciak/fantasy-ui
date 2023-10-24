@@ -1,13 +1,45 @@
-import { CamelCasedProperties } from '@app/@shared/models/camel-case.model';
-import { NFLClientGridIronPlayer } from '@sports-ui/daily-fantasy-sdk/models';
+export interface GridIronPlayer {
+  playerId: number;
+  player: string | null;
+  salary: number | null;
+  opp?: string | null;
+  pos?: string | null;
+  team?: string | null;
+  scheduleId?: number | null;
+  paatt: number | null;
+  comp: number | null;
+  payds: number | null;
+  patd: number | null;
+  int: number | null;
+  ruatt: number | null;
+  ruyds: number | null;
+  rutd: number | null;
+  tar: number | null;
+  rec: number | null;
+  reyds: number | null;
+  retd: number | null;
+  fpts: number | null;
+  sdFpts: number | null;
+  fptsPerDollar: number | null;
+  floor: number | null;
+  sdFloor: number | null;
+  ceil: number | null;
+  sdCeil: number | null;
+  smash?: number | null;
+  value?: number | null;
+  pown: number | null;
+  partnerId: number | null;
+  ownership: Record<number, number>;
+  rgid: number | null;
+  slate: string | null;
+  injury: string | null;
+}
 
-type NormalizedGridIronPlayerAttributes = CamelCasedProperties<NFLClientGridIronPlayer>;
+export type GridIronPlayerMap = Record<number, GridIronPlayer>;
 
-type GridIronPlayerAttributes = Omit<NormalizedGridIronPlayerAttributes, 'playerid' | 'partnerid' | 'fpts$'> & {
-  partnerId: string | null;
-  fptsPerK: string | null;
-};
-
-export type GridIronPlayer = Required<{ [key in keyof GridIronPlayerAttributes]: number | null } & { playerId: string }>;
-
-export type GridIronPlayerMap = Record<string, GridIronPlayer>;
+export enum GridIronProjectionType {
+  BlitzDefault = 2009661,
+  BlitzDefenseAgnostic = 3202616,
+  BlitzDefenseDeflated = 3202618,
+  Default = 3350867,
+}

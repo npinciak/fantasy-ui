@@ -1,7 +1,6 @@
 import { SLATE_TYPES } from '../models/daily-fantasy-client.const';
 import { Multiplier, Slot } from '../models/daily-fantasy-client.model';
 import { Site } from './site.model';
-import { Vegas } from './vegas.model';
 
 export type SlateType = typeof SLATE_TYPES[keyof typeof SLATE_TYPES];
 export type DkSlateTypeMap = { [slateType in SlateType]: SlateConfig };
@@ -26,18 +25,10 @@ export interface SiteSlateEntity {
   type: SlateType;
   salaryCap: number;
   slate_path: string;
-  source: string;
-  default: boolean;
-  taggable: boolean;
-  hidden: boolean;
 }
 
 export interface SlateConfig {
   salaryCap: number;
   slots: Slot[];
   fpts_multipliers: Multiplier;
-}
-
-export interface SlateAttrTeamProperties {
-  vegas: Vegas;
 }

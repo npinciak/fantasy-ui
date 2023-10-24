@@ -1,16 +1,19 @@
-import { MLBClientPlayerAttributes, MLBClientSlateAttrTeam } from '../models/mlb-client.model';
-import { NFLClientPlayerAttributes, NFLClientSlateAttrTeam, NFLClientStatGroup } from '../models/nfl-client.model';
+import { ClientMlbSlatePlayerAttributes, ClientMlbSlateTeamAttributes } from '../models/mlb-client.model';
+import { NFLClientPlayerAttributes, NFLClientSlateAttrTeam } from '../models/nfl-client.model';
 
-export interface ClientSlateAttributes {
-  stat_groups: ClientSlateStatGroups;
-  players: Record<string, NFLClientPlayerAttributes | MLBClientPlayerAttributes>;
-  teams: Record<string, NFLClientSlateAttrTeam | MLBClientSlateAttrTeam>;
-}
+type ClientSlatePlayerAttributesMap<PlayerAttributes> = Record<string, PlayerAttributes>;
+type ClientSlateTeamAttributesMap<TeamAttributes> = Record<string, TeamAttributes>;
 
-export type ClientSlateStatGroups = NFLClientStatGroup | null | undefined;
+type ClientSlateAttributes<PlayerAttributes, TeamAttributes> = {
+  players: ClientSlatePlayerAttributesMap<PlayerAttributes>;
+  teams: ClientSlateTeamAttributesMap<TeamAttributes>;
+};
 
-export type ClientSlatePlayerAttributes = Partial<NFLClientPlayerAttributes & MLBClientPlayerAttributes>;
-export type ClientSlatePlayerAttributesMap = Record<string, ClientSlatePlayerAttributes>;
+export type ClientNflSlateAttributes = ClientSlateAttributes<NFLClientPlayerAttributes, NFLClientSlateAttrTeam>;
+export type ClientMlbSlateAttributes = ClientSlateAttributes<ClientMlbSlatePlayerAttributes, ClientMlbSlateTeamAttributes>;
 
-export type ClientSlateTeamAttributes = Partial<NFLClientSlateAttrTeam & MLBClientSlateAttrTeam>;
-export type ClientSlateTeamAttributesMap = Record<string, ClientSlateTeamAttributes>;
+export type ClientNflSlatePlayerAttributesMap = ClientSlatePlayerAttributesMap<NFLClientPlayerAttributes>;
+export type ClientMlbSlatePlayerAttributesMap = ClientSlatePlayerAttributesMap<ClientMlbSlatePlayerAttributes>;
+
+export type ClientNflSlateTeamAttributesMap = ClientSlateTeamAttributesMap<NFLClientSlateAttrTeam>;
+export type ClientMlbSlateTeamAttributesMap = ClientSlateTeamAttributesMap<ClientMlbSlateTeamAttributes>;
