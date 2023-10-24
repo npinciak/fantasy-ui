@@ -2,12 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { FOOTBALL_ROSTER_HEADERS_BY_LINEUP_SLOT, FOOTBALL_ROSTER_ROWS_BY_LINEUP_SLOT } from '../../consts/fantasy-football-table.const';
-
 import {
   BASIC_FOOTBALL_LINEUP_SLOT_FILTER_OPTIONS,
   FOOTBALL_LINEUP_MAP,
-  FootballLineupSlot,
   INJURY_STATUS_FILTER,
   NFL_STATS_MAP,
 } from '@sports-ui/ui-sdk/espn';
@@ -38,9 +35,8 @@ export class FootballFreeAgentsComponent implements OnInit {
   xAxisStat$ = new BehaviorSubject<string>('');
   yAxisStat$ = new BehaviorSubject<string>('');
 
-  selectedLineupSlotId$ = this.freeAgentsFilterFacade.selectedLineupSlotId$;
-  toggledLineupSlotIds$ = this.freeAgentsFilterFacade.toggledLineupSlotIds$;
-  toggledAvailabilityStatusIds$ = this.freeAgentsFilterFacade.toggledAvailabilityStatusIds$;
+  selectedLineupSlotId$ = this.freeAgentsFilterFacade.selectedLineupSlotIds$;
+
   selectedPlayerAvailability$ = new BehaviorSubject<string>(PLAYER_AVAILABILITY_STATUS.FreeAgent);
 
   scoringPeriodFilterOptions$ = this.footballLeagueFacade.scoringPeriodFilterOptions$;
@@ -60,8 +56,8 @@ export class FootballFreeAgentsComponent implements OnInit {
 
   tableConfig$ = combineLatest([this.selectedLineupSlotId$]).pipe(
     map(([slotId]) => ({
-      rows: FOOTBALL_ROSTER_ROWS_BY_LINEUP_SLOT[slotId],
-      headers: FOOTBALL_ROSTER_HEADERS_BY_LINEUP_SLOT[slotId],
+      rows: [], // FOOTBALL_ROSTER_ROWS_BY_LINEUP_SLOT[slotId],
+      headers: [], //FOOTBALL_ROSTER_HEADERS_BY_LINEUP_SLOT[slotId],
     }))
   );
 
@@ -79,12 +75,13 @@ export class FootballFreeAgentsComponent implements OnInit {
 
     const leagueId = this.footballLeagueFacade.leagueId!;
 
-    await this.freeAgentsFilterFacade.setScoringPeriodId(val).toPromise();
+    await this.freeAgentsFilterFacade.toggleScoringPeriodIds([val]).toPromise();
     await this.freeAgentsFacade.fetchFreeAgents(leagueId).toPromise();
   }
 
-  onLineupFilterSlotIdChange(lineupSlotId: FootballLineupSlot) {
-    this.freeAgentsFilterFacade.setLineupSlotId(lineupSlotId);
+  async onLineupFilterSlotIdChange(lineupSlotId: any): Promise<void> {
+    await this.freeAgentsFilterFacade.toggleLineupSlotIds([lineupSlotId]).toPromise();
+    await this.freeAgentsFacade.fetchFreeAgents(this.footballLeagueFacade.leagueId!).toPromise();
   }
 
   onAxisXChange(val: string) {

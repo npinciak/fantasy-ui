@@ -15,7 +15,7 @@ import { FootballFreeAgentsComponent } from './pages/football-free-agents/footba
 import { FootballHomeComponent } from './pages/football-home/football-home.component';
 import { FootballTeamComponent } from './pages/football-team/football-team.component';
 import { FantasyFootballEventsState } from './state/fantasy-football-events.state';
-import { FantasyFootballFreeAgentsFilterState } from './state/fantasy-football-free-agent-filter.state';
+import { FantasyFootballFreeAgentsFilterState } from './state/fantasy-football-free-agents-filter.state';
 import { FantasyFootballFreeAgentsState } from './state/fantasy-football-free-agents.state';
 import { FantasyFootballLeagueState } from './state/fantasy-football-league.state';
 import { FantasyFootballPlayerNewsState } from './state/fantasy-football-player-news.state';
@@ -46,6 +46,7 @@ import { FantasyFootballTransactionState } from './state/fantasy-football-transa
       FantasyFootballFreeAgentsState,
       FantasyFootballFreeAgentActionHandler,
       FantasyFootballFreeAgentsFilterState,
+
       FantasyFootballPlayerNewsState,
       FantasyFootballTransactionState,
       FantasyFootballEventsState,

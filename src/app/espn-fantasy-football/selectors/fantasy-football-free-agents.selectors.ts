@@ -6,7 +6,7 @@ import { exists, existsFilter, pickData } from '@sports-ui/ui-sdk/helpers';
 import { FootballPlayerFreeAgent, FootballPlayerStatsRow } from '../models/football-player.model';
 import { FantasyFootballFreeAgentsState } from '../state/fantasy-football-free-agents.state';
 import { transformToFootballPlayerStatsRow } from '../transformers/fantasy-football.transformers';
-import { FantasyFootballFreeAgentFilterSelector } from './fantasy-football-free-agent-filter.selector';
+import { FantasyFootballFreeAgentsFilterSelector } from './fantasy-football-free-agents-filter.selector';
 import { FantasyFootballTeamSelectors } from './fantasy-football-team.selectors';
 
 export class FantasyFootballFreeAgentsSelectors extends GenericSelector(FantasyFootballFreeAgentsState) {
@@ -15,9 +15,9 @@ export class FantasyFootballFreeAgentsSelectors extends GenericSelector(FantasyF
     return list.filter(p => p.teamId !== '0');
   }
 
-  @Selector([FantasyFootballFreeAgentsSelectors.getFreeAgents, FantasyFootballFreeAgentFilterSelector.slices.scoringPeriodId])
-  static getFreeAgentsStats(players: FootballPlayerFreeAgent[], scoringPeriodId: string | null) {
-    return existsFilter(players.map(p => transformToFootballPlayerStatsRow(p, scoringPeriodId ?? '')));
+  @Selector([FantasyFootballFreeAgentsSelectors.getFreeAgents, FantasyFootballFreeAgentsFilterSelector.slices.selectedScoringPeriodIds])
+  static getFreeAgentsStats(players: FootballPlayerFreeAgent[], scoringPeriodId: { [id: string]: boolean }) {
+    return existsFilter(players.map(p => transformToFootballPlayerStatsRow(p, '')));
   }
 
   @Selector([FantasyFootballTeamSelectors.getTeamStats, FantasyFootballFreeAgentsSelectors.getFreeAgentsStats])

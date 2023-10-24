@@ -14,13 +14,16 @@
 
           <div class="mt-2"></div>
 
-          <app-dropdown-filter
-            ariaLabel="position options"
-            [selectedOption]="selectedLineupSlotId$ | async"
-            title="Position"
-            [filterItems]="LINEUP_SLOTS"
-            (filterUpdate)="onLineupFilterSlotIdChange($event)"
-          ></app-dropdown-filter>
+          <div>
+            <app-multi-select
+              ariaLabel="player-position-options-"
+              title="Position"
+              [selectedOption]="selectedLineupSlotId$ | async"
+              [filterItems]="LINEUP_SLOTS"
+              (filterUpdate)="onLineupFilterSlotIdChange($event)"
+            >
+            </app-multi-select>
+          </div>
 
           <div class="mt-2"></div>
 
