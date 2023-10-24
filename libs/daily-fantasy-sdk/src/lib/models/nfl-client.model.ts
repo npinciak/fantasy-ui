@@ -158,7 +158,9 @@ type NFLClientGridIronPlayerAttributes =
   | 'SALARY'
   | 'FPTS/$'
   | 'FLOOR'
+  | 'SDFLOOR'
   | 'CEIL'
+  | 'SDCEIL'
   | 'SMASH'
   | 'VALUE'
   | 'POWN'
@@ -183,7 +185,8 @@ type NFLClientGridIronPlayerAttributes =
   | 'REC'
   | 'REYDS'
   | 'RETD'
-  | 'FPTS';
+  | 'FPTS'
+  | 'SDFPTS';
 
 export type NFLClientGridIronPlayer = { [key in NFLClientGridIronPlayerAttributes]: string | null } & { OWNERSHIP: Record<string, string> };
 
