@@ -32,7 +32,7 @@ export class NflSlateService extends SlateService {
     let params = new HttpParams();
     params = params.append('site', site ?? 'draftkings');
     return this.apiService
-      .get<NFLClientGridIronPlayer[]>(this.endpoint.gridIronProjectionByProjectionType(projectionType), { params })
+      .get<NFLClientGridIronPlayer[]>(this.endpointBuilder.gridIronProjectionByProjectionType(projectionType), { params })
       .pipe(map(res => res.map(p => DfsTransformers.normalizeNFLClientGridIronPlayer(p))));
   }
 }
