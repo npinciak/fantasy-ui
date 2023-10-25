@@ -1,7 +1,8 @@
 import { Selector } from '@app/@shared/models/typed-selector';
 import { DfsNflSlateDetailsActions } from '@app/dfs/nfl/actions/dfs-nfl-slate-details.actions';
 import { ActionType, createPropertySelectors, createSelector, getActionTypeFromInstance } from '@ngxs/store';
-import { LoadingExecutorState, LoadingExecutorStateModel } from './loading-executor.state';
+import { LoadingExecutorStateModel } from './loading-executor.model';
+import { LoadingExecutorState } from './loading-executor.state';
 
 export class LoadingExecutorSelector {
   static slices = createPropertySelectors<LoadingExecutorStateModel>(LoadingExecutorState);
@@ -38,22 +39,16 @@ export type ActionsExecuting = { [action: string]: number } | null;
 
 function actionsExecutingFn(actionTypes: ActionType[], state: LoadingExecutorStateModel): ActionsExecuting {
   if (!actionTypes || actionTypes.length === 0) {
-    if (Object.keys(state).length === 0) {
-      return null;
-    }
+    if (Object.keys(state).length === 0) return null;
     return state;
   }
 
   return actionTypes.reduce((acc: ActionsExecuting, type: ActionType) => {
     const actionType = getActionTypeFromInstance(type);
 
-    if (!actionType) {
-      return acc;
-    }
+    if (!actionType) return acc;
 
-    if (state[actionType]) {
-      return { ...acc, [actionType]: state[actionType] };
-    }
+    if (state[actionType]) return { ...acc, [actionType]: state[actionType] };
 
     return acc;
   }, null);

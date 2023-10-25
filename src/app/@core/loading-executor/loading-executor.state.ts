@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
 import { SetActionCount } from './loading-executer.actions';
-
-export interface LoadingExecutorStateModel {
-  [action: string]: number;
-}
+import { LoadingExecutorStateModel } from './loading-executor.model';
 
 @State<LoadingExecutorStateModel>({
-  name: 'ngxs_actions_executing',
+  name: 'loadingExecutor',
 })
 @Injectable()
 export class LoadingExecutorState {
