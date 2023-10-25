@@ -9,7 +9,7 @@ export class AuthenticationGuard implements CanActivate {
   constructor(private supaService: AuthenticationService) {}
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const session = await firstValueFrom(this.supaService.getSession();
+    const session = await this.supaService.getSession();
 
     return session != null ? true : false;
   }
