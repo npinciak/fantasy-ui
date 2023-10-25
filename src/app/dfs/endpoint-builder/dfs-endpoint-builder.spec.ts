@@ -8,16 +8,24 @@ describe('DfsEndpointBuilder', () => {
   const dailyFantasyJsonBase = environment.dailyFantasyJsonBase;
   const dailyFantasyBase = environment.dailyFantasyBase;
   const awsBase = environment.awsBase;
-  const MOCK_DATE = new Date('2023-10-31').getTime();
+
+  const basePath = `https://${awsBase}/${dailyFantasyJsonBase}`;
   const MOCK_SPORT = 'nba';
   const MOCK_GAME_ID = '12345';
+  const MOCK_DATE = new Date('2023/05/01');
   const MOCK_PROJECTION_TYPE = GridIronProjectionType.Default;
 
-  // Before each test, create a new instance of DfsEndpointBuilder.
   beforeEach(() => {
     dfsEndpointBuilder = new DfsEndpointBuilder();
+  });
 
-    spyOnProperty(window as any, 'espnDateFormatter').and.returnValue({ delim: '/', date: MOCK_DATE });
+  beforeAll(() => {
+    jasmine.clock().install();
+    jasmine.clock().mockDate(MOCK_DATE);
+  });
+
+  afterAll(() => {
+    jasmine.clock().uninstall();
   });
 
   describe('#constructor', () => {
@@ -28,8 +36,9 @@ describe('DfsEndpointBuilder', () => {
 
   describe('#slateMasterBySport', () => {
     it('should generate slateMasterBySport endpoint', () => {
+      const expectedDate = '2023/05/01';
       const actual = dfsEndpointBuilder.slateMasterBySport(MOCK_SPORT);
-      const expected = `${awsBase}/v2.00/${MOCK_DATE}/slates/${MOCK_SPORT}-master.json`;
+      const expected = `${basePath}/v2.00/${expectedDate}/slates/${MOCK_SPORT}-master.json`;
       expect(actual).toBe(expected);
     });
   });
@@ -45,15 +54,16 @@ describe('DfsEndpointBuilder', () => {
   describe('#lineupHeadquarters', () => {
     it('should generate lineupHeadquarters endpoint', () => {
       const actual = dfsEndpointBuilder.lineupHeadquarters;
-      const expected = `${awsBase}/lineuphq/slate-definitions-v1.json`;
+      const expected = `${basePath}/lineuphq/slate-definitions-v1.json`;
       expect(actual).toBe(expected);
     });
   });
 
   describe('#mlbPlateIqByGameId', () => {
     it('should generate mlbPlateIqByGameId endpoint', () => {
+      const expectedDate = '2023-05-01';
       const actual = dfsEndpointBuilder.mlbPlateIqByGameId(MOCK_GAME_ID);
-      const expected = `${awsBase}/plateiq/${MOCK_DATE}/${MOCK_GAME_ID}.json`;
+      const expected = `${basePath}/plateiq/${expectedDate}/${MOCK_GAME_ID}.json`;
       expect(actual).toBe(expected);
     });
   });
