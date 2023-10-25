@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { tickerDate } from '@app/@shared/helpers/date';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
+import { EspnDateHelper } from '@app/espn/espn-date-helper';
 import { fastcastEventSummary } from '@app/espn/espn-helpers';
 import { FASTCAST_DATE_SHORT } from '@app/espn/espn.const';
 import { EVENT_STATUS, SEASON_TYPE } from '@sports-ui/ui-sdk/espn-client';
@@ -45,6 +45,7 @@ export class EspnScoreboardCardComponent {
   }
 
   get tickerDate() {
+    const tickerDate = new EspnDateHelper().tickerDate;
     return tickerDate(this.event.timestamp);
   }
 

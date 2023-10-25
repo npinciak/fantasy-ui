@@ -1,5 +1,5 @@
-import { tickerDate } from '@app/@shared/helpers/date';
 import { Selector } from '@app/@shared/models/typed-selector';
+import { EspnDateHelper } from '@app/espn/espn-date-helper';
 import { createPropertySelectors } from '@ngxs/store';
 import { exists } from '@sports-ui/ui-sdk/helpers';
 import { EspnFastcastConnectionStateModel } from '../models/fastcast-connection-state.model';
@@ -15,6 +15,7 @@ export class EspnFastcastConnectionSelectors {
 
   @Selector([EspnFastcastConnectionSelectors.slices.lastRefresh])
   static getLastRefreshAsTickerDate(timestamp: number | null) {
+    const tickerDate = new EspnDateHelper().tickerDate;
     return exists(timestamp) ? tickerDate(timestamp) : null;
   }
 }
