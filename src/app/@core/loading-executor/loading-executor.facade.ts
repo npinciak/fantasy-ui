@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
 import { SetActionCount } from './loading-executer.actions';
+import { LoadingExecutorStateModel } from './loading-executor.model';
 import { LoadingExecutorSelector } from './loading-executor.selector';
-import { LoadingExecutorStateModel } from './loading-executor.state';
 
 @Injectable({ providedIn: 'root' })
 export class LoadingExecutorFacade {
