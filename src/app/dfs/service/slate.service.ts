@@ -4,27 +4,25 @@ import { espnDateFormatter } from '@app/@shared/helpers/date';
 import { ApiService } from '@app/@shared/services/api.service';
 import { SlateMasterMap } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { Observable } from 'rxjs';
-import { DailyFantasyEndpointBuilder, DfsEndpointBuilder } from '../endpoint-builder/daily-fantasy-endpoint-builder';
+import { DfsEndpointBuilder } from '../endpoint-builder/dfs-endpoint-builder';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SlateService {
-  protected endpoint = DfsEndpointBuilder();
-  protected endpointBuilder: DailyFantasyEndpointBuilder;
+  protected endpointBuilder: DfsEndpointBuilder;
 
   constructor(protected apiService: ApiService) {
-    this.endpointBuilder = new DailyFantasyEndpointBuilder();
+    this.endpointBuilder = new DfsEndpointBuilder();
   }
 
   getSlatesByDate({ sport }: { sport: string }): Observable<SlateMasterMap> {
-    this.endpointBuilder.sport = sport;
-    return this.apiService.get<SlateMasterMap>(this.endpointBuilder.slateMaster);
+    return this.apiService.get<SlateMasterMap>(this.endpointBuilder.slateMasterBySport(sport));
   }
 
   getGameAttributesBySlateId<T>({ sport, site, slateId }: GameAttributesRequest): Observable<T> {
     const params = this.params({ slateId, site });
-    return this.apiService.get<T>(this.endpoint.slateGameAttributesBySport(sport), { params });
+    return this.apiService.get<T>(this.endpointBuilder.slateGameAttributesBySport(sport), { params });
   }
 
   private params({ slateId, site }: Pick<GameAttributesRequest, 'slateId' | 'site'>): HttpParams {
