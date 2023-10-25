@@ -1,5 +1,5 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { espnDateFormatter, getTomorrowDate, getYesterdayDate } from '@app/@shared/helpers/date';
+import { DateHelper } from '@app/@shared/helpers/date-helper';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
 import * as DateFns from 'date-fns';
@@ -14,15 +14,20 @@ export class EspnFastcastLeagueSelectors extends GenericSelector(EspnFastcastLea
 
   @Selector()
   static dateFilterList(): FilterOptions<string>[] {
+    const dateHelper = new DateHelper();
+    const today = dateHelper.formatWithDelimiter({ date: new Date().getTime() });
+    const yesterday = dateHelper.formatWithDelimiter({ date: dateHelper.getYesterday().getTime() });
+    const tomorrow = dateHelper.formatWithDelimiter({ date: dateHelper.getTomorrow().getTime() });
+
     return [
       {
-        value: espnDateFormatter({ date: getYesterdayDate().getTime() }),
-        label: `Yesterday ${DateFns.format(getYesterdayDate().getTime(), 'MM/dd')}`,
+        value: yesterday,
+        label: `Yesterday ${DateFns.format(dateHelper.getYesterday().getTime(), 'MM/dd')}`,
       },
-      { value: espnDateFormatter({ date: new Date().getTime() }), label: 'Today' },
+      { value: today, label: 'Today' },
       {
-        value: espnDateFormatter({ date: getTomorrowDate().getTime() }),
-        label: `Tomorrow ${DateFns.format(getTomorrowDate().getTime(), 'MM/dd')}`,
+        value: tomorrow,
+        label: `Tomorrow ${DateFns.format(dateHelper.getTomorrow().getTime(), 'MM/dd')}`,
       },
     ];
   }

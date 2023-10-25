@@ -1,4 +1,3 @@
-import { tickerDate } from '@app/@shared/helpers/date';
 import { FootballPlayer } from '@app/espn-fantasy-football/models/football-player.model';
 import { EventSummaryBySeasonTypeByEventStatus } from '@app/espn-fastcast/models/fastcast-event-summary.model';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
@@ -14,6 +13,7 @@ import {
 } from '@sports-ui/ui-sdk/espn-client';
 import { CompetitorsEntity } from '@sports-ui/ui-sdk/espn-fastcast-client';
 import { exists, getContrastRatio } from '@sports-ui/ui-sdk/helpers';
+import { EspnDateHelper } from './espn-date-helper';
 import { BaseballPlayer, BaseballPlayerStatsRow } from './mlb/models/baseball-player.model';
 
 /**
@@ -228,6 +228,8 @@ export function injuredPlayersFilter<T extends FootballPlayer | BaseballPlayer>(
  */
 export function fastcastEventSummary(event: FastcastEvent): string | null {
   const { status, statusId, seasonType, note, timestamp, summary } = event;
+
+  const tickerDate = new EspnDateHelper().tickerDate;
 
   const defaultPregame = tickerDate(timestamp);
   const defaultInProgress = statusId === EVENT_STATUS_TYPE.RainDelay ? `Rain Delay, ${summary}` : summary;

@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { espnDateFormatter } from '@app/@shared/helpers/date';
+import { DateHelper } from '@app/@shared/helpers/date-helper';
 import { ApiService } from '@app/@shared/services/api.service';
 import { SlateMasterMap } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { Observable } from 'rxjs';
@@ -26,8 +26,13 @@ export class SlateService {
   }
 
   private params({ slateId, site }: Pick<GameAttributesRequest, 'slateId' | 'site'>): HttpParams {
+    const dateHelper = new DateHelper();
+    const date = dateHelper.formatWithDelimiter({
+      date: new Date().getTime(),
+      delimiter: '-',
+    });
     let params = new HttpParams();
-    params = params.append('date', espnDateFormatter({ delim: '-', date: new Date().getTime() }));
+    params = params.append('date', date);
     params = params.append('site', site);
     params = params.append('slate_id', slateId);
 

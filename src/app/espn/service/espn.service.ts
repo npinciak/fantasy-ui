@@ -1,12 +1,12 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { espnDateFormatter } from '@app/@shared/helpers/date';
 import { ApiService } from '@app/@shared/services/api.service';
 import { FastcastTransform } from '@app/espn-fastcast/models/fastcast-transform.model';
 import { EspnClient } from '@sports-ui/ui-sdk/espn';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { DateHelper } from '@app/@shared/helpers/date-helper';
 import { clientFastcastToFastcast } from '@app/espn-fastcast/transformers/espn-fastcast.transformers';
 import { FreeAgent, ProTeamSchedule } from '@sports-ui/ui-sdk/espn-client';
 import { SportsEntity } from '@sports-ui/ui-sdk/espn-fastcast-client';
@@ -88,9 +88,10 @@ export class EspnService extends ApiService {
    */
   protected fetchFantasyLeagueEvents({ sport, headers }: FantasyLeagueEventsRequest): Observable<EspnClient.EventList> {
     const endpoint = BaseEspnEndpointBuilder({ sport }).espnEvents;
+    const dateHelper = new DateHelper();
     const params = new HttpParams()
       .set(ESPN_PARAM_FRAGMENTS.UseMap, true)
-      .set(ESPN_PARAM_FRAGMENTS.Dates, espnDateFormatter({ date: new Date().getTime() }))
+      .set(ESPN_PARAM_FRAGMENTS.Dates, dateHelper.formatWithDelimiter({ date: new Date().getTime() }))
       .set(ESPN_PARAM_FRAGMENTS.PbpOnly, true);
     return this.get<EspnClient.EventList>(endpoint, { params, headers });
   }
