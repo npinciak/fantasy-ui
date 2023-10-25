@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Event, NavigationCancel, NavigationEnd, Router, RouterStateSnapshot } from '@angular/router';
-import { Store } from '@ngxs/store';
 import { filter } from 'rxjs/operators';
 import { CustomRouterStateSerializer } from './@core/router/router-state.serializer';
-import { SetRouterState } from './@core/router/router.state';
+import { RouterFacade } from './@core/router/router.facade';
 import { untilDestroyed } from './@shared/until-destroyed';
 
 type NavigationComplete = NavigationEnd | NavigationCancel;
@@ -13,7 +12,11 @@ type NavigationComplete = NavigationEnd | NavigationCancel;
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit, OnDestroy {
-  constructor(private store: Store, private router: Router, private customRouteStateSerializer: CustomRouterStateSerializer) {}
+  constructor(
+    private routerFacade: RouterFacade,
+    private router: Router,
+    private customRouteStateSerializer: CustomRouterStateSerializer
+  ) {}
 
   ngOnInit() {
     this.router.events.pipe(untilDestroyed(this), filter(this.navigationComplete.bind(this))).subscribe(e => this.onNavigationComplete(e));
@@ -31,7 +34,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private setRouterState(state?: RouterStateSnapshot): void {
     const routerStateParams = this.customRouteStateSerializer.serialize(state ?? this.router.routerState.snapshot).state;
-
-    this.store.dispatch([new SetRouterState({ routerStateParams })]);
+    this.routerFacade.setRouterStateParams(routerStateParams);
   }
 }

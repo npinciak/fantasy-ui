@@ -9,3 +9,7 @@ export interface RouterStateModel {
     data: any;
   };
 }
+
+export const INITIAL_STATE: RouterStateModel = {
+  state: undefined,
+};

@@ -1,22 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
-import { RouterStateModel } from './router-state.model';
-
-export class SetRouterState {
-  public static readonly type = `[router] SetRouterState`;
-  constructor(public payload: { routerStateParams }) {}
-}
+import { INITIAL_STATE, RouterStateModel } from './router-state.model';
+import { SetRouterState } from './router.actions';
 
 @State<RouterStateModel>({
   name: 'router',
-  defaults: {
-    state: undefined,
-  },
+  defaults: INITIAL_STATE,
 })
 @Injectable()
 export class RouterState {
-  constructor() {}
-
   @Action(SetRouterState)
   setState({ patchState }: StateContext<RouterStateModel>, { payload: { routerStateParams } }: SetRouterState) {
     patchState({ state: routerStateParams });

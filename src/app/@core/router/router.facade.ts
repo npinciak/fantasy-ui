@@ -4,6 +4,7 @@ import { UrlPathFragments } from '@app/@core/router/url-builder';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
 import { DfsRouteBuilder, EspnRouteBuilder } from './route-builder';
+import { SetRouterState } from './router.actions';
 import { RouterSelector } from './router.selectors';
 
 type NavigationComplete = NavigationEnd | NavigationCancel;
@@ -81,9 +82,11 @@ export class RouterFacade {
     this.navigate(DfsRouteBuilder.sportPathFragments(sport), { queryParams: { site: 'draftkings' } });
   }
 
+  setRouterStateParams(routerStateParams: any) {
+    return this.store.dispatch([new SetRouterState({ routerStateParams })]);
+  }
+
   private navigate(route: any[], opt?: NavigationExtras | undefined) {
     return this.router.navigate(route, opt);
   }
 }
-
-// create a jasmine test for navigateToEspnBaseballTeam
