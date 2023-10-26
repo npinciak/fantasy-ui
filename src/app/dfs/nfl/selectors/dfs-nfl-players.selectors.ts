@@ -9,7 +9,8 @@ import { DfsTeamsSelectors } from '@app/dfs/selectors/dfs-teams.selectors';
 import { DfsSlatePlayersState } from '@app/dfs/state/dfs-slate-players.state';
 import { NFL_RG_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
 import { exists, existsFilter, hasNonNullableFields, pickData, uniqueBy } from '@sports-ui/ui-sdk/helpers';
-import { positionValueByDfsSite } from '../consts/value-targets-by-position.const';
+import { TARGET_VALUE_CONFIGURATION_BY_POSITION_BY_SITE } from '../helpers/target-value-calculator/target-value-by-position.const';
+import { TargetValueCalculator } from '../helpers/target-value-calculator/target-value-calculator';
 import { GridIronPlayer } from '../models/nfl-gridIron.model';
 import { NflDfsPlayerTableData } from '../models/nfl-player.model';
 import { DfsNflGridIronSelectors } from './dfs-nfl-grid-iron.selectors';
@@ -65,7 +66,13 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
 
         const { id, name, rgTeamId, position } = p;
 
-        const targetValue = positionValueByDfsSite[position][dfsSite];
+        const { valueTargetGPPs, valueTargetCash, targetValueDiffGPPs, targetValueDiffCash } = new TargetValueCalculator({
+          salary,
+          fantasyPoints: gridIron?.fpts ?? 0,
+          position,
+          dfsSite,
+          configuration: TARGET_VALUE_CONFIGURATION_BY_POSITION_BY_SITE,
+        });
 
         return {
           id,
@@ -88,10 +95,10 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
           sdFpts: gridIron ? gridIron.sdFpts : null,
           fptsPerDollar: gridIron ? gridIron.fptsPerDollar : null,
           value: gridIron ? gridIron.value : null,
-          valueTargetGPPs: (salary * targetValue.valueTargetMultiplierGPPs) / 1000,
-          valueTargetCash: (salary * targetValue.valueTargetMultiplierCash) / 1000,
-          minimumFantasyPointsCash: targetValue.minimumFantasyPointsCash,
-          minimumFantasyPointsGPPs: targetValue.minimumFantasyPointsGPPs,
+          valueTargetGPPs,
+          valueTargetCash,
+          targetValueDiffGPPs,
+          targetValueDiffCash,
         };
       })
       .filter(p => p.opp != null)

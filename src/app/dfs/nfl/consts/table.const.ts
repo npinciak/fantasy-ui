@@ -10,25 +10,12 @@ const BASE_STATS_COLUMNS: BaseTableColumn<NflDfsPlayerTableData>[] = [
   { columnDef: 'smash', headerCell: 'smash', headerLabel: 'Smash', dataType: TableColumnDataType.Percentage },
   { columnDef: 'value', headerCell: 'value', headerLabel: 'Value', dataType: TableColumnDataType.Number },
   { columnDef: 'fpts', headerCell: 'fpts', headerLabel: 'FPts', dataType: TableColumnDataType.Number },
+  { columnDef: 'sdFpts', headerCell: 'sdFpts', headerLabel: 'SDFPts', dataType: TableColumnDataType.Number },
   { columnDef: 'valueTargetGPPs', headerCell: 'valueTargetGPPs', headerLabel: 'GPP', dataType: TableColumnDataType.Number },
   { columnDef: 'valueTargetCash', headerCell: 'valueTargetCash', headerLabel: 'Cash', dataType: TableColumnDataType.Number },
-  {
-    columnDef: 'minimumFantasyPointsGPPs',
-    headerCell: 'minimumFantasyPointsGPPs',
-    headerLabel: 'Min GPP',
-    dataType: TableColumnDataType.Number,
-  },
-  {
-    columnDef: 'minimumFantasyPointsCash',
-    headerCell: 'minimumFantasyPointsCash',
-    headerLabel: 'Min Cash',
-    dataType: TableColumnDataType.Number,
-  },
   { columnDef: 'fptsPerDollar', headerCell: 'fptsPerDollar', headerLabel: 'FPts/$', dataType: TableColumnDataType.Number },
   { columnDef: 'ceil', headerCell: 'ceil', headerLabel: 'Ceil', dataType: TableColumnDataType.Number },
-  { columnDef: 'sdCeil', headerCell: 'sdCeil', headerLabel: 'SDCeil', dataType: TableColumnDataType.Number },
   { columnDef: 'floor', headerCell: 'floor', headerLabel: 'Floor', dataType: TableColumnDataType.Number },
-  { columnDef: 'sdFloor', headerCell: 'sdFloor', headerLabel: 'sdFloor', dataType: TableColumnDataType.Number },
 ];
 
 export const RECEIVER_STATS_COLUMNS: BaseTableColumn<NflDfsPlayerTableData>[] = [
