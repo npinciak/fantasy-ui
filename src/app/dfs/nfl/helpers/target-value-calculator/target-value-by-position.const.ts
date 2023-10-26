@@ -1,6 +1,6 @@
-import { SiteType } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { TargetValueSiteConfiguration } from './target-value-calculator.model';
 
-export const positionValueByDfsSite = {
+export const TARGET_VALUE_CONFIGURATION_BY_POSITION_BY_SITE: Record<string, Record<string, TargetValueSiteConfiguration>> = {
   QB: {
     draftkings: {
       minimumSalary: 5000,
@@ -8,14 +8,14 @@ export const positionValueByDfsSite = {
       valueTargetMultiplierGPPs: 4,
       minimumFantasyPointsCash: 15,
       minimumFantasyPointsGPPs: 20,
-    },
-    [SiteType.FanDuel]: {
+    } as TargetValueSiteConfiguration,
+    fanduel: {
       minimumSalary: 6000,
       valueTargetMultiplierCash: 2,
       valueTargetMultiplierGPPs: 3,
       minimumFantasyPointsCash: 12,
       minimumFantasyPointsGPPs: 18,
-    },
+    } as TargetValueSiteConfiguration,
   },
   RB: {
     draftkings: {
@@ -24,14 +24,14 @@ export const positionValueByDfsSite = {
       valueTargetMultiplierGPPs: 4,
       minimumFantasyPointsCash: 12,
       minimumFantasyPointsGPPs: 16,
-    },
-    [SiteType.FanDuel]: {
+    } as TargetValueSiteConfiguration,
+    fanduel: {
       minimumSalary: 4500,
       valueTargetMultiplierCash: 2.5,
       valueTargetMultiplierGPPs: 3.5,
       minimumFantasyPointsCash: 11.25,
       minimumFantasyPointsGPPs: 15.75,
-    },
+    } as TargetValueSiteConfiguration,
   },
   WR: {
     draftkings: {
@@ -40,14 +40,14 @@ export const positionValueByDfsSite = {
       valueTargetMultiplierGPPs: 4,
       minimumFantasyPointsCash: 9,
       minimumFantasyPointsGPPs: 12,
-    },
-    [SiteType.FanDuel]: {
+    } as TargetValueSiteConfiguration,
+    fanduel: {
       minimumSalary: 4500,
       valueTargetMultiplierCash: 2,
       valueTargetMultiplierGPPs: 3,
       minimumFantasyPointsCash: 9,
       minimumFantasyPointsGPPs: 13.5,
-    },
+    } as TargetValueSiteConfiguration,
   },
   TE: {
     draftkings: {
@@ -57,13 +57,13 @@ export const positionValueByDfsSite = {
       minimumFantasyPointsCash: 7.5,
       minimumFantasyPointsGPPs: 10,
     },
-    [SiteType.FanDuel]: {
+    fanduel: {
       minimumSalary: 4000,
       valueTargetMultiplierCash: 2,
       valueTargetMultiplierGPPs: 3,
       minimumFantasyPointsCash: 8,
       minimumFantasyPointsGPPs: 12,
-    },
+    } as TargetValueSiteConfiguration,
   },
   DST: {
     draftkings: {
@@ -72,13 +72,13 @@ export const positionValueByDfsSite = {
       valueTargetMultiplierGPPs: 4,
       minimumFantasyPointsCash: 6,
       minimumFantasyPointsGPPs: 8,
-    },
-    [SiteType.FanDuel]: {
+    } as TargetValueSiteConfiguration,
+    fanduel: {
       minimumSalary: 3000,
       valueTargetMultiplierCash: 2,
       valueTargetMultiplierGPPs: 3,
       minimumFantasyPointsCash: 6,
       minimumFantasyPointsGPPs: 9,
-    },
+    } as TargetValueSiteConfiguration,
   },
 };

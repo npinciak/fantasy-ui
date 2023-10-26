@@ -14,16 +14,6 @@ export interface BaseTableRow<T> {
   headerLabel: string;
 }
 
-/**
- * @deprecated
- */
-export type TableColumn = {
-  columnDef: string;
-  headerCell: string;
-  headerLabel: string;
-  dataType: TableColumnDataType;
-};
-
 export enum TableColumnDataType {
   // eslint-disable-next-line id-blacklist
   Number,
