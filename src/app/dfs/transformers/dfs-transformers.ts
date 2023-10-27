@@ -15,7 +15,7 @@ export function normalizeNFLClientGridIronPlayer(gridIronPlayer: NFLClientGridIr
     SCHEDULE_ID,
     PAATT,
     PAYDS,
-    COMP,
+    CMP,
     PATD,
     INT,
     RUATT,
@@ -50,7 +50,7 @@ export function normalizeNFLClientGridIronPlayer(gridIronPlayer: NFLClientGridIr
   map['salary'] = SALARY ? Number(SALARY) : null;
   map['scheduleId'] = SCHEDULE_ID ? Number(SCHEDULE_ID) : null;
   map['paatt'] = PAATT ? Number(PAATT) : null;
-  map['comp'] = COMP ? Number(COMP) : null;
+  map['comp'] = CMP ? Number(CMP) : null;
   map['payds'] = PAYDS ? Number(PAYDS) : null;
   map['patd'] = PATD ? Number(PATD) : null;
   map['int'] = INT ? Number(INT) : null;
@@ -78,8 +78,8 @@ export function normalizeNFLClientGridIronPlayer(gridIronPlayer: NFLClientGridIr
   return map;
 }
 
-export function convertObjectValuesToNumbers(obj: Record<string, any>): Record<string, any> {
-  const result: Record<string, any> = {};
+export function convertObjectValuesToNumbers(obj: Record<string, string | number>): Record<string, number | null> {
+  const result: Record<string, number | null> = {};
 
   for (const key in obj) {
     // eslint-disable-next-line no-prototype-builtins
@@ -88,7 +88,7 @@ export function convertObjectValuesToNumbers(obj: Record<string, any>): Record<s
       if (typeof value === 'string' && !isNaN(Number(value))) {
         result[key] = Number(value);
       } else {
-        result[key] = value;
+        result[key] = null;
       }
     }
   }

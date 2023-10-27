@@ -1,6 +1,7 @@
 import { SalariesEntity } from './salaries.model';
 
 type ScheduleAttributes = 'id' | 'rg_id' | 'sport_id' | 'date';
+
 export type Schedule = { [attr in ScheduleAttributes]: string } & {
   team_away: ScheduleTeamEntity;
   team_home: ScheduleTeamEntity;

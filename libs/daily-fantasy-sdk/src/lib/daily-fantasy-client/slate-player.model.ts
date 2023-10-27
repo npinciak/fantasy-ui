@@ -2,7 +2,7 @@ import { BattingAttributes } from '../models/mlb-client.model';
 import { Schedule } from './schedule.model';
 
 export interface DfsSlatePlayer {
-  attributes: BattingAttributes;
+  attributes?: BattingAttributes;
   fpts: number;
   player: SlatePlayerEntity;
   schedule: Schedule;
