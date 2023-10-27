@@ -15,7 +15,7 @@ export function normalizeNFLClientGridIronPlayer(gridIronPlayer: NFLClientGridIr
     SCHEDULE_ID,
     PAATT,
     PAYDS,
-    COMP,
+    CMP,
     PATD,
     INT,
     RUATT,
@@ -50,7 +50,7 @@ export function normalizeNFLClientGridIronPlayer(gridIronPlayer: NFLClientGridIr
   map['salary'] = SALARY ? Number(SALARY) : null;
   map['scheduleId'] = SCHEDULE_ID ? Number(SCHEDULE_ID) : null;
   map['paatt'] = PAATT ? Number(PAATT) : null;
-  map['comp'] = COMP ? Number(COMP) : null;
+  map['comp'] = CMP ? Number(CMP) : null;
   map['payds'] = PAYDS ? Number(PAYDS) : null;
   map['patd'] = PATD ? Number(PATD) : null;
   map['int'] = INT ? Number(INT) : null;

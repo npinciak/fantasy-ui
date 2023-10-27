@@ -1,5 +1,7 @@
 import { DfsSlatePlayer } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import {
+  MOCK_CLIENT_GRIDIRON_PLAYER,
+  MOCK_CLIENT_GRIDIRON_PLAYER_NULL,
   MOCK_CLIENT_SCHEDULE,
   MOCK_DFS_SLATE_PLAYER,
   MOCK_SCHEDULE_HOME_TEAM,
@@ -8,8 +10,10 @@ import { SlatePlayer } from '../models/player.model';
 import { MOCK_SCHEDULE } from '../models/schedule.mock';
 import { SLATE_PLAYER_MOCK } from '../models/slate-player.mock';
 import { MOCK_HOME_TEAM } from '../models/team.mock';
+import { MOCK_GRIDIRON_PLAYER, MOCK_GRIDIRON_PLAYER_NULL } from '../nfl/models/nfl-gridIron.mock';
 import {
   convertObjectValuesToNumbers,
+  normalizeNFLClientGridIronPlayer,
   transformDfsClientPlayerToPlayer,
   transformDfsClientScheduleToSchedule,
   transformScheduleTeamEntityToTeam,
@@ -59,6 +63,28 @@ describe('Dfs Transformers', () => {
       const actual = transformDfsClientScheduleToSchedule(schedule);
 
       expect(actual).toEqual(expected);
+    });
+  });
+
+  describe('#normalizeNFLClientGridIronPlayer', () => {
+    it('should return null when PLAYERID does not exist', () => {
+      const gridIronPlayer = { ...MOCK_CLIENT_GRIDIRON_PLAYER, PLAYERID: null };
+      const result = normalizeNFLClientGridIronPlayer(gridIronPlayer);
+      expect(result).toBeNull();
+    });
+
+    it('should normalize the player data', () => {
+      const gridIronPlayer = MOCK_CLIENT_GRIDIRON_PLAYER;
+      const expected = MOCK_GRIDIRON_PLAYER;
+      const result = normalizeNFLClientGridIronPlayer(gridIronPlayer);
+      expect(result).toEqual(expected);
+    });
+
+    it('should handle missing properties gracefully', () => {
+      const gridIronPlayer = { ...MOCK_CLIENT_GRIDIRON_PLAYER_NULL, PLAYERID: MOCK_CLIENT_GRIDIRON_PLAYER.PLAYERID };
+      const expected = MOCK_GRIDIRON_PLAYER_NULL;
+      const result = normalizeNFLClientGridIronPlayer(gridIronPlayer);
+      expect(result).toEqual(expected);
     });
   });
 

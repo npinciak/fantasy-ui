@@ -1,4 +1,4 @@
-export interface GridIronPlayer {
+export type GridIronPlayer = {
   playerId: number;
   player: string | null;
   salary: number | null;
@@ -29,11 +29,11 @@ export interface GridIronPlayer {
   value?: number | null;
   pown: number | null;
   partnerId: number | null;
-  ownership: Record<number, number | null>;
+  ownership: Record<number | string, number | null>;
   rgid: number | null;
   slate: string | null;
   injury: string | null;
-}
+};
 
 export type GridIronPlayerMap = Record<number, GridIronPlayer>;
 

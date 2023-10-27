@@ -158,14 +158,11 @@ type NFLClientGridIronPlayerAttributes =
   | 'SALARY'
   | 'FPTS/$'
   | 'FLOOR'
-  | 'SDFLOOR'
   | 'CEIL'
-  | 'SDCEIL'
   | 'SMASH'
   | 'VALUE'
   | 'POWN'
   | 'PARTNERID'
-  | 'OWNERSHIP'
   | 'RGID'
   | 'SLATE'
   | 'INJURY'
@@ -174,7 +171,7 @@ type NFLClientGridIronPlayerAttributes =
   | 'POS'
   | 'TEAM'
   | 'PAATT'
-  | 'COMP'
+  | 'CMP'
   | 'PAYDS'
   | 'PATD'
   | 'INT'
@@ -186,9 +183,22 @@ type NFLClientGridIronPlayerAttributes =
   | 'REYDS'
   | 'RETD'
   | 'FPTS'
-  | 'SDFPTS';
+  | 'PP'
+  | 'UD'
+  | 'TOTYD'
+  | 'TOTTD'
+  | 'PARUYD'
+  | 'PARUTD'
+  | 'RUREYD'
+  | 'RURETD'
+  | 'REFID';
 
-export type NFLClientGridIronPlayer = { [key in NFLClientGridIronPlayerAttributes]: string | null } & { OWNERSHIP: Record<string, string> };
+export type NFLClientGridIronPlayer = { [key in NFLClientGridIronPlayerAttributes]: string | null } & {
+  OWNERSHIP: Record<string, string>;
+  SDCEIL?: string;
+  SDFLOOR?: string;
+  SDFPTS?: string;
+};
 
 export type NFLClientGridIronPlayerMap = Record<string, NFLClientGridIronPlayer>;
 export type NFLClientPlayerAttributes = NFLClientPlayerAttributesEntity & DfsClientPlayerAttributes;
