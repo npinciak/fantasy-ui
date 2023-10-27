@@ -29,7 +29,7 @@ export interface GridIronPlayer {
   value?: number | null;
   pown: number | null;
   partnerId: number | null;
-  ownership: Record<number, number>;
+  ownership: Record<number, number | null>;
   rgid: number | null;
   slate: string | null;
   injury: string | null;

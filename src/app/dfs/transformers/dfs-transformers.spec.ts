@@ -9,6 +9,7 @@ import { MOCK_SCHEDULE } from '../models/schedule.mock';
 import { SLATE_PLAYER_MOCK } from '../models/slate-player.mock';
 import { MOCK_HOME_TEAM } from '../models/team.mock';
 import {
+  convertObjectValuesToNumbers,
   transformDfsClientPlayerToPlayer,
   transformDfsClientScheduleToSchedule,
   transformScheduleTeamEntityToTeam,
@@ -58,6 +59,36 @@ describe('Dfs Transformers', () => {
       const actual = transformDfsClientScheduleToSchedule(schedule);
 
       expect(actual).toEqual(expected);
+    });
+  });
+
+  describe('#convertObjectValuesToNumbers', () => {
+    it('should convert valid numeric strings to numbers', () => {
+      const input = {
+        passingYards: '350',
+        rushingYards: '125',
+        receivingYards: '80.5',
+      };
+
+      const result = convertObjectValuesToNumbers(input);
+
+      expect(result.passingYards).toBe(350);
+      expect(result.rushingYards).toBe(125);
+      expect(result.receivingYards).toBe(80.5);
+    });
+
+    it('should handle invalid numeric strings by setting them to null', () => {
+      const input = {
+        fantasyPoints: '20.5',
+        touchdowns: '2',
+        fumbles: 'invalid',
+      };
+
+      const result = convertObjectValuesToNumbers(input);
+
+      expect(result.fantasyPoints).toBe(20.5);
+      expect(result.touchdowns).toBe(2);
+      expect(result.fumbles).toBe(null);
     });
   });
 });

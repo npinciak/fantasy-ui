@@ -78,8 +78,8 @@ export function normalizeNFLClientGridIronPlayer(gridIronPlayer: NFLClientGridIr
   return map;
 }
 
-export function convertObjectValuesToNumbers(obj: Record<string, any>): Record<string, any> {
-  const result: Record<string, any> = {};
+export function convertObjectValuesToNumbers(obj: Record<string, string | number>): Record<string, number | null> {
+  const result: Record<string, number | null> = {};
 
   for (const key in obj) {
     // eslint-disable-next-line no-prototype-builtins
@@ -88,7 +88,7 @@ export function convertObjectValuesToNumbers(obj: Record<string, any>): Record<s
       if (typeof value === 'string' && !isNaN(Number(value))) {
         result[key] = Number(value);
       } else {
-        result[key] = value;
+        result[key] = null;
       }
     }
   }
