@@ -9,7 +9,6 @@ import {
 } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { NFLClientOutsidersProperties, NFLClientSafptsProperties, NFLClientSlateAttrTeam } from '@sports-ui/daily-fantasy-sdk/models';
 import { exists } from '@sports-ui/ui-sdk/helpers';
-
 import { SlatePlayer } from '../models/slate-player.model';
 import { SlateTeamMlb, SlateTeamNfl } from '../models/slate-team.model';
 import { Vegas } from '../models/vegas.model';
