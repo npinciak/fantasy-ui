@@ -1,31 +1,42 @@
-// ... Previous test suite and imports ...
-
 import { DfsSlatePlayer } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
-import { MOCK_DFS_SLATE_PLAYER } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client/mocks';
+import { MOCK_DFS_SLATE_PLAYER, MOCK_SCHEDULE_HOME_TEAM } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client/mocks';
 import { SlatePlayer } from '../models/player.model';
 import { SLATE_PLAYER_MOCK } from '../models/slate-player.mock';
-import { transformDfsClientPlayerToPlayer } from './dfs-transformers';
+import { MOCK_HOME_TEAM } from '../models/team.mock';
+import { transformDfsClientPlayerToPlayer, transformScheduleTeamEntityToTeam } from './dfs-transformers';
 
 describe('Dfs Transformers', () => {
   describe('#transformDfsClientPlayerToPlayer', () => {
     it('should transform a DfsClientPlayer to a SlatePlayer with a complete name', () => {
       const dfsClientPlayer: DfsSlatePlayer = MOCK_DFS_SLATE_PLAYER;
 
-      const expectedSlatePlayer: SlatePlayer = SLATE_PLAYER_MOCK;
+      const expected: SlatePlayer = SLATE_PLAYER_MOCK;
 
-      const result = transformDfsClientPlayerToPlayer(dfsClientPlayer);
+      const actual = transformDfsClientPlayerToPlayer(dfsClientPlayer);
 
-      expect(result).toEqual(expectedSlatePlayer);
+      expect(actual).toEqual(expected);
     });
 
     it('should transform a DfsClientPlayer to a SlatePlayer with a missing first name', () => {
       const dfsClientPlayer: DfsSlatePlayer = { ...MOCK_DFS_SLATE_PLAYER, player: { ...MOCK_DFS_SLATE_PLAYER.player, last_name: '' } };
 
-      const expectedSlatePlayer = { ...SLATE_PLAYER_MOCK, name: MOCK_DFS_SLATE_PLAYER.player.first_name };
+      const expected = { ...SLATE_PLAYER_MOCK, name: MOCK_DFS_SLATE_PLAYER.player.first_name };
 
-      const result = transformDfsClientPlayerToPlayer(dfsClientPlayer);
+      const actual = transformDfsClientPlayerToPlayer(dfsClientPlayer);
 
-      expect(result).toEqual(expectedSlatePlayer);
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe('#transformScheduleTeamEntityToTeam', () => {
+    it('should transform a ScheduleTeamEntity to a Team', () => {
+      const scheduleTeamEntity = MOCK_SCHEDULE_HOME_TEAM;
+
+      const expected = MOCK_HOME_TEAM;
+
+      const actual = transformScheduleTeamEntityToTeam(scheduleTeamEntity);
+
+      expect(actual).toEqual(expected);
     });
   });
 });
