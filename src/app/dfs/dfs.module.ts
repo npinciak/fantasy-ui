@@ -23,6 +23,7 @@ import { DfsNflGridIronState } from './nfl/state/dfs-nfl-grid-iron.state';
 import { DfsNflSlatePlayerDetailsState } from './nfl/state/dfs-nfl-slate-player-details.state';
 import { DfsNflSlateTeamDetailsState } from './nfl/state/dfs-nfl-slate-team-details.state';
 import { DfsHomeComponent } from './pages/dfs-home/dfs-home.component';
+import { DfsFilterState } from './state/dfs-filter.state';
 import { DfsMatchupsState } from './state/dfs-matchups.state';
 import { DfsSelectedLineupState } from './state/dfs-selected-lineup.state';
 import { DfsSelectedSlateConfigurationState } from './state/dfs-selected-slate-configuration.state';
@@ -35,6 +36,7 @@ const states = [
   DfsSlatePlayersState,
   DfsSlatePlayersHandlerState,
   DfsSelectedSlateConfigurationState,
+  DfsFilterState,
   DfsMatchupsState,
   DfsSlatesState,
   DfsSlatesHandlerState,
