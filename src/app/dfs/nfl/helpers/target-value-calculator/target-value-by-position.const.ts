@@ -81,4 +81,20 @@ export const TARGET_VALUE_CONFIGURATION_BY_POSITION_BY_SITE: Record<string, Reco
       minimumFantasyPointsGPPs: 9,
     } as TargetValueSiteConfiguration,
   },
+  UNKNOWN: {
+    draftkings: {
+      minimumSalary: 0,
+      valueTargetMultiplierCash: 0,
+      valueTargetMultiplierGPPs: 0,
+      minimumFantasyPointsCash: 0,
+      minimumFantasyPointsGPPs: 0,
+    } as TargetValueSiteConfiguration,
+    fanduel: {
+      minimumSalary: 0,
+      valueTargetMultiplierCash: 0,
+      valueTargetMultiplierGPPs: 0,
+      minimumFantasyPointsCash: 0,
+      minimumFantasyPointsGPPs: 0,
+    } as TargetValueSiteConfiguration,
+  },
 };
