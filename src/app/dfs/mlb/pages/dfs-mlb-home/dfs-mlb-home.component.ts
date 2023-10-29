@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DfsFilterFacade } from '@app/dfs/facade/dfs-filter.facade';
 import { DfsSelectedSlateConfigurationFacade } from '@app/dfs/facade/dfs-selected-slate-configuration.facade';
 import { DfsSlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade';
@@ -27,13 +28,14 @@ export class DfsMlbHomeComponent extends DfsHomeComponent implements OnInit {
   };
 
   constructor(
+    readonly dfsFilterFacade: DfsFilterFacade,
     readonly dfsPlayersFacade: DfsSlatePlayersFacade,
     readonly dfsSlateFacade: DfsSlatesFacade,
     readonly dfsSlateAttrFacade: DfsSlateAttrFacade,
     readonly dfsSelectedSlateConfigurationFacade: DfsSelectedSlateConfigurationFacade,
     readonly mlbPlayerFacade: DfsMlbSlatePlayerFacade
   ) {
-    super(dfsPlayersFacade, dfsSlateFacade, dfsSlateAttrFacade, dfsSelectedSlateConfigurationFacade);
+    super(dfsPlayersFacade, dfsSlateFacade, dfsSlateAttrFacade, dfsSelectedSlateConfigurationFacade, dfsFilterFacade);
   }
 
   ngOnInit(): void {}
