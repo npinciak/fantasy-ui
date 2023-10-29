@@ -82,7 +82,12 @@ export class PlayerTableComponent implements AfterViewInit, OnChanges {
           break;
       }
 
-      return match;
+      const textMatches =
+        data.name.toLowerCase().includes(filter.value.toLowerCase()) ||
+        data.position.toLowerCase().includes(filter.value.toLowerCase()) ||
+        data.rgTeamId === filter.value;
+
+      return match && textMatches;
     };
   }
 
