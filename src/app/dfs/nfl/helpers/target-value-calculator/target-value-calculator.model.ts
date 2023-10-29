@@ -7,9 +7,9 @@ export type TargetValueCalculatorConstructor = {
 };
 
 export type TargetValueSiteConfiguration = {
-  minimumSalary: number;
-  valueTargetMultiplierCash: number;
-  valueTargetMultiplierGPPs: number;
-  minimumFantasyPointsCash: number;
-  minimumFantasyPointsGPPs: number;
+  minimumSalary: number | null;
+  valueTargetMultiplierCash: number | null;
+  valueTargetMultiplierGPPs: number | null;
+  minimumFantasyPointsCash: number | null;
+  minimumFantasyPointsGPPs: number | null;
 };
