@@ -18,8 +18,9 @@ export class LoadingExecutorActionHandlerState implements NgxsOnInit, OnDestroy 
 
         const isRouterAction = /router/g.test(actionType!);
         const isSetActionCountAction = /loadingExecutor/g.test(actionType!);
+        const dfsFilterAction = /dfsFilter/g.test(actionType!);
 
-        if (isRouterAction || isSetActionCountAction) return;
+        if (isRouterAction || isSetActionCountAction || dfsFilterAction) return;
 
         let count = this.loadingExecutorFacade.getCountByActionType(actionType) || 0;
 

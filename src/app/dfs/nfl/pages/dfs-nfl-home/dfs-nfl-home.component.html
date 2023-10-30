@@ -8,7 +8,6 @@
           </ng-container>
         </app-base-card>
       </div>
-
       <div class="mb-12 w-full sm:px-4 xl:mb-0 xl:w-9/12">
         <div class="flex flex-wrap">
           <div class="mb-12 w-full sm:px-4 xl:mb-0 xl:w-4/12">
@@ -73,65 +72,48 @@
           </div>
         </div>
 
-        <!-- <div class="flex flex-wrap">
-          <div class="mb-12 w-full xl:mb-0">
-            <app-base-card>
-              <app-chart-bar height="350px" [chartData]="playerBarChartData$ | async"></app-chart-bar>
-            </app-base-card>
-          </div>
-        </div> -->
-
         <app-base-card>
-          <div class="flex flex-wrap">
-            <div class="w-full sm:px-4 xl:w-4/12">
+          <div class="mb-2 flex flex-wrap">
+            <div class="w-full sm:px-4 xl:w-3/12">
               <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Search</label>
 
               <input
                 type="text"
                 #nameInput
                 placeholder="Search for player"
-                (change)="nameInputChange(nameInput.value)"
+                (keyup)="nameInputChange(nameInput.value)"
                 autocomplete="off"
                 class="m-0 block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding bg-no-repeat px-3 py-1.5 text-base font-normal text-gray-700 focus:border-sky-900 focus:bg-white focus:text-gray-700 focus:outline-none"
               />
             </div>
-            <div class="w-full sm:px-4 xl:w-4/12">
-              <app-dropdown-filter
-                ariaLabel="Stat options"
-                title="Stat"
-                [filterItems]="playerScatterAxisOptions$ | async"
-                (filterUpdate)="onStatChange($event)"
-              ></app-dropdown-filter>
-            </div>
-
-            <div class="w-full sm:px-4 xl:w-4/12">
+            <div class="w-full sm:px-4 xl:w-2/12">
               <app-dropdown-filter
                 ariaLabel="ProjectionType options"
                 title="Projection Type"
+                [selectedOption]="selectedProjectionFilter$ | async"
                 [filterItems]="GRIDIRON_PROJECTION_FILTER_OPTIONS"
                 (filterUpdate)="projectionTypeChange($event)"
               ></app-dropdown-filter>
             </div>
-
-            <div class="w-full sm:px-4 xl:w-4/12">
+            <div class="w-full sm:px-4 xl:w-2/12">
               <app-dropdown-filter
                 ariaLabel="team options"
                 title="Teams"
+                [selectedOption]="selectedTeamFilter$ | async"
                 [filterItems]="playerTeamsFilterOptions$ | async"
                 (filterUpdate)="teamFilterChange($event)"
               ></app-dropdown-filter>
             </div>
-            <div class="w-full sm:px-4 xl:w-4/12">
+            <div class="w-full sm:px-4 xl:w-2/12">
               <app-dropdown-filter
                 ariaLabel="position options"
                 title="Position"
+                [selectedOption]="selectedPositionFilter$ | async"
                 [filterItems]="playerPositionFilterOptions$ | async"
                 (filterUpdate)="positionFilterChange($event)"
               ></app-dropdown-filter>
             </div>
           </div>
-        </app-base-card>
-        <app-base-card>
           <app-player-table
             [filter]="tableFilter$ | async"
             [teamMap]="NFL_RG_TEAM_ID_MAP"
