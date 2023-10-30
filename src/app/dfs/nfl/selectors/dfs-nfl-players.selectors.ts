@@ -31,7 +31,7 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
 
   @Selector([DfsNflPlayerSelectors.getPlayerTeams])
   static getPlayerTeamsFilterOptions(list: string[]): FilterOptions<string | null>[] {
-    const reset = [{ value: 'All', label: 'All' }];
+    const reset = [{ value: null, label: 'All' }];
     const teams = list.map(t => ({ value: t, label: NFL_RG_TEAM_ID_MAP[t] as string })).sort((a, b) => a.label.localeCompare(b.label));
 
     return [...reset, ...teams];
