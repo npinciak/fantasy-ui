@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingExecutorFacade } from '@app/@core/loading-executor/loading-executor.facade';
+import { DfsFilterFacade } from '@app/dfs/facade/dfs-filter.facade';
 import { DfsSelectedLineupFacade } from '@app/dfs/facade/dfs-selected-lineup.facade';
 import { DfsSelectedSlateConfigurationFacade } from '@app/dfs/facade/dfs-selected-slate-configuration.facade';
 import { DfsSlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
@@ -54,8 +55,7 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   teamsWithHighestValue$ = this.nflPlayerFacade.teamsWithHighestValue$;
 
   statGroup: string;
-  teamId: number | null = null;
-  position$ = new BehaviorSubject<string | null>('All');
+
   tableFilter$ = new BehaviorSubject<string | null>(null);
   xAxisStat$ = new BehaviorSubject<string | null>(null);
   yAxisStat$ = new BehaviorSubject<string | null>(null);
@@ -68,7 +68,7 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
     })
   );
 
-  playerBarChartData$ = combineLatest([this.nflPlayerFacade.playerBarChartData$, this.xAxisStat$, this.position$]).pipe(
+  playerBarChartData$ = combineLatest([this.nflPlayerFacade.playerBarChartData$, this.xAxisStat$, this.positionFilter$]).pipe(
     map(([playerBarChartData, stat, position]) => playerBarChartData(stat ?? 'fpts', position ?? 'QB'))
   );
 
@@ -78,7 +78,7 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
     })
   );
 
-  tableConfig$ = combineLatest([this.position$]).pipe(
+  tableConfig$ = combineLatest([this.positionFilter$]).pipe(
     map(([position]) => {
       const headers = position != null ? HEADERS_BY_POS[position] : HEADERS_BY_POS.All;
       const rows = position != null ? ROWS_BY_POS[position] : ROWS_BY_POS.All;
@@ -100,9 +100,10 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
     readonly nflPlayerFacade: DfsNflPlayerFacade,
     readonly nflTeamSlateAttrFacade: DfsNflSlateTeamDetailsFacade,
     readonly nflMatchupsFacade: DfsNflMatchupsFacade,
-    readonly dfsNflSlateDetailsFacade: DfsNflSlateDetailsFacade
+    readonly dfsNflSlateDetailsFacade: DfsNflSlateDetailsFacade,
+    readonly dfsFilterFacade: DfsFilterFacade
   ) {
-    super(dfsPlayersFacade, dfsSlateFacade, dfsSlateAttrFacade, dfsSelectedSlateConfigurationFacade);
+    super(dfsPlayersFacade, dfsSlateFacade, dfsSlateAttrFacade, dfsSelectedSlateConfigurationFacade, dfsFilterFacade);
   }
 
   ngOnInit(): void {}
@@ -120,15 +121,17 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   }
 
   positionFilterChange(value: string) {
-    this.position$.next(value);
+    this.dfsFilterFacade.setPosition(value);
     this.tableFilter$.next(JSON.stringify({ filterType: FilterType.pos, value }));
   }
 
   teamFilterChange(value: number) {
+    this.dfsFilterFacade.setTeam(value.toString());
     this.tableFilter$.next(JSON.stringify({ filterType: FilterType.team, value: value.toString() }));
   }
 
   nameInputChange(value: string) {
+    this.dfsFilterFacade.setName(value);
     this.tableFilter$.next(JSON.stringify({ filterType: FilterType.name, value }));
   }
 
