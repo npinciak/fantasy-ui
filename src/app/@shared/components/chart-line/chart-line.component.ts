@@ -20,7 +20,7 @@ Chart.register(...registerables);
     </div>
   `,
 })
-export class ChartLineComponent extends BaseChartComponent implements OnChanges {
+export class ChartLineComponent extends BaseChartComponent<'line'> implements OnChanges {
   chartType = 'line';
 
   lineChartData: ChartConfiguration<'line'>['data'];

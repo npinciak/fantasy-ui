@@ -22,7 +22,7 @@ Chart.register(...registerables);
     </div>
   `,
 })
-export class ChartScatterComponent extends BaseChartComponent implements OnChanges {
+export class ChartScatterComponent extends BaseChartComponent<'scatter'> implements OnChanges {
   @Input() set xAxisLabel(val: string | null) {
     // this.xAxisLabel = val;
   }

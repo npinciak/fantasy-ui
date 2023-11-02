@@ -21,7 +21,7 @@ Chart.register(...registerables);
     </div>
   `,
 })
-export class ChartPieComponent extends BaseChartComponent implements OnChanges {
+export class ChartPieComponent extends BaseChartComponent<'pie'> implements OnChanges {
   pieChartData: ChartConfiguration<'polarArea'>['data'];
   pieChartOptions: ChartOptions<'polarArea'> = { maintainAspectRatio: false, responsive: true };
   pieChartLegend = false;
