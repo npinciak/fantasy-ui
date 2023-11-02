@@ -33,4 +33,14 @@ export class DfsFilterState {
   ) {
     setState(patch<DfsFilterStateModel>({ projectionType }));
   }
+
+  @Action(DfsFilterActions.SetXChartAxis)
+  setXChartAxis({ setState }: StateContext<DfsFilterStateModel>, { payload: { xChartAxis } }: { payload: { xChartAxis: string | null } }) {
+    setState(patch<DfsFilterStateModel>({ xChartAxis }));
+  }
+
+  @Action(DfsFilterActions.SetYChartAxis)
+  setYChartAxis({ setState }: StateContext<DfsFilterStateModel>, { payload: { yChartAxis } }: { payload: { yChartAxis: string | null } }) {
+    setState(patch<DfsFilterStateModel>({ yChartAxis }));
+  }
 }

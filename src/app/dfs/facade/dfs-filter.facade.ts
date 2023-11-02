@@ -15,6 +15,8 @@ export class DfsFilterFacade {
   team$ = select(DfsFilterSelector.slices.team);
   position$ = select(DfsFilterSelector.slices.position);
   projectionType$ = select(DfsFilterSelector.slices.projectionType);
+  xChartAxis$ = select(DfsFilterSelector.slices.xChartAxis);
+  yChartAxis$ = select(DfsFilterSelector.slices.yChartAxis);
 
   constructor(private store: Store) {}
 
@@ -34,6 +36,14 @@ export class DfsFilterFacade {
     return this.store.selectSnapshot(DfsFilterSelector.slices.projectionType);
   }
 
+  get xChartAxis() {
+    return this.store.selectSnapshot(DfsFilterSelector.slices.xChartAxis);
+  }
+
+  get yChartAxis() {
+    return this.store.selectSnapshot(DfsFilterSelector.slices.yChartAxis);
+  }
+
   setName(name: string | null): Observable<void> {
     return this.store.dispatch(new DfsFilterActions.SetName({ name }));
   }
@@ -48,5 +58,13 @@ export class DfsFilterFacade {
 
   setProjectionType(projectionType: GridIronProjectionType): Observable<void> {
     return this.store.dispatch(new DfsFilterActions.SetProjectionType({ projectionType }));
+  }
+
+  setXChartAxis(xChartAxis: string | null): Observable<void> {
+    return this.store.dispatch(new DfsFilterActions.SetXChartAxis({ xChartAxis }));
+  }
+
+  setYChartAxis(yChartAxis: string | null): Observable<void> {
+    return this.store.dispatch(new DfsFilterActions.SetYChartAxis({ yChartAxis }));
   }
 }
