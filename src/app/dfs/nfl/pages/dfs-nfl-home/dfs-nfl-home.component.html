@@ -10,6 +10,22 @@
       </div>
       <div class="mb-12 w-full sm:px-4 xl:mb-0 xl:w-9/12">
         <div class="flex flex-wrap">
+          <div class="mb-12 w-full xl:mb-0 xl:w-8/12">
+            <app-base-card>
+              <app-chart-bar height="350px" [chartDataV2]="playerBarChartData$ | async" [chartData]="playerBarChartData$ | async"></app-chart-bar>
+            </app-base-card>
+          </div>
+        </div>
+        <div class="w-full sm:px-4 xl:w-4/12">
+          <app-dropdown-filter
+            ariaLabel="Stat options"
+            title="Stat"
+            [filterItems]="playerScatterAxisOptions$ | async"
+            (filterUpdate)="onStatChange($event)"
+          ></app-dropdown-filter>
+        </div>
+
+        <div class="flex flex-wrap">
           <div class="mb-12 w-full sm:px-4 xl:mb-0 xl:w-4/12">
             <app-base-card title="Games to Target">
               <ng-container *ngIf="(nflTopFiveMatchups$ | async).length > 0; else noData">

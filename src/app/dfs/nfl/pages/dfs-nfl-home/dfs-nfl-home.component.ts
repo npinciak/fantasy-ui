@@ -14,6 +14,7 @@ import { map } from 'rxjs/operators';
 import { GRIDIRON_PROJECTION_FILTER_OPTIONS } from '../../consts/nfl-gridiron-projection.const';
 import { HEADERS_BY_POS, ROWS_BY_POS } from '../../consts/table.const';
 import { DfsNflPlayerFacade } from '../../facade/daily-fantasy-nfl-players.facade';
+import { DfsNflChartFacade } from '../../facade/dfs-nfl-chart.facade';
 import { DfsNflGridIronFacade } from '../../facade/dfs-nfl-gridiron.facade';
 import { DfsNflMatchupsFacade } from '../../facade/dfs-nfl-matchups.facade';
 import { DfsNflSlateDetailsFacade } from '../../facade/dfs-nfl-slate-details.facade';
@@ -45,6 +46,7 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   nflPositionList$ = this.nflPlayerFacade.positionList$;
   nflPlayerList$ = this.nflPlayerFacade.playerList$;
   nflTeamList$ = this.nflPlayerFacade.teamList$;
+
   playerScatterAxisOptions$ = this.nflPlayerFacade.playerScatterAxisOptions$;
   playerTeamsFilterOptions$ = this.nflPlayerFacade.playerTeamsFilterOptions$;
   playerPositionFilterOptions$ = this.nflPlayerFacade.playerPositionFilterOptions$;
@@ -67,14 +69,14 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
 
   selectedSlateType$ = new BehaviorSubject<SlateType | null>(null);
 
-  playerScatterData$ = combineLatest([this.nflPlayerFacade.playerScatterData$, this.xAxisStat$, this.yAxisStat$]).pipe(
+  playerScatterData$ = combineLatest([this.dfsGraphingFacade.playerScatterData$, this.xAxisStat$, this.yAxisStat$]).pipe(
     map(([playerScatterData, xAxis, yAxis]) => {
       return playerScatterData(xAxis, yAxis);
     })
   );
 
-  playerBarChartData$ = combineLatest([this.nflPlayerFacade.playerBarChartData$, this.xAxisStat$, this.positionFilter$]).pipe(
-    map(([playerBarChartData, stat, position]) => playerBarChartData(stat ?? 'fpts', position ?? 'QB'))
+  playerBarChartData$ = combineLatest([this.dfsGraphingFacade.playerBarChartData$, this.xAxisStat$]).pipe(
+    map(([playerBarChartData, stat]) => playerBarChartData(stat ?? 'fpts'))
   );
 
   slateWeather$ = combineLatest([this.selectedSlateType$, this.dfsSlateFacade.slateWeather$]).pipe(
@@ -106,7 +108,8 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
     readonly nflTeamSlateAttrFacade: DfsNflSlateTeamDetailsFacade,
     readonly nflMatchupsFacade: DfsNflMatchupsFacade,
     readonly dfsNflSlateDetailsFacade: DfsNflSlateDetailsFacade,
-    readonly dfsFilterFacade: DfsFilterFacade
+    readonly dfsFilterFacade: DfsFilterFacade,
+    readonly dfsGraphingFacade: DfsNflChartFacade
   ) {
     super(dfsPlayersFacade, dfsSlateFacade, dfsSlateAttrFacade, dfsSelectedSlateConfigurationFacade, dfsFilterFacade);
   }
