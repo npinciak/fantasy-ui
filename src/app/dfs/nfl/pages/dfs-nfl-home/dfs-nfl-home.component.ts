@@ -41,6 +41,9 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   selectedTeamFilter$ = this.dfsFilterFacade.team$;
   selectedPositionFilter$ = this.dfsFilterFacade.position$;
   selectedNameFilter$ = this.dfsFilterFacade.name$;
+  selectedXChartAxis$ = this.dfsFilterFacade.xChartAxis$;
+  selectedYChartAxis$ = this.dfsFilterFacade.yChartAxis$;
+
   selectedProjectionFilter$ = this.dfsSelectedSlateConfigurationFacade.projectionType$;
 
   nflPositionList$ = this.nflPlayerFacade.positionList$;
@@ -64,20 +67,11 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   statGroup: string;
 
   tableFilter$ = new BehaviorSubject<string | null>(null);
-  xAxisStat$ = new BehaviorSubject<string | null>(null);
-  yAxisStat$ = new BehaviorSubject<string | null>(null);
 
   selectedSlateType$ = new BehaviorSubject<SlateType | null>(null);
 
-  playerScatterData$ = combineLatest([this.dfsGraphingFacade.playerScatterData$, this.xAxisStat$, this.yAxisStat$]).pipe(
-    map(([playerScatterData, xAxis, yAxis]) => {
-      return playerScatterData(xAxis, yAxis);
-    })
-  );
-
-  playerBarChartData$ = combineLatest([this.dfsGraphingFacade.playerBarChartData$, this.xAxisStat$]).pipe(
-    map(([playerBarChartData, stat]) => playerBarChartData(stat ?? 'fpts'))
-  );
+  playerScatterData$ = this.dfsGraphingFacade.playerScatterData$;
+  playerBarChartData$ = this.dfsGraphingFacade.playerBarChartData$;
 
   slateWeather$ = combineLatest([this.selectedSlateType$, this.dfsSlateFacade.slateWeather$]).pipe(
     map(([slate, weather]) => {
@@ -117,11 +111,11 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   ngOnInit(): void {}
 
   onAxisXChange(val: string) {
-    this.xAxisStat$.next(val);
+    this.dfsFilterFacade.setXChartAxis(val);
   }
 
   onAxisYChange(val: string) {
-    this.yAxisStat$.next(val);
+    this.dfsFilterFacade.setYChartAxis(val);
   }
 
   statGroupFilter(value: string) {
@@ -141,10 +135,6 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   nameInputChange(value: string) {
     this.dfsFilterFacade.setName(value);
     this.tableFilter$.next(JSON.stringify({ filterType: FilterType.name, value }));
-  }
-
-  onStatChange(value: string) {
-    this.xAxisStat$.next(value);
   }
 
   onSelectNflSlate(event: SiteSlateEntity) {

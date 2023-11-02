@@ -20,8 +20,9 @@
           <app-dropdown-filter
             ariaLabel="Stat options"
             title="Stat"
+            [selectedOption]="selectedXChartAxis$ | async"
             [filterItems]="playerScatterAxisOptions$ | async"
-            (filterUpdate)="onStatChange($event)"
+            (filterUpdate)="onAxisXChange($event)"
           ></app-dropdown-filter>
         </div>
 
