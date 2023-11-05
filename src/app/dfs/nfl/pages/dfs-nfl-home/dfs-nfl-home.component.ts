@@ -72,6 +72,7 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
 
   playerScatterData$ = this.dfsGraphingFacade.playerScatterData$;
   playerBarChartData$ = this.dfsGraphingFacade.playerBarChartData$;
+  playerScatterChartDataByStat$ = this.dfsGraphingFacade.playerScatterChartDataByStat$;
 
   slateWeather$ = combineLatest([this.selectedSlateType$, this.dfsSlateFacade.slateWeather$]).pipe(
     map(([slate, weather]) => {

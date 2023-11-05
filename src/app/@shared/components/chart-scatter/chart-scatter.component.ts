@@ -13,7 +13,7 @@ Chart.register(...registerables);
         baseChart
         [attr.aria-label]="ariaLabel"
         [type]="'scatter'"
-        [data]="scatterChartData"
+        [data]="chartDataV2"
         [options]="scatterChartOptions"
         [legend]="scatterChartLegend"
       >
@@ -65,9 +65,9 @@ export class ChartScatterComponent extends BaseChartComponent<'scatter'> impleme
     const propertyNames = Object.getOwnPropertyNames(changes);
 
     if (propertyNames.some(key => requireRender.includes(key)) || propertyNames.every(key => changes[key].isFirstChange())) {
-      this.generateGraph(this.chartData);
+      // this.generateGraph(this.chartData);
     } else {
-      this.generateGraph(changes.chartData.currentValue);
+      // this.generateGraph(changes.chartData.currentValue);
     }
   }
 

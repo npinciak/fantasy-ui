@@ -1,10 +1,6 @@
 import { ChartConfiguration, ChartDataset } from 'chart.js';
 import { NflDfsPlayerTableData } from '../../models/nfl-player.model';
-
-type PlayerData = {
-  label: string[];
-  data: (number | null)[];
-};
+import { SimpleChartConfig } from './chart-helper.model';
 
 export function transformTableDataToBarChartData(
   playerTableData: NflDfsPlayerTableData[],
@@ -33,13 +29,37 @@ export function transformTableDataToBarChartData(
   const dataSets = transformToDataSet(tableData.data, {
     type: 'bar',
     label: stat,
-    color: '#3b82f6',
+    color: '#cbd5e1',
     order: 1,
   });
 
   const labels = tableData.labels;
 
   return transformToChartConfigurationData(labels, [dataSets]);
+}
+
+export function transformTableDataToScatterChartData(
+  data: NflDfsPlayerTableData[],
+  { xChartAxis, yChartAxis }
+): ChartConfiguration['data'] {
+  const points: { x: number; y: number }[] = data.reduce((acc, val) => {
+    if (val[xChartAxis] > 1 && val[yChartAxis] > 1) {
+      acc.push({
+        x: val[xChartAxis] as number,
+        y: val[yChartAxis] as number,
+      });
+    }
+    return acc;
+  }, [] as { x: number; y: number }[]);
+
+  const dataSets = transformToDataSet(points, {
+    type: 'scatter',
+    label: 'scatter',
+    color: '#f43f5e',
+    order: 1,
+  });
+
+  return transformToChartConfigurationData([], [dataSets]);
 }
 
 export function transformToChartConfigurationData(labels: string[], datasets: ChartDataset[]): ChartConfiguration['data'] {
@@ -61,7 +81,3 @@ export function transformToDataSet(data, config: SimpleChartConfig): ChartDatase
     order,
   };
 }
-
-type SimpleChartConfig = Pick<ChartDataset, 'type' | 'label' | 'order'> & {
-  color: string;
-};

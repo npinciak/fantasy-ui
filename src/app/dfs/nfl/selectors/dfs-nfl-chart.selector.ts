@@ -3,7 +3,11 @@ import { DfsFilterSelector } from '@app/dfs/selectors/dfs-filter.selector';
 import { Selector } from '@ngxs/store';
 import { pickData } from '@sports-ui/ui-sdk';
 import { ChartConfiguration } from 'chart.js';
-import { transformTableDataToBarChartData, transformToDataSet } from '../helpers/chart-helper/chart-helper';
+import {
+  transformTableDataToBarChartData,
+  transformTableDataToScatterChartData,
+  transformToDataSet,
+} from '../helpers/chart-helper/chart-helper';
 import { NflDfsPlayerTableData } from '../models/nfl-player.model';
 import { DfsNflPlayerSelectors } from './dfs-nfl-players.selectors';
 
@@ -51,6 +55,15 @@ export class DfsNflChartSelector {
       ...barChartData,
       datasets: [...barChartData.datasets, targetValueGppLineData, targetValueGppDiffLineData],
     };
+  }
+
+  @Selector([DfsNflPlayerSelectors.getPlayerTableData, DfsFilterSelector.slices.xChartAxis, DfsFilterSelector.slices.yChartAxis])
+  static getPlayerScatterChartDataByStat(
+    data: NflDfsPlayerTableData[],
+    xAxis: string | null,
+    yAxis: string | null
+  ): ChartConfiguration['data'] {
+    return transformTableDataToScatterChartData(data, { xChartAxis: xAxis, yChartAxis: yAxis });
   }
 
   @Selector([DfsNflPlayerSelectors.getPlayerTableData, DfsFilterSelector.slices.xChartAxis, DfsFilterSelector.slices.yChartAxis])
