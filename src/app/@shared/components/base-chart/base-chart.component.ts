@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Chart, registerables } from 'chart.js';
+import { Chart, ChartConfiguration, ChartType, registerables } from 'chart.js';
 
 export interface StatsChart<T = number> {
   data: T[];
@@ -12,9 +12,10 @@ Chart.register(...registerables);
   selector: `app-chart-base`,
   template: ``,
 })
-export class BaseChartComponent {
+export class BaseChartComponent<T extends ChartType> {
   @Input() ariaLabel = null;
   @Input() statsMap = {};
   @Input() chartData: StatsChart;
+  @Input() chartDataV2: ChartConfiguration<T>['data'];
   @Input() height = null;
 }

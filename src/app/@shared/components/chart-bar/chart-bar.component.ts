@@ -1,6 +1,7 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { BAR_CHART_OPTIONS } from '@app/dfs/nfl/helpers/chart-helper/chart-config';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
-import { BaseChartComponent, StatsChart } from '../base-chart/base-chart.component';
+import { BaseChartComponent } from '../base-chart/base-chart.component';
 
 @Component({
   selector: `app-chart-bar`,
@@ -10,7 +11,7 @@ import { BaseChartComponent, StatsChart } from '../base-chart/base-chart.compone
         baseChart
         [attr.aria-label]="ariaLabel"
         [type]="chartType"
-        [data]="barChartData"
+        [data]="chartDataV2"
         [options]="barChartOptions"
         [legend]="lineChartLegend"
       >
@@ -19,43 +20,15 @@ import { BaseChartComponent, StatsChart } from '../base-chart/base-chart.compone
     </div>
   `,
 })
-export class ChartBarComponent extends BaseChartComponent implements OnChanges {
+export class ChartBarComponent extends BaseChartComponent<'bar'> {
   @Input() horizontalLabels = true;
 
   barChartData: ChartConfiguration<'bar'>['data'];
   chartType = 'bar';
-  lineChartLegend = false;
+  lineChartLegend = true;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    const requireRender = ['type'];
-    const propertyNames = Object.getOwnPropertyNames(changes);
-
-    if (propertyNames.some(key => requireRender.includes(key)) || propertyNames.every(key => changes[key].isFirstChange())) {
-      this.generateGraph(this.chartData);
-    } else {
-      this.generateGraph(changes.chartData.currentValue);
-    }
-  }
-
-  get barChartOptions(): ChartOptions<'bar'> {
-    return { maintainAspectRatio: false, responsive: true, indexAxis: this.horizontalLabels ? 'x' : 'y' };
-  }
-
-  generateGraph(graphData: StatsChart) {
-    if (graphData.data.length === 0) return;
-    if (graphData.label.length === 0) return;
-
-    this.barChartData = {
-      labels: graphData.label,
-      datasets: [
-        {
-          data: graphData.data,
-          label: '',
-          borderColor: '#0284c7',
-          backgroundColor: '#bae6fd',
-          type: 'bar',
-        },
-      ],
-    };
-  }
+  barChartOptions: ChartOptions<'bar'> = {
+    ...BAR_CHART_OPTIONS,
+    indexAxis: this.horizontalLabels ? 'x' : 'y',
+  };
 }

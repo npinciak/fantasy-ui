@@ -11,9 +11,6 @@ export class DfsNflPlayerFacade extends GenericFacade({ selectorClass: DfsNflPla
   teamList$ = select(DfsNflPlayerSelectors.getPlayerTeams);
   positionList$ = select(DfsNflPlayerSelectors.getPlayerPositions);
 
-  playerBarChartData$ = select(DfsNflPlayerSelectors.getPlayerBarChartDataByStatAndPosition);
-
-  playerScatterData$ = select(DfsNflPlayerSelectors.getPlayerScatterData);
   playerScatterAxisOptions$ = select(DfsNflPlayerSelectors.getPlayerScatterAxisOptions);
 
   playerTeamsFilterOptions$ = select(DfsNflPlayerSelectors.getPlayerTeamsFilterOptions);

@@ -1,5 +1,4 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { linearRegression, transformScatterGraphData } from '@app/@shared/helpers/graph.helpers';
 import { FilterOptions } from '@app/@shared/models/filter.model';
 import { Selector } from '@app/@shared/models/typed-selector';
 import { SlatePlayer } from '@app/dfs/models/player.model';
@@ -8,7 +7,7 @@ import { DfsSelectedSlateConfigurationSelectors } from '@app/dfs/selectors/dfs-s
 import { DfsTeamsSelectors } from '@app/dfs/selectors/dfs-teams.selectors';
 import { DfsSlatePlayersState } from '@app/dfs/state/dfs-slate-players.state';
 import { NFL_RG_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
-import { exists, existsFilter, hasNonNullableFields, pickData, uniqueBy } from '@sports-ui/ui-sdk/helpers';
+import { exists, existsFilter, hasNonNullableFields, uniqueBy } from '@sports-ui/ui-sdk/helpers';
 import { TARGET_VALUE_CONFIGURATION_BY_POSITION_BY_SITE } from '../helpers/target-value-calculator/target-value-by-position.const';
 import { TargetValueCalculator } from '../helpers/target-value-calculator/target-value-calculator';
 import { GridIronPlayer } from '../models/nfl-gridIron.model';
@@ -105,21 +104,6 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
       .sort((a, b) => b.salary! - a.salary!);
   }
 
-  @Selector([DfsNflPlayerSelectors.getPlayerTableData])
-  static getPlayerBarChartDataByStatAndPosition(playerTableData: NflDfsPlayerTableData[]) {
-    return (stat: string, position: string) => {
-      const tableData = playerTableData
-        .filter(p => p.position === position && p[stat] > 1)
-        .map(p => ({ label: p.name, value: p[stat] as number | null }))
-        .sort((a, b) => b.value! - a.value!);
-
-      return {
-        label: tableData.map(p => p.label),
-        data: tableData.map(p => p.value),
-      };
-    };
-  }
-
   @Selector([DfsNflPlayerSelectors.getPlayerTableData, DfsTeamsSelectors.getById])
   static getTeamsWithHighestPown(
     tableData: NflDfsPlayerTableData[],
@@ -178,57 +162,16 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
   }
 
   @Selector()
-  static getPlayerScatterAxisOptions(): FilterOptions<string>[] {
+  static getPlayerScatterAxisOptions(): FilterOptions<keyof NflDfsPlayerTableData>[] {
     return [
       { value: 'pown', label: 'Own %' },
       { value: 'fpts', label: 'Fantasy Pts' },
-      { value: 'fptsPerK', label: 'fptsPerK' },
+      { value: 'fptsPerDollar', label: 'fptsPerK' },
       { value: 'ceil', label: 'Ceil' },
       { value: 'floor', label: 'Floor' },
       { value: 'salary', label: 'Salary' },
-      { value: 'val', label: 'Value' },
+      { value: 'value', label: 'Value' },
       { value: 'smash', label: 'Smash' },
-      { value: 'tar', label: 'Targets' },
-      { value: 'productionPremium', label: 'Production Premium' },
-    ].sort((a, b) => a.label.localeCompare(b.label));
-  }
-
-  @Selector([DfsNflPlayerSelectors.getPlayerTableData])
-  static getPlayerScatterData(data: NflDfsPlayerTableData[]): (xAxis: string | null, yAxis: string | null) => any {
-    return (xAxis: string | null, yAxis: string | null) => {
-      if (xAxis == null || yAxis == null) return [];
-
-      const x: number[] = data.map(p => p[xAxis]);
-
-      const y: number[] = data.map(p => p[yAxis]);
-
-      const lR = linearRegression(x, y);
-
-      const text: string[] = pickData(data, p => p.name);
-
-      const fitFrom = Math.min(...x);
-      const fitTo = Math.max(...x);
-
-      const fit = {
-        x: [fitFrom, fitTo],
-        y: [fitFrom * lR.slope + lR.yIntercept, fitTo * lR.slope + lR.yIntercept],
-        text,
-        mode: 'lines',
-        type: 'scatter',
-        name: 'R2='.concat((Math.round(lR.r2 * 10000) / 10000).toString()),
-      };
-
-      const points = transformScatterGraphData({
-        data,
-        x,
-        y,
-        xAxisLabel: xAxis,
-        yAxisLabel: yAxis,
-        dataLabels: 'name',
-        graphType: 'scatter',
-      });
-
-      return [{ ...points }, { ...fit }];
-    };
+    ];
   }
 }
