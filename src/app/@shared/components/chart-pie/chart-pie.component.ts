@@ -1,4 +1,5 @@
 import { Component, OnChanges, SimpleChanges } from '@angular/core';
+import { BASE_CHART_OPTIONS } from '@app/dfs/nfl/helpers/chart-helper/chart-config';
 import { Chart, ChartConfiguration, ChartOptions, registerables } from 'chart.js';
 import { BaseChartComponent, StatsChart } from '../base-chart/base-chart.component';
 
@@ -23,7 +24,7 @@ Chart.register(...registerables);
 })
 export class ChartPieComponent extends BaseChartComponent<'pie'> implements OnChanges {
   pieChartData: ChartConfiguration<'polarArea'>['data'];
-  pieChartOptions: ChartOptions<'polarArea'> = { maintainAspectRatio: false, responsive: true };
+  pieChartOptions: ChartOptions<'polarArea'> = BASE_CHART_OPTIONS;
   pieChartLegend = false;
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -1,4 +1,5 @@
 import { Component, OnChanges, SimpleChanges } from '@angular/core';
+import { BASE_CHART_OPTIONS } from '@app/dfs/nfl/helpers/chart-helper/chart-config';
 import { Chart, ChartConfiguration, ChartOptions, registerables } from 'chart.js';
 import { BaseChartComponent, StatsChart } from '../base-chart/base-chart.component';
 
@@ -25,7 +26,7 @@ export class ChartLineComponent extends BaseChartComponent<'line'> implements On
 
   lineChartData: ChartConfiguration<'line'>['data'];
 
-  lineChartOptions: ChartOptions<'line'> = { maintainAspectRatio: false, responsive: true };
+  lineChartOptions: ChartOptions<'line'> = BASE_CHART_OPTIONS;
   lineChartLegend = false;
 
   ngOnChanges(changes: SimpleChanges): void {
