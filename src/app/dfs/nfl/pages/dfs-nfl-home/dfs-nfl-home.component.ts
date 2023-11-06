@@ -105,6 +105,7 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
     readonly dfsNflSlateDetailsFacade: DfsNflSlateDetailsFacade,
     readonly dfsFilterFacade: DfsFilterFacade,
     readonly dfsGraphingFacade: DfsNflChartFacade
+
   ) {
     super(dfsPlayersFacade, dfsSlateFacade, dfsSlateAttrFacade, dfsSelectedSlateConfigurationFacade, dfsFilterFacade);
   }

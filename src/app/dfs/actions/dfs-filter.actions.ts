@@ -22,7 +22,7 @@ export class DfsFilterActions {
     static readonly type = `[${DfsFilterActions.stateName}] SetProjectionType`;
     constructor(public payload: { projectionType: GridIronProjectionType }) {}
   };
-
+  
   static SetXChartAxis = class {
     static readonly type = `[${DfsFilterActions.stateName}] SetXChartAxis`;
     constructor(public payload: { xChartAxis: string | null }) {}
