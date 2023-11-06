@@ -43,5 +43,4 @@ export class DfsFilterState {
   setYChartAxis({ setState }: StateContext<DfsFilterStateModel>, { payload: { yChartAxis } }: { payload: { yChartAxis: string | null } }) {
     setState(patch<DfsFilterStateModel>({ yChartAxis }));
   }
-
 }

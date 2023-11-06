@@ -41,6 +41,7 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   selectedTeamFilter$ = this.dfsFilterFacade.team$;
   selectedPositionFilter$ = this.dfsFilterFacade.position$;
   selectedNameFilter$ = this.dfsFilterFacade.name$;
+
   selectedXChartAxis$ = this.dfsFilterFacade.xChartAxis$;
   selectedYChartAxis$ = this.dfsFilterFacade.yChartAxis$;
 
@@ -74,6 +75,7 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   playerBarChartData$ = this.dfsGraphingFacade.playerBarChartData$;
   playerScatterChartDataByStat$ = this.dfsGraphingFacade.playerScatterChartDataByStat$;
 
+
   slateWeather$ = combineLatest([this.selectedSlateType$, this.dfsSlateFacade.slateWeather$]).pipe(
     map(([slate, weather]) => {
       return slate != null ? weather(slate as SlateType) : [];
@@ -105,7 +107,6 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
     readonly dfsNflSlateDetailsFacade: DfsNflSlateDetailsFacade,
     readonly dfsFilterFacade: DfsFilterFacade,
     readonly dfsGraphingFacade: DfsNflChartFacade
-
   ) {
     super(dfsPlayersFacade, dfsSlateFacade, dfsSlateAttrFacade, dfsSelectedSlateConfigurationFacade, dfsFilterFacade);
   }

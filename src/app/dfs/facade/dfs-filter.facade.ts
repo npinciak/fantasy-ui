@@ -15,8 +15,10 @@ export class DfsFilterFacade {
   team$ = select(DfsFilterSelector.slices.team);
   position$ = select(DfsFilterSelector.slices.position);
   projectionType$ = select(DfsFilterSelector.slices.projectionType);
+
   xChartAxis$ = select(DfsFilterSelector.slices.xChartAxis);
   yChartAxis$ = select(DfsFilterSelector.slices.yChartAxis);
+
 
   constructor(private store: Store) {}
 
@@ -35,6 +37,7 @@ export class DfsFilterFacade {
   get projectionType() {
     return this.store.selectSnapshot(DfsFilterSelector.slices.projectionType);
   }
+
 
   get xChartAxis() {
     return this.store.selectSnapshot(DfsFilterSelector.slices.xChartAxis);
