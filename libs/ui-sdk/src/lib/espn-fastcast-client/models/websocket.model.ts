@@ -3,7 +3,7 @@ import { OPERATION_CODE } from './websocket.const';
 
 export type OperationCode = typeof OPERATION_CODE[keyof typeof OPERATION_CODE];
 
-interface WebSocketResponseProps {
+export type WebSocketResponseProps = {
   /**
    * Heartbeat interval
    */
@@ -51,7 +51,7 @@ interface WebSocketResponseProps {
    * Message
    */
   msg: string;
-}
+};
 
 export interface WebSocketConnectionInfo {
   ip: string;
