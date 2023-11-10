@@ -1,3 +1,5 @@
+import { WebSocketResponseProps } from '@sports-ui/ui-sdk/espn-fastcast-client';
+
 export class FastCastConnection {
   static stateName = 'espnFastcastConnection';
 
@@ -21,12 +23,20 @@ export class FastCastConnection {
 
   static HandleWebSocketMessage = class {
     static readonly type = `[${FastCastConnection.stateName}] HandleWebSocketMessage`;
-    constructor(public payload: any) {}
+    constructor(public payload: Partial<WebSocketResponseProps>) {}
   };
 
   static SendWebSocketMessage = class {
     static readonly type = `[${FastCastConnection.stateName}] SendWebSocketMessage`;
-    constructor(public payload: any) {}
+    constructor(public payload: Partial<WebSocketResponseProps>) {}
+  };
+
+  static SetLastRefresh = class {
+    static readonly type = `[${FastCastConnection.stateName}] SetLastRefresh`;
+  };
+
+  static SetConnect = class {
+    static readonly type = `[${FastCastConnection.stateName}] SetConnect`;
   };
 
   static SetSelectedLeague = class {

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { select } from '@app/@shared/models/typed-select';
 import { Store } from '@ngxs/store';
+import { WebSocketResponseProps } from '@sports-ui/ui-sdk/espn-fastcast-client';
 import { Observable } from 'rxjs';
 import { FastCastConnection } from '../actions/espn-fastcast-connection.actions';
 import { EspnFastcastConnectionSelectors } from '../selectors/espn-fastcast-connection.selectors';
@@ -37,20 +38,12 @@ export class EspnFastcastConnectionFacade {
     return this.store.dispatch(new FastCastConnection.FetchStaticFastcast(opts));
   }
 
-  sendWebSocketMessage(message: any): Observable<void> {
-    return this.store.dispatch(
-      new FastCastConnection.SendWebSocketMessage({
-        message,
-      })
-    );
+  sendWebSocketMessage(message: Partial<WebSocketResponseProps>): Observable<void> {
+    return this.store.dispatch(new FastCastConnection.SendWebSocketMessage(message));
   }
 
-  handleWebSocketMessage(message: any): Observable<void> {
-    return this.store.dispatch(
-      new FastCastConnection.HandleWebSocketMessage({
-        message,
-      })
-    );
+  handleWebSocketMessage(message: Partial<WebSocketResponseProps>): Observable<void> {
+    return this.store.dispatch(new FastCastConnection.HandleWebSocketMessage(message));
   }
 
   fetchFastcast(uri: string): Observable<void> {
@@ -67,6 +60,10 @@ export class EspnFastcastConnectionFacade {
 
   disconnect(): Observable<void> {
     return this.store.dispatch(new FastCastConnection.DisconnectWebSocket());
+  }
+
+  setConnect(): Observable<void> {
+    return this.store.dispatch(new FastCastConnection.SetConnect());
   }
 
   setEventType(eventType: string | null): Observable<void> {
@@ -87,5 +84,13 @@ export class EspnFastcastConnectionFacade {
 
   setConnectionClosed() {
     return this.store.dispatch(new FastCastConnection.SetConnectionClosed());
+  }
+
+  setDisconnectWebsocket() {
+    return this.store.dispatch(new FastCastConnection.SetDisconnect());
+  }
+
+  setLastRefresh() {
+    return this.store.dispatch(new FastCastConnection.SetLastRefresh());
   }
 }

@@ -13,6 +13,7 @@ import { EspnFastcastEventsState } from './state/espn-fastcast-events.state';
 import { EspnFastcastLeagueState } from './state/espn-fastcast-league.state';
 import { EspnFastcastSportState } from './state/espn-fastcast-sport.state';
 import { EspnFastcastTeamState } from './state/espn-fastcast-team.state';
+import { EspnFastcastConnectionHandler } from './handlers/espn-fastcast-connection.handler';
 
 @NgModule({
   declarations: [EspnScoreboardComponent, EspnScoreboardCardComponent, EspnScoreboardCardTeamComponent, EspnFastcastEventMlbComponent],
@@ -22,7 +23,7 @@ import { EspnFastcastTeamState } from './state/espn-fastcast-team.state';
     MaterialModule,
     CommonModule,
     NgxsModule.forFeature([
-      // EspnFastcastConnectionHandlerState,
+      EspnFastcastConnectionHandler,
       EspnFastcastConnectionState,
       EspnFastcastEventsState,
       EspnFastcastLeagueState,
