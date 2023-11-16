@@ -17,7 +17,12 @@
           </div>
           <div class="mb-12 w-full sm:px-4 xl:mb-0 xl:w-4/12">
             <app-base-card>
-              <app-chart-scatter height="350px" [chartDataV2]="playerScatterChartDataByStat$ | async" [chartData]="playerBarChartData$ | async"></app-chart-scatter>
+              <app-chart-scatter
+                height="350px"
+                [chartDataV2]="playerScatterChartDataByStat$ | async"
+                [chartData]="playerBarChartData$ | async"
+                [chartOptions]="playerScatterChartOptions$ | async"
+              ></app-chart-scatter>
             </app-base-card>
           </div>
         </div>
