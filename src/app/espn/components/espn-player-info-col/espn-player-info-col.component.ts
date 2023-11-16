@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { BaseballPlayer } from '@app/espn/mlb/models/baseball-player.model';
 
 import { FootballPlayer } from '@app/espn-fantasy-football/models/football-player.model';
 import { EspnPlayerComponent } from '../espn-player/espn-player.component';
+import { BaseballPlayer } from '@app/espn-fantasy-baseball/models/baseball-player.model';
 
 @Component({
   selector: 'app-espn-player-info-col',

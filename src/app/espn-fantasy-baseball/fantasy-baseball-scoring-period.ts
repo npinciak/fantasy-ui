@@ -1,5 +1,5 @@
-import { BaseScoringPeriod } from '../const/stat-period.const';
-import { StatTypePeriodId } from '../models/espn-stats.model';
+import { BaseScoringPeriod } from '@app/espn/const/stat-period.const';
+import { StatTypePeriodId } from '@app/espn/models/espn-stats.model';
 
 export class FantasyBaseballScoringPeriod extends BaseScoringPeriod() {
   static filterOptionListWithWeeks(season: string | null) {
