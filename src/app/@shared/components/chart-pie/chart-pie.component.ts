@@ -8,7 +8,7 @@ Chart.register(...registerables);
 @Component({
   selector: `app-chart-pie`,
   template: `
-    <div [ngStyle]="{ height: height }">
+    <div [ngStyle]="{ height }">
       <canvas
         baseChart
         [attr.aria-label]="ariaLabel"

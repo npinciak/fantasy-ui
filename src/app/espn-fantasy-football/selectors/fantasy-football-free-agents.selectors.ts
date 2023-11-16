@@ -1,8 +1,6 @@
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { linearRegression, transformScatterGraphData } from '@app/@shared/helpers/graph.helpers';
 import { Selector } from '@app/@shared/models/typed-selector';
-import { NFL_STATS_MAP } from '@sports-ui/ui-sdk/espn';
-import { exists, existsFilter, pickData } from '@sports-ui/ui-sdk/helpers';
+import { existsFilter } from '@sports-ui/ui-sdk/helpers';
 import { FootballPlayerFreeAgent, FootballPlayerStatsRow } from '../models/football-player.model';
 import { FantasyFootballFreeAgentsState } from '../state/fantasy-football-free-agents.state';
 import { transformToFootballPlayerStatsRow } from '../transformers/fantasy-football.transformers';
@@ -26,46 +24,5 @@ export class FantasyFootballFreeAgentsSelectors extends GenericSelector(FantasyF
     freeAgents: any[]
   ): (teamId: string | null) => FootballPlayerStatsRow[] {
     return (teamId: string | null) => [];
-  }
-
-  @Selector([FantasyFootballFreeAgentsSelectors.getFreeAgentsStats])
-  static getFreeAgentsScatter(freeAgents: any[]): (statPeriod: string, xAxis: string | null, yAxis: string | null) => any {
-    return (statPeriod: string, xAxis: string | null, yAxis: string | null) => {
-      const data = freeAgents;
-
-      if (xAxis == null || yAxis == null) return [];
-
-      const x: number[] = data.map(p => (exists(p.stats) ? p.stats.stats[xAxis] : (0 as number)));
-
-      const y: number[] = data.map(p => (exists(p.stats) ? p.stats.stats[yAxis] : (0 as number)));
-
-      const lR = linearRegression(x, y);
-
-      const text: string[] = pickData(data, p => p.name);
-
-      const fitFrom = Math.min(...x);
-      const fitTo = Math.max(...x);
-
-      const fit = {
-        x: [fitFrom, fitTo],
-        y: [fitFrom * lR.slope + lR.yIntercept, fitTo * lR.slope + lR.yIntercept],
-        text,
-        mode: 'lines',
-        type: 'scatter',
-        name: 'R2='.concat((Math.round(lR.r2 * 10000) / 10000).toString()),
-      };
-
-      const points = transformScatterGraphData({
-        data,
-        x,
-        y,
-        xAxisLabel: NFL_STATS_MAP[Number(xAxis)].abbrev,
-        yAxisLabel: NFL_STATS_MAP[Number(yAxis)].abbrev,
-        dataLabels: 'name',
-        graphType: 'scatter',
-      });
-
-      return [{ ...points }, { ...fit }];
-    };
   }
 }
