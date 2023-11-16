@@ -7,4 +7,5 @@ export class DfsNflChartFacade {
   playerBarChartData$ = select(DfsNflChartSelector.getPlayerBarChartDataByStatAndPosition);
 
   playerScatterChartDataByStat$ = select(DfsNflChartSelector.getPlayerScatterChartDataByStat);
+  playerScatterChartOptions$ = select(DfsNflChartSelector.getPlayerScatterChartOptions);
 }

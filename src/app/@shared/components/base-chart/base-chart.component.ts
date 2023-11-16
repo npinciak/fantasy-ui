@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Chart, ChartConfiguration, ChartType, registerables } from 'chart.js';
+import { Chart, ChartConfiguration, ChartOptions, ChartType, registerables } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 export interface StatsChart<T = number> {
   data: T[];
@@ -7,7 +8,6 @@ export interface StatsChart<T = number> {
 }
 
 Chart.register(...registerables);
-
 @Component({
   selector: `app-chart-base`,
   template: ``,
@@ -17,5 +17,6 @@ export class BaseChartComponent<T extends ChartType> {
   @Input() statsMap = {};
   @Input() chartData: StatsChart;
   @Input() chartDataV2: ChartConfiguration<T>['data'];
+  @Input() chartOptions: ChartOptions<T>;
   @Input() height = null;
 }

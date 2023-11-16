@@ -6,7 +6,7 @@ import { BaseChartComponent } from '../base-chart/base-chart.component';
 @Component({
   selector: `app-chart-bar`,
   template: `
-    <div [ngStyle]="{ height: height }">
+    <div [ngStyle]="{ height }">
       <canvas
         baseChart
         [attr.aria-label]="ariaLabel"
