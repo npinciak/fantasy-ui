@@ -11,7 +11,6 @@ export class FantasyBaseballFreeAgentsFacade {
   playerList$ = select(FantasyBaseballFreeAgentSelector.getIdList);
   freeAgentBatterStats$ = select(FantasyBaseballFreeAgentSelector.getFreeAgentBatterStats);
   freeAgentBatterChartData$ = select(FantasyBaseballFreeAgentSelector.getFreeAgentBatterChartData);
-  freeAgentBatterScatterChartData$ = select(FantasyBaseballFreeAgentSelector.getFreeAgentBatterScatterChartData);
 
   freeAgentPitcherStats$ = select(FantasyBaseballFreeAgentSelector.getFreeAgentPitcherStats);
   freeAgentPitcherChartData$ = select(FantasyBaseballFreeAgentSelector.getFreeAgentPitcherChartData);

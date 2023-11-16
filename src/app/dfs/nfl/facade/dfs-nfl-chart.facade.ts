@@ -5,7 +5,6 @@ import { DfsNflChartSelector } from '../selectors/dfs-nfl-chart.selector';
 @Injectable({ providedIn: 'root' })
 export class DfsNflChartFacade {
   playerBarChartData$ = select(DfsNflChartSelector.getPlayerBarChartDataByStatAndPosition);
-  playerScatterData$ = select(DfsNflChartSelector.getPlayerScatterData);
 
   playerScatterChartDataByStat$ = select(DfsNflChartSelector.getPlayerScatterChartDataByStat);
 }

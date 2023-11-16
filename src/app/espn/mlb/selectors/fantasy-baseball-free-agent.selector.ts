@@ -1,10 +1,9 @@
 import { FangraphsConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
 import { FangraphsConstantsSelector } from '@app/@shared/fangraphs/fangraphs-const.selector';
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
-import { linearRegression, transformScatterGraphData } from '@app/@shared/helpers/graph.helpers';
 import { Selector } from '@ngxs/store';
-import { BaseballStat, MLB_STATS_MAP } from '@sports-ui/ui-sdk/espn';
-import { exists, existsFilter, pickData } from '@sports-ui/ui-sdk/helpers';
+import { BaseballStat } from '@sports-ui/ui-sdk/espn';
+import { exists, existsFilter } from '@sports-ui/ui-sdk/helpers';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
 import { FantasyBaseballFreeAgentsState } from '../state/fantasy-baseball-free-agents.state';
 import { FantasyBaseballTransformers } from '../transformers/fantasy-baseball.transformers.m';
@@ -32,48 +31,6 @@ export class FantasyBaseballFreeAgentSelector extends GenericSelector(FantasyBas
       return existsFilter(
         players.map(p => FantasyBaseballTransformers.transformToBaseballPlayerBatterStatsRow(p, statPeriod, seasonConst))
       );
-    };
-  }
-
-  @Selector([FantasyBaseballFreeAgentSelector.getFreeAgentBatterStats, FantasyBaseballLeagueSelector.slices.seasonId])
-  static getFreeAgentBatterScatterChartData(
-    getTeamBatters: (teamId: string, statPeriod: string) => BaseballPlayerStatsRow[]
-  ): (teamId: string, statPeriod: string, xAxis: BaseballStat | null, yAxis: BaseballStat | null) => any {
-    return (teamId: string, statPeriod: string, xAxis: BaseballStat | null, yAxis: BaseballStat | null) => {
-      const data = getTeamBatters(teamId, statPeriod);
-
-      if (xAxis == null || yAxis == null) return [];
-
-      const x: number[] = data.map(p => (exists(p.stats) ? p.stats[xAxis] : (0 as number)));
-      const y: number[] = data.map(p => (exists(p.stats) ? p.stats[yAxis] : (0 as number)));
-
-      const lR = linearRegression(x, y);
-
-      const text: string[] = pickData(data, p => p.name);
-
-      const fitFrom = Math.min(...x);
-      const fitTo = Math.max(...x);
-
-      const fit = {
-        text,
-        type: 'scatter',
-        x: [fitFrom, fitTo],
-        y: [fitFrom * lR.slope + lR.yIntercept, fitTo * lR.slope + lR.yIntercept],
-        mode: 'lines',
-        name: 'R2='.concat((Math.round(lR.r2 * 10000) / 10000).toString()),
-      };
-
-      const points = transformScatterGraphData({
-        data,
-        x,
-        y,
-        xAxisLabel: MLB_STATS_MAP[xAxis].abbrev,
-        yAxisLabel: MLB_STATS_MAP[yAxis].abbrev,
-        dataLabels: 'name',
-        graphType: 'scatter',
-      });
-
-      return [{ ...points }, { ...fit }];
     };
   }
 

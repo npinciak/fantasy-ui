@@ -44,15 +44,6 @@ export class FootballFreeAgentsComponent implements OnInit {
   // TODO: fix this with freeAgentsFacade.compareTeamAndFreeAgentList$
   tableData$ = this.freeAgentsFacade.freeAgentsStats$;
 
-  freeAgentsScatter$ = combineLatest([
-    this.freeAgentsFacade.freeAgentsScatter$,
-    this.scoringPeriodId$,
-    this.yAxisStat$,
-    this.xAxisStat$,
-  ]).pipe(
-    map(([getFreeAgentsScatter, scoringPeriodId, yAxisStat, xAxisStat]) => getFreeAgentsScatter(scoringPeriodId, yAxisStat, xAxisStat))
-  );
-
   tableConfig$ = combineLatest([this.selectedLineupSlotId$]).pipe(
     map(([slotId]) => ({
       rows: [], // FOOTBALL_ROSTER_ROWS_BY_LINEUP_SLOT[slotId],

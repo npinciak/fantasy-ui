@@ -13,7 +13,6 @@ export class FantasyFootballFreeAgentsFacade extends GenericFacade({
   selectorClass: FantasyFootballFreeAgentsSelectors,
   actionHandler: FantasyFootballFreeAgentActions,
 }) {
-  freeAgentsScatter$ = select(FantasyFootballFreeAgentsSelectors.getFreeAgentsScatter);
   freeAgentsStats$ = select(FantasyFootballFreeAgentsSelectors.getFreeAgentsStats);
   compareTeamAndFreeAgentList$ = select(FantasyFootballFreeAgentsSelectors.getCompareTeamAndFreeAgentList);
 

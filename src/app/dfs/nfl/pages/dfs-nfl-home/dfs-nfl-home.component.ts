@@ -56,8 +56,6 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   playerPositionFilterOptions$ = this.nflPlayerFacade.playerPositionFilterOptions$;
   teamOwnPercent$ = this.nflPlayerFacade.teamOwnPercent$;
 
-  nflMatchupGraphData$ = this.nflTeamSlateAttrFacade.matchupGraphData$;
-
   matchups$ = this.nflMatchupsFacade.nflMatchupTableData$;
   nflTopFiveMatchups$ = this.nflMatchupsFacade.nflTopFiveMatchupsByOverUnder$;
   nflTopFiveTeamTotals$ = this.nflMatchupsFacade.nflTopFiveTeamTotals$;
@@ -71,7 +69,6 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
 
   selectedSlateType$ = new BehaviorSubject<SlateType | null>(null);
 
-  playerScatterData$ = this.dfsGraphingFacade.playerScatterData$;
   playerBarChartData$ = this.dfsGraphingFacade.playerBarChartData$;
   playerScatterChartDataByStat$ = this.dfsGraphingFacade.playerScatterChartDataByStat$;
 

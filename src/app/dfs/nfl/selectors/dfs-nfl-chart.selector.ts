@@ -1,8 +1,7 @@
-import { linearRegression, transformScatterGraphData } from '@app/@shared/helpers/graph.helpers';
 import { DfsFilterSelector } from '@app/dfs/selectors/dfs-filter.selector';
 import { Selector } from '@ngxs/store';
-import { pickData } from '@sports-ui/ui-sdk';
-import { ChartConfiguration } from 'chart.js';
+import { ChartConfiguration, ChartOptions } from 'chart.js';
+import { SCATTER_CHART_OPTIONS } from '../helpers/chart-helper/chart-config';
 import {
   transformTableDataToBarChartData,
   transformTableDataToScatterChartData,
@@ -67,39 +66,20 @@ export class DfsNflChartSelector {
   }
 
   @Selector([DfsNflPlayerSelectors.getPlayerTableData, DfsFilterSelector.slices.xChartAxis, DfsFilterSelector.slices.yChartAxis])
-  static getPlayerScatterData(data: NflDfsPlayerTableData[], xAxis: string | null, yAxis: string | null) {
-    if (xAxis == null || yAxis == null) return [];
+  static getPlayerScatterChartOptions(data: NflDfsPlayerTableData[], xAxis: string | null, yAxis: string | null): ChartOptions<'scatter'> {
+    return {
+      ...SCATTER_CHART_OPTIONS,
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const { label, formattedValue } = ctx;
 
-    const x: number[] = data.map(p => p[xAxis]);
-
-    const y: number[] = data.map(p => p[yAxis]);
-
-    const lR = linearRegression(x, y);
-
-    const text: string[] = pickData(data, p => p.name);
-
-    const fitFrom = Math.min(...x);
-    const fitTo = Math.max(...x);
-
-    const fit = {
-      x: [fitFrom, fitTo],
-      y: [fitFrom * lR.slope + lR.yIntercept, fitTo * lR.slope + lR.yIntercept],
-      text,
-      mode: 'lines',
-      type: 'scatter',
-      name: 'R2='.concat((Math.round(lR.r2 * 10000) / 10000).toString()),
+              return `${yAxis}: ${formattedValue}, ${xAxis}: ${label}`;
+            },
+          },
+        },
+      },
     };
-
-    const points = transformScatterGraphData({
-      data,
-      x,
-      y,
-      xAxisLabel: xAxis,
-      yAxisLabel: yAxis,
-      dataLabels: 'name',
-      graphType: 'scatter',
-    });
-
-    return [{ ...points }, { ...fit }];
   }
 }
