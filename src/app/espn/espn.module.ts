@@ -17,25 +17,12 @@ import { EspnTeamInfoColComponent } from './components/espn-team-info-col/espn-t
 import { EspnRoutingModule } from './espn-routing.module';
 import { BaseballLineupCardComponent } from './mlb/components/baseball-lineup-card/baseball-lineup-card.component';
 import { LeagueScoreboardComponent } from './mlb/components/league-scoreboard/league-scoreboard.component';
-import { FantasyBaseballEventsActionHandler } from './mlb/handlers/fantasy-baseball-events.handler';
-import { FantasyBaseballLeagueActionHandler } from './mlb/handlers/fantasy-baseball-league.handler';
-import { FantasyBaseballPlayerCardActionHandler } from './mlb/handlers/fantasy-baseball-player-card.handler';
 import { BaseballBattersComponent } from './mlb/pages/baseball-batters/baseball-batters.component';
 import { BaseballFreeAgentsComponent } from './mlb/pages/baseball-free-agents/baseball-free-agents.component';
 import { BaseballHomeComponent } from './mlb/pages/baseball-home/baseball-home.component';
 import { BaseballPitchersComponent } from './mlb/pages/baseball-pitchers/baseball-pitchers.component';
 import { BaseballPlayerComponent } from './mlb/pages/baseball-player/baseball-player.component';
 import { BaseballTeamComponent } from './mlb/pages/baseball-team/baseball-team.component';
-import { FantasyBaseballEventsState } from './mlb/state/fantasy-baseball-events.state';
-import { FantasyBaseballFreeAgentsFilterState } from './mlb/state/fantasy-baseball-free-agents-filter.state';
-import { FantasyBaseballFreeAgentsState } from './mlb/state/fantasy-baseball-free-agents.state';
-import { FantasyBaseballLeagueState } from './mlb/state/fantasy-baseball-league.state';
-import { FantasyBaseballPlayerCardState } from './mlb/state/fantasy-baseball-player-card.state';
-import { FantasyBaseballPlayerNewsState } from './mlb/state/fantasy-baseball-player-news.state';
-import { FantasyBaseballProTeamScheduleState } from './mlb/state/fantasy-baseball-pro-team-schedule.state';
-import { FantasyBaseballTeamsLiveState } from './mlb/state/fantasy-baseball-team-live.state';
-import { FantasyBaseballTeamState } from './mlb/state/fantasy-baseball-team.state';
-import { FantasyBaseballTransactionsState } from './mlb/state/fantasy-baseball-transactions.state';
 import { EspnHomeComponent } from './pages/espn-home/espn-home.component';
 import { FreeAgentsAvailabilitySelectedState } from './state/free-agent-availability-selected.state';
 
@@ -67,22 +54,7 @@ import { FreeAgentsAvailabilitySelectedState } from './state/free-agent-availabi
     CommonModule,
     MaterialModule,
     SharedModule,
-    NgxsModule.forFeature([
-      FantasyBaseballLeagueActionHandler,
-      FantasyBaseballLeagueState,
-      FantasyBaseballTeamState,
-      FantasyBaseballTeamsLiveState,
-      FantasyBaseballFreeAgentsState,
-      FantasyBaseballFreeAgentsFilterState,
-      FantasyBaseballPlayerNewsState,
-      FantasyBaseballPlayerCardState,
-      FantasyBaseballPlayerCardActionHandler,
-      FantasyBaseballEventsState,
-      FantasyBaseballEventsActionHandler,
-      FantasyBaseballProTeamScheduleState,
-      FantasyBaseballTransactionsState,
-      FreeAgentsAvailabilitySelectedState,
-    ]),
+    NgxsModule.forFeature([FreeAgentsAvailabilitySelectedState]),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [
