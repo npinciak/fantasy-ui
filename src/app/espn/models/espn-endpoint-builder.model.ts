@@ -190,16 +190,6 @@ export const LeagueSportToImageLocationMap: { [key in FantasySports]: string } =
   [FantasySports.Hockey]: '-4px -304px',
 } as const;
 
-/**
- * @deprecated use SportToImageLocationMap instead
- */
-export const SportLeagueToImageLocationMap: { [key in SportLeague]: string } = {
-  [SportLeague.MLB]: '-4px -272px',
-  [SportLeague.NBA]: '-4px -239px',
-  [SportLeague.NFL]: '-4px -206px',
-  [SportLeague.NHL]: '-4px -304px',
-} as const;
-
 export const SportToImageLocationMap = {
   [Sports.baseball]: '-4px -272px',
   [Sports.basketball]: '-4px -239px',

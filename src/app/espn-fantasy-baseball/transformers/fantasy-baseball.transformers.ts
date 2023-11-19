@@ -1,10 +1,10 @@
 import { FangraphsConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
+import { isPitcher } from '@app/espn/espn-helpers';
+import { FantasyLeague } from '@app/espn/models/fantasy-league.model';
+import { EspnTransformers } from '@app/espn/transformers/espn-transformers.m';
 import { BASEBALL_LINEUP_MAP, BaseballLineupSlot, BaseballStat, EspnClient, MLB_POSITION_MAP, MLB_TEAM_MAP } from '@sports-ui/ui-sdk/espn';
 import { FreeAgent, PlayerCardEntity, ProLeagueType, SPORT_TYPE, TeamRosterEntry } from '@sports-ui/ui-sdk/espn-client';
 import { exists } from '@sports-ui/ui-sdk/helpers';
-import { isPitcher } from '../../espn-helpers';
-import { FantasyLeague } from '../../models/fantasy-league.model';
-import { EspnTransformers } from '../../transformers/espn-transformers.m';
 import { MlbAdvancedStats } from '../class/mlb-advanced-stats';
 import { FantasyBaseballImageBuilder } from '../fantasy-baseball-image-builder';
 import { FantasyBaseballScoringPeriod } from '../fantasy-baseball-scoring-period';

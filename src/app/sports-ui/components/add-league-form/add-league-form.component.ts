@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { LeagueStorageMap } from '@app/espn-fantasy-baseball/models/baseball-league-storage.model';
 import { ICON_PATH } from '@app/espn/espn.const';
-import { LeagueStorageMap } from '@app/espn/mlb/models/baseball-league-storage.model';
 import {
   FantasySportToLabelMap,
   FantasySportToSportLeagueMap,

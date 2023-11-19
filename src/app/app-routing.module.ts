@@ -14,6 +14,10 @@ const routes: Routes = [
       loadChildren: () => import('./espn-fantasy-football/espn-fantasy-football.module').then(m => m.EspnFantasyFootballModule),
     },
     {
+      path: `${UrlPathFragments.Espn}/${UrlPathFragments.Baseball}`,
+      loadChildren: () => import('./espn-fantasy-baseball/espn-fantasy-baseball.module').then(m => m.EspnFantasyBaseballModule),
+    },
+    {
       path: UrlPathFragments.Dfs,
       loadChildren: () => import('./dfs/dfs.module').then(m => m.DfsModule),
     },

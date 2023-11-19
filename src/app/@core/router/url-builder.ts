@@ -4,12 +4,16 @@ export enum UrlPathFragments {
   Espn = 'espn',
   Game = 'game',
   League = 'league',
+  /**
+   * @deprecated Use UrlPathFragments.Baseball instead
+   */
   MLB = 'mlb',
   /**
    * @deprecated Use UrlPathFragments.Football instead
    */
   NFL = 'nfl',
   Football = 'football',
+  Baseball = 'baseball',
   NBA = 'nba',
   Team = 'team',
   FreeAgents = 'free-agents',
