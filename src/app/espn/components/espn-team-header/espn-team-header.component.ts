@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { BaseballTeam } from '@app/espn/mlb/models/baseball-team.model';
+import { BaseballTeam } from '@app/espn-fantasy-baseball/models/baseball-team.model';
 
 @Component({
   selector: 'app-espn-team-header',

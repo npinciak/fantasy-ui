@@ -1,3 +1,4 @@
+import { BaseballPlayer, BaseballPlayerStatsRow } from '@app/espn-fantasy-baseball/models/baseball-player.model';
 import { FootballPlayer } from '@app/espn-fantasy-football/models/football-player.model';
 import { EventSummaryBySeasonTypeByEventStatus } from '@app/espn-fastcast/models/fastcast-event-summary.model';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
@@ -14,7 +15,6 @@ import {
 import { CompetitorsEntity } from '@sports-ui/ui-sdk/espn-fastcast-client';
 import { exists, getContrastRatio } from '@sports-ui/ui-sdk/helpers';
 import { EspnDateHelper } from './espn-date-helper';
-import { BaseballPlayer, BaseballPlayerStatsRow } from './mlb/models/baseball-player.model';
 
 /**
  * Sports to include in Fastcast
