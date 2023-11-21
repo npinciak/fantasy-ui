@@ -148,6 +148,14 @@
                 (filterUpdate)="positionFilterChange($event)"
               ></app-dropdown-filter>
             </div>
+            <div class="flex w-full items-center sm:px-4 xl:w-3/12">
+              <a
+                class="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto"
+                [href]="selectedSlateLineupTemplateCsv$ | async"
+              >
+                <i class="fa fa-download pr-2"></i>CSV Template</a
+              >
+            </div>
           </div>
           <app-player-table
             [filter]="tableFilter$ | async"

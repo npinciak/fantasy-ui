@@ -7,11 +7,13 @@ export class DfsEndpointBuilder {
   private readonly dailyFantasyBase: string;
   private readonly awsBase: string;
   private readonly dateHelper: DateHelper;
+  private readonly dkUri: string;
 
   constructor() {
     this.dailyFantasyJsonBase = environment.dailyFantasyJsonBase;
     this.dailyFantasyBase = environment.dailyFantasyBase;
     this.awsBase = environment.awsBase;
+    this.dkUri = environment.dk;
     this.dateHelper = new DateHelper();
   }
 
@@ -36,6 +38,10 @@ export class DfsEndpointBuilder {
 
   gridIronProjectionByProjectionType(projectionType = GridIronProjectionType.Default) {
     return `${this.dailyFantasyBase}/grids/${projectionType}.json`;
+  }
+
+  dkBulkLineupUrl(slateId: string) {
+    return `${this.dkUri}/bulklineup/getdraftablecsv?draftGroupId=${slateId}`;
   }
 
   private get baseAws() {

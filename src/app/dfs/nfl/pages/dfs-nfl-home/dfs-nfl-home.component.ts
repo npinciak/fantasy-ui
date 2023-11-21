@@ -46,6 +46,7 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   selectedYChartAxis$ = this.dfsFilterFacade.yChartAxis$;
 
   selectedProjectionFilter$ = this.dfsSelectedSlateConfigurationFacade.projectionType$;
+  selectedSlateLineupTemplateCsv$ = this.dfsSelectedSlateConfigurationFacade.selectedSlateLineupTemplateCsv$;
 
   nflPositionList$ = this.nflPlayerFacade.positionList$;
   nflPlayerList$ = this.nflPlayerFacade.playerList$;

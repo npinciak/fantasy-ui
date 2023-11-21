@@ -15,6 +15,7 @@ export class DfsSelectedSlateConfigurationFacade {
   path$ = select(DfsSelectedSlateConfigurationSelectors.slices.path);
   sport$ = select(DfsSelectedSlateConfigurationSelectors.slices.sport);
   projectionType$ = select(DfsSelectedSlateConfigurationSelectors.slices.projectionType);
+  selectedSlateLineupTemplateCsv$ = select(DfsSelectedSlateConfigurationSelectors.getSelectedSlateLineupTemplateCsv);
 
   constructor(private store: Store) {}
 
@@ -36,6 +37,10 @@ export class DfsSelectedSlateConfigurationFacade {
 
   get projectionType() {
     return this.store.selectSnapshot(DfsSelectedSlateConfigurationSelectors.slices.projectionType);
+  }
+
+  getSelectedSlateLineupTemplateCsv(): string | null {
+    return this.store.selectSnapshot(DfsSelectedSlateConfigurationSelectors.getSelectedSlateLineupTemplateCsv);
   }
 
   setSlateId(slateId: string): Observable<void> {
