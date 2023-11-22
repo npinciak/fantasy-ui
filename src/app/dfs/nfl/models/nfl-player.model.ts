@@ -3,7 +3,7 @@ import { GridIronPlayer } from './nfl-gridIron.model';
 
 export type NflDfsPlayer = Player;
 
-export type NflDfsPlayerTableData = Pick<SlatePlayer, 'name' | 'rgTeamId' | 'position'> &
+export type NflDfsPlayerTableData = Pick<SlatePlayer, 'name' | 'rgTeamId' | 'position' | 'id'> &
   Pick<
     GridIronPlayer,
     'ceil' | 'sdCeil' | 'floor' | 'sdFloor' | 'tar' | 'fpts' | 'sdFpts' | 'fptsPerDollar' | 'pown' | 'smash' | 'value' | 'opp' | 'salary'

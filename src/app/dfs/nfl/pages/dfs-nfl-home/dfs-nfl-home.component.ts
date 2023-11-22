@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingExecutorFacade } from '@app/@core/loading-executor/loading-executor.facade';
 import { DfsFilterFacade } from '@app/dfs/facade/dfs-filter.facade';
-import { DfsSelectedLineupFacade } from '@app/dfs/facade/dfs-selected-lineup.facade';
 import { DfsSelectedSlateConfigurationFacade } from '@app/dfs/facade/dfs-selected-slate-configuration.facade';
 import { DfsSlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade';
@@ -17,6 +16,7 @@ import { DfsNflPlayerFacade } from '../../facade/daily-fantasy-nfl-players.facad
 import { DfsNflChartFacade } from '../../facade/dfs-nfl-chart.facade';
 import { DfsNflGridIronFacade } from '../../facade/dfs-nfl-gridiron.facade';
 import { DfsNflMatchupsFacade } from '../../facade/dfs-nfl-matchups.facade';
+import { DfsNflSelectedLineupFacade } from '../../facade/dfs-nfl-selected-lineup.facade';
 import { DfsNflSlateDetailsFacade } from '../../facade/dfs-nfl-slate-details.facade';
 import { DfsNflSlateTeamDetailsFacade } from '../../facade/dfs-nfl-slate-team-details.facade';
 import { GridIronProjectionType } from '../../models/nfl-gridIron.model';
@@ -37,6 +37,8 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   readonly NFL_TEAM_ID_MAP = NFL_TEAM_ID_MAP;
 
   readonly GRIDIRON_PROJECTION_FILTER_OPTIONS = GRIDIRON_PROJECTION_FILTER_OPTIONS;
+
+  selectedLineupPlayers$ = this.dfsNflSelectedLineupFacade.getSelectedPlayers$;
 
   selectedTeamFilter$ = this.dfsFilterFacade.team$;
   selectedPositionFilter$ = this.dfsFilterFacade.position$;
@@ -93,7 +95,7 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
 
   constructor(
     readonly loadingExecutorFacade: LoadingExecutorFacade,
-    readonly dfsLineupSelectorFacade: DfsSelectedLineupFacade,
+    readonly dfsNflSelectedLineupFacade: DfsNflSelectedLineupFacade,
     readonly dfsPlayersFacade: DfsSlatePlayersFacade,
     readonly dfsSlateFacade: DfsSlatesFacade,
     readonly dfsSlateAttrFacade: DfsSlateAttrFacade,
@@ -141,7 +143,7 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   onSelectNflSlate(event: SiteSlateEntity) {
     const { slate_path, importId } = event;
 
-    this.dfsLineupSelectorFacade.clear();
+    this.dfsNflSelectedLineupFacade.clear();
     this.dfsPlayersFacade.fetchPlayers(slate_path);
     this.dfsSelectedSlateConfigurationFacade.setSlateId(importId);
     this.dfsNflSlateDetailsFacade.fetch();
@@ -149,7 +151,7 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
 
   onPlayerSelectionChange(player: NflDfsPlayerTableData) {
     if (!player.playerSiteId) return;
-    this.dfsLineupSelectorFacade.toggle([player.playerSiteId]);
+    this.dfsNflSelectedLineupFacade.toggle([player.id]);
   }
 
   async projectionTypeChange(value: GridIronProjectionType): Promise<void> {

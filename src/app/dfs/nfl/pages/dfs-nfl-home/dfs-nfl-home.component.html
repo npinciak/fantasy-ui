@@ -7,6 +7,16 @@
             <app-slate-list [slateList]="selectSlateByType$ | async" (selectSlate)="onSelectNflSlate($event)"></app-slate-list>
           </ng-container>
         </app-base-card>
+
+        <app-base-card>
+          <ul>
+            <ng-container *ngFor="let player of selectedLineupPlayers$ | async">
+              <li>
+                {{ player.name }}
+              </li>
+            </ng-container>
+          </ul>
+        </app-base-card>
       </div>
       <div class="mb-12 w-full sm:px-4 xl:mb-0 xl:w-9/12">
         <div class="flex flex-wrap">
