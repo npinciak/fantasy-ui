@@ -39,6 +39,8 @@ export class DfsNflHomeComponent extends DfsHomeComponent implements OnInit {
   readonly GRIDIRON_PROJECTION_FILTER_OPTIONS = GRIDIRON_PROJECTION_FILTER_OPTIONS;
 
   selectedLineupPlayers$ = this.dfsNflSelectedLineupFacade.getSelectedPlayers$;
+  selectedPlayersTotalSalary$ = this.dfsNflSelectedLineupFacade.getSelectedPlayersTotalSalary$;
+  selectedPlayersTotalSalaryRemaining$ = this.dfsNflSelectedLineupFacade.getSelectedPlayersTotalSalaryRemaining$;
 
   selectedTeamFilter$ = this.dfsFilterFacade.team$;
   selectedPositionFilter$ = this.dfsFilterFacade.position$;

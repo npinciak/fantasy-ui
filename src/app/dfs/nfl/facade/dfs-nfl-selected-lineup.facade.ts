@@ -8,4 +8,6 @@ import { DfsNflSelectedLineupSelector } from '../selectors/dfs-nfl-selected-line
 })
 export class DfsNflSelectedLineupFacade extends DfsSelectedLineupFacade {
   getSelectedPlayers$ = select(DfsNflSelectedLineupSelector.getSelectedPlayers);
+  getSelectedPlayersTotalSalary$ = select(DfsNflSelectedLineupSelector.getSelectedPlayersTotalSalary);
+  getSelectedPlayersTotalSalaryRemaining$ = select(DfsNflSelectedLineupSelector.getSelectedPlayersTotalSalaryRemaining);
 }

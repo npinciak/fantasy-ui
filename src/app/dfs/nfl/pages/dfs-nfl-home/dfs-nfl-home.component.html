@@ -9,11 +9,10 @@
         </app-base-card>
 
         <app-base-card>
+          {{ selectedPlayersTotalSalaryRemaining$ | async }}
           <ul>
             <ng-container *ngFor="let player of selectedLineupPlayers$ | async">
-              <li>
-                {{ player.name }}
-              </li>
+              <li>{{ player.name }}</li>
             </ng-container>
           </ul>
         </app-base-card>
