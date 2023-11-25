@@ -89,9 +89,15 @@ export class EspnService extends ApiService {
   protected fetchFantasyLeagueEvents({ sport, headers }: FantasyLeagueEventsRequest): Observable<EspnClient.EventList> {
     const endpoint = BaseEspnEndpointBuilder({ sport }).espnEvents;
     const dateHelper = new DateHelper();
+
+    const oneWeekAgoFromToday = dateHelper.formatWithDelimiter({ date: dateHelper.oneWeekAgoFromToday.getTime() });
+    const oneWeekFromToday = dateHelper.formatWithDelimiter({ date: dateHelper.oneWeekFromToday.getTime() });
+
+    const dateRange = `${oneWeekAgoFromToday}-${oneWeekFromToday}`;
+
     const params = new HttpParams()
       .set(ESPN_PARAM_FRAGMENTS.UseMap, true)
-      .set(ESPN_PARAM_FRAGMENTS.Dates, dateHelper.formatWithDelimiter({ date: new Date().getTime() }))
+      .set(ESPN_PARAM_FRAGMENTS.Dates, dateRange)
       .set(ESPN_PARAM_FRAGMENTS.PbpOnly, true);
     return this.get<EspnClient.EventList>(endpoint, { params, headers });
   }
