@@ -39,7 +39,7 @@ export class FootballTeamComponent {
 
   statPeriodFilterOptions$ = this.footballLeagueFacade.scoringPeriodFilterOptions$;
 
-  starters$ = this.footballTeamFacade.starters$;
+  starters$ = this.footballTeamFacade.teamStarters$;
 
   startersPoints$ = this.footballTeamFacade.startersPoints$;
 

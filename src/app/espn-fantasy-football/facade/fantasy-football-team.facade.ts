@@ -19,7 +19,7 @@ export class FantasyFootballTeamFacade extends GenericFacade({
 
   teamFilterOptions$ = select(FantasyFootballTeamSelectors.getTeamFilterOptions);
 
-  starters$ = select(FantasyFootballTeamSelectors.getTeamStarters);
+  teamStarters$ = select(FantasyFootballTeamSelectors.getTeamStarters);
   startersPoints$ = select(FantasyFootballTeamSelectors.getTeamStartersPoints);
   // startersLineupCard$ = select(FantasyFootballTeamSelectors.getTeamStartersLineupCard);
 
