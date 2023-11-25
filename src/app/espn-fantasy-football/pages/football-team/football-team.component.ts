@@ -16,6 +16,7 @@ import { FantasyFootballPlayerNewsFacade } from '../../facade/fantasy-football-p
 import { FantasyFootballTeamFacade } from '../../facade/fantasy-football-team.facade';
 import { FantasyFootballScoringPeriod } from '../../fantasy-football-scoring-period';
 import { FootballPlayer } from '../../models/football-player.model';
+import { FantasyFootballEventsFacade } from '@app/espn-fantasy-football/facade/fantasy-football-events.facade';
 
 @Component({
   selector: 'app-football-team',
@@ -32,6 +33,7 @@ export class FootballTeamComponent {
   readonly FOOTBALL_ROSTER_ROWS_BY_POS = FOOTBALL_ROSTER_ROWS_BY_POS;
 
   teamInfo$ = this.footballTeamFacade.teamInfo$;
+  liveTeamStats$ = this.footballEventsFacade.getLiveTeamStats$;
   scoringPeriodId$ = new BehaviorSubject(FantasyFootballScoringPeriod.season('2023'));
   selectedPosition$ = new BehaviorSubject(FootballPosition.QB);
   selectedStats$ = new BehaviorSubject(FootballStat.GP);
@@ -62,6 +64,7 @@ export class FootballTeamComponent {
   );
 
   constructor(
+    readonly footballEventsFacade: FantasyFootballEventsFacade,
     readonly footballPlayerNewsFacade: FantasyFootballPlayerNewsFacade,
     readonly footballLeagueFacade: FantasyFootballLeagueFacade,
     readonly footballTeamFacade: FantasyFootballTeamFacade,
