@@ -20,4 +20,12 @@ export class DateHelper {
   getTomorrow(): Date {
     return DateFns.addDays(new Date(), 1);
   }
+
+  get oneWeekFromToday(): Date {
+    return DateFns.addDays(new Date(), 7);
+  }
+
+  get oneWeekAgoFromToday(): Date {
+    return DateFns.subDays(new Date(), 7);
+  }
 }
