@@ -8,7 +8,6 @@ import { FootballTeam } from '../models/football-team.model';
 
 import { RouterSelector } from '@app/@core/router/router.selectors';
 import { FOOTBALL_LINEUP_MAP, FootballPosition } from '@sports-ui/ui-sdk/espn';
-import { PlayerStatsYear } from '@sports-ui/ui-sdk/espn-client';
 import { FantasyFootballTeamState } from '../state/fantasy-football-team.state';
 import { FantasyFootballTransformers } from '../transformers/fantasy-football.transformers.m';
 
@@ -90,15 +89,4 @@ export class FantasyFootballTeamSelectors extends GenericSelector(FantasyFootbal
       return teamPositionCount;
     };
   }
-}
-
-function statsValidator(
-  stats: {
-    [year: string]: PlayerStatsYear | null;
-  } | null,
-  statPeriod: string | null
-) {
-  if (exists(stats) && exists(statPeriod)) return stats;
-
-  return null;
 }

@@ -5,7 +5,6 @@ import { EspnFastcastModule } from '@app/espn-fastcast/espn-fastcast.module';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialModule } from 'src/app/material.module';
 import { EspnFreeAgentFilterComponentComponent } from './components/espn-free-agent-filter-component/espn-free-agent-filter-component.component';
-import { EspnPlayerDialogComponent } from './components/espn-player-dialog/espn-player-dialog.component';
 import { EspnPlayerInfoColComponent } from './components/espn-player-info-col/espn-player-info-col.component';
 import { EspnPlayerNewsComponent } from './components/espn-player-news/espn-player-news.component';
 import { EspnPlayerTrendingColComponent } from './components/espn-player-trending-col/espn-player-trending-col.component';
@@ -27,7 +26,6 @@ import { FreeAgentsAvailabilitySelectedState } from './state/free-agent-availabi
     EspnPlayerTrendingColComponent,
     EspnPlayerInfoColComponent,
     EspnTeamInfoColComponent,
-    EspnPlayerDialogComponent,
     EspnStandingsTableComponent,
     EspnTeamHeaderComponent,
     EspnFreeAgentFilterComponentComponent,
@@ -48,8 +46,6 @@ import { FreeAgentsAvailabilitySelectedState } from './state/free-agent-availabi
     EspnPlayerTrendingColComponent,
     EspnPlayerInfoColComponent,
     EspnTeamInfoColComponent,
-
-    EspnPlayerDialogComponent,
     EspnStandingsTableComponent,
     EspnTeamHeaderComponent,
     EspnFreeAgentFilterComponentComponent,
