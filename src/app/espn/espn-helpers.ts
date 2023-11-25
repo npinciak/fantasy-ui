@@ -192,7 +192,7 @@ export function benchPlayersFilter<T extends FootballPlayer | BaseballPlayer>(pl
  * @returns
  */
 export function startingPlayersFilter<T extends FootballPlayer | BaseballPlayer>(players: T[], lineupMap: EspnClient.LineupEntityMap): T[] {
-  const playerList = players.filter(p => !lineupMap[p.lineupSlotId].bench);
+  const playerList = players.filter(p => !lineupMap[p.lineupSlotId].bench && p.lineupSlotId !== 21);
   return sortPlayersByLineupSlotDisplayOrder(playerList, lineupMap);
 }
 

@@ -6,4 +6,8 @@ import { FootballPlayer } from '../../models/football-player.model';
   selector: 'app-football-lineup-card',
   templateUrl: './football-lineup-card.component.html',
 })
-export class FootballLineupCardComponent extends EspnLineupCardComponent<FootballPlayer> {}
+export class FootballLineupCardComponent extends EspnLineupCardComponent<FootballPlayer> {
+  performanceSummary(player: FootballPlayer): string {
+    return '';
+  }
+}

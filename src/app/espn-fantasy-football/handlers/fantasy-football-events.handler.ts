@@ -11,7 +11,7 @@ export class FantasyFootballEventsActionHandler {
   constructor(private fantasyFootballService: FantasyFootballService, private fantasyFootballEventsFacade: FantasyFootballEventsFacade) {}
 
   @Action(FantasyFootballEvents.Fetch)
-  async fetchBaseballEvents(): Promise<void> {
+  async fetchFootballEvents(): Promise<void> {
     const events = await firstValueFrom(this.fantasyFootballService.footballEvents());
     this.fantasyFootballEventsFacade.addOrUpdate(events);
   }
