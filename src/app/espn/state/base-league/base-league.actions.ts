@@ -17,6 +17,16 @@ export function BaseLeagueActions({ stateName }: { stateName: string }): IBaseLe
     static Refresh = class {
       public static readonly type = `[${stateName}] Refresh`;
     };
+
+    static SetCurrentScoringPeriodStartDate = class {
+      public static readonly type = `[${stateName}] SetCurrentScoringPeriodStartDate`;
+      constructor(public payload: { currentScoringPeriodStartDate: string | null }) {}
+    };
+
+    static SetCurrentScoringPeriodEndDate = class {
+      public static readonly type = `[${stateName}] SetCurrentScoringPeriodEndDate`;
+      constructor(public payload: { currentScoringPeriodEndDate: string | null }) {}
+    };
   }
 
   return BaseLeagueActionsClass;

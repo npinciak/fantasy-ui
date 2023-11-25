@@ -14,6 +14,8 @@ export interface FantasyLeagueBaseStateModel {
   firstScoringPeriod: string | null;
   finalScoringPeriod: string | null;
   matchupPeriodCount: string | null;
+  currentScoringPeriodStartDate: string | null;
+  currentScoringPeriodEndDate: string | null;
 }
 
 export const INITIAL_STATE = {
@@ -23,12 +25,16 @@ export const INITIAL_STATE = {
   firstScoringPeriod: null,
   finalScoringPeriod: null,
   matchupPeriodCount: null,
+  currentScoringPeriodStartDate: null,
+  currentScoringPeriodEndDate: null,
 };
 
 export interface IBaseLeagueActionsClass {
   new (...args: any[]): any;
   stateName: string;
   SetLeague: GenericPayloadFetchActionClass<{ state: FantasyLeagueBaseStateModel }>;
+  SetCurrentScoringPeriodStartDate: GenericPayloadFetchActionClass<{ currentScoringPeriodStartDate: string | null }>;
+  SetCurrentScoringPeriodEndDate: GenericPayloadFetchActionClass<{ currentScoringPeriodEndDate: string | null }>;
   Fetch: GenericPayloadFetchActionClass<{ leagueId: string; year: string }>;
   Refresh: GenericPayloadClearActionClass;
 }
@@ -45,12 +51,16 @@ export interface IFantasyLeagueBaseFacade {
   firstScoringPeriod: string | null;
   finalScoringPeriod: string | null;
   matchupPeriodCount: string | null;
+  currentScoringPeriodStartDate: string | null;
+  currentScoringPeriodEndDate: string | null;
   leagueId$: Observable<string | null>;
   seasonId$: Observable<string | null>;
   scoringPeriodId$: Observable<string | null>;
   firstScoringPeriod$: Observable<string | null>;
   finalScoringPeriod$: Observable<string | null>;
   matchupPeriodCount$: Observable<string | null>;
+  currentScoringPeriodStartDate$: Observable<string | null>;
+  currentScoringPeriodEndDate$: Observable<string | null>;
   setLeague(state): void;
   fetch(leagueId: string, year: string): Observable<void>;
   refresh(): Observable<void>;

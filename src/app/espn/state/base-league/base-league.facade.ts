@@ -26,6 +26,8 @@ export function FantasyLeagueBaseFacade<T extends FantasyLeagueBaseStateModel>({
     firstScoringPeriod$: Observable<string | null> = select(selectorClass.slices.firstScoringPeriod);
     finalScoringPeriod$: Observable<string | null> = select(selectorClass.slices.finalScoringPeriod);
     matchupPeriodCount$: Observable<string | null> = select(selectorClass.slices.matchupPeriodCount);
+    currentScoringPeriodStartDate$: Observable<string | null> = select(selectorClass.slices.currentScoringPeriodStartDate);
+    currentScoringPeriodEndDate$: Observable<string | null> = select(selectorClass.slices.currentScoringPeriodEndDate);
 
     constructor(private store: Store) {}
 
@@ -53,8 +55,24 @@ export function FantasyLeagueBaseFacade<T extends FantasyLeagueBaseStateModel>({
       return this.store.selectSnapshot(selectorClass.slices.matchupPeriodCount);
     }
 
+    get currentScoringPeriodStartDate(): string | null {
+      return this.store.selectSnapshot(selectorClass.slices.currentScoringPeriodStartDate);
+    }
+
+    get currentScoringPeriodEndDate(): string | null {
+      return this.store.selectSnapshot(selectorClass.slices.currentScoringPeriodEndDate);
+    }
+
     setLeague(state: any): Observable<void> {
       return this.store.dispatch(new actionHandler.SetLeague({ state }));
+    }
+
+    setCurrentScoringPeriodStartDate(currentScoringPeriodStartDate: string | null): Observable<void> {
+      return this.store.dispatch(new actionHandler.SetCurrentScoringPeriodStartDate({ currentScoringPeriodStartDate }));
+    }
+
+    setCurrentScoringPeriodEndDate(currentScoringPeriodEndDate: string | null): Observable<void> {
+      return this.store.dispatch(new actionHandler.SetCurrentScoringPeriodEndDate({ currentScoringPeriodEndDate }));
     }
 
     fetch(leagueId: string, year: string): Observable<void> {
