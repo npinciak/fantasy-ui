@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RouterFacade } from '@app/@core/router/router.facade';
-import { EspnPlayerDialogComponent } from '@app/espn/components/espn-player-dialog/espn-player-dialog.component';
-import { PlayerDialog } from '@app/espn/models/player-dialog-component.model';
 import { Store } from '@ngxs/store';
 import { FootballPosition, FootballStat, NFL_POSITION_MAP, NFL_STATS_MAP } from '@sports-ui/ui-sdk/espn';
 import { BehaviorSubject, combineLatest, firstValueFrom } from 'rxjs';
@@ -89,9 +87,5 @@ export class FootballTeamComponent {
   async onPlayerClick(player: FootballPlayer): Promise<void> {
     await firstValueFrom(this.store.dispatch([new FantasyFootballPlayerNews.Fetch({ playerId: player.id })]));
     const news = this.footballPlayerNewsFacade.getById(player.id)?.news ?? [];
-
-    const data = { player, news, sport: 'nfl' } as PlayerDialog<FootballPlayer>;
-
-    this.dialog.open(EspnPlayerDialogComponent, { data, height: '500px', width: '800px' });
   }
 }
