@@ -7,5 +7,7 @@ import { FootballTeam } from './football-team.model';
 export interface FootballLeague extends FantasyLeague {
   teams: FootballTeam[];
   freeAgents: FootballPlayerFreeAgent[];
-  schedule: EspnClient.ScheduleEntity[];
+  schedule: ScheduleByMatchupPeriodId[];
 }
+
+export type ScheduleByMatchupPeriodId = { matchupPeriodId: string; schedule: EspnClient.ScheduleEntity[] };

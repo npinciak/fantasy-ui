@@ -6,6 +6,6 @@ import { FantasyFootballSchedule } from '../actions/fantasy-football-schedule.ac
 @State({ name: FantasyFootballSchedule.stateName })
 @Injectable()
 export class FantasyFootballScheduleState extends GenericState({
-  idProperty: 'id',
+  idProperty: 'matchupPeriodId',
   actionHandler: FantasyFootballSchedule,
 }) {}

@@ -1,4 +1,4 @@
 import { GenericActions } from '@app/@shared/generic-state/generic.actions';
-import { EspnClient } from '@sports-ui/ui-sdk/espn';
+import { ScheduleByMatchupPeriodId } from '../models/fantasy-football-league.model';
 
-export class FantasyFootballSchedule extends GenericActions<EspnClient.ScheduleEntity>({ stateName: 'fantasyFootballSchedule' }) {}
+export class FantasyFootballSchedule extends GenericActions<ScheduleByMatchupPeriodId>({ stateName: 'fantasyFootballSchedule' }) {}

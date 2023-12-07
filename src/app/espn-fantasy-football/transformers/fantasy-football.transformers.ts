@@ -5,15 +5,28 @@ import { EspnClient, FOOTBALL_LINEUP_MAP, NFL_POSITION_MAP, NFL_TEAM_MAP } from 
 import { FreeAgentEntry, ProLeagueType, SPORT_TYPE, ScheduleTeam, TeamRosterEntry } from '@sports-ui/ui-sdk/espn-client';
 import { exists } from '@sports-ui/ui-sdk/helpers';
 import { FantasyFootballImageBuilder } from '../fantasy-football-image-builder';
-import { FootballLeague } from '../models/fantasy-football-league.model';
+import { FootballLeague, ScheduleByMatchupPeriodId } from '../models/fantasy-football-league.model';
 import { FantasyMatchup, FantasyMatchupMap, FantasyMatchupTeam } from '../models/fantasy-schedule.model';
 import { FootballPlayer, FootballPlayerFreeAgent, FootballPlayerStatsRow } from '../models/football-player.model';
 import { FootballTeam } from '../models/football-team.model';
 
 export function clientLeagueToFootballLeague(res: EspnClient.FootballLeague, genericLeagueSettings: FantasyLeague): FootballLeague {
-  const { schedule } = res;
-  const teams = res.teams.map(t => clientTeamListToTeamList(t));
+  const teams = res.teams.map(clientTeamListToTeamList);
   const freeAgents = clientFreeAgentToFootballPlayer(res.players);
+
+  const scheduleMap: Record<number, ScheduleByMatchupPeriodId> = res.schedule.reduce((acc, val) => {
+    const { matchupPeriodId } = val;
+    if (!acc[matchupPeriodId]) {
+      acc[matchupPeriodId] = {
+        matchupPeriodId: matchupPeriodId.toString(),
+        schedule: [],
+      };
+    }
+    acc[matchupPeriodId].schedule.push(val);
+    return acc;
+  }, {});
+
+  const schedule = Object.values(scheduleMap);
 
   return {
     ...genericLeagueSettings,
