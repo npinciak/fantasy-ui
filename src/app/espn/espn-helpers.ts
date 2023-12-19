@@ -259,9 +259,9 @@ export function fastcastEventSummary(event: FastcastEvent): string | null {
       [EVENT_STATUS.Postgame]: postSeasonPostgame,
     },
     [SEASON_TYPE.OffSeason]: {
-      [EVENT_STATUS.Pre]: null,
-      [EVENT_STATUS.InProgress]: null,
-      [EVENT_STATUS.Postgame]: null,
+      [EVENT_STATUS.Pre]: postSeasonPregame,
+      [EVENT_STATUS.InProgress]: defaultInProgress,
+      [EVENT_STATUS.Postgame]: postSeasonPostgame,
     },
     [SEASON_TYPE.Unknown]: {
       [EVENT_STATUS.Pre]: postSeasonPregame,
