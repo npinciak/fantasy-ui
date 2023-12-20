@@ -9,8 +9,8 @@ import {
 } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { NFLClientOutsidersProperties, NFLClientSafptsProperties, NFLClientSlateAttrTeam } from '@sports-ui/daily-fantasy-sdk/models';
 import { exists } from '@sports-ui/ui-sdk/helpers';
-import { SlatePlayer } from '../models/slate-player.model';
-import { SlateTeamMlb, SlateTeamNfl } from '../models/slate-team.model';
+import { SlatePlayerAttributeDetails } from '../models/slate-player.model';
+import { SlateTeamMlbDetails, SlateTeamNfl } from '../models/slate-team.model';
 import { Vegas } from '../models/vegas.model';
 import { Weather } from '../models/weather.model';
 import { Outsiders, SaFpts } from '../nfl/models/nfl-slate-attributes.model';
@@ -24,46 +24,45 @@ export function transformNflTeamSlateAttributes(teams: ClientNflSlateTeamAttribu
   });
 }
 
-export function transformMlbTeamSlateAttributes(teams: ClientMlbSlateTeamAttributesMap, site: string): SlateTeamMlb[] {
+export function transformMlbTeamSlateAttributes(teams: ClientMlbSlateTeamAttributesMap, site: string): SlateTeamMlbDetails[] {
   if (objectIsEmpty(teams)) return [];
+  const siteType = SITE_TO_SITETYPE_MAP[site];
 
   return Object.entries(teams).map(([id, team]) => {
-    const { stack_value, stack_leverage, stack_field, stack_diff, top_value, smash_pct } = team;
+    const { stack_value, stack_leverage, stack_field, stack_diff, top_value, smash_pct, vegas } = team;
 
-    const slateTeam: SlateTeamMlb = {
+    const slateTeam: SlateTeamMlbDetails = {
       id,
-      vegas: transformClientVegasToVegas(team.vegas),
-      stack_value: stack_value[site],
-      stack_leverage: stack_leverage[site],
-      stack_field: stack_field[site],
-      stack_diff: stack_diff[site],
-      top_value: top_value[site],
-      stat_group: '',
-      salary_diff: {},
-      slate_ownership: {},
-      ownership: {},
-      value_pct: {},
-      smash_pct: smash_pct[site],
+      vegas: transformClientVegasToVegas(vegas),
+      stackValue: stack_value ? stack_value[siteType] : null,
+      stackLeverage: stack_leverage ? stack_leverage[siteType] : null,
+      stackField: stack_field ? stack_field[siteType] : null,
+      stackDiff: stack_diff ? stack_diff[siteType] : null,
+      topValue: top_value ? top_value[siteType] : null,
+      smashPct: smash_pct ? smash_pct[siteType] : null,
     };
 
     return slateTeam;
   });
 }
 
-export function transformPlayerSlateAttributes(players: ClientNflSlatePlayerAttributesMap, site: string): SlatePlayer[] {
+export function transformNflPlayerSlateAttributes(players: ClientNflSlatePlayerAttributesMap, site: string): SlatePlayerAttributeDetails[] {
   if (objectIsEmpty(players)) return [];
 
-  const siteMap = SITE_TO_SITETYPE_MAP[site];
+  const siteType = SITE_TO_SITETYPE_MAP[site];
 
-  return Object.entries(players).map(([id, player]) => ({
-    id,
-    statGroup: player.stat_group ?? null,
-    salaryDiff: player.salary_diff?.[siteMap] ?? null,
-    slateOwn: player.slate_ownership?.[siteMap] ?? null,
-    ownership: normalizeStringToNumber(player.ownership?.[siteMap]) ?? null,
-    value: normalizeStringToNumber(player.value_pct?.[siteMap]) ?? null,
-    smash: normalizeStringToNumber(player.smash_pct?.[siteMap]) ?? null,
-  }));
+  return Object.entries(players).map(([id, player]) => {
+    const slatePlayer: SlatePlayerAttributeDetails = {
+      id,
+      statGroup: player.stat_group ?? null,
+      salaryDiff: player.salary_diff?.[siteType] ?? null,
+      slateOwn: player.slate_ownership?.[siteType] ?? null,
+      ownership: normalizeStringToNumber(player.ownership?.[siteType]) ?? null,
+      value: normalizeStringToNumber(player.value_pct?.[siteType]) ?? null,
+      smash: normalizeStringToNumber(player.smash_pct?.[siteType]) ?? null,
+    };
+    return slatePlayer;
+  });
 }
 
 export function transformWeather(games: Record<string, SlateWeather>): Weather[] {

@@ -5,7 +5,8 @@ import { Player } from './player.model';
  * Base Dfs slate player model
  *
  */
-type SlatePlayerAttributes = {
+export type SlatePlayerAttributeDetails = {
+  id: string;
   statGroup: string | null;
   ownership: number | null;
   value: number | null;
@@ -20,4 +21,4 @@ type SlatePlayerAttributes = {
  *
  * @example import { SlatePlayer } from '@app/dfs/models/player.model';
  */
-export type SlatePlayer = Pick<Player, 'id'> & SlatePlayerAttributes;
+export type SlatePlayer = Pick<Player, 'id'> & SlatePlayerAttributeDetails;

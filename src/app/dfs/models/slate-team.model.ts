@@ -14,3 +14,11 @@ export type SlateTeamNfl = SlateTeam & {
 };
 
 export type SlateTeamMlb = SlateTeam & DfsClientPlayerAttributes;
+export type SlateTeamMlbDetails = SlateTeam & {
+  stackValue: number | null;
+  stackLeverage: number | null;
+  stackField: number | null;
+  stackDiff: number | null;
+  topValue: number | null;
+  smashPct: number | null;
+};
