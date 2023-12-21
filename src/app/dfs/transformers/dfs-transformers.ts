@@ -1,4 +1,4 @@
-import { DfsSlatePlayer, Schedule as ScheduleImport, ScheduleTeamEntity } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { ClientSlatePlayer, Schedule as ScheduleImport, ScheduleTeamEntity } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { NFLClientGridIronPlayer } from '@sports-ui/daily-fantasy-sdk/models';
 import { exists } from '@sports-ui/ui-sdk/helpers';
 import { SlatePlayer } from '../models/player.model';
@@ -96,7 +96,7 @@ export function convertObjectValuesToNumbers(obj: Record<string, string | number
   return result;
 }
 
-export function transformDfsClientPlayerToPlayer(dfsClientPlayer: DfsSlatePlayer): SlatePlayer {
+export function transformDfsClientPlayerToPlayer(dfsClientPlayer: ClientSlatePlayer): SlatePlayer {
   const {
     schedule,
     schedule: { salaries },

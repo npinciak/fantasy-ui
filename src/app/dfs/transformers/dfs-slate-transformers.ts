@@ -3,9 +3,9 @@ import {
   ClientMlbSlateTeamAttributesMap,
   ClientNflSlatePlayerAttributesMap,
   ClientNflSlateTeamAttributesMap,
+  ClientSlateWeather,
   ClientVegas,
   SITE_TO_SITETYPE_MAP,
-  SlateWeather,
 } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { NFLClientOutsidersProperties, NFLClientSafptsProperties, NFLClientSlateAttrTeam } from '@sports-ui/daily-fantasy-sdk/models';
 import { exists } from '@sports-ui/ui-sdk/helpers';
@@ -65,7 +65,7 @@ export function transformNflPlayerSlateAttributes(players: ClientNflSlatePlayerA
   });
 }
 
-export function transformWeather(games: Record<string, SlateWeather>): Weather[] {
+export function transformWeather(games: Record<string, ClientSlateWeather>): Weather[] {
   return Object.entries(games).map(([id, game]) => ({
     id,
     ...game.weather,
