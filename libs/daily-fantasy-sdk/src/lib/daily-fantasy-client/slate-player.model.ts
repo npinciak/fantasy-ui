@@ -1,8 +1,8 @@
-import { BattingAttributes } from '../models/mlb-client.model';
+import { ClientMlbBattingAttributes } from '../daily-fantasy-client-mlb/batting-attributes.model';
 import { Schedule } from './schedule.model';
 
 export interface DfsSlatePlayer {
-  attributes?: BattingAttributes;
+  attributes?: ClientMlbBattingAttributes;
   fpts: number;
   player: SlatePlayerEntity;
   schedule: Schedule;

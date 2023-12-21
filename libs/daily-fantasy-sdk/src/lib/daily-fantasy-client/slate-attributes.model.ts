@@ -1,4 +1,4 @@
-import { ClientMlbSlatePlayerAttributes, ClientMlbSlateTeamAttributes } from '../models/mlb-client.model';
+import { ClientMlbSlatePlayerAttributes, ClientMlbSlateTeamAttributes } from '../daily-fantasy-client-mlb/slate-player-attributes.model';
 import { NFLClientPlayerAttributes, NFLClientSlateAttrTeam } from '../models/nfl-client.model';
 import { ClientSalaryDiff } from './salary-diff.model';
 import { Site } from './site.model';
