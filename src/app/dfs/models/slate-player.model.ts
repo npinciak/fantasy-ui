@@ -1,16 +1,17 @@
-import { SalaryDiff } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { ClientSalaryDiff } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { Player } from './player.model';
 
 /**
  * Base Dfs slate player model
  *
  */
-type SlatePlayerAttributes = {
+export type SlatePlayerAttributeDetails = {
+  id: string;
   statGroup: string | null;
   ownership: number | null;
   value: number | null;
   smash: number | null;
-  salaryDiff: SalaryDiff | null;
+  salaryDiff: ClientSalaryDiff | null;
   slateOwn: Record<number, string> | null;
 };
 
@@ -20,4 +21,4 @@ type SlatePlayerAttributes = {
  *
  * @example import { SlatePlayer } from '@app/dfs/models/player.model';
  */
-export type SlatePlayer = Pick<Player, 'id'> & SlatePlayerAttributes;
+export type SlatePlayer = Pick<Player, 'id'> & SlatePlayerAttributeDetails;

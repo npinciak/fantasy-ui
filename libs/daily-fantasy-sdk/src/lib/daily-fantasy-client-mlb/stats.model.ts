@@ -22,8 +22,8 @@ type StatsProperties =
 
 type StatSplitProperties = 'last-two' | 'season' | '12weeks' | '4weeks' | '2weeks' | '1week';
 
-export type ClientMlbStats = { [prop in StatsProperties]: string };
+export type ClientMlbStats = Record<StatsProperties, string>;
 
-export type ClientMlbStatSplit = { [prop in StatSplitProperties]: ClientMlbStats } & {
+export type ClientMlbStatSplit = Record<StatSplitProperties, ClientMlbStats> & {
   yesterday: Omit<ClientMlbStats, 'xwoba' | 'wellHitPct' | 'hbp' | 'hr/fb' | 'k' | 'sb' | 'gp'>;
 };

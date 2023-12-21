@@ -1,7 +1,7 @@
-import { Schedule } from '../schedule.model';
+import { ClientSchedule } from '../schedule.model';
 import { MOCK_SCHEDULE_AWAY_TEAM, MOCK_SCHEDULE_HOME_TEAM } from './schedule-team.mock';
 
-export const MOCK_CLIENT_SCHEDULE: Schedule = {
+export const MOCK_CLIENT_SCHEDULE: ClientSchedule = {
   id: '1',
   rg_id: '2',
   sport_id: '1',

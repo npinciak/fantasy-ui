@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GenericStateModel } from '@app/@shared/generic-state/generic.model';
 import { Action, State, StateContext } from '@ngxs/store';
-import { SiteSlateEntity } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { ClientSiteSlateEntity } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { SLATE_TYPES } from '@sports-ui/daily-fantasy-sdk/models';
 import { firstValueFrom } from 'rxjs';
 import { DfsSlatesActions } from '../actions/dfs-slates.actions';
@@ -20,14 +20,14 @@ export class DfsSlatesHandlerState {
 
   @Action(DfsSlatesActions.Fetch)
   async fetchSlates(
-    _: StateContext<GenericStateModel<SiteSlateEntity>>,
+    _: StateContext<GenericStateModel<ClientSiteSlateEntity>>,
     { payload }: { payload: { sport: string; site: string } }
   ): Promise<void> {
     const { sport, site } = payload;
 
     const map = await firstValueFrom(this.slateService.getSlatesByDate({ sport }));
 
-    const slates = Object.values(map[site]) as SiteSlateEntity[];
+    const slates = Object.values(map[site]) as ClientSiteSlateEntity[];
 
     await firstValueFrom(this.dfsSlatesFacade.addOrUpdate(slates));
 

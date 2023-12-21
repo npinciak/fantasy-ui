@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '@app/@shared/services/api.service';
-import { DfsSlatePlayer } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { ClientSlatePlayer } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { uniqueBy } from '@sports-ui/ui-sdk/helpers';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -15,7 +15,7 @@ export class PlayerService {
   constructor(private apiService: ApiService) {}
 
   getPlayersBySlate({ slatePath }: { slatePath: string }): Observable<PlayersBySlate> {
-    return this.apiService.get<DfsSlatePlayer[]>(slatePath).pipe(
+    return this.apiService.get<ClientSlatePlayer[]>(slatePath).pipe(
       map(res => {
         const players = res.map(p => DfsTransformers.transformDfsClientPlayerToPlayer(p));
 

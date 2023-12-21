@@ -1,8 +1,8 @@
-export type SlateWeather = {
-  weather: SlateWeatherDetails;
+export type ClientSlateWeather = {
+  weather: ClientSlateWeatherDetails;
 };
 
-export type SlateWeatherDetails = {
+export type ClientSlateWeatherDetails = {
   color: string;
   description: string;
 };

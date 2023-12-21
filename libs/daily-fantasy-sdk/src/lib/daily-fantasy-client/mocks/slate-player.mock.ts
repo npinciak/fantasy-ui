@@ -1,6 +1,6 @@
-import { DfsSlatePlayer } from '../slate-player.model';
+import { ClientSlatePlayer } from '../slate-player.model';
 
-export const MOCK_DFS_SLATE_PLAYER: DfsSlatePlayer = {
+export const MOCK_DFS_SLATE_PLAYER: ClientSlatePlayer = {
   fpts: 28.4,
   player: {
     id: '823156',

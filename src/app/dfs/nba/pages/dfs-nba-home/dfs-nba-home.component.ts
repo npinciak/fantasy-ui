@@ -4,7 +4,7 @@ import { DfsSlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade';
 import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
 import { NBA_RG_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/basketball';
-import { SiteSlateEntity, SlateType } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { ClientSiteSlateEntity, ClientSlateType } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { BehaviorSubject } from 'rxjs';
 import { HEADERS_BY_POS, ROWS_BY_POS } from '../../consts/table.const';
 import { DfsNbaSlatePlayerFacade } from '../../facade/dfs-nba-slate-players.facade';
@@ -18,7 +18,7 @@ export class DfsNbaHomeComponent implements OnInit {
 
   playerList$ = this.nbaPlayerFacade.getPlayerTableData$;
   selectedSlate$ = new BehaviorSubject<string | null>(null);
-  selectedSlateType$ = new BehaviorSubject<SlateType | null>(null);
+  selectedSlateType$ = new BehaviorSubject<ClientSlateType | null>(null);
 
   slatesEmpty$ = this.dailyFantasySlateFacade.slatesEmpty$;
   selectSlateByType$ = this.dailyFantasySlateFacade.selectSlateByType$;
@@ -38,7 +38,7 @@ export class DfsNbaHomeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSelectSlate(event: SiteSlateEntity) {
+  onSelectSlate(event: ClientSiteSlateEntity) {
     this.dailyFantasyPlayersFacade.fetchPlayers(event.slate_path);
     this.selectedSlate$.next(event.name);
     this.selectedSlateType$.next(event.type);

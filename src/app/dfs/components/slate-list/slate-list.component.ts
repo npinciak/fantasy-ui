@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SlateTypeMap } from '@app/dfs/selectors/daily-fantasy-slate.selectors';
-import { SiteSlateEntity } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { ClientSiteSlateEntity } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 
 @Component({
   selector: 'app-slate-list',
@@ -9,5 +9,5 @@ import { SiteSlateEntity } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-clie
 })
 export class DfsSlateListComponent {
   @Input() slateList: SlateTypeMap;
-  @Output() selectSlate = new EventEmitter<SiteSlateEntity>();
+  @Output() selectSlate = new EventEmitter<ClientSiteSlateEntity>();
 }

@@ -1,13 +1,5 @@
-export interface SalariesEntity {
+export interface ClientSalaryEntity {
   position: string;
   salary: number;
   player_id: string;
-}
-
-export interface SalaryDiff {
-  diff?: number;
-  position: string;
-  rank?: number;
-  rank_diff?: number;
-  salary: string;
 }

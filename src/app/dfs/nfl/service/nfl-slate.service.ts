@@ -16,7 +16,7 @@ export class NflSlateService extends SlateService {
     return this.getGameAttributesBySlateId<ClientNflSlateAttributes>({ sport, site, slateId }).pipe(
       map(res => ({
         teams: DfsSlateTransformers.transformNflTeamSlateAttributes(res.teams),
-        players: DfsSlateTransformers.transformPlayerSlateAttributes(res.players, site),
+        players: DfsSlateTransformers.transformNflPlayerSlateAttributes(res.players, site),
         // weather: DfsSlateTransformers.transformWeather(res.games),
       }))
     );
