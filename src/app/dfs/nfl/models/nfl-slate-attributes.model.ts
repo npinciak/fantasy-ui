@@ -1,10 +1,3 @@
-import { SlatePlayer } from '@app/dfs/models/slate-player.model';
-import { ExpertConsensusRank } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
-
-export type SlatePlayerNfl = SlatePlayer & {
-  expertRanking: ExpertConsensusRank;
-};
-
 type SaFptsAttributes =
   | 'rawQB'
   | 'adjQB'

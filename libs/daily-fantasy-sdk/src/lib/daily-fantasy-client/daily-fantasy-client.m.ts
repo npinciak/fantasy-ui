@@ -1,4 +1,3 @@
-export * from './expert-consensus-ranking.model';
 export * from './salaries.model';
 export * from './salary-diff.model';
 export * from './schedule.model';
