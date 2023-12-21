@@ -1,5 +1,4 @@
 import { SLATE_TYPES } from '../models/daily-fantasy-client.const';
-import { Multiplier, Slot } from '../models/daily-fantasy-client.model';
 import { Site } from './site.model';
 
 export type SlateType = typeof SLATE_TYPES[keyof typeof SLATE_TYPES];
@@ -32,3 +31,7 @@ export interface SlateConfig {
   slots: Slot[];
   fpts_multipliers: Multiplier;
 }
+
+export type Multiplier = Record<number, number>;
+
+export type Slot = { posName: string; posOpts: Record<number, string> };
