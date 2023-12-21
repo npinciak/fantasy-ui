@@ -1,6 +1,6 @@
 import { ExpertConsensusRankBySite } from '../daily-fantasy-client/expert-consensus-ranking.model';
+import { DfsClientSlateAttributes } from '../daily-fantasy-client/slate-attributes.model';
 import { ClientVegas } from '../daily-fantasy-client/vegas.model';
-import { DfsClientPlayerAttributes } from './daily-fantasy-client-slate-attr.model';
 
 export type ValueProperties = {
   stack_value: string;
@@ -19,7 +19,7 @@ export interface ClientMlbPitcherAttributes {
 }
 
 export type ClientMlbSlateTeamAttributesProperties = Omit<
-  DfsClientPlayerAttributes,
+  DfsClientSlateAttributes,
   'stat_group' | 'salary_diff' | 'slate_ownership' | 'ownership' | 'value_pct'
 > & {
   pitcher: ClientMlbPitcherAttributes;
@@ -113,5 +113,5 @@ export type PlateIqFactorEntity = {
 
 export type ClientMlbSlateTeamAttributes = { vegas: ClientVegas } & ClientMlbSlateTeamAttributesProperties;
 export type ClientMlbSlatePlayerAttributes = ClientMlbSlatePlayerAttributesProperties &
-  Omit<DfsClientPlayerAttributes, 'stat_group' | 'salary_diff' | 'slate_ownership' | 'ownership' | 'value_pct'>;
+  Omit<DfsClientSlateAttributes, 'stat_group' | 'salary_diff' | 'slate_ownership' | 'ownership' | 'value_pct'>;
 export type MLBClientTeamAttributes = ClientMlbSlateTeamAttributesProperties & ValueProperties;

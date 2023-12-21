@@ -1,4 +1,4 @@
-import { DfsClientPlayerAttributes } from '@sports-ui/daily-fantasy-sdk/models';
+import { DfsClientSlateAttributes } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { Outsiders, SaFpts } from '../nfl/models/nfl-slate-attributes.model';
 import { Team } from './team.model';
 import { Vegas } from './vegas.model';
@@ -13,7 +13,7 @@ export type SlateTeamNfl = SlateTeam & {
   safpts: SaFpts | null;
 };
 
-export type SlateTeamMlb = SlateTeam & DfsClientPlayerAttributes;
+export type SlateTeamMlb = SlateTeam & DfsClientSlateAttributes;
 export type SlateTeamMlbDetails = SlateTeam & {
   stackValue: number | null;
   stackLeverage: number | null;
