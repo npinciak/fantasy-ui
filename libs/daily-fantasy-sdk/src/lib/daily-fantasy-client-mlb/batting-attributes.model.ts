@@ -1,8 +1,8 @@
-export type BattingAttributes = {
-  batting_order: BattingOrder;
+export type ClientMlbBattingAttributes = {
+  batting_order: ClientMlbBattingOrder;
 };
 
-export type BattingOrder = {
+export type ClientMlbBattingOrder = {
   order: string;
   confirmed: number;
 };

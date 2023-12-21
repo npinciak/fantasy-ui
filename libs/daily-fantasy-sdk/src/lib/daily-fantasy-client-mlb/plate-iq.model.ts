@@ -9,21 +9,21 @@ type PlateIqScoreProperties =
   | 'sbFactor'
   | 'overall';
 
-export type PlateIqScore = { [prop in PlateIqScoreProperties]: number };
+export type ClientMlbPlateIqScore = Record<PlateIqScoreProperties, number>;
 
-export type PlateIq = {
-  score: PlateIqScore;
-  factors: PlateIqFactors;
+export type ClientMlbPlateIq = {
+  score: ClientMlbPlateIqScore;
+  factors: ClientMlbPlateIqFactors;
 };
 
-export type PlateIqFactors = {
-  positive: PlateIqFactorEntity[] | null;
-  negative: PlateIqFactorEntity[] | null;
+export type ClientMlbPlateIqFactors = {
+  positive: ClientMlbPlateIqFactorEntity[] | null;
+  negative: ClientMlbPlateIqFactorEntity[] | null;
   positiveCt: number;
   negativeCt: number;
 };
 
-export type PlateIqFactorEntity = {
+export type ClientMlbPlateIqFactorEntity = {
   name: string;
   comparisonValue: number;
   description: string;

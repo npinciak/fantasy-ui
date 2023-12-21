@@ -1,6 +1,7 @@
 import { ExpertConsensusRankBySite } from '../daily-fantasy-client/expert-consensus-ranking.model';
+import { ClientSalaryDiff } from '../daily-fantasy-client/salary-diff.model';
+import { ClientSlateAttributes } from '../daily-fantasy-client/slate-attributes.model';
 import { ClientVegas } from '../daily-fantasy-client/vegas.model';
-import { ClientSalaryDiff, DfsClientPlayerAttributes } from './daily-fantasy-client-slate-attr.model';
 
 type SafptsAttributes =
   | 'RawQB'
@@ -201,7 +202,7 @@ export type NFLClientGridIronPlayer = { [key in NFLClientGridIronPlayerAttribute
 };
 
 export type NFLClientGridIronPlayerMap = Record<string, NFLClientGridIronPlayer>;
-export type NFLClientPlayerAttributes = NFLClientPlayerAttributesEntity & DfsClientPlayerAttributes;
+export type NFLClientPlayerAttributes = NFLClientPlayerAttributesEntity & ClientSlateAttributes;
 
 export type NFLClientPlayerAttributesMap = Record<string, NFLClientPlayerAttributes>;
 

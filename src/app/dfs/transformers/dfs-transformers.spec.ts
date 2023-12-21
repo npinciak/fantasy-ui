@@ -1,4 +1,4 @@
-import { DfsSlatePlayer } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { ClientSlatePlayer } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import {
   MOCK_CLIENT_GRIDIRON_PLAYER,
   MOCK_CLIENT_GRIDIRON_PLAYER_NULL,
@@ -22,7 +22,7 @@ import {
 describe('Dfs Transformers', () => {
   describe('#transformDfsClientPlayerToPlayer', () => {
     it('should transform a DfsClientPlayer to a SlatePlayer with a complete name', () => {
-      const dfsClientPlayer: DfsSlatePlayer = MOCK_DFS_SLATE_PLAYER;
+      const dfsClientPlayer: ClientSlatePlayer = MOCK_DFS_SLATE_PLAYER;
 
       const expected: SlatePlayer = SLATE_PLAYER_MOCK;
 
@@ -32,7 +32,7 @@ describe('Dfs Transformers', () => {
     });
 
     it('should transform a DfsClientPlayer to a SlatePlayer with a missing first name', () => {
-      const dfsClientPlayer: DfsSlatePlayer = { ...MOCK_DFS_SLATE_PLAYER, player: { ...MOCK_DFS_SLATE_PLAYER.player, last_name: '' } };
+      const dfsClientPlayer: ClientSlatePlayer = { ...MOCK_DFS_SLATE_PLAYER, player: { ...MOCK_DFS_SLATE_PLAYER.player, last_name: '' } };
 
       const expected = { ...SLATE_PLAYER_MOCK, name: MOCK_DFS_SLATE_PLAYER.player.first_name };
 
