@@ -1,4 +1,4 @@
-import { SalaryDiff } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { ClientSalaryDiff } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { Player } from './player.model';
 
 /**
@@ -11,7 +11,7 @@ export type SlatePlayerAttributeDetails = {
   ownership: number | null;
   value: number | null;
   smash: number | null;
-  salaryDiff: SalaryDiff | null;
+  salaryDiff: ClientSalaryDiff | null;
   slateOwn: Record<number, string> | null;
 };
 
