@@ -1,11 +1,11 @@
 import { ClientMlbBattingAttributes } from '../daily-fantasy-client-mlb/batting-attributes.model';
-import { Schedule } from './schedule.model';
+import { ClientSchedule } from './schedule.model';
 
 export interface ClientSlatePlayer {
   attributes?: ClientMlbBattingAttributes;
   fpts: number;
   player: ClientSlatePlayerDetails;
-  schedule: Schedule;
+  schedule: ClientSchedule;
   stat_group: string;
   status: null;
 }

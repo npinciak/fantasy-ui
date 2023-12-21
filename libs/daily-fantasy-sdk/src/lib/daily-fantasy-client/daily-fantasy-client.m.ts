@@ -2,7 +2,6 @@ export * from './expert-consensus-ranking.model';
 export * from './salaries.model';
 export * from './salary-diff.model';
 export * from './schedule.model';
-export * from './site-configs.model';
 export * from './site.model';
 export * from './slate-attributes.model';
 export * from './slate-player.model';

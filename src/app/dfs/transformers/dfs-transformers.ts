@@ -1,4 +1,8 @@
-import { ClientSlatePlayer, Schedule as ScheduleImport, ScheduleTeamEntity } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import {
+  ClientScheduleTeamEntity,
+  ClientSlatePlayer,
+  ClientSchedule as ScheduleImport,
+} from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { NFLClientGridIronPlayer } from '@sports-ui/daily-fantasy-sdk/models';
 import { exists } from '@sports-ui/ui-sdk/helpers';
 import { SlatePlayer } from '../models/player.model';
@@ -132,7 +136,7 @@ export function transformDfsClientScheduleToSchedule(dfsClientSchedule: Schedule
   };
 }
 
-export function transformScheduleTeamEntityToTeam(scheduleTeamEntity: ScheduleTeamEntity): Team {
+export function transformScheduleTeamEntityToTeam(scheduleTeamEntity: ClientScheduleTeamEntity): Team {
   const { id, name, rg_id, hashtag } = scheduleTeamEntity;
 
   return {
