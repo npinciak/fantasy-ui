@@ -1,6 +1,6 @@
 export type Site = typeof SITE[keyof typeof SITE];
 
-export enum SiteType {
+export enum ClientSiteType {
   FanDuel = 2,
   DraftKings = 20,
   Yahoo = 50,
@@ -15,8 +15,8 @@ export const SITE = {
 } as const;
 
 export const SITE_TO_SITETYPE_MAP = {
-  [SITE.Fanduel]: SiteType.FanDuel,
-  [SITE.Draftkings]: SiteType.DraftKings,
-  [SITE.Yahoo]: SiteType.Yahoo,
-  [SITE.Superdraft]: SiteType.Superdraft,
+  [SITE.Fanduel]: ClientSiteType.FanDuel,
+  [SITE.Draftkings]: ClientSiteType.DraftKings,
+  [SITE.Yahoo]: ClientSiteType.Yahoo,
+  [SITE.Superdraft]: ClientSiteType.Superdraft,
 } as const;

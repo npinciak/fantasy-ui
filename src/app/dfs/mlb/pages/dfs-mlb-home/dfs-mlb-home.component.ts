@@ -6,7 +6,7 @@ import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade'
 import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
 import { DfsHomeComponent } from '@app/dfs/pages/dfs-home/dfs-home.component';
 import { MLB_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/baseball';
-import { SlateType } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { ClientSlateType } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { BehaviorSubject } from 'rxjs';
 import { HEADERS_BY_POS, ROWS_BY_POS } from '../../consts/mlb-dfs-table.const';
 import { DfsMlbSlatePlayerFacade } from '../../facade/dfs-mlb-slate-players.facade';
@@ -20,7 +20,7 @@ export class DfsMlbHomeComponent extends DfsHomeComponent implements OnInit {
 
   playerList$ = this.mlbPlayerFacade.getPlayerTableData$;
 
-  selectedSlateType$ = new BehaviorSubject<SlateType | null>(null);
+  selectedSlateType$ = new BehaviorSubject<ClientSlateType | null>(null);
 
   tableConfig = {
     headers: HEADERS_BY_POS.B,

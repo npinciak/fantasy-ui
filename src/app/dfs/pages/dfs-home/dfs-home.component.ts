@@ -4,7 +4,7 @@ import { DfsSelectedSlateConfigurationFacade } from '@app/dfs/facade/dfs-selecte
 import { DfsSlateAttrFacade } from '@app/dfs/facade/dfs-slate-attr.facade';
 import { DfsSlatePlayersFacade } from '@app/dfs/facade/dfs-slate-players.facade';
 import { DfsSlatesFacade } from '@app/dfs/facade/dfs-slates.facade';
-import { SiteSlateEntity } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { ClientSiteSlateEntity } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 
 @Component({
   selector: 'app-dfs-home',
@@ -31,7 +31,7 @@ export class DfsHomeComponent {
 
   ngOnInit(): void {}
 
-  onSelectSlate(event: SiteSlateEntity) {
+  onSelectSlate(event: ClientSiteSlateEntity) {
     const { slate_path, importId } = event;
 
     this.dfsPlayersFacade.fetchPlayers(slate_path);

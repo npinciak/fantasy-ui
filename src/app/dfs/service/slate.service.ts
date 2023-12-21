@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DateHelper } from '@app/@shared/helpers/date-helper';
 import { ApiService } from '@app/@shared/services/api.service';
-import { SlateMasterMap } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
+import { ClientSlateMasterMap } from '@sports-ui/daily-fantasy-sdk/daily-fantasy-client';
 import { Observable } from 'rxjs';
 import { DfsEndpointBuilder } from '../endpoint-builder/dfs-endpoint-builder';
 
@@ -16,8 +16,8 @@ export class SlateService {
     this.endpointBuilder = new DfsEndpointBuilder();
   }
 
-  getSlatesByDate({ sport }: { sport: string }): Observable<SlateMasterMap> {
-    return this.apiService.get<SlateMasterMap>(this.endpointBuilder.slateMasterBySport(sport));
+  getSlatesByDate({ sport }: { sport: string }): Observable<ClientSlateMasterMap> {
+    return this.apiService.get<ClientSlateMasterMap>(this.endpointBuilder.slateMasterBySport(sport));
   }
 
   getGameAttributesBySlateId<T>({ sport, site, slateId }: GameAttributesRequest): Observable<T> {
