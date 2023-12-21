@@ -8,7 +8,7 @@ export type SalaryDiffByDfsSiteType = Record<number, ClientSalaryDiff>;
 export type PlayerAttributesByDfsSite = Record<number, string>;
 export type PlayerOwnershipByDfsSiteTypeBySlate = Record<number, Record<number, string>>;
 
-export type DfsClientSlateAttributes = {
+export type ClientSlateAttributes = {
   stack_value?: AttributesByDfsSite;
   top_value?: AttributesByDfsSite;
   stack_leverage?: AttributesByDfsSite;
@@ -29,13 +29,13 @@ export type DfsClientSlateAttributes = {
 type ClientSlatePlayerAttributesMap<PlayerAttributes> = Record<string, PlayerAttributes>;
 type ClientSlateTeamAttributesMap<TeamAttributes> = Record<string, TeamAttributes>;
 
-type ClientSlateAttributes<PlayerAttributes, TeamAttributes> = {
+type ClientSlatePlayerAndTeamAttributes<PlayerAttributes, TeamAttributes> = {
   players: ClientSlatePlayerAttributesMap<PlayerAttributes>;
   teams: ClientSlateTeamAttributesMap<TeamAttributes>;
 };
 
-export type ClientNflSlateAttributes = ClientSlateAttributes<NFLClientPlayerAttributes, NFLClientSlateAttrTeam>;
-export type ClientMlbSlateAttributes = ClientSlateAttributes<ClientMlbSlatePlayerAttributes, ClientMlbSlateTeamAttributes>;
+export type ClientNflSlateAttributes = ClientSlatePlayerAndTeamAttributes<NFLClientPlayerAttributes, NFLClientSlateAttrTeam>;
+export type ClientMlbSlateAttributes = ClientSlatePlayerAndTeamAttributes<ClientMlbSlatePlayerAttributes, ClientMlbSlateTeamAttributes>;
 
 export type ClientNflSlatePlayerAttributesMap = ClientSlatePlayerAttributesMap<NFLClientPlayerAttributes>;
 export type ClientMlbSlatePlayerAttributesMap = ClientSlatePlayerAttributesMap<ClientMlbSlatePlayerAttributes>;
