@@ -34,6 +34,6 @@ export class FootballHomeComponent implements OnInit {
   }
 
   updateCurrentScoringPeriodId(scoringPeriodId: string) {
-    throw new Error('Method not implemented.');
+    this.fantasyFootballLeagueFacade.setCurrentScoringPeriodId(scoringPeriodId);
   }
 }
