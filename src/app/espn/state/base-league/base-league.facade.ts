@@ -57,6 +57,10 @@ export function FantasyLeagueBaseFacade<T extends FantasyLeagueBaseStateModel>({
       return this.store.dispatch(new actionHandler.SetLeague({ state }));
     }
 
+    setCurrentScoringPeriodId(scoringPeriodId: string): Observable<void> {
+      return this.store.dispatch(new actionHandler.SetCurrentScoringPeriodId({ scoringPeriodId }));
+    }
+
     fetch(leagueId: string, year: string): Observable<void> {
       return this.store.dispatch(new actionHandler.Fetch({ leagueId, year }));
     }

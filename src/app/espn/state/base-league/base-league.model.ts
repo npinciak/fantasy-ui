@@ -28,6 +28,7 @@ export const INITIAL_STATE = {
 export interface IBaseLeagueActionsClass {
   new (...args: any[]): any;
   stateName: string;
+  SetCurrentScoringPeriodId: GenericPayloadFetchActionClass<{ scoringPeriodId: string | null }>;
   SetLeague: GenericPayloadFetchActionClass<{ state: FantasyLeagueBaseStateModel }>;
   Fetch: GenericPayloadFetchActionClass<{ leagueId: string; year: string }>;
   Refresh: GenericPayloadClearActionClass;
@@ -52,6 +53,7 @@ export interface IFantasyLeagueBaseFacade {
   finalScoringPeriod$: Observable<string | null>;
   matchupPeriodCount$: Observable<string | null>;
   setLeague(state): void;
+  setCurrentScoringPeriodId(scoringPeriodId: string): Observable<void>;
   fetch(leagueId: string, year: string): Observable<void>;
   refresh(): Observable<void>;
 }
