@@ -1,4 +1,3 @@
-import { ExpertConsensusRankBySite } from '../daily-fantasy-client/expert-consensus-ranking.model';
 import { ClientSalaryDiff } from '../daily-fantasy-client/salary-diff.model';
 import { ClientSlateAttributes } from '../daily-fantasy-client/slate-attributes.model';
 import { ClientVegas } from '../daily-fantasy-client/vegas.model';
@@ -150,7 +149,6 @@ export type NFLClientSalaryDiff = ClientSalaryDiff;
 export interface NFLClientPlayerAttributesEntity {
   team: string;
   xml_id: string;
-  ecr: ExpertConsensusRankBySite;
 }
 
 type NFLClientGridIronPlayerAttributes =
