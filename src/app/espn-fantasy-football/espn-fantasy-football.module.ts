@@ -13,6 +13,7 @@ import { FantasyFootballFreeAgentActionHandler } from './handlers/fantasy-footba
 import { FantasyFootballLeagueActionHandler } from './handlers/fantasy-football-league.handler';
 import { FootballFreeAgentsComponent } from './pages/football-free-agents/football-free-agents.component';
 import { FootballHomeComponent } from './pages/football-home/football-home.component';
+import { FootballPlayerComponent } from './pages/football-player/football-player.component';
 import { FootballTeamComponent } from './pages/football-team/football-team.component';
 import { FantasyFootballEventsState } from './state/fantasy-football-events.state';
 import { FantasyFootballFreeAgentsFilterState } from './state/fantasy-football-free-agents-filter.state';
@@ -31,6 +32,7 @@ import { FantasyFootballTransactionState } from './state/fantasy-football-transa
     FootballLineupCardComponent,
     FootballMatchupCardComponent,
     FootballMatchupCardTeamComponent,
+    FootballPlayerComponent,
   ],
   imports: [
     CommonModule,
