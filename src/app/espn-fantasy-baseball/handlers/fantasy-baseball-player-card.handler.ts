@@ -17,7 +17,6 @@ import { FantasyBaseballService } from '../services/fantasy-baseball.service';
 export class FantasyBaseballPlayerCardActionHandler {
   constructor(
     private fantasyBaseballProTeamScheduleFacade: FantasyBaseballProTeamScheduleFacade,
-
     private baseballPlayerCardFacade: FantasyBaseballPlayerCardFacade,
     private baseballLeagueFacade: FantasyBaseballLeagueFacade,
     private mlbService: FantasyBaseballService

@@ -1,5 +1,5 @@
 import { FantasyPlayer } from '@app/espn/models/fantasy-player.model';
-import { PlayerStatsYear, TeamRosterEntry } from '@sports-ui/ui-sdk/espn-client';
+import { PlayerCardEntity, PlayerStatsYear, TeamRosterEntry } from '@sports-ui/ui-sdk/espn-client';
 
 export type FootballPlayerAttributes = {
   lineupSlot: string | null;
@@ -25,6 +25,9 @@ export type FootballPlayerStatsRow = Pick<
   | 'defaultPositionId'
 > &
   Pick<PlayerStatsYear, 'stats' | 'appliedTotal' | 'appliedAverage' | 'appliedTotalCeiling'> & { highlightedPlayer: boolean };
+
+export type FootballPlayerCard = Omit<FootballPlayer, 'lineupSlotId' | 'lineupSlot'> &
+  Pick<PlayerCardEntity['player'], 'stance' | 'laterality'> & { playerCardImage: string };
 
 export type PlayerOutlookByWeek = {
   week: number;
