@@ -11,7 +11,7 @@ import { EspnFantasyFootballRoutingModule } from './espn-fantasy-football-routin
 import { FantasyFootballEventsActionHandler } from './handlers/fantasy-football-events.handler';
 import { FantasyFootballFreeAgentActionHandler } from './handlers/fantasy-football-free-agent.handler';
 import { FantasyFootballLeagueActionHandler } from './handlers/fantasy-football-league.handler';
-import { FantasyBaseballPlayerCardActionHandler } from './handlers/fantasy-football-player-card.handler';
+import { FantasyFootballPlayerCardActionHandler } from './handlers/fantasy-football-player-card.handler';
 import { FantasyBaseballPlayerNewsActionHandler } from './handlers/fantasy-football-player-news.handler';
 import { FootballFreeAgentsComponent } from './pages/football-free-agents/football-free-agents.component';
 import { FootballHomeComponent } from './pages/football-home/football-home.component';
@@ -54,7 +54,7 @@ import { FantasyFootballTransactionState } from './state/fantasy-football-transa
       FantasyFootballPlayerNewsState,
       FantasyBaseballPlayerNewsActionHandler,
       FantasyFootballPlayerCardState,
-      FantasyBaseballPlayerCardActionHandler,
+      FantasyFootballPlayerCardActionHandler,
       FantasyFootballTransactionState,
       FantasyFootballEventsState,
       FantasyFootballEventsActionHandler,

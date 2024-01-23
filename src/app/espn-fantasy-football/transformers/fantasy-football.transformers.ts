@@ -2,12 +2,12 @@ import { FantasyLeague } from '@app/espn/models/fantasy-league.model';
 import { FantasyPlayer } from '@app/espn/models/fantasy-player.model';
 import { EspnTransformers } from '@app/espn/transformers/espn-transformers.m';
 import { EspnClient, FOOTBALL_LINEUP_MAP, NFL_POSITION_MAP, NFL_TEAM_MAP } from '@sports-ui/ui-sdk/espn';
-import { FreeAgentEntry, ProLeagueType, SPORT_TYPE, ScheduleTeam, TeamRosterEntry } from '@sports-ui/ui-sdk/espn-client';
+import { FreeAgentEntry, PlayerCardEntity, ProLeagueType, SPORT_TYPE, ScheduleTeam, TeamRosterEntry } from '@sports-ui/ui-sdk/espn-client';
 import { exists } from '@sports-ui/ui-sdk/helpers';
 import { FantasyFootballImageBuilder } from '../fantasy-football-image-builder';
 import { FootballLeague } from '../models/fantasy-football-league.model';
 import { FantasyMatchup, FantasyMatchupMap, FantasyMatchupTeam } from '../models/fantasy-schedule.model';
-import { FootballPlayer, FootballPlayerFreeAgent, FootballPlayerStatsRow } from '../models/football-player.model';
+import { FootballPlayer, FootballPlayerCard, FootballPlayerFreeAgent, FootballPlayerStatsRow } from '../models/football-player.model';
 import { FootballTeam } from '../models/football-team.model';
 
 export function clientLeagueToFootballLeague(res: EspnClient.FootballLeague, genericLeagueSettings: FantasyLeague): FootballLeague {
@@ -169,4 +169,34 @@ export function transformMatchupListToMatchupMap(matchupList: FantasyMatchup[]):
     }
   });
   return map;
+}
+
+export function clientPlayerCardToFootballPlayerCard(players: PlayerCardEntity[]): FootballPlayerCard[] {
+  return players.map(player => {
+    const {
+      player: { starterStatusByProGame, lastNewsDate, stance, laterality },
+      ratings,
+    } = player;
+
+    const playerInfo = EspnTransformers.clientPlayerToFantasyPlayer({
+      clientPlayer: player.player,
+      sport: SPORT_TYPE.Baseball,
+      leagueId: ProLeagueType.MLB,
+      teamMap: NFL_TEAM_MAP,
+      positionMap: NFL_POSITION_MAP,
+    });
+
+    const playerCardImage = FantasyFootballImageBuilder.headshotImgBuilder({ id: playerInfo.id, width: 426, height: 320 });
+
+    return {
+      ...playerInfo,
+      starterStatusByProGame,
+      lastNewsDate,
+      isStarting: false,
+      playerRatings: ratings,
+      stance,
+      laterality,
+      playerCardImage,
+    };
+  });
 }

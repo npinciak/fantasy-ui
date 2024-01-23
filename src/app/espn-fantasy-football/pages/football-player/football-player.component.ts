@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FantasyFootballPlayerCardFacade } from '@app/espn-fantasy-football/facade/fantasy-football-player-card.facade';
+import { FantasyFootballPlayerNewsFacade } from '@app/espn-fantasy-football/facade/fantasy-football-player-news.facade';
+import { PlayerRatingTimePeriod } from '@sports-ui/ui-sdk';
 
 @Component({
   selector: 'app-football-player',
@@ -7,9 +9,16 @@ import { FantasyFootballPlayerCardFacade } from '@app/espn-fantasy-football/faca
 })
 export class FootballPlayerComponent implements OnInit {
   currentPlayerCard$ = this.fantasyFootballPlayerCardFacade.getCurrentPlayerCard$;
-  currentPlayerCardStats$ = this.fantasyFootballPlayerCardFacade.getCurrentPlayerCardStats$;
+  playerCardStats$ = this.fantasyFootballPlayerCardFacade.getCurrentPlayerCardStats$;
 
-  constructor(private fantasyFootballPlayerCardFacade: FantasyFootballPlayerCardFacade) {}
+  playerNews$ = this.fantasyFootballPlayeNewsFacade.getCurrentPlayerNews$;
+
+  readonly PlayerRatingTimePeriod = PlayerRatingTimePeriod;
+
+  constructor(
+    private fantasyFootballPlayerCardFacade: FantasyFootballPlayerCardFacade,
+    private fantasyFootballPlayeNewsFacade: FantasyFootballPlayerNewsFacade
+  ) {}
 
   ngOnInit(): void {}
 }

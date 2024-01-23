@@ -9,9 +9,8 @@ import { FantasyFootballPlayerNewsFacade } from '../facade/fantasy-football-play
 export class FantasyFootballPlayerNewsResolver implements Resolve<void> {
   constructor(
     private fantasyFootballPlayerNewsFacade: FantasyFootballPlayerNewsFacade,
-    private fantasyFootballPlayerCardFacade: FantasyFootballPlayerCardFacade
-  ) // ,
-  // private fantasyFootballProTeamScheduleFacade: FantasyFootballProTeamScheduleFacade
+    private fantasyFootballPlayerCardFacade: FantasyFootballPlayerCardFacade // ,
+  ) // private fantasyFootballProTeamScheduleFacade: FantasyFootballProTeamScheduleFacade
   {}
 
   async resolve(route: ActivatedRouteSnapshot): Promise<void> {

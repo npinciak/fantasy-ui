@@ -39,36 +39,6 @@
                       {{ player?.playerRatings[PlayerRatingTimePeriod.Season].positionalRanking | number: '1.1-3' }}
                     </td>
                   </tr>
-                  <tr>
-                    <td class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-3 align-middle text-xs">
-                      {{ player?.playerRatings[PlayerRatingTimePeriod.Pr7].totalRating | number: '1.1-3' }}
-                    </td>
-                    <th class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-3 text-left align-middle text-xs">Last 7</th>
-
-                    <td class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-3 align-middle text-xs">
-                      {{ player?.playerRatings[PlayerRatingTimePeriod.Pr7].positionalRanking | number: '1.1-3' }}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-3 align-middle text-xs">
-                      {{ player?.playerRatings[PlayerRatingTimePeriod.Pr15].totalRating | number: '1.1-3' }}
-                    </td>
-                    <th class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-3 text-left align-middle text-xs">Last 15</th>
-
-                    <td class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-3 align-middle text-xs">
-                      {{ player?.playerRatings[PlayerRatingTimePeriod.Pr15].positionalRanking | number: '1.1-3' }}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-3 align-middle text-xs">
-                      {{ player?.playerRatings[PlayerRatingTimePeriod.Pr30].totalRating | number: '1.1-3' }}
-                    </td>
-                    <th class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-3 text-left align-middle text-xs">Last 30</th>
-
-                    <td class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-3 align-middle text-xs">
-                      {{ player?.playerRatings[PlayerRatingTimePeriod.Pr30].positionalRanking | number: '1.1-3' }}
-                    </td>
-                  </tr>
                 </table>
               </div>
             </div>
@@ -79,17 +49,11 @@
         <app-base-card>
           <mat-tab-group>
             <mat-tab label="News">
-              <!-- <app-espn-player-news [articles]="playerNews$ | async"></app-espn-player-news> -->
+              <app-espn-player-news [articles]="playerNews$ | async"></app-espn-player-news>
             </mat-tab>
             <mat-tab label="Stats">
               <div class="p-4">
-                <!-- <app-espn-stats-table
-                    [data]="playerCardStats$ | async"
-                    [dataColumns]="(tableConfig$ | async).rows"
-                    [headers]="(tableConfig$ | async).headers"
-                    [statsMap]="MLB_STAT_MAP"
-                  >
-                  </app-espn-stats-table> -->
+                <app-espn-stats-table [data]="[]" [dataColumns]="[]" [headers]="[]" [statsMap]="{}"> </app-espn-stats-table>
               </div>
             </mat-tab>
           </mat-tab-group>

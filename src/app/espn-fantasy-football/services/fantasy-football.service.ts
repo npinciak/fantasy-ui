@@ -8,7 +8,9 @@ import { EspnClient } from '@sports-ui/ui-sdk/espn';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { PlayerCardEntity } from '@sports-ui/ui-sdk';
 import { FootballLeague } from '../models/fantasy-football-league.model';
+import { FootballPlayerCard } from '../models/football-player.model';
 import { FantasyFootballTransformers } from '../transformers/fantasy-football.transformers.m';
 
 @Injectable({
@@ -43,6 +45,22 @@ export class FantasyFootballService extends EspnService {
     return this.fetchFantasyPlayerNewsBySport({ sport: this.sport, lookbackDays: '30', playerId }).pipe(map(res => res));
   }
 
+  fetchFootballPlayerCard(leagueId: string, year: string, scoringPeriod: string, playerId: string): Observable<FootballPlayerCard[]> {
+    const filter = {
+      players: {
+        filterIds: { value: [playerId] },
+        filterStatsForTopScoringPeriodIds: { value: scoringPeriod },
+      },
+    };
+
+    let headers = new HttpHeaders();
+    headers = headers.append('X-Fantasy-Filter', JSON.stringify(filter));
+
+    return this.fetchFantasyPlayerCardBySport<{ players: PlayerCardEntity[] }>(
+      { sport: this.sport, leagueId, year, headers },
+      scoringPeriod
+    ).pipe(map(res => FantasyFootballTransformers.clientPlayerCardToFootballPlayerCard(res.players)));
+  }
   /**
    * Return games for current date
    *
