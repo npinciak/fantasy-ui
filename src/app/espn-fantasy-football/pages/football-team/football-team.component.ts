@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RouterFacade } from '@app/@core/router/router.facade';
+import { FantasyFootballEventsFacade } from '@app/espn-fantasy-football/facade/fantasy-football-events.facade';
 import { Store } from '@ngxs/store';
 import { FootballPosition, FootballStat, NFL_POSITION_MAP, NFL_STATS_MAP } from '@sports-ui/ui-sdk/espn';
-import { BehaviorSubject, combineLatest, firstValueFrom } from 'rxjs';
+import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FantasyFootballPlayerNews } from '../../actions/fantasy-football-player-news.actions';
 import { FOOTBALL_POSITION_LIST_FILTER } from '../../consts/fantasy-football-position.const';
 import { FOOTBALL_ROSTER_HEADERS_BY_POS, FOOTBALL_ROSTER_ROWS_BY_POS } from '../../consts/fantasy-football-table.const';
 import { FOOTBALL_STATS_QB } from '../../consts/stats-filters.const';
@@ -14,7 +14,6 @@ import { FantasyFootballPlayerNewsFacade } from '../../facade/fantasy-football-p
 import { FantasyFootballTeamFacade } from '../../facade/fantasy-football-team.facade';
 import { FantasyFootballScoringPeriod } from '../../fantasy-football-scoring-period';
 import { FootballPlayer } from '../../models/football-player.model';
-import { FantasyFootballEventsFacade } from '@app/espn-fantasy-football/facade/fantasy-football-events.facade';
 
 @Component({
   selector: 'app-football-team',
@@ -87,8 +86,12 @@ export class FootballTeamComponent {
     this.footballLeagueFacade.refresh();
   }
 
-  async onPlayerClick(player: FootballPlayer): Promise<void> {
-    await firstValueFrom(this.store.dispatch([new FantasyFootballPlayerNews.Fetch({ playerId: player.id })]));
-    const news = this.footballPlayerNewsFacade.getById(player.id)?.news ?? [];
+  // async onPlayerClick(player: FootballPlayer): Promise<void> {
+  //   await firstValueFrom(this.store.dispatch([new FantasyFootballPlayerNews.Fetch({ playerId: player.id })]));
+  //   const news = this.footballPlayerNewsFacade.getById(player.id)?.news ?? [];
+  // }
+
+  onPlayerClick(player: FootballPlayer) {
+    this.routerFacade.navigateToFantasyPlayer(player.id);
   }
 }

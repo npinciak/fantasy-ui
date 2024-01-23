@@ -9,6 +9,11 @@ export function BaseLeagueActions({ stateName }: { stateName: string }): IBaseLe
       constructor(public payload: { state: FantasyLeagueBaseStateModel }) {}
     };
 
+    static SetCurrentScoringPeriodId = class {
+      public static readonly type = `[${stateName}] SetCurrentScoringPeriodId`;
+      constructor(public payload: { scoringPeriodId: string | null }) {}
+    };
+
     static Fetch = class {
       public static readonly type = `[${stateName}] Fetch`;
       constructor(public payload: { leagueId: string; year: string }) {}
