@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { Chart, ChartConfiguration, ChartOptions, ChartType, registerables } from 'chart.js';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 export interface StatsChart<T = number> {
   data: T[];
