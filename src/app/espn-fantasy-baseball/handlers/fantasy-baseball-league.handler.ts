@@ -26,13 +26,16 @@ export class FantasyBaseballLeagueActionHandler {
         await firstValueFrom(this.mlbService.baseballLeague(leagueId, year));
 
       const state = { id, scoringPeriodId, matchupPeriodCount, firstScoringPeriod, finalScoringPeriod, seasonId };
-      this.store.dispatch([
-        new FantasyBaseballEvents.Fetch(),
-        new FantasyBaseballTeamsLive.AddOrUpdate(teamsLive),
-        new FantasyBaseballTeams.AddOrUpdate(teams),
-        new FantasyBaseballTransactions.AddOrUpdate(transactions ?? []),
-        new FantasyBaseballLeague.SetLeague({ state }),
-      ]);
+
+      await firstValueFrom(
+        this.store.dispatch([
+          new FantasyBaseballEvents.Fetch(),
+          new FantasyBaseballTeamsLive.AddOrUpdate(teamsLive),
+          new FantasyBaseballTeams.AddOrUpdate(teams),
+          new FantasyBaseballTransactions.AddOrUpdate(transactions ?? []),
+          new FantasyBaseballLeague.SetLeague({ state }),
+        ])
+      );
     } catch (e) {}
   }
 }

@@ -10,7 +10,7 @@ export interface BaseballPlayerProps {
   percentOwned: number | null;
   isPitcher: boolean;
   lineupSlot: string | null;
-  starterStatusByProGame: Record<number, PlayerInjuryStatus>;
+  starterStatusByProGame: Record<number, PlayerInjuryStatus> | null;
   eligibleLineupSlots: string;
 }
 
