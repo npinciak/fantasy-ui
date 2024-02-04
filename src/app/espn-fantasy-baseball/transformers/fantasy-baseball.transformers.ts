@@ -87,7 +87,7 @@ export function clientScheduleTeamListToTeamList(team: EspnClient.ScheduleTeam):
 export function clientPlayerCardToBaseballPlayerCard(players: PlayerCardEntity[]): BaseballPlayerCard[] {
   return players.map(player => {
     const {
-      player: { starterStatusByProGame, eligibleSlots, lastNewsDate, stance, laterality },
+      player: { eligibleSlots, lastNewsDate, stance, laterality },
       ratings,
     } = player;
 
@@ -102,6 +102,8 @@ export function clientPlayerCardToBaseballPlayerCard(players: PlayerCardEntity[]
     });
 
     const playerCardImage = FantasyBaseballImageBuilder.headshotImgBuilder({ id: playerInfo.id, width: 426, height: 320 });
+
+    const starterStatusByProGame = player.player.starterStatusByProGame ?? null;
 
     return {
       ...playerInfo,
@@ -130,7 +132,7 @@ export function clientPlayerToBaseballPlayer(players: TeamRosterEntry[]): Baseba
     const {
       lineupSlotId,
       playerPoolEntry: {
-        player: { starterStatusByProGame, lastNewsDate, eligibleSlots },
+        player: { lastNewsDate, eligibleSlots },
         ratings,
       },
     } = player;
@@ -144,6 +146,7 @@ export function clientPlayerToBaseballPlayer(players: TeamRosterEntry[]): Baseba
     });
 
     const eligibleLineupSlots = playerEligibleLineupSlotDisplay(eligibleSlots);
+    const starterStatusByProGame = player.playerPoolEntry.player.starterStatusByProGame ?? null;
 
     return {
       ...playerInfo,
@@ -171,7 +174,7 @@ export function transformEspnFreeAgentToBaseballPlayer(freeAgents: FreeAgent[]):
 
     const {
       player,
-      player: { starterStatusByProGame, eligibleSlots, lastNewsDate },
+      player: { eligibleSlots, lastNewsDate },
       ratings,
     } = freeAgent;
 
@@ -184,6 +187,8 @@ export function transformEspnFreeAgentToBaseballPlayer(freeAgents: FreeAgent[]):
     });
 
     const eligibleLineupSlots = playerEligibleLineupSlotDisplay(eligibleSlots);
+
+    const starterStatusByProGame = freeAgent.player.starterStatusByProGame ?? null;
 
     return {
       ...playerInfo,

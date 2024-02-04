@@ -174,7 +174,7 @@ export function transformMatchupListToMatchupMap(matchupList: FantasyMatchup[]):
 export function clientPlayerCardToFootballPlayerCard(players: PlayerCardEntity[]): FootballPlayerCard[] {
   return players.map(player => {
     const {
-      player: { starterStatusByProGame, lastNewsDate, stance, laterality },
+      player: { lastNewsDate, stance, laterality },
       ratings,
     } = player;
 
@@ -185,6 +185,8 @@ export function clientPlayerCardToFootballPlayerCard(players: PlayerCardEntity[]
       teamMap: NFL_TEAM_MAP,
       positionMap: NFL_POSITION_MAP,
     });
+
+    const starterStatusByProGame = player.player.starterStatusByProGame ?? null;
 
     const playerCardImage = FantasyFootballImageBuilder.headshotImgBuilder({ id: playerInfo.id, width: 426, height: 320 });
 

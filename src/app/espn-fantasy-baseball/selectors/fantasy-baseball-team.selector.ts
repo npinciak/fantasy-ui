@@ -9,7 +9,7 @@ import {
   startingPlayersFilter,
 } from '@app/espn/espn-helpers';
 import { Selector } from '@ngxs/store';
-import { BASEBALL_LINEUP_MAP, BaseballStat } from '@sports-ui/ui-sdk/espn';
+import { BASEBALL_LINEUP_MAP, BaseballStat, PLAYER_INJURY_STATUS } from '@sports-ui/ui-sdk/espn';
 import { exists, existsFilter } from '@sports-ui/ui-sdk/helpers';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
@@ -42,6 +42,11 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
         const playerGames = p.starterStatusByProGame;
 
         const playerObj = {} as BaseballPlayer;
+
+        if (playerGames == null) {
+          playerObj['injuryStatus'] = PLAYER_INJURY_STATUS.Active;
+          return { ...p, ...playerObj };
+        }
 
         Object.entries(playerGames).map(([k, g]) => {
           if (!gameIdSet.has(k)) return;
