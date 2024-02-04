@@ -19,7 +19,7 @@ export type PlayerInfo = Pick<IdAttributesNumber, 'id' | 'proTeamId' | 'playerId
   outlooks?: PlayerOutlooksMap;
   eligibleSlots: number[];
   stats?: PlayerStatsYear[];
-  starterStatusByProGame: GameStatus;
+  starterStatusByProGame?: GameStatus;
 };
 
 export type PlayerOutlooks = Record<string, string>;
