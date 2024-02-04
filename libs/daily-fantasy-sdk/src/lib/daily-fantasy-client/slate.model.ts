@@ -5,7 +5,7 @@ export type ClientSlateType = typeof SLATE_TYPES[keyof typeof SLATE_TYPES];
 export type ClientSlateTypeConfig = Record<ClientSlateType, ClientSlateConfig>;
 export type ClientDkSlateTypeMap = ClientSlateTypeConfig;
 export type ClientSiteSlateEntityMap = Record<string, ClientSiteSlateEntity>;
-export type ClientSlateMasterMap = Record<Site, ClientSiteSlateEntityMap>;
+export type ClientSlateMasterMap = Record<Site, ClientSiteSlateEntityMap> | null;
 
 type SiteSlateGameAttributes = 'date' | 'time' | 'scheduleId' | 'teamAwayId' | 'teamHomeId' | 'teamAwayHashtag' | 'teamHomeHashtag';
 export type ClientSiteSlateGameEntity = Record<SiteSlateGameAttributes, string> & {

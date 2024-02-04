@@ -27,7 +27,7 @@ export class DfsSlatesHandlerState {
 
     const map = await firstValueFrom(this.slateService.getSlatesByDate({ sport }));
 
-    const slates = Object.values(map[site]) as ClientSiteSlateEntity[];
+    const slates = !map || !map[site] ? [] : (Object.values(map[site]) as ClientSiteSlateEntity[]);
 
     await firstValueFrom(this.dfsSlatesFacade.addOrUpdate(slates));
 

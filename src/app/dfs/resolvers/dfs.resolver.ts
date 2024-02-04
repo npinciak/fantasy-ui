@@ -31,7 +31,8 @@ export class DfsResolver implements Resolve<void> {
     const slateId = this.dfsSelectedSlateConfigurationFacade.slateId;
 
     if (!exists(slateId) || !exists(slatePath)) throw new Error(`slateId (${slateId}) or slatePath (${slateId}) is not defined`);
-
+    
+    await firstValueFrom(this.dfsSlatePlayersFacade.clear());
     await firstValueFrom(this.dfsSlatePlayersFacade.fetchPlayers(slatePath));
   }
 }
