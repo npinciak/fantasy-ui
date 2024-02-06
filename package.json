@@ -35,7 +35,7 @@
     "@angular/service-worker": "15.0.1",
     "@ngxs/router-plugin": "^3.8.0",
     "@ngxs/store": "^3.8.0",
-    "@nrwl/angular": "16.2.2",
+    "@nrwl/angular": "16.7.0",
     "@sports-ui/daily-fantasy-sdk": "file:libs/daily-fantasy-sdk",
     "@sports-ui/ui-sdk": "file:libs/ui-sdk",
     "@supabase/supabase-js": "^2.2.0",
@@ -65,8 +65,8 @@
     "@angular/compiler-cli": "15.0.1",
     "@angular/language-service": "15.0.1",
     "@ngxs/devtools-plugin": "^3.8.1",
-    "@nrwl/workspace": "16.2.2",
-    "@nx/js": "16.2.2",
+    "@nrwl/workspace": "16.7.0",
+    "@nx/js": "16.7.0",
     "@types/clone": "^2.1.1",
     "@types/jasmine": "~3.6.0",
     "@types/lodash": "^4.14.173",
@@ -87,7 +87,7 @@
     "karma-coverage": "^2.2.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
-    "nx": "16.2.2",
+    "nx": "16.7.0",
     "postcss-scss": "^4.0.6",
     "prettier": "2.6.2",
     "prettier-plugin-tailwindcss": "^0.2.2",
@@ -98,3 +98,4 @@
     "webpack-bundle-analyzer": "^4.7.0"
   }
 }
+
