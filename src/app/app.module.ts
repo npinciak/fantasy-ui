@@ -70,7 +70,7 @@ const ngxsConfig = {
     ),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production, actionSanitizer, stateSanitizer }),
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
+      enabled: false,
       registrationStrategy: 'registerWhenStable:30000',
     }),
     AppRoutingModule,
