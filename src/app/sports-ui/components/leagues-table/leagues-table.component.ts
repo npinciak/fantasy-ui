@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -9,6 +10,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ICON_PATH } from '@app/espn/espn.const';
@@ -19,7 +21,7 @@ import { cellDataAccessor } from '@sports-ui/ui-sdk/helpers';
 @Component({
   standalone: true,
   selector: 'app-leagues-table',
-  imports: [MatTableModule],
+  imports: [MatTableModule, MatMenuModule, CommonModule],
   templateUrl: './leagues-table.component.html',
   styleUrls: ['./leagues-table.component.scss'],
 })
