@@ -27,6 +27,9 @@
         "styles": ["src/styles.scss"],
         "scripts": [],
         "serviceWorker": true,
+        "stylePreprocessorOptions": {
+          "includePaths": ["node_modules/"]
+        },
         "ngswConfigPath": "./ngsw-config.json",
         "vendorChunk": true,
         "extractLicenses": false,

@@ -17,7 +17,7 @@ import { SportsUiTeamsState } from './state/sports-ui-teams.state';
 import { SportsUiUserState } from './state/sports-ui-user.state';
 
 @NgModule({
-  declarations: [AddLeagueFormComponent, MyProfileComponent, LoginComponent, LeaguesTableComponent],
+  declarations: [AddLeagueFormComponent, MyProfileComponent, LoginComponent],
   imports: [
     NgxsModule.forFeature([
       SportsUiTeamsState,
@@ -32,6 +32,7 @@ import { SportsUiUserState } from './state/sports-ui-user.state';
     SharedModule,
     MaterialModule,
     SportsUiRoutingModule,
+    LeaguesTableComponent,
   ],
   exports: [AddLeagueFormComponent],
 })
