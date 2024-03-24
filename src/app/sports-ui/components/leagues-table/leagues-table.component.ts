@@ -10,14 +10,16 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ICON_PATH } from '@app/espn/espn.const';
 import { FantasySportToLabelMap, FantasySports, SportToImageLocationMap } from '@app/espn/models/espn-endpoint-builder.model';
 import { SportsUiClientLeague } from '@app/sports-ui/models/sports-ui-league.model';
 import { cellDataAccessor } from '@sports-ui/ui-sdk/helpers';
 
 @Component({
+  standalone: true,
   selector: 'app-leagues-table',
+  imports: [MatTableModule],
   templateUrl: './leagues-table.component.html',
   styleUrls: ['./leagues-table.component.scss'],
 })
