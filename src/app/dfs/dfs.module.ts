@@ -54,7 +54,7 @@ const states = [
 ];
 
 @NgModule({
-  imports: [CommonModule, DfsRoutingModule, FormsModule, MaterialModule, SharedModule, NgxsModule.forFeature(states)],
+  imports: [CommonModule, DfsRoutingModule, FormsModule, MaterialModule, SharedModule, NgxsModule.forFeature(states), PlayerTableComponent],
   declarations: [
     DfsHomeComponent,
     DfsNflMatchupComponent,
@@ -63,7 +63,6 @@ const states = [
     DfsSlateListComponent,
     DfsNflHomeComponent,
     DfsMlbHomeComponent,
-    PlayerTableComponent,
   ],
 })
 export class DfsModule {}

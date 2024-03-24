@@ -1,39 +1,233 @@
 {
   "migrations": [
     {
-      "version": "15.0.0",
-      "factory": "./update-15/remove-browserslist-config",
-      "description": "Remove Browserslist configuration files that matches the Angular CLI default configuration.",
-      "package": "@angular/cli",
-      "name": "remove-browserslist-config"
+      "cli": "nx",
+      "version": "16.8.0-beta.3",
+      "description": "Escape $ in env variables",
+      "implementation": "./src/migrations/update-16-8-0/escape-dollar-sign-env-variables",
+      "package": "nx",
+      "name": "16.8.0-escape-dollar-sign-env"
     },
     {
-      "version": "15.0.0",
-      "factory": "./update-15/remove-platform-server-exports",
-      "description": "Remove exported `@angular/platform-server` `renderModule` method. The `renderModule` method is now exported by the Angular CLI.",
-      "package": "@angular/cli",
-      "name": "remove-platform-server-exports"
+      "cli": "nx",
+      "version": "17.0.0-beta.1",
+      "description": "Updates the default cache directory to .nx/cache",
+      "implementation": "./src/migrations/update-17-0-0/move-cache-directory",
+      "package": "nx",
+      "name": "17.0.0-move-cache-directory"
     },
     {
-      "version": "15.0.0",
-      "factory": "./update-15/update-typescript-target",
-      "description": "Update TypeScript compiler `target` and set `useDefineForClassFields`. These changes are for IDE purposes as TypeScript compiler options `target` and `useDefineForClassFields` are set to `ES2022` and `false` respectively by the Angular CLI. To control ECMA version and features use the Browerslist configuration.",
-      "package": "@angular/cli",
-      "name": "update-typescript-target"
+      "cli": "nx",
+      "version": "17.0.0-beta.3",
+      "description": "Use minimal config for tasksRunnerOptions",
+      "implementation": "./src/migrations/update-17-0-0/use-minimal-config-for-tasks-runner-options",
+      "package": "nx",
+      "name": "17.0.0-use-minimal-config-for-tasks-runner-options"
     },
     {
-      "version": "15.0.0",
-      "factory": "./update-15/update-workspace-config",
-      "description": "Remove options from 'angular.json' that are no longer supported by the official builders.",
-      "package": "@angular/cli",
-      "name": "update-workspace-config"
+      "version": "17.0.0-rc.1",
+      "description": "Migration for v17.0.0-rc.1",
+      "implementation": "./src/migrations/update-17-0-0/rm-default-collection-npm-scope",
+      "package": "nx",
+      "name": "rm-default-collection-npm-scope"
     },
     {
-      "version": "15.0.0",
-      "factory": "./update-15/update-karma-main-file",
-      "description": "Remove no longer needed require calls in Karma builder main file.",
-      "package": "@angular/cli",
-      "name": "update-karma-main-file"
+      "cli": "nx",
+      "version": "17.3.0-beta.6",
+      "description": "Updates the nx wrapper.",
+      "implementation": "./src/migrations/update-17-3-0/update-nxw",
+      "package": "nx",
+      "name": "17.3.0-update-nx-wrapper"
+    },
+    {
+      "cli": "nx",
+      "version": "18.0.0-beta.2",
+      "description": "Updates nx.json to disabled adding plugins when generating projects in an existing Nx workspace",
+      "implementation": "./src/migrations/update-18-0-0/disable-crystal-for-existing-workspaces",
+      "x-repair-skip": true,
+      "package": "nx",
+      "name": "18.0.0-disable-adding-plugins-for-existing-workspaces"
+    },
+    {
+      "version": "18.1.0-beta.3",
+      "description": "Moves affected.defaultBase to defaultBase in `nx.json`",
+      "implementation": "./src/migrations/update-17-2-0/move-default-base",
+      "package": "nx",
+      "name": "move-default-base-to-nx-json-root"
+    },
+    {
+      "cli": "nx",
+      "version": "16.8.2-beta.0",
+      "description": "Remove invalid options (strict, noInterop) for ES6 type modules.",
+      "factory": "./src/migrations/update-16-8-2/update-swcrc",
+      "package": "@nx/js",
+      "name": "16-8-2-update-swcrc"
+    },
+    {
+      "cli": "nx",
+      "version": "17.0.2",
+      "description": "Remove deprecated build options",
+      "implementation": "./src/migrations/update-17-0-0/remove-deprecated-build-options",
+      "package": "@nx/js",
+      "name": "update-17-0-0-remove-deprecated-build-options"
+    },
+    {
+      "cli": "nx",
+      "version": "17.1.0-beta.5",
+      "requires": {
+        "@angular/core": ">=17.0.0"
+      },
+      "description": "Update the @angular/cli package version to ~17.0.0.",
+      "factory": "./src/migrations/update-17-1-0/update-angular-cli",
+      "package": "@nrwl/angular",
+      "name": "update-angular-cli-version-17-0-0"
+    },
+    {
+      "cli": "nx",
+      "version": "17.1.0-beta.5",
+      "requires": {
+        "@angular/core": ">=17.0.0"
+      },
+      "description": "Rename 'browserTarget' to 'buildTarget'.",
+      "factory": "./src/migrations/update-17-1-0/browser-target-to-build-target",
+      "package": "@nrwl/angular",
+      "name": "rename-browser-target-to-build-target"
+    },
+    {
+      "cli": "nx",
+      "version": "17.1.0-beta.5",
+      "requires": {
+        "@angular/core": ">=17.0.0"
+      },
+      "description": "Replace usages of '@nguniversal/builders' with '@angular-devkit/build-angular'.",
+      "factory": "./src/migrations/update-17-1-0/replace-nguniversal-builders",
+      "package": "@nrwl/angular",
+      "name": "replace-nguniversal-builders"
+    },
+    {
+      "cli": "nx",
+      "version": "17.1.0-beta.5",
+      "requires": {
+        "@angular/core": ">=17.0.0"
+      },
+      "description": "Replace usages of '@nguniversal/' packages with '@angular/ssr'.",
+      "factory": "./src/migrations/update-17-1-0/replace-nguniversal-engines",
+      "package": "@nrwl/angular",
+      "name": "replace-nguniversal-engines"
+    },
+    {
+      "cli": "nx",
+      "version": "17.1.0-beta.5",
+      "requires": {
+        "@angular/core": ">=17.0.0"
+      },
+      "description": "Replace the deep imports from 'zone.js/dist/zone' and 'zone.js/dist/zone-testing' with 'zone.js' and 'zone.js/testing'.",
+      "factory": "./src/migrations/update-17-1-0/update-zone-js-deep-import",
+      "package": "@nrwl/angular",
+      "name": "update-zone-js-deep-import"
+    },
+    {
+      "cli": "nx",
+      "version": "17.2.0-beta.2",
+      "description": "Rename '@nx/angular:webpack-dev-server' executor to '@nx/angular:dev-server'",
+      "factory": "./src/migrations/update-17-2-0/rename-webpack-dev-server",
+      "package": "@nrwl/angular",
+      "name": "rename-webpack-dev-server-executor"
+    },
+    {
+      "cli": "nx",
+      "version": "17.3.0-beta.10",
+      "requires": {
+        "@angular/core": ">=17.1.0"
+      },
+      "description": "Update the @angular/cli package version to ~17.1.0.",
+      "factory": "./src/migrations/update-17-3-0/update-angular-cli",
+      "package": "@nrwl/angular",
+      "name": "update-angular-cli-version-17-1-0"
+    },
+    {
+      "cli": "nx",
+      "version": "17.3.0-beta.10",
+      "requires": {
+        "@angular/core": ">=17.1.0"
+      },
+      "description": "Add 'browser-sync' as dev dependency when '@angular-devkit/build-angular:ssr-dev-server' or '@nx/angular:module-federation-dev-ssr' is used.",
+      "factory": "./src/migrations/update-17-3-0/add-browser-sync-dependency",
+      "package": "@nrwl/angular",
+      "name": "add-browser-sync-dependency"
+    },
+    {
+      "cli": "nx",
+      "version": "17.3.0-beta.10",
+      "requires": {
+        "@angular/core": ">=17.1.0"
+      },
+      "description": "Add 'autoprefixer' as dev dependency when '@nx/angular:ng-packagr-lite' or '@nx/angular:package` is used.",
+      "factory": "./src/migrations/update-17-3-0/add-autoprefixer-dependency",
+      "package": "@nrwl/angular",
+      "name": "add-autoprefixer-dependency"
+    },
+    {
+      "cli": "nx",
+      "version": "18.0.0-beta.0",
+      "description": "Add NX_MF_DEV_SERVER_STATIC_REMOTES to inputs for task hashing when '@nx/angular:webpack-browser' is used for Module Federation.",
+      "factory": "./src/migrations/update-18-0-0/add-mf-env-var-to-target-defaults",
+      "package": "@nrwl/angular",
+      "name": "add-module-federation-env-var-to-target-defaults"
+    },
+    {
+      "cli": "nx",
+      "version": "18.1.0-beta.1",
+      "requires": {
+        "@angular/core": ">=17.2.0"
+      },
+      "description": "Update the @angular/cli package version to ~17.2.0.",
+      "factory": "./src/migrations/update-18-1-0/update-angular-cli",
+      "package": "@nrwl/angular",
+      "name": "update-angular-cli-version-17-2-0"
+    },
+    {
+      "cli": "nx",
+      "version": "18.1.1-beta.0",
+      "description": "Ensure targetDefaults inputs for task hashing when '@nx/angular:webpack-browser' is used are correct for Module Federation.",
+      "factory": "./src/migrations/update-18-1-1/fix-target-defaults-inputs",
+      "package": "@nrwl/angular",
+      "name": "fix-target-defaults-for-webpack-browser"
+    },
+    {
+      "version": "17.0.0",
+      "description": "Angular v17 introduces a new control flow syntax that uses the @ and } characters. This migration replaces the existing usages with their corresponding HTML entities.",
+      "factory": "./migrations/block-template-entities/bundle",
+      "package": "@angular/core",
+      "name": "block-template-entities"
+    },
+    {
+      "version": "17.0.0",
+      "description": "CompilerOption.useJit and CompilerOption.missingTranslation are unused under Ivy. This migration removes their usage",
+      "factory": "./migrations/compiler-options/bundle",
+      "package": "@angular/core",
+      "name": "migration-v17-compiler-options"
+    },
+    {
+      "version": "17.0.0",
+      "description": "Updates `TransferState`, `makeStateKey`, `StateKey` imports from `@angular/platform-browser` to `@angular/core`.",
+      "factory": "./migrations/transfer-state/bundle",
+      "package": "@angular/core",
+      "name": "migration-transfer-state"
+    },
+    {
+      "version": "17.0.0-0",
+      "description": "Updates Angular Material to v17",
+      "factory": "./ng-update/index_bundled#updateToV17",
+      "package": "@angular/material",
+      "name": "migration-v17"
+    },
+    {
+      "version": "17.0.0-0",
+      "description": "Updates the Angular CDK to v17",
+      "factory": "./ng-update/index#updateToV17",
+      "package": "@angular/cdk",
+      "name": "migration-v17"
     }
   ]
 }

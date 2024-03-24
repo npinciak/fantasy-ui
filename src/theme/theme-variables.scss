@@ -4,8 +4,6 @@
 @use '@angular/material' as mat;
 @use 'sass:map';
 
-@import '@angular/material/theming';
-
 $app-primary: mat.define-palette(mat.$light-blue-palette, 900);
 $app-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 $app-warn: mat.define-palette(mat.$red-palette);
