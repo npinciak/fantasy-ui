@@ -41,14 +41,14 @@ speed-measure-plugin*.json
 npm-debug.log
 yarn-error.log
 testem.log
-*src/environments/*.ts
+
+#environments
+src/environments/environment.prod.ts
 
 
 # System Files
 .DS_Store
 Thumbs.db
 .env
-
 .angular
-
-.nx/cache
+.nx
