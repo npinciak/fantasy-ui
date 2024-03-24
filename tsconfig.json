@@ -27,9 +27,6 @@
       "@sports-ui/daily-fantasy-sdk/basketball": [
         "libs/daily-fantasy-sdk/src/lib/basketball/basketball.m.ts"
       ],
-      "@sports-ui/daily-fantasy-sdk/football": [
-        "libs/daily-fantasy-sdk/src/lib/football/football.m.ts"
-      ],
       "@sports-ui/daily-fantasy-sdk/daily-fantasy-client": [
         "libs/daily-fantasy-sdk/src/lib/daily-fantasy-client/daily-fantasy-client.m"
       ],
@@ -38,6 +35,9 @@
       ],
       "@sports-ui/daily-fantasy-sdk/daily-fantasy-mlb-client": [
         "libs/daily-fantasy-sdk/src/lib/daily-fantasy-mlb-client/daily-fantasy-mlb-client.m"
+      ],
+      "@sports-ui/daily-fantasy-sdk/football": [
+        "libs/daily-fantasy-sdk/src/lib/football/football.m.ts"
       ],
       "@sports-ui/daily-fantasy-sdk/models": [
         "libs/daily-fantasy-sdk/src/lib/models/models.m"
@@ -50,11 +50,11 @@
       "@sports-ui/ui-sdk/espn-fastcast-client": [
         "libs/ui-sdk/src/lib/espn-fastcast-client/espn-fastcast-client.m.ts"
       ],
+      "@sports-ui/ui-sdk/helpers": ["libs/ui-sdk/src/lib/helpers/helpers.m.ts"],
+      "@sports-ui/ui-sdk/pwa": ["libs/ui-sdk/src/lib/pwa/pwa.m.ts"],
       "@sports-ui/ui-sdk/supabase": [
         "libs/ui-sdk/src/lib/supabase/supabase.m.ts"
-      ],
-      "@sports-ui/ui-sdk/helpers": ["libs/ui-sdk/src/lib/helpers/helpers.m.ts"],
-      "@sports-ui/ui-sdk/pwa": ["libs/ui-sdk/src/lib/pwa/pwa.m.ts"]
+      ]
     },
     "typeRoots": ["./node_modules/@types"]
   },
