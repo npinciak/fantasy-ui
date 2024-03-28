@@ -151,8 +151,8 @@ export class RouterSelector {
       { id: '7', routerLink: EspnRouteBuilder.teamBattersPathFragments(sport, season, leagueId, teamId), label: 'Batters' },
     ];
 
-    const showFantasyLeagueLinks = (sport === UrlPathFragments.MLB || sport === UrlPathFragments.NFL) && exists(leagueId);
-    const showFantasyBaseballPositionLinks = sport === UrlPathFragments.MLB && exists(teamId);
+    const showFantasyLeagueLinks = (sport === UrlPathFragments.Baseball || sport === UrlPathFragments.Football) && exists(leagueId);
+    const showFantasyBaseballPositionLinks = sport === UrlPathFragments.Baseball && exists(teamId);
 
     return showFantasyBaseballPositionLinks
       ? [...baseNavLinks, ...leagueNavLinks, ...fantasyBaseballTeamLinks]
