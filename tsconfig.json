@@ -58,11 +58,6 @@
     },
     "typeRoots": ["./node_modules/@types"]
   },
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.spec.json" },
-    { "path": "./libs/daily-fantasy-sdk/tsconfig.json" },
-    { "path": "./libs/ui-sdk/tsconfig.json" }
-  ],
-  "exclude": ["schematics"]
+  "exclude": ["schematics"],
+  "include": ["src/**/*.ts"]
 }

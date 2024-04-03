@@ -8,7 +8,7 @@ describe('SportsUiLeaguesResolver', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports:[NgxsModule.forRoot()]
+      imports: [NgxsModule.forRoot()],
     });
     resolver = TestBed.inject(SportsUiLeaguesResolver);
   });

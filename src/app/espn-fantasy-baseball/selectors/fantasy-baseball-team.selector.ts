@@ -2,6 +2,7 @@ import { RouterSelector } from '@app/@core/router/router.selectors';
 import { FangraphsConstants } from '@app/@shared/fangraphs/fangraphs-const.model';
 import { FangraphsConstantsSelector } from '@app/@shared/fangraphs/fangraphs-const.selector';
 import { GenericSelector } from '@app/@shared/generic-state/generic.selector';
+import { transformTableDataToBarChartData } from '@app/@shared/helpers/chart-helper';
 import {
   benchPlayersFilter,
   injuredPlayersFilter,
@@ -11,6 +12,7 @@ import {
 import { Selector } from '@ngxs/store';
 import { BASEBALL_LINEUP_MAP, BaseballStat, PLAYER_INJURY_STATUS } from '@sports-ui/ui-sdk/espn';
 import { exists, existsFilter } from '@sports-ui/ui-sdk/helpers';
+import { ChartConfiguration } from 'chart.js';
 import { BaseballEvent } from '../models/baseball-event.model';
 import { BaseballPlayer, BaseballPlayerStatsRow } from '../models/baseball-player.model';
 import { BaseballTeam, BaseballTeamTableRow } from '../models/baseball-team.model';
@@ -140,22 +142,17 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
   }
 
   @Selector([FantasyBaseballTeamSelector.getTeamBatterStats])
-  static getBatterStatsLineChartData(batters: (statPeriod: string) => BaseballPlayerStatsRow[]): (
-    statPeriod: string,
-    statFilter: BaseballStat
-  ) => {
-    label: string[];
-    data: number[];
-  } {
+  static getBatterStatsLineChartData(
+    batters: (statPeriod: string) => BaseballPlayerStatsRow[]
+  ): (statPeriod: string, statFilter: BaseballStat) => ChartConfiguration['data'] {
     return (statPeriod: string, statFilter: BaseballStat) => {
-      const batterStats = batters(statPeriod)
-        .map(p => ({ statValue: exists(p.stats) ? p.stats[statFilter] : 0, name: p.name }))
-        .filter(d => d.statValue !== 0)
-        .sort((a, b) => b.statValue - a.statValue);
+      const playerTableData = batters(statPeriod);
+
+      const barChartData = transformTableDataToBarChartData({ playerTableData, statPeriod: 'QB', stat: statFilter });
 
       return {
-        label: batterStats.map(p => p.name),
-        data: batterStats.map(p => p.statValue),
+        ...barChartData,
+        datasets: [...barChartData.datasets],
       };
     };
   }
