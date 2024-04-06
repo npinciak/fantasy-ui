@@ -26,7 +26,7 @@ export function SupabaseClientService<Table extends SupaClientTables>({ table }:
       return data;
     }
 
-    static async insert(payload: Partial<SupaClientTableRelationRow<Table>>): Promise<null> {
+    static async insert(payload: SupaClientTableRelationRow<Table>): Promise<null> {
       const { data, error } = await supabase.from(table).insert(payload);
       if (error) throw error;
       return data;

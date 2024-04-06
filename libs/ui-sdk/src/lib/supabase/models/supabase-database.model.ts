@@ -90,6 +90,42 @@ export type Database = {
         }
         Relationships: []
       }
+      league_to_team_map: {
+        Row: {
+          created_at: string
+          id: number
+          league_id: string
+          league_team_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          league_id: string
+          league_team_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          league_id?: string
+          league_team_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_league_to_team_map_league_id_fkey"
+            columns: ["league_id"]
+            isOneToOne: false
+            referencedRelation: "league"
+            referencedColumns: ["league_id"]
+          },
+          {
+            foreignKeyName: "public_league_to_team_map_league_team_id_fkey"
+            columns: ["league_team_id"]
+            isOneToOne: false
+            referencedRelation: "team"
+            referencedColumns: ["league_team_id"]
+          },
+        ]
+      }
       "league-owner": {
         Row: {
           created_at: string
@@ -101,7 +137,7 @@ export type Database = {
           created_at?: string
           id?: number
           league_id: string
-          owner_id?: string
+          owner_id: string
         }
         Update: {
           created_at?: string
@@ -109,7 +145,22 @@ export type Database = {
           league_id?: string
           owner_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "public_league-owner_league_id_fkey"
+            columns: ["league_id"]
+            isOneToOne: false
+            referencedRelation: "league"
+            referencedColumns: ["league_id"]
+          },
+          {
+            foreignKeyName: "public_league-owner_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       "league-progression": {
         Row: {
@@ -118,6 +169,7 @@ export type Database = {
           espn_team_id: number | null
           id: number
           league_id: string
+          league_team_id: string
           rank: number | null
           total_points: number | null
         }
@@ -127,6 +179,7 @@ export type Database = {
           espn_team_id?: number | null
           id?: number
           league_id: string
+          league_team_id: string
           rank?: number | null
           total_points?: number | null
         }
@@ -136,6 +189,7 @@ export type Database = {
           espn_team_id?: number | null
           id?: number
           league_id?: string
+          league_team_id?: string
           rank?: number | null
           total_points?: number | null
         }
@@ -146,6 +200,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "league"
             referencedColumns: ["league_id"]
+          },
+          {
+            foreignKeyName: "public_league-progression_league_team_id_fkey"
+            columns: ["league_team_id"]
+            isOneToOne: false
+            referencedRelation: "team"
+            referencedColumns: ["league_team_id"]
           },
         ]
       }
@@ -194,18 +255,21 @@ export type Database = {
         Row: {
           created_at: string
           id: number
+          league_team_id: string
           name: string | null
           team_id: number
         }
         Insert: {
           created_at?: string
           id?: number
+          league_team_id?: string
           name?: string | null
           team_id: number
         }
         Update: {
           created_at?: string
           id?: number
+          league_team_id?: string
           name?: string | null
           team_id?: number
         }
@@ -215,22 +279,37 @@ export type Database = {
         Row: {
           created_at: string
           id: number
-          owner_id: string | null
-          team_id: number | null
+          league_team_id: string
+          owner_id: string
         }
         Insert: {
           created_at?: string
           id?: number
-          owner_id?: string | null
-          team_id?: number | null
+          league_team_id: string
+          owner_id: string
         }
         Update: {
           created_at?: string
           id?: number
-          owner_id?: string | null
-          team_id?: number | null
+          league_team_id?: string
+          owner_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "public_team-owner_league_team_id_fkey"
+            columns: ["league_team_id"]
+            isOneToOne: false
+            referencedRelation: "team"
+            referencedColumns: ["league_team_id"]
+          },
+          {
+            foreignKeyName: "public_team-owner_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       Teams: {
         Row: {
