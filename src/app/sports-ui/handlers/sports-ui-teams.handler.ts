@@ -7,11 +7,11 @@ import { TeamsClientService } from '../service/teams-client.service';
 @State({ name: SportsUiTeams.stateName + 'ActionHandler' })
 @Injectable()
 export class SportsUiTeamsActionHandler {
-  constructor(private teamClientService: TeamsClientService, private sportsUiTeamsFacade: SportsUiTeamsFacade) {}
+  constructor(private sportsUiTeamsFacade: SportsUiTeamsFacade) {}
 
   @Action(SportsUiTeams.Fetch)
   async fetchUserTeams(): Promise<void> {
-    const teams = await this.teamClientService.getAll();
+    const teams = await TeamsClientService.getAll();
     this.sportsUiTeamsFacade.addOrUpdate(teams);
   }
 }

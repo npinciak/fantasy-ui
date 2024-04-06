@@ -1,4 +1,4 @@
 import { GenericActions } from '@app/@shared/generic-state/generic.actions';
-import { Database } from '@sports-ui/ui-sdk/supabase';
+import { SupaClientTableRelationRow } from '@sports-ui/ui-sdk';
 
-export class SportsUiTeams extends GenericActions<Database['public']['Tables']['Teams']['Row']>({ stateName: 'sportsUiTeams' }) {}
+export class SportsUiTeams extends GenericActions<SupaClientTableRelationRow<'team'>>({ stateName: 'sportsUiTeams' }) {}

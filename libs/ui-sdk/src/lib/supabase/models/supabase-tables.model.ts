@@ -17,5 +17,5 @@ export type SupaClientFangraphsConstantsRelationInsert = SupaClientTableRelation
 export type SupaClientLeagues = SupaClientTableRelationRow<'Leagues'>;
 export type SupaClientTeams = SupaClientTableRelationRow<'Teams'>;
 
-
-
+export type SupaClientLeagueProgression = SupaClientTableRelationRow<'league-progression'>;
+export type SupaClientLeagueProgressionInsert = SupaClientTableRelationInsert<'league-progression'>;

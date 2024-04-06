@@ -48,8 +48,8 @@ export class SportsUiLeagueFormActionHandler {
         sport,
         season,
       };
-      await this.leagueClientService.create(requestBody);
-      await this.leagueClientService.getAll();
+      // await this.leagueClientService.create(requestBody);
+      // await this.leagueClientService.getAll();
     } catch (error) {
       if (error.status === 404) throw new Error('League not found');
       this.sportsUiLeagueFormFacade.reset();

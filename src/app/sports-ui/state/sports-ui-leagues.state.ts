@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
 import { GenericStateClass } from '@app/@shared/generic-state/generic.model';
 import { GenericState } from '@app/@shared/generic-state/generic.state';
-import { Action, State, StateContext, Store } from '@ngxs/store';
+import { Action, State, StateContext } from '@ngxs/store';
 import { SportsUiLeagues } from '../../sports-ui/actions/sports-ui-leagues.actions';
 import { SportsUiClientLeague } from '../models/sports-ui-league.model';
-import { LeaguesClientService } from '../service/leagues-client.service';
 
 @State({ name: SportsUiLeagues.stateName })
 @Injectable()
 export class SportsUiLeaguesState extends GenericState({
-  idProperty: 'leagueId',
+  idProperty: 'league_id',
   actionHandler: SportsUiLeagues,
 }) {
-  constructor(private leagueClientService: LeaguesClientService, private store: Store) {
+  constructor() {
     super();
   }
 

@@ -7,11 +7,11 @@ import { FangraphsService } from './fangraphs.service';
 @State({ name: FangraphsConstants.stateName + 'Actionhandler' })
 @Injectable()
 export class FangraphsConstantsActionHandler {
-  constructor(private fangraphsService: FangraphsService, private fangraphsConstantsFacade: FangraphsConstantsFacade) {}
+  constructor(private fangraphsConstantsFacade: FangraphsConstantsFacade) {}
 
   @Action(FangraphsConstants.Fetch)
   async fetchFangraphsConstants() {
-    const seasonConstants = await this.fangraphsService.getFangraphsConstants();
+    const seasonConstants = await FangraphsService.getAll();
     this.fangraphsConstantsFacade.addOrUpdate(seasonConstants);
   }
 }

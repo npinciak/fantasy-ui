@@ -7,11 +7,11 @@ import { LeaguesClientService } from '../service/leagues-client.service';
 @State({ name: SportsUiLeagues.stateName + 'ActionHandler' })
 @Injectable()
 export class SportsUiLeaguesActionHandler {
-  constructor(private leagueClientService: LeaguesClientService, private sportsUiLeaguesFacade: SportsUiLeaguesFacade) {}
+  constructor(private sportsUiLeaguesFacade: SportsUiLeaguesFacade) {}
 
   @Action(SportsUiLeagues.Fetch)
   async fetchUserLeagues(): Promise<void> {
-    const leagues = await this.leagueClientService.getAll();
+    const leagues = await LeaguesClientService.getAll();
     this.sportsUiLeaguesFacade.addOrUpdate(leagues);
   }
 }
