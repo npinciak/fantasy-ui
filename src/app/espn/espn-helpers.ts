@@ -2,7 +2,7 @@ import { BaseballPlayer, BaseballPlayerStatsRow } from '@app/espn-fantasy-baseba
 import { FootballPlayer } from '@app/espn-fantasy-football/models/football-player.model';
 import { EventSummaryBySeasonTypeByEventStatus } from '@app/espn-fastcast/models/fastcast-event-summary.model';
 import { FastcastEvent } from '@app/espn-fastcast/models/fastcast-event.model';
-import { EspnClient, PITCHING_LINEUP_IDS, PLAYER_INJURY_STATUS } from '@sports-ui/ui-sdk/espn';
+import { BaseballLineupSlot, EspnClient, PITCHING_LINEUP_IDS } from '@sports-ui/ui-sdk/espn';
 import {
   EVENT_STATUS,
   EVENT_STATUS_TYPE,
@@ -180,7 +180,7 @@ export function flattenPlayerStats(stats?: PlayerStatsYear[] | null): Record<str
  * @returns
  */
 export function benchPlayersFilter<T extends FootballPlayer | BaseballPlayer>(players: T[], lineupMap: EspnClient.LineupEntityMap): T[] {
-  const playerList = players.filter(p => lineupMap[p.lineupSlotId].bench);
+  const playerList = players.filter(p => lineupMap[p.lineupSlotId].bench && !p.injured);
   return sortPlayersByLineupSlotDisplayOrder(playerList, lineupMap);
 }
 
@@ -192,7 +192,7 @@ export function benchPlayersFilter<T extends FootballPlayer | BaseballPlayer>(pl
  * @returns
  */
 export function startingPlayersFilter<T extends FootballPlayer | BaseballPlayer>(players: T[], lineupMap: EspnClient.LineupEntityMap): T[] {
-  const playerList = players.filter(p => !lineupMap[p.lineupSlotId].bench && p.lineupSlotId !== 21);
+  const playerList = players.filter(p => !lineupMap[p.lineupSlotId].bench && p.lineupSlotId !== 21 && !p.injured);
   return sortPlayersByLineupSlotDisplayOrder(playerList, lineupMap);
 }
 
@@ -217,7 +217,7 @@ export function sortPlayersByLineupSlotDisplayOrder<T extends FootballPlayer | B
  * @returns
  */
 export function injuredPlayersFilter<T extends FootballPlayer | BaseballPlayer>(players: T[]): T[] {
-  return players.filter(p => p.injuryStatus === PLAYER_INJURY_STATUS.IR);
+  return players.filter(p => p.lineupSlotId === BaseballLineupSlot.IL);
 }
 
 /**

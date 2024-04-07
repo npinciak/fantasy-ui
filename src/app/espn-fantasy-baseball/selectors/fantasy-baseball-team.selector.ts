@@ -81,6 +81,11 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
     return benchPlayersFilter(batters, BASEBALL_LINEUP_MAP);
   }
 
+  @Selector([FantasyBaseballTeamSelector.getTeamBatters])
+  static getTeamInjuredReserveBatters(batters: BaseballPlayer[]): BaseballPlayer[] {
+    return injuredPlayersFilter(batters);
+  }
+
   @Selector([RouterSelector.getTeamId, FantasyBaseballTeamSelector.getRosterByTeamId])
   static getTeamPitchers(teamId: string | null, selectRosterByTeamId: (id: string) => BaseballPlayer[]): BaseballPlayer[] {
     return teamId ? selectRosterByTeamId(teamId).filter(p => p.isPitcher) : [];

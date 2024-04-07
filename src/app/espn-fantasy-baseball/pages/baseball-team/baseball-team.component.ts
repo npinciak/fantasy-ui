@@ -47,6 +47,8 @@ export class BaseballTeamComponent {
     map(([defaultStartingBatters, liveStartingBatters, isLiveScore]) => (isLiveScore ? liveStartingBatters : defaultStartingBatters))
   );
 
+  injuredBatters$ = this.fantasyBaseballTeamFacade.injuredBatters$
+  
   benchBatters$ = combineLatest([
     this.fantasyBaseballTeamFacade.benchBatters$,
     this.fantasyBaseballTeamLiveFacade.liveTeamBenchBatterStatsTableRows$,
