@@ -1,6 +1,10 @@
 {
   "name": "sports-ui",
   "version": "0.0.0",
+  "engines": {
+    "node": ">=18",
+    "npm": ">=9"
+  },
   "scripts": {
     "ng": "nx",
     "start": "nx serve --port=4401",
