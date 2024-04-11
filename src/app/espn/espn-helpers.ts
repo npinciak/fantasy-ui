@@ -54,7 +54,7 @@ export function excludeLeagues(id: string): boolean {
  * @returns boolean
  */
 export function isPitcher(eligiblePos: number[]): boolean {
-  return eligiblePos.some(posId => PITCHING_LINEUP_IDS.has(posId));
+  return eligiblePos.some(posId => PITCHING_LINEUP_IDS.has(posId)) && !eligiblePos.includes(BaseballLineupSlot.DH);
 }
 
 /**

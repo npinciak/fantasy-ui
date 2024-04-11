@@ -93,7 +93,9 @@ export class FantasyBaseballTeamSelector extends GenericSelector(FantasyBaseball
 
   @Selector([FantasyBaseballTeamSelector.getTeamPitchers])
   static getTeamStartingPitchers(pitchers: BaseballPlayer[]): BaseballPlayer[] {
-    return startingPlayersFilter(pitchers, BASEBALL_LINEUP_MAP);
+    const lineupMap = BASEBALL_LINEUP_MAP;
+    const playerList = pitchers.filter(p => !lineupMap[p.lineupSlotId].bench && p.lineupSlotId !== 21 && p.lineupSlotId !== 12 && !p.injured);
+    return sortPlayersByLineupSlotDisplayOrder(playerList, lineupMap);
   }
 
   @Selector([FantasyBaseballTeamSelector.getTeamPitchers])
