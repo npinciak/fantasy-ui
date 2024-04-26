@@ -22,8 +22,9 @@ export class BaseballLineupCardComponent extends EspnLineupCardComponent<Basebal
       const walksAgainstText = stats[BaseballStat.BBI] > 0 ? `${stats[BaseballStat.BBI]} BB, ` : '';
       const earnedRunsText = stats[BaseballStat.ER] > 0 ? `${stats[BaseballStat.ER]} ER, ` : '';
       const strikeoutsText = stats[BaseballStat.K] > 0 ? `${stats[BaseballStat.K]} K, ` : '';
+      const winsText = stats[BaseballStat.W] > 0 ? `${stats[BaseballStat.W]} W, ` : '';
 
-      return `${inningsPitchedText}${hitsAgainstText}${earnedRunsText}${walksAgainstText}${strikeoutsText}`.slice(0, -2);
+      return `${inningsPitchedText}${hitsAgainstText}${earnedRunsText}${walksAgainstText}${strikeoutsText}${winsText}`.slice(0, -2);
     }
 
     const hitsAtBatsTextAlt = `${!exists(stats[BaseballStat.H]) ? '' : `${stats[BaseballStat.H]}/`}${
