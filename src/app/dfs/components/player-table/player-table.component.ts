@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { TableColumnDataType } from '@app/@shared/models/table-columns.model';
 import { DfsNflThresholds } from '@app/dfs/nfl/consts/stats-threshold.m';
 import { NflDfsPlayerTableData } from '@app/dfs/nfl/models/nfl-player.model';
@@ -10,8 +10,6 @@ import { cellDataAccessor } from '@sports-ui/ui-sdk/helpers';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
-  standalone: true,
-  imports: [MatTableModule, MatPaginatorModule],
   selector: 'app-player-table',
   templateUrl: './player-table.component.html',
 })

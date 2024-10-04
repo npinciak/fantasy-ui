@@ -47,7 +47,7 @@
         <div class="flex flex-wrap">
           <div class="mb-12 w-full sm:px-4 xl:mb-0 xl:w-4/12">
             <app-base-card title="Games to Target">
-              <ng-container *ngIf="(nflTopFiveMatchups$ | async).length > 0; else noData">
+              <ng-container *ngIf="(nflTopFiveMatchups$ | async)?.length > 0; else noData">
                 <ng-container *ngFor="let matchup of nflTopFiveMatchups$ | async">
                   <div class="flex w-full gap-5 text-left">
                     <div class="flex-1 p-1 text-left text-xs sm:text-sm">
@@ -77,7 +77,7 @@
           </div>
           <div class="mb-12 w-full sm:px-4 xl:mb-0 xl:w-4/12">
             <app-base-card title="Highest Own Pct">
-              <ng-container *ngIf="(teamsWithHighestPown$ | async).length > 0; else noData">
+              <ng-container *ngIf="(teamsWithHighestPown$ | async)?.length > 0; else noData">
                 <ng-container *ngFor="let team of teamsWithHighestPown$ | async">
                   <div class="flex w-full gap-5 text-left">
                     <div class="flex-1 p-1 text-left text-xs sm:text-sm">
@@ -95,7 +95,7 @@
           </div>
           <div class="mb-12 w-full sm:px-4 xl:mb-0 xl:w-4/12">
             <app-base-card title="Highest Team Value">
-              <ng-container *ngIf="(teamsWithHighestValue$ | async).length > 0; else noData">
+              <ng-container *ngIf="(teamsWithHighestValue$ | async)?.length > 0; else noData">
                 <ng-container *ngFor="let team of teamsWithHighestValue$ | async">
                   <div class="flex w-full gap-5 text-left">
                     <div class="flex-1 p-1 text-left text-xs sm:text-sm">{{ team?.teamName }}</div>

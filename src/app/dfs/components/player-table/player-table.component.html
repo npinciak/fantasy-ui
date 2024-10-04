@@ -12,7 +12,7 @@
           {{ col?.headerLabel }}
         </th>
         <td
-          class="whitespace-nowrap border-t-0 border-l-0 border-r-0 p-3 align-middle text-xs"
+          class="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-3 align-middle text-xs"
           mat-cell
           *matCellDef="let data"
           [ngClass]="col.columnDef === 'oppPassDefRank' || col.columnDef === 'oppRushDefRank' ? matchupThresholdInverse(col?.cellData(data)) : null"
@@ -45,5 +45,5 @@
   </table>
 </div>
 <div class="my-3">
-  <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons> </mat-paginator>
+  <mat-paginator [length]="dataSource?.data?.length" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons> </mat-paginator>
 </div>
