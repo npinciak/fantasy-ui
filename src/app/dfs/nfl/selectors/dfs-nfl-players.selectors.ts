@@ -10,9 +10,7 @@ import { NFL_RG_TEAM_ID_MAP } from '@sports-ui/daily-fantasy-sdk/football';
 import { exists, existsFilter, hasNonNullableFields, uniqueBy } from '@sports-ui/ui-sdk/helpers';
 import { TARGET_VALUE_CONFIGURATION_BY_POSITION_BY_SITE } from '../helpers/target-value-calculator/target-value-by-position.const';
 import { TargetValueCalculator } from '../helpers/target-value-calculator/target-value-calculator';
-import { GridIronPlayer } from '../models/nfl-gridIron.model';
 import { NflDfsPlayerTableData } from '../models/nfl-player.model';
-import { DfsNflGridIronSelectors } from './dfs-nfl-grid-iron.selectors';
 import { DfsNflSlateTeamDetailsSelectors } from './dfs-nfl-slate-team-details.selectors';
 
 export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState) {
@@ -44,64 +42,59 @@ export class DfsNflPlayerSelectors extends GenericSelector(DfsSlatePlayersState)
     return [...reset, ...positions];
   }
 
-  @Selector([
-    DfsNflPlayerSelectors.getList,
-    DfsNflGridIronSelectors.getById,
-    DfsNflSlateTeamDetailsSelectors.getById,
-    DfsSelectedSlateConfigurationSelectors.slices.site,
-  ])
+  @Selector([DfsNflPlayerSelectors.getList, DfsNflSlateTeamDetailsSelectors.getById, DfsSelectedSlateConfigurationSelectors.slices.site])
   static getPlayerTableData(
     list: SlatePlayer[],
-    gridIronById: (id: string | null) => GridIronPlayer | null,
     teamMatchupById: (rgId: string | null) => SlateTeamNfl | null,
     dfsSite: string
   ): NflDfsPlayerTableData[] {
-    return list
-      .map(p => {
-        const matchup = teamMatchupById(p.rgTeamId);
+    return (
+      list
+        .map(p => {
+          const matchup = teamMatchupById(p.rgTeamId);
 
-        const salary = exists(p.salaries) ? Number(p.salaries[0].salary) : 0;
-        const gridIron = gridIronById(p.rgId);
+          const salary = exists(p.salaries) ? Number(p.salaries[0].salary) : 0;
 
-        const { id, name, rgTeamId, position } = p;
+          const { id, name, rgTeamId, position } = p;
 
-        const { valueTargetGPPs, valueTargetCash, targetValueDiffGPPs, targetValueDiffCash } = new TargetValueCalculator({
-          salary,
-          fantasyPoints: gridIron?.fpts ?? 0,
-          position,
-          dfsSite,
-          configuration: TARGET_VALUE_CONFIGURATION_BY_POSITION_BY_SITE,
-        });
+          const { valueTargetGPPs, valueTargetCash, targetValueDiffGPPs, targetValueDiffCash } = new TargetValueCalculator({
+            salary,
+            fantasyPoints: 0,
+            position,
+            dfsSite,
+            configuration: TARGET_VALUE_CONFIGURATION_BY_POSITION_BY_SITE,
+          });
 
-        return {
-          id,
-          name,
-          rgTeamId,
-          position,
-          salary,
-          playerSiteId: p.salaries ? p.salaries[0].player_id : null,
-          oppRushDefRank: matchup?.outsiders?.oppRuDefRk ?? null,
-          oppPassDefRank: matchup?.outsiders?.oppPaDefRk ?? null,
-          pown: gridIron ? gridIron.pown : null,
-          opp: gridIron ? gridIron.opp : null,
-          smash: gridIron ? gridIron.smash : null,
-          ceil: gridIron ? gridIron.ceil : null,
-          sdCeil: gridIron ? gridIron.sdCeil : null,
-          floor: gridIron ? gridIron.floor : null,
-          sdFloor: gridIron ? gridIron.sdFloor : null,
-          tar: gridIron ? gridIron.tar : null,
-          fpts: gridIron ? gridIron.fpts : null,
-          sdFpts: gridIron ? gridIron.sdFpts : null,
-          fptsPerDollar: gridIron ? gridIron.fptsPerDollar : null,
-          value: gridIron ? gridIron.value : null,
-          valueTargetGPPs,
-          valueTargetCash,
-          targetValueDiffGPPs,
-          targetValueDiffCash,
-        };
-      })
-      .filter(p => p.opp != null)
-      .sort((a, b) => b.salary! - a.salary!);
+          return {
+            id,
+            name,
+            rgTeamId,
+            position,
+            salary,
+            playerSiteId: p.salaries ? p.salaries[0].player_id : null,
+            oppRushDefRank: matchup?.outsiders?.oppRuDefRk ?? null,
+            oppPassDefRank: matchup?.outsiders?.oppPaDefRk ?? null,
+            pown: 0,
+            opp: null,
+            smash: null,
+            ceil: null,
+            sdCeil: null,
+            floor: null,
+            sdFloor: null,
+            tar: null,
+            fpts: null,
+            sdFpts: null,
+            fptsPerDollar: null,
+            value: null,
+            valueTargetGPPs,
+            valueTargetCash,
+            targetValueDiffGPPs,
+            targetValueDiffCash,
+          };
+        })
+        // .filter(p => p.opp != null)
+        .sort((a, b) => b.salary! - a.salary!)
+    );
   }
 
   @Selector([DfsNflPlayerSelectors.getPlayerTableData, DfsTeamsSelectors.getById])
